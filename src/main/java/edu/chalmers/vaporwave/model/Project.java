@@ -1,4 +1,4 @@
-package edu.chalmers.projecttemplate.model;
+package edu.chalmers.vaporwave.model;
 
 public class Project {
 	public static final String PROJECT_WINDOW_TEXT = "ProjectTemplate";

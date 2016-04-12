@@ -1,4 +1,4 @@
-package edu.chalmers.projecttemplate.model;
+package edu.chalmers.vaporwave.model;
 
 import org.junit.Assert;
 import org.junit.Test;

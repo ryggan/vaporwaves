@@ -1,8 +1,8 @@
-package edu.chalmers.projecttemplate;
+package edu.chalmers.vaporwave;
 
-import edu.chalmers.projecttemplate.controller.ProjectController;
-import edu.chalmers.projecttemplate.model.Project;
-import edu.chalmers.projecttemplate.view.ProjectView;
+import edu.chalmers.vaporwave.controller.ProjectController;
+import edu.chalmers.vaporwave.model.Project;
+import edu.chalmers.vaporwave.view.ProjectView;
 import javax.swing.SwingUtilities;
 
 /*

@@ -1,7 +1,7 @@
-package edu.chalmers.projecttemplate.controller;
+package edu.chalmers.vaporwave.controller;
 
-import edu.chalmers.projecttemplate.model.Project;
-import edu.chalmers.projecttemplate.view.ProjectView;
+import edu.chalmers.vaporwave.model.Project;
+import edu.chalmers.vaporwave.view.ProjectView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

@@ -1,6 +1,6 @@
-package edu.chalmers.projecttemplate.view;
+package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.projecttemplate.model.Project;
+import edu.chalmers.vaporwave.model.Project;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
