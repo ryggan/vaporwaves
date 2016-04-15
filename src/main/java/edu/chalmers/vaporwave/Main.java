@@ -27,7 +27,7 @@ public class Main extends Application {
 
         primaryStage.show();
 
-		MainController mc = new MainController(primaryStage);
+		MainController mc = new MainController(root);
 		new ListenerController(scene, mc);
 
 	}

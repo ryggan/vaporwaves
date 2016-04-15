@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.util.LongValue;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
 import javafx.stage.Stage;
 
 /**
@@ -8,13 +10,26 @@ import javafx.stage.Stage;
  */
 public class MainController {
 
-    private Stage stage;
+//    private Stage stage;
+
+    private MenuController mc;
+    private ArenaController ac;
+
     private boolean inGame;
 
+    /**
+     * Constructor, that sets up the ongoing main loop.
+     * @param root
+     */
+    public MainController(Group root) {
 
-    public MainController(Stage stage) {
-        this.stage = stage;
+        // Class setup
+
+//        this.stage = stage;
         this.inGame = false;
+
+        mc = new MenuController(root);
+        ac = new ArenaController(root);
 
         // Animation timer setup
 
@@ -33,7 +48,7 @@ public class MainController {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
 
 
-                // TEST
+                // TEST OUTPUT
 
                 if (t % 1.0 < 0.05) {
                     System.out.println("Elapsed time since beginning: "+t);
@@ -42,17 +57,5 @@ public class MainController {
             }
 
         }.start();
-    }
-}
-
-/**
- * Utility class, to walk around the problem with inner classes and primitive variables.
- * Mainly used in AnimationTimer().
- */
-class LongValue {
-    public long value;
-
-    public LongValue(long n) {
-        value = n;
     }
 }
