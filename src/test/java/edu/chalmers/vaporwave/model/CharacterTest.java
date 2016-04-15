@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.model;
 
+import edu.chalmers.vaporwave.model.arena.Character;
 import org.junit.Test;
 
 import java.awt.*;

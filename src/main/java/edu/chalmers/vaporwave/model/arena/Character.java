@@ -1,6 +1,6 @@
-package edu.chalmers.vaporwave.model;
+package edu.chalmers.vaporwave.model.arena;
 
-import javafx.scene.input.KeyCode;
+import edu.chalmers.vaporwave.model.Player;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
