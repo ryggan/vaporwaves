@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave;
 
-import edu.chalmers.vaporwave.controller.ProjectController;
-import edu.chalmers.vaporwave.model.Project;
 import edu.chalmers.vaporwave.view.ProjectView;
 import javax.swing.SwingUtilities;
 
@@ -14,12 +12,6 @@ public final class Main {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-                    final Project project = new Project();
-                    final ProjectView projectView = new ProjectView(project);
-                    
-                    ProjectController.create(project, projectView);
-                    projectView.setVisible(true);
-                });
+
 	}
 }
