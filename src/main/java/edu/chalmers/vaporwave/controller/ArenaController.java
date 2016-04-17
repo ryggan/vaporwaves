@@ -15,6 +15,8 @@ public class ArenaController {
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+        av.updateView(timeSinceStart, timeSinceLastCall);
 
+        // aaaall the game logicz
     }
 }

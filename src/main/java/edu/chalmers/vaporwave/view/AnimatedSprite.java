@@ -59,11 +59,10 @@ public class AnimatedSprite extends Sprite {
 
         int posx = startPos[0];
         int posy = startPos[1];
-//        int posx, posy;
+
         for (int i = 0; i < length; i++) {
-//            posx = startPos[0] + i;
-//            posy = startPos[1];
-            posx++;
+
+            posx = startPos[0] + i;
             while(posx >= sheetDimension.getWidth()) {
                 posx -= sheetDimension.getWidth();
                 posy++;
@@ -105,8 +104,9 @@ public class AnimatedSprite extends Sprite {
      */
     public void render(GraphicsContext gc, double time) {
         int index = (int)((time % (length * duration)) / duration);
-
-        gc.drawImage(spriteSheet, frames.get(index)[0], frames.get(index)[1], getWidth(), getHeight(),
+        int posx = frames.get(index)[0] * (int)getWidth();
+        int posy = frames.get(index)[1] * (int)getHeight();
+        gc.drawImage(spriteSheet, posx, posy, getWidth(), getHeight(),
                 getPositionX(), getPositionY(), getWidth(), getHeight());
     }
     @Override

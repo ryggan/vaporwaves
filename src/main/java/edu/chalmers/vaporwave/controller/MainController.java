@@ -50,15 +50,15 @@ public class MainController {
                 // Controller calls
 
                 ac.timerUpdate(timeSinceStart, timeSinceLastCall);
-
+                mc.timerUpdate(timeSinceStart, timeSinceLastCall);
 
                 // TEST OUTPUT
 
-                if (timeSinceStart % 1.0 < 0.05) {
-                    System.out.println("Elapsed time since beginning: "+timeSinceStart);
-                    System.out.println("Elapsed time since last call: "+timeSinceLastCall);
-                    System.out.println("---");
-                }
+//                if (timeSinceStart % 1.0 < 0.05) {
+//                    System.out.println("Elapsed time since beginning: "+timeSinceStart);
+//                    System.out.println("Elapsed time since last call: "+timeSinceLastCall);
+//                    System.out.println("---");
+//                }
             }
 
         }.start();
