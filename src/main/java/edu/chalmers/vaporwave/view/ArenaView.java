@@ -30,6 +30,6 @@ public class ArenaView {
     }
 
     public void update() {
-        
+
     }
 }
