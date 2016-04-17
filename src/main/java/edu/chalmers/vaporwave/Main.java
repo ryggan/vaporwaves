@@ -6,6 +6,7 @@ package edu.chalmers.vaporwave;
 
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
+import edu.chalmers.vaporwave.util.Constants;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -23,6 +24,9 @@ public class Main extends Application {
         Group root = new Group();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.setMinHeight(Constants.WINDOW_HEIGHT);
+        primaryStage.setMinWidth(Constants.WINDOW_WIDTH);
 
 //        setUpStage(primaryStage);
 
