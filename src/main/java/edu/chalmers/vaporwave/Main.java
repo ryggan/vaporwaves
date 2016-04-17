@@ -1,5 +1,6 @@
 
-package edu.chalmers.vaporwave;/**
+package edu.chalmers.vaporwave;
+/**
  * Created by bob on 2016-04-15.
  */
 
@@ -12,19 +13,12 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	//this shit is the most shitty shit comment ever
-	//fuck  git
-	//fml
-
-
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-
-		System.out.println("literally fuck");
 
         Group root = new Group();
         Scene scene = new Scene(root);

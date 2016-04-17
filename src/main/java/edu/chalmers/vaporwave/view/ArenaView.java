@@ -26,10 +26,12 @@ public class ArenaView {
         // TEST DRAWING
 
         gc.clearRect(0, 0, 500, 500);
-        gc.drawImage(new Image("Images/Alyssa-fwd_walk-01.png"), 0, 0);
+        Sprite s = new Sprite("Images/Alyssa-fwd_walk-01.png");
+        s.render(gc);
+//        gc.drawImage(new Image("Images/Alyssa-fwd_walk-01.png"), 0, 0);
     }
 
-    public void update() {
+    public void updateView() {
 
     }
 }

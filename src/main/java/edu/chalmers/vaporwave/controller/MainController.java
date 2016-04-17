@@ -42,17 +42,22 @@ public class MainController {
 
                 // Time management
 
-                double elapsedTime = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
+                double timeSinceLastCall = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
                 lastNanoTime.value = currentNanoTime;
 
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+                double timeSinceStart = (currentNanoTime - startNanoTime) / 1000000000.0;
+
+                // Controller calls
+
+                ac.timerUpdate(timeSinceStart, timeSinceLastCall);
 
 
                 // TEST OUTPUT
 
-                if (t % 1.0 < 0.05) {
-                    System.out.println("Elapsed time since beginning: "+t);
-                    System.out.println("Elapsed time since last call: "+elapsedTime);
+                if (timeSinceStart % 1.0 < 0.05) {
+                    System.out.println("Elapsed time since beginning: "+timeSinceStart);
+                    System.out.println("Elapsed time since last call: "+timeSinceLastCall);
+                    System.out.println("---");
                 }
             }
 

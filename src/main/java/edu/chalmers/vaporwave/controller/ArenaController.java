@@ -12,7 +12,9 @@ public class ArenaController {
 
     public ArenaController(Group root) {
         av = new ArenaView(root);
+    }
 
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
     }
 }
