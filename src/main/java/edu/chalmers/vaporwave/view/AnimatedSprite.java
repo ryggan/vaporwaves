@@ -57,12 +57,13 @@ public class AnimatedSprite extends Sprite {
 
         // Initiating frames-list, by calculating every coordinate in the spritesheet
 
-        int posx = startPos[0];
-        int posy = startPos[1];
+        int posx, posy;
 
         for (int i = 0; i < length; i++) {
 
             posx = startPos[0] + i;
+            posy = startPos[1];
+
             while(posx >= sheetDimension.getWidth()) {
                 posx -= sheetDimension.getWidth();
                 posy++;
@@ -72,6 +73,8 @@ public class AnimatedSprite extends Sprite {
 
             int[] frame = {posx, posy};
             frames.add(frame);
+
+//            System.out.println("posx: "+posx+" - posy: "+posy);
         }
 
     }
