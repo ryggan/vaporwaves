@@ -23,9 +23,8 @@ public class MainController {
      */
     public MainController(Group root) {
 
-        // Class setup
+        // Initiating variables and controllers
 
-//        this.stage = stage;
         this.inGame = false;
 
         mc = new MenuController(root);

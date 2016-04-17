@@ -12,8 +12,6 @@ public class MenuController {
 
     public MenuController(Group root) {
         mv = new MenuView(root);
-
-
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {

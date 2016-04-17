@@ -21,9 +21,13 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
+        // Setting up hierarchy
+
         Group root = new Group();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+
+        // Design additions
 
         primaryStage.setResizable(false);
         primaryStage.setMinHeight(Constants.WINDOW_HEIGHT);
@@ -31,8 +35,9 @@ public class Main extends Application {
 
         primaryStage.show();
 
+        // Initiating controllers
+
 		MainController mc = new MainController(root);
 		new ListenerController(scene, mc);
-
 	}
 }

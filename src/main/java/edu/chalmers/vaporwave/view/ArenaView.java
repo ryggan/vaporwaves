@@ -16,8 +16,8 @@ public class ArenaView {
 //    private Canvas canvas;
     private GraphicsContext gc;
 
-    private AnimatedSprite testSprite;
-    private AnimatedSprite testSprite2;
+//    private AnimatedSprite testSprite;
+//    private AnimatedSprite testSprite2;
 
     public ArenaView(Group root) {
 

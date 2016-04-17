@@ -10,6 +10,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
+ * An extended version of Sprite that functions in much the same way, with the only addition
+ * that animated picture now is supported.
+ *
  * Created by bob on 2016-04-15.
  */
 public class AnimatedSprite extends Sprite {
@@ -35,7 +38,7 @@ public class AnimatedSprite extends Sprite {
      */
     public AnimatedSprite(Image spriteSheet, Dimension spriteDim, int length, double duration, int[] startPos) {
 
-        // Checking arguments
+        // Checking arguments, throwing exception if something is wrong
 
         if (spriteSheet == null || spriteDim == null || spriteDim.getWidth() < 1 || spriteDim.getHeight() < 1 || length == 0
                 || duration <= 0.0 || startPos[0] < 0 || startPos[1] < 0) {
@@ -82,11 +85,11 @@ public class AnimatedSprite extends Sprite {
     public AnimatedSprite(Image sprSheet, Dimension sprDim, int length, double duration) {
         this(sprSheet, sprDim, length, duration, new int[] {0, 0});
     }
-    public AnimatedSprite(String fname, Dimension sprDim, int length, double duration, int[] startPos) throws FileNotFoundException {
-        this(new Image(fname), sprDim, length, duration, startPos);
+    public AnimatedSprite(String fileName, Dimension sprDim, int length, double duration, int[] startPos) throws FileNotFoundException {
+        this(new Image(fileName), sprDim, length, duration, startPos);
     }
-    public AnimatedSprite(String fname, Dimension sprDim, int length, double duration) throws FileNotFoundException {
-        this(new Image(fname), sprDim, length, duration, new int[] {0, 0});
+    public AnimatedSprite(String fileName, Dimension sprDim, int length, double duration) throws FileNotFoundException {
+        this(new Image(fileName), sprDim, length, duration, new int[] {0, 0});
     }
 
     /**
@@ -100,14 +103,15 @@ public class AnimatedSprite extends Sprite {
         frames.set(frameNum, frame);
     }
 
+    /**
+     * Besides setting the scale, also updates the Image, via Utils, to the new resized scale.
+     * A slightly changed setScale() overridden, since the setImage() function is unused in AnimatedSprite.
+     * @param scale
+     */
     @Override
     public void setScale(double scale) {
         super.setScale(scale);
         setSpriteSheet(Utils.resize(this.spriteSheet, scale));
-    }
-
-    public void setSpriteSheet(Image spriteSheet) {
-        this.spriteSheet = spriteSheet;
     }
 
     /**
@@ -126,14 +130,24 @@ public class AnimatedSprite extends Sprite {
     }
     @Override
     public void render(GraphicsContext gc) {
+
         // unused method, overridden so that super.render() never gets called accidentally
+
+        System.out.println("Warning! AnimatedSprite.render(GrapgicsContext gc) is unused.");
+    }
+
+    @Override
+    public String toString() {
+        return "Animated "+super.toString() + " Length: "+length;
+    }
+
+    // GETTERS AND SETTERS:
+
+    public void setSpriteSheet(Image spriteSheet) {
+        this.spriteSheet = spriteSheet;
     }
 
     public int getLength() {
         return length;
-    }
-
-    public void setScale() {
-
     }
 }
