@@ -24,11 +24,10 @@ public class Main extends Application {
         Group root = new Group();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+
         primaryStage.setResizable(false);
         primaryStage.setMinHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setMinWidth(Constants.WINDOW_WIDTH);
-
-//        setUpStage(primaryStage);
 
         primaryStage.show();
 
@@ -36,11 +35,4 @@ public class Main extends Application {
 		new ListenerController(scene, mc);
 
 	}
-
-//    private void setUpStage(Stage primaryStage) {
-//
-//        Group root = new Group();
-//        Scene scene = new Scene(root);
-//        primaryStage.setScene(scene);
-//    }
 }
