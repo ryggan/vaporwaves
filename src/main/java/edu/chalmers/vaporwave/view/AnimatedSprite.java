@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -26,17 +27,17 @@ public class AnimatedSprite extends Sprite {
      * Below this are three versions, the first where startPos is omitted, in case the animation is supposed to be
      * asynchronous, and the last two similar constructors but with the parameter Image sprSheet exchanged with
      * a String fname paramater. The last two throws FileNotFoundExceptions.
-     * @param sprSheet
-     * @param sprDim
+     * @param spriteSheet
+     * @param spriteDim
      * @param length
      * @param duration
      * @param startPos
      */
-    public AnimatedSprite(Image sprSheet, Dimension sprDim, int length, double duration, int[] startPos) {
+    public AnimatedSprite(Image spriteSheet, Dimension spriteDim, int length, double duration, int[] startPos) {
 
         // Checking arguments
 
-        if (sprSheet == null || sprDim == null || sprDim.getWidth() < 1 || sprDim.getHeight() < 1 || length == 0
+        if (spriteSheet == null || spriteDim == null || spriteDim.getWidth() < 1 || spriteDim.getHeight() < 1 || length == 0
                 || duration <= 0.0 || startPos[0] < 0 || startPos[1] < 0) {
             throw new IllegalArgumentException();
         }
@@ -45,8 +46,8 @@ public class AnimatedSprite extends Sprite {
 
         this.frames = new ArrayList<int[]>();
         this.length = length;
-        this.spriteSheet = sprSheet;
-        this.spriteDimension = sprDim;
+        this.spriteSheet = spriteSheet;
+        this.spriteDimension = spriteDim;
         this.duration = duration;
 
         setWidth(spriteDimension.getWidth());
@@ -99,6 +100,16 @@ public class AnimatedSprite extends Sprite {
         frames.set(frameNum, frame);
     }
 
+    @Override
+    public void setScale(double scale) {
+        super.setScale(scale);
+        setSpriteSheet(Utils.resize(this.spriteSheet, scale));
+    }
+
+    public void setSpriteSheet(Image spriteSheet) {
+        this.spriteSheet = spriteSheet;
+    }
+
     /**
      * This method is supposed to be used instead of the render(GraphicsContext gc) in the superclass, because
      * this one includes the calculation of which image is supposed to be shown, from the frames list.
@@ -107,10 +118,11 @@ public class AnimatedSprite extends Sprite {
      */
     public void render(GraphicsContext gc, double time) {
         int index = (int)((time % (length * duration)) / duration);
-        int posx = frames.get(index)[0] * (int)getWidth();
-        int posy = frames.get(index)[1] * (int)getHeight();
-        gc.drawImage(spriteSheet, posx, posy, getWidth(), getHeight(),
-                getPositionX(), getPositionY(), getWidth(), getHeight());
+        double width = getWidth() * getScale();
+        double height = getHeight() * getScale();
+        int posx = frames.get(index)[0] * (int)width;
+        int posy = frames.get(index)[1] * (int)height;
+        gc.drawImage(spriteSheet, posx, posy, width, height, getPositionX(), getPositionY(), width, height);
     }
     @Override
     public void render(GraphicsContext gc) {

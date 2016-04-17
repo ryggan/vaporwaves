@@ -30,21 +30,20 @@ public class ArenaView {
 
         // TEST DRAWING
 
-//        gc.clearRect(0, 0, 500, 500);
-//        Sprite s = new Sprite("Images/Alyssa-fwd_walk-01.png");
-//        s.render(gc);
-//        gc.drawImage(new Image("Images/Alyssa-fwd_walk-01.png"), 0, 0);
-
         Image img = new Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
         testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
         testSprite.setVelocity(4.5, 10.0);
+        testSprite.setScale(3);
 
         Image img2 = new Image("Images/spritesheet-alyssa-death-56x56.png");
         testSprite2 = new AnimatedSprite(img2, new Dimension(56, 56), 28, 0.1);
         testSprite2.setPosition(50, 50);
+        testSprite2.setScale(2);
     }
 
     public void updateView(double timeSinceStart, double timeSinceLastCall) {
+
+        // TESTING
 
         gc.clearRect(0, 0, 500, 500);
 

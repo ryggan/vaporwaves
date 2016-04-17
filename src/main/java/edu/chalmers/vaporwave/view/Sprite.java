@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -16,12 +17,14 @@ public class Sprite {
     private double velocityY;
     private double width;
     private double height;
+    private double scale;
 
     public Sprite() {
         this.positionX = 0;
         this.positionY = 0;
         this.velocityX = 0;
         this.velocityY = 0;
+        scale = 1.0;
         setImage(this.image);
     }
     public Sprite(Image image) {
@@ -63,32 +66,43 @@ public class Sprite {
         this.velocityY += addY;
     }
 
-    public double getPositionX() {
-        return positionX;
-    }
-    public double getPositionY() {
-        return positionY;
-    }
-
-    public double getVelocityX() {
-        return velocityX;
-    }
-    public double getVelocityY() {
-        return velocityY;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-    public double getHeight() {
-        return height;
-    }
-
     public void setWidth(double width) {
         this.width = width;
     }
     public void setHeight(double height) {
         this.height = height;
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
+        if (this.image != null) {
+            setImage(Utils.resize(this.image, this.scale));
+        }
+    }
+
+    public double getPositionX() {
+        return this.positionX;
+    }
+    public double getPositionY() {
+        return this.positionY;
+    }
+
+    public double getVelocityX() {
+        return this.velocityX;
+    }
+    public double getVelocityY() {
+        return this.velocityY;
+    }
+
+    public double getWidth() {
+        return this.width;
+    }
+    public double getHeight() {
+        return this.height;
+    }
+
+    public double getScale() {
+        return this.scale;
     }
 
     public void update(double time) {
@@ -99,9 +113,6 @@ public class Sprite {
     public void render(GraphicsContext gc) {
         gc.drawImage(this.image, positionX, positionY);
     }
-//    public void render(GraphicsContext gc, Image image) {
-//        gc.drawImage(image, positionX, positionY);
-//    }
 
     public Rectangle2D getBoundary() {
         return new Rectangle2D(positionX, positionY, width, height);
