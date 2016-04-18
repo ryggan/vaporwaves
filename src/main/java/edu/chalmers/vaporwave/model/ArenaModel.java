@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -35,8 +36,12 @@ public class ArenaModel {
         return arena;
     }
 
-    public void setTile(Tile tile, int posx, int posy) {
-        arena[posx][posy].add(tile);
+    public void setTile(Tile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
+        if (arena.length <= posx && arena[0].length <= posy && posx >= 0 && posy >= 0) {
+            arena[posx][posy].add(tile);
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
     }
 
     public ArrayList<Tile> getTiles(int posx, int posy) {
