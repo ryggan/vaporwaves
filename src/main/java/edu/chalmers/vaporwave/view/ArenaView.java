@@ -18,8 +18,8 @@ public class ArenaView {
     private GraphicsContext backgroundGC;
     private GraphicsContext tileGC;
 
-    private Sprite testSprite;
-    private Sprite testSprite2;
+//    private Sprite testSprite;
+//    private Sprite testSprite2;
 
     public ArenaView(Group root) {
 
@@ -42,31 +42,32 @@ public class ArenaView {
 
         // TEST DRAWING
 
-        Image img = new Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
-        testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
-        testSprite.setVelocity(0, 5);
-        testSprite.setScale(2);
-        Image img2 = new Image("Images/spritesheet-alyssa-death-56x56.png");
-        testSprite2 = new AnimatedSprite(img2, new Dimension(56, 56), 28, 0.1);
-        testSprite2.setPosition(50, 50);
-        testSprite2.setScale(2);
-
-        Image img3 = new Image("Images/sprite-arenabackground-01.png");
-        Sprite testSprite3 = new Sprite(img3);
-        testSprite3.setPosition(0, 0);
-        testSprite3.render(backgroundGC, -1);
-        testSprite3.setScale(2);
+//        Image img = new Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
+//        testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
+//        testSprite.setVelocity(0, 5);
+//        testSprite.setScale(2);
+//        Image img2 = new Image("Images/spritesheet-alyssa-death-56x56.png");
+//        testSprite2 = new AnimatedSprite(img2, new Dimension(56, 56), 28, 0.1);
+//        testSprite2.setPosition(50, 50);
+//        testSprite2.setScale(2);
+//
+//        Image img3 = new Image("Images/sprite-arenabackground-01.png");
+//        Sprite testSprite3 = new Sprite(img3);
+//        testSprite3.setPosition(0, 0);
+//        testSprite3.setScale(2);
+//
+//        testSprite3.render(backgroundGC, -1);
     }
 
     public void updateView(double timeSinceStart, double timeSinceLastCall) {
 
         // TESTING
 
-        tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-
-        testSprite.update(timeSinceLastCall);
-        testSprite.render(tileGC, timeSinceStart);
+//        tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 //
-        testSprite2.render(tileGC, timeSinceStart);
+//        testSprite.update(timeSinceLastCall);
+//        testSprite.render(tileGC, timeSinceStart);
+////
+//        testSprite2.render(tileGC, timeSinceStart);
     }
 }
