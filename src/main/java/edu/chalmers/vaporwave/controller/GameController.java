@@ -1,24 +1,43 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.model.ArenaModel;
+import edu.chalmers.vaporwave.model.gameObjects.Tile;
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.view.ArenaView;
+import edu.chalmers.vaporwave.model.gameObjects.Character;
 import javafx.scene.Group;
+
+import java.awt.*;
+import java.lang.reflect.Array;
 
 public class GameController {
 
-    private ArenaView av;
+    private ArenaView arenaView;
+    private ArenaModel arenaModel;
 
     public GameController(Group root) {
 
         // Initiates view
 
-        av = new ArenaView(root);
+        arenaView = new ArenaView(root);
+        arenaModel = new ArenaModel(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT);
+
+        Tile testCharacter = new Character(new Point(50, 50));
+        try {
+            arenaModel.setTile(testCharacter, 5, 5);
+        } catch(ArrayIndexOutOfBoundsException e) {
+
+        }
+
     }
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         // Calls view to update graphics
-        av.updateView(timeSinceStart, timeSinceLastCall);
+        arenaView.updateView(timeSinceStart, timeSinceLastCall);
+
+//        System.out.println(timeSinceLastCall);
 
         // aaaall the game logicz
     }
