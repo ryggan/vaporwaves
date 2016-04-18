@@ -1,9 +1,10 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.model.Player;
+import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
+
 
 /**
  * Created by FEngelbrektsson on 15/04/16.
@@ -26,16 +27,16 @@ public class Character extends DynamicTile {
     }
 
     public void move(KeyEvent e) {
-        if(e.getKeyCode() == 65) {
+        if(e.getCode().equals(65)) {
             this.moveLeft();
         }
-        else if(e.getKeyCode() == 68) {
+        else if(e.getCode().equals(68)) {
             this.moveRight();
         }
-        else if(e.getKeyCode() == 83) {
+        else if(e.getCode().equals(83)) {
             this.moveDown();
         }
-        else if(e.getKeyCode() == 87) {
+        else if(e.getCode().equals(87)) {
             this.moveUp();
         }
     }
