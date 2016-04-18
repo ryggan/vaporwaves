@@ -101,6 +101,7 @@ public class Sprite {
         this.scale = scale;
         if (this.image != null) {
             setImage(Utils.resize(this.image, this.scale));
+            System.out.println(scale);
         }
     }
 

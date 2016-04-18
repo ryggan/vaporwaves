@@ -50,4 +50,8 @@ public class ArenaModel {
         }
         return false;
     }
+
+    public boolean isEmpty(int posx, int posy) {
+        return (arena[posx][posy].size() == 0);
+    }
 }

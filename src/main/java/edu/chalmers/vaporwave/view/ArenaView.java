@@ -54,7 +54,8 @@ public class ArenaView {
         Image img3 = new Image("Images/sprite-arenabackground-01.png");
         Sprite testSprite3 = new Sprite(img3);
         testSprite3.setPosition(0, 0);
-        testSprite3.render(tileGC, -1);
+        testSprite3.render(backgroundGC, -1);
+        testSprite3.setScale(2);
     }
 
     public void updateView(double timeSinceStart, double timeSinceLastCall) {
