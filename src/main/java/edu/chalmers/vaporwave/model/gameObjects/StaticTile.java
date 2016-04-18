@@ -12,8 +12,7 @@ public abstract class StaticTile implements Tile {
     private Point gridPosition;
     private Sprite sprite;
 
-    protected StaticTile() {
-
+    public StaticTile(){
     }
 
     public StaticTile(Sprite s, Point gPos, Point cPos) {

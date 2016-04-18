@@ -15,6 +15,9 @@ public class MenuController {
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+        
 //        av.updateView(timeSinceStart);
-    }
+    } //menustate
+
+
 }
