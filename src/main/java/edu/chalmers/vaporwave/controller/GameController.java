@@ -3,12 +3,14 @@ package edu.chalmers.vaporwave.controller;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.ArenaView;
-import edu.chalmers.vaporwave.model.gameObjects.Character;
+import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
+import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 
 public class GameController {
 
@@ -22,11 +24,18 @@ public class GameController {
         arenaView = new ArenaView(root);
         arenaModel = new ArenaModel(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT);
 
-        Tile testCharacter = new Character(new Point(50, 50));
+        // Setting up background
+
+        
+
+        // Setting up tiles
+
+        Tile testCharacter = new GameCharacter(new Point(50, 50));
+
         try {
             arenaModel.setTile(testCharacter, 5, 5);
         } catch(ArrayIndexOutOfBoundsException e) {
-
+            System.out.println("Tile out of bounds!");
         }
 
     }
@@ -34,11 +43,10 @@ public class GameController {
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
+        // ------- aaaall the game logicz --------
+
         // Calls view to update graphics
-        arenaView.updateView(timeSinceStart, timeSinceLastCall);
 
-//        System.out.println(timeSinceLastCall);
-
-        // aaaall the game logicz
+        arenaView.updateView(arenaModel.getArena(), timeSinceStart, timeSinceLastCall);
     }
 }

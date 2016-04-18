@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class ArenaModel {
 
     private ArrayList<Tile>[][] arena;
+    private int width;
+    private int height;
 
     public ArenaModel(int width, int height) {
         newArena(width, height);
@@ -23,7 +25,9 @@ public class ArenaModel {
     }
 
     public void newArena(int width, int height) {
-        arena = new ArrayList[width][height];
+        this.arena = new ArrayList[width][height];
+        this.width = width;
+        this.height = height;
 
         for (int i = 0; i < arena.length; i++) {
             for (int j = 0; j < arena[0].length; j++) {
@@ -37,7 +41,7 @@ public class ArenaModel {
     }
 
     public void setTile(Tile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
-        if (arena.length <= posx && arena[0].length <= posy && posx >= 0 && posy >= 0) {
+        if (posx <= width && posy <= height && posx >= 0 && posy >= 0) {
             arena[posx][posy].add(tile);
         } else {
             throw new ArrayIndexOutOfBoundsException();
