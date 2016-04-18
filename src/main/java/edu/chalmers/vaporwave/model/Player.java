@@ -5,6 +5,8 @@ package edu.chalmers.vaporwave.model;
  */
 public class Player {
     private int playerId;
+    private String playerName;
+    //namn id options
 
     public Player(int id) {
         this.playerId = id;
