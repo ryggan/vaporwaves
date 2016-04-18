@@ -9,18 +9,18 @@ import java.awt.*;
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
-public class Character extends DynamicTile {
+public class GameCharacter extends DynamicTile {
     private Point currentPosition;
     private Point previousPosition;
     private Player player;
     private int playerId;
 
 
-    public Character(Point position) {
+    public GameCharacter(Point position) {
         this.currentPosition = position;
     }
 
-    public Character(Point position, Player player) {
+    public GameCharacter(Point position, Player player) {
         this.currentPosition = position;
         this.player = player;
         this.playerId = player.getId();

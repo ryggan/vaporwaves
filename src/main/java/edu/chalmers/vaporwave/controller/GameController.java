@@ -4,11 +4,10 @@ import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.view.ArenaView;
-import edu.chalmers.vaporwave.model.gameObjects.Character;
+import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import javafx.scene.Group;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 
 public class GameController {
 
@@ -22,7 +21,7 @@ public class GameController {
         arenaView = new ArenaView(root);
         arenaModel = new ArenaModel(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT);
 
-        Tile testCharacter = new Character(new Point(50, 50));
+        Tile testCharacter = new GameCharacter(new Point(50, 50));
         try {
             arenaModel.setTile(testCharacter, 5, 5);
         } catch(ArrayIndexOutOfBoundsException e) {
