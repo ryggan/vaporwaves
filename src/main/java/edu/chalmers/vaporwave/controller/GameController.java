@@ -24,14 +24,18 @@ public class GameController {
         arenaView = new ArenaView(root);
         arenaModel = new ArenaModel(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT);
 
-        Tile testCharacter = new GameCharacter(new Point(50, 50));
+        // Setting up background
 
-        System.out.println(testCharacter.getSprite());
+        
+
+        // Setting up tiles
+
+        Tile testCharacter = new GameCharacter(new Point(50, 50));
 
         try {
             arenaModel.setTile(testCharacter, 5, 5);
         } catch(ArrayIndexOutOfBoundsException e) {
-
+            System.out.println("Tile out of bounds!");
         }
 
     }
@@ -39,9 +43,7 @@ public class GameController {
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-//        System.out.println(timeSinceLastCall);
-
-        // aaaall the game logicz
+        // ------- aaaall the game logicz --------
 
         // Calls view to update graphics
 

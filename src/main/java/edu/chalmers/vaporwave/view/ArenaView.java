@@ -64,21 +64,22 @@ public class ArenaView {
     public void updateView(ArrayList<Tile>[][] arena, double timeSinceStart, double timeSinceLastCall) {
 
         // TESTING
-
-//        tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 //
 //        testSprite.update(timeSinceLastCall);
 //        testSprite.render(tileGC, timeSinceStart);
 ////
 //        testSprite2.render(tileGC, timeSinceStart);
 
-        System.out.println(arena[5][5]);
+//        System.out.println(arena[5][5]);
+
+        // Actual rendering:
+
+        tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         for (int i = 0; i < arena.length; i++) {
             for (int j = 0; j < arena[0].length; j++) {
                 for (Tile t : arena[i][j]) {
                     t.getSprite().render(tileGC, timeSinceStart);
-                    System.out.println(t.toString());
                 }
             }
         }
