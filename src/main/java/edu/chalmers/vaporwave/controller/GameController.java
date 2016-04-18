@@ -26,14 +26,17 @@ public class GameController {
 
         // Setting up background
 
-        
+
 
         // Setting up tiles
 
+
+        // TEST TILES
         Tile testCharacter = new GameCharacter(new Point(50, 50));
 
         try {
             arenaModel.setTile(testCharacter, 5, 5);
+
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
@@ -43,7 +46,13 @@ public class GameController {
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        // ------- aaaall the game logicz --------
+        // Game logic
+
+
+
+        // Updating positions
+
+
 
         // Calls view to update graphics
 
