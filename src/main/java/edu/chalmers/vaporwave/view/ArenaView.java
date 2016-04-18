@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.model.gameObjects.Tile;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -7,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by FEngelbrektsson on 15/04/16.
@@ -59,7 +61,7 @@ public class ArenaView {
 //        testSprite3.render(backgroundGC, -1);
     }
 
-    public void updateView(double timeSinceStart, double timeSinceLastCall) {
+    public void updateView(ArrayList<Tile>[][] arena, double timeSinceStart, double timeSinceLastCall) {
 
         // TESTING
 
@@ -69,5 +71,13 @@ public class ArenaView {
 //        testSprite.render(tileGC, timeSinceStart);
 ////
 //        testSprite2.render(tileGC, timeSinceStart);
+
+        for (int i = 0; i < arena.length; i++) {
+            for (int j = 0; j < arena[0].length; j++) {
+                for (Tile t : arena[i][j]) {
+                    t.getSprite().render(tileGC, timeSinceStart);
+                }
+            }
+        }
     }
 }

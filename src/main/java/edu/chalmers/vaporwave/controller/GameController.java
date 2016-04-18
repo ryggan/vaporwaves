@@ -33,11 +33,12 @@ public class GameController {
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        // Calls view to update graphics
-        arenaView.updateView(timeSinceStart, timeSinceLastCall);
-
 //        System.out.println(timeSinceLastCall);
 
         // aaaall the game logicz
+
+        // Calls view to update graphics
+
+        arenaView.updateView(arenaModel.getArena(), timeSinceStart, timeSinceLastCall);
     }
 }
