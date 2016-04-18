@@ -10,4 +10,10 @@ public class HealthPowerUp implements PowerUpState {
         return this.randomValue;
     }
 
+    public int getEffect() {
+        return 1;
+    }
+    public void getPowerType() {
+
+    }
 }
