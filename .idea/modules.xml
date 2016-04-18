@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/vaporwave.iml" filepath="$PROJECT_DIR$/vaporwave.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/vaporwaves.iml" filepath="$PROJECT_DIR$/.idea/vaporwaves.iml" />
     </modules>
   </component>
 </project>
