@@ -34,7 +34,7 @@ public class StatPowerup extends Powerup {
                        powerUpState = l.get(i);
                     }
                 }
-            }
+
         }
     }
 }
