@@ -1,9 +1,21 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
+import edu.chalmers.vaporwave.view.Sprite;
+
+import java.awt.*;
+
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
 public interface Tile {
-    public double getPosition();
-    public double setPosition();
+    public Point getCanvasPosition();
+    public Point getGridPosition();
+    public void setCanvasPosition(Point p);
+    public void setGridPosition(Point p);
+    public double getGridYPosition();
+    public double getGridXPosition();
+    public double getCanvasYPosition();
+    public double getCanvasXPosition();
+    public Sprite getSprite();
+    public void setSprite(Sprite s);
 }

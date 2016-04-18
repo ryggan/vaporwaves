@@ -57,6 +57,9 @@ public class Character extends DynamicTile {
         currentPosition.setLocation(previousPosition.getX() + 1, previousPosition.getY());
     }
 
+    public void setPosition(Point p) {
+        this.currentPosition = p;
+    }
     public Point getPosition() {
         return currentPosition;
     }
