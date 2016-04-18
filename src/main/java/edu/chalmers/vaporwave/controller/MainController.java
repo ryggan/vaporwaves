@@ -3,7 +3,6 @@ package edu.chalmers.vaporwave.controller;
 import edu.chalmers.vaporwave.util.LongValue;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
-import javafx.stage.Stage;
 
 /**
  * Created by bob on 2016-04-15.
@@ -13,7 +12,7 @@ public class MainController {
 //    private Stage stage;
 
     private MenuController mc;
-    private ArenaController ac;
+    private GameController ac;
 
     private boolean inGame;
 
@@ -28,7 +27,7 @@ public class MainController {
         this.inGame = false;
 
         mc = new MenuController(root);
-        ac = new ArenaController(root);
+        ac = new GameController(root);
 
         // Animation timer setup
 

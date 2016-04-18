@@ -1,4 +1,4 @@
-package edu.chalmers.projecttemplate;
+package edu.chalmers.vaporwave;
 
 import java.io.IOException;
 import jdepend.framework.JDepend;
