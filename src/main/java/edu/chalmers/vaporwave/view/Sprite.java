@@ -20,6 +20,7 @@ public class Sprite {
     private double width;
     private double height;
     private double scale;
+    private boolean stayOnPixel;
 
     /**
      * Constructors, one simple which leaves the Sprite object without Image, and the other two with an Image
@@ -30,7 +31,8 @@ public class Sprite {
         this.positionY = 0;
         this.velocityX = 0;
         this.velocityY = 0;
-        scale = 1.0;
+        this.scale = 1.0;
+        this.stayOnPixel = true;
         setImage(this.image);
     }
     public Sprite(Image image) {
@@ -70,9 +72,16 @@ public class Sprite {
     /**
      * Draws the sprites image on canvas at the right position.
      * @param gc
+     * @param time (unused, but necessary for overridden method)
      */
-    public void render(GraphicsContext gc) {
-        gc.drawImage(this.image, positionX, positionY);
+    public void render(GraphicsContext gc, double time) {
+        double posx = positionX;
+        double posy = positionY;
+        if (stayOnPixel) {
+            posx = Math.round(posx * scale) * scale;
+            posy = Math.round(posy * scale) * scale;
+        }
+        gc.drawImage(this.image, posx, posy);
     }
 
     /**
@@ -126,6 +135,10 @@ public class Sprite {
         this.height = height;
     }
 
+    public void setStayOnPixel(boolean stayOnPixel) {
+        this.stayOnPixel = stayOnPixel;
+    }
+
     public double getPositionX() {
         return this.positionX;
     }
@@ -153,6 +166,10 @@ public class Sprite {
 
     public Rectangle2D getBoundary() {
         return new Rectangle2D(positionX, positionY, width, height);
+    }
+
+    public boolean getStayOnPixel() {
+        return stayOnPixel;
     }
 
 }

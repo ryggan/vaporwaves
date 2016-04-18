@@ -120,20 +120,20 @@ public class AnimatedSprite extends Sprite {
      * @param gc
      * @param time
      */
+    @Override
     public void render(GraphicsContext gc, double time) {
         int index = (int)((time % (length * duration)) / duration);
         double width = getWidth() * getScale();
         double height = getHeight() * getScale();
-        int posx = frames.get(index)[0] * (int)width;
-        int posy = frames.get(index)[1] * (int)height;
-        gc.drawImage(spriteSheet, posx, posy, width, height, getPositionX(), getPositionY(), width, height);
-    }
-    @Override
-    public void render(GraphicsContext gc) {
-
-        // unused method, overridden so that super.render() never gets called accidentally
-
-        System.out.println("Warning! AnimatedSprite.render(GrapgicsContext gc) is unused.");
+        int sourcex = frames.get(index)[0] * (int)width;
+        int sourcey = frames.get(index)[1] * (int)height;
+        double targetx = getPositionX();
+        double targety = getPositionY();
+        if (getStayOnPixel()) {
+            targetx = Math.round(targetx * getScale()) * getScale();
+            targety = Math.round(targety * getScale()) * getScale();
+        }
+        gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
     }
 
     @Override
