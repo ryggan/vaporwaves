@@ -1,13 +1,14 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
-import java.awt.Image;
 
 
 /**
@@ -19,16 +20,34 @@ public class GameCharacter extends DynamicTile {
     private Player player;
     private int playerId;
 
+    private Sprite spawnSprite;
+    private Sprite[] idleSprite = new Sprite[4];
+    private Sprite[] walkSprite = new Sprite[4];
+    private Sprite[] flinchSprite = new Sprite[4];
+    private Sprite deathSprite;
 
     public GameCharacter(Point position) {
         this.currentPosition = position;
 
+        Image spriteSheet1 = new javafx.scene.image.Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
+        Image spriteSheet2 = new javafx.scene.image.Image("Images/spritesheet-alyssa-death-56x56.png");
 
-        javafx.scene.image.Image img = new javafx.scene.image.Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
-        Sprite testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
-        testSprite.setVelocity(0, 5);
-        testSprite.setScale(2);
-        setSprite(testSprite);
+        for (int i = 0; i < 4; i++) {
+            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 32), 1, 0.1, new int[] {i, 4});
+            idleSprite[i].setScale(Constants.GAME_SCALE);
+        }
+        for (int i = 0; i < 4; i++) {
+            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 32), 8, 0.1, new int[] {0, i});
+            walkSprite[i].setScale(Constants.GAME_SCALE);
+        }
+        for (int i = 0; i < 4; i++) {
+            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 32), 1, 0.1, new int[] {4+i, 4});
+            flinchSprite[i].setScale(Constants.GAME_SCALE);
+        }
+        deathSprite = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0});
+        deathSprite.setScale(Constants.GAME_SCALE);
+
+        setSprite(idleSprite[0]);
 
     }
 
