@@ -20,7 +20,7 @@ public class StatPowerup extends Powerup {
         enabledPowerUpList = l;
 
         if(l.size() > 0) {
-            int randomMaxValue;
+            int randomMaxValue = 0;
             for (int i = 0; i < l.size(); i++) {
                 randomMaxValue = randomMaxValue + l.get(i).getRandomValue();
             }
