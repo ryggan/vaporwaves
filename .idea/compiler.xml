@@ -23,12 +23,10 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="vaporwave" />
-        <module name="vaporwaves" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="vaporwave" target="1.8" />
-      <module name="vaporwaves" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
