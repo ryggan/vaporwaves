@@ -72,10 +72,13 @@ public class ArenaView {
 ////
 //        testSprite2.render(tileGC, timeSinceStart);
 
+        System.out.println(arena[5][5]);
+
         for (int i = 0; i < arena.length; i++) {
             for (int j = 0; j < arena[0].length; j++) {
                 for (Tile t : arena[i][j]) {
                     t.getSprite().render(tileGC, timeSinceStart);
+                    System.out.println(t.toString());
                 }
             }
         }

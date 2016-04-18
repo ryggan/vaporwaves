@@ -1,9 +1,13 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.view.AnimatedSprite;
+import edu.chalmers.vaporwave.view.Sprite;
+import javafx.scene.image.*;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
+import java.awt.Image;
 
 
 /**
@@ -18,6 +22,14 @@ public class GameCharacter extends DynamicTile {
 
     public GameCharacter(Point position) {
         this.currentPosition = position;
+
+
+        javafx.scene.image.Image img = new javafx.scene.image.Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
+        Sprite testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
+        testSprite.setVelocity(0, 5);
+        testSprite.setScale(2);
+        setSprite(testSprite);
+
     }
 
     public GameCharacter(Point position, Player player) {
