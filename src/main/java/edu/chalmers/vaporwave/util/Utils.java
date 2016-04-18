@@ -17,7 +17,7 @@ public class Utils {
      * OBS! Other values than EVEN NUMBERS may still give a wee bit wonky graphic. Not a problem though.
      * @param input
      * @param scaleFactor
-     * @return
+     * @return A scaled image
      */
     public static Image resize(Image input, double scaleFactor) {
         final int W = (int) input.getWidth();
