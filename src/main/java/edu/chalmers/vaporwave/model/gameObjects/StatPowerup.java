@@ -22,14 +22,14 @@ public class StatPowerup extends Powerup {
         if(l.size() > 0) {
             int randomMaxValue = 0;
             for (int i = 0; i < l.size(); i++) {
-                randomMaxValue = randomMaxValue + l.get(i).getRandomValue();
+                randomMaxValue = randomMaxValue + l.get(i).getSpawnChance();
             }
 
             Random r = new Random();
             int randomValue = r.nextInt(randomMaxValue);
             int j = 0;
                 for (int i = 0; i < l.size(); i++) {
-                    j = j + l.get(i).getRandomValue();
+                    j = j + l.get(i).getSpawnChance();
                     if(j <= randomValue) {
                        powerUpState = l.get(i);
                     }

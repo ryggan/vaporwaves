@@ -6,13 +6,13 @@ import edu.chalmers.vaporwave.util.PowerUpStates;
  * Created by FEngelbrektsson on 18/04/16.
  */
 public class BombCountPowerUp implements PowerUpState {
-        private int randomValue = 1;
+        private int spawnChance = 1;
 
-        public int getRandomValue() {
-            return this.randomValue;
+        public int getSpawnChance() {
+            return this.spawnChance;
         }
 
-        public int getEffect() {
+        public int getStatusEffect() {
             return 1;
         }
         public PowerUpStates getPowerType() {

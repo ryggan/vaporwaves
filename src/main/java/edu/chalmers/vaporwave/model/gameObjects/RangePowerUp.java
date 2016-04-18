@@ -6,13 +6,13 @@ import edu.chalmers.vaporwave.util.PowerUpStates;
  * Created by FEngelbrektsson on 18/04/16.
  */
 public class RangePowerUp implements PowerUpState{
-    private int randomValue = 2;
+    private int spawnChance = 2;
 
-    public int getRandomValue() {
-        return this.randomValue;
+    public int getSpawnChance() {
+        return this.spawnChance;
     }
 
-    public int getEffect() {
+    public int getStatusEffect() {
         //Not sure what value we should have here
         return 10;
     }
