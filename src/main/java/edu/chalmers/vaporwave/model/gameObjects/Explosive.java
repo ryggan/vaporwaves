@@ -10,6 +10,10 @@ import java.awt.*;
 public abstract class Explosive extends StaticTile {
     private double power;
 
+    protected Explosive() {
+
+    }
+
     public Explosive(Sprite s, Point cPos, Point gPos, double power) {
         super.setCanvasPosition(cPos);
         super.setGridPosition(gPos);
