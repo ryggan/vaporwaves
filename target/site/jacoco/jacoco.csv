@@ -1,6 +1,38 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-VaporWave,edu.chalmers.vaporwave.controller,ProjectController,23,0,0,0,6,0,2,0,2,0
-VaporWave,edu.chalmers.vaporwave.controller,ProjectController.ProjectButtonPressed,21,0,0,0,4,0,2,0,2,0
-VaporWave,edu.chalmers.vaporwave.model,Project,0,13,0,0,0,4,0,3,0,3
-VaporWave,edu.chalmers.vaporwave,Main,23,0,0,0,9,0,3,0,3,0
-VaporWave,edu.chalmers.vaporwave.view,ProjectView,60,0,0,0,15,0,3,0,3,0
+VaporWave,edu.chalmers.vaporwave.model,Player,9,0,0,0,4,0,2,0,2,0
+VaporWave,edu.chalmers.vaporwave.controller,MainController.new AnimationTimer() {...},46,0,0,0,7,0,2,0,2,0
+VaporWave,edu.chalmers.vaporwave.controller,ListenerController.new EventHandler() {...},34,0,2,0,6,0,3,0,2,0
+VaporWave,edu.chalmers.vaporwave.controller,ListenerController.new EventHandler() {...},29,0,0,0,5,0,2,0,2,0
+VaporWave,edu.chalmers.vaporwave.controller,ArenaController,15,0,0,0,5,0,2,0,2,0
+VaporWave,edu.chalmers.vaporwave.controller,MainController,32,0,0,0,9,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.controller,MenuController,10,0,0,0,4,0,2,0,2,0
+VaporWave,edu.chalmers.vaporwave.controller,ListenerController,24,0,0,0,6,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave,Main,41,0,0,0,13,0,3,0,3,0
+VaporWave,edu.chalmers.vaporwave.view,Sprite,246,0,6,0,65,0,28,0,25,0
+VaporWave,edu.chalmers.vaporwave.view,ArenaView,85,0,0,0,17,0,2,0,2,0
+VaporWave,edu.chalmers.vaporwave.view,MenuView,3,0,0,0,2,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.view,AnimatedSprite,333,0,24,0,51,0,22,0,10,0
+VaporWave,edu.chalmers.vaporwave.model.menu,GameSettings,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.menu,StartMenu,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.menu,OptionsMenu,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.menu,PauseMenu,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.menu,CharacterSelect,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.menu,ArenaSelect,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Powerup,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,StatPowerup,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Bomb,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Blast,6,0,0,0,4,0,2,0,2,0
+VaporWave,edu.chalmers.vaporwave.model.arena,SuperPowerup,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Wall,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Enemy,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,IndestructibleWall,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Explosive,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Mine,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,CPUPlayer,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,DynamicTile,0,3,0,0,0,1,0,1,0,1
+VaporWave,edu.chalmers.vaporwave.model.arena,DestructibleWall,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.model.arena,Character,44,78,8,0,15,17,7,7,3,7
+VaporWave,edu.chalmers.vaporwave.model.arena,StaticTile,3,0,0,0,1,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.util,LongValue,6,0,0,0,3,0,1,0,1,0
+VaporWave,edu.chalmers.vaporwave.util,Utils,89,0,8,0,14,0,6,0,2,0
+VaporWave,edu.chalmers.vaporwave.util,Constants,3,0,0,0,1,0,1,0,1,0

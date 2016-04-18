@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="sv"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Character.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VaporWave</a> &gt; <a href="index.source.html" class="el_package">edu.chalmers.vaporwave.model.arena</a> &gt; <span class="el_source">Character.java</span></div><h1>Character.java</h1><pre class="source lang-java linenums">package edu.chalmers.vaporwave.model.arena;
+
+import edu.chalmers.vaporwave.model.Player;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
+/**
+ * Created by FEngelbrektsson on 15/04/16.
+ */
+public class Character extends DynamicTile {
+    private Point currentPosition;
+    private Point previousPosition;
+    private Player player;
+    private int playerId;
+
+
+<span class="fc" id="L18">    public Character(Point position) {</span>
+<span class="fc" id="L19">        this.currentPosition = position;</span>
+<span class="fc" id="L20">    }</span>
+
+<span class="nc" id="L22">    public Character(Point position, Player player) {</span>
+<span class="nc" id="L23">        this.currentPosition = position;</span>
+<span class="nc" id="L24">        this.player = player;</span>
+<span class="nc" id="L25">        this.playerId = player.getId();</span>
+<span class="nc" id="L26">    }</span>
+
+    public void move(KeyEvent e) {
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        if(e.getKeyCode() == 65) {</span>
+<span class="nc" id="L30">            this.moveLeft();</span>
+        }
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        else if(e.getKeyCode() == 68) {</span>
+<span class="nc" id="L33">            this.moveRight();</span>
+        }
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        else if(e.getKeyCode() == 83) {</span>
+<span class="nc" id="L36">            this.moveDown();</span>
+        }
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        else if(e.getKeyCode() == 87) {</span>
+<span class="nc" id="L39">            this.moveUp();</span>
+        }
+<span class="nc" id="L41">    }</span>
+
+    public void moveUp() {
+<span class="fc" id="L44">        previousPosition = currentPosition;</span>
+<span class="fc" id="L45">        currentPosition.setLocation(previousPosition.getX(), previousPosition.getY() + 1);</span>
+<span class="fc" id="L46">    }</span>
+    public void moveDown() {
+<span class="fc" id="L48">        previousPosition = currentPosition;</span>
+<span class="fc" id="L49">        currentPosition.setLocation(previousPosition.getX(), previousPosition.getY() - 1);</span>
+<span class="fc" id="L50">    }</span>
+    public void moveLeft() {
+<span class="fc" id="L52">        previousPosition = currentPosition;</span>
+<span class="fc" id="L53">        currentPosition.setLocation(previousPosition.getX() - 1, previousPosition.getY());</span>
+<span class="fc" id="L54">    }</span>
+    public void moveRight() {
+<span class="fc" id="L56">        previousPosition = currentPosition;</span>
+<span class="fc" id="L57">        currentPosition.setLocation(previousPosition.getX() + 1, previousPosition.getY());</span>
+<span class="fc" id="L58">    }</span>
+
+    public Point getPosition() {
+<span class="nc" id="L61">        return currentPosition;</span>
+    }
+    public double getXPosition() {
+<span class="fc" id="L64">        return currentPosition.getX();</span>
+    }
+    public double getYPosition() {
+<span class="fc" id="L67">        return currentPosition.getY();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

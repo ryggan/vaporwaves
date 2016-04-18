@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="sv"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>AnimatedSprite.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">VaporWave</a> &gt; <a href="index.source.html" class="el_package">edu.chalmers.vaporwave.view</a> &gt; <span class="el_source">AnimatedSprite.java</span></div><h1>AnimatedSprite.java</h1><pre class="source lang-java linenums">package edu.chalmers.vaporwave.view;
+
+import edu.chalmers.vaporwave.util.Utils;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
+import java.awt.*;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+/**
+ * An extended version of Sprite that functions in much the same way, with the only addition
+ * that animated picture now is supported.
+ *
+ * Created by bob on 2016-04-15.
+ */
+public class AnimatedSprite extends Sprite {
+
+    private ArrayList&lt;int[]&gt; frames;
+    private int length;
+    private Image spriteSheet;
+    private Dimension spriteDimension;
+    private Dimension sheetDimension;
+    private double duration;
+
+    /**
+     * Constructor that takes an Image object, and uses it as an spritesheed, with some help from the other
+     * arguments, to create an animated image.
+     * Below this are three versions, the first where startPos is omitted, in case the animation is supposed to be
+     * asynchronous, and the last two similar constructors but with the parameter Image sprSheet exchanged with
+     * a String fname paramater. The last two throws FileNotFoundExceptions.
+     * @param spriteSheet
+     * @param spriteDim
+     * @param length
+     * @param duration
+     * @param startPos
+     */
+<span class="nc" id="L39">    public AnimatedSprite(Image spriteSheet, Dimension spriteDim, int length, double duration, int[] startPos) {</span>
+
+        // Checking arguments, throwing exception if something is wrong
+
+<span class="nc bnc" id="L43" title="All 16 branches missed.">        if (spriteSheet == null || spriteDim == null || spriteDim.getWidth() &lt; 1 || spriteDim.getHeight() &lt; 1 || length == 0</span>
+                || duration &lt;= 0.0 || startPos[0] &lt; 0 || startPos[1] &lt; 0) {
+<span class="nc" id="L45">            throw new IllegalArgumentException();</span>
+        }
+
+        // Setting up variables
+
+<span class="nc" id="L50">        this.frames = new ArrayList&lt;int[]&gt;();</span>
+<span class="nc" id="L51">        this.length = length;</span>
+<span class="nc" id="L52">        this.spriteSheet = spriteSheet;</span>
+<span class="nc" id="L53">        this.spriteDimension = spriteDim;</span>
+<span class="nc" id="L54">        this.duration = duration;</span>
+
+<span class="nc" id="L56">        setWidth(spriteDimension.getWidth());</span>
+<span class="nc" id="L57">        setHeight(spriteDimension.getHeight());</span>
+
+<span class="nc" id="L59">        this.sheetDimension = new Dimension((int)Math.floor(spriteSheet.getWidth() / spriteDimension.getWidth()),</span>
+<span class="nc" id="L60">                (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));</span>
+
+        // Initiating frames-list, by calculating every coordinate in the spritesheet
+
+        int posx, posy;
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        for (int i = 0; i &lt; length; i++) {</span>
+
+<span class="nc" id="L68">            posx = startPos[0] + i;</span>
+<span class="nc" id="L69">            posy = startPos[1];</span>
+
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            while(posx &gt;= sheetDimension.getWidth()) {</span>
+<span class="nc" id="L72">                posx -= sheetDimension.getWidth();</span>
+<span class="nc" id="L73">                posy++;</span>
+            }
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            if (posy &gt;= sheetDimension.getHeight())</span>
+<span class="nc" id="L76">                throw new IllegalArgumentException();</span>
+
+<span class="nc" id="L78">            int[] frame = {posx, posy};</span>
+<span class="nc" id="L79">            frames.add(frame);</span>
+
+//            System.out.println(&quot;posx: &quot;+posx+&quot; - posy: &quot;+posy);
+        }
+
+<span class="nc" id="L84">    }</span>
+    public AnimatedSprite(Image sprSheet, Dimension sprDim, int length, double duration) {
+<span class="nc" id="L86">        this(sprSheet, sprDim, length, duration, new int[] {0, 0});</span>
+<span class="nc" id="L87">    }</span>
+    public AnimatedSprite(String fileName, Dimension sprDim, int length, double duration, int[] startPos) throws FileNotFoundException {
+<span class="nc" id="L89">        this(new Image(fileName), sprDim, length, duration, startPos);</span>
+<span class="nc" id="L90">    }</span>
+    public AnimatedSprite(String fileName, Dimension sprDim, int length, double duration) throws FileNotFoundException {
+<span class="nc" id="L92">        this(new Image(fileName), sprDim, length, duration, new int[] {0, 0});</span>
+<span class="nc" id="L93">    }</span>
+
+    /**
+     * Sets the coordinates in the spritesheet for a specific frame in the frames list.
+     * @param frameNum
+     * @param posx
+     * @param posy
+     */
+    public void setFramePos(int frameNum, int posx, int posy) {
+<span class="nc" id="L102">        int[] frame = {posx, posy};</span>
+<span class="nc" id="L103">        frames.set(frameNum, frame);</span>
+<span class="nc" id="L104">    }</span>
+
+    /**
+     * Besides setting the scale, also updates the Image, via Utils, to the new resized scale.
+     * A slightly changed setScale() overridden, since the setImage() function is unused in AnimatedSprite.
+     * @param scale
+     */
+    @Override
+    public void setScale(double scale) {
+<span class="nc" id="L113">        super.setScale(scale);</span>
+<span class="nc" id="L114">        setSpriteSheet(Utils.resize(this.spriteSheet, scale));</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * This method is supposed to be used instead of the render(GraphicsContext gc) in the superclass, because
+     * this one includes the calculation of which image is supposed to be shown, from the frames list.
+     * @param gc
+     * @param time
+     */
+    @Override
+    public void render(GraphicsContext gc, double time) {
+<span class="nc" id="L125">        int index = (int)((time % (length * duration)) / duration);</span>
+<span class="nc" id="L126">        double width = getWidth() * getScale();</span>
+<span class="nc" id="L127">        double height = getHeight() * getScale();</span>
+<span class="nc" id="L128">        int sourcex = frames.get(index)[0] * (int)width;</span>
+<span class="nc" id="L129">        int sourcey = frames.get(index)[1] * (int)height;</span>
+<span class="nc" id="L130">        double targetx = getPositionX();</span>
+<span class="nc" id="L131">        double targety = getPositionY();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        if (getStayOnPixel()) {</span>
+<span class="nc" id="L133">            targetx = Math.round(targetx * getScale()) * getScale();</span>
+<span class="nc" id="L134">            targety = Math.round(targety * getScale()) * getScale();</span>
+        }
+<span class="nc" id="L136">        gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);</span>
+<span class="nc" id="L137">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L141">        return &quot;Animated &quot;+super.toString() + &quot; Length: &quot;+length;</span>
+    }
+
+    // GETTERS AND SETTERS:
+
+    public void setSpriteSheet(Image spriteSheet) {
+<span class="nc" id="L147">        this.spriteSheet = spriteSheet;</span>
+<span class="nc" id="L148">    }</span>
+
+    public int getLength() {
+<span class="nc" id="L151">        return length;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
