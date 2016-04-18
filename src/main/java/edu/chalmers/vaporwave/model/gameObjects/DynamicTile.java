@@ -13,6 +13,10 @@ public abstract class DynamicTile implements Tile {
     private Sprite sprite;
     private int velocity;
 
+    protected DynamicTile() {
+
+    }
+
     public DynamicTile(Sprite s, Point gPos, Point cPos) {
         this.canvasPosition = cPos;
         this.gridPosition = gPos;

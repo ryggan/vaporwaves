@@ -12,6 +12,10 @@ public abstract class StaticTile implements Tile {
     private Point gridPosition;
     private Sprite sprite;
 
+    protected StaticTile() {
+
+    }
+
     public StaticTile(Sprite s, Point gPos, Point cPos) {
         this.canvasPosition = cPos;
         this.gridPosition = gPos;
