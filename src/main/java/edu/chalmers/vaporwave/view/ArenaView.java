@@ -13,25 +13,32 @@ import java.awt.*;
  */
 public class ArenaView {
 
-//    private Canvas canvas;
-    private GraphicsContext gc;
+    private Canvas backgroundCanvas;
+    private Canvas tileCanvas;
+    private GraphicsContext backgroundGC;
+    private GraphicsContext tileGC;
 
-    private AnimatedSprite testSprite;
-    private AnimatedSprite testSprite2;
+    private Sprite testSprite;
+    private Sprite testSprite2;
 
     public ArenaView(Group root) {
 
         // Setting up area to draw graphics
 
-        Canvas canvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-        root.getChildren().add(canvas);
+        backgroundCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        root.getChildren().add(backgroundCanvas);
+        tileCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        root.getChildren().add(tileCanvas);
 
         double xoffset = Math.floor((Constants.WINDOW_WIDTH - Constants.GAME_WIDTH) / 2);
         double yoffset = Math.floor((Constants.WINDOW_HEIGHT - Constants.GAME_HEIGHT) / 2);
-        canvas.setLayoutX(xoffset);
-        canvas.setLayoutY(yoffset);
+        tileCanvas.setLayoutX(xoffset);
+        tileCanvas.setLayoutY(yoffset);
+        backgroundCanvas.setLayoutX(xoffset);
+        backgroundCanvas.setLayoutY(yoffset);
 
-        gc = canvas.getGraphicsContext2D();
+        tileGC = tileCanvas.getGraphicsContext2D();
+        backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
         // TEST DRAWING
 
@@ -39,22 +46,26 @@ public class ArenaView {
         testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
         testSprite.setVelocity(0, 5);
         testSprite.setScale(2);
-//
         Image img2 = new Image("Images/spritesheet-alyssa-death-56x56.png");
         testSprite2 = new AnimatedSprite(img2, new Dimension(56, 56), 28, 0.1);
         testSprite2.setPosition(50, 50);
         testSprite2.setScale(2);
+
+        Image img3 = new Image("Images/sprite-arenabackground-01.png");
+        Sprite testSprite3 = new Sprite(img3);
+        testSprite3.setPosition(0, 0);
+        testSprite3.render(tileGC, -1);
     }
 
     public void updateView(double timeSinceStart, double timeSinceLastCall) {
 
         // TESTING
 
-        gc.clearRect(0, 0, 500, 500);
+        tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         testSprite.update(timeSinceLastCall);
-        testSprite.render(gc, timeSinceStart);
+        testSprite.render(tileGC, timeSinceStart);
 //
-        testSprite2.render(gc, timeSinceStart);
+        testSprite2.render(tileGC, timeSinceStart);
     }
 }
