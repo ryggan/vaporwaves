@@ -10,8 +10,8 @@ import javafx.scene.input.KeyEvent;
 import java.awt.*;
 
 public class GameCharacter extends DynamicTile {
-    private Point currentPosition;
-    private Point previousPosition;
+    private Point currentGridPosition;
+    private Point previousGridPosition;
     private Player player;
     private int playerId;
 
@@ -22,7 +22,7 @@ public class GameCharacter extends DynamicTile {
     private Sprite deathSprite;
 
     public GameCharacter() {
-//        this.currentPosition = position;
+//        this.currentGridPosition = position;
 
         Image spriteSheet0 = new Image("imgs/spritesheet-alyssa-respawn-48x128.png");
         Image spriteSheet1 = new Image("imgs/spritesheet-alyssa-walkidleflinch-48x32.png");
@@ -43,16 +43,19 @@ public class GameCharacter extends DynamicTile {
         deathSprite = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0});
         deathSprite.setScale(Constants.GAME_SCALE);
 
-        setSprite(spawnSprite);
+        setSprite(deathSprite);
 
     }
 
+
+    // Should be rewritten
     public GameCharacter(Point position, Player player) {
-        this.currentPosition = position;
+        this.currentGridPosition = position;
         this.player = player;
         this.playerId = player.getId();
     }
 
+    // Change this to use enum instead
     public void move(KeyEvent e) {
         if(e.getCode().equals(65)) {
             this.moveLeft();
@@ -69,29 +72,29 @@ public class GameCharacter extends DynamicTile {
     }
 
     public void moveUp() {
-        previousPosition = currentPosition;
-        currentPosition.setLocation(previousPosition.getX(), previousPosition.getY() + 1);
+        previousGridPosition = currentGridPosition;
+        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() + 1);
     }
     public void moveDown() {
-        previousPosition = currentPosition;
-        currentPosition.setLocation(previousPosition.getX(), previousPosition.getY() - 1);
+        previousGridPosition = currentGridPosition;
+        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() - 1);
     }
     public void moveLeft() {
-        previousPosition = currentPosition;
-        currentPosition.setLocation(previousPosition.getX() - 1, previousPosition.getY());
+        previousGridPosition = currentGridPosition;
+        currentGridPosition.setLocation(previousGridPosition.getX() - 1, previousGridPosition.getY());
     }
     public void moveRight() {
-        previousPosition = currentPosition;
-        currentPosition.setLocation(previousPosition.getX() + 1, previousPosition.getY());
+        previousGridPosition = currentGridPosition;
+        currentGridPosition.setLocation(previousGridPosition.getX() + 1, previousGridPosition.getY());
     }
 
     public Point getPosition() {
-        return currentPosition;
+        return currentGridPosition;
     }
     public double getXPosition() {
-        return currentPosition.getX();
+        return currentGridPosition.getX();
     }
     public double getYPosition() {
-        return currentPosition.getY();
+        return currentGridPosition.getY();
     }
 }
