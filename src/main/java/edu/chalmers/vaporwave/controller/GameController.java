@@ -32,7 +32,7 @@ public class GameController {
 
 
         // TEST TILES
-        Tile testCharacter = new GameCharacter(new Point(50, 50));
+        Tile testCharacter = new GameCharacter();
 
         try {
             arenaModel.setTile(testCharacter, 5, 5);

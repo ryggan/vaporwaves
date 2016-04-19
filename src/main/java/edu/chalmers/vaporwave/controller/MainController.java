@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.model.gameObjects.RangePowerUp;
 import edu.chalmers.vaporwave.util.LongValue;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
