@@ -36,7 +36,6 @@ public class GameController {
 
         try {
             arenaModel.setTile(testCharacter, 5, 5);
-
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }

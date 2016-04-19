@@ -46,9 +46,6 @@ public class GameCharacter extends DynamicTile {
         deathSprite.setScale(Constants.GAME_SCALE);
 
         setSprite(walkSprite[2]);
-
-
-
     }
 
     public GameCharacter(Point position, Player player) {
