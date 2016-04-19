@@ -31,17 +31,17 @@ public class AnimatedSprite extends Sprite {
      * asynchronous, and the last two similar constructors but with the parameter Image sprSheet exchanged with
      * a String fname paramater. The last two throws FileNotFoundExceptions.
      * @param spriteSheet
-     * @param spriteDim
+     * @param spriteDimension
      * @param length
      * @param duration
      * @param startPos
      */
-    public AnimatedSprite(Image spriteSheet, Dimension spriteDim, int length, double duration, int[] startPos) {
+    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPos) {
 
         // Checking arguments, throwing exception if something is wrong
 
-        if (spriteSheet == null || spriteDim == null || spriteDim.getWidth() < 1 || spriteDim.getHeight() < 1 || length == 0
-                || duration <= 0.0 || startPos[0] < 0 || startPos[1] < 0) {
+        if (spriteSheet == null || spriteDimension == null || spriteDimension.getWidth() < 1 || spriteDimension.getHeight() < 1
+                || length == 0 || duration <= 0.0 || startPos[0] < 0 || startPos[1] < 0) {
             throw new IllegalArgumentException();
         }
 
@@ -50,7 +50,7 @@ public class AnimatedSprite extends Sprite {
         this.frames = new ArrayList<int[]>();
         this.length = length;
         this.spriteSheet = spriteSheet;
-        this.spriteDimension = spriteDim;
+        this.spriteDimension = spriteDimension;
         this.duration = duration;
 
         setWidth(spriteDimension.getWidth());
