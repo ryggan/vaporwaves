@@ -4,12 +4,10 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
-import javafx.scene.image.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
 import java.awt.*;
-import java.io.File;
 
 public class GameCharacter extends DynamicTile {
     private Point currentPosition;
@@ -26,7 +24,7 @@ public class GameCharacter extends DynamicTile {
     public GameCharacter(Point position) {
         this.currentPosition = position;
 
-        Image spriteSheet0 = new Image("Images/spritesheet-alyssa-spawn-48x128.png");
+        Image spriteSheet0 = new Image("Images/spritesheet-alyssa-respawn-48x128.png");
         Image spriteSheet1 = new Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
         Image spriteSheet2 = new Image("Images/spritesheet-alyssa-death-56x56.png");
 
@@ -45,7 +43,8 @@ public class GameCharacter extends DynamicTile {
         deathSprite = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0});
         deathSprite.setScale(Constants.GAME_SCALE);
 
-        setSprite(walkSprite[2]);
+        setSprite(spawnSprite);
+
     }
 
     public GameCharacter(Point position, Player player) {
