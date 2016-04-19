@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 /**
  * Created by Lina on 4/19/2016.
  */
-public class AlyssaConfig extends CharacterConfig{
+public class AlyssaConfig extends characterConfig {
 
     private static AlyssaConfig instance = new AlyssaConfig();
 

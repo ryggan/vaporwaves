@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 /**
  * Created by Lina on 4/19/2016.
  */
-public abstract class CharacterConfig {
+public abstract class characterConfig {
 
     //hej
 
@@ -23,7 +23,7 @@ public abstract class CharacterConfig {
     ImageView characterName;
     ImageView selectedCharacterView;
 
-    public CharacterConfig(int health, int bombCount, int bombRange, int speed, String name, ImageView characterFrameView,
+    public characterConfig(int health, int bombCount, int bombRange, int speed, String name, ImageView characterFrameView,
                            ImageView frameSelected, ImageView frame, ImageView characterName, ImageView selectedCharacterView){
         this.health=health;
         this.bombCount=bombCount;

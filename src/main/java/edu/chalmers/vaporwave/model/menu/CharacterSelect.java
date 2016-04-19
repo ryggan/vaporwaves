@@ -1,14 +1,9 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import edu.chalmers.vaporwave.model.AlyssaConfig;
-import edu.chalmers.vaporwave.model.CharacterConfig;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
+import edu.chalmers.vaporwave.model.characterConfig;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import sun.security.jca.GetInstance;
-
-import java.util.List;
 
 
 /**
@@ -26,12 +21,12 @@ public class CharacterSelect implements MenuState {
     ImageView goButton;
     ImageView backButton;
 
-    CharacterConfig[] characters;
+    characterConfig[] characters;
 
     private static CharacterSelect instance = new CharacterSelect();
 
     private CharacterSelect(){
-        characters=new CharacterConfig[4];
+        characters=new characterConfig[4];
         characters[0]=AlyssaConfig.getInstance();
     }
 
