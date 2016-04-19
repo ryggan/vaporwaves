@@ -8,6 +8,9 @@ import javax.swing.text.html.ImageView;
 public class CharacterSelect implements MenuState {
 
     ImageView[] characters;
-    ImageView[] 
+    ImageView[] goButton;
+    ImageView[] selectedCharacter;
+    ImageView[] characterName;
+    ImageView[] backButton;
     
 }
