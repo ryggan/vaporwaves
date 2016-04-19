@@ -21,7 +21,7 @@ public abstract class CharacterConfig {
     ImageView characterName;
     ImageView selectedCharacterView;
 
-    public characterConfig(int health, int bombCount, int bombRange, int speed, String name, ImageView characterFrameView,
+    public CharacterConfig(int health, int bombCount, int bombRange, int speed, String name, ImageView characterFrameView,
                            ImageView frameSelected, ImageView frame, ImageView characterName, ImageView selectedCharacterView){
         this.health=health;
         this.bombCount=bombCount;
