@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
  */
 public abstract class CharacterConfig {
 
+    //hej
+
     int health;
     int bombCount;
     int bombRange;
