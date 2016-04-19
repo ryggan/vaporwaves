@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.util;
 
-import org.w3c.dom.Document;
+import com.sun.org.apache.xerces.internal.dom.AttributeMap;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,7 +22,7 @@ public class XMLReader {
 
     }
 
-    public void read() {
+    public NodeList read() {
         System.out.println(file);
 
 
@@ -31,7 +32,9 @@ public class XMLReader {
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(file);
             document.getDocumentElement().normalize();
-            System.out.println(document.getDocumentElement().getNodeName());
+
+            NodeList characterList = document.getElementsByTagName("gameCharacters");
+            return characterList;
 
         } catch(ParserConfigurationException e) {
             System.out.println(e);
@@ -40,6 +43,8 @@ public class XMLReader {
         } catch(SAXException e) {
             System.out.println(e);
         }
+
+        return null;
     }
 
 }

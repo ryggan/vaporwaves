@@ -24,9 +24,9 @@ public class GameCharacter extends DynamicTile {
     public GameCharacter() {
 //        this.currentGridPosition = position;
 
-        Image spriteSheet0 = new Image("imgs/spritesheet-alyssa-respawn-48x128.png");
-        Image spriteSheet1 = new Image("imgs/spritesheet-alyssa-walkidleflinch-48x32.png");
-        Image spriteSheet2 = new Image("imgs/spritesheet-alyssa-death-56x56.png");
+        Image spriteSheet0 = new Image("images/spritesheet-alyssa-respawn-48x128.png");
+        Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x32.png");
+        Image spriteSheet2 = new Image("images/spritesheet-alyssa-death-56x56.png");
 
         spawnSprite = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0});
         spawnSprite.setScale(Constants.GAME_SCALE);
