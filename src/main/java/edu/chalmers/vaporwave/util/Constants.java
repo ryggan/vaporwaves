@@ -14,5 +14,8 @@ public class Constants {
     public static final int DEFAULT_GRID_WIDTH = 16;
     public static final int DEFAULT_GRID_HEIGHT = 14;
 
+    public static final int DEFAULT_TILE_WIDTH = 16;
+    public static final int DEFAULT_TILE_HEIGHT = 16;
+
     public static final double GAME_SCALE = 2.0;
 }
