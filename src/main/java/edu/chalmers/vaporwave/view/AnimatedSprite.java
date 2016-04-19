@@ -41,7 +41,7 @@ public class AnimatedSprite extends Sprite {
         // Checking arguments, throwing exception if something is wrong
 
         if (spriteSheet == null || spriteDimension == null || spriteDimension.getWidth() < 1 || spriteDimension.getHeight() < 1
-                || length == 0 || duration <= 0.0 || startPos[0] < 0 || startPos[1] < 0) {
+                || length <= 0 || duration <= 0.0 || startPos[0] < 0 || startPos[1] < 0) {
             throw new IllegalArgumentException();
         }
 
@@ -90,6 +90,26 @@ public class AnimatedSprite extends Sprite {
     }
     public AnimatedSprite(String fileName, Dimension sprDim, int length, double duration) throws FileNotFoundException {
         this(new Image(fileName), sprDim, length, duration, new int[] {0, 0});
+    }
+
+    public AnimatedSprite(AnimatedSprite sprite) {
+//        this(sprite.spriteSheet, sprite.spriteDimension, 1, sprite.duration, new int[] {0, 0});
+//        this.frames.remove(0);
+
+        for(int[] i : sprite.frames) {
+            int[] frame = {i[0], i[1]};
+            frames.add(frame);
+        }
+
+        this.length = sprite.length;
+        this.spriteSheet = sprite.spriteSheet;
+        this.spriteDimension = sprite.spriteDimension;
+        this.duration = sprite.duration;
+
+        setWidth(sprite.spriteDimension.getWidth());
+        setHeight(sprite.spriteDimension.getHeight());
+
+        this.sheetDimension = sprite.sheetDimension;
     }
 
     /**
