@@ -67,20 +67,15 @@ public class GameController {
 
         // Game logic
 
+        // Input handling:
+
         if (input.size() > 0)
             System.out.println(input);
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);
-            if (key.equals("UP")) {
-                playerCharacter.moveUp();
-            } else if (key.equals("LEFT")) {
-                playerCharacter.moveLeft();
-            } else if (key.equals("DOWN")) {
-                playerCharacter.moveDown();
-            } else if (key.equals("RIGHT")) {
-                playerCharacter.moveRight();
-            }
+            if (key.equals("UP") || key.equals("LEFT") || key.equals("DOWN") || key.equals("RIGHT"))
+                playerCharacter.move(key);
         }
 
         // Updating positions
