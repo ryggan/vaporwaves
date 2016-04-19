@@ -9,29 +9,28 @@ import java.awt.*;
  */
 public abstract class Explosive extends StaticTile {
 
-    private double range;
+    private int range;
 
     //animation when exploding
     //might only need one sprite
-    private Sprite[] explosionSprites = new Sprite[4];
+
 
     protected Explosive() {
 
     }
 
-    public Explosive(Sprite s, Sprite[] explosionSprites, Point cPos, Point gPos, double range) {
+    public Explosive(Sprite s, Point cPos, Point gPos, int range) {
         super.setCanvasPosition(cPos);
         super.setGridPosition(gPos);
         this.range = range;
-        this.explosionSprites=explosionSprites;
         super.setSprite(s);
     }
 
-    public double getRange() {
+    public int getRange() {
         return this.range;
     }
 
     public void explode() {
-        Blast b = new Blast(this);
+        new Blast(this);
     }
 }
