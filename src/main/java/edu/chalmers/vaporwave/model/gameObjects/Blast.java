@@ -8,7 +8,7 @@ import edu.chalmers.vaporwave.view.Sprite;
 public class Blast {
 
     int range;
-    private Sprite[] explosionSprites = new Sprite[4];
+//    private Sprite[] explosionSprites = new Sprite[4];
 
     public Blast(Explosive b) {
             //add sprites

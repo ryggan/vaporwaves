@@ -85,7 +85,8 @@ public class ArenaView {
         for (int i = 0; i < arena.length; i++) {
             for (int j = 0; j < arena[0].length; j++) {
                 for (Tile t : arena[i][j]) {
-                    t.getSprite().render(tileGC, timeSinceStart);
+//                    t.getSprite().render(tileGC, timeSinceStart);
+                    t.render(tileGC, timeSinceStart);
                 }
             }
         }
