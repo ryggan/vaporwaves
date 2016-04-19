@@ -11,14 +11,19 @@ public abstract class Explosive extends StaticTile {
 
     private double range;
 
+    //animation when exploding
+    //might only need one sprite
+    private Sprite[] explosionSprites = new Sprite[4];
+
     protected Explosive() {
 
     }
 
-    public Explosive(Sprite s, Point cPos, Point gPos, double range) {
+    public Explosive(Sprite s, Sprite[] explosionSprites, Point cPos, Point gPos, double range) {
         super.setCanvasPosition(cPos);
         super.setGridPosition(gPos);
         this.range = range;
+        this.explosionSprites=explosionSprites;
         super.setSprite(s);
     }
 
