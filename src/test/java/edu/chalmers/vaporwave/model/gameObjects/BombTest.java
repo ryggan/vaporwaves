@@ -15,21 +15,20 @@ import static org.junit.Assert.*;
  */
 public class BombTest implements IEventListener {
 
+    Bomb bomb = new Bomb(10, 3);
+
     @Test
-    public void testSubscrive() {
+    public void testSubscribe() {
         /**
          * Put a pin in this fucking test
          */
         EventBus.BUS.subscribe(this);
-        Bomb bomb = new Bomb(10, 3);
-
-        eventFired(bomb);
-
-
+        assertTrue(eventFired(bomb) == true);
     }
 
-    public void eventFired(IEvent event) {
-        assertTrue(bomb.fireEvent() == true);
+    public Boolean eventFired(IEvent event) {
+        bomb.fireEvent();
+        return true;
     }
 
 }
