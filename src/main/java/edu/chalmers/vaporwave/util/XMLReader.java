@@ -37,7 +37,7 @@ public class XMLReader {
             return characterList;
 
         } catch(ParserConfigurationException e) {
-            System.out.println(e);
+            System.out.println("Fel :( " + e);
         } catch(IOException e) {
             System.out.println(e);
         } catch(SAXException e) {

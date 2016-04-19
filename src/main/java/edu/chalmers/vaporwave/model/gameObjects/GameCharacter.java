@@ -1,11 +1,15 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.SpriteProperties;
+import edu.chalmers.vaporwave.util.CharacterLoader;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.XMLReader;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import org.w3c.dom.NodeList;
 
 import java.awt.*;
 
@@ -21,8 +25,15 @@ public class GameCharacter extends DynamicTile {
     private Sprite[] flinchSprite = new Sprite[4];
     private Sprite deathSprite;
 
-    public GameCharacter() {
-//        this.currentGridPosition = position;
+    public GameCharacter(String name) {
+
+        // Trying out the XML loader
+        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
+        NodeList nl = reader.read();
+        System.out.println(nl);
+        SpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
+        System.out.println(sp[0].getName());
+
 
         Image spriteSheet0 = new Image("images/spritesheet-alyssa-respawn-48x128.png");
         Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
@@ -43,7 +54,8 @@ public class GameCharacter extends DynamicTile {
         deathSprite = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0});
         deathSprite.setScale(Constants.GAME_SCALE);
 
-        setSprite(walkSprite[0]);
+        setGridPosition(new Point(0,0));
+        moveRight();
 
     }
 
@@ -74,21 +86,30 @@ public class GameCharacter extends DynamicTile {
     public void moveUp() {
         previousGridPosition = currentGridPosition;
         currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() + 1);
+        setSprite(walkSprite[3]);
     }
     public void moveDown() {
         previousGridPosition = currentGridPosition;
         currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() - 1);
+        setSprite(walkSprite[0]);
     }
     public void moveLeft() {
         previousGridPosition = currentGridPosition;
         currentGridPosition.setLocation(previousGridPosition.getX() - 1, previousGridPosition.getY());
+        setSprite(walkSprite[1]);
     }
     public void moveRight() {
         previousGridPosition = currentGridPosition;
         currentGridPosition.setLocation(previousGridPosition.getX() + 1, previousGridPosition.getY());
+        setSprite(walkSprite[2]);
     }
 
-    public Point getPosition() {
+    public void setGridPosition(Point gridPosition) {
+        this.currentGridPosition = gridPosition;
+        this.previousGridPosition = gridPosition;
+    }
+
+    public Point getGridPosition() {
         return currentGridPosition;
     }
     public double getXPosition() {
