@@ -45,6 +45,8 @@ public class GameCharacter extends DynamicTile {
 
         setSprite(idleSprite[0]);
 
+
+
     }
 
     public GameCharacter(Point position, Player player) {
