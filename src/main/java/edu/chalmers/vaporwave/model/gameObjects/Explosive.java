@@ -20,4 +20,12 @@ public abstract class Explosive extends StaticTile {
         this.power = power;
         super.setSprite(s);
     }
+
+    public double getPower() {
+        return this.power;
+    }
+
+    public void explode() {
+        Blast b = new Blast(this);
+    }
 }
