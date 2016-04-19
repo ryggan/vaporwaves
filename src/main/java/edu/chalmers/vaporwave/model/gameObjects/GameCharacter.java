@@ -11,10 +11,6 @@ import javafx.scene.input.KeyEvent;
 import java.awt.*;
 import java.io.File;
 
-
-/**
- * Created by FEngelbrektsson on 15/04/16.
- */
 public class GameCharacter extends DynamicTile {
     private Point currentPosition;
     private Point previousPosition;
@@ -50,6 +46,8 @@ public class GameCharacter extends DynamicTile {
         deathSprite.setScale(Constants.GAME_SCALE);
 
         setSprite(walkSprite[2]);
+
+
 
     }
 
