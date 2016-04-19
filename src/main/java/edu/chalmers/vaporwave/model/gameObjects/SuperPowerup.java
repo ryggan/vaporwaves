@@ -3,5 +3,5 @@ package edu.chalmers.vaporwave.model.gameObjects;
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
-public class SuperPowerup extends PowerUp {
+public class SuperPowerUp extends PowerUp {
 }
