@@ -9,11 +9,11 @@ import java.util.Random;
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
-public class StatPowerup extends PowerUp {
+public class StatPowerUp extends PowerUp {
     private ArrayList<PowerUpState> enabledPowerUpList;
     private PowerUpState powerUpState;
 
-    public StatPowerup(Sprite s, Point cPos, Point gPos, ArrayList<PowerUpState> l) {
+    public StatPowerUp(Sprite s, Point cPos, Point gPos, ArrayList<PowerUpState> l) {
         super.setSprite(s);
         super.setCanvasPosition(cPos);
         super.setGridPosition(gPos);
