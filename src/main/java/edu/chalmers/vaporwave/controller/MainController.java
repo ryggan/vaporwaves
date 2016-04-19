@@ -5,6 +5,8 @@ import edu.chalmers.vaporwave.util.LongValue;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
+import java.util.ArrayList;
+
 /**
  * Created by bob on 2016-04-15.
  */
@@ -12,8 +14,9 @@ public class MainController {
 
 //    private Stage stage;
 
-    private MenuController mc;
-    private GameController ac;
+    private MenuController menuController;
+    private GameController gameController;
+    private ListenerController listenerController;
 
     private boolean inGame;
 
@@ -21,14 +24,15 @@ public class MainController {
      * Constructor, that sets up the ongoing main loop.
      * @param root
      */
-    public MainController(Group root) {
+    public MainController(Group root, ListenerController listenerController) {
 
         // Initiating variables and controllers
 
-        this.inGame = false;
+        this.inGame = true;
 
-        mc = new MenuController(root);
-        ac = new GameController(root);
+        this.menuController = new MenuController(root);
+        this.gameController = new GameController(root);
+        this.listenerController = listenerController;
 
         // Animation timer setup
 
@@ -48,8 +52,12 @@ public class MainController {
 
                 // Controller calls
 
-                ac.timerUpdate(timeSinceStart, timeSinceLastCall);
-                mc.timerUpdate(timeSinceStart, timeSinceLastCall);
+                ArrayList<String> input = listenerController.getInput();
+
+                if (inGame)
+                    gameController.timerUpdate(timeSinceStart, timeSinceLastCall, input);
+                else
+                    menuController.timerUpdate(timeSinceStart, timeSinceLastCall, input);
 
                 // TEST OUTPUT
 

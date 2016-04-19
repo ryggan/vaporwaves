@@ -72,6 +72,7 @@ public class Blast {
         explosionEndSprite.render(gc, time);
 
         // TODO: 1. Fix rotation of explosion beam sprites and end sprites
+        //          tip: http://stackoverflow.com/questions/18260421/how-to-draw-image-rotated-on-javafx-canvas
         // TODO: 2. Make sure the explosion starts at frame = 0 and then destroys itself at frame = last
     }
 }

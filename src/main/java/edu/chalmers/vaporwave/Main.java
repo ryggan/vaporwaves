@@ -37,7 +37,8 @@ public class Main extends Application {
 
         // Initiating controllers
 
-		MainController mc = new MainController(root);
-		new ListenerController(scene, mc);
+		ListenerController lc = new ListenerController(scene);
+		new MainController(root, lc);
+//		new ListenerController(scene, mc);
 	}
 }
