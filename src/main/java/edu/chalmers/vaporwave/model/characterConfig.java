@@ -6,9 +6,7 @@ import javafx.scene.image.ImageView;
 /**
  * Created by Lina on 4/19/2016.
  */
-public abstract class characterConfig {
-
-    //hej
+public abstract class CharacterConfig {
 
     int health;
     int bombCount;
