@@ -8,6 +8,6 @@ public class Blast {
     //radius also, what Type?
 
     public Blast(Explosive b) {
-        this.power = b.getPower();
+        this.power = b.getRange();
     }
 }
