@@ -20,6 +20,9 @@ public class ArenaView {
     private GraphicsContext backgroundGC;
     private GraphicsContext tileGC;
 
+    private HUDView hudView;
+    private GameStatus gameStatus;
+
 //    private Sprite testSprite;
 //    private Sprite testSprite2;
 
@@ -41,6 +44,9 @@ public class ArenaView {
 
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
+
+        hudView = new HUDView();
+        gameStatus = new GameStatus();
 
         // TEST DRAWING
 
