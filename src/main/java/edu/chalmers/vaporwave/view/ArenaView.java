@@ -50,16 +50,16 @@ public class ArenaView {
 
         // TEST DRAWING
 
-//        Image img = new Image("imgs/spritesheet-alyssa-walkidleflinch-48x32.png");
+//        Image img = new Image("images/spritesheet-alyssa-walkidleflinch-48x32.png");
 //        testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
 //        testSprite.setVelocity(0, 5);
 //        testSprite.setScale(2);
-//        Image img2 = new Image("imgs/spritesheet-alyssa-death-56x56.png");
+//        Image img2 = new Image("images/spritesheet-alyssa-death-56x56.png");
 //        testSprite2 = new AnimatedSprite(img2, new Dimension(56, 56), 28, 0.1);
 //        testSprite2.setPosition(50, 50);
 //        testSprite2.setScale(2);
 //
-//        Image img3 = new Image("imgs/sprite-arenabackground-01.png");
+//        Image img3 = new Image("images/sprite-arenabackground-01.png");
 //        Sprite testSprite3 = new Sprite(img3);
 //        testSprite3.setPosition(0, 0);
 //        testSprite3.setScale(2);
