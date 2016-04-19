@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<character>
+    <name>Alyssa</name>
+    <state>spawn</state>
+    <xDimension>48</xDimension>
+    <yDimension>128</yDimension>
+    <frames>27</frames>
+    <duration>0.1</duration>
+    <firstFrameX>0</firstFrameX>
+    <firstFrameY>0</firstFrameY>
+</character>

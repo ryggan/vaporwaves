@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.controller;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.XMLReader;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.ArenaView;
 import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
@@ -39,6 +40,9 @@ public class GameController {
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
+
+        XMLReader testReader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
+        testReader.read();
 
     }
 
