@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
-public class StatPowerup extends Powerup {
+public class StatPowerup extends PowerUp {
     private ArrayList<PowerUpState> enabledPowerUpList;
     private PowerUpState powerUpState;
 

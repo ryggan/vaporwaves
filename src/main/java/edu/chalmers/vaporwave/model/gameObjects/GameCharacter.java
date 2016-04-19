@@ -30,12 +30,12 @@ public class GameCharacter extends DynamicTile {
     public GameCharacter(Point position) {
         this.currentPosition = position;
 
-        Image spriteSheet0 = new Image("Images/spritesheet-alyssa-spawn-48x128.png");
+        //Image spriteSheet0 = new Image("Images/spritesheet-alyssa-spawn-48x128.png");
         Image spriteSheet1 = new Image("Images/spritesheet-alyssa-walkidleflinch-48x32.png");
         Image spriteSheet2 = new Image("Images/spritesheet-alyssa-death-56x56.png");
 
-        spawnSprite = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0});
-        spawnSprite.setScale(Constants.GAME_SCALE);
+       // spawnSprite = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0});
+        //spawnSprite.setScale(Constants.GAME_SCALE);
         for (int i = 0; i < 4; i++) {
             idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 32), 1, 0.1, new int[] {i, 4});
             idleSprite[i].setScale(Constants.GAME_SCALE);
