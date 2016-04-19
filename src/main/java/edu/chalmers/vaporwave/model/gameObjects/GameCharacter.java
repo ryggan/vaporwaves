@@ -21,8 +21,8 @@ public class GameCharacter extends DynamicTile {
     private Sprite[] flinchSprite = new Sprite[4];
     private Sprite deathSprite;
 
-    public GameCharacter(Point position) {
-        this.currentPosition = position;
+    public GameCharacter() {
+//        this.currentPosition = position;
 
         Image spriteSheet0 = new Image("imgs/spritesheet-alyssa-respawn-48x128.png");
         Image spriteSheet1 = new Image("imgs/spritesheet-alyssa-walkidleflinch-48x32.png");
