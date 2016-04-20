@@ -42,7 +42,7 @@ public class GameCharacter extends DynamicTile {
         initCharacterSprites();
 
         // Test settings setup:
-
+    
         setGeneralPosition(5, 5);
         characterState = "IDLE";
         direction = Directions.DOWN;
