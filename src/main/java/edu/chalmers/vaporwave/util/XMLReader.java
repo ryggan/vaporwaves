@@ -19,12 +19,10 @@ public class XMLReader {
 
     public XMLReader(String file) {
         this.file = file;
-
     }
 
     public NodeList read() {
         System.out.println(file);
-
 
         try {
             File file = new File(this.file);

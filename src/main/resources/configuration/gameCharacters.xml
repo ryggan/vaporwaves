@@ -11,175 +11,64 @@
 
         <walk>
             <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
             <frames>8</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
+            <offsetX>0</offsetX>
+            <offsetY>0</offsetY>
         </walk>
 
         <idle>
             <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
             <frames>1</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>4</firstFrameY>
+            <offsetX>0</offsetX>
+            <offsetY>0</offsetY>
         </idle>
 
         <flinch>
             <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
             <frames>1</frames>
             <duration>0.1</duration>
             <firstFrameX>4</firstFrameX>
             <firstFrameY>4</firstFrameY>
+            <offsetX>0</offsetX>
+            <offsetY>0</offsetY>
         </flinch>
 
         <death>
             <spritesheet>images/spritesheet-alyssa-death-56x56.png</spritesheet>
-            <xDimension>56</xDimension>
-            <yDimension>56</yDimension>
+            <dimensionX>56</dimensionX>
+            <dimensionY>56</dimensionY>
             <frames>28</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
+            <offsetX>0</offsetX>
+            <offsetY>0</offsetY>
         </death>
 
-        <respawn>
+        <spawn>
             <spritesheet>images/spritesheet-alyssa-respawn-48x128.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>128</yDimension>
+            <dimensionX>48</dimensionX>
+            <dimensionY>128</dimensionY>
             <frames>27</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
-        </respawn>
+            <offsetX>0</offsetX>
+            <offsetY>0</offsetY>
+        </spawn>
     </character>
 
-
-
-    <character>
-        <name>Nipple</name>
-
-        <maxHealth>100.0</maxHealth>
-        <speed>10.0</speed>
-        <bombRange>3</bombRange>
-        <bombCount>1</bombCount>
-
-        <walk>
-            <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
-            <frames>8</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
-        </walk>
-
-        <idle>
-            <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
-            <frames>1</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>4</firstFrameY>
-        </idle>
-
-        <flinch>
-            <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
-            <frames>1</frames>
-            <duration>0.1</duration>
-            <firstFrameX>4</firstFrameX>
-            <firstFrameY>4</firstFrameY>
-        </flinch>
-
-        <death>
-            <spritesheet>images/spritesheet-alyssa-death-56x56.png</spritesheet>
-            <xDimension>56</xDimension>
-            <yDimension>56</yDimension>
-            <frames>28</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
-        </death>
-
-        <respawn>
-            <spritesheet>images/spritesheet-alyssa-respawn-48x128.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>128</yDimension>
-            <frames>27</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
-        </respawn>
-    </character>
-
-
-
-    <character>
-        <name>Mario</name>
-
-        <maxHealth>100.0</maxHealth>
-        <speed>10.0</speed>
-        <bombRange>3</bombRange>
-        <bombCount>1</bombCount>
-
-        <walk>
-            <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
-            <frames>8</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
-        </walk>
-
-        <idle>
-            <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
-            <frames>1</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>4</firstFrameY>
-        </idle>
-
-        <flinch>
-            <spritesheet>images/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>48</yDimension>
-            <frames>1</frames>
-            <duration>0.1</duration>
-            <firstFrameX>4</firstFrameX>
-            <firstFrameY>4</firstFrameY>
-        </flinch>
-
-        <death>
-            <spritesheet>images/spritesheet-alyssa-death-56x56.png</spritesheet>
-            <xDimension>56</xDimension>
-            <yDimension>56</yDimension>
-            <frames>28</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
-        </death>
-
-        <respawn>
-            <spritesheet>images/spritesheet-alyssa-respawn-48x128.png</spritesheet>
-            <xDimension>48</xDimension>
-            <yDimension>128</yDimension>
-            <frames>27</frames>
-            <duration>0.1</duration>
-            <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
-        </respawn>
-    </character>
 
 </gameCharacters>

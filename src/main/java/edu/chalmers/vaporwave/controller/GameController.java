@@ -1,21 +1,14 @@
 package edu.chalmers.vaporwave.controller;
 
 import edu.chalmers.vaporwave.model.ArenaModel;
-import edu.chalmers.vaporwave.model.SpriteProperties;
 import edu.chalmers.vaporwave.model.gameObjects.DynamicTile;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
-import edu.chalmers.vaporwave.util.CharacterLoader;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.XMLReader;
-import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.ArenaView;
 import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
-import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import org.w3c.dom.NodeList;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class GameController {
@@ -44,7 +37,7 @@ public class GameController {
 //        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
 //        NodeList nl = reader.read();
 //        System.out.println(nl);
-//        SpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
+//        CharacterSpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
 //        System.out.println(sp[0].getName());
 
 
@@ -70,8 +63,8 @@ public class GameController {
 
         // Input handling:
 
-        if (input.size() > 0)
-            System.out.println(input);
+//        if (input.size() > 0)
+//            System.out.println(input);
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);

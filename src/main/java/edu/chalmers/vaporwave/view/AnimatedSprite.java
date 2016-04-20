@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
+import com.sun.tools.internal.jxc.ap.Const;
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -34,14 +36,14 @@ public class AnimatedSprite extends Sprite {
      * @param spriteDimension
      * @param length
      * @param duration
-     * @param startPos
+     * @param startPosition
      */
-    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPos) {
+    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
 
         // Checking arguments, throwing exception if something is wrong
 
         if (spriteSheet == null || spriteDimension == null || spriteDimension.getWidth() < 1 || spriteDimension.getHeight() < 1
-                || length <= 0 || duration <= 0.0 || startPos[0] < 0 || startPos[1] < 0) {
+                || length <= 0 || duration <= 0.0 || startPosition[0] < 0 || startPosition[1] < 0) {
             throw new IllegalArgumentException();
         }
 
@@ -59,14 +61,17 @@ public class AnimatedSprite extends Sprite {
         this.sheetDimension = new Dimension((int)Math.floor(spriteSheet.getWidth() / spriteDimension.getWidth()),
                 (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));
 
+        setOffset(offset[0], offset[1]);
+        setScale(Constants.GAME_SCALE);
+
         // Initiating frames-list, by calculating every coordinate in the spritesheet
 
         int posx, posy;
 
         for (int i = 0; i < length; i++) {
 
-            posx = startPos[0] + i;
-            posy = startPos[1];
+            posx = startPosition[0] + i;
+            posy = startPosition[1];
 
             while(posx >= sheetDimension.getWidth()) {
                 posx -= sheetDimension.getWidth();
@@ -77,19 +82,11 @@ public class AnimatedSprite extends Sprite {
 
             int[] frame = {posx, posy};
             frames.add(frame);
-
-//            System.out.println("posx: "+posx+" - posy: "+posy);
         }
 
     }
-    public AnimatedSprite(Image sprSheet, Dimension sprDim, int length, double duration) {
-        this(sprSheet, sprDim, length, duration, new int[] {0, 0});
-    }
-    public AnimatedSprite(String fileName, Dimension sprDim, int length, double duration, int[] startPos) throws FileNotFoundException {
-        this(new Image(fileName), sprDim, length, duration, startPos);
-    }
-    public AnimatedSprite(String fileName, Dimension sprDim, int length, double duration) throws FileNotFoundException {
-        this(new Image(fileName), sprDim, length, duration, new int[] {0, 0});
+    public AnimatedSprite(String fileName, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
+        this(new Image(fileName), spriteDimension, length, duration, startPosition, offset);
     }
 
     public AnimatedSprite(AnimatedSprite sprite) {
@@ -147,11 +144,11 @@ public class AnimatedSprite extends Sprite {
         double height = getHeight() * getScale();
         int sourcex = frames.get(index)[0] * (int)width;
         int sourcey = frames.get(index)[1] * (int)height;
-        double targetx = getPositionX();
-        double targety = getPositionY();
+        double targetx = (getPositionX() - getOffsetX()) * getScale();
+        double targety = (getPositionY() - getOffsetY()) * getScale();
         if (getStayOnPixel()) {
-            targetx = Math.round(targetx * getScale()) * getScale();
-            targety = Math.round(targety * getScale()) * getScale();
+            targetx = Math.round(targetx * getScale()) / getScale();
+            targety = Math.round(targety * getScale()) / getScale();
         }
         gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
     }

@@ -19,6 +19,6 @@ public class Constants {
 
     public static final double GAME_SCALE = 2.0;
 
-    public static final State[] CHARACTER_STATE = { State.WALK, State.IDLE, State.FLINCH, State.DEATH, State.SPAWN };
+    public static final CharacterState[] CHARACTER_CHARACTER_STATE = { CharacterState.WALK, CharacterState.IDLE, CharacterState.FLINCH, CharacterState.DEATH, CharacterState.SPAWN };
 
 }

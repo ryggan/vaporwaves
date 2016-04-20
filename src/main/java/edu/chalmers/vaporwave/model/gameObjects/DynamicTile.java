@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -90,5 +91,10 @@ public abstract class DynamicTile implements Tile {
     }
     public double getGridPositionY() {
         return gridPosition.getY();
+    }
+
+    public void setGeneralPosition(int gridPositionX, int gridPositionY) {
+        setGridPosition(new Point(gridPositionX, gridPositionY));
+        setCanvasPosition(gridPositionX * Constants.DEFAULT_TILE_WIDTH, gridPositionY * Constants.DEFAULT_TILE_HEIGHT);
     }
 }

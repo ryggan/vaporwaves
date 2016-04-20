@@ -2,12 +2,11 @@ package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.SpriteProperties;
+import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import org.w3c.dom.NodeList;
 
 import java.awt.*;
@@ -21,7 +20,7 @@ public class GameCharacter extends DynamicTile {
     private int playerId;
 
     private Directions direction;
-    private String characterState;
+    private CharacterState characterState;
 
     private double maxHealth;
     private double health;
@@ -42,41 +41,70 @@ public class GameCharacter extends DynamicTile {
         NodeList nl = reader.read();
         System.out.println(nl);
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), name);
-//        System.out.println(sp[0].getState());
 
+        Sprite currentSpriteCreation;
+        System.out.println(characterProperties.getSpriteProperties());
 
+        for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
 
+            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
 
+            currentSpriteCreation = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                    characterSpriteProperties.getFrames(),
+                    characterSpriteProperties.getDuration(),
+                    characterSpriteProperties.getFirstFrame(),
+                    characterSpriteProperties.getOffset());
 
-        Image spriteSheet0 = new Image("images/spritesheet-alyssa-respawn-48x128.png");
-        Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
-        Image spriteSheet2 = new Image("images/spritesheet-alyssa-death-56x56.png");
-
-        spawnSprite[0] = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0});
-        spawnSprite[0].setScale(Constants.GAME_SCALE);
-        for (int i = 0; i < 4; i++) {
-            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4});
-            idleSprite[i].setScale(Constants.GAME_SCALE);
-
-            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i});
-            walkSprite[i].setScale(Constants.GAME_SCALE);
-
-            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4});
-            flinchSprite[i].setScale(Constants.GAME_SCALE);
+            switch(characterState) {
+                case SPAWN:
+                    spawnSprite[0] = currentSpriteCreation;
+                    break;
+                case DEATH:
+                    deathSprite[0] = currentSpriteCreation;
+                    break;
+            }
         }
-        deathSprite[0] = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0});
-        deathSprite[0].setScale(Constants.GAME_SCALE);
 
-        setGridPosition(new Point(0,0));
-        characterState = "IDLE";
+
+
+
+        Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
+
+        for (int i = 0; i < 4; i++) {
+            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {16, 27});
+            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {16, 27});
+            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {16, 27});
+        }
+
+        // Test settings setup:
+
+        setGeneralPosition(5, 5);
+        characterState = CharacterState.IDLE;
         direction = Directions.DOWN;
         speed = 0.8;
         updateSprite();
     }
 
+
+    /**
+     * Helper method for creating an AnimatedSprite object from a CharacterSpriteProperties object.
+     *
+     * @param characterSpriteProperties
+     * @return An AnimatedSprite object
+     */
+    private AnimatedSprite createSpriteFromProperties(CharacterSpriteProperties characterSpriteProperties) {
+        return new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                characterSpriteProperties.getFrames(),
+                characterSpriteProperties.getDuration(),
+                characterSpriteProperties.getFirstFrame(),
+                characterSpriteProperties.getOffset());
+    }
+
     public void move(String key) {
-//        if (!characterState.equals("WALK") || oppositeDirection(key)) {
-            characterState = "WALK";
+//        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
+            characterState = CharacterState.WALK;
             if (key.equals("UP")) {
                 moveUp();
             } else if (key.equals("LEFT")) {
@@ -99,13 +127,13 @@ public class GameCharacter extends DynamicTile {
 
     private void updateSprite() {
         Sprite[] currentSprite = idleSprite; // Always idle if no other state is active
-        if (characterState.equals("WALK")) {
+        if (characterState == CharacterState.WALK) {
             currentSprite = walkSprite;
-        } else if (characterState.equals("FLINCH")) {
+        } else if (characterState == CharacterState.FLINCH) {
             currentSprite = flinchSprite;
-        } else if (characterState.equals("SPAWN")) {
+        } else if (characterState == CharacterState.SPAWN) {
             currentSprite = spawnSprite;
-        } else if (characterState.equals("DEATH")) {
+        } else if (characterState == CharacterState.DEATH) {
             currentSprite = deathSprite;
         }
 
