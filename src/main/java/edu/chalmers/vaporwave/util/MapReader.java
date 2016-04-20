@@ -39,8 +39,6 @@ public class MapReader {
      */
     public String[][] parseStrings(String[] strings) {
         for(int i = 0; i < strings.length; i++) {
-        }
-        for(int i = 0; i < strings.length; i++) {
                stringKeywords[i] = strings[i].split(" ");
         }
         return stringKeywords;

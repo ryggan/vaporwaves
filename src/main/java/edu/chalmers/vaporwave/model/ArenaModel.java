@@ -1,7 +1,9 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.model.gameObjects.Tile;
+import edu.chalmers.vaporwave.model.gameObjects.*;
+import edu.chalmers.vaporwave.util.MapReader;
 
+import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -16,6 +18,9 @@ public class ArenaModel {
     private ArrayList<Tile>[][] arena;
     private int width;
     private int height;
+
+    private MapReader mapReader;
+    private File mapFile;
 
     public ArenaModel(int width, int height) {
         newArena(width, height);
@@ -62,5 +67,42 @@ public class ArenaModel {
 
     public boolean isEmpty(int posx, int posy) {
         return (arena[posx][posy].size() == 0);
+    }
+
+    /**
+     * Iterates through our mapMatrix and calls on createObject to create the appropriate object
+     * @param mapFile going to be changed to String[][]
+     * @throws Exception
+     */
+    public void loadObjectsToMap(File mapFile) throws Exception {
+        //Första raden skall göras någon annanstans, behövs även då byta args till en String[][]
+       String[][] mapMatrix = mapReader.createMapArray(mapFile);
+        for(int i = 0; i < mapMatrix.length; i++) {
+            for(int j = 0; i < mapMatrix[i].length; j++) {
+               arena[i][j].add(createObject(mapMatrix[i][j], i, j));
+            }
+        }
+    }
+
+    /**
+     *
+     * @param character
+     * @param x grid position in rows
+     * @param y grid position in columns
+     * @return appropriate Tile
+     */
+    public Tile createObject(String character, int x, int y) {
+        ArrayList<Tile> objectList = new ArrayList<Tile>();
+        if(character.equals("O")) {
+            return new DestructibleWall(x, y);
+        } else if(character.equals("X")) {
+            return new IndestructibleWall(x, y);
+        } else if(character.equals("C")) {
+            return new GameCharacter(x, y);
+        } else if(character.equals("A")) {
+            return new Enemy(x, y);
+        } else {
+            return null;
+        }
     }
 }
