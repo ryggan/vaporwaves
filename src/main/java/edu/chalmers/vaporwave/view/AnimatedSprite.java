@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
+import com.sun.tools.internal.jxc.ap.Const;
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -60,6 +62,7 @@ public class AnimatedSprite extends Sprite {
                 (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));
 
         setOffset(offset[0], offset[1]);
+        setScale(Constants.GAME_SCALE);
 
         // Initiating frames-list, by calculating every coordinate in the spritesheet
 
