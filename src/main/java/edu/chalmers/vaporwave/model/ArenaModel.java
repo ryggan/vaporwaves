@@ -79,7 +79,7 @@ public class ArenaModel {
        String[][] mapMatrix = mapReader.createMapArray(mapFile);
         for(int i = 0; i < mapMatrix.length; i++) {
             for(int j = 0; i < mapMatrix[i].length; j++) {
-               arena[i][j].add(createObject(mapMatrix[i][j], i, j));
+//               arena[i][j].add(createObject(mapMatrix[i][j], i, j));
             }
         }
     }
@@ -91,18 +91,18 @@ public class ArenaModel {
      * @param y grid position in columns
      * @return appropriate Tile
      */
-    public Tile createObject(String character, int x, int y) {
-        ArrayList<Tile> objectList = new ArrayList<Tile>();
-        if(character.equals("O")) {
-            return new DestructibleWall(x, y);
-        } else if(character.equals("X")) {
-            return new IndestructibleWall(x, y);
-        } else if(character.equals("C")) {
-            return new GameCharacter(x, y);
-        } else if(character.equals("A")) {
-            return new Enemy(x, y);
-        } else {
-            return null;
-        }
-    }
+//    public Tile createObject(String character, int x, int y) {
+//        ArrayList<Tile> objectList = new ArrayList<Tile>();
+//        if(character.equals("O")) {
+//            return new DestructibleWall(x, y);
+//        } else if(character.equals("X")) {
+//            return new IndestructibleWall(x, y);
+//        } else if(character.equals("C")) {
+//            return new GameCharacter(x, y);
+//        } else if(character.equals("A")) {
+//            return new Enemy(x, y);
+//        } else {
+//            return null;
+//        }
+//    }
 }
