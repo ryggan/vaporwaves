@@ -126,7 +126,6 @@ public class GameCharacter extends DynamicTile {
 
     public void move(String key) {
         if (characterState != CharacterState.WALK || oppositeDirection(key)) {
-            characterState = CharacterState.WALK;
             if (key.equals("UP")) {
                 moveUp();
             } else if (key.equals("LEFT")) {
@@ -136,6 +135,8 @@ public class GameCharacter extends DynamicTile {
             } else if (key.equals("RIGHT")) {
                 moveRight();
             }
+            if (getVelocityY() != 0 || getVelocityX() != 0)
+                characterState = CharacterState.WALK;
             updateSprite();
         }
     }
@@ -175,19 +176,23 @@ public class GameCharacter extends DynamicTile {
 
     public void moveUp() {
         direction = Directions.UP;
-        setVelocity(0, -this.speed);
+        if (getGridPositionY() > 0)
+            setVelocity(0, -this.speed);
     }
     public void moveDown() {
         direction = Directions.DOWN;
-        setVelocity(0, this.speed);
+        if (getGridPositionY() < Constants.DEFAULT_GRID_HEIGHT-1)
+            setVelocity(0, this.speed);
     }
     public void moveLeft() {
         direction = Directions.LEFT;
-        setVelocity(-this.speed, 0);
+        if (getGridPositionX() > 0)
+            setVelocity(-this.speed, 0);
     }
     public void moveRight() {
         direction = Directions.RIGHT;
-        setVelocity(this.speed, 0);
+        if (getGridPositionX() < Constants.DEFAULT_GRID_WIDTH-1)
+            setVelocity(this.speed, 0);
     }
 
     @Override
