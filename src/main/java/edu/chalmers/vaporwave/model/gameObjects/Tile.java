@@ -11,8 +11,8 @@ import java.awt.*;
 public interface Tile {
     public void setGridPosition(Point p);
     public Point getGridPosition();
-    public double getGridPositionX();
-    public double getGridPositionY();
+    public int getGridPositionX();
+    public int getGridPositionY();
     public void setCanvasPosition(double canvasPositionX, double canvasPositionY);
     public void setCanvasPositionX(double canvasPositionX);
     public void setCanvasPositionY(double canvasPositionY);

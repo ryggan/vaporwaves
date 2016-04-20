@@ -64,10 +64,10 @@ public abstract class StaticTile implements Tile {
         return this.gridPosition;
     }
 
-    public double getGridPositionX() {
-        return gridPosition.getX();
+    public int getGridPositionX() {
+        return (int)gridPosition.getX();
     }
-    public double getGridPositionY() {
-        return gridPosition.getY();
+    public int getGridPositionY() {
+        return (int)gridPosition.getY();
     }
 }

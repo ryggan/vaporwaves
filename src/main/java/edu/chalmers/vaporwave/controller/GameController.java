@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.controller;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.DynamicTile;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
@@ -39,8 +40,6 @@ public class GameController {
 //        System.out.println(nl);
 //        CharacterSpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
 //        System.out.println(sp[0].getName());
-
-
 
         // TEST TILES
         playerCharacter = new GameCharacter("Alyssa");
