@@ -30,7 +30,7 @@ public class MainController {
 
         // Initiating variables and controllers
 
-        this.inGame = false;
+        this.inGame = true;
 
         this.menuController = new MenuController(root);
         this.gameController = new GameController(root);
@@ -56,10 +56,11 @@ public class MainController {
 
                 ArrayList<String> input = listenerController.getInput();
 
-                if (inGame)
+                if (inGame) {
                     gameController.timerUpdate(timeSinceStart, timeSinceLastCall, input);
-                else
+                } else {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall, input);
+                }
 
                 // TEST OUTPUT
 
