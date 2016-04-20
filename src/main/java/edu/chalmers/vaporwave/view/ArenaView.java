@@ -5,9 +5,7 @@ import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +19,7 @@ public class ArenaView {
     private GraphicsContext tileGC;
 
     private HUDView hudView;
-    private GameStatus gameStatus;
+    private Scoreboard scoreboard;
 
 //    private Sprite testSprite;
 //    private Sprite testSprite2;
@@ -29,11 +27,11 @@ public class ArenaView {
     public ArenaView(Group root) {
 
         // Setting up area to draw graphics
-
         backgroundCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         root.getChildren().add(backgroundCanvas);
         tileCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         root.getChildren().add(tileCanvas);
+
 
         double xoffset = Math.floor((Constants.WINDOW_WIDTH - Constants.GAME_WIDTH) / 2);
         double yoffset = Math.floor((Constants.WINDOW_HEIGHT - Constants.GAME_HEIGHT) / 2);
@@ -44,10 +42,6 @@ public class ArenaView {
 
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
-        createBackground(backgroundGC);
-
-        hudView = new HUDView();
-        gameStatus = new GameStatus();
 
         // TEST DRAWING
 
@@ -61,6 +55,14 @@ public class ArenaView {
 //        testSprite2.setScale(2);
 //
 
+    }
+
+    public void initArena() {
+
+        createBackground(backgroundGC);
+
+        hudView = new HUDView();
+        scoreboard = new Scoreboard();
     }
 
     private void createBackground(GraphicsContext backgroundGC) {

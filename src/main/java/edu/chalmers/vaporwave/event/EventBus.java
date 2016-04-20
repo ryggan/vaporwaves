@@ -1,7 +1,6 @@
 package edu.chalmers.vaporwave.event;
 
 import java.util.ArrayList;
-import java.util.EventObject;
 
 /**
  * Created by FEngelbrektsson on 19/04/16.
@@ -48,7 +47,7 @@ public enum EventBus {
      * @param event
      */
 
-    public void postEvent(EventObject event) {
+    public void postEvent(IEvent event) {
         for (IEventListener listener : busSubscribers) {
             listener.eventFired(event);
         }

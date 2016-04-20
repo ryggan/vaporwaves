@@ -1,6 +1,10 @@
 package edu.chalmers.vaporwave.model;
 
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapObject;
+import javafx.geometry.Dimension2D;
+
+import java.awt.Dimension;
 
 /**
  * Created by andreascarlsson on 2016-04-20.
@@ -8,10 +12,12 @@ import edu.chalmers.vaporwave.util.MapObject;
 public class ArenaMap {
     private String name;
     private MapObject[][] mapObjects;
+    private Dimension mapSize;
 
     public ArenaMap(String name, MapObject[][] mapObjects) {
         this.name = name;
         this.mapObjects = mapObjects;
+        this.mapSize = new Dimension(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT);
     }
 
     public String getName() {
@@ -20,5 +26,9 @@ public class ArenaMap {
 
     public MapObject[][] getMapObjects() {
         return this.mapObjects;
+    }
+
+    public Dimension getMapSize() {
+        return this.mapSize;
     }
 }

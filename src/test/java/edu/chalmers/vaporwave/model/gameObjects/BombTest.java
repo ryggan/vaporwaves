@@ -1,7 +1,6 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.event.EventBus;
-import edu.chalmers.vaporwave.event.IEvent;
 import edu.chalmers.vaporwave.event.IEventListener;
 import edu.chalmers.vaporwave.model.gameObjects.Bomb;
 import edu.chalmers.*;
@@ -29,7 +28,7 @@ public class BombTest implements IEventListener {
         assertTrue(eventFired(bomb) == true);
     }
 
-    public Boolean eventFired(IEvent event) {
+    public Boolean eventFired(EventObject event) {
         bomb.fireEvent();
         return true;
     }

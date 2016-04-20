@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.event.EventBus;
 import edu.chalmers.vaporwave.model.gameObjects.RangePowerUp;
 import edu.chalmers.vaporwave.util.LongValue;
 import javafx.animation.AnimationTimer;
@@ -17,6 +18,7 @@ public class MainController {
     private MenuController menuController;
     private GameController gameController;
     private ListenerController listenerController;
+    private EventBus eventBus;
 
     private boolean inGame;
 

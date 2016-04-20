@@ -23,7 +23,7 @@ public class XMLReader {
     /**
      * Method for reading from an XML-file and returning the content as a NodeList
      *
-     * @return A NodeList containing all characters if reading successfull, otherwhise null.
+     * @return A NodeList containing all characters if reading successful, otherwise null.
      */
     public NodeList read() {
         try {

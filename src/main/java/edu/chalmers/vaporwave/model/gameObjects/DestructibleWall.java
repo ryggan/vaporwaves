@@ -15,19 +15,18 @@ public class DestructibleWall extends Wall {
     public DestructibleWall(Sprite firstSprite, double canvasPositionX, double canvasPositionY, Point gridPosition, Sprite destroyedSprite){
         super(firstSprite, canvasPositionX, canvasPositionY, gridPosition);
         this.destroyedSprite=destroyedSprite;
-        isDestroyed=false;
+        isDestroyed = false;
     }
 
-    private void setDestroyed(boolean set){
-        isDestroyed=set;
-        if(isDestroyed){
-            this.setSprite(destroyedSprite);
-        }
+    private void setDestroyed(){
+        isDestroyed = true;
+        setSprite(destroyedSprite);
     }
 
     private boolean getDestroyed(){
         return isDestroyed;
     }
+
 
     /////needs spriteinfo, dynamic, cuz need to change when destroyed
 

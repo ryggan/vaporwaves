@@ -47,6 +47,7 @@ public class Sprite {
         this.scale = sprite.getScale();
         this.stayOnPixel = sprite.getStayOnPixel();
         setImage(sprite.getImage());
+        setImage(sprite.getImage());
     }
 
     public void setImage(Image image) {

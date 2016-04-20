@@ -1,10 +1,9 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.gameObjects.*;
-import edu.chalmers.vaporwave.util.MapReader;
+import edu.chalmers.vaporwave.util.MapFileReader;
 
 import java.io.File;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -15,12 +14,16 @@ import java.util.ArrayList;
  */
 public class ArenaModel {
 
+    private ArenaMap arenaMap;
     private ArrayList<Tile>[][] arena;
     private int width;
     private int height;
 
-    private MapReader mapReader;
-    private File mapFile;
+    public ArenaModel(ArenaMap arenaMap) {
+        this.arenaMap = arenaMap;
+
+        newArena(arenaMap.getMapSize().width, arenaMap.getMapSize().width);
+    }
 
     public ArenaModel(int width, int height) {
         newArena(width, height);
@@ -74,15 +77,15 @@ public class ArenaModel {
      * @param mapFile going to be changed to String[][]
      * @throws Exception
      */
-    public void loadObjectsToMap(File mapFile) throws Exception {
-        //Första raden skall göras någon annanstans, behövs även då byta args till en String[][]
-       String[][] mapMatrix = mapReader.createMapArray(mapFile);
-        for(int i = 0; i < mapMatrix.length; i++) {
-            for(int j = 0; i < mapMatrix[i].length; j++) {
-//               arena[i][j].add(createObject(mapMatrix[i][j], i, j));
-            }
-        }
-    }
+//    public void loadObjectsToMap(File mapFile) throws Exception {
+//        //Första raden skall göras någon annanstans, behövs även då byta args till en String[][]
+//       String[][] mapMatrix = mapFileReader.createMapArray(mapFile);
+//        for(int i = 0; i < mapMatrix.length; i++) {
+//            for(int j = 0; i < mapMatrix[i].length; j++) {
+////               arena[i][j].add(createObject(mapMatrix[i][j], i, j));
+//            }
+//        }
+//    }
 
     /**
      *

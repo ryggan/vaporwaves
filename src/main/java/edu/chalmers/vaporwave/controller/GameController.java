@@ -1,9 +1,11 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.DynamicTile;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.MapObject;
 import edu.chalmers.vaporwave.util.XMLReader;
 import edu.chalmers.vaporwave.view.ArenaView;
 import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
@@ -22,8 +24,13 @@ public class GameController {
 
         // Initiates view
 
-        arenaView = new ArenaView(root);
-        arenaModel = new ArenaModel(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT);
+        this.arenaView = new ArenaView(root);
+
+
+        // Starting new game
+        this.arenaModel = newGame(new ArenaMap("default", new MapObject[0][0]));
+        arenaView.initArena();
+
 
         // Setting up background
 
@@ -89,5 +96,13 @@ public class GameController {
         // Calls view to update graphics
 
         arenaView.updateView(arenaModel.getArena(), timeSinceStart, timeSinceLastCall);
+    }
+
+
+    public ArenaModel newGame(ArenaMap arenaMap) {
+
+        // Here goes all code for setting up the environment for a new game
+
+        return new ArenaModel(arenaMap);
     }
 }
