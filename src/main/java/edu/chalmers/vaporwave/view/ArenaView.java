@@ -44,6 +44,7 @@ public class ArenaView {
 
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
+        createBackground(backgroundGC);
 
         hudView = new HUDView();
         gameStatus = new GameStatus();
@@ -59,12 +60,16 @@ public class ArenaView {
 //        testSprite2.setPosition(50, 50);
 //        testSprite2.setScale(2);
 //
-//        Image img3 = new Image("images/sprite-arenabackground-01.png");
-//        Sprite testSprite3 = new Sprite(img3);
-//        testSprite3.setPosition(0, 0);
-//        testSprite3.setScale(2);
-//
-//        testSprite3.render(backgroundGC, -1);
+
+    }
+
+    private void createBackground(GraphicsContext backgroundGC) {
+
+        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
+        arenaBackgroundSprite.setPosition(0, 0);
+        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
+        arenaBackgroundSprite.render(backgroundGC, -1);
+
     }
 
     public void updateView(ArrayList<Tile>[][] arena, double timeSinceStart, double timeSinceLastCall) {

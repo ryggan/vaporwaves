@@ -19,6 +19,8 @@ public class Sprite {
     private double height;
     private double scale;
     private boolean stayOnPixel;
+    private double offsetX;
+    private double offsetY;
 
     /**
      * Constructors, one simple which leaves the Sprite object without Image, and the other two with an Image
@@ -67,8 +69,8 @@ public class Sprite {
      * @param time (unused, but necessary for overridden method)
      */
     public void render(GraphicsContext gc, double time) {
-        double posx = positionX;
-        double posy = positionY;
+        double posx = positionX - offsetX * scale;
+        double posy = positionY - offsetY * scale;
         if (stayOnPixel) {
             posx = Math.round(posx * scale) * scale;
             posy = Math.round(posy * scale) * scale;
@@ -145,6 +147,24 @@ public class Sprite {
 
     public Image getImage() {
         return this.image;
+    }
+
+    public void setOffset(double offsetX, double offsetY) {
+        this.offsetX = offsetX;
+        this.offsetY = offsetY;
+    }
+    public void setOffsetX(double offsetX) {
+        this.offsetX = offsetX;
+    }
+    public void setOffsetY(double offsetY) {
+        this.offsetY = offsetY;
+    }
+
+    public double getOffsetX() {
+        return this.offsetX;
+    }
+    public double getOffsetY() {
+        return this.offsetY;
     }
 
 }
