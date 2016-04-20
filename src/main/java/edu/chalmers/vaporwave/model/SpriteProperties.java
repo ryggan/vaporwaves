@@ -1,17 +1,21 @@
 package edu.chalmers.vaporwave.model;
 
+import javafx.scene.image.Image;
+
 /**
  * Created by andreascarlsson on 2016-04-19.
  */
 public class SpriteProperties {
     private String state;
+    private Image spritesheet;
     private int xDimension;
     private int yDimension;
     private int frames;
     private double duration;
     private int[] firstFrame;
 
-    public SpriteProperties(String state, int xDimension, int yDimension, int frames, double duration, int[] firstFrame) {
+    public SpriteProperties(String state, Image spritesheet, int xDimension, int yDimension, int frames, double duration, int[] firstFrame) {
+        this.spritesheet = spritesheet;
         this.state = state;
         this.xDimension = xDimension;
         this.yDimension = yDimension;
@@ -22,6 +26,10 @@ public class SpriteProperties {
 
     public String getState() {
         return this.state;
+    }
+
+    public Image getSpritesheet() {
+        return this.spritesheet;
     }
 
     public int getxDimension() {
@@ -41,7 +49,16 @@ public class SpriteProperties {
     }
 
     public int[] getFirstFrame() {
-        return this.getFirstFrame();
+        return this.firstFrame;
+    }
+
+    public String toString() {
+        return "state: " + getState() +
+                "\nxDimension: " + getxDimension() +
+                "\nyDimension: " + getyDimension() +
+                "\nframes: " + getFrames() +
+                "\nduration: " + getDuration() +
+                "\nfirstFrame: " + getFirstFrame()[0] + ", " + getFirstFrame()[1];
     }
 
 }

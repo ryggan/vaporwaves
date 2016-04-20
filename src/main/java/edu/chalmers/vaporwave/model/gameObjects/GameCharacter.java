@@ -3,10 +3,7 @@ package edu.chalmers.vaporwave.model.gameObjects;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.SpriteProperties;
-import edu.chalmers.vaporwave.util.CharacterLoader;
-import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.Directions;
-import edu.chalmers.vaporwave.util.XMLReader;
+import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.Image;
@@ -47,7 +44,8 @@ public class GameCharacter extends DynamicTile {
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), name);
 //        System.out.println(sp[0].getState());
 
-        System.out.println(characterProperties);
+
+
 
 
         Image spriteSheet0 = new Image("images/spritesheet-alyssa-respawn-48x128.png");
