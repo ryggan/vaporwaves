@@ -8,20 +8,22 @@ import javafx.scene.image.Image;
 public class SpriteProperties {
     private String state;
     private Image spritesheet;
-    private int xDimension;
-    private int yDimension;
+    private int dimensionX;
+    private int dimensionY;
     private int frames;
     private double duration;
     private int[] firstFrame;
+    private double[] offset;
 
-    public SpriteProperties(String state, Image spritesheet, int xDimension, int yDimension, int frames, double duration, int[] firstFrame) {
+    public SpriteProperties(String state, Image spritesheet, int dimensionX, int dimensionY, int frames, double duration, int[] firstFrame, double[] offset) {
         this.spritesheet = spritesheet;
         this.state = state;
-        this.xDimension = xDimension;
-        this.yDimension = yDimension;
+        this.dimensionX = dimensionX;
+        this.dimensionY = dimensionY;
         this.frames = frames;
         this.duration = duration;
         this.firstFrame = firstFrame;
+        this.offset = offset;
     }
 
     public String getState() {
@@ -32,12 +34,12 @@ public class SpriteProperties {
         return this.spritesheet;
     }
 
-    public int getxDimension() {
-        return this.xDimension;
+    public int getDimensionX() {
+        return this.dimensionX;
     }
 
-    public int getyDimension() {
-        return this.yDimension;
+    public int getDimensionY() {
+        return this.dimensionY;
     }
 
     public int getFrames() {
@@ -52,14 +54,19 @@ public class SpriteProperties {
         return this.firstFrame;
     }
 
+    public double[] getOffset() {
+        return this.offset;
+    }
+
     public String toString() {
         return "state: " + getState() +
                 "\nspritesheet: " + getSpritesheet() +
-                "\nxDimension: " + getxDimension() +
-                "\nyDimension: " + getyDimension() +
+                "\nxDimension: " + getDimensionX() +
+                "\nyDimension: " + getDimensionY() +
                 "\nframes: " + getFrames() +
                 "\nduration: " + getDuration() +
-                "\nfirstFrame: " + getFirstFrame()[0] + ", " + getFirstFrame()[1];
+                "\nfirstFrame: " + getFirstFrame()[0] + ", " + getFirstFrame()[1] +
+                "\noffset: " + getOffset()[0] + ", " + getOffset()[1];
     }
 
 }
