@@ -42,8 +42,30 @@ public class GameCharacter extends DynamicTile {
         NodeList nl = reader.read();
         System.out.println(nl);
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), name);
-//        System.out.println(sp[0].getState());
 
+        Sprite currentSpriteCreation;
+        System.out.println(characterProperties.getSpriteProperties());
+
+        for (State state : Constants.CHARACTER_STATE) {
+
+            SpriteProperties spriteProperties = characterProperties.getSpriteProperties(state);
+
+            currentSpriteCreation = new AnimatedSprite(spriteProperties.getSpritesheet(),
+                    new Dimension(spriteProperties.getxDimension(), spriteProperties.getyDimension()),
+                    spriteProperties.getFrames(),
+                    spriteProperties.getDuration(),
+                    spriteProperties.getFirstFrame());
+
+
+            switch(state) {
+                case SPAWN:
+                    spawnSprite[0] = currentSpriteCreation;
+                    break;
+                case DEATH:
+                    deathSprite[0] = currentSpriteCreation;
+                    break;
+            }
+        }
 
 
 
