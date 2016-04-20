@@ -56,7 +56,6 @@ public class GameCharacter extends DynamicTile {
                     spriteProperties.getFirstFrame(),
                     spriteProperties.getOffset());
 
-
             switch(characterState) {
                 case SPAWN:
                     spawnSprite[0] = currentSpriteCreation;
@@ -96,6 +95,22 @@ public class GameCharacter extends DynamicTile {
         direction = Directions.DOWN;
         speed = 0.8;
         updateSprite();
+    }
+
+
+    /**
+     * Helper method for creating an AnimatedSprite object from a SpriteProperties object.
+     *
+     * @param spriteProperties
+     * @return An AnimatedSprite object
+     */
+    private AnimatedSprite createSpriteFromProperties(SpriteProperties spriteProperties) {
+        return new AnimatedSprite(spriteProperties.getSpritesheet(),
+                new Dimension(spriteProperties.getDimensionX(), spriteProperties.getDimensionY()),
+                spriteProperties.getFrames(),
+                spriteProperties.getDuration(),
+                spriteProperties.getFirstFrame(),
+                spriteProperties.getOffset());
     }
 
     public void move(String key) {
