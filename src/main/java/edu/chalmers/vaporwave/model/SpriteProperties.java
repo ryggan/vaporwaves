@@ -54,6 +54,7 @@ public class SpriteProperties {
 
     public String toString() {
         return "state: " + getState() +
+                "\nspritesheet: " + getSpritesheet() +
                 "\nxDimension: " + getxDimension() +
                 "\nyDimension: " + getyDimension() +
                 "\nframes: " + getFrames() +

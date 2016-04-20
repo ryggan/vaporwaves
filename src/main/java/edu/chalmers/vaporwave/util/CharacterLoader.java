@@ -27,7 +27,7 @@ public class CharacterLoader {
                 String currentName = singleCharacterNodes.getElementsByTagName("name").item(j).getTextContent();
                 if (currentName.equals(name)) {
 
-                    for (int k = 0; k < State.values().length - 1; k++) {
+                    for (int k = 0; k < Constants.CHARACTER_STATE.length; k++) {
 
                         Element currentSpriteNodes = (Element)singleCharacterNodes.getElementsByTagName(Constants.CHARACTER_STATE[k].toString().toLowerCase()).item(j);
 

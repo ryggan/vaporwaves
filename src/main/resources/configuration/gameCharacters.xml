@@ -49,7 +49,7 @@
             <firstFrameY>0</firstFrameY>
         </death>
 
-        <respawn>
+        <spawn>
             <spritesheet>images/spritesheet-alyssa-respawn-48x128.png</spritesheet>
             <xDimension>48</xDimension>
             <yDimension>128</yDimension>
@@ -57,7 +57,7 @@
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
-        </respawn>
+        </spawn>
     </character>
 
 
