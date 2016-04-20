@@ -14,13 +14,14 @@ public class IOUtilities {
 
     public char[] readMapFile(File mapFile) {
         try {
+            System.out.println(mapFile);
             fr = new FileReader(mapFile);
         } catch(FileNotFoundException e) {
-            // Do something, will figure it out later
+            System.out.println("KRASHADE VID FILEREADER SKAPNING");
         } try {
             fr.read(stringKeywords);
         } catch(IOException e) {
-            // Do something, will figure it out later
+            System.out.println("KRASHADE VID LÄSNING AV READERN");
         }
         return stringKeywords;
     }
