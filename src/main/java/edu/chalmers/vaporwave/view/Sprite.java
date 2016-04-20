@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -29,7 +30,7 @@ public class Sprite {
     public Sprite() {
         this.positionX = 0;
         this.positionY = 0;
-        this.scale = 1.0;
+        this.scale = Constants.GAME_SCALE;
         this.stayOnPixel = true;
         setImage(this.image);
     }
