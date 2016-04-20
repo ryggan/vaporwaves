@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.SpriteProperties;
 import edu.chalmers.vaporwave.util.CharacterLoader;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.Directions;
 import edu.chalmers.vaporwave.util.XMLReader;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
@@ -14,10 +15,12 @@ import org.w3c.dom.NodeList;
 import java.awt.*;
 
 public class GameCharacter extends DynamicTile {
+
     private Point currentGridPosition;
     private Point previousGridPosition;
     private Player player;
     private int playerId;
+    private Directions direction;
 
     private Sprite spawnSprite;
     private Sprite[] idleSprite = new Sprite[4];
@@ -70,12 +73,16 @@ public class GameCharacter extends DynamicTile {
     // Change this to use enum instead
     public void move(String key) {
         if (key.equals("UP")) {
+            direction = Directions.UP;
             moveUp();
         } else if (key.equals("LEFT")) {
+            direction = Directions.LEFT;
             moveLeft();
         } else if (key.equals("DOWN")) {
+            direction = Directions.DOWN;
             moveDown();
         } else if (key.equals("RIGHT")) {
+            direction = Directions.RIGHT;
             moveRight();
         }
     }

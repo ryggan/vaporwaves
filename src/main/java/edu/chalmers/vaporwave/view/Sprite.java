@@ -15,8 +15,6 @@ public class Sprite {
     private Image image;
     private double positionX;
     private double positionY;
-    private double velocityX;
-    private double velocityY;
     private double width;
     private double height;
     private double scale;
@@ -29,8 +27,6 @@ public class Sprite {
     public Sprite() {
         this.positionX = 0;
         this.positionY = 0;
-        this.velocityX = 0;
-        this.velocityY = 0;
         this.scale = 1.0;
         this.stayOnPixel = true;
         setImage(this.image);
@@ -63,16 +59,6 @@ public class Sprite {
     public void setImage(String fileName) {
         Image i = new Image(fileName);
         this.setImage(i);
-    }
-
-    /**
-     * Updates position relative to velocity.
-     * Unsure if this works any good, may need to revisit this. <<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-     * @param time
-     */
-    public void update(double time) {
-        positionX += velocityX * time;
-        positionY += velocityY * time;
     }
 
     /**
@@ -110,28 +96,15 @@ public class Sprite {
     }
 
     public String toString() {
-        return "Sprite - Position: [" + positionX + "," + positionY + "]" + " Velocity: ["
-                + velocityX + "," + velocityY + "]";
+        return "Sprite - Position: [" + positionX + "," + positionY + "]" + "Width:[" + width +"," + height + "]";
     }
 
-    // POSITION AND VEOLOCITY MANAGEMENT:
+    // GETTERS AND SETTERS:
 
     public void setPosition(double positionX, double positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
     }
-
-    public void setVelocity(double velocityX, double velocityY) {
-        this.velocityX = velocityX;
-        this.velocityY = velocityY;
-    }
-
-    public void addVelocity(double addX, double addY) {
-        this.velocityX += addX;
-        this.velocityY += addY;
-    }
-
-    // GETTERS AND SETTERS:
 
     public void setWidth(double width) {
         this.width = width;
@@ -149,13 +122,6 @@ public class Sprite {
     }
     public double getPositionY() {
         return this.positionY;
-    }
-
-    public double getVelocityX() {
-        return this.velocityX;
-    }
-    public double getVelocityY() {
-        return this.velocityY;
     }
 
     public double getWidth() {

@@ -20,8 +20,8 @@ public class Bomb extends Explosive implements IEvent {
     public Bomb(int range, int delay) {
         this.delay = delay;
     }
-    public Bomb(Sprite s, Point cPos, Point gPos, int range, int delay){
-        super(s, cPos, gPos, range);
+    public Bomb(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition, int range, int delay){
+        super(sprite, canvasPositionX, canvasPositionY, gridPosition, range);
         this.delay=delay;
     }
 

@@ -9,14 +9,15 @@ import java.awt.*;
  * Created by FEngelbrektsson on 15/04/16.
  */
 public interface Tile {
-    public Point getCanvasPosition();
-    public Point getGridPosition();
-    public void setCanvasPosition(Point p);
     public void setGridPosition(Point p);
-    public double getGridYPosition();
-    public double getGridXPosition();
-    public double getCanvasYPosition();
-    public double getCanvasXPosition();
+    public Point getGridPosition();
+    public double getGridPositionX();
+    public double getGridPositionY();
+    public void setCanvasPosition(double canvasPositionX, double canvasPositionY);
+    public void setCanvasPositionX(double canvasPositionX);
+    public void setCanvasPositionY(double canvasPositionY);
+    public double getCanvasPositionX();
+    public double getCanvasPositionY();
     public Sprite getSprite();
     public void setSprite(Sprite s);
     public void render(GraphicsContext gc, double time);
