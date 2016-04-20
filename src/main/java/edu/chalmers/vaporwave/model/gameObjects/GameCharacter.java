@@ -2,7 +2,7 @@ package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.SpriteProperties;
+import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
@@ -47,14 +47,14 @@ public class GameCharacter extends DynamicTile {
 
         for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
 
-            SpriteProperties spriteProperties = characterProperties.getSpriteProperties(characterState);
+            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
 
-            currentSpriteCreation = new AnimatedSprite(spriteProperties.getSpritesheet(),
-                    new Dimension(spriteProperties.getDimensionX(), spriteProperties.getDimensionY()),
-                    spriteProperties.getFrames(),
-                    spriteProperties.getDuration(),
-                    spriteProperties.getFirstFrame(),
-                    spriteProperties.getOffset());
+            currentSpriteCreation = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                    characterSpriteProperties.getFrames(),
+                    characterSpriteProperties.getDuration(),
+                    characterSpriteProperties.getFirstFrame(),
+                    characterSpriteProperties.getOffset());
 
             switch(characterState) {
                 case SPAWN:
@@ -69,17 +69,13 @@ public class GameCharacter extends DynamicTile {
 
 
 
-        Image spriteSheet0 = new Image("images/spritesheet-alyssa-respawn-48x128.png");
         Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
-        Image spriteSheet2 = new Image("images/spritesheet-alyssa-death-56x56.png");
 
-        spawnSprite[0] = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0}, new double[] {0, 0});
         for (int i = 0; i < 4; i++) {
             idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {16, 27});
             walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {16, 27});
             flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {16, 27});
         }
-        deathSprite[0] = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0}, new double[] {0, 0});
 
         // Test settings setup:
 
@@ -92,18 +88,18 @@ public class GameCharacter extends DynamicTile {
 
 
     /**
-     * Helper method for creating an AnimatedSprite object from a SpriteProperties object.
+     * Helper method for creating an AnimatedSprite object from a CharacterSpriteProperties object.
      *
-     * @param spriteProperties
+     * @param characterSpriteProperties
      * @return An AnimatedSprite object
      */
-    private AnimatedSprite createSpriteFromProperties(SpriteProperties spriteProperties) {
-        return new AnimatedSprite(spriteProperties.getSpritesheet(),
-                new Dimension(spriteProperties.getDimensionX(), spriteProperties.getDimensionY()),
-                spriteProperties.getFrames(),
-                spriteProperties.getDuration(),
-                spriteProperties.getFirstFrame(),
-                spriteProperties.getOffset());
+    private AnimatedSprite createSpriteFromProperties(CharacterSpriteProperties characterSpriteProperties) {
+        return new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                characterSpriteProperties.getFrames(),
+                characterSpriteProperties.getDuration(),
+                characterSpriteProperties.getFirstFrame(),
+                characterSpriteProperties.getOffset());
     }
 
     public void move(String key) {

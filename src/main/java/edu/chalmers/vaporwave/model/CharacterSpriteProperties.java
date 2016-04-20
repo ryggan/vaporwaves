@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 /**
  * Created by andreascarlsson on 2016-04-19.
  */
-public class SpriteProperties {
+public class CharacterSpriteProperties {
     private String state;
     private Image spritesheet;
     private int dimensionX;
@@ -15,7 +15,7 @@ public class SpriteProperties {
     private int[] firstFrame;
     private double[] offset;
 
-    public SpriteProperties(String state, Image spritesheet, int dimensionX, int dimensionY, int frames, double duration, int[] firstFrame, double[] offset) {
+    public CharacterSpriteProperties(String state, Image spritesheet, int dimensionX, int dimensionY, int frames, double duration, int[] firstFrame, double[] offset) {
         this.spritesheet = spritesheet;
         this.state = state;
         this.dimensionX = dimensionX;

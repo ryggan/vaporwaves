@@ -1,7 +1,7 @@
 package edu.chalmers.vaporwave.util;
 
 import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.model.SpriteProperties;
+import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import javafx.scene.image.Image;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,7 +16,7 @@ public class CharacterLoader {
 
     public static CharacterProperties loadCharacter(NodeList nodeList, String name) {
 
-        Map<CharacterState, SpriteProperties> spritePropertiesMap = new HashMap<CharacterState, SpriteProperties>();
+        Map<CharacterState, CharacterSpriteProperties> spritePropertiesMap = new HashMap<CharacterState, CharacterSpriteProperties>();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
 
@@ -41,7 +41,7 @@ public class CharacterLoader {
                         double[] offset = { Double.parseDouble(currentSpriteNodes.getElementsByTagName("offsetX").item(0).getTextContent()),
                                 Integer.parseInt(currentSpriteNodes.getElementsByTagName("firstFrameY").item(0).getTextContent())};
 
-                        SpriteProperties property = new SpriteProperties(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(),
+                        CharacterSpriteProperties property = new CharacterSpriteProperties(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(),
                                 spritesheet, dimensionX, dimensionY, frames, duration, firstFrame, offset);
                         spritePropertiesMap.put(Constants.CHARACTER_CHARACTER_STATE[k], property);
 

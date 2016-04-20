@@ -9,9 +9,9 @@ import java.util.Map;
  */
 public class CharacterProperties {
     private String name;
-    private Map<CharacterState, SpriteProperties> spriteProperties;
+    private Map<CharacterState, CharacterSpriteProperties> spriteProperties;
 
-    public CharacterProperties(String name, Map<CharacterState, SpriteProperties> spriteProperties) {
+    public CharacterProperties(String name, Map<CharacterState, CharacterSpriteProperties> spriteProperties) {
         this.name = name;
         this.spriteProperties = spriteProperties;
     }
@@ -24,7 +24,7 @@ public class CharacterProperties {
         return this.spriteProperties;
     }
 
-    public SpriteProperties getSpriteProperties(CharacterState characterState) {
+    public CharacterSpriteProperties getSpriteProperties(CharacterState characterState) {
         return this.spriteProperties.get(characterState);
     }
 
