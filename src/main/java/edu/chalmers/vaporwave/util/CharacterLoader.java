@@ -16,7 +16,7 @@ public class CharacterLoader {
 
     public static CharacterProperties loadCharacter(NodeList nodeList, String name) {
 
-        Map<CharacterState, SpriteProperties> spritePropertiesMap = new HashMap<CharacterState, SpriteProperties>();
+        Map<State, SpriteProperties> spritePropertiesMap = new HashMap<State, SpriteProperties>();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
 
@@ -27,7 +27,7 @@ public class CharacterLoader {
                 String currentName = singleCharacterNodes.getElementsByTagName("name").item(j).getTextContent();
                 if (currentName.equals(name)) {
 
-                    for (int k = 0; k < CharacterState.values().length - 1; k++) {
+                    for (int k = 0; k < State.values().length - 1; k++) {
 
                         Element currentSpriteNodes = (Element)singleCharacterNodes.getElementsByTagName(Constants.CHARACTER_STATE[k].toString().toLowerCase()).item(j);
 
