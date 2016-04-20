@@ -1,11 +1,9 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
+import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.SpriteProperties;
-import edu.chalmers.vaporwave.util.CharacterLoader;
-import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.Directions;
-import edu.chalmers.vaporwave.util.XMLReader;
+import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.Image;
@@ -43,8 +41,11 @@ public class GameCharacter extends DynamicTile {
         XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
         NodeList nl = reader.read();
         System.out.println(nl);
-        SpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
-        System.out.println(sp[0].getName());
+        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), name);
+//        System.out.println(sp[0].getState());
+
+
+
 
 
         Image spriteSheet0 = new Image("images/spritesheet-alyssa-respawn-48x128.png");
@@ -69,6 +70,7 @@ public class GameCharacter extends DynamicTile {
         setGridPosition(new Point(0,0));
         characterState = "IDLE";
         direction = Directions.DOWN;
+        speed = 0.8;
         updateSprite();
     }
 
@@ -122,25 +124,28 @@ public class GameCharacter extends DynamicTile {
 
     public void moveUp() {
         direction = Directions.UP;
-
+        setVelocity(0, -this.speed);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() + 1);
 //        setSprite(walkSprite[3]);
     }
     public void moveDown() {
         direction = Directions.DOWN;
+        setVelocity(0, this.speed);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() - 1);
 //        setSprite(walkSprite[0]);
     }
     public void moveLeft() {
         direction = Directions.LEFT;
+        setVelocity(-this.speed, 0);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX() - 1, previousGridPosition.getY());
 //        setSprite(walkSprite[1]);
     }
     public void moveRight() {
         direction = Directions.RIGHT;
+        setVelocity(this.speed, 0);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX() + 1, previousGridPosition.getY());
 //        setSprite(walkSprite[2]);

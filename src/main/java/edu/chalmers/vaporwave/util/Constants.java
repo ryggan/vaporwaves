@@ -18,4 +18,7 @@ public class Constants {
     public static final int DEFAULT_TILE_HEIGHT = 16;
 
     public static final double GAME_SCALE = 2.0;
+
+    public static final State[] CHARACTER_STATE = { State.WALK, State.IDLE, State.FLINCH, State.DEATH, State.SPAWN };
+
 }

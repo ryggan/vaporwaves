@@ -19,11 +19,11 @@ public abstract class DynamicTile implements Tile {
 
     protected DynamicTile() { }
 
-    public DynamicTile(Sprite s, double canvasPositionX, double canvasPositionY, Point gridPosition) {
+    public DynamicTile(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition) {
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
         this.gridPosition = gridPosition;
-        this.sprite = s;
+        this.sprite = sprite;
         this.velocityX = 0;
         this.velocityY = 0;
     }
@@ -52,8 +52,8 @@ public abstract class DynamicTile implements Tile {
         return this.velocityY;
     }
 
-    public void setSprite(Sprite s) {
-        this.sprite = s;
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
     public Sprite getSprite() {
         return this.sprite;
@@ -77,8 +77,8 @@ public abstract class DynamicTile implements Tile {
         return this.canvasPositionY;
     }
 
-    public void setGridPosition(Point p) {
-        this.gridPosition = p;
+    public void setGridPosition(Point gridPosition) {
+        this.gridPosition = gridPosition;
     }
 
     public Point getGridPosition() {
