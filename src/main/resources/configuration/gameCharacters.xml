@@ -17,8 +17,8 @@
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
-            <offsetX>0</offsetX>
-            <offsetY>0</offsetY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
         </walk>
 
         <idle>
@@ -29,8 +29,8 @@
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>4</firstFrameY>
-            <offsetX>0</offsetX>
-            <offsetY>0</offsetY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
         </idle>
 
         <flinch>
@@ -41,8 +41,8 @@
             <duration>0.1</duration>
             <firstFrameX>4</firstFrameX>
             <firstFrameY>4</firstFrameY>
-            <offsetX>0</offsetX>
-            <offsetY>0</offsetY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
         </flinch>
 
         <death>
