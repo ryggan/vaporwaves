@@ -16,12 +16,13 @@ import java.awt.*;
 
 public class GameCharacter extends DynamicTile {
 
+    // needed or not?
     private Point currentGridPosition;
     private Point previousGridPosition;
     private Player player;
     private int playerId;
+
     private Directions direction;
-//    private boolean moving;
     private String characterState;
 
     private double maxHealth;
