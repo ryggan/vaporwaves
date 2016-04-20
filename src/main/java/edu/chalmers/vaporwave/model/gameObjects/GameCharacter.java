@@ -15,8 +15,8 @@ public class GameCharacter extends DynamicTile {
 
     private String name;
 
-    private Point currentGridPosition;
-    private Point previousGridPosition;
+    //private Point currentGridPosition;
+    //private Point previousGridPosition;
     private Player player;
     private int playerId;
 
@@ -175,44 +175,53 @@ public class GameCharacter extends DynamicTile {
     public void moveUp() {
         direction = Directions.UP;
         setVelocity(0, -this.speed);
-//        previousGridPosition = currentGridPosition;
-//        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() + 1);
-//        setSprite(walkSprite[3]);
     }
     public void moveDown() {
         direction = Directions.DOWN;
         setVelocity(0, this.speed);
-//        previousGridPosition = currentGridPosition;
-//        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() - 1);
-//        setSprite(walkSprite[0]);
     }
     public void moveLeft() {
         direction = Directions.LEFT;
         setVelocity(-this.speed, 0);
-//        previousGridPosition = currentGridPosition;
-//        currentGridPosition.setLocation(previousGridPosition.getX() - 1, previousGridPosition.getY());
-//        setSprite(walkSprite[1]);
     }
     public void moveRight() {
         direction = Directions.RIGHT;
         setVelocity(this.speed, 0);
-//        previousGridPosition = currentGridPosition;
-//        currentGridPosition.setLocation(previousGridPosition.getX() + 1, previousGridPosition.getY());
-//        setSprite(walkSprite[2]);
     }
 
-//    public void setGridPosition(Point gridPosition) {
-//        this.currentGridPosition = gridPosition;
-//        this.previousGridPosition = gridPosition;
-//    }
+    @Override
+    public void updatePosition() {
+        super.updatePosition();
+        if (characterState == CharacterState.WALK)
+            stopOnTileIfNeeded();
+    }
+
+    private void stopOnTileIfNeeded() {
+        System.out.println("stop???? "+getCanvasPositionX());
+    }
+
+//    private void stopOnTileIfNeeded() {
+//        double previousPositionX = getGridPositionX() * Constants.DEFAULT_GRID_WIDTH;
+//        double previousPositionY = getGridPositionY() * Constants.DEFAULT_GRID_HEIGHT;
+//        double nextPositionX = previousPositionX + Constants.DEFAULT_GRID_WIDTH * Math.signum(getVelocityX());
+//        double nextPositionY = previousPositionY + Constants.DEFAULT_GRID_HEIGHT * Math.signum(getVelocityY());
 //
-//    public Point getGridPosition() {
-//        return currentGridPosition;
+//        boolean previousCheck = (Math.abs(getCanvasPositionX() + getVelocityX() - previousPositionX) <= getVelocityX()
+//                && Math.abs(getCanvasPositionY() + getVelocityY() - previousPositionY) <= getVelocityY());
+//        boolean nextCheck = (Math.abs(getCanvasPositionX() + getVelocityX() - nextPositionX) <= getVelocityX()
+//                && Math.abs(getCanvasPositionY() + getVelocityY() - nextPositionY) <= getVelocityY());
+//
+//        if (previousCheck || nextCheck) {
+//            characterState = CharacterState.IDLE;
+//            setVelocity(0, 0);
+//            if (previousCheck)
+//                setGeneralPosition((int)previousPositionX, (int)previousPositionY);
+//            else if (nextCheck)
+//                setGeneralPosition((int)nextPositionX, (int)nextPositionY);
+//        }
 //    }
-//    public double getXPosition() {
-//        return currentGridPosition.getX();
-//    }
-//    public double getYPosition() {
-//        return currentGridPosition.getY();
+
+//    private void stop() {
+//
 //    }
 }

@@ -47,8 +47,6 @@ public class GameController {
 //        CharacterSpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
 //        System.out.println(sp[0].getName());
 
-
-
         // TEST TILES
         playerCharacter = new GameCharacter("Alyssa");
 
