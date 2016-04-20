@@ -212,7 +212,7 @@ public class GameCharacter extends DynamicTile {
     }
 
     private void stop(int newGridPositionX, int newGridPositionY) {
-        System.out.println("newx: "+newGridPositionX+", newy: "+newGridPositionY);
+//        System.out.println("newx: "+newGridPositionX+", newy: "+newGridPositionY);
         setVelocity(0, 0);
         characterState = CharacterState.IDLE;
         setGeneralPosition(newGridPositionX, newGridPositionY);

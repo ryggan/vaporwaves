@@ -33,7 +33,7 @@ public abstract class DynamicTile implements Tile {
         this.canvasPositionX += this.velocityX;
         this.canvasPositionY += this.velocityY;
         sprite.setPosition(this.canvasPositionX, this.canvasPositionY);
-        System.out.println("posx: "+canvasPositionX+", posy: "+canvasPositionY);
+//        System.out.println("posx: "+canvasPositionX+", posy: "+canvasPositionY);
     }
 
     public void render(GraphicsContext gc, double time) {

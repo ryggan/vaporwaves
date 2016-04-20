@@ -108,7 +108,7 @@ public class Sprite {
     public void setPosition(double positionX, double positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
-        System.out.println("sprite posx: "+positionX+", posy: "+positionY);
+//        System.out.println("sprite posx: "+positionX+", posy: "+positionY);
     }
 
     public void setWidth(double width) {
