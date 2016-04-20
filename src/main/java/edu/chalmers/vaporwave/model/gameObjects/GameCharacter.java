@@ -77,13 +77,13 @@ public class GameCharacter extends DynamicTile {
         spawnSprite[0] = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0}, new double[] {0, 0});
         spawnSprite[0].setScale(Constants.GAME_SCALE);
         for (int i = 0; i < 4; i++) {
-            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {0, 0});
+            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {16, 27});
             idleSprite[i].setScale(Constants.GAME_SCALE);
 
-            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {0, 0});
+            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {16, 27});
             walkSprite[i].setScale(Constants.GAME_SCALE);
 
-            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {0, 0});
+            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {16, 27});
             flinchSprite[i].setScale(Constants.GAME_SCALE);
         }
         deathSprite[0] = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0}, new double[] {0, 0});
@@ -91,10 +91,10 @@ public class GameCharacter extends DynamicTile {
 
         // Test settings setup:
 
-        setGeneralPosition(0, 0);
+        setGeneralPosition(5, 5);
         characterState = "IDLE";
         direction = Directions.DOWN;
-        speed = 0.4;
+        speed = 0.8;
         updateSprite();
     }
 

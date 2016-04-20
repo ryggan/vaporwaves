@@ -96,6 +96,5 @@ public abstract class DynamicTile implements Tile {
     public void setGeneralPosition(int gridPositionX, int gridPositionY) {
         setGridPosition(new Point(gridPositionX, gridPositionY));
         setCanvasPosition(gridPositionX * Constants.DEFAULT_TILE_WIDTH, gridPositionY * Constants.DEFAULT_TILE_HEIGHT);
-        System.out.println("in: "+gridPositionX+", "+gridPositionY+" - out: "+getCanvasPositionX()+", "+getCanvasPositionY());
     }
 }
