@@ -18,7 +18,7 @@ public class Map {
         return this.name;
     }
 
-    public MapObject[][] {
+    public MapObject[][] getMapObjects() {
         return this.mapObjects;
     }
 }
