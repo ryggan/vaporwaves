@@ -20,7 +20,7 @@ public class GameCharacter extends DynamicTile {
     private int playerId;
 
     private Directions direction;
-    private String characterState;
+    private CharacterState characterState;
 
     private double maxHealth;
     private double health;
@@ -80,7 +80,7 @@ public class GameCharacter extends DynamicTile {
         // Test settings setup:
 
         setGeneralPosition(5, 5);
-        characterState = "IDLE";
+        characterState = CharacterState.IDLE;
         direction = Directions.DOWN;
         speed = 0.8;
         updateSprite();
@@ -103,8 +103,8 @@ public class GameCharacter extends DynamicTile {
     }
 
     public void move(String key) {
-//        if (!characterState.equals("WALK") || oppositeDirection(key)) {
-            characterState = "WALK";
+//        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
+            characterState = CharacterState.WALK;
             if (key.equals("UP")) {
                 moveUp();
             } else if (key.equals("LEFT")) {
@@ -127,13 +127,13 @@ public class GameCharacter extends DynamicTile {
 
     private void updateSprite() {
         Sprite[] currentSprite = idleSprite; // Always idle if no other state is active
-        if (characterState.equals("WALK")) {
+        if (characterState == CharacterState.WALK) {
             currentSprite = walkSprite;
-        } else if (characterState.equals("FLINCH")) {
+        } else if (characterState == CharacterState.FLINCH) {
             currentSprite = flinchSprite;
-        } else if (characterState.equals("SPAWN")) {
+        } else if (characterState == CharacterState.SPAWN) {
             currentSprite = spawnSprite;
-        } else if (characterState.equals("DEATH")) {
+        } else if (characterState == CharacterState.DEATH) {
             currentSprite = deathSprite;
         }
 
