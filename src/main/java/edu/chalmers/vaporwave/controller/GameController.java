@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.controller;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.DynamicTile;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;

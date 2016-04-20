@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.view;
 
-import com.sun.tools.internal.jxc.ap.Const;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.Rectangle2D;

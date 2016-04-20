@@ -4,7 +4,7 @@
     <character>
         <name>Alyssa</name>
 
-        <maxHealth>100.0</maxHealth>
+        <maxHealth>100</maxHealth>
         <speed>10.0</speed>
         <bombRange>3</bombRange>
         <bombCount>1</bombCount>
@@ -68,6 +68,16 @@
             <offsetX>0</offsetX>
             <offsetY>0</offsetY>
         </spawn>
+
+        <menu>
+            <!---
+                frameselected
+                frame
+                characterFrameView
+                characterName
+                selectedCharacterView
+            -->
+        </menu>
     </character>
 
 
