@@ -16,14 +16,16 @@ import java.io.IOException;
 public class XMLReader {
     private String file;
 
-
     public XMLReader(String file) {
         this.file = file;
     }
 
+    /**
+     * Method for reading from an XML-file and returning the content as a NodeList
+     *
+     * @return A NodeList containing all characters if reading successfull, otherwhise null.
+     */
     public NodeList read() {
-        System.out.println(file);
-
         try {
             File file = new File(this.file);
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -33,9 +35,8 @@ public class XMLReader {
 
             NodeList characterList = document.getElementsByTagName("gameCharacters");
             return characterList;
-
         } catch(ParserConfigurationException e) {
-            System.out.println("Fel :( " + e);
+            System.out.println(e);
         } catch(IOException e) {
             System.out.println(e);
         } catch(SAXException e) {
