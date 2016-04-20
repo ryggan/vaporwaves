@@ -68,18 +68,15 @@ public class GameCharacter extends DynamicTile {
     }
 
     // Change this to use enum instead
-    public void move(KeyEvent e) {
-        if(e.getCode().equals(65)) {
-            this.moveLeft();
-        }
-        else if(e.getCode().equals(68)) {
-            this.moveRight();
-        }
-        else if(e.getCode().equals(83)) {
-            this.moveDown();
-        }
-        else if(e.getCode().equals(87)) {
-            this.moveUp();
+    public void move(String key) {
+        if (key.equals("UP")) {
+            moveUp();
+        } else if (key.equals("LEFT")) {
+            moveLeft();
+        } else if (key.equals("DOWN")) {
+            moveDown();
+        } else if (key.equals("RIGHT")) {
+            moveRight();
         }
     }
 

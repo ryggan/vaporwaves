@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.view.Sprite;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.*;
 
@@ -18,4 +19,5 @@ public interface Tile {
     public double getCanvasXPosition();
     public Sprite getSprite();
     public void setSprite(Sprite s);
+    public void render(GraphicsContext gc, double time);
 }

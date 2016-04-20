@@ -15,11 +15,14 @@ import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class GameController {
 
     private ArenaView arenaView;
     private ArenaModel arenaModel;
+
+    private GameCharacter playerCharacter;
 
     public GameController(Group root) {
 
@@ -46,10 +49,10 @@ public class GameController {
 
 
         // TEST TILES
-        Tile testCharacter = new GameCharacter("Alyssa");
+        playerCharacter = new GameCharacter("Alyssa");
 
         try {
-            arenaModel.setTile(testCharacter, 5, 5);
+            arenaModel.setTile(playerCharacter, 5, 5);
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
@@ -60,11 +63,20 @@ public class GameController {
     }
 
     // This one is called every time the game-timer is updated
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall, ArrayList<String> input) {
 
         // Game logic
 
+        // Input handling:
 
+        if (input.size() > 0)
+            System.out.println(input);
+
+        for (int i = 0; i < input.size(); i++) {
+            String key = input.get(i);
+            if (key.equals("UP") || key.equals("LEFT") || key.equals("DOWN") || key.equals("RIGHT"))
+                playerCharacter.move(key);
+        }
 
         // Updating positions
 

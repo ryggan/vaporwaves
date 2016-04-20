@@ -43,4 +43,8 @@ public class Player {
     public int getId() {
         return this.playerId;
     }
+
+    public class KeyBindings {
+        // ?
+    }
 }

@@ -11,12 +11,14 @@ import java.util.ArrayList;
  */
 public class ListenerController {
 
-    private MainController mc;
+//    private MainController mc;
+    private ArrayList<String> input = new ArrayList<String>();
 
-    public ListenerController(Scene scene, MainController mc) {
-        this.mc = mc;
+    public ListenerController(Scene scene) {
+//        public ListenerController(Scene scene, MainController mc) {
+//        this.mc = mc;
 
-        ArrayList<String> input = new ArrayList<String>();
+//        ArrayList<String> input = new ArrayList<String>();
 
         scene.setOnKeyPressed(
             new EventHandler<KeyEvent>() {
@@ -24,7 +26,7 @@ public class ListenerController {
                     String code = e.getCode().toString();
                     if (!input.contains(code)) {
                         input.add(code);
-                        System.out.println("Key pressed: "+code);
+//                        System.out.println("Key pressed: "+code);
                     }
                 }
             });
@@ -34,8 +36,17 @@ public class ListenerController {
                 public void handle(KeyEvent e) {
                     String code = e.getCode().toString();
                     input.remove(code);
-                    System.out.println("Key released: "+code);
+//                    System.out.println("Key released: "+code);
                 }
             });
+    }
+
+    public ArrayList<String> getInput() {
+        ArrayList<String> inputReturn = new ArrayList<String>();
+        for (String s: this.input) {
+            inputReturn.add(s);
+        }
+//        input = new ArrayList<String>();
+        return inputReturn;
     }
 }

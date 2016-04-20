@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.view.Sprite;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.*;
 
@@ -66,5 +67,9 @@ public abstract class DynamicTile implements Tile {
     }
     public double getGridYPosition() {
         return gridPosition.getY();
+    }
+
+    public void render(GraphicsContext gc, double time) {
+        getSprite().render(gc, time);
     }
 }

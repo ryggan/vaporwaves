@@ -43,6 +43,12 @@ public class Sprite {
         this();
         setImage(fileName);
     }
+    public Sprite(Sprite sprite) {
+        this();
+        this.scale = sprite.getScale();
+        this.stayOnPixel = sprite.getStayOnPixel();
+        setImage(sprite.getImage());
+    }
 
     public void setImage(Image image) {
         this.image = image;
@@ -169,6 +175,10 @@ public class Sprite {
 
     public boolean getStayOnPixel() {
         return stayOnPixel;
+    }
+
+    public Image getImage() {
+        return this.image;
     }
 
 }
