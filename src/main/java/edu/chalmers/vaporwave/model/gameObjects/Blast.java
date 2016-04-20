@@ -36,8 +36,8 @@ public class Blast {
         explosionCenterSprite.setScale(Constants.GAME_SCALE);
 
         this.range = b.getRange();
-        this.canvasXPosition = b.getCanvasXPosition();
-        this.canvasYPosition = b.getCanvasYPosition();
+        this.canvasXPosition = b.getCanvasPositionX();
+        this.canvasYPosition = b.getCanvasPositionY();
         this.time = 0;
     }
 
@@ -71,7 +71,7 @@ public class Blast {
         explosionEndSprite.setPosition(canvasXPosition, canvasYPosition + end * 16);
         explosionEndSprite.render(gc, time);
 
-        // TODO: 1. Fix rotation of explosion beam sprites and end sprites
+        // TODO: 1. Fix rotation of explosion beam sprites and end sprites OR solve it in spritesheet
         //          tip: http://stackoverflow.com/questions/18260421/how-to-draw-image-rotated-on-javafx-canvas
         // TODO: 2. Make sure the explosion starts at frame = 0 and then destroys itself at frame = last
     }

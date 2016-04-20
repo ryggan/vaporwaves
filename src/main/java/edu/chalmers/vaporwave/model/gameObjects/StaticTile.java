@@ -9,25 +9,51 @@ import java.awt.*;
  * Created by FEngelbrektsson on 15/04/16.
  */
 public abstract class StaticTile implements Tile {
-    private Point canvasPosition;
+
+    private double canvasPositionX;
+    private double canvasPositionY;
     private Point gridPosition;
     private Sprite sprite;
 
     public StaticTile(){
     }
 
-    public StaticTile(Sprite s, Point gPos, Point cPos) {
-        this.canvasPosition = cPos;
-        this.gridPosition = gPos;
+    public StaticTile(Sprite s, double canvasPositionX, double canvasPositionY, Point gridPosition) {
+        this.canvasPositionX = canvasPositionX;
+        this.canvasPositionY = canvasPositionY;
+        this.gridPosition = gridPosition;
         this.sprite = s;
     }
 
-    public void setCanvasPosition(Point p) {
-        this.canvasPosition = p;
+    public void render(GraphicsContext gc, double time) {
+        getSprite().render(gc, time);
     }
 
-    public Point getCanvasPosition() {
-        return this.canvasPosition;
+    // GET N SETS
+
+    public void setSprite(Sprite s) {
+        this.sprite = s;
+    }
+    public Sprite getSprite() {
+        return this.sprite;
+    }
+
+    public void setCanvasPosition(double canvasPositionX, double canvasPositionY) {
+        this.canvasPositionX = canvasPositionX;
+        this.canvasPositionY = canvasPositionY;
+    }
+    public void setCanvasPositionX(double canvasPositionX) {
+        this.canvasPositionX = canvasPositionX;
+    }
+    public void setCanvasPositionY(double canvasPositionY) {
+        this.canvasPositionY = canvasPositionY;
+    }
+
+    public double getCanvasPositionX() {
+        return this.canvasPositionX;
+    }
+    public double getCanvasPositionY() {
+        return this.canvasPositionY;
     }
 
     public void setGridPosition(Point p) {
@@ -38,28 +64,10 @@ public abstract class StaticTile implements Tile {
         return this.gridPosition;
     }
 
-    public void setSprite(Sprite s) {
-        this.sprite = s;
-    }
-    public Sprite getSprite() {
-        return this.sprite;
-    }
-
-    public double getCanvasXPosition() {
-        return canvasPosition.getX();
-    }
-    public double getCanvasYPosition() {
-        return canvasPosition.getY();
-    }
-
-    public double getGridXPosition() {
+    public double getGridPositionX() {
         return gridPosition.getX();
     }
-    public double getGridYPosition() {
+    public double getGridPositionY() {
         return gridPosition.getY();
-    }
-
-    public void render(GraphicsContext gc, double time) {
-        getSprite().render(gc, time);
     }
 }

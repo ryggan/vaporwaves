@@ -13,25 +13,25 @@ public class StatPowerUp extends PowerUp {
     private ArrayList<PowerUpState> enabledPowerUpList;
     private PowerUpState powerUpState;
 
-    public StatPowerUp(Sprite s, Point cPos, Point gPos, ArrayList<PowerUpState> l) {
-        super.setSprite(s);
-        super.setCanvasPosition(cPos);
-        super.setGridPosition(gPos);
-        enabledPowerUpList = l;
+    public StatPowerUp(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition, ArrayList<PowerUpState> list) {
+        super.setSprite(sprite);
+        super.setCanvasPosition(canvasPositionX, canvasPositionY);
+        super.setGridPosition(gridPosition);
+        enabledPowerUpList = list;
 
-        if(l.size() > 0) {
+        if(list.size() > 0) {
             int randomMaxValue = 0;
-            for (int i = 0; i < l.size(); i++) {
-                randomMaxValue = randomMaxValue + l.get(i).getSpawnChance();
+            for (int i = 0; i < list.size(); i++) {
+                randomMaxValue = randomMaxValue + list.get(i).getSpawnChance();
             }
 
             Random r = new Random();
             int randomValue = r.nextInt(randomMaxValue);
             int j = 0;
-            for (int i = 0; i < l.size(); i++) {
-                j = j + l.get(i).getSpawnChance();
+            for (int i = 0; i < list.size(); i++) {
+                j = j + list.get(i).getSpawnChance();
                 if(j <= randomValue) {
-                    powerUpState = l.get(i);
+                    powerUpState = list.get(i);
                 }
             }
 

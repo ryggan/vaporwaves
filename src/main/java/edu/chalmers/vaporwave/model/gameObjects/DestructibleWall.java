@@ -12,8 +12,8 @@ public class DestructibleWall extends Wall {
     private boolean isDestroyed;
     private Sprite destroyedSprite;
 
-    public DestructibleWall(Sprite firstSprite, Point gPos, Point cPos, Sprite destroyedSprite){
-        super(firstSprite, gPos, cPos);
+    public DestructibleWall(Sprite firstSprite, double canvasPositionX, double canvasPositionY, Point gridPosition, Sprite destroyedSprite){
+        super(firstSprite, canvasPositionX, canvasPositionY, gridPosition);
         this.destroyedSprite=destroyedSprite;
         isDestroyed=false;
     }

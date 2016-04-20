@@ -9,8 +9,8 @@ import java.awt.*;
  */
 public class IndestructibleWall extends Wall {
 
-    public IndestructibleWall(Sprite s, Point gPos, Point cPos){
-        super(s, gPos, cPos);
+    public IndestructibleWall(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition){
+        super(sprite, canvasPositionX, canvasPositionY, gridPosition);
     }
 
 
