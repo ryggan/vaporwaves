@@ -69,11 +69,11 @@ public class Sprite {
      * @param time (unused, but necessary for overridden method)
      */
     public void render(GraphicsContext gc, double time) {
-        double posx = positionX - offsetX * scale;
-        double posy = positionY - offsetY * scale;
+        double posx = (positionX - offsetX) * scale;
+        double posy = (positionY - offsetY) * scale;
         if (stayOnPixel) {
-            posx = Math.round(posx * scale) * scale;
-            posy = Math.round(posy * scale) * scale;
+            posx = Math.round(posx * scale) / scale;
+            posy = Math.round(posy * scale) / scale;
         }
         gc.drawImage(this.image, posx, posy);
     }

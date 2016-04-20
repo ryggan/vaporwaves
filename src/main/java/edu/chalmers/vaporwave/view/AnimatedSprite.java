@@ -60,7 +60,6 @@ public class AnimatedSprite extends Sprite {
                 (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));
 
         setOffset(offset[0], offset[1]);
-        System.out.println(offset[0]+" offset "+offset[1]);
 
         // Initiating frames-list, by calculating every coordinate in the spritesheet
 
@@ -142,12 +141,11 @@ public class AnimatedSprite extends Sprite {
         double height = getHeight() * getScale();
         int sourcex = frames.get(index)[0] * (int)width;
         int sourcey = frames.get(index)[1] * (int)height;
-        double targetx = getPositionX() - getOffsetX() * getScale();
-        double targety = getPositionY() - getOffsetY() * getScale();
-//        System.out.println("target: "+targetx+", "+targety);
+        double targetx = (getPositionX() - getOffsetX()) * getScale();
+        double targety = (getPositionY() - getOffsetY()) * getScale();
         if (getStayOnPixel()) {
-            targetx = Math.round(targetx * getScale()) * getScale();
-            targety = Math.round(targety * getScale()) * getScale();
+            targetx = Math.round(targetx * getScale()) / getScale();
+            targety = Math.round(targety * getScale()) / getScale();
         }
         gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
     }
