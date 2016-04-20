@@ -72,6 +72,7 @@ public class GameCharacter extends DynamicTile {
         setGridPosition(new Point(0,0));
         characterState = "IDLE";
         direction = Directions.DOWN;
+        speed = 0.8;
         updateSprite();
     }
 
@@ -125,25 +126,28 @@ public class GameCharacter extends DynamicTile {
 
     public void moveUp() {
         direction = Directions.UP;
-
+        setVelocity(0, -this.speed);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() + 1);
 //        setSprite(walkSprite[3]);
     }
     public void moveDown() {
         direction = Directions.DOWN;
+        setVelocity(0, this.speed);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() - 1);
 //        setSprite(walkSprite[0]);
     }
     public void moveLeft() {
         direction = Directions.LEFT;
+        setVelocity(-this.speed, 0);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX() - 1, previousGridPosition.getY());
 //        setSprite(walkSprite[1]);
     }
     public void moveRight() {
         direction = Directions.RIGHT;
+        setVelocity(this.speed, 0);
 //        previousGridPosition = currentGridPosition;
 //        currentGridPosition.setLocation(previousGridPosition.getX() + 1, previousGridPosition.getY());
 //        setSprite(walkSprite[2]);

@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.controller;
 
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.SpriteProperties;
+import edu.chalmers.vaporwave.model.gameObjects.DynamicTile;
 import edu.chalmers.vaporwave.model.gameObjects.Tile;
 import edu.chalmers.vaporwave.util.CharacterLoader;
 import edu.chalmers.vaporwave.util.Constants;
@@ -80,7 +81,17 @@ public class GameController {
 
         // Updating positions
 
+        ArrayList<Tile>[][] arena = arenaModel.getArena();
 
+        for (int i = 0; i < arena.length; i++) {
+            for (int j = 0; j < arena[0].length; j++) {
+                for (Tile t : arena[i][j]) {
+                    if (t instanceof DynamicTile) {
+                        ((DynamicTile)t).updatePosition();
+                    }
+                }
+            }
+        }
 
         // Calls view to update graphics
 
