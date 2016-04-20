@@ -5,4 +5,6 @@ package edu.chalmers.vaporwave.model.menu;
  */
 public class GameSettings implements MenuState {
 
+
+
 }

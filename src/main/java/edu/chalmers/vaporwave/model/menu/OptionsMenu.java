@@ -5,4 +5,5 @@ package edu.chalmers.vaporwave.model.menu;
  */
 public class OptionsMenu implements MenuState {
 
+
 }
