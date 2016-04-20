@@ -13,6 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.awt.event.KeyEvent.*;
 
 /**
@@ -26,6 +30,9 @@ public class MenuView {
     private GraphicsContext tileGC;
     private Label lol;
     private ImageView start;
+    private ImageView startSelected;
+
+    private List<ImageView[]> items;
 
     private MenuState menuState;
 
@@ -33,10 +40,12 @@ public class MenuView {
     public MenuView(Group root) {
 
         // Setting up area to draw graphics
+        items=new ArrayList<ImageView[]>();
 
         start = new ImageView("images/startgame.png");
+        startSelected = new ImageView("images/startgame.png");
 
-
+        items.add(new ImageView[]{start, startSelected});
 
         start.setOnKeyPressed(new EventHandler<KeyEvent>(){
 
@@ -49,38 +58,6 @@ public class MenuView {
 
         root.getChildren().add(start);
         root.setOnKeyPressed(event -> System.out.print("sup"));
-
-
-       // backgroundCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-        //root.getChildren().add(backgroundCanvas);
-        //tileCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
-        //root.getChildren().add(tileCanvas);
-        ;
-
-        //double xoffset = Math.floor((Constants.WINDOW_WIDTH - Constants.GAME_WIDTH) / 2);
-       // double yoffset = Math.floor((Constants.WINDOW_HEIGHT - Constants.GAME_HEIGHT) / 2);
-        //tileCanvas.setLayoutX(xoffset);
-        //tileCanvas.setLayoutY(yoffset);
-        //backgroundCanvas.setLayoutX(xoffset);
-        //backgroundCanvas.setLayoutY(yoffset);
-
-        //tileGC = tileCanvas.getGraphicsContext2D();
-       // backgroundGC = backgroundCanvas.getGraphicsContext2D();
-        //createBackground(backgroundGC);
-
-
-       // menuState = new MenuState();
-
-        // TEST DRAWING
-
-//        Image img = new Image("images/spritesheet-alyssa-walkidleflinch-48x32.png");
-//        testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
-//        testSprite.setVelocity(0, 5);
-//        testSprite.setScale(2);
-//        Image img2 = new Image("images/spritesheet-alyssa-death-56x56.png");
-//        testSprite2 = new AnimatedSprite(img2, new Dimension(56, 56), 28, 0.1);
-//        testSprite2.setPosition(50, 50);
-//        testSprite2.setScale(2);
 //
 
     }
@@ -91,6 +68,13 @@ public class MenuView {
         arenaBackgroundSprite.setPosition(0, 0);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
+
+    }
+
+    public void changeSelected(String key){
+        if (key.equals("UP")){
+
+        }
 
     }
 
