@@ -149,6 +149,7 @@ public class AnimatedSprite extends Sprite {
             targetx = Math.round(targetx * getScale()) / getScale();
             targety = Math.round(targety * getScale()) / getScale();
         }
+        System.out.println("targetx: "+targetx+", targety: "+targety);
         gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
     }
 

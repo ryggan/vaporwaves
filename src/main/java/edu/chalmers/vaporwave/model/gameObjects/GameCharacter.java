@@ -45,7 +45,7 @@ public class GameCharacter extends DynamicTile {
         setGeneralPosition(5, 5);
         characterState = CharacterState.IDLE;
         direction = Directions.DOWN;
-        speed = 0.3;
+        speed = 0.6;
         updateSprite();
     }
 
@@ -170,6 +170,7 @@ public class GameCharacter extends DynamicTile {
             spriteIndex = 0; // Happens when direction = DOWN, or when characterState = SPAWN/DEATH
         }
         setSprite(currentSprite[spriteIndex]);
+        getSprite().setPosition(getCanvasPositionX(), getCanvasPositionY());
     }
 
     public void moveUp() {
@@ -199,54 +200,22 @@ public class GameCharacter extends DynamicTile {
     private void stopOnTileIfNeeded() {
         int closestTilePositionX = (int)Math.round(getCanvasPositionX() / Constants.DEFAULT_TILE_WIDTH);
         int closestTilePositionY = (int)Math.round(getCanvasPositionY() / Constants.DEFAULT_TILE_HEIGHT);
-//        System.out.println(closestTilePositionX+" - "+closestTilePositionY
-//                +" distance: "+Math.abs(closestTilePositionY * Constants.DEFAULT_TILE_HEIGHT - getCanvasPositionY()));
 
         boolean closeToPosition =
                 (Math.abs(closestTilePositionX * Constants.DEFAULT_TILE_WIDTH - getCanvasPositionX()) <= this.speed)
-                && (Math.abs(closestTilePositionY * Constants.DEFAULT_TILE_HEIGHT - getCanvasPositionY()) <= this.speed);
-//                && (closestTilePositionX != getGridPositionX() || closestTilePositionX != getGridPositionY());
+                && (Math.abs(closestTilePositionY * Constants.DEFAULT_TILE_HEIGHT - getCanvasPositionY()) <= this.speed)
+                && (closestTilePositionX != getGridPositionX() || closestTilePositionY != getGridPositionY());
 
         if(closeToPosition) {
             stop(closestTilePositionX, closestTilePositionY);
         }
-//            System.out.println("Close to position!! x: "+closestTilePositionX+", y: "+closestTilePositionY);
     }
 
     private void stop(int newGridPositionX, int newGridPositionY) {
-//        System.out.println("Stop at position!! x: "+newGridPositionX+", y: "+newGridPositionY);
-//        System.out.println("current position, x: "+getCanvasPositionX()+", y: "+getCanvasPositionY()
-//                +" - new position, x: "+newGridPositionX*Constants.DEFAULT_TILE_WIDTH+", y: "+newGridPositionY*Constants.DEFAULT_TILE_HEIGHT);
+        System.out.println("newx: "+newGridPositionX+", newy: "+newGridPositionY);
         setVelocity(0, 0);
         characterState = CharacterState.IDLE;
-//        setGridPosition(new Point(newGridPositionX, newGridPositionY));
-//        setGeneralPosition(newGridPositionX, newGridPositionY);
-//        setCanvasPosition(newGridPositionX * Constants.DEFAULT_TILE_WIDTH, newGridPositionY * Constants.DEFAULT_TILE_HEIGHT);
+        setGeneralPosition(newGridPositionX, newGridPositionY);
         updateSprite();
     }
-
-//    private void stopOnTileIfNeeded() {
-//        double previousPositionX = getGridPositionX() * Constants.DEFAULT_GRID_WIDTH;
-//        double previousPositionY = getGridPositionY() * Constants.DEFAULT_GRID_HEIGHT;
-//        double nextPositionX = previousPositionX + Constants.DEFAULT_GRID_WIDTH * Math.signum(getVelocityX());
-//        double nextPositionY = previousPositionY + Constants.DEFAULT_GRID_HEIGHT * Math.signum(getVelocityY());
-//
-//        boolean previousCheck = (Math.abs(getCanvasPositionX() + getVelocityX() - previousPositionX) <= getVelocityX()
-//                && Math.abs(getCanvasPositionY() + getVelocityY() - previousPositionY) <= getVelocityY());
-//        boolean nextCheck = (Math.abs(getCanvasPositionX() + getVelocityX() - nextPositionX) <= getVelocityX()
-//                && Math.abs(getCanvasPositionY() + getVelocityY() - nextPositionY) <= getVelocityY());
-//
-//        if (previousCheck || nextCheck) {
-//            characterState = CharacterState.IDLE;
-//            setVelocity(0, 0);
-//            if (previousCheck)
-//                setGeneralPosition((int)previousPositionX, (int)previousPositionY);
-//            else if (nextCheck)
-//                setGeneralPosition((int)nextPositionX, (int)nextPositionY);
-//        }
-//    }
-
-//    private void stop() {
-//
-//    }
 }
