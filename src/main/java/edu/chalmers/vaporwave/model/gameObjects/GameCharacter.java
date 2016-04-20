@@ -7,7 +7,6 @@ import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.AnimatedSprite;
 import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import org.w3c.dom.NodeList;
 
 import java.awt.*;
@@ -46,18 +45,19 @@ public class GameCharacter extends DynamicTile {
         Sprite currentSpriteCreation;
         System.out.println(characterProperties.getSpriteProperties());
 
-        for (State state : Constants.CHARACTER_STATE) {
+        for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
 
-            SpriteProperties spriteProperties = characterProperties.getSpriteProperties(state);
+            SpriteProperties spriteProperties = characterProperties.getSpriteProperties(characterState);
 
             currentSpriteCreation = new AnimatedSprite(spriteProperties.getSpritesheet(),
-                    new Dimension(spriteProperties.getxDimension(), spriteProperties.getyDimension()),
+                    new Dimension(spriteProperties.getDimensionX(), spriteProperties.getDimensionY()),
                     spriteProperties.getFrames(),
                     spriteProperties.getDuration(),
-                    spriteProperties.getFirstFrame());
+                    spriteProperties.getFirstFrame(),
+                    spriteProperties.getOffset());
 
 
-            switch(state) {
+            switch(characterState) {
                 case SPAWN:
                     spawnSprite[0] = currentSpriteCreation;
                     break;
