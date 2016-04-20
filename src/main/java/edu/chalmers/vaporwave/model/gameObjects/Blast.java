@@ -28,11 +28,11 @@ public class Blast {
 
         // Initiate sprites:
         Image spriteSheet = new Image("images/spritesheet-bombs_and_explosions-17x17.png");
-        explosionEndSprite = new AnimatedSprite(spriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0});
+        explosionEndSprite = new AnimatedSprite(spriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
         explosionEndSprite.setScale(Constants.GAME_SCALE);
-        explosionBeamSprite = new AnimatedSprite(spriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1});
+        explosionBeamSprite = new AnimatedSprite(spriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
         explosionBeamSprite.setScale(Constants.GAME_SCALE);
-        explosionCenterSprite = new AnimatedSprite(spriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 2});
+        explosionCenterSprite = new AnimatedSprite(spriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 2}, new double[] {0, 0});
         explosionCenterSprite.setScale(Constants.GAME_SCALE);
 
         this.range = b.getRange();

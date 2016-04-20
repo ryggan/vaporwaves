@@ -70,8 +70,8 @@ public class GameController {
 
         // Input handling:
 
-        if (input.size() > 0)
-            System.out.println(input);
+//        if (input.size() > 0)
+//            System.out.println(input);
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);

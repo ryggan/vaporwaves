@@ -52,25 +52,27 @@ public class GameCharacter extends DynamicTile {
         Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
         Image spriteSheet2 = new Image("images/spritesheet-alyssa-death-56x56.png");
 
-        spawnSprite[0] = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0});
+        spawnSprite[0] = new AnimatedSprite(spriteSheet0, new Dimension(48, 128), 27, 0.1, new int[] {0, 0}, new double[] {0, 0});
         spawnSprite[0].setScale(Constants.GAME_SCALE);
         for (int i = 0; i < 4; i++) {
-            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4});
+            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {0, 0});
             idleSprite[i].setScale(Constants.GAME_SCALE);
 
-            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i});
+            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {0, 0});
             walkSprite[i].setScale(Constants.GAME_SCALE);
 
-            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4});
+            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {0, 0});
             flinchSprite[i].setScale(Constants.GAME_SCALE);
         }
-        deathSprite[0] = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0});
+        deathSprite[0] = new AnimatedSprite(spriteSheet2, new Dimension(56, 56), 28, 0.1, new int[] {0, 0}, new double[] {0, 0});
         deathSprite[0].setScale(Constants.GAME_SCALE);
 
-        setGridPosition(new Point(0,0));
+        // Test settings setup:
+
+        setGeneralPosition(0, 0);
         characterState = "IDLE";
         direction = Directions.DOWN;
-        speed = 0.8;
+        speed = 0.4;
         updateSprite();
     }
 
