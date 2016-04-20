@@ -13,7 +13,8 @@ import java.awt.*;
 
 public class GameCharacter extends DynamicTile {
 
-    // needed or not?
+    private String name;
+
     private Point currentGridPosition;
     private Point previousGridPosition;
     private Player player;
@@ -36,46 +37,9 @@ public class GameCharacter extends DynamicTile {
 
     public GameCharacter(String name) {
 
-        // Trying out the XML loader
-        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
-        NodeList nl = reader.read();
-        System.out.println(nl);
-        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), name);
+        this.name = name;
 
-        Sprite currentSpriteCreation;
-        System.out.println(characterProperties.getSpriteProperties());
-
-        for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
-
-            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
-
-            currentSpriteCreation = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                    characterSpriteProperties.getFrames(),
-                    characterSpriteProperties.getDuration(),
-                    characterSpriteProperties.getFirstFrame(),
-                    characterSpriteProperties.getOffset());
-
-            switch(characterState) {
-                case SPAWN:
-                    spawnSprite[0] = currentSpriteCreation;
-                    break;
-                case DEATH:
-                    deathSprite[0] = currentSpriteCreation;
-                    break;
-            }
-        }
-
-
-
-
-        Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
-
-        for (int i = 0; i < 4; i++) {
-            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {16, 27});
-            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {16, 27});
-            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {16, 27});
-        }
+        initCharacterSprites();
 
         // Test settings setup:
 
@@ -86,6 +50,57 @@ public class GameCharacter extends DynamicTile {
         updateSprite();
     }
 
+    /**
+     * Reads character information from an XML-file and populate the instance variables for the sprites
+     */
+    private void initCharacterSprites() {
+        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
+        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), this.name);
+
+        for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
+            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
+            switch(characterState) {
+                case SPAWN:
+                    spawnSprite[0] = createSpriteFromProperties(characterSpriteProperties);
+                    break;
+                case DEATH:
+                    deathSprite[0] = createSpriteFromProperties(characterSpriteProperties);
+                    break;
+                case WALK:
+                    for (int i = 0; i < 4; i++) {
+                        walkSprite[i] = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                characterSpriteProperties.getFrames(),
+                                characterSpriteProperties.getDuration(),
+                                new int[] {characterSpriteProperties.getFirstFrame()[0], i},
+                                characterSpriteProperties.getOffset());
+                    }
+                    break;
+                case IDLE:
+                    for (int i = 0; i < 4; i++) {
+                        idleSprite[i] = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                characterSpriteProperties.getFrames(),
+                                characterSpriteProperties.getDuration(),
+                                new int[] {i, characterSpriteProperties.getFirstFrame()[1]},
+                                characterSpriteProperties.getOffset());
+                    }
+                    break;
+                case FLINCH:
+                    for (int i = 0; i < 4; i++) {
+                        flinchSprite[i] = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                characterSpriteProperties.getFrames(),
+                                characterSpriteProperties.getDuration(),
+                                new int[] {characterSpriteProperties.getFirstFrame()[0] + i, i},
+                                characterSpriteProperties.getOffset());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     /**
      * Helper method for creating an AnimatedSprite object from a CharacterSpriteProperties object.
