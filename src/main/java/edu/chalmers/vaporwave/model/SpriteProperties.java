@@ -4,7 +4,6 @@ package edu.chalmers.vaporwave.model;
  * Created by andreascarlsson on 2016-04-19.
  */
 public class SpriteProperties {
-    private String name;
     private String state;
     private int xDimension;
     private int yDimension;
@@ -12,18 +11,13 @@ public class SpriteProperties {
     private double duration;
     private int[] firstFrame;
 
-    public SpriteProperties(String name, String state, int xDimension, int yDimension, int frames, double duration, int[] firstFrame) {
-        this.name = name;
+    public SpriteProperties(String state, int xDimension, int yDimension, int frames, double duration, int[] firstFrame) {
         this.state = state;
         this.xDimension = xDimension;
         this.yDimension = yDimension;
         this.frames = frames;
         this.duration = duration;
         this.firstFrame = firstFrame;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public String getState() {

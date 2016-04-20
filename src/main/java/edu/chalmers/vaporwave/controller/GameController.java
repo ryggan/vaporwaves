@@ -37,11 +37,11 @@ public class GameController {
 
 
         // Trying out the XML loader
-        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
-        NodeList nl = reader.read();
-        System.out.println(nl);
-        SpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
-        System.out.println(sp[0].getName());
+//        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
+//        NodeList nl = reader.read();
+//        System.out.println(nl);
+//        SpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
+//        System.out.println(sp[0].getName());
 
 
 

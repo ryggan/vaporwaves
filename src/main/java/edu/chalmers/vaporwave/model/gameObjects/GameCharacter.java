@@ -32,7 +32,7 @@ public class GameCharacter extends DynamicTile {
         NodeList nl = reader.read();
         System.out.println(nl);
         SpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
-        System.out.println(sp[0].getName());
+        System.out.println(sp[0].getState());
 
 
         Image spriteSheet0 = new Image("images/spritesheet-alyssa-respawn-48x128.png");
