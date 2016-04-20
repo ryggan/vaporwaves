@@ -21,7 +21,7 @@ public class GameCharacter extends DynamicTile {
     private int playerId;
 
     private Directions direction;
-    private String characterState;
+    private CharacterState characterState;
 
     private double maxHealth;
     private double health;
@@ -42,9 +42,8 @@ public class GameCharacter extends DynamicTile {
         initCharacterSprites();
 
         // Test settings setup:
-    
         setGeneralPosition(5, 5);
-        characterState = "IDLE";
+        characterState = CharacterState.IDLE;
         direction = Directions.DOWN;
         speed = 0.8;
         updateSprite();
@@ -100,6 +99,14 @@ public class GameCharacter extends DynamicTile {
                     break;
             }
         }
+        Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
+
+        for (int i = 0; i < 4; i++) {
+            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {16, 27});
+            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {16, 27});
+            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {16, 27});
+        }
+
     }
 
     /**
@@ -118,8 +125,8 @@ public class GameCharacter extends DynamicTile {
     }
 
     public void move(String key) {
-//        if (!characterState.equals("WALK") || oppositeDirection(key)) {
-            characterState = "WALK";
+//        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
+            characterState = CharacterState.WALK;
             if (key.equals("UP")) {
                 moveUp();
             } else if (key.equals("LEFT")) {
@@ -142,13 +149,13 @@ public class GameCharacter extends DynamicTile {
 
     private void updateSprite() {
         Sprite[] currentSprite = idleSprite; // Always idle if no other state is active
-        if (characterState.equals("WALK")) {
+        if (characterState == CharacterState.WALK) {
             currentSprite = walkSprite;
-        } else if (characterState.equals("FLINCH")) {
+        } else if (characterState == CharacterState.FLINCH) {
             currentSprite = flinchSprite;
-        } else if (characterState.equals("SPAWN")) {
+        } else if (characterState == CharacterState.SPAWN) {
             currentSprite = spawnSprite;
-        } else if (characterState.equals("DEATH")) {
+        } else if (characterState == CharacterState.DEATH) {
             currentSprite = deathSprite;
         }
 
