@@ -45,7 +45,7 @@ public class GameCharacter extends DynamicTile {
         setGeneralPosition(5, 5);
         characterState = CharacterState.IDLE;
         direction = Directions.DOWN;
-        speed = 0.8;
+        speed = 0.3;
         updateSprite();
     }
 
@@ -125,7 +125,7 @@ public class GameCharacter extends DynamicTile {
     }
 
     public void move(String key) {
-//        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
+        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
             characterState = CharacterState.WALK;
             if (key.equals("UP")) {
                 moveUp();
@@ -137,7 +137,7 @@ public class GameCharacter extends DynamicTile {
                 moveRight();
             }
             updateSprite();
-//        }
+        }
     }
 
     private boolean oppositeDirection(String key) {
@@ -197,7 +197,32 @@ public class GameCharacter extends DynamicTile {
     }
 
     private void stopOnTileIfNeeded() {
-        System.out.println("stop???? "+getCanvasPositionX());
+        int closestTilePositionX = (int)Math.round(getCanvasPositionX() / Constants.DEFAULT_TILE_WIDTH);
+        int closestTilePositionY = (int)Math.round(getCanvasPositionY() / Constants.DEFAULT_TILE_HEIGHT);
+//        System.out.println(closestTilePositionX+" - "+closestTilePositionY
+//                +" distance: "+Math.abs(closestTilePositionY * Constants.DEFAULT_TILE_HEIGHT - getCanvasPositionY()));
+
+        boolean closeToPosition =
+                (Math.abs(closestTilePositionX * Constants.DEFAULT_TILE_WIDTH - getCanvasPositionX()) <= this.speed)
+                && (Math.abs(closestTilePositionY * Constants.DEFAULT_TILE_HEIGHT - getCanvasPositionY()) <= this.speed);
+//                && (closestTilePositionX != getGridPositionX() || closestTilePositionX != getGridPositionY());
+
+        if(closeToPosition) {
+            stop(closestTilePositionX, closestTilePositionY);
+        }
+//            System.out.println("Close to position!! x: "+closestTilePositionX+", y: "+closestTilePositionY);
+    }
+
+    private void stop(int newGridPositionX, int newGridPositionY) {
+//        System.out.println("Stop at position!! x: "+newGridPositionX+", y: "+newGridPositionY);
+//        System.out.println("current position, x: "+getCanvasPositionX()+", y: "+getCanvasPositionY()
+//                +" - new position, x: "+newGridPositionX*Constants.DEFAULT_TILE_WIDTH+", y: "+newGridPositionY*Constants.DEFAULT_TILE_HEIGHT);
+        setVelocity(0, 0);
+        characterState = CharacterState.IDLE;
+//        setGridPosition(new Point(newGridPositionX, newGridPositionY));
+//        setGeneralPosition(newGridPositionX, newGridPositionY);
+//        setCanvasPosition(newGridPositionX * Constants.DEFAULT_TILE_WIDTH, newGridPositionY * Constants.DEFAULT_TILE_HEIGHT);
+        updateSprite();
     }
 
 //    private void stopOnTileIfNeeded() {
