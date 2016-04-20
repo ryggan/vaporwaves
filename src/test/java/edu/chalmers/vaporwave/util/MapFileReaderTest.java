@@ -2,16 +2,14 @@ package edu.chalmers.vaporwave.util;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by FEngelbrektsson on 20/04/16.
  */
-public class MapReaderTest {
+public class MapFileReaderTest {
 
     @Test
     public void testParseFunction() {
-        MapReader mr = new MapReader();
+        MapFileReader mr = new MapFileReader();
         String[] strArr = new String[3];
         String str1 = "h e j ";
         String str2 = "o j ";

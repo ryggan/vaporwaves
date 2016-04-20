@@ -9,12 +9,17 @@ import java.util.Scanner;
 /**
  * Created by FEngelbrektsson on 20/04/16.
  */
-public class MapReader {
+public class MapFileReader {
+    private File mapFile;
+
     private String[][] stringKeywords = new String[Constants.DEFAULT_GRID_HEIGHT][Constants.DEFAULT_GRID_WIDTH];
     private Scanner textScanner;
     private String[] linesHolder = new String[Constants.DEFAULT_GRID_HEIGHT];
    // private String[] parsedLines;
 
+    public MapFileReader(String filename) {
+
+    }
 
     /**
      *
@@ -51,7 +56,7 @@ public class MapReader {
      * @throws Exception
      */
     public String[][] createMapArray(File mapFile) throws Exception {
-       linesHolder = readMapRows(mapFile);
+        linesHolder = readMapRows(mapFile);
         return parseStrings(linesHolder);
     }
 

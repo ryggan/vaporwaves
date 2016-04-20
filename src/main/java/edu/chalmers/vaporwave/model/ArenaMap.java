@@ -5,11 +5,11 @@ import edu.chalmers.vaporwave.util.MapObject;
 /**
  * Created by andreascarlsson on 2016-04-20.
  */
-public class Map {
+public class ArenaMap {
     private String name;
     private MapObject[][] mapObjects;
 
-    public Map(String name, MapObject[][] mapObjects) {
+    public ArenaMap(String name, MapObject[][] mapObjects) {
         this.name = name;
         this.mapObjects = mapObjects;
     }
