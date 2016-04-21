@@ -4,6 +4,8 @@ import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import edu.chalmers.vaporwave.model.gameObjects.Movable;
+import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.MapObject;
 import edu.chalmers.vaporwave.util.XMLReader;
 import edu.chalmers.vaporwave.view.ArenaView;
@@ -24,9 +26,10 @@ public class GameController {
 
         this.arenaView = new ArenaView(root);
 
+        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
 
         // Starting new game
-        this.arenaModel = newGame(new ArenaMap("default", new MapObject[0][0]));
+        this.arenaModel = newGame(arenaMap);
 
         arenaView.initArena();
 
@@ -48,8 +51,7 @@ public class GameController {
             System.out.println("Tile out of bounds!");
         }
 
-        XMLReader testReader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
-        testReader.read();
+
 
     }
 

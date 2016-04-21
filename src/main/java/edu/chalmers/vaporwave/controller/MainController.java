@@ -26,7 +26,6 @@ public class MainController {
 
         GameEventBus.getInstance().register(this);
         // Trying out mapreader
-        MapFileReader mfr = new MapFileReader("src/main/resources/maps/default.vapormap");
 
 
         this.root = root;
@@ -79,7 +78,7 @@ public class MainController {
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
         this.gameController = new GameController(this.root);
-        System.out.println(newGameEvent.getId());
+
 
     }
 }
