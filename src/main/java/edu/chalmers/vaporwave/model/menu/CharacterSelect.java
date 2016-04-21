@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 /**
  * Created by bob on 2016-04-15.
  */
-public class CharacterSelect implements MenuState {
+public class CharacterSelect extends MenuState {
 
     Label speed;
     Label bombRange;
@@ -26,6 +26,7 @@ public class CharacterSelect implements MenuState {
     private static CharacterSelect instance = new CharacterSelect();
 
     private CharacterSelect(){
+        super(4);
         characters=new CharacterConfig[4];
         characters[0]=AlyssaConfig.getInstance();
     }
