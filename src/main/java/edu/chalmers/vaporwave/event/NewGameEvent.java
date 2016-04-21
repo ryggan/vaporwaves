@@ -10,6 +10,7 @@ import edu.chalmers.vaporwave.model.gameObjects.PowerUp;
 public class NewGameEvent {
     private ArenaMap arenaMap;
     private GameCharacter gameCharacter;
+//    private enabledPowerUps = List<>
 
     public int getId() {
         return 15;
