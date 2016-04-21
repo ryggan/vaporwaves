@@ -2,12 +2,10 @@ package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -149,7 +147,6 @@ public class AnimatedSprite extends Sprite {
             targetx = Math.round(targetx * getScale()) / getScale();
             targety = Math.round(targety * getScale()) / getScale();
         }
-//        System.out.println("targetx: "+targetx+", targety: "+targety);
         gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
     }
 

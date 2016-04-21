@@ -3,16 +3,15 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
-import edu.chalmers.vaporwave.model.gameObjects.Enemy;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
-import edu.chalmers.vaporwave.model.gameObjects.Movable;
-import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
+import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.*;
 
 import java.awt.*;
+import java.awt.Image;
 import java.util.ArrayList;
 
 /**
@@ -29,6 +28,11 @@ public class ArenaView {
     private Scoreboard scoreboard;
 
     private CharacterSprite[] characterSprites = new CharacterSprite[4];
+    private Sprite[] bombSprite = new Sprite[4];
+
+    private Sprite destructibleWallSprite;
+    private Sprite destructibleWallDestroyedSprite;
+    private Sprite indestructibleWallSprite;
 
     private Group root;
     
@@ -57,6 +61,32 @@ public class ArenaView {
 
         characterSprites[0] = new CharacterSprite("ALYSSA");
         initCharacterSprites(characterSprites[0]);
+//        characterSprites[1] = new CharacterSprite("ZYPHER");
+//        initCharacterSprites(characterSprites[1]);
+//        characterSprites[2] = new CharacterSprite("CHARLOTTE");
+//        initCharacterSprites(characterSprites[2]);
+//        characterSprites[3] = new CharacterSprite("MEI");
+//        initCharacterSprites(characterSprites[3]);
+
+        javafx.scene.image.Image bombSpriteSheet = new javafx.scene.image.Image("images/spritesheet-bombs_and_explosions-17x17.png");
+        bombSprite[0] =
+                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 0}, new double[] {0, 0});
+        bombSprite[1] =
+                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 1}, new double[] {0, 0});
+        bombSprite[2] =
+                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 2}, new double[] {0, 0});
+        bombSprite[3] =
+                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 3}, new double[] {0, 0});
+
+        javafx.scene.image.Image wallSpriteSheet = new javafx.scene.image.Image("images/spritesheet-walls_both-17x17.png");
+        destructibleWallSprite =
+                new AnimatedSprite(wallSpriteSheet, new Dimension(17, 17), 1, 1.0, new int[] {0, 0}, new double[] {0, 0});
+        destructibleWallDestroyedSprite =
+                new AnimatedSprite(wallSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {1, 0}, new double[] {0, 0});
+        indestructibleWallSprite =
+                new AnimatedSprite(wallSpriteSheet, new Dimension(17, 17), 1, 1.0, new int[] {0, 1}, new double[] {0, 0});
+
+
     }
 
     public void initArena() {
@@ -96,8 +126,11 @@ public class ArenaView {
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null) {
-//                    arenaTiles[i][j].render(tileGC, timeSinceStart);
-                    renderTile(arenaTiles[i][j], timeSinceStart);
+                    Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
+                    if (tileSprite != null) {
+                        tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
+                        tileSprite.render(tileGC, timeSinceStart);
+                    }
                 }
             }
         }
@@ -113,8 +146,32 @@ public class ArenaView {
 
     }
 
-    public void renderTile(StaticTile tile, double timeSinceStart) {
+    public Sprite getTileSprite(StaticTile tile) {
+        if (tile instanceof Wall) {
+            if (tile instanceof DestructibleWall) {
+                return destructibleWallSprite;
+            } else if (tile instanceof IndestructibleWall) {
+                return indestructibleWallSprite;
+            }
+        } else if (tile instanceof Explosive) {
+            if (tile instanceof Bomb) {
 
+                // todo: DO NOT erese below; should work when "getOwner()" is implemented
+//                String name = ((Bomb)tile).getOwner().getCharacter().getName();
+//                if (name.equals("ALYSSA")) {
+//                    return bombSprite[0];
+//                } else if (name.equals("ZYPHER")) {
+//                    return bombSprite[1];
+//                } else if (name.equals("CHARLOTTE")) {
+//                    return bombSprite[2];
+//                } else if (name.equals("MEI")) {
+//                    return bombSprite[3];
+//                }
+            }
+        } else if (tile instanceof PowerUp) {
+
+        }
+        return null;
     }
 
     public void renderCharacter(GameCharacter character, double timeSinceStart) {
