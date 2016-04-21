@@ -59,33 +59,4 @@ public class MapFileReader {
         linesHolder = readMapRows(mapFile);
         return parseStrings(linesHolder);
     }
-
-    public Boolean isDestructibleWall(char c) {
-        if(c == 'X') {
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean isInDestructibleWall(char c) {
-        if(c == 'O') {
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean isEnemySpawn(char c) {
-        if(c == 'E') {
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean isCharacterSpawn(char c) {
-        if(c == 'C') {
-            return true;
-        }
-        return false;
-    }
-
 }

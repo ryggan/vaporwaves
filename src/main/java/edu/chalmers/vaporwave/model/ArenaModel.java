@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.MapFileReader;
+import edu.chalmers.vaporwave.util.MapObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class ArenaModel {
 
     private ArenaMap arenaMap;
-    private ArrayList<Tile>[][] arena;
+    private StaticTile[][] arena;
     private int width;
     private int height;
 
@@ -77,35 +78,43 @@ public class ArenaModel {
      * @param mapFile going to be changed to String[][]
      * @throws Exception
      */
-//    public void loadObjectsToMap(File mapFile) throws Exception {
-//        //Första raden skall göras någon annanstans, behövs även då byta args till en String[][]
-//       String[][] mapMatrix = mapFileReader.createMapArray(mapFile);
-//        for(int i = 0; i < mapMatrix.length; i++) {
-//            for(int j = 0; i < mapMatrix[i].length; j++) {
-////               arena[i][j].add(createObject(mapMatrix[i][j], i, j));
-//            }
-//        }
-//    }
+    public void loadObjectsToMap(ArenaMap arenaMap) throws Exception {
+        //Första raden skall göras någon annanstans, behövs även då byta args till en String[][]
+       MapObject[][] mapMatrix = arenaMap.getMapObjects();//.createMapArray(mapFile);
+        for(int i = 0; i < mapMatrix.length; i++) {
+            for(int j = 0; i < mapMatrix[i].length; j++) {
+               arena[i][j] = (createObject(mapMatrix[i][j], i, j));
+            }
+        }
+    }
 
     /**
      *
-     * @param character
+     * @param mapObject
      * @param x grid position in rows
      * @param y grid position in columns
      * @return appropriate Tile
      */
-//    public Tile createObject(String character, int x, int y) {
-//        ArrayList<Tile> objectList = new ArrayList<Tile>();
-//        if(character.equals("O")) {
-//            return new DestructibleWall(x, y);
-//        } else if(character.equals("X")) {
-//            return new IndestructibleWall(x, y);
-//        } else if(character.equals("C")) {
-//            return new GameCharacter(x, y);
-//        } else if(character.equals("A")) {
-//            return new Enemy(x, y);
-//        } else {
-//            return null;
-//        }
-//    }
+    public Tile createObject(MapObject mapObject, int x, int y) {
+        //ArrayList<Tile> objectList = new ArrayList<Tile>();
+
+        switch(mapObject) {
+            case DESTRUCTIBLE_WALL:
+                return new DestructibleWall(x, y);
+            case INDESTRUCTIBLE_WALL:
+                return new IndestructibleWall(x, y);
+            default:
+                return null;
+        }
+    }
+
+    public String toString() {
+        String temporaryString = "";
+        for(int i = 0; i < arena[0].length; i++) {
+            for(int j = 0; j < arena.length; j++) {
+
+            }
+        }
+        return temporaryString;
+    }
 }
