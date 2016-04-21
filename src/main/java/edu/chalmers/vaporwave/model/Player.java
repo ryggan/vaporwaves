@@ -1,12 +1,14 @@
 package edu.chalmers.vaporwave.model;
 
+import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
+
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
 public class Player {
     private int playerId;
     private String playerName;
-    private Character character;
+    private GameCharacter character;
     private int score;
     //name id character
     //ListenerController
@@ -32,8 +34,12 @@ public class Player {
         this.score=0;
     }
 
-    public void setCharacter(Character c){
+    public void setCharacter(GameCharacter c){
         character=c;
+    }
+
+    public GameCharacter getCharacter() {
+        return character;
     }
 
     public void clearCharacter(){
