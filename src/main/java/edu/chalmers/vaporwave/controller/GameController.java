@@ -39,13 +39,6 @@ public class GameController {
 
 
 
-        // Trying out the XML loader
-//        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
-//        NodeList nl = reader.read();
-//        System.out.println(nl);
-//        CharacterSpriteProperties[] sp = CharacterLoader.loadCharacters(reader.read());
-//        System.out.println(sp[0].getName());
-
         // TEST TILES
         playerCharacter = new GameCharacter("ALYSSA");
 
@@ -67,9 +60,6 @@ public class GameController {
 
         // Input handling:
 
-//        if (input.size() > 0)
-//            System.out.println(input);
-
         ArrayList<String> input = ListenerController.getInstance().getInput();
 
         for (int i = 0; i < input.size(); i++) {
@@ -83,21 +73,9 @@ public class GameController {
 
         // Updating positions
 
-//        ArrayList<Movable> arenaMovables = arenaModel.getArenaMovables();
-
         for (Movable movable : arenaModel.getArenaMovables()) {
             movable.updatePosition();
         }
-
-//        for (int i = 0; i < arena.length; i++) {
-//            for (int j = 0; j < arena[0].length; j++) {
-//                for (Tile t : arena[i][j]) {
-//                    if (t instanceof DynamicTile) {
-//                        ((DynamicTile)t).updatePosition();
-//                    }
-//                }
-//            }
-//        }
 
         // Calls view to update graphics
 

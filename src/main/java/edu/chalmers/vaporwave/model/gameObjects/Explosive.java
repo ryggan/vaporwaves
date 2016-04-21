@@ -14,14 +14,12 @@ public abstract class Explosive extends StaticTile {
     //animation when exploding
     //might only need one sprite
 
-
-    protected Explosive() {
+    public Explosive() {
 
     }
 
-    public Explosive(Sprite sprite, int range) {
+    public Explosive(int range) {
         this.range = range;
-        super.setSprite(sprite);
     }
 
     public int getRange() {

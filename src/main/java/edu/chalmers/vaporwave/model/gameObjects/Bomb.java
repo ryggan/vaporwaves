@@ -18,10 +18,6 @@ public class Bomb extends Explosive {
     public Bomb(int range, int delay) {
         this.delay = delay;
     }
-    public Bomb(Sprite sprite, int range, int delay){
-        super(sprite, range);
-        this.delay=delay;
-    }
 
     public void startTimer(){
         Timer t= new Timer();

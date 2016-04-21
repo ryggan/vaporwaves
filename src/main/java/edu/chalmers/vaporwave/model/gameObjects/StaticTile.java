@@ -10,25 +10,4 @@ import java.awt.*;
  */
 public abstract class StaticTile {
 
-    private Sprite sprite;
-
-    public StaticTile(){
-    }
-
-    public StaticTile(Sprite sprite) {
-        this.sprite = sprite;
-    }
-
-    public void render(GraphicsContext gc, double time) {
-        getSprite().render(gc, time);
-    }
-
-    // GET N SETS
-
-    public void setSprite(Sprite s) {
-        this.sprite = s;
-    }
-    public Sprite getSprite() {
-        return this.sprite;
-    }
 }
