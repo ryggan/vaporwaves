@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by bob on 2016-04-15.
  */
-public class Enemy extends DynamicTile {
+public class Enemy extends Movable {
 
     private Point currentGridPosition;
     private Point previousGridPosition;

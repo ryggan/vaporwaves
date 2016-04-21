@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
+import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
@@ -10,8 +11,9 @@ import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
 
 import java.awt.*;
+import java.util.ArrayList;
 
-public class GameCharacter extends DynamicTile {
+public class GameCharacter extends Movable {
 
     private String name;
 
@@ -125,7 +127,7 @@ public class GameCharacter extends DynamicTile {
     }
 
     public void move(String key) {
-        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
+        if (moveAllowed(key)) {
             if (key.equals("UP")) {
                 moveUp();
             } else if (key.equals("LEFT")) {
@@ -139,6 +141,14 @@ public class GameCharacter extends DynamicTile {
                 characterState = CharacterState.WALK;
             updateSprite();
         }
+    }
+
+    private boolean moveAllowed(String key) {
+        int closestTilePositionX = (int)Math.round(getCanvasPositionX() / Constants.DEFAULT_TILE_WIDTH);
+        int closestTilePositionY = (int)Math.round(getCanvasPositionY() / Constants.DEFAULT_TILE_HEIGHT);
+
+//        return (characterState != CharacterState.WALK || (closestTilePositionX == getGridPositionX() && closestTilePositionY == getGridPositionY())) || oppositeDirection(key);
+        return characterState != CharacterState.WALK || oppositeDirection(key);
     }
 
     private boolean oppositeDirection(String key) {
@@ -217,9 +227,13 @@ public class GameCharacter extends DynamicTile {
     }
 
     private void stop(int newGridPositionX, int newGridPositionY) {
-//        System.out.println("newx: "+newGridPositionX+", newy: "+newGridPositionY);
+
+        ArrayList<String> input = ListenerController.getInstance().getInput();
+//        if (!input.contains("UP") && !input.contains("DOWN") && !input.contains("LEFT") && !input.contains("RIGHT")) {
+            characterState = CharacterState.IDLE;
+//        }
+
         setVelocity(0, 0);
-        characterState = CharacterState.IDLE;
         setGeneralPosition(newGridPositionX, newGridPositionY);
         updateSprite();
     }

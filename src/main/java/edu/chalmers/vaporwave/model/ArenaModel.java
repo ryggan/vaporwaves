@@ -16,7 +16,8 @@ import java.util.ArrayList;
 public class ArenaModel {
 
     private ArenaMap arenaMap;
-    private StaticTile[][] arena;
+    private StaticTile[][] arenaTiles;
+    private ArrayList<Movable> arenaMovables;
     private int width;
     private int height;
 
@@ -34,48 +35,54 @@ public class ArenaModel {
     }
 
     public void newArena(int width, int height) {
-        this.arena = new ArrayList[width][height];
+//        this.arena = new ArrayList[width][height];
+        this.arenaTiles = new StaticTile[width][height];
+        this.arenaMovables = new ArrayList<>();
         this.width = width;
         this.height = height;
 
-        for (int i = 0; i < arena.length; i++) {
-            for (int j = 0; j < arena[0].length; j++) {
-                arena[i][j] = new ArrayList<Tile>();
-            }
-        }
+//        for (int i = 0; i < arena.length; i++) {
+//            for (int j = 0; j < arena[0].length; j++) {
+//                arena[i][j] = new ArrayList<Tile>();
+//            }
+//        }
     }
 
-    public ArrayList<Tile>[][] getArena() {
-        return arena;
+    public StaticTile[][] getArenaTiles() {
+        return arenaTiles;
     }
 
-    public void setTile(Tile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
+    public ArrayList<Movable> getArenaMovables() {
+        return arenaMovables;
+    }
+
+    public void setTile(StaticTile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
         if (posx <= width && posy <= height && posx >= 0 && posy >= 0) {
-            arena[posx][posy].add(tile);
+            arenaTiles[posx][posy] = tile;
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
 
-    public ArrayList<Tile> getTiles(int posx, int posy) {
-        return arena[posx][posy];
+//    public ArrayList<Tile> getTiles(int posx, int posy) {
+//        return arena[posx][posy];
+//    }
+
+    public void addMovable(Movable movable) {
+        arenaMovables.add(movable);
     }
 
-    public boolean removeTile(Tile tile, int posx, int posy) {
-        if (arena[posx][posy].contains(tile)) {
-            arena[posx][posy].remove(tile);
-            return true;
-        }
-        return false;
+    public void removeMovable(Movable movable) {
+        arenaMovables.remove(movable);
     }
 
-    public boolean isEmpty(int posx, int posy) {
-        return (arena[posx][posy].size() == 0);
-    }
+//    public boolean isEmpty(int posx, int posy) {
+//        return (arena[posx][posy].size() == 0);
+//    }
 
     /**
      * Iterates through our mapMatrix and calls on createObject to create the appropriate object
-     * @param mapFile going to be changed to String[][]
+     * @param arenaMap going to be changed to String[][]
      * @throws Exception
      */
     public void loadObjectsToMap(ArenaMap arenaMap) throws Exception {
@@ -83,7 +90,7 @@ public class ArenaModel {
        MapObject[][] mapMatrix = arenaMap.getMapObjects();//.createMapArray(mapFile);
         for(int i = 0; i < mapMatrix.length; i++) {
             for(int j = 0; i < mapMatrix[i].length; j++) {
-               arena[i][j] = (createObject(mapMatrix[i][j], i, j));
+               arenaTiles[i][j] = (createObject(mapMatrix[i][j], i, j));
             }
         }
     }
@@ -95,14 +102,14 @@ public class ArenaModel {
      * @param y grid position in columns
      * @return appropriate Tile
      */
-    public Tile createObject(MapObject mapObject, int x, int y) {
+    public StaticTile createObject(MapObject mapObject, int x, int y) {
         //ArrayList<Tile> objectList = new ArrayList<Tile>();
 
         switch(mapObject) {
             case DESTRUCTIBLE_WALL:
-                return new DestructibleWall(x, y);
+//                return new DestructibleWall();
             case INDESTRUCTIBLE_WALL:
-                return new IndestructibleWall(x, y);
+//                return new IndestructibleWall();
             default:
                 return null;
         }
@@ -110,8 +117,8 @@ public class ArenaModel {
 
     public String toString() {
         String temporaryString = "";
-        for(int i = 0; i < arena[0].length; i++) {
-            for(int j = 0; j < arena.length; j++) {
+        for(int i = 0; i < arenaTiles[0].length; i++) {
+            for(int j = 0; j < arenaTiles.length; j++) {
 
             }
         }

@@ -17,7 +17,6 @@ public class MainController {
 
     private MenuController menuController;
     private GameController gameController;
-    private ListenerController listenerController;
     private EventBus eventBus;
 
     private boolean inGame;
@@ -26,7 +25,7 @@ public class MainController {
      * Constructor, that sets up the ongoing main loop.
      * @param root
      */
-    public MainController(Group root, ListenerController listenerController) {
+    public MainController(Group root) {
 
         // Initiating variables and controllers
 
@@ -34,7 +33,7 @@ public class MainController {
 
         this.menuController = new MenuController(root);
         this.gameController = new GameController(root);
-        this.listenerController = listenerController;
+
 
         // Animation timer setup
 
@@ -54,12 +53,10 @@ public class MainController {
 
                 // Controller calls
 
-                ArrayList<String> input = listenerController.getInput();
-
                 if (inGame) {
-                    gameController.timerUpdate(timeSinceStart, timeSinceLastCall, input);
+                    gameController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 } else {
-                    menuController.timerUpdate(timeSinceStart, timeSinceLastCall, input);
+                    menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 }
 
                 // TEST OUTPUT
