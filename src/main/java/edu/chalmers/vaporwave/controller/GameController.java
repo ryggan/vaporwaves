@@ -73,8 +73,11 @@ public class GameController {
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);
-            if (key.equals("UP") || key.equals("LEFT") || key.equals("DOWN") || key.equals("RIGHT"))
+            if (key.equals("UP") || key.equals("LEFT") || key.equals("DOWN") || key.equals("RIGHT")) {
                 playerCharacter.move(key);
+            } else if (key.equals("ENTER")) {
+                playerCharacter.spawn();
+            }
         }
 
         // Updating positions

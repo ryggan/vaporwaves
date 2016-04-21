@@ -160,15 +160,15 @@ public class GameCharacter extends DynamicTile {
             currentSprite = deathSprite;
         }
 
-        int spriteIndex;
-        if (direction == Directions.LEFT) {
+        int spriteIndex = 0;
+        if (characterState == CharacterState.SPAWN || characterState == CharacterState.DEATH || direction == Directions.DOWN) {
+            spriteIndex = 0;
+        } else if (direction == Directions.LEFT) {
             spriteIndex = 1;
         } else if (direction == Directions.RIGHT) {
             spriteIndex = 2;
         } else if (direction == Directions.UP) {
             spriteIndex = 3;
-        } else {
-            spriteIndex = 0; // Happens when direction = DOWN, or when characterState = SPAWN/DEATH
         }
         setSprite(currentSprite[spriteIndex]);
         getSprite().setPosition(getCanvasPositionX(), getCanvasPositionY());
@@ -222,5 +222,19 @@ public class GameCharacter extends DynamicTile {
         characterState = CharacterState.IDLE;
         setGeneralPosition(newGridPositionX, newGridPositionY);
         updateSprite();
+    }
+
+    public void death() {
+        if (characterState == CharacterState.IDLE) {
+            characterState = CharacterState.DEATH;
+            updateSprite();
+        }
+    }
+
+    public void spawn() {
+        if (characterState == CharacterState.IDLE) {
+            characterState = CharacterState.SPAWN;
+            updateSprite();
+        }
     }
 }
