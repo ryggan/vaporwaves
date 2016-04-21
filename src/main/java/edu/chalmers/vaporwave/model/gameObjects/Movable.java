@@ -14,17 +14,15 @@ public abstract class Movable {
     private double canvasPositionX;
     private double canvasPositionY;
     private Point gridPosition;
-    private Sprite sprite;
     private double velocityX;
     private double velocityY;
 
     protected Movable() { }
 
-    public Movable(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition) {
+    public Movable(double canvasPositionX, double canvasPositionY, Point gridPosition) {
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
         this.gridPosition = gridPosition;
-        this.sprite = sprite;
         this.velocityX = 0;
         this.velocityY = 0;
     }
@@ -32,12 +30,6 @@ public abstract class Movable {
     public void updatePosition() {
         this.canvasPositionX += this.velocityX;
         this.canvasPositionY += this.velocityY;
-        sprite.setPosition(this.canvasPositionX, this.canvasPositionY);
-//        System.out.println("posx: "+canvasPositionX+", posy: "+canvasPositionY);
-    }
-
-    public void render(GraphicsContext gc, double time) {
-        getSprite().render(gc, time);
     }
 
     // GET N SETS
@@ -52,13 +44,6 @@ public abstract class Movable {
     }
     public double getVelocityY() {
         return this.velocityY;
-    }
-
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
-    }
-    public Sprite getSprite() {
-        return this.sprite;
     }
 
     public void setCanvasPosition(double canvasPositionX, double canvasPositionY) {

@@ -10,17 +10,13 @@ import java.awt.*;
 public class DestructibleWall extends Wall {
 
     private boolean isDestroyed;
-    private Sprite destroyedSprite;
 
-    public DestructibleWall(Sprite firstSprite, Sprite destroyedSprite){
-        setSprite(firstSprite);
-        this.destroyedSprite=destroyedSprite;
+    public DestructibleWall(){
         isDestroyed = false;
     }
 
     private void setDestroyed(){
         isDestroyed = true;
-        setSprite(destroyedSprite);
     }
 
     private boolean getDestroyed(){

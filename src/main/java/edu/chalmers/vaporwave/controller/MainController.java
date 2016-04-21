@@ -1,15 +1,12 @@
 package edu.chalmers.vaporwave.controller;
 
-import edu.chalmers.vaporwave.event.IEvent;
-import edu.chalmers.vaporwave.event.IEventListener;
+import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.NewGameEvent;
-import edu.chalmers.vaporwave.model.gameObjects.RangePowerUp;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.util.MapFileReader;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
-
-import java.util.ArrayList;
 
 public class MainController {
 
@@ -26,17 +23,19 @@ public class MainController {
      */
     public MainController(Group root) {
 
+
+        GameEventBus.getInstance().register(this);
+        // Trying out mapreader
         MapFileReader mfr = new MapFileReader("src/main/resources/maps/default.vapormap");
 
-        this.root = root;
 
+        this.root = root;
         // Initiating variables and controllers
 
         this.inGame = true;
 
 
         this.menuController = new MenuController(root);
-        this.gameController = new GameController(root);
 
         // Animation timer setup
 
@@ -76,10 +75,11 @@ public class MainController {
         }.start();
     }
 
-    public void newGame(NewGameEvent event) {
+
+    @Subscribe
+    public void newGame(NewGameEvent newGameEvent) {
         this.gameController = new GameController(this.root);
-
-
+        System.out.println(newGameEvent.getId());
 
     }
 }

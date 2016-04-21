@@ -13,12 +13,6 @@ public class Enemy extends Movable {
     private Point currentGridPosition;
     private Point previousGridPosition;
 
-    private Sprite spawnSprite;
-    private Sprite[] idleSprite = new Sprite[4];
-    private Sprite[] walkSprite = new Sprite[4];
-    private Sprite[] flinchSprite = new Sprite[4];
-    private Sprite deathSprite;
-
     public void moveUp() {
         previousGridPosition = currentGridPosition;
         currentGridPosition.setLocation(previousGridPosition.getX(), previousGridPosition.getY() + 1);

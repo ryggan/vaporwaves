@@ -13,8 +13,7 @@ public class StatPowerUp extends PowerUp {
     private ArrayList<PowerUpState> enabledPowerUpList;
     private PowerUpState powerUpState;
 
-    public StatPowerUp(Sprite sprite, ArrayList<PowerUpState> list) {
-        super.setSprite(sprite);
+    public StatPowerUp(ArrayList<PowerUpState> list) {
         enabledPowerUpList = list;
 
         if(list.size() > 0) {
