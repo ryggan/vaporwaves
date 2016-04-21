@@ -28,29 +28,12 @@ public class MenuView {
     private Canvas tileCanvas;
     private GraphicsContext backgroundGC;
     private GraphicsContext tileGC;
-    private Label lol;
-    private ImageView start;
-    private ImageView startSelected;
-
-    private List<ImageView[]> items;
 
     private MenuState menuState;
-
+    private Group root;
 
     public MenuView(Group root) {
-
-        // Setting up area to draw graphics
-        items=new ArrayList<ImageView[]>();
-
-        start = new ImageView("images/startgame.png");
-        startSelected = new ImageView("images/startgame.png");
-
-        items.add(new ImageView[]{start, startSelected});
-
-
-        root.getChildren().add(start);
-        root.setOnKeyPressed(event -> System.out.print("sup"));
-//
+    this.root=root;
 
     }
 
@@ -63,20 +46,27 @@ public class MenuView {
 
     }
 
-    public void changeSelected(String key){
-        if (key.equals("UP")){
-
+    public void setMenuState(MenuState menuState){
+        this.menuState=menuState;
+        for(int i=1; i<menuState.getButtonList().length-1; i++) {
+            root.getChildren().add(menuState.getButtonList()[i].getUnselected());
         }
+        root.getChildren().add(menuState.getButtonList()[0].getSelected());
 
     }
 
-    private void createStartGameButton() {
-
-        start = new ImageView("images/startgame.png");
-        start.setLayoutX(50);
-
-        //arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
-        //arenaBackgroundSprite.render(backgroundGC, -1);
+    public void update(String key){
+        if(key=="UP") {
+            root.getChildren().remove(menuState.getLastSelectedButton().getSelected());
+            root.getChildren().add(menuState.getLastSelectedButton().getUnselected());
+            root.getChildren().remove(menuState.getSelectedButton().getUnselected());
+            root.getChildren().add(menuState.getSelectedButton().getSelected());
+        } else if(key=="DOWN") {
+            root.getChildren().remove(menuState.getLastSelectedButton().getSelected());
+            root.getChildren().add(menuState.getLastSelectedButton().getUnselected());
+            root.getChildren().remove(menuState.getSelectedButton().getUnselected());
+            root.getChildren().add(menuState.getSelectedButton().getSelected());
+        }
 
     }
 }

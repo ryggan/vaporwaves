@@ -10,16 +10,18 @@ public abstract class MenuState {
 
     GameMenuButton[] buttonList;
     GameMenuButton selectedButton;
+    GameMenuButton lastSelectedButton;
 
     public MenuState(int arrayLength){
         buttonList=new GameMenuButton[arrayLength];
     }
 
-    private GameMenuButton[] getButtonList(){
+    public GameMenuButton[] getButtonList(){
         return buttonList;
     }
 
     public void changeSelected(String key){
+        lastSelectedButton=selectedButton;
 
         if(key=="DOWN") {
             if (getMenuButtonIndex(selectedButton) == buttonList.length - 1) {
@@ -43,13 +45,18 @@ public abstract class MenuState {
         }
     }
 
-    private void setSelectedButton(GameMenuButton selectedButton){
+    public void setSelectedButton(GameMenuButton selectedButton){
         this.selectedButton=selectedButton;
     }
 
-    private GameMenuButton getSelectedButton(){
+    public GameMenuButton getSelectedButton(){
         return selectedButton;
     }
+    public GameMenuButton getLastSelectedButton(){
+        return lastSelectedButton;
+    }
+
+
 
     //TODO
     private int getMenuButtonIndex(GameMenuButton button) throws IllegalArgumentException {

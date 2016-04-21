@@ -31,7 +31,7 @@ public class GameController {
         // Starting new game
         this.arenaModel = newGame(arenaMap);
 
-        arenaView.initArena();
+        //arenaView.initArena();
 
 
         // Setting up background

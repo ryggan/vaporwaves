@@ -18,7 +18,7 @@ public class StartMenu extends MenuState {
 
     private StartMenu(){
         super(2);
-        startGameButton=new GameMenuButton(new ImageView(), new ImageView(), new ImageView());
+        startGameButton=new GameMenuButton(new ImageView("images/startGameButton.png"), new ImageView("images/startGameButtonSelected.png"), new ImageView());
         optionsButton= new GameMenuButton(new ImageView(), new ImageView(), new ImageView());
         buttonList[0]=startGameButton;
         buttonList[1]=optionsButton;
