@@ -33,8 +33,8 @@ public class Blast {
         explosionCenterSprite = new AnimatedSprite(spriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 2}, new double[] {0, 0});
 
         this.range = b.getRange();
-        this.canvasXPosition = b.getCanvasPositionX();
-        this.canvasYPosition = b.getCanvasPositionY();
+//        this.canvasXPosition = b.getCanvasPositionX();
+//        this.canvasYPosition = b.getCanvasPositionY();
         this.time = 0;
     }
 
