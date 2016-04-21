@@ -23,4 +23,9 @@ public class MenuController {
         }
 
     }
+
+    public void newGame() {
+
+    }
+
 }

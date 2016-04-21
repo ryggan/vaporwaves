@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.controller;
 
-import edu.chalmers.vaporwave.event.EventBus;
+import edu.chalmers.vaporwave.event.IEvent;
+import edu.chalmers.vaporwave.event.IEventListener;
+import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.gameObjects.RangePowerUp;
 import edu.chalmers.vaporwave.util.LongValue;
 import javafx.animation.AnimationTimer;
@@ -13,7 +15,7 @@ public class MainController {
     private MenuController menuController;
     private GameController gameController;
     private ListenerController listenerController;
-    private EventBus eventBus;
+    private Group root;
 
     private boolean inGame;
 
@@ -23,12 +25,17 @@ public class MainController {
      */
     public MainController(Group root, ListenerController listenerController) {
 
+
+        this.root = root;
+
         // Initiating variables and controllers
 
         this.inGame = true;
 
+
         this.menuController = new MenuController(root);
-        this.gameController = new GameController(root);
+        newGame(new NewGameEvent());
+
         this.listenerController = listenerController;
 
         // Animation timer setup
@@ -71,6 +78,10 @@ public class MainController {
         }.start();
     }
 
-    public void newGame() {
+    public void newGame(NewGameEvent event) {
+        this.gameController = new GameController(this.root);
+
+
+
     }
 }

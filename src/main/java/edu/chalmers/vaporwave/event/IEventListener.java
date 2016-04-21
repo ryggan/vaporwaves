@@ -11,5 +11,5 @@ public interface IEventListener {
      * @param event
      * @return boolean for testing purposes
      */
-    Boolean eventFired(IEvent event);
+    void eventFired(IEvent event);
 }

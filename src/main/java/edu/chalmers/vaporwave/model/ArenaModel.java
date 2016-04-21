@@ -77,7 +77,7 @@ public class ArenaModel {
      * @param mapFile going to be changed to String[][]
      * @throws Exception
      */
-//    public void loadObjectsToMap(File mapFile) throws Exception {
+//    public void loadObjectsToMap(ArenaMap arenaMap) throws Exception {
 //        //Första raden skall göras någon annanstans, behövs även då byta args till en String[][]
 //       String[][] mapMatrix = mapFileReader.createMapArray(mapFile);
 //        for(int i = 0; i < mapMatrix.length; i++) {
