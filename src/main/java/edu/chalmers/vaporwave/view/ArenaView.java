@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
 import edu.chalmers.vaporwave.util.Constants;
@@ -22,10 +23,13 @@ public class ArenaView {
     private HUDView hudView;
     private Scoreboard scoreboard;
 
+    private Group root;
+
 //    private Sprite testSprite;
 //    private Sprite testSprite2;
 
     public ArenaView(Group root) {
+        this.root = root;
 
         // Setting up area to draw graphics
         backgroundCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -63,7 +67,7 @@ public class ArenaView {
         createBackground(backgroundGC);
 
         hudView = new HUDView();
-        scoreboard = new Scoreboard();
+        scoreboard = new Scoreboard(root);
     }
 
     private void createBackground(GraphicsContext backgroundGC) {
@@ -76,6 +80,15 @@ public class ArenaView {
     }
 
     public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
+
+        /**
+         * Checks if player is holding tab, then shows the scoreboard.
+         */
+        if(ListenerController.getInstance().getInput().contains("TAB")) {
+            scoreboard.showScoreboard();
+        } else {
+            scoreboard.hideScoreboard();
+        }
 
         // TESTING
 //
