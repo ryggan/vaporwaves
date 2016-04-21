@@ -1,16 +1,14 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
-import edu.chalmers.vaporwave.event.IEvent;
 import edu.chalmers.vaporwave.view.Sprite;
 
-import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
-public class Bomb extends Explosive implements IEvent {
+public class Bomb extends Explosive {
 
     private int delay;
     //timer

@@ -1,10 +1,11 @@
 package edu.chalmers.vaporwave.controller;
 
+import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.view.MenuView;
 import javafx.scene.Group;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuController {
 
@@ -27,8 +28,5 @@ public class MenuController {
 
     }
 
-    public void newGame() {
-
-    }
 
 }
