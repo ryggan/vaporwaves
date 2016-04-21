@@ -30,8 +30,6 @@ public class MainController {
 
 
         this.root = root;
-
-        GameEventBus.getInstance().post(new NewGameEvent());
         // Initiating variables and controllers
 
         this.inGame = true;
