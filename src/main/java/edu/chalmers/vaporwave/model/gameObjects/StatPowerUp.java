@@ -13,10 +13,8 @@ public class StatPowerUp extends PowerUp {
     private ArrayList<PowerUpState> enabledPowerUpList;
     private PowerUpState powerUpState;
 
-    public StatPowerUp(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition, ArrayList<PowerUpState> list) {
+    public StatPowerUp(Sprite sprite, ArrayList<PowerUpState> list) {
         super.setSprite(sprite);
-        super.setCanvasPosition(canvasPositionX, canvasPositionY);
-        super.setGridPosition(gridPosition);
         enabledPowerUpList = list;
 
         if(list.size() > 0) {
