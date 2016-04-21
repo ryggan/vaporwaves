@@ -15,6 +15,7 @@ public class ListenerController {
     private static ListenerController instance;
 
     private ArrayList<String> input = new ArrayList<String>();
+    private ArrayList<String> pressed = new ArrayList<String>();
 
     private ListenerController() { }
 
