@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
-public abstract class StaticTile implements Tile {
+public abstract class StaticTile {
 
     private double canvasPositionX;
     private double canvasPositionY;

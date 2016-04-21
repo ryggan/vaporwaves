@@ -1,9 +1,6 @@
 package edu.chalmers.vaporwave.util;
 
-import edu.chalmers.vaporwave.model.gameObjects.Tile;
-
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /**

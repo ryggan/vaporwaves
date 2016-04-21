@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public class ArenaModel {
 
     private ArenaMap arenaMap;
-    private ArrayList<Tile>[][] arena;
+    private StaticTile[][] arenaTiles;
+    private ArrayList<Movable> arenaMovables;
     private int width;
     private int height;
 
@@ -33,44 +34,50 @@ public class ArenaModel {
     }
 
     public void newArena(int width, int height) {
-        this.arena = new ArrayList[width][height];
+//        this.arena = new ArrayList[width][height];
+        this.arenaTiles = new StaticTile[width][height];
+        this.arenaMovables = new ArrayList<>();
         this.width = width;
         this.height = height;
 
-        for (int i = 0; i < arena.length; i++) {
-            for (int j = 0; j < arena[0].length; j++) {
-                arena[i][j] = new ArrayList<Tile>();
-            }
-        }
+//        for (int i = 0; i < arena.length; i++) {
+//            for (int j = 0; j < arena[0].length; j++) {
+//                arena[i][j] = new ArrayList<Tile>();
+//            }
+//        }
     }
 
-    public ArrayList<Tile>[][] getArena() {
-        return arena;
+    public StaticTile[][] getArenaTiles() {
+        return arenaTiles;
     }
 
-    public void setTile(Tile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
+    public ArrayList<Movable> getArenaMovables() {
+        return arenaMovables;
+    }
+
+    public void setTile(StaticTile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
         if (posx <= width && posy <= height && posx >= 0 && posy >= 0) {
-            arena[posx][posy].add(tile);
+            arenaTiles[posx][posy] = tile;
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
     }
 
-    public ArrayList<Tile> getTiles(int posx, int posy) {
-        return arena[posx][posy];
+//    public ArrayList<Tile> getTiles(int posx, int posy) {
+//        return arena[posx][posy];
+//    }
+
+    public void addMovable(Movable movable) {
+        arenaMovables.add(movable);
     }
 
-    public boolean removeTile(Tile tile, int posx, int posy) {
-        if (arena[posx][posy].contains(tile)) {
-            arena[posx][posy].remove(tile);
-            return true;
-        }
-        return false;
+    public void removeMovable(Movable movable) {
+        arenaMovables.remove(movable);
     }
 
-    public boolean isEmpty(int posx, int posy) {
-        return (arena[posx][posy].size() == 0);
-    }
+//    public boolean isEmpty(int posx, int posy) {
+//        return (arena[posx][posy].size() == 0);
+//    }
 
     /**
      * Iterates through our mapMatrix and calls on createObject to create the appropriate object

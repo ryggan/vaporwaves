@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Created by FEngelbrektsson on 15/04/16.
  */
-public abstract class DynamicTile implements Tile {
+public abstract class Movable {
 
     private double canvasPositionX;
     private double canvasPositionY;
@@ -18,9 +18,9 @@ public abstract class DynamicTile implements Tile {
     private double velocityX;
     private double velocityY;
 
-    protected DynamicTile() { }
+    protected Movable() { }
 
-    public DynamicTile(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition) {
+    public Movable(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition) {
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
         this.gridPosition = gridPosition;

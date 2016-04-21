@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GameCharacter extends DynamicTile {
+public class GameCharacter extends Movable {
 
     private String name;
 
