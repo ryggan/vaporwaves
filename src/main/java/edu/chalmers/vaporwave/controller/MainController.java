@@ -8,12 +8,7 @@ import javafx.scene.Group;
 
 import java.util.ArrayList;
 
-/**
- * Created by bob on 2016-04-15.
- */
 public class MainController {
-
-//    private Stage stage;
 
     private MenuController menuController;
     private GameController gameController;
@@ -41,6 +36,8 @@ public class MainController {
         final long startNanoTime = System.nanoTime();
         LongValue lastNanoTime = new LongValue(System.nanoTime());
 
+
+        // Game loop
         new AnimationTimer() {
 
             public void handle(long currentNanoTime) {
@@ -72,5 +69,8 @@ public class MainController {
             }
 
         }.start();
+    }
+
+    public void newGame() {
     }
 }
