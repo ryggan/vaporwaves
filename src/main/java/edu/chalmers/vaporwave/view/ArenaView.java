@@ -156,17 +156,16 @@ public class ArenaView {
         } else if (tile instanceof Explosive) {
             if (tile instanceof Bomb) {
 
-                // todo: DO NOT erese below; should work when "getOwner()" is implemented
-//                String name = ((Bomb)tile).getOwner().getCharacter().getName();
-//                if (name.equals("ALYSSA")) {
-//                    return bombSprite[0];
-//                } else if (name.equals("ZYPHER")) {
-//                    return bombSprite[1];
-//                } else if (name.equals("CHARLOTTE")) {
-//                    return bombSprite[2];
-//                } else if (name.equals("MEI")) {
-//                    return bombSprite[3];
-//                }
+                String name = ((Bomb)tile).getOwner().getCharacter().getName();
+                if (name.equals("ALYSSA")) {
+                    return bombSprite[0];
+                } else if (name.equals("ZYPHER")) {
+                    return bombSprite[1];
+                } else if (name.equals("CHARLOTTE")) {
+                    return bombSprite[2];
+                } else if (name.equals("MEI")) {
+                    return bombSprite[3];
+                }
             }
         } else if (tile instanceof PowerUp) {
 
