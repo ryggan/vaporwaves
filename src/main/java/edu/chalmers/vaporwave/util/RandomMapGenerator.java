@@ -16,26 +16,24 @@ public class RandomMapGenerator {
     private int numberOfColumns = 16;
 
     public RandomMapGenerator() {
-        random = new Random(9);
+        random = new Random();
     }
 
     public MapObject[][] generateMap() {
-        System.out.println("1");
         MapObject[][] mapObjects = new MapObject[numberOfRows][numberOfColumns];
+        int randomNumber = 0;
         for(int i = 0; i < numberOfRows; i++) {
-            System.out.println("2");
             for(int j = 0; j < numberOfColumns; j++){
-                System.out.println("3");
-                if (random.nextInt() == 1 || random.nextInt() == 2) {
+                randomNumber = random.nextInt(9);
+                if (randomNumber == 1 || randomNumber == 2) {
                     mapObjects[i][j] = MapObject.INDESTRUCTIBLE_WALL;
-                } else if (random.nextInt() == 3 || random.nextInt() == 4 || random.nextInt() == 5) {
-                    mapObjects[i][j] = MapObject.INDESTRUCTIBLE_WALL;
+                } else if (randomNumber == 3 || randomNumber == 4 || randomNumber == 5) {
+                    mapObjects[i][j] = MapObject.DESTRUCTIBLE_WALL;
                 } else {
                     mapObjects[i][j] = MapObject.EMPTY;
                 }
             }
         }
-        System.out.println("Starting to place spawnpoints");
         /**
          * Player 1 spawnpoint
          */
@@ -46,9 +44,7 @@ public class RandomMapGenerator {
         /**
          * Player 2 spawnpoint
          */
-        System.out.println("The system is broken by 15");
         mapObjects[0][15] = MapObject.EMPTY;
-        System.out.println("Just joking kitty");
         mapObjects[0][14] = MapObject.EMPTY;
         mapObjects[1][15] = MapObject.EMPTY;
 
@@ -66,24 +62,25 @@ public class RandomMapGenerator {
         mapObjects[13][14] = MapObject.EMPTY;
         mapObjects[12][15] = MapObject.EMPTY;
 
-        System.out.println("Returning the mapobject");
         return mapObjects;
     }
 
     public void printMap(MapObject[][] mapObjects) {
         System.out.println("<<<< CURRENT MAP >>>>");
+        String[] stringHolder = new String[13];
+
         for(int i = 0; i < mapObjects.length; i++) {
-            System.out.println();
             for(int j = 0; j < mapObjects[0].length; j++) {
                 switch(mapObjects[i][j]) {
                     case DESTRUCTIBLE_WALL:
-                        System.out.print("D ");
+                        stringHolder[i] += "D ";
                     case INDESTRUCTIBLE_WALL:
-                        System.out.print("X ");
+                        stringHolder[i] += "X ";
                     case EMPTY:
-                        System.out.print("° ");
+                        stringHolder[i] += "° ";
                 }
             }
+            System.out.println(stringHolder[i]);
         }
     }
 }
