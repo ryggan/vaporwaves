@@ -115,13 +115,14 @@ public class GameCharacter extends Movable {
 
     private void stop(int newGridPositionX, int newGridPositionY) {
 
-        ArrayList<String> input = ListenerController.getInstance().getInput();
-//        if (!input.contains("UP") && !input.contains("DOWN") && !input.contains("LEFT") && !input.contains("RIGHT")) {
-            characterState = CharacterState.IDLE;
-//        }
-
+        characterState = CharacterState.IDLE;
         setVelocity(0, 0);
         setGeneralPosition(newGridPositionX, newGridPositionY);
+
+        ArrayList<String> input = ListenerController.getInstance().getInput();
+        if (input.size() > 0 && !input.contains("UP") && !input.contains("DOWN") && !input.contains("LEFT") && !input.contains("RIGHT")) {
+            move(input.get(input.size()));
+        }
     }
 
     public void death() {
