@@ -1,13 +1,18 @@
 package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.controller.ListenerController;
+import edu.chalmers.vaporwave.model.CharacterProperties;
+import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
+import edu.chalmers.vaporwave.model.gameObjects.Enemy;
+import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
-import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -23,15 +28,15 @@ public class ArenaView {
     private HUDView hudView;
     private Scoreboard scoreboard;
 
+    private CharacterSprite[] characterSprites = new CharacterSprite[4];
+
     private Group root;
-
-//    private Sprite testSprite;
-//    private Sprite testSprite2;
-
+    
     public ArenaView(Group root) {
         this.root = root;
 
         // Setting up area to draw graphics
+
         backgroundCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         root.getChildren().add(backgroundCanvas);
         tileCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
@@ -48,18 +53,10 @@ public class ArenaView {
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
-        // TEST DRAWING
+        // Setting up sprites
 
-//        Image img = new Image("images/spritesheet-alyssa-walkidleflinch-48x32.png");
-//        testSprite = new AnimatedSprite(img, new Dimension(48, 32), 8, 0.1, new int[] {0, 0});
-//        testSprite.setVelocity(0, 5);
-//        testSprite.setScale(2);
-//        Image img2 = new Image("images/spritesheet-alyssa-death-56x56.png");
-//        testSprite2 = new AnimatedSprite(img2, new Dimension(56, 56), 28, 0.1);
-//        testSprite2.setPosition(50, 50);
-//        testSprite2.setScale(2);
-//
-
+        characterSprites[0] = new CharacterSprite("ALYSSA");
+        initCharacterSprites(characterSprites[0]);
     }
 
     public void initArena() {
@@ -107,19 +104,132 @@ public class ArenaView {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null) {
                     arenaTiles[i][j].render(tileGC, timeSinceStart);
+                    renderTile(arenaTiles[i][j], timeSinceStart);
                 }
             }
         }
         for (Movable movable : arenaMovables) {
-            movable.render(tileGC, timeSinceStart);
+
+            if (movable instanceof GameCharacter) {
+                renderCharacter((GameCharacter)movable, timeSinceStart);
+
+            } else if (movable instanceof Enemy) {
+
+            }
         }
 
-//        for (int i = 0; i < arena.length; i++) {
-//            for (int j = 0; j < arena[0].length; j++) {
-//                for (Tile t : arena[i][j]) {
-//                    t.render(tileGC, timeSinceStart);
-//                }
-//            }
-//        }
+    }
+
+    public void renderTile(StaticTile tile, double timeSinceStart) {
+
+    }
+
+    public void renderCharacter(GameCharacter character, double timeSinceStart) {
+        CharacterState state = character.getState();
+        CharacterSprite sprites = null;
+        for (int i = 0; i < 4; i++) {
+            if (characterSprites[i] != null && characterSprites[i].getName().equals(character.getName())) {
+                sprites = characterSprites[i];
+            }
+        }
+
+        if (sprites != null) {
+            Sprite[] currentSprite = sprites.getIdleSprites(); // Always idle if no other state is active
+            if (state == CharacterState.WALK) {
+                currentSprite = sprites.getWalkSprites();
+            } else if (state == CharacterState.FLINCH) {
+                currentSprite = sprites.getFlinchSprites();
+            } else if (state == CharacterState.SPAWN) {
+                currentSprite = sprites.getSpawnSprites();
+            } else if (state == CharacterState.DEATH) {
+                currentSprite = sprites.getDeathSprites();
+            }
+
+            int spriteIndex = 0;
+            if (state == CharacterState.SPAWN || state == CharacterState.DEATH || character.getDirection() == Directions.DOWN) {
+                spriteIndex = 0;
+            } else if (character.getDirection() == Directions.LEFT) {
+                spriteIndex = 1;
+            } else if (character.getDirection() == Directions.RIGHT) {
+                spriteIndex = 2;
+            } else if (character.getDirection() == Directions.UP) {
+                spriteIndex = 3;
+            }
+
+            Sprite actualSprite = currentSprite[spriteIndex];
+            actualSprite.setPosition(character.getCanvasPositionX(), character.getCanvasPositionY());
+            actualSprite.render(tileGC, timeSinceStart);
+        }
+    }
+
+    /**
+     * Reads character information from an XML-file and populate the instance variables for the sprites
+     */
+    private void initCharacterSprites(CharacterSprite characterSprite) {
+        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
+
+        for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
+            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
+            switch (characterState) {
+                case SPAWN:
+                    characterSprite.setSpawnSprite(
+                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                            new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                            characterSpriteProperties.getFrames(),
+                            characterSpriteProperties.getDuration(),
+                            characterSpriteProperties.getFirstFrame(),
+                            characterSpriteProperties.getOffset())
+                    );
+                    break;
+                case DEATH:
+                    characterSprite.setDeathSprite(
+                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                            new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                            characterSpriteProperties.getFrames(),
+                            characterSpriteProperties.getDuration(),
+                            characterSpriteProperties.getFirstFrame(),
+                            characterSpriteProperties.getOffset())
+                    );
+                    break;
+                case WALK:
+                    for (int i = 0; i < 4; i++) {
+                        characterSprite.setWalkSprite(
+                                new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                characterSpriteProperties.getFrames(),
+                                characterSpriteProperties.getDuration(),
+                                new int[]{characterSpriteProperties.getFirstFrame()[0], i},
+                                characterSpriteProperties.getOffset()),
+                                i);
+                    }
+                    break;
+                case IDLE:
+                    for (int i = 0; i < 4; i++) {
+                        characterSprite.setIdleSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                characterSpriteProperties.getFrames(),
+                                characterSpriteProperties.getDuration(),
+                                new int[]{i, characterSpriteProperties.getFirstFrame()[1]},
+                                characterSpriteProperties.getOffset()),
+                                i);
+                    }
+                    break;
+                case FLINCH:
+                    for (int i = 0; i < 4; i++) {
+                        characterSprite.setFlinchSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                characterSpriteProperties.getFrames(),
+                                characterSpriteProperties.getDuration(),
+                                new int[]{characterSpriteProperties.getFirstFrame()[0] + i, i},
+                                characterSpriteProperties.getOffset()),
+                                i);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }
