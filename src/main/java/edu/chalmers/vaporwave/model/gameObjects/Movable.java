@@ -32,7 +32,7 @@ public abstract class Movable {
     public void updatePosition() {
         this.canvasPositionX += this.velocityX;
         this.canvasPositionY += this.velocityY;
-        sprite.setPosition(this.canvasPositionX, this.canvasPositionY);
+//        sprite.setPosition(this.canvasPositionX, this.canvasPositionY);
 //        System.out.println("posx: "+canvasPositionX+", posy: "+canvasPositionY);
     }
 

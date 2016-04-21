@@ -47,7 +47,7 @@ public class GameController {
 //        System.out.println(sp[0].getName());
 
         // TEST TILES
-        playerCharacter = new GameCharacter("Alyssa");
+        playerCharacter = new GameCharacter("ALYSSA");
 
         try {
             arenaModel.addMovable(playerCharacter);

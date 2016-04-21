@@ -17,8 +17,6 @@ public class GameCharacter extends Movable {
 
     private String name;
 
-    //private Point currentGridPosition;
-    //private Point previousGridPosition;
     private Player player;
     private int playerId;
 
@@ -31,99 +29,15 @@ public class GameCharacter extends Movable {
     private int bombRange;
     private int bombCount;
 
-    private Sprite[] spawnSprite = new Sprite[1];
-    private Sprite[] idleSprite = new Sprite[4];
-    private Sprite[] walkSprite = new Sprite[4];
-    private Sprite[] flinchSprite = new Sprite[4];
-    private Sprite[] deathSprite = new Sprite[1];
-
     public GameCharacter(String name) {
 
         this.name = name;
-
-        initCharacterSprites();
 
         // Test settings setup:
         setGeneralPosition(5, 5);
         characterState = CharacterState.IDLE;
         direction = Directions.DOWN;
         speed = 0.6;
-        updateSprite();
-    }
-
-    /**
-     * Reads character information from an XML-file and populate the instance variables for the sprites
-     */
-    private void initCharacterSprites() {
-        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
-        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), this.name);
-
-        for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
-            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
-            switch(characterState) {
-                case SPAWN:
-                    spawnSprite[0] = createSpriteFromProperties(characterSpriteProperties);
-                    break;
-                case DEATH:
-                    deathSprite[0] = createSpriteFromProperties(characterSpriteProperties);
-                    break;
-                case WALK:
-                    for (int i = 0; i < 4; i++) {
-                        walkSprite[i] = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                characterSpriteProperties.getFrames(),
-                                characterSpriteProperties.getDuration(),
-                                new int[] {characterSpriteProperties.getFirstFrame()[0], i},
-                                characterSpriteProperties.getOffset());
-                    }
-                    break;
-                case IDLE:
-                    for (int i = 0; i < 4; i++) {
-                        idleSprite[i] = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                characterSpriteProperties.getFrames(),
-                                characterSpriteProperties.getDuration(),
-                                new int[] {i, characterSpriteProperties.getFirstFrame()[1]},
-                                characterSpriteProperties.getOffset());
-                    }
-                    break;
-                case FLINCH:
-                    for (int i = 0; i < 4; i++) {
-                        flinchSprite[i] = new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                characterSpriteProperties.getFrames(),
-                                characterSpriteProperties.getDuration(),
-                                new int[] {characterSpriteProperties.getFirstFrame()[0] + i, i},
-                                characterSpriteProperties.getOffset());
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        Image spriteSheet1 = new Image("images/spritesheet-alyssa-walkidleflinch-48x48.png");
-
-        for (int i = 0; i < 4; i++) {
-            idleSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {i, 4}, new double[] {16, 27});
-            walkSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 8, 0.1, new int[] {0, i}, new double[] {16, 27});
-            flinchSprite[i] = new AnimatedSprite(spriteSheet1, new Dimension(48, 48), 1, 0.1, new int[] {4+i, 4}, new double[] {16, 27});
-        }
-
-    }
-
-    /**
-     * Helper method for creating an AnimatedSprite object from a CharacterSpriteProperties object.
-     *
-     * @param characterSpriteProperties
-     * @return An AnimatedSprite object
-     */
-    private AnimatedSprite createSpriteFromProperties(CharacterSpriteProperties characterSpriteProperties) {
-        return new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                characterSpriteProperties.getFrames(),
-                characterSpriteProperties.getDuration(),
-                characterSpriteProperties.getFirstFrame(),
-                characterSpriteProperties.getOffset());
     }
 
     public void move(String key) {
@@ -139,7 +53,6 @@ public class GameCharacter extends Movable {
             }
             if (getVelocityY() != 0 || getVelocityX() != 0)
                 characterState = CharacterState.WALK;
-            updateSprite();
         }
     }
 
@@ -156,32 +69,6 @@ public class GameCharacter extends Movable {
                 || (key.equals("DOWN") && direction == Directions.UP)
                 || (key.equals("RIGHT") && direction == Directions.LEFT)
                 || (key.equals("LEFT") && direction == Directions.RIGHT);
-    }
-
-    private void updateSprite() {
-        Sprite[] currentSprite = idleSprite; // Always idle if no other state is active
-        if (characterState == CharacterState.WALK) {
-            currentSprite = walkSprite;
-        } else if (characterState == CharacterState.FLINCH) {
-            currentSprite = flinchSprite;
-        } else if (characterState == CharacterState.SPAWN) {
-            currentSprite = spawnSprite;
-        } else if (characterState == CharacterState.DEATH) {
-            currentSprite = deathSprite;
-        }
-
-        int spriteIndex = 0;
-        if (characterState == CharacterState.SPAWN || characterState == CharacterState.DEATH || direction == Directions.DOWN) {
-            spriteIndex = 0;
-        } else if (direction == Directions.LEFT) {
-            spriteIndex = 1;
-        } else if (direction == Directions.RIGHT) {
-            spriteIndex = 2;
-        } else if (direction == Directions.UP) {
-            spriteIndex = 3;
-        }
-        setSprite(currentSprite[spriteIndex]);
-        getSprite().setPosition(getCanvasPositionX(), getCanvasPositionY());
     }
 
     public void moveUp() {
@@ -235,20 +122,31 @@ public class GameCharacter extends Movable {
 
         setVelocity(0, 0);
         setGeneralPosition(newGridPositionX, newGridPositionY);
-        updateSprite();
     }
 
     public void death() {
         if (characterState == CharacterState.IDLE) {
             characterState = CharacterState.DEATH;
-            updateSprite();
         }
     }
 
     public void spawn() {
         if (characterState == CharacterState.IDLE) {
             characterState = CharacterState.SPAWN;
-            updateSprite();
         }
+    }
+
+    // GETS AND SETS:
+
+    public CharacterState getState() {
+        return this.characterState;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Directions getDirection() {
+        return direction;
     }
 }

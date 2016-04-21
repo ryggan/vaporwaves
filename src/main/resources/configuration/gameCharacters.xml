@@ -2,7 +2,7 @@
 
 <gameCharacters>
     <character>
-        <name>Alyssa</name>
+        <name>ALYSSA</name>
 
         <maxHealth>100</maxHealth>
         <speed>10.0</speed>
