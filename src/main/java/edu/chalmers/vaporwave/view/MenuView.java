@@ -47,14 +47,6 @@ public class MenuView {
 
         items.add(new ImageView[]{start, startSelected});
 
-        start.setOnKeyPressed(new EventHandler<KeyEvent>(){
-
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.print("sup");
-
-            }
-        });
 
         root.getChildren().add(start);
         root.setOnKeyPressed(event -> System.out.print("sup"));

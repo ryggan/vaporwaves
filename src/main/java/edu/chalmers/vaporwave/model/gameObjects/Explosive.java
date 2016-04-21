@@ -19,9 +19,7 @@ public abstract class Explosive extends StaticTile {
 
     }
 
-    public Explosive(Sprite sprite, double canvasPositionX, double canvasPositionY, Point gridPosition, int range) {
-        super.setCanvasPosition(canvasPositionX, canvasPositionY);
-        super.setGridPosition(gridPosition);
+    public Explosive(Sprite sprite, int range) {
         this.range = range;
         super.setSprite(sprite);
     }

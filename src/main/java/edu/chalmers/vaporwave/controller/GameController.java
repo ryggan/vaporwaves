@@ -2,13 +2,11 @@ package edu.chalmers.vaporwave.controller;
 
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
-import edu.chalmers.vaporwave.model.gameObjects.DynamicTile;
-import edu.chalmers.vaporwave.model.gameObjects.Tile;
-import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
+import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.util.MapObject;
 import edu.chalmers.vaporwave.util.XMLReader;
 import edu.chalmers.vaporwave.view.ArenaView;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import javafx.scene.Group;
 
 import java.util.ArrayList;
@@ -29,6 +27,7 @@ public class GameController {
 
         // Starting new game
         this.arenaModel = newGame(new ArenaMap("default", new MapObject[0][0]));
+
         arenaView.initArena();
 
 
@@ -51,7 +50,7 @@ public class GameController {
         playerCharacter = new GameCharacter("Alyssa");
 
         try {
-            arenaModel.setTile(playerCharacter, 5, 5);
+            arenaModel.addMovable(playerCharacter);
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
@@ -62,7 +61,7 @@ public class GameController {
     }
 
     // This one is called every time the game-timer is updated
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall, ArrayList<String> input) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         // Game logic
 
@@ -70,6 +69,8 @@ public class GameController {
 
 //        if (input.size() > 0)
 //            System.out.println(input);
+
+        ArrayList<String> input = ListenerController.getInstance().getInput();
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);
@@ -82,21 +83,25 @@ public class GameController {
 
         // Updating positions
 
-        ArrayList<Tile>[][] arena = arenaModel.getArena();
+//        ArrayList<Movable> arenaMovables = arenaModel.getArenaMovables();
 
-        for (int i = 0; i < arena.length; i++) {
-            for (int j = 0; j < arena[0].length; j++) {
-                for (Tile t : arena[i][j]) {
-                    if (t instanceof DynamicTile) {
-                        ((DynamicTile)t).updatePosition();
-                    }
-                }
-            }
+        for (Movable movable : arenaModel.getArenaMovables()) {
+            movable.updatePosition();
         }
+
+//        for (int i = 0; i < arena.length; i++) {
+//            for (int j = 0; j < arena[0].length; j++) {
+//                for (Tile t : arena[i][j]) {
+//                    if (t instanceof DynamicTile) {
+//                        ((DynamicTile)t).updatePosition();
+//                    }
+//                }
+//            }
+//        }
 
         // Calls view to update graphics
 
-        arenaView.updateView(arenaModel.getArena(), timeSinceStart, timeSinceLastCall);
+        arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);
     }
 
 

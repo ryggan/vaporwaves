@@ -40,6 +40,4 @@ public class MapFileReader {
     public MapObject[][] getMapObjects() {
         return this.mapObjects;
     }
-
-
 }
