@@ -30,6 +30,8 @@ public class MenuController {
             if (input.contains("UP")) {
                 menuState.changeSelected("UP");
                 menuView.update("UP");
+
+
             } else if (input.contains("DOWN")) {
                 menuState.changeSelected("DOWN");
                 menuView.update("DOWN");
