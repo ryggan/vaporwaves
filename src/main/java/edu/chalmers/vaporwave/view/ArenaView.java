@@ -68,6 +68,8 @@ public class ArenaView {
 
         hudView = new HUDView();
         scoreboard = new Scoreboard(root);
+        //make players a proper arraylist of the current players
+        //scoreboard.addPlayersToScoreboard(players);
     }
 
     private void createBackground(GraphicsContext backgroundGC) {
