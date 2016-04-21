@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.view.MenuView;
 import javafx.scene.Group;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuController {
 
@@ -13,7 +14,9 @@ public class MenuController {
         menuView = new MenuView(root);
     }
 
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall, ArrayList<String> input) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+
+        ArrayList<String> input = ListenerController.getInstance().getInput();
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);

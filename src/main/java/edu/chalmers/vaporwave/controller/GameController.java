@@ -62,7 +62,7 @@ public class GameController {
     }
 
     // This one is called every time the game-timer is updated
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall, ArrayList<String> input) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         // Game logic
 
@@ -70,6 +70,8 @@ public class GameController {
 
 //        if (input.size() > 0)
 //            System.out.println(input);
+
+        ArrayList<String> input = ListenerController.getInstance().getInput();
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);

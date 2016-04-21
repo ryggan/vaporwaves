@@ -37,8 +37,8 @@ public class Main extends Application {
 
         // Initiating controllers
 
-		ListenerController lc = new ListenerController(scene);
-		new MainController(root, lc);
+		ListenerController.getInstance().initiateListener(scene);
+		new MainController(root);
 //		new ListenerController(scene, mc);
 	}
 }
