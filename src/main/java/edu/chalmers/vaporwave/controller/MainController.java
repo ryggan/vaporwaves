@@ -31,7 +31,7 @@ public class MainController {
         this.root = root;
         // Initiating variables and controllers
 
-        this.inGame = false;
+        this.inGame = true;
 
 
         this.menuController = new MenuController(root);

@@ -20,6 +20,21 @@ public class MapFileReader {
                 line = line.replace(" ", "");
                 for (int j = 0; j < width; j++) {
                     switch (line.charAt(j)) {
+                        case '1':
+                            mapObjects[j][i] = MapObject.PLAYER1;
+                            break;
+                        case '2':
+                            mapObjects[j][i] = MapObject.PLAYER2;
+                            break;
+                        case '3':
+                            mapObjects[j][i] = MapObject.PLAYER3;
+                            break;
+                        case '4':
+                            mapObjects[j][i] = MapObject.PLAYER4;
+                            break;
+                        case 'E':
+                            mapObjects[j][i] = MapObject.ENEMY;
+                            break;
                         case 'X':
                             mapObjects[j][i] = MapObject.INDESTRUCTIBLE_WALL;
                             break;
