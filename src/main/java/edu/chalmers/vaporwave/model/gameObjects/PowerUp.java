@@ -12,8 +12,6 @@ public abstract class PowerUp extends StaticTile {
 
     public PowerUp(){
 
-
     }
-
 
 }

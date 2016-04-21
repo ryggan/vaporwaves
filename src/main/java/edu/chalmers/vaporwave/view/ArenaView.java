@@ -87,23 +87,14 @@ public class ArenaView {
             scoreboard.hideScoreboard();
         }
 
-        // TESTING
-//
-//        testSprite.update(timeSinceLastCall);
-//        testSprite.render(tileGC, timeSinceStart);
-////
-//        testSprite2.render(tileGC, timeSinceStart);
-
-//        System.out.println(arena[5][5]);
-
-        // Actual rendering:
+        // Rendering:
 
         tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null) {
-                    arenaTiles[i][j].render(tileGC, timeSinceStart);
+//                    arenaTiles[i][j].render(tileGC, timeSinceStart);
                     renderTile(arenaTiles[i][j], timeSinceStart);
                 }
             }
