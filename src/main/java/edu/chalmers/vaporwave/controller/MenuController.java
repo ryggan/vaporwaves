@@ -15,6 +15,9 @@ public class MenuController {
     private MenuView menuView;
     private MenuState menuState;
 
+    private boolean upKeyPressed = false;
+    private boolean downKeyPressed = false;
+
     public MenuController(Group root) {
         menuView = new MenuView(root);
         menuState=StartMenu.getInstance();
@@ -27,15 +30,25 @@ public class MenuController {
 
         ArrayList<String> input = ListenerController.getInstance().getInput();
 
-            if (input.contains("UP")) {
+
+            if (input.contains("UP") && !upKeyPressed) {
+                upKeyPressed = true;
                 menuState.changeSelected("UP");
                 menuView.update("UP");
-
-
-            } else if (input.contains("DOWN")) {
+            } else if (input.contains("DOWN") && !downKeyPressed) {
+                downKeyPressed = true;
                 menuState.changeSelected("DOWN");
                 menuView.update("DOWN");
             }
+
+            if (!input.contains("UP")) {
+                upKeyPressed = false;
+            }
+
+            if (!input.contains("DOWN")) {
+                downKeyPressed = false;
+            }
+
 
 
     }
