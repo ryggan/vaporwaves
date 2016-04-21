@@ -23,4 +23,6 @@ public class Constants {
 
     public static final String GAME_CHARACTER_XML_FILE = "src/main/resources/configuration/gameCharacters.xml";
 
+    public static final String DEFAULT_MAP_FILE = "src/main/resources/maps/default.vapormap";
+
 }

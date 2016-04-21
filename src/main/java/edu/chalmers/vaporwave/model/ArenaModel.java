@@ -24,29 +24,20 @@ public class ArenaModel {
     public ArenaModel(ArenaMap arenaMap) {
         this.arenaMap = arenaMap;
 
-        newArena(arenaMap.getMapSize().width, arenaMap.getMapSize().width);
-    }
-
-    public ArenaModel(int width, int height) {
-        newArena(width, height);
-    }
-    public ArenaModel() {
-        newArena(0, 0);
-    }
-
-    public void newArena(int width, int height) {
-//        this.arena = new ArrayList[width][height];
+        this.width = arenaMap.getMapSize().width;
+        this.height = arenaMap.getMapSize().height;
         this.arenaTiles = new StaticTile[width][height];
-        this.arenaMovables = new ArrayList<>();
-        this.width = width;
-        this.height = height;
 
-//        for (int i = 0; i < arena.length; i++) {
-//            for (int j = 0; j < arena[0].length; j++) {
-//                arena[i][j] = new ArrayList<Tile>();
-//            }
-//        }
+        this.arenaMovables = new ArrayList<>();
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                arenaTiles[i][j] = createMapObject(arenaMap.getMapObjects()[i][j]);
+            }
+        }
+
     }
+
 
     public StaticTile[][] getArenaTiles() {
         return arenaTiles;
@@ -98,18 +89,14 @@ public class ArenaModel {
     /**
      *
      * @param mapObject
-     * @param x grid position in rows
-     * @param y grid position in columns
      * @return appropriate Tile
      */
-    public StaticTile createObject(MapObject mapObject, int x, int y) {
-        //ArrayList<Tile> objectList = new ArrayList<Tile>();
-
+    public StaticTile createMapObject(MapObject mapObject) {
         switch(mapObject) {
             case DESTRUCTIBLE_WALL:
-//                return new DestructibleWall();
+                return new DestructibleWall();
             case INDESTRUCTIBLE_WALL:
-//                return new IndestructibleWall();
+                return new IndestructibleWall();
             default:
                 return null;
         }

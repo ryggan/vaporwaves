@@ -17,8 +17,7 @@ public class ArenaMap {
     public ArenaMap(String name, MapObject[][] mapObjects) {
         this.name = name;
         this.mapObjects = mapObjects;
-        this.mapSize = new Dimension(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT); // Redo this
-//        this.mapSize = new Dimension(mapObjects[0].length, mapObjects.length); // Redo this
+        this.mapSize = new Dimension(mapObjects.length, mapObjects[0].length);
     }
 
     public String getName() {

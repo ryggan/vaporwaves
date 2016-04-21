@@ -26,6 +26,8 @@ public class MapFileReader {
                         case 'D':
                             mapObjects[j][i] = MapObject.DESTRUCTIBLE_WALL;
                             break;
+                        default:
+                            mapObjects[j][i] = MapObject.EMPTY;
                     }
                 }
                 i++;
