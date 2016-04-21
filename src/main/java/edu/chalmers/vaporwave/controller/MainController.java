@@ -5,6 +5,7 @@ import edu.chalmers.vaporwave.event.IEventListener;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.gameObjects.RangePowerUp;
 import edu.chalmers.vaporwave.util.LongValue;
+import edu.chalmers.vaporwave.util.MapFileReader;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
@@ -25,6 +26,7 @@ public class MainController {
      */
     public MainController(Group root, ListenerController listenerController) {
 
+        MapFileReader mfr = new MapFileReader("src/main/resources/maps/default.vapormap");
 
         this.root = root;
 
