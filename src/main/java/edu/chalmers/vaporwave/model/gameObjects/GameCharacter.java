@@ -53,7 +53,7 @@ public class GameCharacter extends DynamicTile {
      * Reads character information from an XML-file and populate the instance variables for the sprites
      */
     private void initCharacterSprites() {
-        XMLReader reader = new XMLReader("src/main/resources/configuration/gameCharacters.xml");
+        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), this.name);
 
         for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {

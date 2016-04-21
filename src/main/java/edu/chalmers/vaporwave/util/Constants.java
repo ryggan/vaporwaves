@@ -21,4 +21,6 @@ public class Constants {
 
     public static final CharacterState[] CHARACTER_CHARACTER_STATE = { CharacterState.WALK, CharacterState.IDLE, CharacterState.FLINCH, CharacterState.DEATH, CharacterState.SPAWN };
 
+    public static final String GAME_CHARACTER_XML_FILE = "src/main/resources/configuration/gameCharacters.xml";
+
 }
