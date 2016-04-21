@@ -1,91 +1,45 @@
 package edu.chalmers.vaporwave.util;
 
-import edu.chalmers.vaporwave.model.gameObjects.Tile;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
-/**
- * Created by FEngelbrektsson on 20/04/16.
- */
 public class MapFileReader {
-    private File mapFile;
-
-    private String[][] stringKeywords = new String[Constants.DEFAULT_GRID_HEIGHT][Constants.DEFAULT_GRID_WIDTH];
-    private Scanner textScanner;
-    private String[] linesHolder = new String[Constants.DEFAULT_GRID_HEIGHT];
-   // private String[] parsedLines;
+    private MapObject[][] mapObjects;
 
     public MapFileReader(String filename) {
-
-    }
-
-    /**
-     *
-     * @param mapFile
-     * @return String array of the lines read from the file
-     * @throws Exception
-     */
-    public String[] readMapRows(File mapFile) throws Exception {
-        textScanner = new Scanner(mapFile);
-        int i = 0;
-        while(textScanner.hasNextLine()) {
-            linesHolder[i] = textScanner.nextLine();
-            i++;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            int width = ((reader.readLine()).replace(" ", "")).length();
+            LineNumberReader numbers = new LineNumberReader(reader);
+            numbers.skip(Integer.MAX_VALUE);
+            int height = (numbers.getLineNumber() + 2);
+            this.mapObjects = new MapObject[width][height];
+            reader = new BufferedReader(new FileReader(filename));
+            String line;
+            int i = 0;
+            while((line = reader.readLine()) != null) {
+                line = line.replace(" ", "");
+                for (int j = 0; j < width; j++) {
+                    switch (line.charAt(j)) {
+                        case 'X':
+                            mapObjects[j][i] = MapObject.INDESTRUCTIBLE_WALL;
+                            break;
+                        case 'D':
+                            mapObjects[j][i] = MapObject.DESTRUCTIBLE_WALL;
+                            break;
+                    }
+                }
+                i++;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        } catch (IOException e) {
+            System.out.println(e);
         }
-        return linesHolder;
     }
 
-    /**
-     *
-     * @param strings takes an array of strings and parses the characters
-     * @return matrix of the characters, in string format
-     */
-    public String[][] parseStrings(String[] strings) {
-        for(int i = 0; i < strings.length; i++) {
-               stringKeywords[i] = strings[i].split(" ");
-        }
-        return stringKeywords;
+    public MapObject[][] getMapObjects() {
+        return this.mapObjects;
     }
 
-    /**
-     *
-     * @param mapFile
-     * @return a matrix of the characters, read from the mapFile, in string format
-     * @throws Exception
-     */
-    public String[][] createMapArray(File mapFile) throws Exception {
-        linesHolder = readMapRows(mapFile);
-        return parseStrings(linesHolder);
-    }
-
-    public Boolean isDestructibleWall(char c) {
-        if(c == 'X') {
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean isInDestructibleWall(char c) {
-        if(c == 'O') {
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean isEnemySpawn(char c) {
-        if(c == 'E') {
-            return true;
-        }
-        return false;
-    }
-
-    public Boolean isCharacterSpawn(char c) {
-        if(c == 'C') {
-            return true;
-        }
-        return false;
-    }
 
 }
