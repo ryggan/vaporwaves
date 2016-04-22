@@ -132,8 +132,7 @@ public class GameCharacter extends Movable {
         previousGridPositionY = newGridPositionY;
 
         List<String> input = ListenerController.getInstance().getInput();
-        if (input.size() > 0 && !input.contains("UP") && !input.contains("DOWN") && !input.contains("LEFT") && !input.contains("RIGHT")) {
-            System.out.println("continous move!");
+        if (input.size() > 0 && (input.contains("UP") || input.contains("DOWN") || input.contains("LEFT") || input.contains("RIGHT"))) {
             move(input.get(input.size()-1));
         }
     }
