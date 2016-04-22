@@ -21,6 +21,7 @@ public class GameCharacter extends Movable {
     private int previousGridPositionX;
     private int previousGridPositionY;
     private boolean moving;
+    private StaticTile[][] latestArenaTiles;
 
     private double maxHealth;
     private double health;
@@ -31,8 +32,8 @@ public class GameCharacter extends Movable {
     public GameCharacter(String name) {
 
         // Test settings setup:
-        setCanvasPosition(Utils.gridToCanvasPosition(5), Utils.gridToCanvasPosition(5));
-        speed = 0.6;
+        setCanvasPosition(Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5));
+        speed = 0.8;
 
         // Setup:
         this.name = name;
@@ -47,8 +48,10 @@ public class GameCharacter extends Movable {
         GameEventBus.getInstance().post(new PlaceBombEvent(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY())));
     }
 
-    public void move(String key) {
-        if (moveAllowed(key)) {
+    public void move(String key, StaticTile[][] arenaTiles) {
+        this.latestArenaTiles = arenaTiles;
+//        if (moveAllowed(key)) {
+        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
             switch (key) {
                 case "UP":
                     moveUp();
@@ -69,13 +72,10 @@ public class GameCharacter extends Movable {
         }
     }
 
-    private boolean moveAllowed(String key) {
-        int closestTilePositionX = Utils.canvasToGridPosition(getCanvasPositionX());
-        int closestTilePositionY = Utils.canvasToGridPosition(getCanvasPositionY());
-
-//        return (characterState != CharacterState.WALK || (closestTilePositionX == getGridPositionX() && closestTilePositionY == getGridPositionY())) || oppositeDirection(key);
-        return characterState != CharacterState.WALK || oppositeDirection(key);
-    }
+//    private boolean moveAllowed(String key) {
+//
+//        return characterState != CharacterState.WALK || oppositeDirection(key);
+//    }
 
     private boolean oppositeDirection(String key) {
         return (key.equals("UP") && direction == Directions.DOWN)
@@ -86,30 +86,35 @@ public class GameCharacter extends Movable {
 
     public void moveUp() {
         direction = Directions.UP;
-//        if (Utils.canvasToGridPosition(getCanvasPositionY()) > 0)
-//        if (previousGridPositionY > 0)
-        if (getCanvasPositionY() > 0)
+        if (allowMove(0, -1) && getCanvasPositionY() > 0) {
             setVelocity(0, -this.speed);
+        }
     }
     public void moveDown() {
         direction = Directions.DOWN;
-//        if (Utils.canvasToGridPosition(getCanvasPositionY()) < Constants.DEFAULT_GRID_HEIGHT-1)
-//        if (previousGridPositionY < Constants.DEFAULT_GRID_HEIGHT-1)
-        if (getCanvasPositionY() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_HEIGHT-1))
+        if (allowMove(0, 1) && getCanvasPositionY() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_HEIGHT-1)) {
             setVelocity(0, this.speed);
+        }
     }
     public void moveLeft() {
         direction = Directions.LEFT;
-//        if (Utils.canvasToGridPosition(getCanvasPositionX()) > 0)
-//        if (previousGridPositionX > 0)
-        if (getCanvasPositionX() > 0)
+        if (allowMove(-1, 0) && getCanvasPositionX() > 0) {
             setVelocity(-this.speed, 0);
+        }
     }
     public void moveRight() {
         direction = Directions.RIGHT;
-//        if (previousGridPositionX < Constants.DEFAULT_GRID_WIDTH-1)
-        if (getCanvasPositionX() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_WIDTH-1))
+        if (allowMove(1, 0) && getCanvasPositionX() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_WIDTH-1)) {
             setVelocity(this.speed, 0);
+        }
+    }
+
+    private boolean allowMove(int gridDirectionX, int gridDirectionY) {
+        int nextGridPositionX = Math.min(Math.max(previousGridPositionX + gridDirectionX, 0), Constants.DEFAULT_GRID_WIDTH-1);
+        int nextGridPositionY = Math.min(Math.max(previousGridPositionY + gridDirectionY, 0), Constants.DEFAULT_GRID_HEIGHT-1);
+        StaticTile nextTile = this.latestArenaTiles[nextGridPositionX][nextGridPositionY];
+
+        return nextTile == null || !(nextTile instanceof Wall) && !(nextTile instanceof Bomb);
     }
 
     @Override
@@ -146,7 +151,7 @@ public class GameCharacter extends Movable {
 
         List<String> input = ListenerController.getInstance().getInput();
         if (input.size() > 0 && (input.contains("UP") || input.contains("DOWN") || input.contains("LEFT") || input.contains("RIGHT"))) {
-            move(input.get(input.size()-1));
+            move(input.get(input.size()-1), this.latestArenaTiles);
         }
     }
 
