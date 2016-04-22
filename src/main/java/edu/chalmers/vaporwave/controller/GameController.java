@@ -89,7 +89,7 @@ public class GameController {
                 case "LEFT":
                 case "DOWN":
                 case "RIGHT":
-                    playerCharacter.move(key);
+                    playerCharacter.move(key, arenaModel.getArenaTiles());
                     break;
                 case "ENTER":
                     playerCharacter.spawn();

@@ -8,6 +8,8 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
+import edu.chalmers.vaporwave.model.PowerUpProperties;
+import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
 import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
@@ -102,13 +104,8 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 
         Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
-        explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
-        explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
-//        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
-//        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
-//        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
-//        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
-//        explosionSpriteList.add(explosionCenterSprite);
+        explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 0}, new double[] {1, 1});
+        explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 1}, new double[] {1, 1});
 
     }
 
@@ -254,6 +251,61 @@ public class ArenaView {
             Sprite actualSprite = currentSprite[spriteIndex];
             actualSprite.setPosition(character.getCanvasPositionX(), character.getCanvasPositionY());
             actualSprite.render(tileGC, timeSinceStart);
+        }
+    }
+
+    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
+        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
+
+        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
+            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
+            switch(powerUpState) {
+                case HEALTH:
+                    powerUpSprite.setHealthSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case BOMB_COUNT:
+                    powerUpSprite.setBombCountSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case SPEED:
+                    powerUpSprite.setSpeedSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case RANGE:
+                    powerUpSprite.setRangeSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+            }
         }
     }
 
