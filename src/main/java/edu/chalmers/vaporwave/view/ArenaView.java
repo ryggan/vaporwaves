@@ -1,7 +1,11 @@
 package edu.chalmers.vaporwave.view;
 
+import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.controller.ListenerController;
+import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
+import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.model.gameObjects.*;
@@ -10,9 +14,11 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.awt.Dimension;
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by FEngelbrektsson on 15/04/16.
@@ -38,10 +44,13 @@ public class ArenaView {
     private Sprite explosionBeamSprite;
     private Sprite explosionCenterSprite;
 
+    private Map<Point, Sprite> explosionSpriteList;
+
     private Group root;
     
     public ArenaView(Group root) {
         this.root = root;
+        this.explosionSpriteList = new HashMap<Point, Sprite>();
         GameEventBus.getInstance().register(this);
 
         // Setting up area to draw graphics
@@ -95,9 +104,11 @@ public class ArenaView {
         Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
         explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
         explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
-
-        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
-        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
+//        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
+//        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
+//        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
+//        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
+//        explosionSpriteList.add(explosionCenterSprite);
 
     }
 
@@ -120,6 +131,19 @@ public class ArenaView {
 
     }
 
+    @Subscribe
+    public void bombPlaced(PlaceBombEvent placeBombEvent) {
+        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
+        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
+        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
+        explosionSpriteList.put(placeBombEvent.getGridPosition(), explosionCenterSprite);
+    }
+
+    @Subscribe
+    public void animationFinished(AnimationFinishedEvent animationFinishedEvent) {
+        explosionCenterSprite = null;
+    }
+
     public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
 
         /**
@@ -138,7 +162,12 @@ public class ArenaView {
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null) {
-                    Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
+                    Sprite tileSprite;
+                    if(arenaTiles[i][j] instanceof Blast) {
+                        tileSprite = getTileSprite(arenaTiles[i][j], new Point(i, j));
+                    } else {
+                        tileSprite = getTileSprite(arenaTiles[i][j]);
+                    }
                     if (tileSprite != null) {
                         tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
                         tileSprite.render(tileGC, timeSinceStart);
@@ -182,15 +211,12 @@ public class ArenaView {
             }
         } else if (tile instanceof PowerUp) {
 
-        } else if (tile instanceof Blast) {
-            // todo: Make use of copy constructor in Animated Sprite instead!
-            Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
-            AnimatedSprite blast = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
-            ((AnimatedSprite)blast).setLoops(1);
-            return blast;
-
         }
         return null;
+    }
+
+    public Sprite getTileSprite(StaticTile tile, Point position) {
+        return explosionSpriteList.get(position);
     }
 
     public void renderCharacter(GameCharacter character, double timeSinceStart) {

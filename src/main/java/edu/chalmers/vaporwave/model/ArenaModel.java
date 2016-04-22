@@ -36,7 +36,6 @@ public class ArenaModel {
                 arenaTiles[i][j] = createMapObject(arenaMap.getMapObjects()[i][j]);
             }
         }
-
     }
 
 
@@ -58,6 +57,10 @@ public class ArenaModel {
 
     public void setTile(StaticTile tile, Point position) throws ArrayIndexOutOfBoundsException {
         setTile(tile, position.x, position.y);
+    }
+
+    public void removeTile(Point position) throws ArrayIndexOutOfBoundsException {
+        setTile(null, position.x, position.y);
     }
 
 //    public ArrayList<Tile> getTiles(int posx, int posy) {

@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
+import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,14 +16,15 @@ import java.util.ArrayList;
  *
  * Created by bob on 2016-04-15.
  */
-public class AnimatedSprite extends Sprite {
+public class AnimatedSprite extends Sprite implements Cloneable {
 
     private ArrayList<int[]> frames;
     private int length;
     private Image spriteSheet;
     private Dimension spriteDimension;
     private Dimension sheetDimension;
-
+    private int[] startPosition;
+    private double[] offset;
     private double duration;
     private double timeOffset;
     private boolean startFromBeginning;
@@ -55,16 +58,20 @@ public class AnimatedSprite extends Sprite {
         // Setting up variables
 
         this.frames = new ArrayList<int[]>();
-        this.length = length;
+
         this.spriteSheet = spriteSheet;
         this.spriteDimension = spriteDimension;
+        this.length = length;
         this.duration = duration;
+        this.startPosition = startPosition;
+        this.offset = offset;
 
         this.timeOffset = 0;
         this.startFromBeginning = false;
         this.runAnimation = true;
         this.loops = -1;
         this.startTime = 0;
+
 
         setWidth(spriteDimension.getWidth());
         setHeight(spriteDimension.getHeight());
@@ -122,6 +129,22 @@ public class AnimatedSprite extends Sprite {
         this.sheetDimension = sprite.sheetDimension;
 
         this.resetLoops();
+    }
+
+    public AnimatedSprite clone() {
+        AnimatedSprite clone = new AnimatedSprite(this.spriteSheet, this.spriteDimension, this.length, this.duration, this.startPosition, this.offset);
+        clone.setLoops(this.loops);
+        clone.setScale(Constants.GAME_SCALE);
+
+
+//        System.out.println("spriteSheet: " + this.spriteSheet +
+//                "\ndimension: " + this.spriteDimension +
+//                "\nlength: " + this.length);
+
+        return clone;
+
+
+        // asdf
     }
 
     /**
@@ -187,6 +210,7 @@ public class AnimatedSprite extends Sprite {
         if (loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
             runAnimation = false;
             this.animationFinished = true;
+            GameEventBus.getInstance().post(new AnimationFinishedEvent());
         }
 
         if (runAnimation) {

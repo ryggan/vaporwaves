@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
 import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
@@ -16,6 +17,7 @@ import edu.chalmers.vaporwave.util.PowerUpState;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -69,6 +71,12 @@ public class GameController {
 
         // Input handling:
 
+
+//        for (Point position : bombPositions) {
+//            this.arenaModel.removeTile(position);
+//        }
+//        bombPositions.clear();
+
         List<String> input = ListenerController.getInstance().getInput();
 
 
@@ -120,7 +128,6 @@ public class GameController {
     public void bombDetonated(BlastEvent blastEvent) {
         arenaModel.setTile(blastEvent.getBlast(), blastEvent.getPosition());
     }
-
 
     public ArenaModel newGame(ArenaMap arenaMap) {
 

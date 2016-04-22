@@ -5,6 +5,8 @@ import edu.chalmers.vaporwave.view.AnimatedSprite;
 public class AnimationFinishedEvent {
     private AnimatedSprite animatedSprite;
 
+    public AnimationFinishedEvent() {}
+
     public AnimationFinishedEvent(AnimatedSprite animatedSprite) {
         this.animatedSprite = animatedSprite;
     }
