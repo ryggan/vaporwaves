@@ -71,32 +71,26 @@ public class ArenaView {
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
 
-        Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-17x17.png");
+        Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
 
         bombSprite[0] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 0}, new double[] {0, 0});
-        bombSprite[0].setOffset(1, 1);
+                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1});
         bombSprite[1] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 1}, new double[] {0, 0});
-        bombSprite[1].setOffset(1, 1);
+                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 1}, new double[] {1, 1});
         bombSprite[2] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 2}, new double[] {0, 0});
-        bombSprite[2].setOffset(1, 1);
+                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 2}, new double[] {1, 1});
         bombSprite[3] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(17, 17), 2, 0.4, new int[] {0, 3}, new double[] {0, 0});
-        bombSprite[3].setOffset(1, 1);
+                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 3}, new double[] {1, 1});
 
-        Image wallSpriteSheet = new Image("images/spritesheet-walls_both-17x17.png");
+        Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
         destructibleWallSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 0}, new double[] {0, 0});
-        destructibleWallSprite.setOffset(1, 1);
+                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 0}, new double[] {1, 1});
         destructibleWallDestroyedSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {0, 0});
-        destructibleWallDestroyedSprite.setOffset(1, 1);
+                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         indestructibleWallSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(17, 17), 1, 1.0, new int[] {0, 1}, new double[] {0, 0});
-        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-17x17.png");
+                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 
+        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
         explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
         explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
         explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 2}, new double[] {0, 0});
