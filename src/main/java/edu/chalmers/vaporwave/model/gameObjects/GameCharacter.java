@@ -3,15 +3,10 @@ package edu.chalmers.vaporwave.model.gameObjects;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
-import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.util.*;
-import edu.chalmers.vaporwave.view.AnimatedSprite;
-import edu.chalmers.vaporwave.view.Sprite;
-import javafx.scene.image.Image;
-import org.w3c.dom.NodeList;
 
+import java.awt.*;
 import java.util.List;
 
 public class GameCharacter extends Movable {
@@ -63,8 +58,9 @@ public class GameCharacter extends Movable {
                     moveRight();
                     break;
             }
-            if (getVelocityY() != 0 || getVelocityX() != 0)
+            if (getVelocityY() != 0 || getVelocityX() != 0) {
                 characterState = CharacterState.WALK;
+            }
         }
     }
 
@@ -153,6 +149,10 @@ public class GameCharacter extends Movable {
 
     // GETS AND SETS:
 
+    public Point getGridPosition() {
+        return new Point(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()));
+    }
+
     public CharacterState getState() {
         return this.characterState;
     }
@@ -164,4 +164,5 @@ public class GameCharacter extends Movable {
     public Directions getDirection() {
         return direction;
     }
+
 }
