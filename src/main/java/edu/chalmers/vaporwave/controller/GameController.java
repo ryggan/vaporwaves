@@ -2,8 +2,7 @@ package edu.chalmers.vaporwave.controller;
 
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
-import edu.chalmers.vaporwave.model.gameObjects.Movable;
+import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.MapObject;
@@ -13,6 +12,7 @@ import javafx.scene.Group;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameController {
 
@@ -111,5 +111,21 @@ public class GameController {
         // Here goes all code for setting up the environment for a new game
 
         return new ArenaModel(arenaMap);
+    }
+
+
+    /** 10% chance to create a SuperPowerUp, 40% chance to create a StatPowerUp and 50% chance to return null.
+     *
+     * @return A powerup Tile.
+     */
+    public void spawnPowerup(int posx, int posy) {
+        Random randomGenerator = new Random();
+        int temporaryNumber = randomGenerator.nextInt(10);
+        if(temporaryNumber == 0 || temporaryNumber == 1
+                || temporaryNumber == 2 || temporaryNumber == 3) {
+            arenaModel.setTile(new StatPowerUp(), posx, posy);
+        } else if(temporaryNumber == 4) {
+            arenaModel.setTile(new StatPowerUp(), posx, posy);
+        }
     }
 }

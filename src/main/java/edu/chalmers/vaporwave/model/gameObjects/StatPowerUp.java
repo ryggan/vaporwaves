@@ -8,6 +8,9 @@ import java.util.Random;
 public class StatPowerUp extends PowerUp {
     private PowerUpState powerUpState;
 
+    //Probably remove this later
+    public StatPowerUp() {}
+
     public StatPowerUp(List<PowerUp> enabledPowerUpList) {
 
         if(enabledPowerUpList.size() > 0) {
