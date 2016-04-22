@@ -65,14 +65,34 @@ public class GameController {
 
         List<String> input = ListenerController.getInstance().getInput();
 
+
+        List<String> pressed = ListenerController.getInstance().getPressed();
+
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);
-            if (key.equals("UP") || key.equals("LEFT") || key.equals("DOWN") || key.equals("RIGHT")) {
-                playerCharacter.move(key);
-            } else if (key.equals("ENTER")) {
-                playerCharacter.spawn();
+            switch (key) {
+                case "UP":
+                case "LEFT":
+                case "DOWN":
+                case "RIGHT":
+                    playerCharacter.move(key);
+                    break;
+                case "ENTER":
+                    playerCharacter.spawn();
+                    break;
             }
         }
+
+        for (int i = 0; i < pressed.size(); i++) {
+            String key = pressed.get(i);
+            switch (key) {
+                case "SPACE":
+                    playerCharacter.placeBomb();
+                    break;
+            }
+        }
+
+
 
         // Updating positions
 

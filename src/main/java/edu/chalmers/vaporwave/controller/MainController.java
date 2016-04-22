@@ -70,7 +70,9 @@ public class MainController {
 //                    System.out.println("---");
 //                }
 
-//                System.out.println(ListenerController.getInstance().getPressed());
+                for (String code : ListenerController.getInstance().getPressed()) {
+                    ListenerController.getInstance().updatePressed(code);
+                }
 //                try {
 //                    Thread.sleep(100);
 //                } catch (Exception e) { }

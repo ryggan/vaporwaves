@@ -13,13 +13,10 @@ public class ListenerController {
 
     private List<String> input = new ArrayList<String>();
     private List<String> pressed = new ArrayList<String>();
-    private List<String> released = new ArrayList<String>();
 
     private ListenerController() { }
 
     public void initiateListener(Scene scene) {
-        released.add("UP");
-        released.add("DOWN");
 
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
@@ -27,14 +24,10 @@ public class ListenerController {
                         String code = e.getCode().toString();
                         if (!input.contains(code)) {
                             input.add(code);
+                            pressed.add(code);
                         }
 
-                        if (pressed.contains(code)) {
-                            pressed.remove(code);
-                        } else if (input.contains(code) && !pressed.contains(code) && released.contains(code)) {
-                            pressed.add(code);
-                            released.remove(code);
-                        }
+
                     }
                 });
 
@@ -43,10 +36,12 @@ public class ListenerController {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
                         input.remove(code);
-                        pressed.remove(code);
-                        released.add(code);
                     }
                 });
+    }
+
+    public void updatePressed(String code) {
+        this.pressed.remove(code);
     }
 
     public static synchronized ListenerController getInstance() {

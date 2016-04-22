@@ -39,6 +39,10 @@ public class GameCharacter extends Movable {
         speed = 0.6;
     }
 
+    public void placeBomb() {
+        System.out.println("BOOOOMB :D");
+    }
+
     public void move(String key) {
         if (moveAllowed(key)) {
             if (key.equals("UP")) {
