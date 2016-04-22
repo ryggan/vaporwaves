@@ -13,16 +13,14 @@ public abstract class Movable {
 
     private double canvasPositionX;
     private double canvasPositionY;
-    private Point gridPosition;
     private double velocityX;
     private double velocityY;
 
     protected Movable() { }
 
-    public Movable(double canvasPositionX, double canvasPositionY, Point gridPosition) {
+    public Movable(double canvasPositionX, double canvasPositionY) {
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
-        this.gridPosition = gridPosition;
         this.velocityX = 0;
         this.velocityY = 0;
     }
