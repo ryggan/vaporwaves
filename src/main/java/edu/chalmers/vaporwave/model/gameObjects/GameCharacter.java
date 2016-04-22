@@ -10,8 +10,7 @@ import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.Image;
 import org.w3c.dom.NodeList;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 public class GameCharacter extends Movable {
 
@@ -119,7 +118,7 @@ public class GameCharacter extends Movable {
         setVelocity(0, 0);
         setGeneralPosition(newGridPositionX, newGridPositionY);
 
-        ArrayList<String> input = ListenerController.getInstance().getInput();
+        List<String> input = ListenerController.getInstance().getInput();
         if (input.size() > 0 && !input.contains("UP") && !input.contains("DOWN") && !input.contains("LEFT") && !input.contains("RIGHT")) {
             move(input.get(input.size()-1));
         }

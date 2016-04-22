@@ -12,6 +12,7 @@ import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameController {
 
@@ -62,7 +63,7 @@ public class GameController {
 
         // Input handling:
 
-        ArrayList<String> input = ListenerController.getInstance().getInput();
+        List<String> input = ListenerController.getInstance().getInput();
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);

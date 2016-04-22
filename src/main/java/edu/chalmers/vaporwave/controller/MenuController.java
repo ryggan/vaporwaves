@@ -28,7 +28,7 @@ public class MenuController {
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        ArrayList<String> input = ListenerController.getInstance().getInput();
+        List<String> input = ListenerController.getInstance().getInput();
 
 
             if (input.contains("UP") && !upKeyPressed) {
