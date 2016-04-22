@@ -93,8 +93,8 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 
         Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
-        explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
-        explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
+        explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {1, 1});
+        explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {1, 1});
 
         explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
         ((AnimatedSprite)explosionCenterSprite).setLoops(1);
