@@ -28,6 +28,8 @@ public class CharacterSprite {
     }
 
     public void setSpawnSprite(Sprite sprite) {
+        ((AnimatedSprite)sprite).setStartFromBeginning(true);
+        ((AnimatedSprite)sprite).setLoops(1);
         spawnSprite[0] = sprite;
     }
 
@@ -44,6 +46,8 @@ public class CharacterSprite {
     }
 
     public void setDeathSprite(Sprite sprite) {
+        ((AnimatedSprite)sprite).setStartFromBeginning(true);
+        ((AnimatedSprite)sprite).setLoops(1);
         deathSprite[0] = sprite;
     }
 

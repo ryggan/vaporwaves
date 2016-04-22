@@ -21,7 +21,13 @@ public class AnimatedSprite extends Sprite {
     private Image spriteSheet;
     private Dimension spriteDimension;
     private Dimension sheetDimension;
+
     private double duration;
+    private double timeOffset;
+    private boolean startFromBeginning;
+    private boolean runAnimation;
+    private int loops; // -1 gives infinite loops
+    private double startTime;
 
     /**
      * Constructor that takes an Image object, and uses it as an spritesheed, with some help from the other
@@ -51,6 +57,12 @@ public class AnimatedSprite extends Sprite {
         this.spriteSheet = spriteSheet;
         this.spriteDimension = spriteDimension;
         this.duration = duration;
+
+        this.timeOffset = -1;
+        this.startFromBeginning = false;
+        this.runAnimation = true;
+        this.loops = -1;
+        this.startTime = -1;
 
         setWidth(spriteDimension.getWidth());
         setHeight(spriteDimension.getHeight());
@@ -87,9 +99,6 @@ public class AnimatedSprite extends Sprite {
     }
 
     public AnimatedSprite(AnimatedSprite sprite) {
-//        this(sprite.spriteSheet, sprite.spriteDimension, 1, sprite.duration, new int[] {0, 0});
-//        this.frames.remove(0);
-
         for(int[] i : sprite.frames) {
             int[] frame = {i[0], i[1]};
             frames.add(frame);
@@ -136,18 +145,43 @@ public class AnimatedSprite extends Sprite {
      */
     @Override
     public void render(GraphicsContext gc, double time) {
-        int index = (int)((time % (length * duration)) / duration);
+
+        if (startFromBeginning && timeOffset == -1) {
+            timeOffset = time;
+        }
+
+        if (startTime == -1) {
+            startTime = time;
+        }
+
+        double timeToCheck = time - timeOffset;
+
+        int index = (int)((timeToCheck % (length * duration)) / duration);
         double width = getWidth() * getScale();
         double height = getHeight() * getScale();
         int sourcex = frames.get(index)[0] * (int)width;
         int sourcey = frames.get(index)[1] * (int)height;
+
         double targetx = (getPositionX() - getOffsetX()) * getScale();
         double targety = (getPositionY() - getOffsetY()) * getScale();
         if (getStayOnPixel()) {
             targetx = Math.round(targetx * getScale()) / getScale();
             targety = Math.round(targety * getScale()) / getScale();
         }
-        gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
+
+        if (loops != -1 && time - startTime > loops * (duration * length)) {
+            runAnimation = false;
+            // todo: here be some kind of listener when loops are done, if needed
+        }
+
+        if (runAnimation) {
+            gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
+        }
+    }
+
+    public void resetLoops() {
+        runAnimation = true;
+        startTime = -1;
     }
 
     @Override
@@ -163,5 +197,14 @@ public class AnimatedSprite extends Sprite {
 
     public int getLength() {
         return length;
+    }
+
+    public void setStartFromBeginning(boolean startFromBeginning) {
+        this.startFromBeginning = startFromBeginning;
+    }
+
+    // if loops = -1, then infinite loops
+    public void setLoops(int loops) {
+        this.loops = loops;
     }
 }
