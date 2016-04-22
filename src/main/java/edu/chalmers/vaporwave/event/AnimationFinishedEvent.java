@@ -1,7 +1,16 @@
 package edu.chalmers.vaporwave.event;
 
-/**
- * Created by andreascarlsson on 2016-04-22.
- */
+import edu.chalmers.vaporwave.view.AnimatedSprite;
+
 public class AnimationFinishedEvent {
+    private AnimatedSprite animatedSprite;
+
+    public AnimationFinishedEvent(AnimatedSprite animatedSprite) {
+        this.animatedSprite = animatedSprite;
+    }
+
+    public AnimatedSprite getAnimatedSprite() {
+        return this.animatedSprite;
+    }
+
 }

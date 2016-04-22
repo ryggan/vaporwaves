@@ -29,6 +29,8 @@ public class AnimatedSprite extends Sprite {
     private int loops; // -1 gives infinite loops
     private double startTime;
 
+    private boolean animationFinished;
+
     /**
      * Constructor that takes an Image object, and uses it as an spritesheed, with some help from the other
      * arguments, to create an animated image.
@@ -98,6 +100,11 @@ public class AnimatedSprite extends Sprite {
         this(new Image(fileName), spriteDimension, length, duration, startPosition, offset);
     }
 
+    /**
+     * Not working yet
+     *
+     * @param sprite
+     */
     public AnimatedSprite(AnimatedSprite sprite) {
         for(int[] i : sprite.frames) {
             int[] frame = {i[0], i[1]};
@@ -113,6 +120,8 @@ public class AnimatedSprite extends Sprite {
         setHeight(sprite.spriteDimension.getHeight());
 
         this.sheetDimension = sprite.sheetDimension;
+
+        this.resetLoops();
     }
 
     /**
@@ -177,7 +186,7 @@ public class AnimatedSprite extends Sprite {
 
         if (loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
             runAnimation = false;
-            // todo: here be some kind of listener when loops are done, if needed
+            this.animationFinished = true;
         }
 
         if (runAnimation) {
@@ -211,6 +220,11 @@ public class AnimatedSprite extends Sprite {
 
     // if loops = -1, then infinite loops
     public void setLoops(int loops) {
+//        System.out.println("Loops: " + loops);
         this.loops = loops;
+    }
+
+    public boolean isAnimationFinished() {
+        return this.animationFinished;
     }
 }

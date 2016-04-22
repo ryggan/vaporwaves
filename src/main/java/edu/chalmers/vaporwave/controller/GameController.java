@@ -12,8 +12,6 @@ import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapFileReader;
-import edu.chalmers.vaporwave.util.MapObject;
-import edu.chalmers.vaporwave.util.XMLReader;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
 

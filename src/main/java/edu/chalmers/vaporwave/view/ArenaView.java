@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.controller.ListenerController;
+import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.model.gameObjects.*;
@@ -41,6 +42,7 @@ public class ArenaView {
     
     public ArenaView(Group root) {
         this.root = root;
+        GameEventBus.getInstance().register(this);
 
         // Setting up area to draw graphics
 
@@ -94,7 +96,7 @@ public class ArenaView {
         explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
         explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
 
-        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {0, 0});
+        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
         ((AnimatedSprite)explosionCenterSprite).setLoops(1);
 
     }
@@ -141,6 +143,7 @@ public class ArenaView {
                         tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
                         tileSprite.render(tileGC, timeSinceStart);
                     }
+
                 }
             }
         }
@@ -180,7 +183,12 @@ public class ArenaView {
         } else if (tile instanceof PowerUp) {
 
         } else if (tile instanceof Blast) {
-            return explosionCenterSprite;
+            // todo: Make use of copy constructor in Animated Sprite instead!
+            Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
+            AnimatedSprite blast = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
+            ((AnimatedSprite)blast).setLoops(1);
+            return blast;
+
         }
         return null;
     }
