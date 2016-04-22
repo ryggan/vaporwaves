@@ -51,28 +51,6 @@ public class CharacterSprite {
         deathSprite[0] = sprite;
     }
 
-    public Sprite getSpawnSprite() {
-        return spawnSprite[0];
-    }
-
-    public Sprite getIdleSprite(int index) {
-        return idleSprite[index];
-    }
-
-    public Sprite getWalkSprite(int index) {
-        return walkSprite[index];
-    }
-
-    public Sprite getFlinchSprite(int index) {
-        return flinchSprite[index];
-    }
-
-    public Sprite getDeathSprite() {
-        return deathSprite[0];
-    }
-
-    // Not sure if these are needed, maybe delete later:
-
     public Sprite[] getDeathSprites() {
         return deathSprite;
     }
@@ -93,30 +71,52 @@ public class CharacterSprite {
         return spawnSprite;
     }
 
-    public void setIdleSprites(Sprite[] sprites) {
-        if (sprites.length != 4)
-            throw new IllegalArgumentException();
+    // Not sure if these are needed, maybe delete later:
 
-        for (int i = 0; i < 4; i++) {
-            idleSprite[i] = sprites[i];
-        }
-    }
+//    public Sprite getSpawnSprite() {
+//        return spawnSprite[0];
+//    }
+//
+//    public Sprite getIdleSprite(int index) {
+//        return idleSprite[index];
+//    }
+//
+//    public Sprite getWalkSprite(int index) {
+//        return walkSprite[index];
+//    }
+//
+//    public Sprite getFlinchSprite(int index) {
+//        return flinchSprite[index];
+//    }
+//
+//    public Sprite getDeathSprite() {
+//        return deathSprite[0];
+//    }
 
-    public void setWalkSprites(Sprite[] sprites) {
-        if (sprites.length != 4)
-            throw new IllegalArgumentException();
-
-        for (int i = 0; i < 4; i++) {
-            walkSprite[i] = sprites[i];
-        }
-    }
-
-    public void setFlinchSprites(Sprite[] sprites) {
-        if (sprites.length != 4)
-            throw new IllegalArgumentException();
-
-        for (int i = 0; i < 4; i++) {
-            flinchSprite[i] = sprites[i];
-        }
-    }
+//    public void setIdleSprites(Sprite[] sprites) {
+//        if (sprites.length != 4)
+//            throw new IllegalArgumentException();
+//
+//        for (int i = 0; i < 4; i++) {
+//            idleSprite[i] = sprites[i];
+//        }
+//    }
+//
+//    public void setWalkSprites(Sprite[] sprites) {
+//        if (sprites.length != 4)
+//            throw new IllegalArgumentException();
+//
+//        for (int i = 0; i < 4; i++) {
+//            walkSprite[i] = sprites[i];
+//        }
+//    }
+//
+//    public void setFlinchSprites(Sprite[] sprites) {
+//        if (sprites.length != 4)
+//            throw new IllegalArgumentException();
+//
+//        for (int i = 0; i < 4; i++) {
+//            flinchSprite[i] = sprites[i];
+//        }
+//    }
 }

@@ -23,6 +23,8 @@ public class GameCharacter extends Movable {
 
     private Directions direction;
     private CharacterState characterState;
+    private double previousGridPositionX;
+    private double previousGridPositionY;
 
     private double maxHealth;
     private double health;
@@ -35,26 +37,32 @@ public class GameCharacter extends Movable {
         this.name = name;
 
         // Test settings setup:
-        setGeneralPosition(5, 5);
+//        setGeneralPosition(5, 5);
+        setCanvasPosition(Utils.gridToCanvasPosition(5), Utils.gridToCanvasPosition(5));
         characterState = CharacterState.IDLE;
         direction = Directions.DOWN;
         speed = 0.6;
     }
 
     public void placeBomb() {
-        GameEventBus.getInstance().post(new PlaceBombEvent(this.getGridPosition()));
+        GameEventBus.getInstance().post(new PlaceBombEvent(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY())));
     }
 
     public void move(String key) {
         if (moveAllowed(key)) {
-            if (key.equals("UP")) {
-                moveUp();
-            } else if (key.equals("LEFT")) {
-                moveLeft();
-            } else if (key.equals("DOWN")) {
-                moveDown();
-            } else if (key.equals("RIGHT")) {
-                moveRight();
+            switch (key) {
+                case "UP":
+                    moveUp();
+                    break;
+                case "LEFT":
+                    moveLeft();
+                    break;
+                case "DOWN":
+                    moveDown();
+                    break;
+                case "RIGHT":
+                    moveRight();
+                    break;
             }
             if (getVelocityY() != 0 || getVelocityX() != 0)
                 characterState = CharacterState.WALK;
@@ -62,8 +70,10 @@ public class GameCharacter extends Movable {
     }
 
     private boolean moveAllowed(String key) {
-        int closestTilePositionX = (int)Math.round(getCanvasPositionX() / Constants.DEFAULT_TILE_WIDTH);
-        int closestTilePositionY = (int)Math.round(getCanvasPositionY() / Constants.DEFAULT_TILE_HEIGHT);
+//        int closestTilePositionX = (int)Math.round(getCanvasPositionX() / Constants.DEFAULT_TILE_WIDTH);
+//        int closestTilePositionY = (int)Math.round(getCanvasPositionY() / Constants.DEFAULT_TILE_HEIGHT);
+        int closestTilePositionX = Utils.canvasToGridPosition(getCanvasPositionX());
+        int closestTilePositionY = Utils.canvasToGridPosition(getCanvasPositionY());
 
 //        return (characterState != CharacterState.WALK || (closestTilePositionX == getGridPositionX() && closestTilePositionY == getGridPositionY())) || oppositeDirection(key);
         return characterState != CharacterState.WALK || oppositeDirection(key);
@@ -78,22 +88,26 @@ public class GameCharacter extends Movable {
 
     public void moveUp() {
         direction = Directions.UP;
-        if (getGridPositionY() > 0)
+//        if (getGridPositionY() > 0)
+        if (Utils.canvasToGridPosition(getCanvasPositionY()) > 0)
             setVelocity(0, -this.speed);
     }
     public void moveDown() {
         direction = Directions.DOWN;
-        if (getGridPositionY() < Constants.DEFAULT_GRID_HEIGHT-1)
+//        if (getGridPositionY() < Constants.DEFAULT_GRID_HEIGHT-1)
+        if (Utils.canvasToGridPosition(getCanvasPositionY()) < Constants.DEFAULT_GRID_HEIGHT-1)
             setVelocity(0, this.speed);
     }
     public void moveLeft() {
         direction = Directions.LEFT;
-        if (getGridPositionX() > 0)
+//        if (getGridPositionX() > 0)
+        if (Utils.canvasToGridPosition(getCanvasPositionX()) > 0)
             setVelocity(-this.speed, 0);
     }
     public void moveRight() {
         direction = Directions.RIGHT;
-        if (getGridPositionX() < Constants.DEFAULT_GRID_WIDTH-1)
+//        if (getGridPositionX() < Constants.DEFAULT_GRID_WIDTH-1)
+        if (Utils.canvasToGridPosition(getCanvasPositionX()) < Constants.DEFAULT_GRID_WIDTH-1)
             setVelocity(this.speed, 0);
     }
 
@@ -105,13 +119,18 @@ public class GameCharacter extends Movable {
     }
 
     private void stopOnTileIfNeeded() {
-        int closestTilePositionX = (int)Math.round(getCanvasPositionX() / Constants.DEFAULT_TILE_WIDTH);
-        int closestTilePositionY = (int)Math.round(getCanvasPositionY() / Constants.DEFAULT_TILE_HEIGHT);
+//        int closestTilePositionX = (int)Math.round(getCanvasPositionX() / Constants.DEFAULT_TILE_WIDTH);
+//        int closestTilePositionY = (int)Math.round(getCanvasPositionY() / Constants.DEFAULT_TILE_HEIGHT);
+
+        int closestTilePositionX = Utils.canvasToGridPosition(getCanvasPositionX());
+        int closestTilePositionY = Utils.canvasToGridPosition(getCanvasPositionY());
 
         boolean closeToPosition =
-                (Math.abs(closestTilePositionX * Constants.DEFAULT_TILE_WIDTH - getCanvasPositionX()) <= this.speed)
-                && (Math.abs(closestTilePositionY * Constants.DEFAULT_TILE_HEIGHT - getCanvasPositionY()) <= this.speed)
-                && (closestTilePositionX != getGridPositionX() || closestTilePositionY != getGridPositionY());
+                (Math.abs(Utils.gridToCanvasPosition(closestTilePositionX) - getCanvasPositionX()) <= this.speed)
+                && (Math.abs(Utils.gridToCanvasPosition(closestTilePositionY) - getCanvasPositionY()) <= this.speed)
+//                && (Utils.gridToCanvasPosition(closestTilePositionX) != getCanvasPositionX()
+//                || Utils.gridToCanvasPosition(closestTilePositionY) != getCanvasPositionY());
+                && (closestTilePositionX != previousGridPositionX || closestTilePositionY != previousGridPositionY);
 
         if(closeToPosition) {
             stop(closestTilePositionX, closestTilePositionY);
@@ -122,10 +141,14 @@ public class GameCharacter extends Movable {
 
         characterState = CharacterState.IDLE;
         setVelocity(0, 0);
-        setGeneralPosition(newGridPositionX, newGridPositionY);
+//        setGeneralPosition(newGridPositionX, newGridPositionY);
+        setCanvasPosition(Utils.gridToCanvasPosition(newGridPositionX), Utils.gridToCanvasPosition(newGridPositionY));
+        previousGridPositionX = newGridPositionX;
+        previousGridPositionY = newGridPositionY;
 
         List<String> input = ListenerController.getInstance().getInput();
         if (input.size() > 0 && !input.contains("UP") && !input.contains("DOWN") && !input.contains("LEFT") && !input.contains("RIGHT")) {
+            System.out.println("continous move!");
             move(input.get(input.size()-1));
         }
     }

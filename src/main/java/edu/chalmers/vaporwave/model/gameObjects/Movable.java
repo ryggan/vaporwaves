@@ -50,12 +50,13 @@ public abstract class Movable {
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
     }
-    public void setCanvasPositionX(double canvasPositionX) {
-        this.canvasPositionX = canvasPositionX;
-    }
-    public void setCanvasPositionY(double canvasPositionY) {
-        this.canvasPositionY = canvasPositionY;
-    }
+    
+//    public void setCanvasPositionX(double canvasPositionX) {
+//        this.canvasPositionX = canvasPositionX;
+//    }
+//    public void setCanvasPositionY(double canvasPositionY) {
+//        this.canvasPositionY = canvasPositionY;
+//    }
 
     public double getCanvasPositionX() {
         return this.canvasPositionX;
@@ -64,23 +65,23 @@ public abstract class Movable {
         return this.canvasPositionY;
     }
 
-    public void setGridPosition(Point gridPosition) {
-        this.gridPosition = gridPosition;
-    }
+//    public void setGridPosition(Point gridPosition) {
+//        this.gridPosition = gridPosition;
+//    }
 
-    public Point getGridPosition() {
-        return this.gridPosition;
-    }
+//    public Point getGridPosition() {
+//        return this.gridPosition;
+//    }
 
-    public int getGridPositionX() {
-        return (int)gridPosition.getX();
-    }
-    public int getGridPositionY() {
-        return (int)gridPosition.getY();
-    }
+//    public int getGridPositionX() {
+//        return (int)gridPosition.getX();
+//    }
+//    public int getGridPositionY() {
+//        return (int)gridPosition.getY();
+//    }
 
-    public void setGeneralPosition(int gridPositionX, int gridPositionY) {
-        setGridPosition(new Point(gridPositionX, gridPositionY));
-        setCanvasPosition(gridPositionX * Constants.DEFAULT_TILE_WIDTH, gridPositionY * Constants.DEFAULT_TILE_HEIGHT);
-    }
+//    public void setGeneralPosition(int gridPositionX, int gridPositionY) {
+//        setGridPosition(new Point(gridPositionX, gridPositionY));
+//        setCanvasPosition(gridPositionX * Constants.DEFAULT_TILE_WIDTH, gridPositionY * Constants.DEFAULT_TILE_HEIGHT);
+//    }
 }
