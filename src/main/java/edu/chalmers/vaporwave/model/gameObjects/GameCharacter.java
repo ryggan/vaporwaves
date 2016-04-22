@@ -164,4 +164,36 @@ public class GameCharacter extends Movable {
     public Directions getDirection() {
         return direction;
     }
+
+    public double getSpeed() {
+        return this.speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public int getBombCount() {
+        return this.bombCount;
+    }
+
+    public void setBombCount(int bombCount) {
+        this.bombCount = bombCount;
+    }
+
+    public double getHealth() {
+        return this.health;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
+    public int getBombRange() {
+        return this.bombRange;
+    }
+
+    public void setBombRange(int bombRange) {
+        this.bombRange = bombRange;
+    }
 }
