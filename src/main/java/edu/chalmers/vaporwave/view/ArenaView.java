@@ -10,9 +10,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.*;
 
-import java.awt.*;
-import java.awt.Image;
 import java.util.ArrayList;
+import java.awt.Dimension;
 
 /**
  * Created by FEngelbrektsson on 15/04/16.
@@ -33,6 +32,10 @@ public class ArenaView {
     private Sprite destructibleWallSprite;
     private Sprite destructibleWallDestroyedSprite;
     private Sprite indestructibleWallSprite;
+
+    private Sprite explosionEndSprite;
+    private Sprite explosionBeamSprite;
+    private Sprite explosionCenterSprite;
 
     private Group root;
     
@@ -68,7 +71,8 @@ public class ArenaView {
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
 
-        javafx.scene.image.Image bombSpriteSheet = new javafx.scene.image.Image("images/spritesheet-bombs_and_explosions-18x18.png");
+        Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
+
         bombSprite[0] =
                 new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1});
         bombSprite[1] =
@@ -78,13 +82,19 @@ public class ArenaView {
         bombSprite[3] =
                 new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 3}, new double[] {1, 1});
 
-        javafx.scene.image.Image wallSpriteSheet = new javafx.scene.image.Image("images/spritesheet-walls_both-18x18.png");
+        Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
         destructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 0}, new double[] {1, 1});
         destructibleWallDestroyedSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
+
+        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
+        explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
+        explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
+        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 2}, new double[] {0, 0});
+
 
     }
 
@@ -155,7 +165,7 @@ public class ArenaView {
         } else if (tile instanceof Explosive) {
             if (tile instanceof Bomb) {
 
-                String name = ((Bomb)tile).getOwner().getCharacter().getName();
+                String name = ((Bomb)tile).getOwner().getName();
                 if (name.equals("ALYSSA")) {
                     return bombSprite[0];
                 } else if (name.equals("ZYPHER")) {
@@ -167,6 +177,8 @@ public class ArenaView {
                 }
             }
         } else if (tile instanceof PowerUp) {
+
+        } else if (tile instanceof Blast) {
 
         }
         return null;

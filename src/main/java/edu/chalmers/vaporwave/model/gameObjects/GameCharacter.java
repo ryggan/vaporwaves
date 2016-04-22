@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.controller.ListenerController;
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
@@ -42,7 +44,7 @@ public class GameCharacter extends Movable {
     }
 
     public void placeBomb() {
-        System.out.println("BOOOOMB :D");
+        GameEventBus.getInstance().post(new PlaceBombEvent(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY())));
     }
 
     public void move(String key) {
@@ -132,8 +134,7 @@ public class GameCharacter extends Movable {
         previousGridPositionY = newGridPositionY;
 
         List<String> input = ListenerController.getInstance().getInput();
-        if (input.size() > 0 && !input.contains("UP") && !input.contains("DOWN") && !input.contains("LEFT") && !input.contains("RIGHT")) {
-            System.out.println("continous move!");
+        if (input.size() > 0 && (input.contains("UP") || input.contains("DOWN") || input.contains("LEFT") || input.contains("RIGHT"))) {
             move(input.get(input.size()-1));
         }
     }

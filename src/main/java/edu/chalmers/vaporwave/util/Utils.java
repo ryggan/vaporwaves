@@ -5,6 +5,8 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
+import java.awt.*;
+
 /**
  * Created by bob on 2016-04-17.
  */
@@ -45,6 +47,10 @@ public class Utils {
 
     public static int canvasToGridPosition(double canvasPosition) {
         return (int)Math.round(canvasPosition / Constants.DEFAULT_TILE_WIDTH);
+    }
+
+    public static Point canvasToGridPosition(double x, double y) {
+        return new Point(canvasToGridPosition(x), canvasToGridPosition(y));
     }
 
     public static double gridToCanvasPosition(int gridPosition) {

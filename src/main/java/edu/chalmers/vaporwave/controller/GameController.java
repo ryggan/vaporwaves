@@ -1,8 +1,14 @@
 package edu.chalmers.vaporwave.controller;
 
+import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.*;
+import edu.chalmers.vaporwave.model.gameObjects.Bomb;
+import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
+import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.MapObject;
@@ -35,6 +41,9 @@ public class GameController {
         arenaView.initArena();
 
 
+        GameEventBus.getInstance().register(this);
+
+
         // Setting up background
 
 
@@ -51,9 +60,6 @@ public class GameController {
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
-
-
-
     }
 
     // This one is called every time the game-timer is updated
@@ -103,6 +109,11 @@ public class GameController {
         // Calls view to update graphics
 
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);
+    }
+
+    @Subscribe
+    public void bombPlaced(PlaceBombEvent placeBombEvent) {
+        arenaModel.setTile(new Bomb(this.playerCharacter, 3, 1000), placeBombEvent.getGridPosition());
     }
 
 

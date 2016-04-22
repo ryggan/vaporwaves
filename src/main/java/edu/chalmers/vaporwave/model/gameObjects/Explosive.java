@@ -1,25 +1,23 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
+import edu.chalmers.vaporwave.event.BlastEvent;
+import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.view.Sprite;
 
 import java.awt.*;
 
-/**
- * Created by FEngelbrektsson on 15/04/16.
- */
 public abstract class Explosive extends StaticTile {
 
+    private GameCharacter owner;
     private int range;
 
-    //animation when exploding
-    //might only need one sprite
-
-    public Explosive() {
-
+    public Explosive(GameCharacter owner, int range) {
+        this.owner = owner;
+        this.range = range;
     }
 
-    public Explosive(int range) {
-        this.range = range;
+    public GameCharacter getOwner() {
+        return this.owner;
     }
 
     public int getRange() {
@@ -28,5 +26,7 @@ public abstract class Explosive extends StaticTile {
 
     public void explode() {
         new Blast(this);
+        GameEventBus.getInstance().post(new BlastEvent());
+        System.out.println("Pang");
     }
 }

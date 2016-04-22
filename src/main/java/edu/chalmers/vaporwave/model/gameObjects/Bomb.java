@@ -11,38 +11,30 @@ import java.util.TimerTask;
  */
 public class Bomb extends Explosive {
 
-    private Player owner;
     private int delay;
     //timer
 
     /**
-     * Constructor for Bomb, takes a range and a delay
+     * Constructor for Bomb, takes GameCharacter, a range and a delay
      *
+     * @param owner
      * @param range
      * @param delay
      */
-    public Bomb(int range, int delay) {
+    public Bomb(GameCharacter owner, int range, int delay) {
+        super(owner, range);
         this.delay = delay;
+        startTimer();
     }
 
-    /**
-     * Default constructor
-     */
-    public Bomb() {
-        this(3, 2000);
-    }
 
     public void startTimer(){
-        Timer t= new Timer();
-        t.schedule(new TimerTask(){
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
             public void run(){
                 explode();
             }
         }, delay);
-    }
-
-    public Player getOwner() {
-        return this.owner;
     }
 
 }

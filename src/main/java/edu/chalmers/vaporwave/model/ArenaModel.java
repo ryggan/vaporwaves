@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.MapObject;
 
+import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -53,6 +54,10 @@ public class ArenaModel {
         } else {
             throw new ArrayIndexOutOfBoundsException();
         }
+    }
+
+    public void setTile(StaticTile tile, Point position) throws ArrayIndexOutOfBoundsException {
+        setTile(tile, position.x, position.y);
     }
 
 //    public ArrayList<Tile> getTiles(int posx, int posy) {
