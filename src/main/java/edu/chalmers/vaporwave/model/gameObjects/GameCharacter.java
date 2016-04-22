@@ -87,13 +87,15 @@ public class GameCharacter extends Movable {
     public void moveUp() {
         direction = Directions.UP;
 //        if (Utils.canvasToGridPosition(getCanvasPositionY()) > 0)
-        if (previousGridPositionY > 0)
+//        if (previousGridPositionY > 0)
+        if (getCanvasPositionY() > 0)
             setVelocity(0, -this.speed);
     }
     public void moveDown() {
         direction = Directions.DOWN;
 //        if (Utils.canvasToGridPosition(getCanvasPositionY()) < Constants.DEFAULT_GRID_HEIGHT-1)
-        if (previousGridPositionY < Constants.DEFAULT_GRID_HEIGHT-1)
+//        if (previousGridPositionY < Constants.DEFAULT_GRID_HEIGHT-1)
+        if (getCanvasPositionY() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_HEIGHT-1))
             setVelocity(0, this.speed);
     }
     public void moveLeft() {
@@ -105,8 +107,8 @@ public class GameCharacter extends Movable {
     }
     public void moveRight() {
         direction = Directions.RIGHT;
-//        if (Utils.canvasToGridPosition(getCanvasPositionX()) < Constants.DEFAULT_GRID_WIDTH-1)
-        if (previousGridPositionX < Constants.DEFAULT_GRID_WIDTH-1)
+//        if (previousGridPositionX < Constants.DEFAULT_GRID_WIDTH-1)
+        if (getCanvasPositionX() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_WIDTH-1))
             setVelocity(this.speed, 0);
     }
 
@@ -125,15 +127,9 @@ public class GameCharacter extends Movable {
 
         double compareX = Math.abs(Utils.gridToCanvasPosition(closestTilePositionX) - getCanvasPositionX());
         double compareY = Math.abs(Utils.gridToCanvasPosition(closestTilePositionY) - getCanvasPositionY());
-//        System.out.println("compareX: "+compareX+" - compareY: "+compareY+" - speed: "+speed);
-//        System.out.println("close bol: "+((compareX <= this.speed / 2) && (compareY <= this.speed / 2)));
-//        System.out.println("moving OR same pos: "+(moving || closestTilePositionX != previousGridPositionX || closestTilePositionY != previousGridPositionY));
 
         boolean closeToPosition = (compareX <= this.speed / 2) && (compareY <= this.speed / 2)
                 && (moving || (closestTilePositionX != previousGridPositionX || closestTilePositionY != previousGridPositionY));
-//                && ((getCanvasPositionX() != Utils.gridToCanvasPosition(previousGridPositionX)
-//                        || getCanvasPositionY() != Utils.gridToCanvasPosition(previousGridPositionY)));
-//                && ((closestTilePositionX != previousGridPositionX || closestTilePositionY != previousGridPositionY));
 
         if(closeToPosition) {
             stop(closestTilePositionX, closestTilePositionY);
@@ -147,12 +143,10 @@ public class GameCharacter extends Movable {
         setCanvasPosition(Utils.gridToCanvasPosition(newGridPositionX), Utils.gridToCanvasPosition(newGridPositionY));
         previousGridPositionX = newGridPositionX;
         previousGridPositionY = newGridPositionY;
-//        System.out.println("STAHP at x: "+getCanvasPositionX()+", y: "+getCanvasPositionY()+" - moving: "+moving);
 
         List<String> input = ListenerController.getInstance().getInput();
         if (input.size() > 0 && (input.contains("UP") || input.contains("DOWN") || input.contains("LEFT") || input.contains("RIGHT"))) {
             move(input.get(input.size()-1));
-//            System.out.println("...but keep going");
         }
     }
 
