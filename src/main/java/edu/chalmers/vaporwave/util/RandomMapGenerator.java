@@ -67,20 +67,23 @@ public class RandomMapGenerator {
 
     public void printMap(MapObject[][] mapObjects) {
         System.out.println("<<<< CURRENT MAP >>>>");
-        String[] stringHolder = new String[13];
 
         for(int i = 0; i < mapObjects.length; i++) {
             for(int j = 0; j < mapObjects[0].length; j++) {
+
                 switch(mapObjects[i][j]) {
                     case DESTRUCTIBLE_WALL:
-                        stringHolder[i] += "D ";
+                        System.out.print("D ");
+                        break;
                     case INDESTRUCTIBLE_WALL:
-                        stringHolder[i] += "X ";
+                        System.out.print("X ");
+                        break;
                     case EMPTY:
-                        stringHolder[i] += "° ";
+                        System.out.print("° ");
+                        break;
                 }
             }
-            System.out.println(stringHolder[i]);
+            System.out.println();
         }
     }
 }
