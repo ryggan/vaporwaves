@@ -12,6 +12,7 @@ import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapFileReader;
+import edu.chalmers.vaporwave.util.PowerUpState;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
 
@@ -141,6 +142,25 @@ public class GameController {
             arenaModel.setTile(new StatPowerUp(), posx, posy);
         } else if(temporaryNumber == 4) {
             arenaModel.setTile(new StatPowerUp(), posx, posy);
+        }
+    }
+
+    /**
+     * Call on this method when player walks on PowerUpTile.
+     * Will set the appropriate stat value on the character that walks on it.
+     * @param character
+     * @param powerUpState
+     */
+    public void playerWalksOnPowerUp(GameCharacter character, PowerUpState powerUpState) {
+        if(powerUpState.equals(PowerUpState.HEALTH)) {
+            // Could change how much health should be applied
+            character.setHealth(character.getHealth() + 10);
+        } else if(powerUpState.equals(PowerUpState.BOMB_COUNT)) {
+            character.setBombCount(character.getBombCount() + 1);
+        } else if(powerUpState.equals(PowerUpState.RANGE)) {
+            character.setBombRange(character.getBombRange() + 1);
+        } else if(powerUpState.equals(PowerUpState.SPEED)) {
+            character.setSpeed(character.getSpeed() + 10);
         }
     }
 }

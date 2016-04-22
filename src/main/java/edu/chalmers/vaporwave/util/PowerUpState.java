@@ -1,8 +1,23 @@
 package edu.chalmers.vaporwave.util;
 
+import edu.chalmers.vaporwave.view.Sprite;
+
 /**
  * Created by andreascarlsson on 2016-04-18.
  */
 public enum PowerUpState {
-    HEALTH, RANGE, SPEED, BOMB_COUNT
+    HEALTH, RANGE, SPEED, BOMB_COUNT;
+
+    public static int getSpawnChance(PowerUpState powerUpState) {
+        if(powerUpState.equals(PowerUpState.HEALTH)) {
+            return 3;
+        } else if(powerUpState.equals(PowerUpState.BOMB_COUNT)) {
+            return 1;
+        } else if(powerUpState.equals(PowerUpState.RANGE)) {
+            return 2;
+        } else if(powerUpState.equals(PowerUpState.SPEED)) {
+            return 3;
+        }
+        return 0;
+    }
 }
