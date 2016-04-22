@@ -81,22 +81,27 @@ public class GameCharacter extends Movable {
 
     public void moveUp() {
         direction = Directions.UP;
-        if (Utils.canvasToGridPosition(getCanvasPositionY()) > 0)
+//        if (Utils.canvasToGridPosition(getCanvasPositionY()) > 0)
+        if (previousGridPositionY > 0)
             setVelocity(0, -this.speed);
     }
     public void moveDown() {
         direction = Directions.DOWN;
-        if (Utils.canvasToGridPosition(getCanvasPositionY()) < Constants.DEFAULT_GRID_HEIGHT-1)
+//        if (Utils.canvasToGridPosition(getCanvasPositionY()) < Constants.DEFAULT_GRID_HEIGHT-1)
+        if (previousGridPositionY < Constants.DEFAULT_GRID_HEIGHT-1)
             setVelocity(0, this.speed);
     }
     public void moveLeft() {
         direction = Directions.LEFT;
-        if (Utils.canvasToGridPosition(getCanvasPositionX()) > 0)
+//        if (Utils.canvasToGridPosition(getCanvasPositionX()) > 0)
+//        if (previousGridPositionX > 0)
+        if (getCanvasPositionX() > 0)
             setVelocity(-this.speed, 0);
     }
     public void moveRight() {
         direction = Directions.RIGHT;
-        if (Utils.canvasToGridPosition(getCanvasPositionX()) < Constants.DEFAULT_GRID_WIDTH-1)
+//        if (Utils.canvasToGridPosition(getCanvasPositionX()) < Constants.DEFAULT_GRID_WIDTH-1)
+        if (previousGridPositionX < Constants.DEFAULT_GRID_WIDTH-1)
             setVelocity(this.speed, 0);
     }
 
@@ -128,10 +133,12 @@ public class GameCharacter extends Movable {
         setCanvasPosition(Utils.gridToCanvasPosition(newGridPositionX), Utils.gridToCanvasPosition(newGridPositionY));
         previousGridPositionX = newGridPositionX;
         previousGridPositionY = newGridPositionY;
+        System.out.println("STAHP at x: "+getCanvasPositionX()+", y: "+getCanvasPositionY());
 
         List<String> input = ListenerController.getInstance().getInput();
         if (input.size() > 0 && (input.contains("UP") || input.contains("DOWN") || input.contains("LEFT") || input.contains("RIGHT"))) {
             move(input.get(input.size()-1));
+            System.out.println("...but keep going");
         }
     }
 
