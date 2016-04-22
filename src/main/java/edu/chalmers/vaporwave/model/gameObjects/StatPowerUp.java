@@ -1,37 +1,30 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
-import edu.chalmers.vaporwave.view.Sprite;
+import edu.chalmers.vaporwave.util.PowerUpState;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-/**
- * Created by FEngelbrektsson on 15/04/16.
- */
 public class StatPowerUp extends PowerUp {
-    private ArrayList<PowerUpState> enabledPowerUpList;
     private PowerUpState powerUpState;
 
-    public StatPowerUp(ArrayList<PowerUpState> list) {
-        enabledPowerUpList = list;
+    public StatPowerUp(List<PowerUp> enabledPowerUpList) {
 
-        if(list.size() > 0) {
+        if(enabledPowerUpList.size() > 0) {
             int randomMaxValue = 0;
-            for (int i = 0; i < list.size(); i++) {
-                randomMaxValue = randomMaxValue + list.get(i).getSpawnChance();
+            for (int i = 0; i < enabledPowerUpList.size(); i++) {
+                randomMaxValue = randomMaxValue + enabledPowerUpList.get(i).getSpawnChance();
             }
 
             Random r = new Random();
             int randomValue = r.nextInt(randomMaxValue);
             int j = 0;
-            for (int i = 0; i < list.size(); i++) {
-                j = j + list.get(i).getSpawnChance();
+            for (int i = 0; i < enabledPowerUpList.size(); i++) {
+                j = j + enabledPowerUpList.get(i).getSpawnChance();
                 if(j <= randomValue) {
-                    powerUpState = list.get(i);
+//                    powerUpState = enabledPowerUpList.get(i);
                 }
             }
-
         }
     }
 }

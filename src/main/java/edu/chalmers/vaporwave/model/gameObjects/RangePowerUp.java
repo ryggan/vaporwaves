@@ -1,17 +1,11 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
-import edu.chalmers.vaporwave.util.PowerUpStates;
-import edu.chalmers.vaporwave.view.Sprite;
+import edu.chalmers.vaporwave.util.PowerUpState;
 
-import java.awt.*;
-
-/**
- * Created by FEngelbrektsson on 18/04/16.
- */
-public class RangePowerUp extends PowerUpState{
+public class RangePowerUp extends PowerUp {
 
     public RangePowerUp(){
-        super(1,1,PowerUpStates.RANGE);
+        super(1,1, PowerUpState.RANGE);
     }
 
 }
