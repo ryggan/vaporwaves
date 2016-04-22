@@ -7,26 +7,27 @@ import javafx.scene.input.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by boob on 2016-04-15.
- */
 public class ListenerController {
 
     private static ListenerController instance;
 
-    private ArrayList<String> input = new ArrayList<String>();
-    private ArrayList<String> pressed = new ArrayList<String>();
+    private List<String> input = new ArrayList<String>();
+    private List<String> pressed = new ArrayList<String>();
 
     private ListenerController() { }
 
     public void initiateListener(Scene scene) {
+
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
                         if (!input.contains(code)) {
                             input.add(code);
+                            pressed.add(code);
                         }
+
+
                     }
                 });
 
@@ -39,19 +40,30 @@ public class ListenerController {
                 });
     }
 
-    public static ListenerController getInstance() {
+    public void updatePressed(String code) {
+        this.pressed.remove(code);
+    }
+
+    public static synchronized ListenerController getInstance() {
         if (instance == null) {
             instance = new ListenerController();
         }
         return instance;
     }
 
-    public ArrayList<String> getInput() {
-        ArrayList<String> inputReturn = new ArrayList<String>();
+    public List<String> getInput() {
+        List<String> inputReturn = new ArrayList<String>();
         for (String s: this.input) {
             inputReturn.add(s);
         }
-
         return inputReturn;
+    }
+
+    public List<String> getPressed() {
+        List<String> pressedReturn = new ArrayList<String>();
+        for (String s: this.pressed) {
+            pressedReturn.add(s);
+        }
+        return pressedReturn;
     }
 }

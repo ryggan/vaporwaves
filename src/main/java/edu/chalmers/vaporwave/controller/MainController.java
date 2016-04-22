@@ -69,6 +69,13 @@ public class MainController {
 //                    System.out.println("Elapsed time since last call: "+timeSinceLastCall);
 //                    System.out.println("---");
 //                }
+
+                for (String code : ListenerController.getInstance().getPressed()) {
+                    ListenerController.getInstance().updatePressed(code);
+                }
+//                try {
+//                    Thread.sleep(100);
+//                } catch (Exception e) { }
             }
 
         }.start();

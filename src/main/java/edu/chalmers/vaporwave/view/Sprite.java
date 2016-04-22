@@ -22,6 +22,7 @@ public class Sprite {
     private boolean stayOnPixel;
     private double offsetX;
     private double offsetY;
+    private BoundingBox boundingBox;
 
     /**
      * Constructors, one simple which leaves the Sprite object without Image, and the other two with an Image
@@ -32,6 +33,7 @@ public class Sprite {
         this.positionY = 0;
         this.scale = Constants.GAME_SCALE;
         this.stayOnPixel = true;
+        this.boundingBox = new BoundingBox();
         setImage(this.image);
     }
     public Sprite(Image image) {
@@ -82,11 +84,11 @@ public class Sprite {
 
     /**
      * Basic colission test between sprites.
-     * @param s
+     * @param sprite
      * @return
      */
-    public boolean intersects(Sprite s) {
-        return s.getBoundary().intersects(this.getBoundary());
+    public boolean intersects(Sprite sprite) {
+        return sprite.getBoundary().intersects(this.getBoundary());
     }
 
     /**
@@ -141,7 +143,8 @@ public class Sprite {
     }
 
     public Rectangle2D getBoundary() {
-        return new Rectangle2D(positionX, positionY, width, height);
+        return new Rectangle2D(positionX + boundingBox.getWest(), positionY + boundingBox.getNorth(),
+                width + boundingBox.getEast(), height + boundingBox.getSouth());
     }
 
     public boolean getStayOnPixel() {
@@ -168,6 +171,14 @@ public class Sprite {
     }
     public double getOffsetY() {
         return this.offsetY;
+    }
+
+    public BoundingBox getBoundingBox() {
+        return this.boundingBox;
+    }
+
+    public void setBoundingBox(BoundingBox boundingBox) {
+        this.boundingBox = boundingBox;
     }
 
 }

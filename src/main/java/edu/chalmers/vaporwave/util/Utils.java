@@ -42,4 +42,12 @@ public class Utils {
 
         return output;
     }
+
+    public static int canvasToGridPosition(double canvasPosition) {
+        return (int)Math.round(canvasPosition / Constants.DEFAULT_TILE_WIDTH);
+    }
+
+    public static double gridToCanvasPosition(int gridPosition) {
+        return (double)(gridPosition * Constants.DEFAULT_TILE_WIDTH);
+    }
 }

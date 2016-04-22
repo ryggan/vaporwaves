@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<powerUps>
+    <powerUp>
+        <state>HEALTH</state>
+        <spawnChance>1</spawnChance>
+        <statusEffect>1</statusEffect>
+    </powerUp>
+    <powerUp>
+        <state>RANGE</state>
+        <spawnChance>1</spawnChance>
+        <statusEffect>1</statusEffect>
+    </powerUp>
+    <powerUp>
+        <state>SPEEED</state>
+        <spawnChance>1</spawnChance>
+        <statusEffect>1</statusEffect>
+    </powerUp>
+    <powerUp>
+        <state>BOMB_COUNT</state>
+        <spawnChance>1</spawnChance>
+        <statusEffect>1</statusEffect>
+    </powerUp>
+</powerUps>
