@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.controller.ListenerController;
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
@@ -40,7 +42,7 @@ public class GameCharacter extends Movable {
     }
 
     public void placeBomb() {
-        System.out.println("BOOOOMB :D");
+        GameEventBus.getInstance().post(new PlaceBombEvent(this.getGridPosition()));
     }
 
     public void move(String key) {
