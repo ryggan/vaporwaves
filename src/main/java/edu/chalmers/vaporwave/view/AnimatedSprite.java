@@ -58,11 +58,11 @@ public class AnimatedSprite extends Sprite {
         this.spriteDimension = spriteDimension;
         this.duration = duration;
 
-        this.timeOffset = -1;
+        this.timeOffset = 0;
         this.startFromBeginning = false;
         this.runAnimation = true;
         this.loops = -1;
-        this.startTime = -1;
+        this.startTime = 0;
 
         setWidth(spriteDimension.getWidth());
         setHeight(spriteDimension.getHeight());
@@ -146,12 +146,18 @@ public class AnimatedSprite extends Sprite {
     @Override
     public void render(GraphicsContext gc, double time) {
 
-        if (startFromBeginning && timeOffset == -1) {
+        if (startFromBeginning && timeOffset == 0) {
             timeOffset = time;
         }
 
-        if (startTime == -1) {
-            startTime = time;
+        if (loops != -1) {
+            if (startTime == 0) {
+                startTime = time;
+            }
+//            else if (time - startTime > loops * (duration * length)) {
+//                System.out.println("Resetting loops?");
+//                resetLoops();
+//            }
         }
 
         double timeToCheck = time - timeOffset;
@@ -169,7 +175,7 @@ public class AnimatedSprite extends Sprite {
             targety = Math.round(targety * getScale()) / getScale();
         }
 
-        if (loops != -1 && time - startTime > loops * (duration * length)) {
+        if (loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
             runAnimation = false;
             // todo: here be some kind of listener when loops are done, if needed
         }
@@ -181,7 +187,7 @@ public class AnimatedSprite extends Sprite {
 
     public void resetLoops() {
         runAnimation = true;
-        startTime = -1;
+        startTime = 0;
     }
 
     @Override
