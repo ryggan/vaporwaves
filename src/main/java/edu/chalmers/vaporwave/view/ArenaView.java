@@ -93,8 +93,9 @@ public class ArenaView {
         Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
         explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 0}, new double[] {0, 0});
         explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 1}, new double[] {0, 0});
-        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(17, 17), 7, 0.1, new int[] {2, 2}, new double[] {0, 0});
 
+        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {0, 0});
+        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
 
     }
 
@@ -179,7 +180,7 @@ public class ArenaView {
         } else if (tile instanceof PowerUp) {
 
         } else if (tile instanceof Blast) {
-
+            return explosionCenterSprite;
         }
         return null;
     }

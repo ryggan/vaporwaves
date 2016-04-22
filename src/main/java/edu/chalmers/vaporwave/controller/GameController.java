@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.model.ArenaMap;
@@ -111,6 +112,11 @@ public class GameController {
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
         arenaModel.setTile(new Bomb(this.playerCharacter, 3, 1000), placeBombEvent.getGridPosition());
+    }
+
+    @Subscribe
+    public void bombDetonated(BlastEvent blastEvent) {
+        arenaModel.setTile(blastEvent.getBlast(), blastEvent.getPosition());
     }
 
 
