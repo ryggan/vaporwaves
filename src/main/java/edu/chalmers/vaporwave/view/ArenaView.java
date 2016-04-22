@@ -229,7 +229,7 @@ public class ArenaView {
                             characterSpriteProperties.getDuration(),
                             characterSpriteProperties.getFirstFrame(),
                             characterSpriteProperties.getOffset())
-                    );
+                            );
                     break;
                 case DEATH:
                     characterSprite.setDeathSprite(
@@ -239,7 +239,7 @@ public class ArenaView {
                             characterSpriteProperties.getDuration(),
                             characterSpriteProperties.getFirstFrame(),
                             characterSpriteProperties.getOffset())
-                    );
+                            );
                     break;
                 case WALK:
                     for (int i = 0; i < 4; i++) {
