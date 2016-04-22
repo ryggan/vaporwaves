@@ -171,7 +171,7 @@ public class GameCharacter extends Movable {
     public Directions getDirection() {
         return direction;
     }
-    
+
     public double getSpeed() {
         return this.speed;
     }

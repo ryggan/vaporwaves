@@ -3,6 +3,8 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
+import edu.chalmers.vaporwave.model.PowerUpProperties;
+import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
 import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
@@ -220,6 +222,61 @@ public class ArenaView {
             Sprite actualSprite = currentSprite[spriteIndex];
             actualSprite.setPosition(character.getCanvasPositionX(), character.getCanvasPositionY());
             actualSprite.render(tileGC, timeSinceStart);
+        }
+    }
+
+    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
+        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
+
+        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
+            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
+            switch(powerUpState) {
+                case HEALTH:
+                    powerUpSprite.setHealthSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case BOMB_COUNT:
+                    powerUpSprite.setBombCountSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case SPEED:
+                    powerUpSprite.setSpeedSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case RANGE:
+                    powerUpSprite.setRangeSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+            }
         }
     }
 
