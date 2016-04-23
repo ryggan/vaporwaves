@@ -1,5 +1,8 @@
 package edu.chalmers.vaporwave.model;
 
+import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.event.BlastFinishedEvent;
+import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.MapObject;
@@ -23,6 +26,9 @@ public class ArenaModel {
     private int height;
 
     public ArenaModel(ArenaMap arenaMap) {
+
+        GameEventBus.getInstance().register(this);
+
         this.arenaMap = arenaMap;
 
         this.width = arenaMap.getMapSize().width;
@@ -118,5 +124,13 @@ public class ArenaModel {
             }
         }
         return temporaryString;
+    }
+
+    @Subscribe
+    public void removeDestroyedWalls(BlastFinishedEvent blastFinishedEvent) {
+        System.out.println("Removing");
+        for (Point position : blastFinishedEvent.getDestroyedWalls()) {
+            this.removeTile(position);
+        }
     }
 }

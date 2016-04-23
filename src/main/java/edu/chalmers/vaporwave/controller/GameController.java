@@ -121,7 +121,7 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setTile(new Bomb(this.playerCharacter, 3, 1000), placeBombEvent.getGridPosition());
+        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), 1000), placeBombEvent.getGridPosition());
     }
 
     @Subscribe

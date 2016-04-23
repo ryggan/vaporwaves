@@ -33,7 +33,8 @@ public class GameCharacter extends Movable {
 
         // Test settings setup:
         setCanvasPosition(Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5));
-        speed = 0.8;
+        this.speed = 0.8;
+        this.bombRange = 3;
 
         // Setup:
         this.name = name;
@@ -45,7 +46,7 @@ public class GameCharacter extends Movable {
     }
 
     public void placeBomb() {
-        GameEventBus.getInstance().post(new PlaceBombEvent(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY())));
+        GameEventBus.getInstance().post(new PlaceBombEvent(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()), bombRange));
     }
 
     public void move(String key, StaticTile[][] arenaTiles) {

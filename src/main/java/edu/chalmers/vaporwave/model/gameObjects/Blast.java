@@ -29,6 +29,10 @@ public class Blast extends StaticTile {
         return this.position;
     }
 
+    public int getRange() {
+        return this.range;
+    }
+
 //    public void render(GraphicsContext gc, double time) {
 //
 //        // First one center explosion sprite

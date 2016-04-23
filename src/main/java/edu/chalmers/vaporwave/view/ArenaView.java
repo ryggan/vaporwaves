@@ -2,10 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.controller.ListenerController;
-import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
-import edu.chalmers.vaporwave.event.BlastEvent;
-import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.event.PlaceBombEvent;
+import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.model.PowerUpProperties;
@@ -42,17 +39,19 @@ public class ArenaView {
     private Sprite destructibleWallDestroyedSprite;
     private Sprite indestructibleWallSprite;
 
-    private Sprite explosionEndSprite;
-    private Sprite explosionBeamSprite;
-    private Sprite explosionCenterSprite;
+    private Map<Point, Sprite> explosionCenterMap;
 
-    private Map<Point, Sprite> explosionSpriteList;
+    private Map<Point, BlastSpriteCollection> blastSpriteMap;
+    private Set<Point> destroyedWalls;
 
     private Group root;
     
     public ArenaView(Group root) {
         this.root = root;
-        this.explosionSpriteList = new HashMap<Point, Sprite>();
+        this.explosionCenterMap = new HashMap<Point, Sprite>();
+        this.blastSpriteMap = new HashMap<>();
+        this.destroyedWalls = new HashSet<>();
+
         GameEventBus.getInstance().register(this);
 
         // Setting up area to draw graphics
@@ -103,9 +102,6 @@ public class ArenaView {
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 
-        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
-        explosionEndSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 0}, new double[] {1, 1});
-        explosionBeamSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 1}, new double[] {1, 1});
 
     }
 
@@ -130,15 +126,7 @@ public class ArenaView {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
-        explosionCenterSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
-        ((AnimatedSprite)explosionCenterSprite).setLoops(1);
-        explosionSpriteList.put(placeBombEvent.getGridPosition(), explosionCenterSprite);
-    }
-
-    @Subscribe
-    public void animationFinished(AnimationFinishedEvent animationFinishedEvent) {
-        explosionCenterSprite = null;
+        blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange()));
     }
 
     public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
@@ -156,23 +144,32 @@ public class ArenaView {
 
         tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
+
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null) {
-                    Sprite tileSprite;
-                    if(arenaTiles[i][j] instanceof Blast) {
-                        tileSprite = getTileSprite(arenaTiles[i][j], new Point(i, j));
-                    } else {
-                        tileSprite = getTileSprite(arenaTiles[i][j]);
-                    }
+                    Sprite tileSprite = tileSprite = getTileSprite(arenaTiles[i][j]);
                     if (tileSprite != null) {
                         tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
                         tileSprite.render(tileGC, timeSinceStart);
                     }
-
                 }
             }
         }
+
+        for (int i = 0; i < arenaTiles.length; i++) {
+            for (int j = 0; j < arenaTiles[0].length; j++) {
+                if (arenaTiles[i][j] instanceof Blast && this.blastSpriteMap.get(new Point(i, j)) != null) {
+                    renderBlast(this.blastSpriteMap.get(new Point(i, j)), timeSinceStart, arenaTiles);
+                    if (this.blastSpriteMap.get(new Point(i, j)).getSprite(new Point(i, j)).isAnimationFinished()) {
+                        GameEventBus.getInstance().post(new BlastFinishedEvent(this.destroyedWalls));
+                        this.destroyedWalls.clear();
+                        this.blastSpriteMap.remove(new Point(i, j));
+                    }
+                }
+            }
+        }
+
         for (Movable movable : arenaMovables) {
 
             if (movable instanceof GameCharacter) {
@@ -182,8 +179,60 @@ public class ArenaView {
 
             }
         }
-
     }
+
+    private void renderBlast(BlastSpriteCollection blastSpriteCollection, double timeSinceStart, StaticTile[][] arenaTiles) {
+        Point position = blastSpriteCollection.getPosition();
+        int range = blastSpriteCollection.getRange();
+
+        Map<Directions, Boolean> blastDirections = new HashMap<>();
+        blastDirections.put(Directions.LEFT, true);
+        blastDirections.put(Directions.UP, true);
+        blastDirections.put(Directions.RIGHT, true);
+        blastDirections.put(Directions.DOWN, true);
+
+        blastSpriteCollection.getSprite(new Point(position.x, position.y)).render(tileGC, timeSinceStart);
+
+        for (int i = 1; i <= range; i++) {
+            if((position.x - i) >= 0 && !(arenaTiles[position.x - i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.LEFT)) {
+                blastSpriteCollection.getSprite(new Point(position.x - i, position.y)).render(tileGC, timeSinceStart);
+                if ((arenaTiles[position.x - i][position.y] instanceof DestructibleWall)) {
+                    blastDirections.put(Directions.LEFT, false);
+                    this.destroyedWalls.add(new Point(position.x - i, position.y));
+                }
+            } else {
+                blastDirections.put(Directions.LEFT, false);
+            }
+            if((position.y - i) >= 0 && !(arenaTiles[position.x][position.y - i] instanceof IndestructibleWall) && blastDirections.get(Directions.UP)) {
+                blastSpriteCollection.getSprite(new Point(position.x, position.y - i)).render(tileGC, timeSinceStart);
+                if ((arenaTiles[position.x][position.y - 1] instanceof DestructibleWall)) {
+                    blastDirections.put(Directions.UP, false);
+                    this.destroyedWalls.add(new Point(position.x, position.y - 1));
+                }
+            } else {
+                blastDirections.put(Directions.UP, false);
+            }
+            if(position.x + i < arenaTiles.length && !(arenaTiles[position.x + i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.RIGHT)) {
+                blastSpriteCollection.getSprite(new Point(position.x + i, position.y)).render(tileGC, timeSinceStart);
+                if ((arenaTiles[position.x + i][position.y] instanceof DestructibleWall)) {
+                    blastDirections.put(Directions.RIGHT, false);
+                    this.destroyedWalls.add(new Point(position.x + i, position.y));
+                }
+            } else {
+                blastDirections.put(Directions.RIGHT, false);
+            }
+            if(position.y + i < arenaTiles[0].length && !(arenaTiles[position.x][position.y + 1] instanceof IndestructibleWall) && blastDirections.get(Directions.DOWN)) {
+                blastSpriteCollection.getSprite(new Point(position.x, position.y + i)).render(tileGC, timeSinceStart);
+                if ((arenaTiles[position.x][position.y + 1] instanceof DestructibleWall)) {
+                    blastDirections.put(Directions.DOWN, false);
+                    this.destroyedWalls.add(new Point(position.x, position.y + 1));
+                }
+            } else {
+                blastDirections.put(Directions.DOWN, false);
+            }
+        }
+    }
+
 
     public Sprite getTileSprite(StaticTile tile) {
         if (tile instanceof Wall) {
@@ -213,7 +262,7 @@ public class ArenaView {
     }
 
     public Sprite getTileSprite(StaticTile tile, Point position) {
-        return explosionSpriteList.get(position);
+        return explosionCenterMap.get(position);
     }
 
     public void renderCharacter(GameCharacter character, double timeSinceStart) {
