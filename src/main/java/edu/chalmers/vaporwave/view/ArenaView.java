@@ -207,7 +207,7 @@ public class ArenaView {
                 blastSpriteCollection.getSprite(new Point(position.x, position.y - i)).render(tileGC, timeSinceStart);
                 if ((arenaTiles[position.x][position.y - 1] instanceof DestructibleWall)) {
                     blastDirections.put(Directions.UP, false);
-                    this.destroyedWalls.add(new Point(position.x, position.y - 1));
+                    this.destroyedWalls.add(new Point(position.x, position.y - i));
                 }
             } else {
                 blastDirections.put(Directions.UP, false);
