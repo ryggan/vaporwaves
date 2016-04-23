@@ -205,7 +205,7 @@ public class ArenaView {
             }
             if((position.y - i) >= 0 && !(arenaTiles[position.x][position.y - i] instanceof IndestructibleWall) && blastDirections.get(Directions.UP)) {
                 blastSpriteCollection.getSprite(new Point(position.x, position.y - i)).render(tileGC, timeSinceStart);
-                if ((arenaTiles[position.x][position.y - 1] instanceof DestructibleWall)) {
+                if ((arenaTiles[position.x][position.y - i] instanceof DestructibleWall)) {
                     blastDirections.put(Directions.UP, false);
                     this.destroyedWalls.add(new Point(position.x, position.y - i));
                 }
@@ -223,9 +223,9 @@ public class ArenaView {
             }
             if(position.y + i < arenaTiles[0].length && !(arenaTiles[position.x][position.y + 1] instanceof IndestructibleWall) && blastDirections.get(Directions.DOWN)) {
                 blastSpriteCollection.getSprite(new Point(position.x, position.y + i)).render(tileGC, timeSinceStart);
-                if ((arenaTiles[position.x][position.y + 1] instanceof DestructibleWall)) {
+                if ((arenaTiles[position.x][position.y + i] instanceof DestructibleWall)) {
                     blastDirections.put(Directions.DOWN, false);
-                    this.destroyedWalls.add(new Point(position.x, position.y + 1));
+                    this.destroyedWalls.add(new Point(position.x, position.y + i));
                 }
             } else {
                 blastDirections.put(Directions.DOWN, false);
