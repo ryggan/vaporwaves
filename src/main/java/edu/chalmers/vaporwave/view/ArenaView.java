@@ -120,7 +120,7 @@ public class ArenaView {
 
 //        createBackground(backgroundGC);
 
-        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
+        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-02.png");
         arenaBackgroundSprite.setPosition(0, 0);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
