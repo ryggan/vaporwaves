@@ -186,7 +186,6 @@ public class GameController {
                 }
             }
 
-
             if(position.x + i < this.arenaModel.getArenaTiles().length && blastDirections.get(Directions.RIGHT)) {
                 if (this.arenaModel.getArenaTiles()[position.x + i][position.y] instanceof DestructibleWall) {
                     blastDirections.put(Directions.RIGHT, false);
@@ -197,8 +196,7 @@ public class GameController {
                     playerRecievesDamage();
                 }
             }
-                     {
-            }
+
             if(position.y + i < this.arenaModel.getArenaTiles()[0].length && blastDirections.get(Directions.DOWN)) {
                 if (this.arenaModel.getArenaTiles()[position.x][position.y + i] instanceof DestructibleWall) {
                     blastDirections.put(Directions.DOWN, false);
@@ -221,12 +219,13 @@ public class GameController {
         updateStats();
     }
 
-    private void updateStats() {this.arenaView.updateStats(
+    private void updateStats() {
+            this.arenaView.updateStats(
             this.playerCharacter.getHealth(),
             this.playerCharacter.getSpeed(),
             this.playerCharacter.getBombRange(),
             this.playerCharacter.getBombCount()
-    );
+        );
     }
 
     public ArenaModel newGame(ArenaMap arenaMap) {
