@@ -19,11 +19,13 @@ public class BlastSpriteCollection {
     private Point position;
     private int range;
     private Map<Point, AnimatedSprite> spriteMap;
+    private boolean blastHasOccured;
 
     public BlastSpriteCollection(Point position, int range) {
         this.position = position;
         this.range = range;
-        spriteMap = new HashMap<>();
+        this.spriteMap = new HashMap<>();
+        this.blastHasOccured = false;
 
         Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
 
@@ -35,7 +37,6 @@ public class BlastSpriteCollection {
         spriteMap.put(position, blastSprite);
 
         for (int i = 1; i <= range; i++) {
-
             if((position.x - i) >= 0) {
                 if(i == range) {
                     blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{2, 0}, new double[]{1, 1});
@@ -76,11 +77,7 @@ public class BlastSpriteCollection {
 
             blastSprite.setPosition((position.x) * Constants.DEFAULT_TILE_WIDTH, (position.y + i) * Constants.DEFAULT_TILE_WIDTH);
             spriteMap.put(new Point(position.x, position.y + i), blastSprite);
-
         }
-
-
-
     }
 
     public Point getPosition() {
