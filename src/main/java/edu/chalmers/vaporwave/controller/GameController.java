@@ -37,7 +37,7 @@ public class GameController {
         // Starting new game
         this.arenaModel = newGame(arenaMap);
 
-        arenaView.initArena();
+        arenaView.initArena(arenaModel.getArenaTiles());
 
 
         GameEventBus.getInstance().register(this);
