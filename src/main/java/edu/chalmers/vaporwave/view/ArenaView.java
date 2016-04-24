@@ -39,7 +39,7 @@ public class ArenaView {
     private Sprite destructibleWallDestroyedSprite;
     private Sprite indestructibleWallSprite;
 
-    private Sprite speedPowerUp;
+    private Map<PowerUpState, Sprite> powerUpSprites;
 
     private Map<Point, BlastSpriteCollection> blastSpriteMap;
     private Set<Point> destroyedWalls;
@@ -47,12 +47,15 @@ public class ArenaView {
     private Group root;
 
     private Label fps;
+    private Label stats;
     
     public ArenaView(Group root) {
         this.root = root;
         this.blastSpriteMap = new HashMap<>();
         this.destroyedWalls = new HashSet<>();
         this.fps = new Label();
+        this.stats = new Label();
+        this.powerUpSprites = new HashMap<>();
 
         GameEventBus.getInstance().register(this);
 
@@ -103,7 +106,11 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
-        speedPowerUp = new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {0, 2}, new double[] {1, 1});
+
+        powerUpSprites.put(PowerUpState.SPEED, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 1}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpState.BOMB_COUNT, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 2}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpState.RANGE, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 3}, new double[] {1, 1}));
+
     }
 
     public void initArena() {
@@ -128,6 +135,16 @@ public class ArenaView {
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
         blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange()));
+    }
+
+    public void updateStats(double health, double speed, int range, int bombCount) {
+        int printHealth = (int)health;
+        int printSpeed = (int)(speed * 100);
+        stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
+        stats.setLayoutX(610);
+        stats.setLayoutY(50);
+        this.root.getChildren().remove(stats);
+        this.root.getChildren().add(stats);
     }
 
     public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
@@ -230,7 +247,7 @@ public class ArenaView {
                 }
             }
         } else if (tile instanceof TestPowerUp) {
-            return speedPowerUp;
+            return powerUpSprites.get(((TestPowerUp) tile).getPowerUpState());
         }
         return null;
     }

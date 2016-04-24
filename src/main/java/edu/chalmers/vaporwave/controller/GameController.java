@@ -54,6 +54,9 @@ public class GameController {
         // TEST TILES
         playerCharacter = new GameCharacter("ALYSSA");
 
+        updateStats();
+
+
         try {
             arenaModel.addMovable(playerCharacter);
         } catch(ArrayIndexOutOfBoundsException e) {
@@ -113,8 +116,18 @@ public class GameController {
 
         if (this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y]
                 instanceof TestPowerUp) {
+            TestPowerUp powerUp = (TestPowerUp)this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y];
             this.arenaModel.setTile(null, playerCharacter.getGridPosition());
-            this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() * 1.1);
+
+            if(powerUp.getPowerUpState().equals(PowerUpState.SPEED)) {
+                this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() + 0.1);
+            } else if(powerUp.getPowerUpState().equals(PowerUpState.BOMB_COUNT)) {
+                this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
+            } else if(powerUp.getPowerUpState().equals(PowerUpState.RANGE)) {
+                this.playerCharacter.setBombRange(this.playerCharacter.getBombRange() + 1);
+            }
+
+            updateStats();
         }
 
         // Calls view to update graphics
@@ -130,10 +143,11 @@ public class GameController {
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
         arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
+        playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
     }
 
     @Subscribe
-    public void bombDetonated(BlastTileInitDoneEvent blastTileInitDoneEvent) {
+    public void blastTileInitDone(BlastTileInitDoneEvent blastTileInitDoneEvent) {
 
         Point position = blastTileInitDoneEvent.getPosition();
         Point currentPosition = new Point(0,0);
@@ -145,36 +159,74 @@ public class GameController {
         blastDirections.put(Directions.RIGHT, true);
         blastDirections.put(Directions.DOWN, true);
 
+        if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y))) {
+            playerRecievesDamage();
+        }
+
         for (int i=1; i<=range; i++) {
-            if((position.x - i) >= 0 && blastDirections.get(Directions.LEFT) &&
-                    this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof DestructibleWall) {
-                blastDirections.put(Directions.LEFT, false);
-                currentPosition.setLocation(position.x - i, position.y);
-                this.arenaModel.setTile(null, currentPosition);
-                spawnPowerUp(currentPosition);
+            if((position.x - i) >= 0 && blastDirections.get(Directions.LEFT)) {
+                if (this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof DestructibleWall) {
+                    blastDirections.put(Directions.LEFT, false);
+                    currentPosition.setLocation(position.x - i, position.y);
+                    this.arenaModel.setTile(null, currentPosition);
+                    spawnPowerUp(currentPosition);
+                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x - i, position.y))) {
+                    playerRecievesDamage();
+                }
             }
-            if((position.y - i) >= 0 && blastDirections.get(Directions.UP) &&
-                    this.arenaModel.getArenaTiles()[position.x][position.y - i] instanceof DestructibleWall) {
-                blastDirections.put(Directions.UP, false);
-                currentPosition.setLocation(position.x, position.y - i);
-                this.arenaModel.setTile(null, currentPosition);
-                spawnPowerUp(currentPosition);
+
+            if((position.y - i) >= 0 && blastDirections.get(Directions.UP)) {
+                if(this.arenaModel.getArenaTiles()[position.x][position.y - i] instanceof DestructibleWall) {
+                    blastDirections.put(Directions.UP, false);
+                    currentPosition.setLocation(position.x, position.y - i);
+                    this.arenaModel.setTile(null, currentPosition);
+                    spawnPowerUp(currentPosition);
+                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y - i))) {
+                    playerRecievesDamage();
+                }
             }
-            if(position.x + i < this.arenaModel.getArenaTiles().length && blastDirections.get(Directions.RIGHT) &&
-                    this.arenaModel.getArenaTiles()[position.x + i][position.y] instanceof DestructibleWall) {
-                blastDirections.put(Directions.RIGHT, false);
-                currentPosition.setLocation(position.x + i, position.y);
-                this.arenaModel.setTile(null, currentPosition);
-                spawnPowerUp(currentPosition);
+
+
+            if(position.x + i < this.arenaModel.getArenaTiles().length && blastDirections.get(Directions.RIGHT)) {
+                if (this.arenaModel.getArenaTiles()[position.x + i][position.y] instanceof DestructibleWall) {
+                    blastDirections.put(Directions.RIGHT, false);
+                    currentPosition.setLocation(position.x + i, position.y);
+                    this.arenaModel.setTile(null, currentPosition);
+                    spawnPowerUp(currentPosition);
+                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x + i, position.y))) {
+                    playerRecievesDamage();
+                }
             }
-            if(position.y + i < this.arenaModel.getArenaTiles()[0].length && blastDirections.get(Directions.DOWN) &&
-                    this.arenaModel.getArenaTiles()[position.x][position.y + i] instanceof DestructibleWall) {
-                blastDirections.put(Directions.DOWN, false);
-                currentPosition.setLocation(position.x, position.y + i);
-                this.arenaModel.setTile(null, currentPosition);
-                spawnPowerUp(currentPosition);
+                     {
+            }
+            if(position.y + i < this.arenaModel.getArenaTiles()[0].length && blastDirections.get(Directions.DOWN)) {
+                if (this.arenaModel.getArenaTiles()[position.x][position.y + i] instanceof DestructibleWall) {
+                    blastDirections.put(Directions.DOWN, false);
+                    currentPosition.setLocation(position.x, position.y + i);
+                    this.arenaModel.setTile(null, currentPosition);
+                    spawnPowerUp(currentPosition);
+                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y + i))) {
+                    playerRecievesDamage();
+                }
             }
         }
+    }
+
+    private void playerRecievesDamage() {
+        this.playerCharacter.setHealth(this.playerCharacter.getHealth() - 30);
+        if(this.playerCharacter.getHealth() < 0) {
+            this.playerCharacter.setHealth(100);
+            this.playerCharacter.death();
+        }
+        updateStats();
+    }
+
+    private void updateStats() {this.arenaView.updateStats(
+            this.playerCharacter.getHealth(),
+            this.playerCharacter.getSpeed(),
+            this.playerCharacter.getBombRange(),
+            this.playerCharacter.getBombCount()
+    );
     }
 
     public ArenaModel newGame(ArenaMap arenaMap) {
@@ -202,9 +254,12 @@ public class GameController {
 
     private void spawnPowerUp(Point position) {
         Random randomGenerator = new Random();
-        int temporaryNumber = randomGenerator.nextInt(10);
-        if(temporaryNumber < 3) {
-            this.arenaModel.setTile(new TestPowerUp(), position);
+        if (randomGenerator.nextInt(10) < 2) {
+            this.arenaModel.setTile(new TestPowerUp(PowerUpState.RANGE), position);
+        } else if (randomGenerator.nextInt(10) < 2) {
+            this.arenaModel.setTile(new TestPowerUp(PowerUpState.BOMB_COUNT), position);
+        } else if (randomGenerator.nextInt(10) < 2) {
+            this.arenaModel.setTile(new TestPowerUp(PowerUpState.SPEED), position);
         }
     }
 
