@@ -136,6 +136,8 @@ public class ArenaView {
             }
         }
 
+        // Creating sub-elements
+
         hudView = new HUDView();
         scoreboard = new Scoreboard(root);
         //make players a proper arraylist of the current players
