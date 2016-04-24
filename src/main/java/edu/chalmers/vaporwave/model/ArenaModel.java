@@ -6,6 +6,8 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.MapObject;
+import edu.chalmers.vaporwave.util.PowerUpLoader;
+import edu.chalmers.vaporwave.util.PowerUpState;
 
 import java.awt.*;
 import java.io.File;
@@ -128,9 +130,9 @@ public class ArenaModel {
 
     @Subscribe
     public void removeDestroyedWalls(BlastFinishedEvent blastFinishedEvent) {
-        System.out.println("Removing");
         for (Point position : blastFinishedEvent.getDestroyedWalls()) {
             this.removeTile(position);
+//            this.setTile(new TestPowerUp(), position);
         }
     }
 }

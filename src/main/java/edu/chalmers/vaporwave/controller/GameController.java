@@ -12,15 +12,15 @@ import edu.chalmers.vaporwave.model.gameObjects.Bomb;
 import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.Directions;
 import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.PowerUpState;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class GameController {
 
@@ -127,6 +127,25 @@ public class GameController {
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
         arenaModel.setTile(blastEvent.getBlast(), blastEvent.getPosition());
+
+        
+
+//        Point position = blastEvent.getPosition();
+
+//        Map<Directions, Boolean> blastDirections = new HashMap<>();
+//        blastDirections.put(Directions.LEFT, true);
+//        blastDirections.put(Directions.UP, true);
+//        blastDirections.put(Directions.RIGHT, true);
+//        blastDirections.put(Directions.DOWN, true);
+//
+//        int range = blastEvent.getBlast().getRange();
+//        for (int i=1; i<=range; i++) {
+//            if((position.x - i) >= 0 && (this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.LEFT)) {
+//                blastDirections.put(Directions.LEFT, false);
+//                this.arenaModel.setTile(null, position);
+//            }
+//        }
+
     }
 
     public ArenaModel newGame(ArenaMap arenaMap) {

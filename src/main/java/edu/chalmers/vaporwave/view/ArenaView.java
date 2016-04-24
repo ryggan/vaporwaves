@@ -12,8 +12,11 @@ import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.image.Image;
+import org.w3c.dom.Node;
 
 import java.awt.*;
 import java.util.*;
@@ -39,18 +42,20 @@ public class ArenaView {
     private Sprite destructibleWallDestroyedSprite;
     private Sprite indestructibleWallSprite;
 
-    private Map<Point, Sprite> explosionCenterMap;
+    private Sprite speedPowerUp;
 
     private Map<Point, BlastSpriteCollection> blastSpriteMap;
     private Set<Point> destroyedWalls;
 
     private Group root;
+
+    private Label fps;
     
     public ArenaView(Group root) {
         this.root = root;
-        this.explosionCenterMap = new HashMap<Point, Sprite>();
         this.blastSpriteMap = new HashMap<>();
         this.destroyedWalls = new HashSet<>();
+        this.fps = new Label();
 
         GameEventBus.getInstance().register(this);
 
@@ -101,7 +106,7 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
-
+        speedPowerUp = new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 2}, new double[] {1, 1});
 
     }
 
@@ -144,6 +149,14 @@ public class ArenaView {
 
         tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
+        // Method for printing current fps count.
+        // Updates every 10 frame approx
+        if((int)(timeSinceLastCall * 1000) - 10 == 7){
+            fps.setText("FPS: " + (int) (1 / timeSinceLastCall));
+            fps.setLayoutX(648);
+            this.root.getChildren().remove(fps);
+            this.root.getChildren().add(fps);
+        }
 
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
@@ -193,39 +206,52 @@ public class ArenaView {
 
         blastSpriteCollection.getSprite(new Point(position.x, position.y)).render(tileGC, timeSinceStart);
 
+        // todo: Refactor this!
         for (int i = 1; i <= range; i++) {
             if((position.x - i) >= 0 && !(arenaTiles[position.x - i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.LEFT)) {
-                blastSpriteCollection.getSprite(new Point(position.x - i, position.y)).render(tileGC, timeSinceStart);
                 if ((arenaTiles[position.x - i][position.y] instanceof DestructibleWall)) {
                     blastDirections.put(Directions.LEFT, false);
                     this.destroyedWalls.add(new Point(position.x - i, position.y));
+                    this.destructibleWallDestroyedSprite.setPosition((position.x - i) * Constants.DEFAULT_TILE_WIDTH, (position.y) * Constants.DEFAULT_TILE_WIDTH);
+                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
+                } else {
+                    blastSpriteCollection.getSprite(new Point(position.x - i, position.y)).render(tileGC, timeSinceStart);
                 }
             } else {
                 blastDirections.put(Directions.LEFT, false);
             }
             if((position.y - i) >= 0 && !(arenaTiles[position.x][position.y - i] instanceof IndestructibleWall) && blastDirections.get(Directions.UP)) {
-                blastSpriteCollection.getSprite(new Point(position.x, position.y - i)).render(tileGC, timeSinceStart);
                 if ((arenaTiles[position.x][position.y - i] instanceof DestructibleWall)) {
                     blastDirections.put(Directions.UP, false);
                     this.destroyedWalls.add(new Point(position.x, position.y - i));
+                    this.destructibleWallDestroyedSprite.setPosition((position.x) * Constants.DEFAULT_TILE_WIDTH, (position.y - i) * Constants.DEFAULT_TILE_WIDTH);
+                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
+                } else {
+                    blastSpriteCollection.getSprite(new Point(position.x, position.y - i)).render(tileGC, timeSinceStart);
                 }
             } else {
                 blastDirections.put(Directions.UP, false);
             }
             if(position.x + i < arenaTiles.length && !(arenaTiles[position.x + i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.RIGHT)) {
-                blastSpriteCollection.getSprite(new Point(position.x + i, position.y)).render(tileGC, timeSinceStart);
                 if ((arenaTiles[position.x + i][position.y] instanceof DestructibleWall)) {
                     blastDirections.put(Directions.RIGHT, false);
                     this.destroyedWalls.add(new Point(position.x + i, position.y));
+                    this.destructibleWallDestroyedSprite.setPosition((position.x + i) * Constants.DEFAULT_TILE_WIDTH, (position.y) * Constants.DEFAULT_TILE_WIDTH);
+                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
+                } else {
+                    blastSpriteCollection.getSprite(new Point(position.x + i, position.y)).render(tileGC, timeSinceStart);
                 }
             } else {
                 blastDirections.put(Directions.RIGHT, false);
             }
             if(position.y + i < arenaTiles[0].length && !(arenaTiles[position.x][position.y + 1] instanceof IndestructibleWall) && blastDirections.get(Directions.DOWN)) {
-                blastSpriteCollection.getSprite(new Point(position.x, position.y + i)).render(tileGC, timeSinceStart);
                 if ((arenaTiles[position.x][position.y + i] instanceof DestructibleWall)) {
                     blastDirections.put(Directions.DOWN, false);
                     this.destroyedWalls.add(new Point(position.x, position.y + i));
+                    this.destructibleWallDestroyedSprite.setPosition((position.x) * Constants.DEFAULT_TILE_WIDTH, (position.y + i) * Constants.DEFAULT_TILE_WIDTH);
+                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
+                } else {
+                    blastSpriteCollection.getSprite(new Point(position.x, position.y + i)).render(tileGC, timeSinceStart);
                 }
             } else {
                 blastDirections.put(Directions.DOWN, false);
@@ -255,14 +281,10 @@ public class ArenaView {
                     return bombSprite[3];
                 }
             }
-        } else if (tile instanceof PowerUp) {
-
+        } else if (tile instanceof TestPowerUp) {
+            return speedPowerUp;
         }
         return null;
-    }
-
-    public Sprite getTileSprite(StaticTile tile, Point position) {
-        return explosionCenterMap.get(position);
     }
 
     public void renderCharacter(GameCharacter character, double timeSinceStart) {
