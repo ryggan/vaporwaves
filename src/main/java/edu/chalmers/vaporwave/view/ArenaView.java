@@ -22,9 +22,6 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-/**
- * Created by FEngelbrektsson on 15/04/16.
- */
 public class ArenaView {
 
     private Canvas backgroundCanvas;
@@ -106,8 +103,7 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
-        speedPowerUp = new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 2}, new double[] {1, 1});
-
+        speedPowerUp = new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {0, 2}, new double[] {1, 1});
     }
 
     public void initArena() {
@@ -174,11 +170,6 @@ public class ArenaView {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof Blast && this.blastSpriteMap.get(new Point(i, j)) != null) {
                     renderBlast(this.blastSpriteMap.get(new Point(i, j)), timeSinceStart, arenaTiles);
-                    if (this.blastSpriteMap.get(new Point(i, j)).getSprite(new Point(i, j)).isAnimationFinished()) {
-                        GameEventBus.getInstance().post(new BlastFinishedEvent(this.destroyedWalls));
-                        this.destroyedWalls.clear();
-                        this.blastSpriteMap.remove(new Point(i, j));
-                    }
                 }
             }
         }
@@ -196,7 +187,6 @@ public class ArenaView {
 
     private void renderBlast(BlastSpriteCollection blastSpriteCollection, double timeSinceStart, StaticTile[][] arenaTiles) {
         Point position = blastSpriteCollection.getPosition();
-        int range = blastSpriteCollection.getRange();
 
         Map<Directions, Boolean> blastDirections = new HashMap<>();
         blastDirections.put(Directions.LEFT, true);
@@ -206,56 +196,14 @@ public class ArenaView {
 
         blastSpriteCollection.getSprite(new Point(position.x, position.y)).render(tileGC, timeSinceStart);
 
-        // todo: Refactor this!
-        for (int i = 1; i <= range; i++) {
-            if((position.x - i) >= 0 && !(arenaTiles[position.x - i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.LEFT)) {
-                if ((arenaTiles[position.x - i][position.y] instanceof DestructibleWall)) {
-                    blastDirections.put(Directions.LEFT, false);
-                    this.destroyedWalls.add(new Point(position.x - i, position.y));
-                    this.destructibleWallDestroyedSprite.setPosition((position.x - i) * Constants.DEFAULT_TILE_WIDTH, (position.y) * Constants.DEFAULT_TILE_WIDTH);
-                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
-                } else {
-                    blastSpriteCollection.getSprite(new Point(position.x - i, position.y)).render(tileGC, timeSinceStart);
-                }
-            } else {
-                blastDirections.put(Directions.LEFT, false);
-            }
-            if((position.y - i) >= 0 && !(arenaTiles[position.x][position.y - i] instanceof IndestructibleWall) && blastDirections.get(Directions.UP)) {
-                if ((arenaTiles[position.x][position.y - i] instanceof DestructibleWall)) {
-                    blastDirections.put(Directions.UP, false);
-                    this.destroyedWalls.add(new Point(position.x, position.y - i));
-                    this.destructibleWallDestroyedSprite.setPosition((position.x) * Constants.DEFAULT_TILE_WIDTH, (position.y - i) * Constants.DEFAULT_TILE_WIDTH);
-                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
-                } else {
-                    blastSpriteCollection.getSprite(new Point(position.x, position.y - i)).render(tileGC, timeSinceStart);
-                }
-            } else {
-                blastDirections.put(Directions.UP, false);
-            }
-            if(position.x + i < arenaTiles.length && !(arenaTiles[position.x + i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.RIGHT)) {
-                if ((arenaTiles[position.x + i][position.y] instanceof DestructibleWall)) {
-                    blastDirections.put(Directions.RIGHT, false);
-                    this.destroyedWalls.add(new Point(position.x + i, position.y));
-                    this.destructibleWallDestroyedSprite.setPosition((position.x + i) * Constants.DEFAULT_TILE_WIDTH, (position.y) * Constants.DEFAULT_TILE_WIDTH);
-                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
-                } else {
-                    blastSpriteCollection.getSprite(new Point(position.x + i, position.y)).render(tileGC, timeSinceStart);
-                }
-            } else {
-                blastDirections.put(Directions.RIGHT, false);
-            }
-            if(position.y + i < arenaTiles[0].length && !(arenaTiles[position.x][position.y + 1] instanceof IndestructibleWall) && blastDirections.get(Directions.DOWN)) {
-                if ((arenaTiles[position.x][position.y + i] instanceof DestructibleWall)) {
-                    blastDirections.put(Directions.DOWN, false);
-                    this.destroyedWalls.add(new Point(position.x, position.y + i));
-                    this.destructibleWallDestroyedSprite.setPosition((position.x) * Constants.DEFAULT_TILE_WIDTH, (position.y + i) * Constants.DEFAULT_TILE_WIDTH);
-                    this.destructibleWallDestroyedSprite.render(tileGC, timeSinceStart);
-                } else {
-                    blastSpriteCollection.getSprite(new Point(position.x, position.y + i)).render(tileGC, timeSinceStart);
-                }
-            } else {
-                blastDirections.put(Directions.DOWN, false);
-            }
+        if(!blastSpriteCollection.getBlastHasOccured()) {
+            blastSpriteCollection.initBlast(arenaTiles);
+        }
+
+        Set<Point> keys = blastSpriteCollection.getSpriteMap().keySet();
+        for (Point key : keys) {
+            blastSpriteCollection.getSprite(new Point(key.x, key.y)).render(tileGC, timeSinceStart);
+
         }
     }
 

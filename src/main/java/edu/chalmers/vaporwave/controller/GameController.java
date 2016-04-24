@@ -1,10 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
-import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
-import edu.chalmers.vaporwave.event.BlastEvent;
-import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.event.PlaceBombEvent;
+import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.*;
@@ -114,6 +111,12 @@ public class GameController {
             movable.updatePosition();
         }
 
+        if (this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y]
+                instanceof TestPowerUp) {
+            this.arenaModel.setTile(null, playerCharacter.getGridPosition());
+            this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() * 1.1);
+        }
+
         // Calls view to update graphics
 
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);
@@ -126,26 +129,52 @@ public class GameController {
 
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
-        arenaModel.setTile(blastEvent.getBlast(), blastEvent.getPosition());
+        arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
+    }
 
-        
+    @Subscribe
+    public void bombDetonated(BlastTileInitDoneEvent blastTileInitDoneEvent) {
 
-//        Point position = blastEvent.getPosition();
+        Point position = blastTileInitDoneEvent.getPosition();
+        Point currentPosition = new Point(0,0);
+        int range = blastTileInitDoneEvent.getRange();
 
-//        Map<Directions, Boolean> blastDirections = new HashMap<>();
-//        blastDirections.put(Directions.LEFT, true);
-//        blastDirections.put(Directions.UP, true);
-//        blastDirections.put(Directions.RIGHT, true);
-//        blastDirections.put(Directions.DOWN, true);
-//
-//        int range = blastEvent.getBlast().getRange();
-//        for (int i=1; i<=range; i++) {
-//            if((position.x - i) >= 0 && (this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof IndestructibleWall) && blastDirections.get(Directions.LEFT)) {
-//                blastDirections.put(Directions.LEFT, false);
-//                this.arenaModel.setTile(null, position);
-//            }
-//        }
+        Map<Directions, Boolean> blastDirections = new HashMap<>();
+        blastDirections.put(Directions.LEFT, true);
+        blastDirections.put(Directions.UP, true);
+        blastDirections.put(Directions.RIGHT, true);
+        blastDirections.put(Directions.DOWN, true);
 
+        for (int i=1; i<=range; i++) {
+            if((position.x - i) >= 0 && blastDirections.get(Directions.LEFT) &&
+                    this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof DestructibleWall) {
+                blastDirections.put(Directions.LEFT, false);
+                currentPosition.setLocation(position.x - i, position.y);
+                this.arenaModel.setTile(null, currentPosition);
+                spawnPowerUp(currentPosition);
+            }
+            if((position.y - i) >= 0 && blastDirections.get(Directions.UP) &&
+                    this.arenaModel.getArenaTiles()[position.x][position.y - i] instanceof DestructibleWall) {
+                blastDirections.put(Directions.UP, false);
+                currentPosition.setLocation(position.x, position.y - i);
+                this.arenaModel.setTile(null, currentPosition);
+                spawnPowerUp(currentPosition);
+            }
+            if(position.x + i < this.arenaModel.getArenaTiles().length && blastDirections.get(Directions.RIGHT) &&
+                    this.arenaModel.getArenaTiles()[position.x + i][position.y] instanceof DestructibleWall) {
+                blastDirections.put(Directions.RIGHT, false);
+                currentPosition.setLocation(position.x + i, position.y);
+                this.arenaModel.setTile(null, currentPosition);
+                spawnPowerUp(currentPosition);
+            }
+            if(position.y + i < this.arenaModel.getArenaTiles()[0].length && blastDirections.get(Directions.DOWN) &&
+                    this.arenaModel.getArenaTiles()[position.x][position.y + i] instanceof DestructibleWall) {
+                blastDirections.put(Directions.DOWN, false);
+                currentPosition.setLocation(position.x, position.y + i);
+                this.arenaModel.setTile(null, currentPosition);
+                spawnPowerUp(currentPosition);
+            }
+        }
     }
 
     public ArenaModel newGame(ArenaMap arenaMap) {
@@ -168,6 +197,14 @@ public class GameController {
             arenaModel.setTile(new StatPowerUp(), posx, posy);
         } else if(temporaryNumber == 4) {
             arenaModel.setTile(new StatPowerUp(), posx, posy);
+        }
+    }
+
+    private void spawnPowerUp(Point position) {
+        Random randomGenerator = new Random();
+        int temporaryNumber = randomGenerator.nextInt(10);
+        if(temporaryNumber < 3) {
+            this.arenaModel.setTile(new TestPowerUp(), position);
         }
     }
 

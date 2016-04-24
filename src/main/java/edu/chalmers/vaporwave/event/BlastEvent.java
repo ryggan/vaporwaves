@@ -19,9 +19,5 @@ public class BlastEvent {
         return this.blast;
     }
 
-    public Point getPosition() {
-        return this.blast.getPosition();
-    }
-
 
 }

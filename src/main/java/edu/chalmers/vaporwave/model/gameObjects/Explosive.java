@@ -28,7 +28,6 @@ public abstract class Explosive extends StaticTile {
 
     public void explode() {
         new Blast(this);
-        System.out.println("Pang");
     }
 
     public Point getPosition() {
