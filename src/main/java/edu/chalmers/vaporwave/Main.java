@@ -1,16 +1,18 @@
 
 package edu.chalmers.vaporwave;
-/**
- * Created by bob on 2016-04-15.
- */
 
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import javax.annotation.Nonnull;
 
 public class Main extends Application {
 
@@ -23,8 +25,8 @@ public class Main extends Application {
 
         // Setting up hierarchy
 
-        Group root = new Group();
-        Scene scene = new Scene(root);
+        final Group root = new Group();
+        final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
 
         // Design additions
@@ -32,6 +34,16 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setMinHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setMinWidth(Constants.WINDOW_WIDTH);
+
+		// This makes the application shut down properly when hitting cmd-q
+		// Solution found here: http://mail.openjdk.java.net/pipermail/openjfx-dev/2013-July/008598.html
+		// Slightly modified
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(final @Nonnull WindowEvent event) {
+				System.exit(0);
+			}
+		});
 
         primaryStage.show();
 
