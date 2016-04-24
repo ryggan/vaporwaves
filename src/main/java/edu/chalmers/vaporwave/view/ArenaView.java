@@ -104,6 +104,7 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 0}, new double[] {1, 1});
         destructibleWallDestroyedSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
+        ((AnimatedSprite)destructibleWallDestroyedSprite).setStartFromBeginning(true);
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 
@@ -113,9 +114,27 @@ public class ArenaView {
 
     }
 
-    public void initArena() {
+    public void initArena(StaticTile[][] arenaTiles) {
 
-        createBackground(backgroundGC);
+        // Rendering background image to background canvas
+
+//        createBackground(backgroundGC);
+
+        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
+        arenaBackgroundSprite.setPosition(0, 0);
+        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
+        arenaBackgroundSprite.render(backgroundGC, -1);
+
+        // Rendering indestructible walls on background canvas
+        for (int i = 0; i < arenaTiles.length; i++) {
+            for (int j = 0; j < arenaTiles[0].length; j++) {
+                if (arenaTiles[i][j] != null && arenaTiles[i][j] instanceof IndestructibleWall) {
+                    Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
+                    tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
+                    tileSprite.render(backgroundGC, -1);
+                }
+            }
+        }
 
         hudView = new HUDView();
         scoreboard = new Scoreboard(root);
@@ -123,14 +142,14 @@ public class ArenaView {
         //scoreboard.addPlayersToScoreboard(players);
     }
 
-    private void createBackground(GraphicsContext backgroundGC) {
-
-        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
-        arenaBackgroundSprite.setPosition(0, 0);
-        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
-        arenaBackgroundSprite.render(backgroundGC, -1);
-
-    }
+//    private void createBackground(GraphicsContext backgroundGC) {
+//
+//        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
+//        arenaBackgroundSprite.setPosition(0, 0);
+//        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
+//        arenaBackgroundSprite.render(backgroundGC, -1);
+//
+//    }
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
@@ -173,8 +192,8 @@ public class ArenaView {
 
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
-                if (arenaTiles[i][j] != null) {
-                    Sprite tileSprite = tileSprite = getTileSprite(arenaTiles[i][j]);
+                if (arenaTiles[i][j] != null && !(arenaTiles[i][j] instanceof IndestructibleWall)) {
+                    Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
                     if (tileSprite != null) {
                         tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
                         tileSprite.render(tileGC, timeSinceStart);

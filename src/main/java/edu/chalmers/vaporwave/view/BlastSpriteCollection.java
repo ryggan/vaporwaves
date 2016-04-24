@@ -40,24 +40,29 @@ public class BlastSpriteCollection {
 
         AnimatedSprite blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{2, 4}, new double[]{1, 1});
         blastSprite.setLoops(1);
+        blastSprite.setStartFromBeginning(true);
         blastSprite.setPosition(position.x * Constants.DEFAULT_TILE_WIDTH, position.y * Constants.DEFAULT_TILE_WIDTH);
 
         Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
-        destructibleWallDestroyedSpriteLeft = destructibleWallDestroyedSpriteLeft =
+        destructibleWallDestroyedSpriteLeft =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         destructibleWallDestroyedSpriteLeft.setLoops(1);
+        destructibleWallDestroyedSpriteLeft.setStartFromBeginning(true);
 
-        destructibleWallDestroyedSpriteUp = destructibleWallDestroyedSpriteUp =
+        destructibleWallDestroyedSpriteUp =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         destructibleWallDestroyedSpriteUp.setLoops(1);
+        destructibleWallDestroyedSpriteUp.setStartFromBeginning(true);
 
-        destructibleWallDestroyedSpriteRight = destructibleWallDestroyedSpriteRight =
+        destructibleWallDestroyedSpriteRight =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         destructibleWallDestroyedSpriteRight.setLoops(1);
+        destructibleWallDestroyedSpriteRight.setStartFromBeginning(true);
 
-        destructibleWallDestroyedSpriteDown = destructibleWallDestroyedSpriteDown =
+        destructibleWallDestroyedSpriteDown =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
         destructibleWallDestroyedSpriteDown.setLoops(1);
+        destructibleWallDestroyedSpriteDown.setStartFromBeginning(true);
 
 
         spriteMap.put(position, blastSprite);
@@ -70,6 +75,7 @@ public class BlastSpriteCollection {
                     blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{9, 0}, new double[]{1, 1});
                 }
                 blastSprite.setLoops(1);
+                blastSprite.setStartFromBeginning(true);
                 blastSprite.setPosition((position.x - i) * Constants.DEFAULT_TILE_WIDTH, position.y * Constants.DEFAULT_TILE_WIDTH);
                 spriteMap.put(new Point(position.x - i, position.y), blastSprite);
             }
@@ -81,6 +87,7 @@ public class BlastSpriteCollection {
                     blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{9, 1}, new double[]{1, 1});
                 }
                 blastSprite.setLoops(1);
+                blastSprite.setStartFromBeginning(true);
                 blastSprite.setPosition((position.x) * Constants.DEFAULT_TILE_WIDTH, (position.y - i) * Constants.DEFAULT_TILE_WIDTH);
                 spriteMap.put(new Point(position.x, position.y - i), blastSprite);
             }
@@ -91,6 +98,7 @@ public class BlastSpriteCollection {
                 blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{9, 2}, new double[]{1, 1});
             }
             blastSprite.setLoops(1);
+            blastSprite.setStartFromBeginning(true);
             blastSprite.setPosition((position.x + i) * Constants.DEFAULT_TILE_WIDTH, position.y * Constants.DEFAULT_TILE_WIDTH);
             spriteMap.put(new Point(position.x + i, position.y), blastSprite);
 
@@ -100,6 +108,7 @@ public class BlastSpriteCollection {
                 blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{9, 3}, new double[]{1, 1});
             }
             blastSprite.setLoops(1);
+            blastSprite.setStartFromBeginning(true);
 
             blastSprite.setPosition((position.x) * Constants.DEFAULT_TILE_WIDTH, (position.y + i) * Constants.DEFAULT_TILE_WIDTH);
             spriteMap.put(new Point(position.x, position.y + i), blastSprite);
