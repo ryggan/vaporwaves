@@ -27,6 +27,8 @@ public abstract class Movable {
     private int previousGridPositionY;
     private StaticTile[][] latestArenaTiles;
 
+    protected Movable() { }
+
     public Movable(double canvasPositionX, double canvasPositionY, double speed) {
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
