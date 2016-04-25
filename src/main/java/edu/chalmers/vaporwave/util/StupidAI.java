@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class StupidAI implements AI {
-    Direction previousDirection;
+    private Direction previousDirection;
 
     public StupidAI() {
         Random random = new Random();
