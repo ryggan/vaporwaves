@@ -90,7 +90,7 @@ public class ArenaView {
         enemySprite = new CharacterSprite("ENEMY");
         initCharacterSprites(enemySprite);
 
-        Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
+        Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png");
 
         bombSprite[0] =
                 new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1});
