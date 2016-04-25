@@ -61,16 +61,20 @@ public class GameController {
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
 
-//        Enemy enemyOne = new Enemy("Enemy", Utils.gridToCanvasPosition(9), Utils.gridToCanvasPosition(6), 0.8, new SemiStupidAI(gameCharacters));
-        Enemy enemyTwo = new Enemy("Enemy", Utils.gridToCanvasPosition(0), Utils.gridToCanvasPosition(4), 0.2, new StupidAI());
-        Enemy enemyThree = new Enemy("Enemy", Utils.gridToCanvasPosition(7), Utils.gridToCanvasPosition(0), 0.2, new StupidAI());
-        Enemy enemyFour = new Enemy("Enemy", Utils.gridToCanvasPosition(4), Utils.gridToCanvasPosition(8), 0.2, new StupidAI());
-        Enemy enemyFive = new Enemy("Enemy", Utils.gridToCanvasPosition(15), Utils.gridToCanvasPosition(10), 0.2, new StupidAI());
-//        enemies.add(enemyOne);
-        enemies.add(enemyTwo);
-        enemies.add(enemyThree);
-        enemies.add(enemyFour);
-        enemies.add(enemyFive);
+        Random random = new Random();
+        for (int k = 0; k < 10; k++) {
+            boolean free = false;
+            Point spawnPosition = new Point(0,0);
+            while (!free) {
+                spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
+                if (arenaModel.getArenaTile(spawnPosition) == null) {
+                    free = true;
+                }
+            }
+            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPosition(spawnPosition.x), Utils.gridToCanvasPosition(spawnPosition.y), 0.2, new StupidAI());
+            enemies.add(enemy);
+        }
+
 
 
 
