@@ -17,6 +17,7 @@ import java.util.Set;
 public class AIHeuristics {
     private Set<GameCharacter> gameCharacters;
     private StaticTile[][] arenaTiles;
+    private int[][] heuristicMatrix;
 
     private void decideHeuristicValue(int[][] heuristicMatrix, Point position, int previousValue) {
         int x = position.x;
@@ -71,14 +72,21 @@ public class AIHeuristics {
     }
 
     public AIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters) {
+        System.out.println(arenaTiles.length);
+        System.out.println(arenaTiles[0].length);
         this.arenaTiles = arenaTiles;
         this.gameCharacters = gameCharacters;
+        heuristicMatrix = new int[this.arenaTiles.length][this.arenaTiles[0].length];
 
     }
 
-    public int[][] getAIHeuristics() {
-        int[][] heuristicMatrix = new int[this.arenaTiles.length][this.arenaTiles[0].length];
+    public void setHeuristicValue(Point point, int value) {
+        int x = point.x;
+        int y = point.y;
+        heuristicMatrix[x][y] = value;
+    }
 
+    public int[][] getAIHeuristics() {
         for(int i = 0; i < arenaTiles.length; i++) {
             for(int j = 0; j < arenaTiles[j].length; j++) {
                 if(arenaTiles[i][j] instanceof PowerUp) {

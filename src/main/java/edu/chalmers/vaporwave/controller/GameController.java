@@ -75,9 +75,6 @@ public class GameController {
             enemies.add(enemy);
         }
 
-
-
-
         for(Enemy enemy : enemies) {
             try {
                 arenaModel.addMovable(enemy);
@@ -85,8 +82,6 @@ public class GameController {
                 System.out.println("Tile out of bounds!");
             }
         }
-
-
     }
 
     // This one is called every time the game-timer is updated
