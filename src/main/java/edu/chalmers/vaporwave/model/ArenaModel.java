@@ -131,4 +131,12 @@ public class ArenaModel {
 //            this.setTile(new TestPowerUp(), position);
         }
     }
+
+    public int getWidth() {
+        return this.width;
+    }
+
+    public int getHeight() {
+        return this.height;
+    }
 }
