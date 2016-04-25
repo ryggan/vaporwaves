@@ -65,7 +65,7 @@ public class ArenaView {
 
         backgroundCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
         root.getChildren().add(backgroundCanvas);
-        tileCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        tileCanvas = new Canvas(Constants.GAME_WIDTH, (Constants.GAME_HEIGHT));
         root.getChildren().add(tileCanvas);
 
 
