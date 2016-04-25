@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
+import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
@@ -293,13 +294,13 @@ public class ArenaView {
             }
 
             int spriteIndex = 0;
-            if (state == CharacterState.SPAWN || state == CharacterState.DEATH || character.getDirection() == Directions.DOWN) {
+            if (state == CharacterState.SPAWN || state == CharacterState.DEATH || character.getDirection() == Direction.DOWN) {
                 spriteIndex = 0;
-            } else if (character.getDirection() == Directions.LEFT) {
+            } else if (character.getDirection() == Direction.LEFT) {
                 spriteIndex = 1;
-            } else if (character.getDirection() == Directions.RIGHT) {
+            } else if (character.getDirection() == Direction.RIGHT) {
                 spriteIndex = 2;
-            } else if (character.getDirection() == Directions.UP) {
+            } else if (character.getDirection() == Direction.UP) {
                 spriteIndex = 3;
             }
 
