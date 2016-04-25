@@ -8,10 +8,7 @@ import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.model.gameObjects.Bomb;
 import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 import edu.chalmers.vaporwave.model.gameObjects.Movable;
-import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.Directions;
-import edu.chalmers.vaporwave.util.MapFileReader;
-import edu.chalmers.vaporwave.util.PowerUpState;
+import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
 
@@ -146,76 +143,56 @@ public class GameController {
         playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
     }
 
+    /**
+     * Gets called when a BlastSpriteCollection has finished its init-method.
+     * Updates the model according the to blast that has occurred.
+     *
+     * @param blastTileInitDoneEvent The event that gets sent from BlastSpriteCollection
+     */
     @Subscribe
     public void blastTileInitDone(BlastTileInitDoneEvent blastTileInitDoneEvent) {
-
-        Point position = blastTileInitDoneEvent.getPosition();
-        Point currentPosition = new Point(0,0);
-        int range = blastTileInitDoneEvent.getRange();
-
         Map<Directions, Boolean> blastDirections = new HashMap<>();
         blastDirections.put(Directions.LEFT, true);
         blastDirections.put(Directions.UP, true);
         blastDirections.put(Directions.RIGHT, true);
         blastDirections.put(Directions.DOWN, true);
 
-        if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y))) {
+        if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
             playerRecievesDamage();
         }
 
-        for (int i=1; i<=range; i++) {
-            if((position.x - i) >= 0 && blastDirections.get(Directions.LEFT)) {
-                if (this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof DestructibleWall) {
-                    blastDirections.put(Directions.LEFT, false);
-                    currentPosition.setLocation(position.x - i, position.y);
-                    this.arenaModel.setTile(null, currentPosition);
-                    spawnPowerUp(currentPosition);
-                } else if (this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof IndestructibleWall) {
-                    blastDirections.put(Directions.LEFT, false);
-                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x - i, position.y))) {
-                    playerRecievesDamage();
+        for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
+            for (Directions direction : blastDirections.keySet()) {
+                Point currentPosition = Utils.getRelativePoint(blastTileInitDoneEvent.getPosition(), i, direction);
+                if (isValidPosition(currentPosition) && blastDirections.get(direction)) {
+                    if (this.arenaModel.getArenaTile(currentPosition) instanceof DestructibleWall) {
+                        blastDirections.put(direction, false);
+                        this.arenaModel.setTile(null, currentPosition);
+                        spawnPowerUp(currentPosition);
+                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof IndestructibleWall) {
+                        blastDirections.put(direction, false);
+                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof Bomb) {
+                        ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
+                    } else if (this.playerCharacter.getGridPosition().equals(currentPosition)) {
+                        playerRecievesDamage();
+                    }
                 }
-            }
 
-            if((position.y - i) >= 0 && blastDirections.get(Directions.UP)) {
-                if(this.arenaModel.getArenaTiles()[position.x][position.y - i] instanceof DestructibleWall) {
-                    blastDirections.put(Directions.UP, false);
-                    currentPosition.setLocation(position.x, position.y - i);
-                    this.arenaModel.setTile(null, currentPosition);
-                    spawnPowerUp(currentPosition);
-                } else if (this.arenaModel.getArenaTiles()[position.x][position.y - i] instanceof IndestructibleWall) {
-                    blastDirections.put(Directions.UP, false);
-                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y - i))) {
-                    playerRecievesDamage();
-                }
-            }
-
-            if(position.x + i < this.arenaModel.getArenaTiles().length && blastDirections.get(Directions.RIGHT)) {
-                if (this.arenaModel.getArenaTiles()[position.x + i][position.y] instanceof DestructibleWall) {
-                    blastDirections.put(Directions.RIGHT, false);
-                    currentPosition.setLocation(position.x + i, position.y);
-                    this.arenaModel.setTile(null, currentPosition);
-                    spawnPowerUp(currentPosition);
-                } else if (this.arenaModel.getArenaTiles()[position.x + i][position.y] instanceof IndestructibleWall) {
-                    blastDirections.put(Directions.RIGHT, false);
-                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x + i, position.y))) {
-                    playerRecievesDamage();
-                }
-            }
-
-            if(position.y + i < this.arenaModel.getArenaTiles()[0].length && blastDirections.get(Directions.DOWN)) {
-                if (this.arenaModel.getArenaTiles()[position.x][position.y + i] instanceof DestructibleWall) {
-                    blastDirections.put(Directions.DOWN, false);
-                    currentPosition.setLocation(position.x, position.y + i);
-                    this.arenaModel.setTile(null, currentPosition);
-                    spawnPowerUp(currentPosition);
-                } else if (this.arenaModel.getArenaTiles()[position.x][position.y + i] instanceof IndestructibleWall) {
-                    blastDirections.put(Directions.DOWN, false);
-                } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y + i))) {
-                    playerRecievesDamage();
-                }
             }
         }
+    }
+
+    /**
+     * Check if a specific position is within the bounds of the ArenaModel.
+     *
+     * @param position The position to check
+     * @return true if position is within bounds, otherwise false.
+     */
+    private boolean isValidPosition(Point position) {
+        return position.x >= 0 &&
+                position.y >= 0 &&
+                position.x < this.arenaModel.getArenaTiles().length &&
+                position.y < this.arenaModel.getArenaTiles()[0].length;
     }
 
     private void playerRecievesDamage() {

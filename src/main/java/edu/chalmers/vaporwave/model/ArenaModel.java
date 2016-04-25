@@ -67,13 +67,13 @@ public class ArenaModel {
         setTile(tile, position.x, position.y);
     }
 
+    public StaticTile getArenaTile(Point position) {
+        return this.arenaTiles[position.x][position.y];
+    }
+
     public void removeTile(Point position) throws ArrayIndexOutOfBoundsException {
         setTile(null, position.x, position.y);
     }
-
-//    public ArrayList<Tile> getTiles(int posx, int posy) {
-//        return arena[posx][posy];
-//    }
 
     public void addMovable(Movable movable) {
         arenaMovables.add(movable);
@@ -82,10 +82,6 @@ public class ArenaModel {
     public void removeMovable(Movable movable) {
         arenaMovables.remove(movable);
     }
-
-//    public boolean isEmpty(int posx, int posy) {
-//        return (arena[posx][posy].size() == 0);
-//    }
 
     /**
      * Iterates through our mapMatrix and calls on createObject to create the appropriate object
