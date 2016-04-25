@@ -34,8 +34,8 @@ public class GameCharacter extends Movable {
         // Test settings setup:
         setCanvasPosition(Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5));
         this.speed = 0.8;
-        this.bombRange = 1;
-        this.bombCount = 1;
+        this.bombRange = 2;
+        this.bombCount = 5;
         this.health = 100.0;
 
         // Setup:
@@ -56,7 +56,6 @@ public class GameCharacter extends Movable {
 
     public void move(String key, StaticTile[][] arenaTiles) {
         this.latestArenaTiles = arenaTiles;
-//        if (moveAllowed(key)) {
         if (characterState != CharacterState.WALK || oppositeDirection(key)) {
             switch (key) {
                 case "UP":
@@ -77,11 +76,6 @@ public class GameCharacter extends Movable {
             }
         }
     }
-
-//    private boolean moveAllowed(String key) {
-//
-//        return characterState != CharacterState.WALK || oppositeDirection(key);
-//    }
 
     private boolean oppositeDirection(String key) {
         return (key.equals("UP") && direction == Directions.DOWN)
