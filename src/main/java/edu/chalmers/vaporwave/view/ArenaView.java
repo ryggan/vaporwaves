@@ -226,12 +226,6 @@ public class ArenaView {
     private void renderBlast(BlastSpriteCollection blastSpriteCollection, double timeSinceStart, StaticTile[][] arenaTiles) {
         Point position = blastSpriteCollection.getPosition();
 
-        Map<Directions, Boolean> blastDirections = new HashMap<>();
-        blastDirections.put(Directions.LEFT, true);
-        blastDirections.put(Directions.UP, true);
-        blastDirections.put(Directions.RIGHT, true);
-        blastDirections.put(Directions.DOWN, true);
-
         blastSpriteCollection.getSprite(new Point(position.x, position.y)).render(tileGC, timeSinceStart);
 
         if(!blastSpriteCollection.getBlastHasOccured()) {
@@ -241,7 +235,6 @@ public class ArenaView {
         Set<Point> keys = blastSpriteCollection.getSpriteMap().keySet();
         for (Point key : keys) {
             blastSpriteCollection.getSprite(new Point(key.x, key.y)).render(tileGC, timeSinceStart);
-
         }
     }
 
