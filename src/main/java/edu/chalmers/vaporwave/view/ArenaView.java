@@ -283,8 +283,10 @@ public class ArenaView {
                 currentSprite = sprites.getFlinchSprites();
             } else if (state == CharacterState.SPAWN) {
                 currentSprite = sprites.getSpawnSprites();
+                ((AnimatedSprite)currentSprite[0]).resetLoops();
             } else if (state == CharacterState.DEATH) {
                 currentSprite = sprites.getDeathSprites();
+                ((AnimatedSprite)currentSprite[0]).resetLoops();
             }
 
             int spriteIndex = 0;
