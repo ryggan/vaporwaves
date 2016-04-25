@@ -170,6 +170,8 @@ public class GameController {
                     currentPosition.setLocation(position.x - i, position.y);
                     this.arenaModel.setTile(null, currentPosition);
                     spawnPowerUp(currentPosition);
+                } else if (this.arenaModel.getArenaTiles()[position.x - i][position.y] instanceof IndestructibleWall) {
+                    blastDirections.put(Directions.LEFT, false);
                 } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x - i, position.y))) {
                     playerRecievesDamage();
                 }
@@ -181,6 +183,8 @@ public class GameController {
                     currentPosition.setLocation(position.x, position.y - i);
                     this.arenaModel.setTile(null, currentPosition);
                     spawnPowerUp(currentPosition);
+                } else if (this.arenaModel.getArenaTiles()[position.x][position.y - i] instanceof IndestructibleWall) {
+                    blastDirections.put(Directions.UP, false);
                 } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y - i))) {
                     playerRecievesDamage();
                 }
@@ -192,6 +196,8 @@ public class GameController {
                     currentPosition.setLocation(position.x + i, position.y);
                     this.arenaModel.setTile(null, currentPosition);
                     spawnPowerUp(currentPosition);
+                } else if (this.arenaModel.getArenaTiles()[position.x + i][position.y] instanceof IndestructibleWall) {
+                    blastDirections.put(Directions.RIGHT, false);
                 } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x + i, position.y))) {
                     playerRecievesDamage();
                 }
@@ -203,6 +209,8 @@ public class GameController {
                     currentPosition.setLocation(position.x, position.y + i);
                     this.arenaModel.setTile(null, currentPosition);
                     spawnPowerUp(currentPosition);
+                } else if (this.arenaModel.getArenaTiles()[position.x][position.y + i] instanceof IndestructibleWall) {
+                    blastDirections.put(Directions.DOWN, false);
                 } else if (this.playerCharacter.getGridPosition().equals(new Point(position.x, position.y + i))) {
                     playerRecievesDamage();
                 }
