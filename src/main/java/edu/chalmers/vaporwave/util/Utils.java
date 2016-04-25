@@ -7,9 +7,6 @@ import javafx.scene.image.WritableImage;
 
 import java.awt.*;
 
-/**
- * Created by bob on 2016-04-17.
- */
 public class Utils {
 
     /**
@@ -55,5 +52,32 @@ public class Utils {
 
     public static double gridToCanvasPosition(int gridPosition) {
         return (double)(gridPosition * Constants.DEFAULT_TILE_WIDTH);
+    }
+
+    /**
+     * Returns a Point with an offset in the specified direction
+     *
+     * @param initialPosition The position in the center
+     * @param distance The relative distance from the center point
+     * @param direction Which direction to calculate (left, up, right, down)
+     * @return newPosition The new position
+     */
+    public static Point getRelativePoint(Point initialPosition, int distance, Directions direction) {
+        Point newPosition = new Point(0,0);
+        switch (direction) {
+            case LEFT:
+                newPosition.setLocation(initialPosition.x - distance, initialPosition.y);
+                break;
+            case UP:
+                newPosition.setLocation(initialPosition.x, initialPosition.y - distance);
+                break;
+            case RIGHT:
+                newPosition.setLocation(initialPosition.x + distance, initialPosition.y);
+                break;
+            case DOWN:
+                newPosition.setLocation(initialPosition.x, initialPosition.y + distance);
+                break;
+        }
+        return newPosition;
     }
 }
