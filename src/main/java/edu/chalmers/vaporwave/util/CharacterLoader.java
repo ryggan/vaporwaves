@@ -9,21 +9,18 @@ import org.w3c.dom.NodeList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by andreascarlsson on 2016-04-19.
- */
 public class CharacterLoader {
 
     public static CharacterProperties loadCharacter(NodeList nodeList, String name) {
 
-        Map<CharacterState, CharacterSpriteProperties> spritePropertiesMap = new HashMap<CharacterState, CharacterSpriteProperties>();
+        Map<MovableState, CharacterSpriteProperties> spritePropertiesMap = new HashMap<>();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
 
             Element allCharacterNodes = (Element)nodeList.item(i);
 
             for (int j = 0; j < allCharacterNodes.getElementsByTagName("character").getLength(); j++) {
-                Element singleCharacterNodes = (Element)allCharacterNodes;
+                Element singleCharacterNodes = allCharacterNodes;
                 String currentName = singleCharacterNodes.getElementsByTagName("name").item(j).getTextContent();
                 if (currentName.equals(name)) {
 

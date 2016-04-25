@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.util.CharacterState;
 import edu.chalmers.vaporwave.util.PowerUpState;
 
 import java.util.Map;

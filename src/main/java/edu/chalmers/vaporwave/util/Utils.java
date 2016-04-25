@@ -81,4 +81,27 @@ public class Utils {
         }
         return newPosition;
     }
+
+    public static Direction getDirectionFromString(String direction) {
+        switch(direction) {
+            case "LEFT":
+                return Direction.LEFT;
+            case "UP":
+                return Direction.UP;
+            case "RIGHT":
+                return Direction.RIGHT;
+            case "DOWN":
+                return Direction.DOWN;
+        }
+        return Direction.RIGHT;
+    }
+
+    public static Direction[] getDirectionsAsArray() {
+        Direction[] directions = new Direction[4];
+        directions[0] = Direction.LEFT;
+        directions[1] = Direction.UP;
+        directions[2] = Direction.RIGHT;
+        directions[3] = Direction.DOWN;
+        return directions;
+    }
 }

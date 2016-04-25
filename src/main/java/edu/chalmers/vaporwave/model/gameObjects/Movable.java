@@ -2,17 +2,16 @@ package edu.chalmers.vaporwave.model.gameObjects;
 
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.controller.ListenerController;
-import edu.chalmers.vaporwave.util.CharacterState;
+import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
-import edu.chalmers.vaporwave.view.Sprite;
-import javafx.scene.canvas.GraphicsContext;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
 
 public abstract class Movable {
+
+    private String name;
 
     private double canvasPositionX;
     private double canvasPositionY;
@@ -21,7 +20,7 @@ public abstract class Movable {
     private double speed;
     private boolean moving;
     private Direction direction;
-    private CharacterState characterState;
+    private MovableState movableState;
 
     private int previousGridPositionX;
     private int previousGridPositionY;
@@ -29,31 +28,32 @@ public abstract class Movable {
 
     protected Movable() { }
 
-    public Movable(double canvasPositionX, double canvasPositionY, double speed) {
+    public Movable(String name, double canvasPositionX, double canvasPositionY, double speed) {
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
         this.velocityX = 0;
         this.velocityY = 0;
         this.speed = speed;
         this.moving = false;
+        this.name = name;
 
         this.previousGridPositionX = Utils.canvasToGridPosition(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());
 
         this.moving = false;
 
-        this.characterState = CharacterState.IDLE;
+        this.movableState = MovableState.IDLE;
     }
 
     public void updatePosition() {
         this.canvasPositionX += this.velocityX;
         this.canvasPositionY += this.velocityY;
-        if (characterState == CharacterState.WALK) {
+        if (movableState == MovableState.WALK) {
             stopOnTileIfNeeded();
         }
         moving = (getVelocityX() != 0 || getVelocityY() != 0);
 
-        if (characterState == CharacterState.WALK) {
+        if (movableState == MovableState.WALK) {
             stopOnTileIfNeeded();
         }
 
@@ -61,7 +61,7 @@ public abstract class Movable {
 
     private void stop(int newGridPositionX, int newGridPositionY) {
 
-        characterState = CharacterState.IDLE;
+        movableState = MovableState.IDLE;
         setVelocity(0, 0);
         setCanvasPosition(Utils.gridToCanvasPosition(newGridPositionX), Utils.gridToCanvasPosition(newGridPositionY));
         setPreviousGridPositionX(newGridPositionX);
@@ -69,7 +69,7 @@ public abstract class Movable {
 
         List<String> input = ListenerController.getInstance().getInput();
         if (input.size() > 0 && (input.contains("UP") || input.contains("DOWN") || input.contains("LEFT") || input.contains("RIGHT"))) {
-            move(input.get(input.size()-1), this.latestArenaTiles);
+            move(Utils.getDirectionFromString(input.get(input.size()-1)), this.latestArenaTiles);
         }
     }
 
@@ -109,36 +109,37 @@ public abstract class Movable {
     }
 
     public void death() {
-        if (characterState == CharacterState.IDLE) {
-            characterState = CharacterState.DEATH;
-        }
+//        if (movableState == movableState.IDLE) {
+        this.setMoving(false);
+            movableState = movableState.DEATH;
+//        }
     }
 
     public void spawn() {
-        if (characterState == CharacterState.IDLE) {
-            characterState = CharacterState.SPAWN;
+        if (movableState == movableState.IDLE) {
+            movableState = movableState.SPAWN;
         }
     }
 
-    public void move(String key, StaticTile[][] arenaTiles) {
+    public void move(Direction direction, StaticTile[][] arenaTiles) {
         this.latestArenaTiles = arenaTiles;
-        if (characterState != CharacterState.WALK || oppositeDirection(key)) {
-            switch (key) {
-                case "UP":
+        if (movableState != movableState.WALK || oppositeDirection(direction)) {
+            switch (direction) {
+                case UP:
                     moveUp();
                     break;
-                case "LEFT":
+                case LEFT:
                     moveLeft();
                     break;
-                case "DOWN":
+                case DOWN:
                     moveDown();
                     break;
-                case "RIGHT":
+                case RIGHT:
                     moveRight();
                     break;
             }
             if (getVelocityY() != 0 || getVelocityX() != 0) {
-                characterState = CharacterState.WALK;
+                movableState = movableState.WALK;
             }
         }
     }
@@ -176,11 +177,11 @@ public abstract class Movable {
         return nextTile == null || !(nextTile instanceof Wall) && !(nextTile instanceof Bomb);
     }
 
-    private boolean oppositeDirection(String key) {
-        return (key.equals("UP") && getDirection() == Direction.DOWN)
-                || (key.equals("DOWN") && getDirection() == Direction.UP)
-                || (key.equals("RIGHT") && getDirection() == Direction.LEFT)
-                || (key.equals("LEFT") && getDirection() == Direction.RIGHT);
+    private boolean oppositeDirection(Direction direction) {
+        return (direction.equals(Direction.UP) && getDirection() == Direction.DOWN)
+                || (direction.equals(Direction.DOWN) && getDirection() == Direction.UP)
+                || (direction.equals(Direction.RIGHT) && getDirection() == Direction.LEFT)
+                || (direction.equals(Direction.LEFT) && getDirection() == Direction.RIGHT);
     }
 
 
@@ -200,8 +201,8 @@ public abstract class Movable {
         this.moving = moving;
     }
 
-    public CharacterState getState() {
-        return this.characterState;
+    public MovableState getState() {
+        return this.movableState;
     }
 
     public Point getGridPosition() {
@@ -234,5 +235,9 @@ public abstract class Movable {
     }
     public double getCanvasPositionY() {
         return this.canvasPositionY;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

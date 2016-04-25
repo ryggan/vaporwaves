@@ -13,15 +13,11 @@ import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.image.*;
 import javafx.scene.image.Image;
-import org.w3c.dom.Node;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class ArenaView {
 
@@ -34,6 +30,7 @@ public class ArenaView {
     private Scoreboard scoreboard;
 
     private CharacterSprite[] characterSprites = new CharacterSprite[4];
+    private CharacterSprite enemySprite;
     private Sprite[] bombSprite = new Sprite[4];
 
     private Sprite destructibleWallSprite;
@@ -89,6 +86,9 @@ public class ArenaView {
 //        initCharacterSprites(characterSprites[2]);
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
+
+        enemySprite = new CharacterSprite("ENEMY");
+        initCharacterSprites(enemySprite);
 
         Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
 
@@ -219,10 +219,10 @@ public class ArenaView {
         for (Movable movable : arenaMovables) {
 
             if (movable instanceof GameCharacter) {
-                renderCharacter((GameCharacter)movable, timeSinceStart);
+                renderCharacter(movable, timeSinceStart);
 
             } else if (movable instanceof Enemy) {
-
+                renderCharacter(movable, timeSinceStart);
             }
         }
     }
@@ -270,31 +270,37 @@ public class ArenaView {
         return null;
     }
 
-    public void renderCharacter(GameCharacter character, double timeSinceStart) {
-        CharacterState state = character.getState();
+    public void renderCharacter(Movable character, double timeSinceStart) {
+        MovableState state = character.getState();
         CharacterSprite sprites = null;
-        for (int i = 0; i < 4; i++) {
-            if (characterSprites[i] != null && characterSprites[i].getName().equals(character.getName())) {
-                sprites = characterSprites[i];
+
+        if (character instanceof GameCharacter) {
+            for (int i = 0; i < 4; i++) {
+                if (characterSprites[i] != null && characterSprites[i].getName().equals(character.getName())) {
+                    sprites = characterSprites[i];
+                }
             }
+        } else if (character instanceof Enemy) {
+            sprites = enemySprite;
         }
 
         if (sprites != null) {
             Sprite[] currentSprite = sprites.getIdleSprites(); // Always idle if no other state is active
-            if (state == CharacterState.WALK) {
+            if (state == MovableState.WALK) {
                 currentSprite = sprites.getWalkSprites();
-            } else if (state == CharacterState.FLINCH) {
+            } else if (state == MovableState.FLINCH) {
                 currentSprite = sprites.getFlinchSprites();
-            } else if (state == CharacterState.SPAWN) {
+            } else if (state == MovableState.SPAWN) {
                 currentSprite = sprites.getSpawnSprites();
                 ((AnimatedSprite)currentSprite[0]).resetLoops();
-            } else if (state == CharacterState.DEATH) {
+            } else if (state == MovableState.DEATH) {
                 currentSprite = sprites.getDeathSprites();
                 ((AnimatedSprite)currentSprite[0]).resetLoops();
+                ((AnimatedSprite)currentSprite[0]).setLoops(1);
             }
 
             int spriteIndex = 0;
-            if (state == CharacterState.SPAWN || state == CharacterState.DEATH || character.getDirection() == Direction.DOWN) {
+            if (state == MovableState.SPAWN || state == MovableState.DEATH || character.getDirection() == Direction.DOWN) {
                 spriteIndex = 0;
             } else if (character.getDirection() == Direction.LEFT) {
                 spriteIndex = 1;
@@ -372,7 +378,7 @@ public class ArenaView {
         XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
-        for (CharacterState characterState : Constants.CHARACTER_CHARACTER_STATE) {
+        for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
             CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
             switch (characterState) {
                 case SPAWN:

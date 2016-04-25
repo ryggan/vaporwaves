@@ -24,6 +24,10 @@ public class GameController {
 
     private GameCharacter playerCharacter;
 
+    private Set<Enemy> enemies;
+
+    private int updatedEnemyDirection;
+
     public GameController(Group root) {
 
         // Initiates view
@@ -40,16 +44,6 @@ public class GameController {
 
         GameEventBus.getInstance().register(this);
 
-
-        // Setting up background
-
-
-
-        // Setting up tiles
-
-
-
-        // TEST TILES
         playerCharacter = new GameCharacter("ALYSSA");
 
         updateStats();
@@ -60,25 +54,48 @@ public class GameController {
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
+
+
+        this.enemies = new HashSet<>();
+        Enemy enemyOne = new Enemy("Enemy", Utils.gridToCanvasPosition(9), Utils.gridToCanvasPosition(8), 0.2, new StupidAI());
+        Enemy enemyTwo = new Enemy("Enemy", Utils.gridToCanvasPosition(0), Utils.gridToCanvasPosition(4), 0.2, new StupidAI());
+        Enemy enemyThree = new Enemy("Enemy", Utils.gridToCanvasPosition(7), Utils.gridToCanvasPosition(0), 0.2, new StupidAI());
+        Enemy enemyFour = new Enemy("Enemy", Utils.gridToCanvasPosition(4), Utils.gridToCanvasPosition(8), 0.2, new StupidAI());
+        Enemy enemyFive = new Enemy("Enemy", Utils.gridToCanvasPosition(15), Utils.gridToCanvasPosition(10), 0.2, new StupidAI());
+        enemies.add(enemyOne);
+        enemies.add(enemyTwo);
+        enemies.add(enemyThree);
+        enemies.add(enemyFour);
+        enemies.add(enemyFive);
+
+
+
+        for(Enemy enemy : enemies) {
+            try {
+                arenaModel.addMovable(enemy);
+            } catch(ArrayIndexOutOfBoundsException e) {
+                System.out.println("Tile out of bounds!");
+            }
+        }
+
+
     }
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        // Game logic
-
-        // Input handling:
-
-
-//        for (Point position : bombPositions) {
-//            this.arenaModel.removeTile(position);
-//        }
-//        bombPositions.clear();
-
         List<String> input = ListenerController.getInstance().getInput();
 
 
         List<String> pressed = ListenerController.getInstance().getPressed();
+
+        if (this.updatedEnemyDirection == 15) {
+            for (Enemy enemy : enemies) {
+                enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), playerCharacter.getGridPosition(), this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
+            }
+            updatedEnemyDirection = 0;
+        }
+        updatedEnemyDirection += 1;
 
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);
@@ -87,7 +104,7 @@ public class GameController {
                 case "LEFT":
                 case "DOWN":
                 case "RIGHT":
-                    playerCharacter.move(key, arenaModel.getArenaTiles());
+                    playerCharacter.move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
                 case "ENTER":
                     playerCharacter.spawn();
@@ -162,6 +179,7 @@ public class GameController {
             playerRecievesDamage();
         }
 
+        Set<Enemy> deadEnemies = new HashSet<>();
         for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
             for (Direction direction : blastDirections.keySet()) {
                 Point currentPosition = Utils.getRelativePoint(blastTileInitDoneEvent.getPosition(), i, direction);
@@ -176,9 +194,20 @@ public class GameController {
                         ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
                     } else if (this.playerCharacter.getGridPosition().equals(currentPosition)) {
                         playerRecievesDamage();
+                    } else {
+                        for (Enemy enemy : this.enemies) {
+                            if (enemy.getGridPosition().equals(currentPosition)) {
+                                enemy.death();
+                                deadEnemies.add(enemy);
+                            }
+                        }
                     }
                 }
             }
+        }
+        for (Enemy enemy : deadEnemies) {
+            this.enemies.remove(enemy);
+            System.out.println(enemies.size());
         }
     }
 

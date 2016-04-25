@@ -81,4 +81,84 @@
     </character>
 
 
+    <character>
+        <name>ENEMY</name>
+
+        <maxHealth>100</maxHealth>
+        <speed>10.0</speed>
+        <bombRange>3</bombRange>
+        <bombCount>1</bombCount>
+
+        <walk>
+            <spritesheet>images/spritesheet-enemy-walkidleflinch-48x48.png</spritesheet>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
+            <frames>8</frames>
+            <duration>0.1</duration>
+            <firstFrameX>0</firstFrameX>
+            <firstFrameY>0</firstFrameY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
+        </walk>
+
+        <idle>
+            <spritesheet>images/spritesheet-enemy-walkidleflinch-48x48.png</spritesheet>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
+            <frames>1</frames>
+            <duration>0.1</duration>
+            <firstFrameX>0</firstFrameX>
+            <firstFrameY>4</firstFrameY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
+        </idle>
+
+        <flinch>
+            <spritesheet>images/spritesheet-enemy-walkidleflinch-48x48.png</spritesheet>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
+            <frames>1</frames>
+            <duration>0.1</duration>
+            <firstFrameX>4</firstFrameX>
+            <firstFrameY>4</firstFrameY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
+        </flinch>
+
+        <death>
+            <spritesheet>images/spritesheet-enemy-death-56x56.png</spritesheet>
+            <dimensionX>56</dimensionX>
+            <dimensionY>56</dimensionY>
+            <frames>28</frames>
+            <duration>0.1</duration>
+            <firstFrameX>0</firstFrameX>
+            <firstFrameY>0</firstFrameY>
+            <offsetX>20</offsetX>
+            <offsetY>40</offsetY>
+        </death>
+
+        <spawn>
+            <spritesheet>images/spritesheet-enemy-respawn-48x128.png</spritesheet>
+            <dimensionX>48</dimensionX>
+            <dimensionY>128</dimensionY>
+            <frames>27</frames>
+            <duration>0.1</duration>
+            <firstFrameX>0</firstFrameX>
+            <firstFrameY>0</firstFrameY>
+            <offsetX>16</offsetX>
+            <offsetY>112</offsetY>
+        </spawn>
+
+        <menu>
+            <!---
+                frameselected
+                frame
+                characterFrameView
+                characterName
+                selectedCharacterView
+            -->
+        </menu>
+    </character>
+
+
 </gameCharacters>

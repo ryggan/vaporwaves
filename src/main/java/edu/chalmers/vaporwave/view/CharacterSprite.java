@@ -1,10 +1,5 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.util.CharacterState;
-
-/**
- * Created by bob on 2016-04-21.
- */
 public class CharacterSprite {
 
     private String name;
@@ -27,9 +22,9 @@ public class CharacterSprite {
         return name;
     }
 
-    public void setSpawnSprite(Sprite sprite) {
-        ((AnimatedSprite)sprite).setStartFromBeginning(true);
-        ((AnimatedSprite)sprite).setLoops(1);
+    public void setSpawnSprite(AnimatedSprite sprite) {
+        sprite.setStartFromBeginning(true);
+        sprite.setLoops(1);
         spawnSprite[0] = sprite;
     }
 

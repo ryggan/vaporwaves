@@ -12,21 +12,18 @@ import java.util.List;
 
 public class GameCharacter extends Movable {
 
-    private String name;
-
     private double maxHealth;
     private double health;
     private int bombRange;
     private int bombCount;
 
     public GameCharacter(String name) {
-        super(Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5), 0.8);
+        super(name, Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5), 0.8);
 
         this.bombRange = 2;
         this.bombCount = 5;
         this.maxHealth = 100.0;
         this.health = 100.0;
-        this.name = name;
     }
 
     public void placeBomb() {
@@ -37,10 +34,6 @@ public class GameCharacter extends Movable {
                     );
             this.bombCount -= 1;
         }
-    }
-
-    public String getName() {
-        return this.name;
     }
 
 
