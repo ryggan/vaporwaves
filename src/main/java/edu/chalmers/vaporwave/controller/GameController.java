@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
+import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
@@ -151,18 +152,18 @@ public class GameController {
      */
     @Subscribe
     public void blastTileInitDone(BlastTileInitDoneEvent blastTileInitDoneEvent) {
-        Map<Directions, Boolean> blastDirections = new HashMap<>();
-        blastDirections.put(Directions.LEFT, true);
-        blastDirections.put(Directions.UP, true);
-        blastDirections.put(Directions.RIGHT, true);
-        blastDirections.put(Directions.DOWN, true);
+        Map<Direction, Boolean> blastDirections = new HashMap<>();
+        blastDirections.put(Direction.LEFT, true);
+        blastDirections.put(Direction.UP, true);
+        blastDirections.put(Direction.RIGHT, true);
+        blastDirections.put(Direction.DOWN, true);
 
         if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
             playerRecievesDamage();
         }
 
         for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
-            for (Directions direction : blastDirections.keySet()) {
+            for (Direction direction : blastDirections.keySet()) {
                 Point currentPosition = Utils.getRelativePoint(blastTileInitDoneEvent.getPosition(), i, direction);
                 if (isValidPosition(currentPosition) && blastDirections.get(direction)) {
                     if (this.arenaModel.getArenaTile(currentPosition) instanceof DestructibleWall) {

@@ -48,6 +48,7 @@ public class ArenaView {
 
     private Label fps;
     private Label stats;
+    private int updateCounter;
     
     public ArenaView(Group root) {
         this.root = root;
@@ -184,13 +185,15 @@ public class ArenaView {
         tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
 
         // Method for printing current fps count.
-        // Updates every 10 frame approx
-        if((int)(timeSinceLastCall * 1000) - 10 == 7){
+        // Updates every 10 frame
+        if (updateCounter == 10){
+            updateCounter = 0;
             fps.setText("FPS: " + (int) (1 / timeSinceLastCall));
             fps.setLayoutX(648);
             this.root.getChildren().remove(fps);
             this.root.getChildren().add(fps);
         }
+        updateCounter += 1;
 
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {

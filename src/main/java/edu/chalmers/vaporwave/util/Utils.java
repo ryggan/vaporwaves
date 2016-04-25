@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.util;
 
+import com.sun.javafx.scene.traversal.Direction;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
@@ -62,7 +63,7 @@ public class Utils {
      * @param direction Which direction to calculate (left, up, right, down)
      * @return newPosition The new position
      */
-    public static Point getRelativePoint(Point initialPosition, int distance, Directions direction) {
+    public static Point getRelativePoint(Point initialPosition, int distance, Direction direction) {
         Point newPosition = new Point(0,0);
         switch (direction) {
             case LEFT:
