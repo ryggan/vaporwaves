@@ -65,7 +65,7 @@ public class BlastSpriteCollection {
         for (int i = 1; i <= range; i++) {
             for (Direction direction : this.blastDirections.keySet()) {
                 Point currentPosition = new Point(Utils.getRelativePoint(this.getPosition(), i, direction));
-                if(position.x - i >= 0 && position.y - i >= 0) {
+                if(!(position.x - i < 0 && direction.equals(Direction.LEFT) && !(position.y - i < 0 && direction.equals(Direction.UP)))) {
                     if(i == range) {
                         blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{2, spriteBlasts.get(direction)}, new double[]{1, 1});
                     } else {
