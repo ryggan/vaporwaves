@@ -14,7 +14,7 @@ public class NewGameEvent {
     private int timeLimit;
 
     public NewGameEvent() {
-        this.enabledPowerUps = new HashSet<>();
+//        this.enabledPowerUps = new HashSet<>();
     }
 
     public void setArenaMap(ArenaMap arenaMap) {

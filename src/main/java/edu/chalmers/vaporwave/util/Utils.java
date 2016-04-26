@@ -93,7 +93,7 @@ public class Utils {
             case "DOWN":
                 return Direction.DOWN;
         }
-        return Direction.RIGHT;
+        return null;
     }
 
     public static Direction[] getDirectionsAsArray() {

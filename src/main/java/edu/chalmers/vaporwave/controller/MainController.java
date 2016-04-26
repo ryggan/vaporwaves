@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.util.LongValue;
@@ -19,6 +20,7 @@ public class MainController {
 
     /**
      * Constructor, that sets up the ongoing main loop.
+     *
      * @param root
      */
     public MainController(Group root) {
@@ -56,7 +58,7 @@ public class MainController {
 
                 // Controller calls
 
-                if (inGame) {
+                if (inGame && gameController != null) {
                     gameController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 } else {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
@@ -80,16 +82,22 @@ public class MainController {
 
         }.start();
 
-//        newGame(new NewGameEvent());
     }
 
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
+        this.root.getChildren().clear();
         this.inGame = true;
         this.menuController = null;
         this.gameController = new GameController(this.root);
+    }
 
-
+    @Subscribe
+    public void exitGame(ExitGameEvent exitGameEvent) {
+        this.root.getChildren().clear();
+        this.inGame = true;
+        this.gameController = null;
+        this.menuController = new MenuController(this.root);
     }
 }

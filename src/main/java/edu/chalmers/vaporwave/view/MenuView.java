@@ -1,67 +1,68 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.model.menu.MenuState;
+import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.model.menu.MenuButtonState;
+import edu.chalmers.vaporwave.model.menu.MenuCategory;
 import edu.chalmers.vaporwave.util.Constants;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 
-
-import java.lang.reflect.Array;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import static java.awt.event.KeyEvent.*;
+import java.util.Map;
 
 public class MenuView {
 
     private Canvas backgroundCanvas;
-    private Canvas tileCanvas;
     private GraphicsContext backgroundGC;
-    private GraphicsContext tileGC;
+    private MenuCategory activeMenuCategory;
+    private int activeMenuButton;
 
-    private MenuState menuState;
+    private Map<MenuCategory, List<MenuButtonView>> menuCategoryMap;
+
     private Group root;
 
     public MenuView(Group root) {
         this.root = root;
-    }
+        backgroundCanvas = new Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+        backgroundGC = backgroundCanvas.getGraphicsContext2D();
+        Image backgroundImage = new Image("images/menu-background.jpg");
 
-    private void createBackground(GraphicsContext backgroundGC) {
+        this.root.getChildren().add(new ImageView(backgroundImage));
+        this.root.getChildren().add(backgroundCanvas);
 
-        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
-        arenaBackgroundSprite.setPosition(0, 0);
-        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
-        arenaBackgroundSprite.render(backgroundGC, -1);
+        this.activeMenuCategory = MenuCategory.START;
+        this.activeMenuButton = 0;
 
-    }
+        menuCategoryMap = new HashMap<>();
 
-    public void setMenuState(MenuState menuState){
-        this.menuState=menuState;
-        for(int i=1; i<menuState.getButtonList().length-1; i++) {
-            root.getChildren().add(menuState.getButtonList()[i].getUnselected());
+        List<MenuButtonView> menuButtonViewList = new ArrayList<>();
+        switch (this.activeMenuCategory) {
+            case START:
+                menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_start_menu_draft.png"), 365, 67, 0, new Point(640, 200)));
+                menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_start_menu_draft.png"), 365, 67, 1, new Point(640, 280)));
+                this.menuCategoryMap.put(activeMenuCategory, menuButtonViewList);
+                break;
         }
-        root.getChildren().add(menuState.getButtonList()[0].getSelected());
 
     }
 
-    public void update(String key){
-        if(key=="UP") {
-            root.getChildren().remove(menuState.getLastSelectedButton().getSelected());
-            root.getChildren().add(menuState.getLastSelectedButton().getUnselected());
-            root.getChildren().remove(menuState.getSelectedButton().getUnselected());
-            root.getChildren().add(menuState.getSelectedButton().getSelected());
-        } else if(key=="DOWN") {
-            root.getChildren().remove(menuState.getLastSelectedButton().getSelected());
-            root.getChildren().add(menuState.getLastSelectedButton().getUnselected());
-            root.getChildren().remove(menuState.getSelectedButton().getUnselected());
-            root.getChildren().add(menuState.getSelectedButton().getSelected());
+    public void updateView(int selected) {
+        System.out.println(selected);
+        this.activeMenuButton = selected;
+
+        for (int i = 0; i < menuCategoryMap.get(activeMenuCategory).size(); i++) {
+            if (activeMenuButton == i) {
+                menuCategoryMap.get(activeMenuCategory).get(i).render(backgroundGC, MenuButtonState.SELECTED);
+            } else {
+                menuCategoryMap.get(activeMenuCategory).get(i).render(backgroundGC, MenuButtonState.UNSELECTED);
+            }
         }
 
     }
