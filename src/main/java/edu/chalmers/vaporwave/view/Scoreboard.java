@@ -16,9 +16,6 @@ import javafx.scene.shape.Rectangle;
 import javax.swing.text.Position;
 import java.util.ArrayList;
 
-/**
- * Created by bob on 2016-04-19.
- */
 public class Scoreboard {
     private Player localPlayer;
     private Sprite scoreboardBackground;

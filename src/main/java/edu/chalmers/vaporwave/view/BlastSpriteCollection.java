@@ -53,7 +53,6 @@ public class BlastSpriteCollection {
             this.destructibleWallDestroyedSprites.put(direction, destructibleWallDestroyedSprite);
         }
 
-
         spriteMap.put(position, blastSprite);
 
         Map<Direction, Integer> spriteBlasts = new HashMap<>(4);
@@ -87,12 +86,6 @@ public class BlastSpriteCollection {
 
     public void initBlast(StaticTile[][] arenaTiles) {
         blastHasOccured = true;
-//        for (int i = 0; i < arenaTiles.length; i++) {
-//            this.spriteMap.remove(new Point(i,0));
-//            if (this.spriteMap.get(new Point(i,0)) != null) {
-//                System.out.println("Tar bort");
-//            }
-//        }
 
         for (int i = 1; i <= range; i++) {
             for (Direction direction : this.blastDirections.keySet()) {
@@ -114,6 +107,7 @@ public class BlastSpriteCollection {
             }
         }
 
+        // Posting to GameEventBus
         GameEventBus.getInstance().post(new BlastTileInitDoneEvent(position, range));
     }
 
