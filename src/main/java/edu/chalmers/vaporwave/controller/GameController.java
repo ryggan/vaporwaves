@@ -61,12 +61,12 @@ public class GameController {
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
 
-       //Enemy enemyOne = new Enemy("Enemy", Utils.gridToCanvasPosition(5), Utils.gridToCanvasPosition(5), 0.6, new SemiStupidAI(gameCharacters));
+        Enemy enemyOne = new Enemy("Enemy", Utils.gridToCanvasPosition(5), Utils.gridToCanvasPosition(5), 0.6, new SemiStupidAI(gameCharacters));
         Enemy enemyTwo = new Enemy("Enemy", Utils.gridToCanvasPosition(0), Utils.gridToCanvasPosition(4), 0.2, new StupidAI());
         Enemy enemyThree = new Enemy("Enemy", Utils.gridToCanvasPosition(7), Utils.gridToCanvasPosition(0), 0.2, new StupidAI());
         Enemy enemyFour = new Enemy("Enemy", Utils.gridToCanvasPosition(4), Utils.gridToCanvasPosition(8), 0.2, new StupidAI());
         Enemy enemyFive = new Enemy("Enemy", Utils.gridToCanvasPosition(15), Utils.gridToCanvasPosition(10), 0.2, new StupidAI());
-       //enemies.add(enemyOne);
+        enemies.add(enemyOne);
         enemies.add(enemyTwo);
         enemies.add(enemyThree);
         enemies.add(enemyFour);
