@@ -6,16 +6,12 @@ import edu.chalmers.vaporwave.view.Sprite;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by FEngelbrektsson on 15/04/16.
- */
 public class Bomb extends Explosive {
 
     private int delay;
-    //timer
 
     /**
-     * Constructor for Bomb, takes GameCharacter, a range and a delay
+     * Constructor for Bomb, takes GameCharacter, a range (tiles) and a delay (ms)
      *
      * @param owner
      * @param range
