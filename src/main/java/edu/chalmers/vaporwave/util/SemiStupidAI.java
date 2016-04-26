@@ -48,7 +48,6 @@ public class SemiStupidAI implements AI {
         for (int i = 0; i < 4; i++) {
             Point positionToCheck = Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]);
             int heuristicValue = aiHeuristics.getAIHeuristics()[positionToCheck.x][positionToCheck.y];
-            System.out.println("x value: " + aiHeuristics.getAIHeuristics()[positionToCheck.x][positionToCheck.y]);
             aiHeuristics.setHeuristicValue(enemyPosition, 1);
             if (heuristicValue > nextDirection.value) {
                 nextDirection.direction = Utils.getDirectionsAsArray()[i];

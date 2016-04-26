@@ -76,8 +76,6 @@ public class AIHeuristics {
     }
 
     public AIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters) {
-        System.out.println(arenaTiles.length);
-        System.out.println(arenaTiles[0].length);
         this.arenaTiles = arenaTiles;
         this.gameCharacters = gameCharacters;
         heuristicMatrix = new int[this.arenaTiles.length][this.arenaTiles[0].length];

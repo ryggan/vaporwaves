@@ -30,7 +30,16 @@ public class GameController {
 
     private int updatedEnemyDirection;
 
+    private List<PowerUpState> enabledPowerUpList;
+
     public GameController(Group root) {
+        //Change this to proper values according to player preferences later, dummy values meanwhile
+        enabledPowerUpList = new ArrayList<>();
+        enabledPowerUpList.add(PowerUpState.BOMB_COUNT);
+        enabledPowerUpList.add(PowerUpState.RANGE);
+        enabledPowerUpList.add(PowerUpState.HEALTH);
+        enabledPowerUpList.add(PowerUpState.SPEED);
+
 
         // Initiates view
 
@@ -144,17 +153,22 @@ public class GameController {
         }
 
         if (this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y]
-                instanceof TestPowerUp) {
-            TestPowerUp powerUp = (TestPowerUp)this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y];
+                instanceof StatPowerUp) {
+            StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y];
             this.arenaModel.setTile(null, playerCharacter.getGridPosition());
-
-            if(powerUp.getPowerUpState().equals(PowerUpState.SPEED)) {
+            /**
+             * quickfix since health is bugging
+             */
+            if(powerUp.getPowerUpState() != null) {
+                playerWalksOnPowerUp(playerCharacter, powerUp.getPowerUpState());
+            }
+        /*    if(powerUp.getPowerUpState().equals(PowerUpState.SPEED)) {
                 this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() + 0.1);
             } else if(powerUp.getPowerUpState().equals(PowerUpState.BOMB_COUNT)) {
                 this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
             } else if(powerUp.getPowerUpState().equals(PowerUpState.RANGE)) {
                 this.playerCharacter.setBombRange(this.playerCharacter.getBombRange() + 1);
-            }
+            }*/
 
             updateStats();
         }
@@ -291,13 +305,16 @@ public class GameController {
 
     private void spawnPowerUp(Point position) {
         Random randomGenerator = new Random();
-        if (randomGenerator.nextInt(10) < 2) {
+        if(randomGenerator.nextInt(4) < 1) {
+            this.arenaModel.setTile(new StatPowerUp(enabledPowerUpList), position);
+        }
+       /* if (randomGenerator.nextInt(10) < 2) {
             this.arenaModel.setTile(new TestPowerUp(PowerUpState.RANGE), position);
         } else if (randomGenerator.nextInt(10) < 2) {
             this.arenaModel.setTile(new TestPowerUp(PowerUpState.BOMB_COUNT), position);
         } else if (randomGenerator.nextInt(10) < 2) {
             this.arenaModel.setTile(new TestPowerUp(PowerUpState.SPEED), position);
-        }
+        }*/
     }
 
     /**
