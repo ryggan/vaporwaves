@@ -3,9 +3,6 @@ package edu.chalmers.vaporwave.model.menu;
 import edu.chalmers.vaporwave.view.GameMenuButton;
 import javafx.scene.control.MenuButton;
 
-/**
- * Created by bob on 2016-04-15.
- */
 public abstract class MenuState {
 
     GameMenuButton[] buttonList;

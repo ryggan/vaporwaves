@@ -14,42 +14,33 @@ public class MenuController {
 
     private MenuView menuView;
     private MenuState menuState;
-
-    private boolean upKeyPressed = false;
-    private boolean downKeyPressed = false;
+    private Group root;
 
     public MenuController(Group root) {
         menuView = new MenuView(root);
+        this.root = root;
         menuState=StartMenu.getInstance();
         menuView.setMenuState(menuState);
 
-        GameEventBus.getInstance().post(new NewGameEvent());
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        List<String> input = ListenerController.getInstance().getInput();
+        if (ListenerController.getInstance().getPressed().contains("UP")) {
+            menuState.changeSelected("UP");
+            menuView.update("UP");
+        } else if (ListenerController.getInstance().getPressed().contains("DOWN")) {
+            menuState.changeSelected("DOWN");
+            menuView.update("DOWN");
+        } else if (ListenerController.getInstance().getPressed().contains("SPACE")) {
+            removeMenu();
+            GameEventBus.getInstance().post(new NewGameEvent());
+        }
 
+    }
 
-            if (input.contains("UP") && !upKeyPressed) {
-                upKeyPressed = true;
-                menuState.changeSelected("UP");
-                menuView.update("UP");
-            } else if (input.contains("DOWN") && !downKeyPressed) {
-                downKeyPressed = true;
-                menuState.changeSelected("DOWN");
-                menuView.update("DOWN");
-            }
-
-            if (!input.contains("UP")) {
-                upKeyPressed = false;
-            }
-
-            if (!input.contains("DOWN")) {
-                downKeyPressed = false;
-            }
-
-
+    public void removeMenu() {
+        this.root.getChildren().clear();
 
     }
 

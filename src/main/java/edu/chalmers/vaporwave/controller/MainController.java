@@ -31,7 +31,7 @@ public class MainController {
         this.root = root;
         // Initiating variables and controllers
 
-        this.inGame = true;
+        this.inGame = false;
 
 
         this.menuController = new MenuController(root);
@@ -79,11 +79,15 @@ public class MainController {
             }
 
         }.start();
+
+        newGame(new NewGameEvent());
     }
 
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
+        this.inGame = true;
+        this.menuController = null;
         this.gameController = new GameController(this.root);
 
 

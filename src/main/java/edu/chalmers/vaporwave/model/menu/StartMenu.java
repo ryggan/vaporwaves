@@ -6,9 +6,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import sun.management.GarbageCollectionNotifInfoCompositeData;
 
-/**
- * Created by bob on 2016-04-15.
- */
 public class StartMenu extends MenuState {
 
     GameMenuButton startGameButton;
