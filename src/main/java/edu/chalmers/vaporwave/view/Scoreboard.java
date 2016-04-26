@@ -32,15 +32,16 @@ public class Scoreboard {
     private static final double ELEMENT_SIZE = 100;
     private static final double GAP = ELEMENT_SIZE / 10;
 
-    private static double xoffset = Math.floor((Constants.WINDOW_WIDTH - Constants.GAME_WIDTH) / 2);
-    private static double yoffset = Math.floor((Constants.WINDOW_HEIGHT - Constants.GAME_HEIGHT) / 2);
+    private static double xoffset = Math.floor((Constants.WINDOW_WIDTH - (Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE) / 2));
+    private static double yoffset = Math.floor((Constants.WINDOW_HEIGHT - (Constants.DEFAULT_TILE_HEIGHT * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE) / 2));
 
     //For testing purposes
     public Scoreboard(Group root) {
         this.root = root;
         //fix filepath after creating image
         scoreboardBackground = new Sprite("images/scoreboardBackground.png");
-        scoreboard = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        scoreboard = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
+                Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
         scoreboardGC = scoreboard.getGraphicsContext2D();
         scoreboard.setLayoutX(xoffset);
         scoreboard.setLayoutY(yoffset);
