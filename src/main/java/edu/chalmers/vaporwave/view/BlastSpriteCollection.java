@@ -73,7 +73,6 @@ public class BlastSpriteCollection {
                     }
                     blastSprite.setLoops(1);
                     blastSprite.setStartFromBeginning(true);
-                    System.out.println(currentPosition.y > 0);
                     if (currentPosition.x >= 0 &&
                             currentPosition.y >= 0 &&
                             currentPosition.x < Constants.DEFAULT_GRID_WIDTH &&
