@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
+import com.sun.tools.internal.jxc.ap.Const;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
@@ -60,13 +61,13 @@ public class ArenaView {
 
         // Setting up area to draw graphics
 
-        backgroundCanvas = new Canvas(Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE));
         root.getChildren().add(backgroundCanvas);
-        tileCanvas = new Canvas(Constants.GAME_WIDTH, (Constants.GAME_HEIGHT));
+        tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + (Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE)));
         root.getChildren().add(tileCanvas);
 
 
-        double xoffset = Math.floor((Constants.WINDOW_WIDTH - Constants.GAME_WIDTH) / 2);
+        double xoffset = Math.floor((Constants.WINDOW_WIDTH - Constants.GAME_WIDTH - (Constants.DEFAULT_TILE_WIDTH * 2)) / 2);
         double yoffset = Math.floor((Constants.WINDOW_HEIGHT - Constants.GAME_HEIGHT) / 2);
         tileCanvas.setLayoutX(xoffset);
         tileCanvas.setLayoutY(yoffset);
@@ -122,8 +123,8 @@ public class ArenaView {
 
 //        createBackground(backgroundGC);
 
-        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-02.png");
-        arenaBackgroundSprite.setPosition(0, 0);
+        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-03.png");
+        arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH, Constants.DEFAULT_TILE_HEIGHT);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
 
@@ -132,7 +133,7 @@ public class ArenaView {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null && arenaTiles[i][j] instanceof IndestructibleWall) {
                     Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
-                    tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
+                    tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH);
                     tileSprite.render(backgroundGC, -1);
                 }
             }
@@ -164,8 +165,8 @@ public class ArenaView {
         int printHealth = (int)health;
         int printSpeed = (int)(speed * 100);
         stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
-        stats.setLayoutX(610);
-        stats.setLayoutY(50);
+        stats.setLayoutX(920);
+        stats.setLayoutY(152);
         this.root.getChildren().remove(stats);
         this.root.getChildren().add(stats);
     }
@@ -183,14 +184,14 @@ public class ArenaView {
 
         // Rendering:
 
-        tileGC.clearRect(0, 0, Constants.GAME_WIDTH, Constants.GAME_HEIGHT);
+        tileGC.clearRect(0, 0, Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), Constants.GAME_HEIGHT + (Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE));
 
         // Method for printing current fps count.
         // Updates every 10 frame
         if (updateCounter == 10){
             updateCounter = 0;
             fps.setText("FPS: " + (int) (1 / timeSinceLastCall));
-            fps.setLayoutX(648);
+            fps.setLayoutX(1029);
             this.root.getChildren().remove(fps);
             this.root.getChildren().add(fps);
         }
@@ -201,7 +202,7 @@ public class ArenaView {
                 if (arenaTiles[i][j] != null && !(arenaTiles[i][j] instanceof IndestructibleWall)) {
                     Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
                     if (tileSprite != null) {
-                        tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH, j * Constants.DEFAULT_TILE_WIDTH);
+                        tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH);
                         tileSprite.render(tileGC, timeSinceStart);
                     }
                 }
@@ -228,9 +229,6 @@ public class ArenaView {
     }
 
     private void renderBlast(BlastSpriteCollection blastSpriteCollection, double timeSinceStart, StaticTile[][] arenaTiles) {
-        Point position = blastSpriteCollection.getPosition();
-
-        blastSpriteCollection.getSprite(new Point(position.x, position.y)).render(tileGC, timeSinceStart);
 
         if(!blastSpriteCollection.getBlastHasOccured()) {
             blastSpriteCollection.initBlast(arenaTiles);
@@ -311,7 +309,7 @@ public class ArenaView {
             }
 
             Sprite actualSprite = currentSprite[spriteIndex];
-            actualSprite.setPosition(character.getCanvasPositionX(), character.getCanvasPositionY());
+            actualSprite.setPosition(character.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH, character.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT);
             actualSprite.render(tileGC, timeSinceStart);
         }
     }

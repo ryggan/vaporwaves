@@ -36,12 +36,12 @@ public class BlastSpriteCollection {
         this.blastDirections.put(Direction.DOWN, true);
         this.blastHasOccured = false;
 
-        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18.png");
+        Image blastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png");
 
         AnimatedSprite blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{2, 4}, new double[]{1, 1});
         blastSprite.setLoops(1);
         blastSprite.setStartFromBeginning(true);
-        blastSprite.setPosition(position.x * Constants.DEFAULT_TILE_WIDTH, position.y * Constants.DEFAULT_TILE_WIDTH);
+        blastSprite.setPosition((position.x+1) * Constants.DEFAULT_TILE_WIDTH, (position.y+1) * Constants.DEFAULT_TILE_WIDTH);
 
         Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
 
@@ -73,7 +73,7 @@ public class BlastSpriteCollection {
                     }
                     blastSprite.setLoops(1);
                     blastSprite.setStartFromBeginning(true);
-                    blastSprite.setPosition(currentPosition.x * Constants.DEFAULT_TILE_WIDTH, currentPosition.y * Constants.DEFAULT_TILE_WIDTH);
+                    blastSprite.setPosition((currentPosition.x+1) * Constants.DEFAULT_TILE_WIDTH, (currentPosition.y+1) * Constants.DEFAULT_TILE_WIDTH);
                     spriteMap.put(currentPosition, blastSprite);
                 }
             }
@@ -82,6 +82,12 @@ public class BlastSpriteCollection {
 
     public void initBlast(StaticTile[][] arenaTiles) {
         blastHasOccured = true;
+//        for (int i = 0; i < arenaTiles.length; i++) {
+//            this.spriteMap.remove(new Point(i,0));
+//            if (this.spriteMap.get(new Point(i,0)) != null) {
+//                System.out.println("Tar bort");
+//            }
+//        }
 
         for (int i = 1; i <= range; i++) {
             for (Direction direction : this.blastDirections.keySet()) {
@@ -91,7 +97,7 @@ public class BlastSpriteCollection {
                     if (this.blastDirections.get(direction)) {
                         this.blastDirections.put(direction, false);
                         if (arenaTiles[currentPosition.x][currentPosition.y] instanceof DestructibleWall) {
-                            destructibleWallDestroyedSprites.get(direction).setPosition((currentPosition.x) * Constants.DEFAULT_TILE_WIDTH, (currentPosition.y) * Constants.DEFAULT_TILE_WIDTH);
+                            destructibleWallDestroyedSprites.get(direction).setPosition((currentPosition.x+1) * Constants.DEFAULT_TILE_WIDTH, (currentPosition.y+1) * Constants.DEFAULT_TILE_WIDTH);
                             this.spriteMap.put(currentPosition, this.destructibleWallDestroyedSprites.get(direction));
                         } else {
                             this.spriteMap.remove(currentPosition);

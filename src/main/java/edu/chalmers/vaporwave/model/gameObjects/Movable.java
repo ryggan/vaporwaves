@@ -111,7 +111,7 @@ public abstract class Movable {
     public void death() {
 //        if (movableState == movableState.IDLE) {
         this.setMoving(false);
-            movableState = movableState.DEATH;
+        movableState = movableState.DEATH;
 //        }
     }
 

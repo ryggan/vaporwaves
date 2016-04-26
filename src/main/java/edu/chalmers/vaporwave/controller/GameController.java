@@ -25,6 +25,8 @@ public class GameController {
     private GameCharacter playerCharacter;
 
     private Set<Enemy> enemies;
+    private Set<Enemy> deadEnemies;
+    private int deadEnemiesAnimation = 0;
 
     private int updatedEnemyDirection;
 
@@ -48,7 +50,6 @@ public class GameController {
 
         updateStats();
 
-
         try {
             arenaModel.addMovable(playerCharacter);
         } catch(ArrayIndexOutOfBoundsException e) {
@@ -57,6 +58,7 @@ public class GameController {
 
 
         this.enemies = new HashSet<>();
+        this.deadEnemies = new HashSet<>();
 
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
@@ -88,8 +90,6 @@ public class GameController {
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         List<String> input = ListenerController.getInstance().getInput();
-
-
         List<String> pressed = ListenerController.getInstance().getPressed();
 
         if (this.updatedEnemyDirection == 15) {
@@ -148,6 +148,21 @@ public class GameController {
             updateStats();
         }
 
+        if (deadEnemies.size() > 0) {
+
+            if (deadEnemiesAnimation == 0) {
+                for (Enemy enemy : deadEnemies) {
+                    this.enemies.remove(enemy);
+                    this.arenaModel.removeMovable(enemy);
+                }
+                deadEnemies.clear();
+                deadEnemiesAnimation = 0;
+            } else {
+                deadEnemiesAnimation += 1;
+            }
+
+        }
+
         // Calls view to update graphics
 
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);
@@ -182,7 +197,6 @@ public class GameController {
             playerRecievesDamage();
         }
 
-        Set<Enemy> deadEnemies = new HashSet<>();
         for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
             for (Direction direction : blastDirections.keySet()) {
                 Point currentPosition = Utils.getRelativePoint(blastTileInitDoneEvent.getPosition(), i, direction);
@@ -207,10 +221,6 @@ public class GameController {
                     }
                 }
             }
-        }
-        for (Enemy enemy : deadEnemies) {
-            this.enemies.remove(enemy);
-            this.arenaModel.removeMovable(enemy);
         }
     }
 

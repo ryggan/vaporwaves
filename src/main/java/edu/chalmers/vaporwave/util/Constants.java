@@ -5,14 +5,14 @@ package edu.chalmers.vaporwave.util;
  */
 public class Constants {
 
-    public static final int WINDOW_WIDTH = 702;
-    public static final int WINDOW_HEIGHT = 548;
+    public static final int WINDOW_WIDTH = 1080;
+    public static final int WINDOW_HEIGHT = 720;
 
-    public static final int GAME_WIDTH = 512;
-    public static final int GAME_HEIGHT = 448;
+    public static final int GAME_WIDTH = 672;
+    public static final int GAME_HEIGHT = 480;
 
-    public static final int DEFAULT_GRID_WIDTH = 16;
-    public static final int DEFAULT_GRID_HEIGHT = 14;
+    public static final int DEFAULT_GRID_WIDTH = 21;
+    public static final int DEFAULT_GRID_HEIGHT = 15;
 
     public static final int DEFAULT_TILE_WIDTH = 16;
     public static final int DEFAULT_TILE_HEIGHT = 16;
