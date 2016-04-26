@@ -62,8 +62,7 @@ public class GameController {
 
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
-
-<<<<<<< HEAD
+        
         Enemy enemyOne = new Enemy("Enemy", Utils.gridToCanvasPosition(5), Utils.gridToCanvasPosition(5), 0.6, new SemiStupidAI(gameCharacters));
         Enemy enemyTwo = new Enemy("Enemy", Utils.gridToCanvasPosition(0), Utils.gridToCanvasPosition(4), 0.2, new StupidAI());
         Enemy enemyThree = new Enemy("Enemy", Utils.gridToCanvasPosition(7), Utils.gridToCanvasPosition(0), 0.2, new StupidAI());
@@ -74,7 +73,7 @@ public class GameController {
         enemies.add(enemyThree);
         enemies.add(enemyFour);
         enemies.add(enemyFive);
-        
+
         Random random = new Random();
         for (int k = 0; k < 10; k++) {
             boolean free = false;
