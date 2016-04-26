@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import com.sun.tools.internal.jxc.ap.Const;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
@@ -124,7 +123,7 @@ public class ArenaView {
 
 //        createBackground(backgroundGC);
 
-        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-03.png");
+        Sprite arenaBackgroundSprite = new Sprite("images/background/sprite-arenabackground-03.png");
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
