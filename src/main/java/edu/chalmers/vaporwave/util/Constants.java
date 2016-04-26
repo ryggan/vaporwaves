@@ -23,4 +23,6 @@ public class Constants {
 
     public static final String DEFAULT_MAP_FILE = "src/main/resources/maps/default.vapormap";
 
+    public static final int GRID_OFFSET_X = 0;
+    public static final int GRID_OFFSET_Y = 62;
 }

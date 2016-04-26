@@ -41,7 +41,7 @@ public class BlastSpriteCollection {
         AnimatedSprite blastSprite = new AnimatedSprite(blastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[]{2, 4}, new double[]{1, 1});
         blastSprite.setLoops(1);
         blastSprite.setStartFromBeginning(true);
-        blastSprite.setPosition((position.x+1) * Constants.DEFAULT_TILE_WIDTH, (position.y+1) * Constants.DEFAULT_TILE_WIDTH);
+        blastSprite.setPosition((position.x+1) * Constants.DEFAULT_TILE_WIDTH, (position.y+1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
 
         Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
 
@@ -73,8 +73,14 @@ public class BlastSpriteCollection {
                     }
                     blastSprite.setLoops(1);
                     blastSprite.setStartFromBeginning(true);
-                    blastSprite.setPosition((currentPosition.x+1) * Constants.DEFAULT_TILE_WIDTH, (currentPosition.y+1) * Constants.DEFAULT_TILE_WIDTH);
-                    spriteMap.put(currentPosition, blastSprite);
+                    System.out.println(currentPosition.y > 0);
+                    if (currentPosition.x >= 0 &&
+                            currentPosition.y >= 0 &&
+                            currentPosition.x < Constants.DEFAULT_GRID_WIDTH &&
+                            currentPosition.y < Constants.DEFAULT_GRID_HEIGHT) {
+                        blastSprite.setPosition((currentPosition.x+1) * Constants.DEFAULT_TILE_WIDTH, (currentPosition.y+1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+                        spriteMap.put(currentPosition, blastSprite);
+                    }
                 }
             }
         }
@@ -97,7 +103,7 @@ public class BlastSpriteCollection {
                     if (this.blastDirections.get(direction)) {
                         this.blastDirections.put(direction, false);
                         if (arenaTiles[currentPosition.x][currentPosition.y] instanceof DestructibleWall) {
-                            destructibleWallDestroyedSprites.get(direction).setPosition((currentPosition.x+1) * Constants.DEFAULT_TILE_WIDTH, (currentPosition.y+1) * Constants.DEFAULT_TILE_WIDTH);
+                            destructibleWallDestroyedSprites.get(direction).setPosition((currentPosition.x+1) * Constants.DEFAULT_TILE_WIDTH, (currentPosition.y+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
                             this.spriteMap.put(currentPosition, this.destructibleWallDestroyedSprites.get(direction));
                         } else {
                             this.spriteMap.remove(currentPosition);

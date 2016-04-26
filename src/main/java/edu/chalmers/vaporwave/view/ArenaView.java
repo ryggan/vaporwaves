@@ -61,14 +61,14 @@ public class ArenaView {
 
         // Setting up area to draw graphics
 
-        backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE));
+        backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         root.getChildren().add(backgroundCanvas);
-        tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + (Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE)));
+        tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
         root.getChildren().add(tileCanvas);
 
 
         double xoffset = Math.floor((Constants.WINDOW_WIDTH - Constants.GAME_WIDTH - (Constants.DEFAULT_TILE_WIDTH * 2)) / 2);
-        double yoffset = Math.floor((Constants.WINDOW_HEIGHT - Constants.GAME_HEIGHT) / 2);
+        double yoffset = 0;
         tileCanvas.setLayoutX(xoffset);
         tileCanvas.setLayoutY(yoffset);
         backgroundCanvas.setLayoutX(xoffset);
@@ -124,7 +124,7 @@ public class ArenaView {
 //        createBackground(backgroundGC);
 
         Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-03.png");
-        arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH, Constants.DEFAULT_TILE_HEIGHT);
+        arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
 
@@ -133,7 +133,7 @@ public class ArenaView {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null && arenaTiles[i][j] instanceof IndestructibleWall) {
                     Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
-                    tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH);
+                    tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
                     tileSprite.render(backgroundGC, -1);
                 }
             }
@@ -184,7 +184,7 @@ public class ArenaView {
 
         // Rendering:
 
-        tileGC.clearRect(0, 0, Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), Constants.GAME_HEIGHT + (Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE));
+        tileGC.clearRect(0, 0, Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), Constants.GAME_HEIGHT + ((Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE) + 1);
 
         // Method for printing current fps count.
         // Updates every 10 frame
@@ -202,7 +202,7 @@ public class ArenaView {
                 if (arenaTiles[i][j] != null && !(arenaTiles[i][j] instanceof IndestructibleWall)) {
                     Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
                     if (tileSprite != null) {
-                        tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH);
+                        tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
                         tileSprite.render(tileGC, timeSinceStart);
                     }
                 }
@@ -309,7 +309,7 @@ public class ArenaView {
             }
 
             Sprite actualSprite = currentSprite[spriteIndex];
-            actualSprite.setPosition(character.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH, character.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT);
+            actualSprite.setPosition(character.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH, character.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
             actualSprite.render(tileGC, timeSinceStart);
         }
     }
