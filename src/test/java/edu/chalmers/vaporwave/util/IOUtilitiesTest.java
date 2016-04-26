@@ -16,9 +16,5 @@ public class IOUtilitiesTest {
     private char[] c;
     private File file = new File("maps/testMap.txt");
 
-    @Test
-    public void testMapReading() throws IOException {
-        assertTrue(file.exists());
-    }
 
 }

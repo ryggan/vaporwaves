@@ -186,10 +186,6 @@ public class AnimatedSprite extends Sprite implements Cloneable {
             if (startTime == 0) {
                 startTime = time;
             }
-//            else if (time - startTime > loops * (duration * length)) {
-//                System.out.println("Resetting loops?");
-//                resetLoops();
-//            }
         }
 
         double timeToCheck = time - timeOffset;

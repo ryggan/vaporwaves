@@ -5,11 +5,15 @@ import edu.chalmers.vaporwave.util.PowerUpState;
 import java.util.List;
 import java.util.Random;
 
-public class StatPowerUp extends PowerUp {
+public class StatPowerUp extends StaticTile {
     private PowerUpState powerUpState;
 
     //Probably remove this later
     public StatPowerUp() {}
+
+    public PowerUpState getPowerUpState() {
+        return this.powerUpState;
+    }
 
     public StatPowerUp(List<PowerUpState> enabledPowerUpList) {
 
@@ -24,7 +28,7 @@ public class StatPowerUp extends PowerUp {
             int j = 0;
             for (int i = 0; i < enabledPowerUpList.size(); i++) {
                  j = j + PowerUpState.getSpawnChance(enabledPowerUpList.get(i));
-                //j = j + enabledPowerUpList.get(i).getSpawnChance();
+                j = j + PowerUpState.getSpawnChance(enabledPowerUpList.get(i));
                 if(j <= randomValue) {
                     powerUpState = enabledPowerUpList.get(i);
                 }

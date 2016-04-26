@@ -37,6 +37,7 @@ public class MenuView {
         this.root.getChildren().add(new ImageView(backgroundImage));
         this.root.getChildren().add(backgroundCanvas);
 
+
         this.activeMenuCategory = MenuCategory.START;
         this.activeMenuButton = 0;
 

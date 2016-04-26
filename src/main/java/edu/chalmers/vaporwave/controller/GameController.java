@@ -60,7 +60,7 @@ public class GameController {
 
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
-        
+
 ////        Enemy enemyOne = new Enemy("Enemy", Utils.gridToCanvasPosition(5), Utils.gridToCanvasPosition(5), 0.6, new SemiStupidAI(gameCharacters));
 //        Enemy enemyTwo = new Enemy("Enemy", Utils.gridToCanvasPosition(0), Utils.gridToCanvasPosition(4), 0.2, new StupidAI());
 //        Enemy enemyThree = new Enemy("Enemy", Utils.gridToCanvasPosition(7), Utils.gridToCanvasPosition(0), 0.2, new StupidAI());
@@ -258,11 +258,11 @@ public class GameController {
     }
 
     private void updateStats() {
-            this.arenaView.updateStats(
-            this.playerCharacter.getHealth(),
-            this.playerCharacter.getSpeed(),
-            this.playerCharacter.getBombRange(),
-            this.playerCharacter.getBombCount()
+        this.arenaView.updateStats(
+                this.playerCharacter.getHealth(),
+                this.playerCharacter.getSpeed(),
+                this.playerCharacter.getBombRange(),
+                this.playerCharacter.getBombCount()
         );
     }
 

@@ -114,7 +114,7 @@ public class ArenaView {
         powerUpSprites.put(PowerUpState.SPEED, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 1}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpState.BOMB_COUNT, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 2}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpState.RANGE, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 3}, new double[] {1, 1}));
-
+        powerUpSprites.put(PowerUpState.HEALTH, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 3}, new double[] {1, 1}));
     }
 
     public void initArena(StaticTile[][] arenaTiles) {
@@ -123,7 +123,7 @@ public class ArenaView {
 
 //        createBackground(backgroundGC);
 
-        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-03.png");
+        Sprite arenaBackgroundSprite = new Sprite("images/background/sprite-arenabackground-03.png");
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
@@ -262,8 +262,8 @@ public class ArenaView {
                     return bombSprite[3];
                 }
             }
-        } else if (tile instanceof TestPowerUp) {
-            return powerUpSprites.get(((TestPowerUp) tile).getPowerUpState());
+        } else if (tile instanceof StatPowerUp) {
+            return powerUpSprites.get(((StatPowerUp) tile).getPowerUpState());
         }
         return null;
     }
