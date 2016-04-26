@@ -19,9 +19,6 @@ import java.util.List;
 
 import static java.awt.event.KeyEvent.*;
 
-/**
- * Created by bob on 2016-04-15.
- */
 public class MenuView {
 
     private Canvas backgroundCanvas;
@@ -33,8 +30,7 @@ public class MenuView {
     private Group root;
 
     public MenuView(Group root) {
-    this.root=root;
-
+        this.root = root;
     }
 
     private void createBackground(GraphicsContext backgroundGC) {
