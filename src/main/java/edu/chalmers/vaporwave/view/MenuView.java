@@ -32,7 +32,7 @@ public class MenuView {
         this.root = root;
         backgroundCanvas = new Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
-        Image backgroundImage = new Image("images/menu-background.jpg");
+        Image backgroundImage = new Image("images/menu-background-2.jpg");
 
         this.root.getChildren().add(new ImageView(backgroundImage));
         this.root.getChildren().add(backgroundCanvas);
