@@ -18,7 +18,7 @@ public class GameCharacter extends Movable {
     private int bombCount;
 
     public GameCharacter(String name) {
-        super(name, Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5), 0.8);
+        super(name, Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5), 1);
 
         this.bombRange = 2;
         this.bombCount = 5;

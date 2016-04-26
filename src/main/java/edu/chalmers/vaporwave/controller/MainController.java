@@ -80,7 +80,7 @@ public class MainController {
 
         }.start();
 
-        newGame(new NewGameEvent());
+//        newGame(new NewGameEvent());
     }
 
 
