@@ -15,6 +15,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.util.*;
@@ -25,6 +26,8 @@ public class ArenaView {
     private Canvas tileCanvas;
     private GraphicsContext backgroundGC;
     private GraphicsContext tileGC;
+
+    private ImageView backgroundPattern;
 
     private HUDView hudView;
     private Scoreboard scoreboard;
@@ -55,10 +58,18 @@ public class ArenaView {
         this.fps = new Label();
         this.stats = new Label();
         this.powerUpSprites = new HashMap<>();
+        this.backgroundPattern=new ImageView();
+
+        root.getChildren().add(backgroundPattern);
+
+
 
         GameEventBus.getInstance().register(this);
 
         // Setting up area to draw graphics
+
+
+
 
         backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         root.getChildren().add(backgroundCanvas);
@@ -122,6 +133,7 @@ public class ArenaView {
 
 //        createBackground(backgroundGC);
 
+
         Sprite arenaBackgroundSprite = new Sprite("images/background/sprite-arenabackground-03.png");
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
@@ -140,20 +152,21 @@ public class ArenaView {
 
         // Creating sub-elements
 
+
+        createRandomBackgroundPattern();
         hudView = new HUDView();
         scoreboard = new Scoreboard(root);
         //make players a proper arraylist of the current players
         //scoreboard.addPlayersToScoreboard(players);
     }
 
-//    private void createBackground(GraphicsContext backgroundGC) {
-//
-//        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
-//        arenaBackgroundSprite.setPosition(0, 0);
-//        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
-//        arenaBackgroundSprite.render(backgroundGC, -1);
-//
-//    }
+    private void createRandomBackgroundPattern() {
+        int randomNum = 1 + (int)(Math.random() * 4 );
+        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
+
+
+
+    }
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
