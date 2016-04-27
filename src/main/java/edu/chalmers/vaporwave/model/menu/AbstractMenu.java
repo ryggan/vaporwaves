@@ -9,13 +9,13 @@ import java.util.List;
 public abstract class AbstractMenu {
 
     private int[] menuItems;
-    private int selectedSuperItem;
-    private int selectedSubItem;
+    private int[] selectedItems;
+    private int currentSelected;
     private NewGameEvent newGameEvent;
 
     public AbstractMenu(NewGameEvent newGameEvent, int[] menuItems) {
-        this.selectedSuperItem = 0;
-        this.selectedSubItem = 0;
+        this.selectedItems = new int[menuItems.length];
+        this.currentSelected = 0;
         this.menuItems = menuItems;
         this.newGameEvent = newGameEvent;
     }
@@ -23,40 +23,42 @@ public abstract class AbstractMenu {
     public void changeSelected(Direction direction) {
         switch (direction) {
             case UP:
-                if (selectedSuperItem > 0) {
-                    selectedSuperItem -= 1;
+                if (currentSelected > 0) {
+                    currentSelected -= 1;
                 } else {
-                    selectedSuperItem = menuItems.length - 1;
+                    currentSelected = menuItems.length - 1;
                 }
                 break;
             case DOWN:
-                if (selectedSuperItem != menuItems.length - 1) {
-                    selectedSuperItem += 1;
+                if (currentSelected != menuItems.length - 1) {
+                    currentSelected += 1;
                 } else {
-                    selectedSuperItem = 0;
+                    currentSelected = 0;
                 }
+                break;
             case LEFT:
-                if (selectedSubItem > 0) {
-                    selectedSubItem -= 1;
+                if (selectedItems[currentSelected] > 0) {
+                    selectedItems[currentSelected] -= 1;
                 } else {
-                    selectedSubItem = menuItems[selectedSuperItem];
+                    selectedItems[currentSelected] = menuItems[currentSelected];
                 }
                 break;
             case RIGHT:
-                if (selectedSubItem != menuItems[selectedSuperItem]) {
-                    selectedSubItem += 1;
+                if (selectedItems[currentSelected] < menuItems[currentSelected]) {
+                    selectedItems[currentSelected] += 1;
                 } else {
-                    selectedSuperItem = 0;
+                    selectedItems[currentSelected] = 0;
                 }
+                break;
         }
     }
 
     public int getSelectedSuper() {
-        return this.selectedSuperItem;
+        return this.currentSelected;
     }
 
-    public int getSelectedSub() {
-        return this.selectedSubItem;
+    public int[] getSelectedSub() {
+        return this.selectedItems;
     }
 
     public abstract MenuAction getMenuAction();

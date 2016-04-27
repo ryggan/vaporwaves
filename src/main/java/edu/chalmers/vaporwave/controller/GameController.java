@@ -130,7 +130,7 @@ public class GameController {
                     playerCharacter.spawn();
                     break;
                 case "ESCAPE":
-                    GameEventBus.getInstance().post(new ExitGameEvent());
+                    GameEventBus.getInstance().post(new GoToMenuEvent());
             }
         }
 

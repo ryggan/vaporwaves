@@ -5,8 +5,12 @@ import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.menu.AbstractMenu;
+import edu.chalmers.vaporwave.model.menu.CharacterMenu;
+import edu.chalmers.vaporwave.model.menu.MenuCategory;
 import edu.chalmers.vaporwave.model.menu.StartMenu;
-import edu.chalmers.vaporwave.view.MenuView;
+import edu.chalmers.vaporwave.view.AbstractMenuView;
+import edu.chalmers.vaporwave.view.CharacterSelectView;
+import edu.chalmers.vaporwave.view.StartMenuView;
 import javafx.scene.Group;
 
 import java.util.ArrayList;
@@ -14,18 +18,26 @@ import java.util.List;
 
 public class MenuController {
 
-    private MenuView menuView;
     private NewGameEvent newGameEvent;
     private List<AbstractMenu> menuList;
+    private List<AbstractMenuView> menuViewList;
     private int activeMenu;
 
     public MenuController(Group root) {
-        menuView = new MenuView(root);
-        this.menuView.updateView(0);
         this.newGameEvent = new NewGameEvent();
         this.activeMenu = 0;
         this.menuList = new ArrayList<>();
-        menuList.add(new StartMenu(this.newGameEvent));
+        this.menuList.add(new StartMenu(this.newGameEvent));
+        this.menuList.add(new CharacterMenu(this.newGameEvent));
+
+        this.menuViewList = new ArrayList<>();
+        this.menuViewList.add(new StartMenuView(root));
+        this.menuViewList.add(new CharacterSelectView(root));
+
+        this.menuViewList.get(activeMenu).updateView(
+                this.menuList.get(activeMenu).getSelectedSuper(),
+                this.menuList.get(activeMenu).getSelectedSub()
+        );
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
@@ -62,12 +74,15 @@ public class MenuController {
 
                     break;
             }
-            if (activeMenu > menuList.size()) {
-
-
-            } else {
-                this.menuView.updateView(this.menuList.get(activeMenu).getSelectedSuper());
-            }
+//            if (activeMenu > menuList.size()) {
+//
+//
+//            } else {
+                this.menuViewList.get(activeMenu).updateView(
+                        this.menuList.get(activeMenu).getSelectedSuper(),
+                        this.menuList.get(activeMenu).getSelectedSub()
+                );
+//            }
         }
     }
 

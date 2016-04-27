@@ -1,8 +1,10 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
+import com.sun.org.apache.bcel.internal.generic.GOTO;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.util.MapFileReader;
@@ -84,17 +86,22 @@ public class MainController {
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
+        System.out.println("Catching new game event");
+        this.menuController = null;
         this.root.getChildren().clear();
         this.inGame = true;
-        this.menuController = null;
         this.gameController = new GameController(this.root);
     }
 
     @Subscribe
     public void exitGame(ExitGameEvent exitGameEvent) {
-        this.root.getChildren().clear();
-        this.inGame = true;
+        System.exit(0);
+    }
+
+    @Subscribe
+    public void goToMenu(GoToMenuEvent goToMenuEvent) {
+        this.inGame = false;
+        this.menuController = new MenuController(root);
         this.gameController = null;
-        this.menuController = new MenuController(this.root);
     }
 }
