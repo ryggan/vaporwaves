@@ -6,11 +6,9 @@ import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.*;
-import edu.chalmers.vaporwave.model.gameObjects.Bomb;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
-import edu.chalmers.vaporwave.model.gameObjects.Movable;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
+import edu.chalmers.vaporwave.view.HUDView;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -20,6 +18,8 @@ import java.util.List;
 public class GameController {
 
     private ArenaView arenaView;
+
+
     private ArenaModel arenaModel;
 
     private GameCharacter playerCharacter;
@@ -42,6 +42,7 @@ public class GameController {
         enabledPowerUpList.add(PowerUpState.SPEED);
 
         // Initiates view
+
 
         this.arenaView = new ArenaView(root);
 
@@ -263,6 +264,8 @@ public class GameController {
         updateStats();
     }
 
+
+    //TODO
     private void updateStats() {
         this.arenaView.updateStats(
                 this.playerCharacter.getHealth(),

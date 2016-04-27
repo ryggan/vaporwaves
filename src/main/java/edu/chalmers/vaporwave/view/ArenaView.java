@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
+
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
@@ -15,6 +16,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.util.*;
@@ -26,8 +28,13 @@ public class ArenaView {
     private GraphicsContext backgroundGC;
     private GraphicsContext tileGC;
 
+    private ImageView backgroundPattern;
+
     private HUDView hudView;
     private Scoreboard scoreboard;
+
+    private Sprite arenaBackgroundSprite;
+    private Map<Compass, Sprite> arenaFrameSprites;
 
     private CharacterSprite[] characterSprites = new CharacterSprite[4];
     private CharacterSprite enemySprite;
@@ -45,32 +52,41 @@ public class ArenaView {
     private Group root;
 
     private Label fps;
-    private Label stats;
+
     private int updateCounter;
+
+    public enum Compass {
+        NORTH, WEST, EAST, SOUTH
+    }
     
     public ArenaView(Group root) {
         this.root = root;
+        this.arenaFrameSprites = new HashMap<>();
         this.blastSpriteMap = new HashMap<>();
         this.destroyedWalls = new HashSet<>();
         this.fps = new Label();
-        this.stats = new Label();
+        
         this.powerUpSprites = new HashMap<>();
+        this.backgroundPattern=new ImageView();
+
+        root.getChildren().add(backgroundPattern);
+
+
 
         GameEventBus.getInstance().register(this);
 
         // Setting up area to draw graphics
 
-        backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
+        backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         root.getChildren().add(backgroundCanvas);
         tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
         root.getChildren().add(tileCanvas);
-
 
         double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
         double yoffset = 0;
         tileCanvas.setLayoutX(xoffset);
         tileCanvas.setLayoutY(yoffset);
-        backgroundCanvas.setLayoutX(xoffset);
+        backgroundCanvas.setLayoutX(xoffset - Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
         backgroundCanvas.setLayoutY(yoffset);
 
         tileGC = tileCanvas.getGraphicsContext2D();
@@ -89,6 +105,15 @@ public class ArenaView {
 
         enemySprite = new CharacterSprite("ENEMY");
         initCharacterSprites(enemySprite);
+
+        arenaBackgroundSprite = new Sprite("images/background/sprite-arenabackground-03.png");
+        arenaFrameSprites.put(Compass.NORTH, new Sprite("images/background/sprite-frame-beach-north.png"));
+        arenaFrameSprites.put(Compass.WEST, new Sprite("images/background/sprite-frame-beach-west.png"));
+        arenaFrameSprites.put(Compass.EAST, new Sprite("images/background/sprite-frame-beach-east.png"));
+        Image frameSouthSheet = new Image("images/background/spritesheet-frame-beach-south-402x54.png");
+        AnimatedSprite frameSouthSprite =
+                new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1});
+        arenaFrameSprites.put(Compass.SOUTH, frameSouthSprite);
 
         Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png");
 
@@ -122,17 +147,31 @@ public class ArenaView {
 
 //        createBackground(backgroundGC);
 
-        Sprite arenaBackgroundSprite = new Sprite("images/background/sprite-arenabackground-03.png");
-        arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
+
+        arenaFrameSprites.get(Compass.NORTH).setPosition(0, -Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        arenaFrameSprites.get(Compass.NORTH).setScale(Constants.GAME_SCALE);
+        arenaFrameSprites.get(Compass.NORTH).render(backgroundGC, -1);
+
+        arenaFrameSprites.get(Compass.WEST).setPosition(0, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        arenaFrameSprites.get(Compass.WEST).setScale(Constants.GAME_SCALE);
+        arenaFrameSprites.get(Compass.WEST).render(backgroundGC, -1);
+
+        arenaFrameSprites.get(Compass.EAST).setPosition(Constants.DEFAULT_TILE_WIDTH * (2 + Constants.DEFAULT_GRID_WIDTH), Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        arenaFrameSprites.get(Compass.EAST).setScale(Constants.GAME_SCALE);
+        arenaFrameSprites.get(Compass.EAST).render(backgroundGC, -1);
+
+        arenaFrameSprites.get(Compass.SOUTH).setPosition(0, (Constants.DEFAULT_GRID_HEIGHT + 1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        arenaFrameSprites.get(Compass.SOUTH).render(backgroundGC, 0);
 
         // Rendering indestructible walls on background canvas
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null && arenaTiles[i][j] instanceof IndestructibleWall) {
                     Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
-                    tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+                    tileSprite.setPosition((i+1) * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
                     tileSprite.render(backgroundGC, -1);
                 }
             }
@@ -140,35 +179,31 @@ public class ArenaView {
 
         // Creating sub-elements
 
-        hudView = new HUDView();
+
+        createRandomBackgroundPattern();
+        hudView = new HUDView(root);
         scoreboard = new Scoreboard(root);
         //make players a proper arraylist of the current players
         //scoreboard.addPlayersToScoreboard(players);
     }
 
-//    private void createBackground(GraphicsContext backgroundGC) {
-//
-//        Sprite arenaBackgroundSprite = new Sprite("images/sprite-arenabackground-01.png");
-//        arenaBackgroundSprite.setPosition(0, 0);
-//        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
-//        arenaBackgroundSprite.render(backgroundGC, -1);
-//
-//    }
+    private void createRandomBackgroundPattern() {
+        int randomNum = 1 + (int)(Math.random() * 4 );
+        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
+
+
+
+    }
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
         blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange()));
     }
 
-    public void updateStats(double health, double speed, int range, int bombCount) {
-        int printHealth = (int)health;
-        int printSpeed = (int)(speed * 100);
-        stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
-        stats.setLayoutX(920);
-        stats.setLayoutY(152);
-        this.root.getChildren().remove(stats);
-        this.root.getChildren().add(stats);
+    public void updateStats(double health, double speed, int bombRange, int bombCount){
+        hudView.updateStats(health, speed, bombRange, bombCount);
     }
+
 
     public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
 
@@ -182,6 +217,8 @@ public class ArenaView {
         }
 
         // Rendering:
+
+        arenaFrameSprites.get(Compass.SOUTH).render(backgroundGC, timeSinceStart);
 
         tileGC.clearRect(0, 0, Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), Constants.GAME_HEIGHT + ((Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE) + 1);
 
@@ -223,6 +260,61 @@ public class ArenaView {
 
             } else if (movable instanceof Enemy) {
                 renderCharacter(movable, timeSinceStart);
+            }
+        }
+    }
+
+    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
+        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
+
+        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
+            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
+            switch(powerUpState) {
+                case HEALTH:
+                    powerUpSprite.setHealthSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case BOMB_COUNT:
+                    powerUpSprite.setBombCountSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case SPEED:
+                    powerUpSprite.setSpeedSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case RANGE:
+                    powerUpSprite.setRangeSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
             }
         }
     }
@@ -313,60 +405,7 @@ public class ArenaView {
         }
     }
 
-    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
-        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
-        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
 
-        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
-            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
-            switch(powerUpState) {
-                case HEALTH:
-                    powerUpSprite.setHealthSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case BOMB_COUNT:
-                    powerUpSprite.setBombCountSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case SPEED:
-                    powerUpSprite.setSpeedSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case RANGE:
-                    powerUpSprite.setRangeSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-            }
-        }
-    }
 
     /**
      * Reads character information from an XML-file and populate the instance variables for the sprites
