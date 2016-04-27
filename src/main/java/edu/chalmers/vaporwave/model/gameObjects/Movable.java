@@ -1,13 +1,11 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.controller.ListenerController;
-import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.Utils;
 
 import java.awt.*;
-import java.util.List;
 
 public abstract class Movable {
 
@@ -19,6 +17,7 @@ public abstract class Movable {
     private double velocityY;
     private double speed;
     private boolean moving;
+    private Direction lastMove;
     private Direction direction;
     private MovableState movableState;
 
@@ -57,6 +56,7 @@ public abstract class Movable {
             stopOnTileIfNeeded();
         }
 
+        this.lastMove = null;
     }
 
     private void stop(int newGridPositionX, int newGridPositionY) {
@@ -67,9 +67,8 @@ public abstract class Movable {
         setPreviousGridPositionX(newGridPositionX);
         setPreviousGridPositionY(newGridPositionY);
 
-        List<String> input = ListenerController.getInstance().getInput();
-        if (input.size() > 0 && (input.contains("UP") || input.contains("DOWN") || input.contains("LEFT") || input.contains("RIGHT"))) {
-            move(Utils.getDirectionFromString(input.get(input.size()-1)), this.latestArenaTiles);
+        if (this.lastMove != null) {
+            move(lastMove, this.latestArenaTiles);
         }
     }
 
@@ -122,6 +121,7 @@ public abstract class Movable {
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
+        this.lastMove = direction;
         this.latestArenaTiles = arenaTiles;
         if (direction != null && (movableState != movableState.WALK || oppositeDirection(direction))) {
             switch (direction) {

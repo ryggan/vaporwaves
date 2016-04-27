@@ -1,14 +1,8 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
-import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
-import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.util.*;
-
-import java.awt.*;
-import java.util.List;
+import edu.chalmers.vaporwave.util.Utils;
 
 public class GameCharacter extends Movable {
 
