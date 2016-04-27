@@ -67,7 +67,6 @@ public class ArenaView {
 
 
         double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
-        System.out.println((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2));
         double yoffset = 0;
         tileCanvas.setLayoutX(xoffset);
         tileCanvas.setLayoutY(yoffset);
