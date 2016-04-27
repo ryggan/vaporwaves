@@ -55,7 +55,6 @@ public class MenuView {
     }
 
     public void updateView(int selected) {
-        System.out.println(selected);
         this.activeMenuButton = selected;
 
         for (int i = 0; i < menuCategoryMap.get(activeMenuCategory).size(); i++) {

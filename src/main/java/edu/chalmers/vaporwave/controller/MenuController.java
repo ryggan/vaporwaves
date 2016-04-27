@@ -1,56 +1,75 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.NewGameEvent;
-import edu.chalmers.vaporwave.model.menu.Menu;
+import edu.chalmers.vaporwave.model.menu.AbstractMenu;
+import edu.chalmers.vaporwave.model.menu.StartMenu;
 import edu.chalmers.vaporwave.view.MenuView;
 import javafx.scene.Group;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuController {
 
     private MenuView menuView;
-    private Menu menuState;
+    private NewGameEvent newGameEvent;
+    private List<AbstractMenu> menuList;
+    private int activeMenu;
 
     public MenuController(Group root) {
         menuView = new MenuView(root);
-        this.menuState = new Menu(1);
         this.menuView.updateView(0);
+        this.newGameEvent = new NewGameEvent();
+        this.activeMenu = 0;
+        this.menuList = new ArrayList<>();
+        menuList.add(new StartMenu(this.newGameEvent));
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
         if (!ListenerController.getInstance().getPressed().isEmpty()) {
             switch (ListenerController.getInstance().getPressed().get(0)) {
                 case "UP":
-                    menuState.changeSelected(Direction.UP);
+                    menuList.get(activeMenu).changeSelected(Direction.UP);
                     break;
                 case "DOWN":
-                    menuState.changeSelected(Direction.DOWN);
+                    menuList.get(activeMenu).changeSelected(Direction.DOWN);
+                    break;
+                case "LEFT":
+                    menuList.get(activeMenu).changeSelected(Direction.LEFT);
+                    break;
+                case "RIGHT":
+                    menuList.get(activeMenu).changeSelected(Direction.RIGHT);
                     break;
                 case "ENTER":
-                case "SPACE": // todo: Make this more beautiful!
-                    if (this.menuState.getSelected() == 0) {
-                        newGame();
-                    } else if (this.menuState.getSelected() == 1) {
-                        System.exit(0);
+                case "SPACE":
+                    switch (menuList.get(activeMenu).getMenuAction()) {
+                        case EXIT_GAME:
+                            GameEventBus.getInstance().post(new ExitGameEvent());
+                            break;
+                        case START_GAME:
+                            GameEventBus.getInstance().post(newGameEvent);
+                            break;
+                        case NEXT:
+                            this.activeMenu += 1;
+                            break;
+                        case PREVIOUS:
+                            this.activeMenu -= 1;
+                            break;
                     }
+
                     break;
             }
-            this.menuView.updateView(this.menuState.getSelected());
+            if (activeMenu > menuList.size()) {
 
+
+            } else {
+                this.menuView.updateView(this.menuList.get(activeMenu).getSelectedSuper());
+            }
         }
     }
 
-    public void removeMenu() {
-//        this.root.getChildren().clear();
 
-    }
-
-    public void selectMenu() {
-
-    }
-
-    public void newGame() {
-        GameEventBus.getInstance().post(new NewGameEvent());
-    }
 }
