@@ -75,9 +75,6 @@ public class MainController {
                 for (String code : ListenerController.getInstance().getPressed()) {
                     ListenerController.getInstance().updatePressed(code);
                 }
-//                try {
-//                    Thread.sleep(100);
-//                } catch (Exception e) { }
             }
 
         }.start();

@@ -123,7 +123,7 @@ public abstract class Movable {
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
         this.latestArenaTiles = arenaTiles;
-        if (movableState != movableState.WALK || oppositeDirection(direction)) {
+        if (direction != null && (movableState != movableState.WALK || oppositeDirection(direction))) {
             switch (direction) {
                 case UP:
                     moveUp();

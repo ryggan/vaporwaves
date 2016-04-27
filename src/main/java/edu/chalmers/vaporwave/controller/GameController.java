@@ -27,11 +27,19 @@ public class GameController {
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
     private int deadEnemiesAnimation = 0;
+    private List<PowerUpState> enabledPowerUpList;
 
     private int updatedEnemyDirection;
 
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
+
+        //Change this to proper values according to player preferences later, dummy values meanwhile
+        enabledPowerUpList = new ArrayList<>();
+        enabledPowerUpList.add(PowerUpState.BOMB_COUNT);
+        enabledPowerUpList.add(PowerUpState.RANGE);
+        enabledPowerUpList.add(PowerUpState.HEALTH);
+        enabledPowerUpList.add(PowerUpState.SPEED);
 
         // Initiates view
 
@@ -144,19 +152,17 @@ public class GameController {
         }
 
         if (this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y]
-                instanceof TestPowerUp) {
-            TestPowerUp powerUp = (TestPowerUp)this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y];
-            this.arenaModel.setTile(null, playerCharacter.getGridPosition());
+                instanceof StatPowerUp) {
+            StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y];
 
-            if(powerUp.getPowerUpState().equals(PowerUpState.SPEED)) {
-                this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() + 0.1);
-            } else if(powerUp.getPowerUpState().equals(PowerUpState.BOMB_COUNT)) {
-                this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
-            } else if(powerUp.getPowerUpState().equals(PowerUpState.RANGE)) {
-                this.playerCharacter.setBombRange(this.playerCharacter.getBombRange() + 1);
+
+            if (powerUp.getPowerUpState() != null) {
+                this.arenaModel.setTile(null, playerCharacter.getGridPosition());
+                playerWalksOnPowerUp(playerCharacter, powerUp.getPowerUpState());
+                updateStats();
             }
 
-            updateStats();
+
         }
 
         if (deadEnemies.size() > 0) {
@@ -181,7 +187,7 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), 1000), placeBombEvent.getGridPosition());
+        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY), placeBombEvent.getGridPosition());
     }
 
     @Subscribe
@@ -278,27 +284,23 @@ public class GameController {
      *
      * @return A powerup Tile.
      */
-    public void spawnPowerup(int posx, int posy) {
+    public void spawnPowerUp(Point position) {
         Random randomGenerator = new Random();
-        int temporaryNumber = randomGenerator.nextInt(10);
-        if(temporaryNumber == 0 || temporaryNumber == 1
-                || temporaryNumber == 2 || temporaryNumber == 3) {
-            arenaModel.setTile(new StatPowerUp(), posx, posy);
-        } else if(temporaryNumber == 4) {
-            arenaModel.setTile(new StatPowerUp(), posx, posy);
+        if(randomGenerator.nextInt(4) < 1) {
+            this.arenaModel.setTile(new StatPowerUp(enabledPowerUpList), position);
         }
     }
 
-    private void spawnPowerUp(Point position) {
-        Random randomGenerator = new Random();
-        if (randomGenerator.nextInt(10) < 2) {
-            this.arenaModel.setTile(new TestPowerUp(PowerUpState.RANGE), position);
-        } else if (randomGenerator.nextInt(10) < 2) {
-            this.arenaModel.setTile(new TestPowerUp(PowerUpState.BOMB_COUNT), position);
-        } else if (randomGenerator.nextInt(10) < 2) {
-            this.arenaModel.setTile(new TestPowerUp(PowerUpState.SPEED), position);
-        }
-    }
+//    private void spawnPowerUp(Point position) {
+//        Random randomGenerator = new Random();
+//        if (randomGenerator.nextInt(10) < 2) {
+//            this.arenaModel.setTile(new TestPowerUp(PowerUpState.RANGE), position);
+//        } else if (randomGenerator.nextInt(10) < 2) {
+//            this.arenaModel.setTile(new TestPowerUp(PowerUpState.BOMB_COUNT), position);
+//        } else if (randomGenerator.nextInt(10) < 2) {
+//            this.arenaModel.setTile(new TestPowerUp(PowerUpState.SPEED), position);
+//        }
+//    }
 
     /**
      * Call on this method when player walks on PowerUpTile.
@@ -307,8 +309,8 @@ public class GameController {
      * @param powerUpState
      */
     public void playerWalksOnPowerUp(GameCharacter character, PowerUpState powerUpState) {
+
         if(powerUpState.equals(PowerUpState.HEALTH)) {
-            // Could change how much health should be applied
             character.setHealth(character.getHealth() + 10);
         } else if(powerUpState.equals(PowerUpState.BOMB_COUNT)) {
             character.setBombCount(character.getBombCount() + 1);
