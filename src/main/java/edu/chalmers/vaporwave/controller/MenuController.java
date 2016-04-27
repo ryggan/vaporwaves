@@ -24,6 +24,7 @@ public class MenuController {
     private int activeMenu;
 
     public MenuController(Group root) {
+
         this.newGameEvent = new NewGameEvent();
         this.activeMenu = 0;
         this.menuList = new ArrayList<>();
@@ -45,15 +46,19 @@ public class MenuController {
             switch (ListenerController.getInstance().getPressed().get(0)) {
                 case "UP":
                     menuList.get(activeMenu).changeSelected(Direction.UP);
+                    updateViews();
                     break;
                 case "DOWN":
                     menuList.get(activeMenu).changeSelected(Direction.DOWN);
+                    updateViews();
                     break;
                 case "LEFT":
                     menuList.get(activeMenu).changeSelected(Direction.LEFT);
+                    updateViews();
                     break;
                 case "RIGHT":
                     menuList.get(activeMenu).changeSelected(Direction.RIGHT);
+                    updateViews();
                     break;
                 case "ENTER":
                 case "SPACE":
@@ -62,28 +67,31 @@ public class MenuController {
                             GameEventBus.getInstance().post(new ExitGameEvent());
                             break;
                         case START_GAME:
+                            for (AbstractMenuView menu : this.menuViewList) {
+                                menu.clearView();
+                            }
                             GameEventBus.getInstance().post(newGameEvent);
                             break;
                         case NEXT:
                             this.activeMenu += 1;
+                            updateViews();
                             break;
                         case PREVIOUS:
                             this.activeMenu -= 1;
+                            updateViews();
                             break;
                     }
 
                     break;
             }
-//            if (activeMenu > menuList.size()) {
-//
-//
-//            } else {
-                this.menuViewList.get(activeMenu).updateView(
-                        this.menuList.get(activeMenu).getSelectedSuper(),
-                        this.menuList.get(activeMenu).getSelectedSub()
-                );
-//            }
         }
+    }
+
+    private void updateViews() {
+        this.menuViewList.get(activeMenu).updateView(
+                this.menuList.get(activeMenu).getSelectedSuper(),
+                this.menuList.get(activeMenu).getSelectedSub()
+        );
     }
 
 

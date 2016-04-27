@@ -37,6 +37,10 @@ public class MainController {
 
         this.inGame = false;
 
+        if (inGame) {
+            newGame(new NewGameEvent());
+        }
+
 
         this.menuController = new MenuController(root);
 
@@ -60,7 +64,7 @@ public class MainController {
 
                 // Controller calls
 
-                if (inGame && gameController != null) {
+                if (inGame) {
                     gameController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 } else {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
@@ -86,11 +90,8 @@ public class MainController {
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
-        System.out.println("Catching new game event");
-        this.menuController = null;
-        this.root.getChildren().clear();
-        this.inGame = true;
         this.gameController = new GameController(this.root);
+        this.inGame = true;
     }
 
     @Subscribe

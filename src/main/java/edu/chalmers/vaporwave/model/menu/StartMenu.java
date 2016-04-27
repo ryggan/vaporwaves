@@ -16,7 +16,6 @@ public class StartMenu extends AbstractMenu {
         if (this.getSelectedSuper() == 0) {
             return MenuAction.NEXT;
         } else if (this.getSelectedSuper() == 1) {
-            System.out.println("exit");
             return MenuAction.EXIT_GAME;
         }
 
