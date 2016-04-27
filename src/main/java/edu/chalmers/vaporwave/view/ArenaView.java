@@ -52,7 +52,7 @@ public class ArenaView {
     private Group root;
 
     private Label fps;
-    private Label stats;
+
     private int updateCounter;
 
     public enum Compass {
@@ -65,7 +65,7 @@ public class ArenaView {
         this.blastSpriteMap = new HashMap<>();
         this.destroyedWalls = new HashSet<>();
         this.fps = new Label();
-        this.stats = new Label();
+        
         this.powerUpSprites = new HashMap<>();
         this.backgroundPattern=new ImageView();
 
@@ -181,7 +181,7 @@ public class ArenaView {
 
 
         createRandomBackgroundPattern();
-        hudView = new HUDView();
+        hudView = new HUDView(root);
         scoreboard = new Scoreboard(root);
         //make players a proper arraylist of the current players
         //scoreboard.addPlayersToScoreboard(players);
@@ -200,15 +200,10 @@ public class ArenaView {
         blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange()));
     }
 
-    public void updateStats(double health, double speed, int range, int bombCount) {
-        int printHealth = (int)health;
-        int printSpeed = (int)(speed * 100);
-        stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
-        stats.setLayoutX(920);
-        stats.setLayoutY(152);
-        this.root.getChildren().remove(stats);
-        this.root.getChildren().add(stats);
+    public void updateStats(double health, double speed, int bombRange, int bombCount){
+        hudView.updateStats(health, speed, bombRange, bombCount);
     }
+
 
     public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
 
@@ -265,6 +260,61 @@ public class ArenaView {
 
             } else if (movable instanceof Enemy) {
                 renderCharacter(movable, timeSinceStart);
+            }
+        }
+    }
+
+    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
+        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
+
+        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
+            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
+            switch(powerUpState) {
+                case HEALTH:
+                    powerUpSprite.setHealthSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case BOMB_COUNT:
+                    powerUpSprite.setBombCountSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case SPEED:
+                    powerUpSprite.setSpeedSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
+                case RANGE:
+                    powerUpSprite.setRangeSprite(
+                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+                                            powerUpSpriteProperties.getDimensionY()),
+                                    powerUpSpriteProperties.getFrames(),
+                                    powerUpSpriteProperties.getDuration(),
+                                    powerUpSpriteProperties.getFirstFrame(),
+                                    powerUpSpriteProperties.getOffset())
+                    );
+                    break;
             }
         }
     }
@@ -355,60 +405,7 @@ public class ArenaView {
         }
     }
 
-    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
-        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
-        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
 
-        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
-            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
-            switch(powerUpState) {
-                case HEALTH:
-                    powerUpSprite.setHealthSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case BOMB_COUNT:
-                    powerUpSprite.setBombCountSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case SPEED:
-                    powerUpSprite.setSpeedSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case RANGE:
-                    powerUpSprite.setRangeSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-            }
-        }
-    }
 
     /**
      * Reads character information from an XML-file and populate the instance variables for the sprites
