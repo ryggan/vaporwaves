@@ -55,7 +55,7 @@ public class GameController {
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
 
-        playerCharacter = new GameCharacter("ALYSSA");
+        playerCharacter = new GameCharacter("CHARLOTTE");
 
         updateStats();
 
