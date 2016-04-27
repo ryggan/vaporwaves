@@ -44,14 +44,16 @@ public class GameController {
         // Initiates view
 
 
-        this.arenaView = new ArenaView(root);
 
         ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
 
         // Starting new game
         this.arenaModel = newGame(arenaMap);
+        this.arenaView = new ArenaView(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());
+        arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
+
 
         playerCharacter = new GameCharacter("ALYSSA");
 
@@ -106,6 +108,7 @@ public class GameController {
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
