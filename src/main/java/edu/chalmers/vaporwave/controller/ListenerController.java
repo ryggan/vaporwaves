@@ -11,8 +11,9 @@ public class ListenerController {
 
     private static ListenerController instance;
 
-    private List<String> input = new ArrayList<String>();
-    private List<String> pressed = new ArrayList<String>();
+    private List<String> input = new ArrayList<>();
+    private List<String> pressed = new ArrayList<>();
+    private List<String> released = new ArrayList<>();
 
     private ListenerController() { }
 
@@ -52,7 +53,7 @@ public class ListenerController {
     }
 
     public List<String> getInput() {
-        List<String> inputReturn = new ArrayList<String>();
+        List<String> inputReturn = new ArrayList<>();
         for (String s: this.input) {
             inputReturn.add(s);
         }
@@ -60,10 +61,18 @@ public class ListenerController {
     }
 
     public List<String> getPressed() {
-        List<String> pressedReturn = new ArrayList<String>();
+        List<String> pressedReturn = new ArrayList<>();
         for (String s: this.pressed) {
             pressedReturn.add(s);
         }
         return pressedReturn;
+    }
+
+    public List<String> getReleased() {
+        List<String> releasedReturn = new ArrayList<>();
+        for (String s: this.released) {
+            releasedReturn.add(s);
+        }
+        return releasedReturn;
     }
 }
