@@ -53,7 +53,7 @@ public class GameController {
 
         arenaView.initArena(arenaModel.getArenaTiles());
 
-        playerCharacter = new GameCharacter("ALYSSA");
+        playerCharacter = new GameCharacter("CHARLOTTE");
 
         updateStats();
 

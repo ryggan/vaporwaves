@@ -96,9 +96,9 @@ public class ArenaView {
 
         characterSprites[0] = new CharacterSprite("ALYSSA");
         initCharacterSprites(characterSprites[0]);
-//        characterSprites[1] = new CharacterSprite("ZYPHER");
-//        initCharacterSprites(characterSprites[1]);
-//        characterSprites[2] = new CharacterSprite("CHARLOTTE");
+        characterSprites[1] = new CharacterSprite("CHARLOTTE");
+        initCharacterSprites(characterSprites[1]);
+//        characterSprites[2] = new CharacterSprite("ZYPHER");
 //        initCharacterSprites(characterSprites[2]);
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
