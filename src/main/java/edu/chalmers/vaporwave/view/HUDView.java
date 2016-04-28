@@ -61,12 +61,7 @@ public class HUDView {
         this.stats = new Label();
 
         stats.getStylesheets().add("css/style.css");
-        stats.getStyleClass().add("statsLabel");
-
-        this.healthPercentage=new Label();
-        healthPercentage.getStylesheets().add("css/style.css");
-        healthPercentage.getStyleClass().add("healthPercentage");
-       
+        stats.getStyleClass().add("healthPercentage");
 
         hudCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         this.root.getChildren().add(hudCanvas);
@@ -79,19 +74,17 @@ public class HUDView {
 
     public void updateStats(double health, double speed, int range, int bombCount) {
         int printHealth = (int) health;
-        int printSpeed = (int) (speed * 100);
-        System.out.println((health / 100) * 300);
+        double printSpeed = (double) (speed);
+        //50
         updateHealthBar((int) ((health / 100) * 300));
         stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
-        healthPercentage.setText(printHealth+"%");
+
         stats.setLayoutX(920);
         stats.setLayoutY(152);
-        healthPercentage.setLayoutX(443);
-        healthPercentage.setLayoutY(37);
+
         this.root.getChildren().remove(stats);
         this.root.getChildren().add(stats);
-        this.root.getChildren().remove(healthPercentage);
-        this.root.getChildren().add(healthPercentage);
+
     }
 
     public void updateHealthBar(int i) {

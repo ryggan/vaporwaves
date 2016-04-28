@@ -303,4 +303,23 @@ public abstract class Movable {
     public String toString() {
         return "Movable[ Name="+getName()+"; State="+getState()+"; Velocity=["+getVelocityX()+", "+getVelocityY()+"] ]";
     }
+
+    @Override
+    public int hashCode(){
+        int hash = 1 + (int) canvasPositionX*23;
+        hash = hash + (int) canvasPositionY*17;
+        hash = hash + (int) velocityX*36;
+        hash = hash + (int) velocityY*42;
+        hash = hash + (int) speed*13;
+        hash = hash + damage*34;
+        hash = hash + previousGridPositionX*35;
+        hash = hash + previousGridPositionY*14;
+        hash = hash + (int) health *51;
+        hash = hash + flinchTimer*56;
+        hash = hash + flinchDelay*36;
+        hash = hash + name.hashCode();
+
+        return hash;
+
+    }
 }

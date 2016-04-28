@@ -28,4 +28,14 @@ public class StupidAI implements AI {
 
         return previousDirection;
     }
+
+    public boolean shouldPutBomb(){
+        Random random = new Random();
+        int nextRandom = random.nextInt(1000);
+        if(nextRandom==1){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

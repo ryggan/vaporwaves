@@ -4,10 +4,11 @@ import java.io.*;
 
 public class MapFileReader {
     private MapObject[][] mapObjects;
+    private BufferedReader reader;
 
     public MapFileReader(String filename) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            reader = new BufferedReader(new FileReader(filename));
             int width = ((reader.readLine()).replace(" ", "")).length();
             LineNumberReader numbers = new LineNumberReader(reader);
             numbers.skip(Integer.MAX_VALUE);
@@ -46,10 +47,11 @@ public class MapFileReader {
                     }
                 }
                 i++;
+
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
     }

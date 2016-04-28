@@ -61,4 +61,9 @@ public class SemiStupidAI implements AI {
 
     }
 
+    @Override
+    public boolean shouldPutBomb() {
+        return false;
+    }
+
 }

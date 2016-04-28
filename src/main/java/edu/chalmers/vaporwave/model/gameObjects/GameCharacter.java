@@ -60,4 +60,13 @@ public class GameCharacter extends Movable {
     public int getMaxBombCount() {
         return this.maxBombCount;
     }
+
+    @Override
+    public int hashCode(){
+        int hash = super.hashCode();
+        hash = hash + bombRange*23;
+        hash=hash + currentBombCount*62;
+        hash=hash + maxBombCount*71;
+        return hash;
+    }
 }

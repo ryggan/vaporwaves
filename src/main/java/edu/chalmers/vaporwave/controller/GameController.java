@@ -113,6 +113,7 @@ public class GameController {
         if (this.updatedEnemyDirection == 15) {
             for (Enemy enemy : enemies) {
                 enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), playerCharacter.getGridPosition(), this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
+                enemy.placeBomb();
             }
             updatedEnemyDirection = 0;
         }

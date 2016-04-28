@@ -180,4 +180,31 @@ public class Sprite {
         this.boundingBox = boundingBox;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Sprite){
+           Sprite other =(Sprite) o;
+            if(other.getStayOnPixel()==this.getStayOnPixel()&&other.getBoundary()==this.getBoundary()&&
+                    this.getHeight()==other.getHeight()&&other.getWidth()==this.getWidth()&&other.getImage()==this.getImage()&&
+                    this.getOffsetX()==other.getOffsetX()&&this.getOffsetY()==other.getOffsetY()&&this.getPositionX()==other.getPositionX()&&
+                    this.getPositionY()==other.getPositionY()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        int hash = 1 + (int) positionX*23;
+        hash = hash + (int) positionY*17;
+        hash = hash + (int) width*36;
+        hash = hash + (int) height*42;
+        hash = hash + (int) scale*13;
+        hash = hash + (int) offsetX*34;
+        hash = hash + (int) offsetY*35;
+        hash = hash + image.hashCode();
+        return hash;
+    }
+
 }
