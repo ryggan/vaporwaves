@@ -62,7 +62,10 @@ public class HUDView {
 
         stats.getStylesheets().add("css/style.css");
         stats.getStyleClass().add("statsLabel");
+
         this.healthPercentage=new Label();
+        healthPercentage.getStylesheets().add("css/style.css");
+        healthPercentage.getStyleClass().add("healthPercentage");
        
 
         hudCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
@@ -83,10 +86,11 @@ public class HUDView {
         healthPercentage.setText(printHealth+"%");
         stats.setLayoutX(920);
         stats.setLayoutY(152);
-        healthPercentage.setLayoutX(184);
-        healthPercentage.setLayoutY(38);
+        healthPercentage.setLayoutX(443);
+        healthPercentage.setLayoutY(37);
         this.root.getChildren().remove(stats);
         this.root.getChildren().add(stats);
+        this.root.getChildren().remove(healthPercentage);
         this.root.getChildren().add(healthPercentage);
     }
 
