@@ -58,7 +58,7 @@ public class HUDView {
 
     private Font bauhaus10;
 
-    public HUDView(Group root){
+    public HUDView(Group root) {
 
 
         this.root = root;
@@ -67,9 +67,9 @@ public class HUDView {
         this.scoreBarEmpty = new ImageView(new Image("images/barempty.png"));
 
 
-        Image filled=new Image("images/healthbarfilled.png");
+        Image filled = new Image("images/healthbarfilled.png");
         reader = filled.getPixelReader();
-        newImage = new WritableImage(reader, 0, 0, 300,17 );
+        newImage = new WritableImage(reader, 0, 0, 300, 17);
         this.healthBarFilled = new ImageView(newImage);
 
         this.healthBarEmpty.setLayoutX(140);
@@ -92,10 +92,10 @@ public class HUDView {
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
-        int printHealth = (int)health;
-        int printSpeed = (int)(speed * 100);
-        System.out.println((health/100) * 300);
-        updateHealthBar((int) ((health/100) * 300));
+        int printHealth = (int) health;
+        int printSpeed = (int) (speed * 100);
+        System.out.println((health / 100) * 300);
+        updateHealthBar((int) ((health / 100) * 300));
         stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
         stats.setLayoutX(920);
         stats.setLayoutY(152);
@@ -103,7 +103,7 @@ public class HUDView {
         this.root.getChildren().add(stats);
     }
 
-    public void updateHealthBar(int i){
+    public void updateHealthBar(int i) {
         newImage = new WritableImage(reader, 0, 0, i, 17);
         ImageView healthBarFilledNew = new ImageView(newImage);
         healthBarFilledNew.setLayoutX(184);
@@ -112,3 +112,4 @@ public class HUDView {
         this.root.getChildren().add(healthBarFilledNew);
         this.healthBarFilled = healthBarFilledNew;
     }
+}
