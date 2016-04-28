@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.model;
+package edu.chalmers.vaporwave.view;
 
 import javafx.scene.image.Image;
 

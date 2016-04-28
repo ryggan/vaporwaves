@@ -6,7 +6,6 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.model.PowerUpProperties;
 import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
 import edu.chalmers.vaporwave.model.gameObjects.*;
@@ -440,39 +439,74 @@ public class ArenaView {
                             );
                     break;
                 case WALK:
-                    for (int i = 0; i < 4; i++) {
-                        characterSprite.setWalkSprite(
-                                new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                characterSpriteProperties.getFrames(),
-                                characterSpriteProperties.getDuration(),
-                                new int[]{characterSpriteProperties.getFirstFrame()[0], i},
-                                characterSpriteProperties.getOffset()),
-                                i);
-                    }
-                    break;
                 case IDLE:
-                    for (int i = 0; i < 4; i++) {
-                        characterSprite.setIdleSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                characterSpriteProperties.getFrames(),
-                                characterSpriteProperties.getDuration(),
-                                new int[]{i, characterSpriteProperties.getFirstFrame()[1]},
-                                characterSpriteProperties.getOffset()),
-                                i);
-                    }
-                    break;
                 case FLINCH:
+                    int startIndexX = characterSpriteProperties.getFirstFrame()[0];
+                    int startIndexY = characterSpriteProperties.getFirstFrame()[1];
+                    int spritesheetWidth = (int)Math.floor(characterSpriteProperties.getSpritesheet().getWidth() / characterSpriteProperties.getDimensionX());
+
                     for (int i = 0; i < 4; i++) {
-                        characterSprite.setFlinchSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                characterSpriteProperties.getFrames(),
-                                characterSpriteProperties.getDuration(),
-                                new int[]{characterSpriteProperties.getFirstFrame()[0] + i, i},
-                                characterSpriteProperties.getOffset()),
-                                i);
+
+                        if (startIndexX >= spritesheetWidth) {
+                            startIndexX -= spritesheetWidth;
+                            startIndexY++;
+                        }
+
+                        switch (characterState) {
+                            case WALK:
+                                characterSprite.setWalkSprite(
+                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                                characterSpriteProperties.getFrames(),
+                                                characterSpriteProperties.getDuration(),
+                                                new int[]{startIndexX, startIndexY},
+                                                characterSpriteProperties.getOffset()),
+                                        i);
+                            case IDLE:
+                                characterSprite.setIdleSprite(
+                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                                characterSpriteProperties.getFrames(),
+                                                characterSpriteProperties.getDuration(),
+                                                new int[]{startIndexX, startIndexY},
+                                                characterSpriteProperties.getOffset()),
+                                        i);
+                            case FLINCH:
+                                characterSprite.setFlinchSprite(
+                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                                characterSpriteProperties.getFrames(),
+                                                characterSpriteProperties.getDuration(),
+                                                new int[]{startIndexX, startIndexY},
+                                                characterSpriteProperties.getOffset()),
+                                        i);
+                        }
+
+                        startIndexX += characterSpriteProperties.getFrames();
                     }
                     break;
+//                case IDLE:
+//                    for (int i = 0; i < 4; i++) {
+//                        characterSprite.setIdleSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+//                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+//                                characterSpriteProperties.getFrames(),
+//                                characterSpriteProperties.getDuration(),
+//                                new int[]{i, characterSpriteProperties.getFirstFrame()[1]},
+//                                characterSpriteProperties.getOffset()),
+//                                i);
+//                    }
+//                    break;
+//                case FLINCH:
+//                    for (int i = 0; i < 4; i++) {
+//                        characterSprite.setFlinchSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+//                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+//                                characterSpriteProperties.getFrames(),
+//                                characterSpriteProperties.getDuration(),
+//                                new int[]{characterSpriteProperties.getFirstFrame()[0] + i, i},
+//                                characterSpriteProperties.getOffset()),
+//                                i);
+//                    }
+//                    break;
                 default:
                     break;
             }

@@ -1,7 +1,7 @@
 package edu.chalmers.vaporwave.util;
 
 import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
+import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
 import javafx.scene.image.Image;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
