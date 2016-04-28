@@ -190,7 +190,8 @@ public class ArenaView {
 
     private void createRandomBackgroundPattern() {
         int randomNum = 1 + (int)(Math.random() * 4 );
-        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
+        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
+//        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
 
 
 

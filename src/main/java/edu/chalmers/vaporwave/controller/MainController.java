@@ -103,7 +103,8 @@ public class MainController {
     @Subscribe
     public void goToMenu(GoToMenuEvent goToMenuEvent) {
         this.inGame = false;
-        this.menuController = new MenuController(root);
+        this.root.getChildren().clear();
         this.gameController = null;
+        this.menuController = new MenuController(root);
     }
 }

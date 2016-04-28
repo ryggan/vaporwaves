@@ -10,13 +10,13 @@ public enum PowerUpState {
 
     public static int getSpawnChance(PowerUpState powerUpState) {
         if(powerUpState.equals(PowerUpState.HEALTH)) {
-            return 3;
+            return 1;
         } else if(powerUpState.equals(PowerUpState.BOMB_COUNT)) {
             return 1;
         } else if(powerUpState.equals(PowerUpState.RANGE)) {
-            return 2;
+            return 1;
         } else if(powerUpState.equals(PowerUpState.SPEED)) {
-            return 3;
+            return 1;
         }
         return 0;
     }

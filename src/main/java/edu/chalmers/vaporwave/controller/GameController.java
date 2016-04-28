@@ -299,7 +299,7 @@ public class GameController {
      */
     public void spawnPowerUp(Point position) {
         Random randomGenerator = new Random();
-        if(randomGenerator.nextInt(4) < 1) {
+        if(randomGenerator.nextInt(4) < 2) {
             this.arenaModel.setTile(new StatPowerUp(enabledPowerUpList), position);
         }
     }
@@ -330,7 +330,7 @@ public class GameController {
         } else if(powerUpState.equals(PowerUpState.RANGE)) {
             character.setBombRange(character.getBombRange() + 1);
         } else if(powerUpState.equals(PowerUpState.SPEED)) {
-            character.setSpeed(character.getSpeed() + 10);
+            character.setSpeed(character.getSpeed() + 0.2);
         }
     }
 }

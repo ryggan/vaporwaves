@@ -20,18 +20,20 @@ public class StatPowerUp extends StaticTile {
         if(enabledPowerUpList.size() > 0) {
             int randomMaxValue = 0;
             for (int i = 0; i < enabledPowerUpList.size(); i++) {
-                randomMaxValue = randomMaxValue + PowerUpState.getSpawnChance(enabledPowerUpList.get(i));
+                randomMaxValue += PowerUpState.getSpawnChance(enabledPowerUpList.get(i));
             }
 
             Random r = new Random();
             int randomValue = r.nextInt(randomMaxValue);
-            int j = 0;
+            int j = 1;
             for (int i = 0; i < enabledPowerUpList.size(); i++) {
-                 j = j + PowerUpState.getSpawnChance(enabledPowerUpList.get(i));
-                j = j + PowerUpState.getSpawnChance(enabledPowerUpList.get(i));
-                if(j <= randomValue) {
-                    powerUpState = enabledPowerUpList.get(i);
-                }
+//                j += PowerUpState.getSpawnChance(enabledPowerUpList.get(i));
+//                System.out.println(enabledPowerUpList.size());
+//                System.out.println(randomMaxValue);
+//                if(j <= randomValue) {
+                    powerUpState = enabledPowerUpList.get(randomValue);
+//                    System.out.println(powerUpState);
+//                }
             }
         }
     }
