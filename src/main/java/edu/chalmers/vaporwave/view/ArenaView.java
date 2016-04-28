@@ -105,7 +105,7 @@ public class ArenaView {
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
 
-        enemySprite = new CharacterSprite("ENEMY");
+        enemySprite = new CharacterSprite("PCCHAN");
         initCharacterSprites(enemySprite);
 
         arenaBackgroundSprite = new Sprite("images/background/sprite-arenabackground-03.png");
