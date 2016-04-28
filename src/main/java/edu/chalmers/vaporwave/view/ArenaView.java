@@ -135,10 +135,11 @@ public class ArenaView {
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 
-        powerUpSprites.put(PowerUpState.SPEED, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 1}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpState.BOMB_COUNT, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 2}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpState.RANGE, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 3}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpState.HEALTH, new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 1, 0.4, new int[] {1, 3}, new double[] {1, 1}));
+        Image powerupSpritesheet = new Image("images/spritesheet-powerups-18x18.png");
+        powerUpSprites.put(PowerUpState.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 0}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpState.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 1}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpState.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpState.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 3}, new double[] {1, 1}));
     }
 
     public void initArena(StaticTile[][] arenaTiles) {
