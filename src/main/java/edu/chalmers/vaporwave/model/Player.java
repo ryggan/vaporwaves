@@ -14,13 +14,13 @@ public class Player {
 
     public Player(int id) {
         this.playerId = id;
-        this.score=0;
+        this.score = 0;
     }
 
     public Player(int id, String playerName) {
         this.playerId = id;
-        this.playerName=playerName;
-        this.score=0;
+        this.playerName = playerName;
+        this.score = 0;
     }
 
     public void setScore(int score){
@@ -28,7 +28,7 @@ public class Player {
     }
 
     public void clearScore(){
-        this.score=0;
+        this.score = 0;
     }
 
     public void setCharacter(GameCharacter c){

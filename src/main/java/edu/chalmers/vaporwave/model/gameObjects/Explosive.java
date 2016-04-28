@@ -1,9 +1,5 @@
 package edu.chalmers.vaporwave.model.gameObjects;
 
-import edu.chalmers.vaporwave.event.BlastEvent;
-import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.view.Sprite;
-
 import java.awt.*;
 
 public abstract class Explosive extends StaticTile {

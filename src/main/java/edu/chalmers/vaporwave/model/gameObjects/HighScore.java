@@ -11,8 +11,8 @@ public class HighScore {
     ArrayList<Object[]> multiPlayerScore;
 
     public HighScore(){
-        singlePlayerScore = new ArrayList<Object[]>();
-        multiPlayerScore = new ArrayList<Object[]>();
+        singlePlayerScore = new ArrayList<>();
+        multiPlayerScore = new ArrayList<>();
     }
 
     //First int then name

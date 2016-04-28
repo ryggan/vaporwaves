@@ -159,10 +159,7 @@ public class GameController {
             }
         }
 
-
-
         // Updating positions
-
         for (Movable movable : arenaModel.getArenaMovables()) {
             movable.updatePosition();
         }
@@ -177,8 +174,6 @@ public class GameController {
                 playerWalksOnPowerUp(powerUp.getPowerUpState());
                 updateStats();
             }
-
-
         }
 
         if (deadEnemies.size() > 0) {
