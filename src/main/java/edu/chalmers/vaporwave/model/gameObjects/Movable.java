@@ -178,10 +178,11 @@ public abstract class Movable {
     }
 
     private boolean oppositeDirection(Direction direction) {
-        return (direction.equals(Direction.UP) && getDirection() == Direction.DOWN)
+        return (((direction.equals(Direction.UP) && getDirection() == Direction.DOWN)
                 || (direction.equals(Direction.DOWN) && getDirection() == Direction.UP)
                 || (direction.equals(Direction.RIGHT) && getDirection() == Direction.LEFT)
-                || (direction.equals(Direction.LEFT) && getDirection() == Direction.RIGHT);
+                || (direction.equals(Direction.LEFT) && getDirection() == Direction.RIGHT))
+                && !(this.latestArenaTiles[getPreviousGridPositionX()][getPreviousGridPositionY()] instanceof Bomb));
     }
 
 
