@@ -28,6 +28,8 @@ public abstract class Movable {
 
     private double maxHealth;
     private double health;
+    private int flinchTimer;
+    private int flinchDelay;
 
     protected Movable() { }
 
@@ -40,6 +42,7 @@ public abstract class Movable {
         this.moving = false;
         this.name = name;
         this.damage = 30;
+        this.flinchDelay = 30;
 
         this.previousGridPositionX = Utils.canvasToGridPosition(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());
@@ -54,22 +57,33 @@ public abstract class Movable {
     public void updatePosition() {
         this.canvasPositionX += this.velocityX;
         this.canvasPositionY += this.velocityY;
-        if (movableState == MovableState.WALK) {
-            stopOnTileIfNeeded();
-        }
+
         moving = (getVelocityX() != 0 || getVelocityY() != 0);
 
-        if (movableState == MovableState.WALK) {
-            stopOnTileIfNeeded();
+        switch (movableState) {
+            case WALK:
+                stopOnTileIfNeeded();
+                break;
+            case FLINCH:
+                if (flinchTimer > 0) {
+                    flinchTimer--;
+                } else {
+                    movableState = MovableState.IDLE;
+                    if (Utils.gridToCanvasPosition(getPreviousGridPositionX()) != getCanvasPositionX()
+                            || Utils.gridToCanvasPosition(getPreviousGridPositionY()) != getCanvasPositionY()) {
+                        move(direction, latestArenaTiles);
+                    }
+                }
         }
 
         this.lastMove = null;
     }
 
-    private void stop(int newGridPositionX, int newGridPositionY) {
+    private void stopAtTile(int newGridPositionX, int newGridPositionY) {
 
+        stop();
         movableState = MovableState.IDLE;
-        setVelocity(0, 0);
+//        setVelocity(0, 0);
         setCanvasPosition(Utils.gridToCanvasPosition(newGridPositionX), Utils.gridToCanvasPosition(newGridPositionY));
         setPreviousGridPositionX(newGridPositionX);
         setPreviousGridPositionY(newGridPositionY);
@@ -77,6 +91,11 @@ public abstract class Movable {
         if (this.lastMove != null) {
             move(lastMove, this.latestArenaTiles);
         }
+    }
+
+    private void stop() {
+        setVelocity(0, 0);
+        this.setMoving(false);
     }
 
     private void stopOnTileIfNeeded() {
@@ -90,7 +109,7 @@ public abstract class Movable {
                 && (moving || (closestTilePositionX != getPreviousGridPositionX() || closestTilePositionY != getPreviousGridPositionY()));
 
         if(closeToPosition) {
-            stop(closestTilePositionX, closestTilePositionY);
+            stopAtTile(closestTilePositionX, closestTilePositionY);
         }
     }
 
@@ -115,7 +134,7 @@ public abstract class Movable {
     }
 
     public void death() {
-        this.setMoving(false);
+        stop();
         movableState = movableState.DEATH;
     }
 
@@ -123,6 +142,12 @@ public abstract class Movable {
         if (movableState == movableState.IDLE) {
             movableState = movableState.SPAWN;
         }
+    }
+
+    public void flinch() {
+        stop();
+        flinchTimer = flinchDelay;
+        movableState = movableState.FLINCH;
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
@@ -195,6 +220,8 @@ public abstract class Movable {
         if (this.health <= 0) {
             this.health = 100;
             death();
+        } else {
+            flinch();
         }
     }
 
