@@ -300,4 +300,8 @@ public abstract class Movable {
     public double getHealth() {
         return this.health;
     }
+
+    public void setFlinchDelay(int delay) {
+        this.flinchDelay = delay;
+    }
 }
