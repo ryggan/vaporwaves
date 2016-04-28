@@ -19,17 +19,18 @@ public class HUDView {
     private int firstFrameX;
     private Point position;
     private Label stats;
-    private MenuButtonView healthbarSprite;
+    private Label healthPercentage;
+
 
     private ImageView healthBarEmpty;
     private ImageView healthBarFilled;
     private ImageView scoreBarFilled;
     private ImageView scoreBarEmpty;
 
+
     private ImageView emptyBar;
     private Group root;
     private Canvas hudCanvas;
-    private GraphicsContext hudGC;
 
     private PixelReader reader;
     private WritableImage newImage;
@@ -58,15 +59,19 @@ public class HUDView {
         this.scoreBarFilled.setLayoutY(38);
 
         this.stats = new Label();
+
         stats.getStylesheets().add("css/style.css");
         stats.getStyleClass().add("statsLabel");
+        this.healthPercentage=new Label();
+       
 
         hudCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         this.root.getChildren().add(hudCanvas);
         this.root.getChildren().add(healthBarEmpty);
-        this.root.getChildren().add(healthBarFilled);
         this.root.getChildren().add(scoreBarEmpty);
         this.root.getChildren().add(scoreBarFilled);
+
+        resetHealthBar();
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
@@ -75,10 +80,14 @@ public class HUDView {
         System.out.println((health / 100) * 300);
         updateHealthBar((int) ((health / 100) * 300));
         stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
+        healthPercentage.setText(printHealth+"%");
         stats.setLayoutX(920);
         stats.setLayoutY(152);
+        healthPercentage.setLayoutX(184);
+        healthPercentage.setLayoutY(38);
         this.root.getChildren().remove(stats);
         this.root.getChildren().add(stats);
+        this.root.getChildren().add(healthPercentage);
     }
 
     public void updateHealthBar(int i) {
@@ -90,5 +99,14 @@ public class HUDView {
         this.root.getChildren().remove(healthBarFilled);
         this.root.getChildren().add(healthBarFilledNew);
         this.healthBarFilled = healthBarFilledNew;
+    }
+
+    public void setZeroHealthBar(){
+        this.root.getChildren().remove(healthBarFilled);
+    }
+
+    public void resetHealthBar(){
+
+        updateHealthBar(300);
     }
 }
