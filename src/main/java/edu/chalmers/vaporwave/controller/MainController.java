@@ -17,6 +17,8 @@ public class MainController {
     private GameController gameController;
     private ListenerController listenerController;
     private Group root;
+    private Group menuRoot;
+    private Group gameRoot;
 
     private boolean inGame;
 
@@ -41,8 +43,13 @@ public class MainController {
             newGame(new NewGameEvent());
         }
 
+        this.menuRoot = new Group();
+        this.gameRoot = new Group();
 
-        this.menuController = new MenuController(root);
+        this.root.getChildren().add(menuRoot);
+
+        this.menuController = new MenuController(menuRoot);
+        this.gameController = new GameController(gameRoot);
 
         // Animation timer setup
 
@@ -70,14 +77,6 @@ public class MainController {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 }
 
-                // TEST OUTPUT
-
-//                if (timeSinceStart % 1.0 < 0.05) {
-//                    System.out.println("Elapsed time since beginning: "+timeSinceStart);
-//                    System.out.println("Elapsed time since last call: "+timeSinceLastCall);
-//                    System.out.println("---");
-//                }
-
                 for (String code : ListenerController.getInstance().getPressed()) {
                     ListenerController.getInstance().updatePressed(code);
                 }
@@ -91,7 +90,8 @@ public class MainController {
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
         this.root.getChildren().clear();
-        this.gameController = new GameController(this.root);
+        this.root.getChildren().add(gameRoot);
+        this.gameController.initGame(gameRoot);
         this.inGame = true;
     }
 
@@ -102,9 +102,9 @@ public class MainController {
 
     @Subscribe
     public void goToMenu(GoToMenuEvent goToMenuEvent) {
-        this.inGame = false;
         this.root.getChildren().clear();
-        this.gameController = null;
-        this.menuController = new MenuController(root);
+        this.root.getChildren().add(menuRoot);
+        this.menuController.updateViews();
+        this.inGame = false;
     }
 }

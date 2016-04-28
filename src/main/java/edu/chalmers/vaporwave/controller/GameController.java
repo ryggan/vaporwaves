@@ -35,6 +35,10 @@ public class GameController {
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
 
+        initGame(root);
+    }
+
+    public void initGame(Group root) {
         //Change this to proper values according to player preferences later, dummy values meanwhile
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpState.BOMB_COUNT);
@@ -58,8 +62,6 @@ public class GameController {
 
         playerCharacter = new GameCharacter("CHARLOTTE");
 
-//        updateStats();
-
         this.arenaView.updateStats(
                 this.playerCharacter.getHealth(),
                 this.playerCharacter.getSpeed(),
@@ -78,17 +80,6 @@ public class GameController {
 
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
-
-////        Enemy enemyOne = new Enemy("Enemy", Utils.gridToCanvasPosition(5), Utils.gridToCanvasPosition(5), 0.6, new SemiStupidAI(gameCharacters));
-//        Enemy enemyTwo = new Enemy("Enemy", Utils.gridToCanvasPosition(0), Utils.gridToCanvasPosition(4), 0.2, new StupidAI());
-//        Enemy enemyThree = new Enemy("Enemy", Utils.gridToCanvasPosition(7), Utils.gridToCanvasPosition(0), 0.2, new StupidAI());
-//        Enemy enemyFour = new Enemy("Enemy", Utils.gridToCanvasPosition(4), Utils.gridToCanvasPosition(8), 0.2, new StupidAI());
-//        Enemy enemyFive = new Enemy("Enemy", Utils.gridToCanvasPosition(15), Utils.gridToCanvasPosition(10), 0.2, new StupidAI());
-////        enemies.add(enemyOne);
-//        enemies.add(enemyTwo);
-//        enemies.add(enemyThree);
-//        enemies.add(enemyFour);
-//        enemies.add(enemyFive);
 
         Random random = new Random();
         for (int k = 0; k < 10; k++) {
@@ -148,6 +139,9 @@ public class GameController {
                             this.arenaModel.getArenaTiles()[j][k] = null;
                         }
                     }
+                    this.enemies.clear();
+                    this.deadEnemies.clear();
+                    this.playerCharacter = null;
 
                     GameEventBus.getInstance().post(new GoToMenuEvent());
             }
@@ -173,10 +167,10 @@ public class GameController {
             movable.updatePosition();
         }
 
-        if (this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y]
+        if (this.playerCharacter != null &&
+                this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y]
                 instanceof StatPowerUp) {
             StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y];
-
 
             if (powerUp.getPowerUpState() != null) {
                 this.arenaModel.setTile(null, playerCharacter.getGridPosition());
@@ -216,7 +210,6 @@ public class GameController {
 
     @Subscribe
     public void minePlaced(PlaceMineEvent placeMineEvent) {
-        System.out.println("Placing mine");
         arenaModel.setTile(new Mine(this.playerCharacter, 1, this.playerCharacter.getDamage()), placeMineEvent.getGridPosition());
         this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
         updateStats();

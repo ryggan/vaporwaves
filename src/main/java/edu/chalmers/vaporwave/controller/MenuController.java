@@ -87,7 +87,7 @@ public class MenuController {
         }
     }
 
-    private void updateViews() {
+    public void updateViews() {
         this.menuViewList.get(activeMenu).updateView(
                 this.menuList.get(activeMenu).getSelectedSuper(),
                 this.menuList.get(activeMenu).getSelectedSub()
