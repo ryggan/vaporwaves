@@ -116,7 +116,6 @@ public class GameController {
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
 
@@ -278,8 +277,9 @@ public class GameController {
     }
 
     private void playerRecievesDamage() {
-        this.playerCharacter.setHealth(this.playerCharacter.getHealth() - 30);
-        if(this.playerCharacter.getHealth() < 0) {
+        if (this.playerCharacter.getHealth() - 30 > 0) {
+            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - 30);
+        } else {
             this.playerCharacter.setHealth(100);
             this.playerCharacter.death();
         }
