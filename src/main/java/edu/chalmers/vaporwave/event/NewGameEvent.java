@@ -51,4 +51,26 @@ public class NewGameEvent {
         return this.timeLimit;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof NewGameEvent){
+            NewGameEvent other = (NewGameEvent) o;
+            if(this.arenaMap==other.arenaMap&&this.gameCharacter==other.gameCharacter&&
+                    this.enabledPowerUps==other.enabledPowerUps&&this.timeLimit==other.timeLimit){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        int hash = 1628;
+        hash=hash+arenaMap.hashCode()*42;
+        hash=hash+gameCharacter.hashCode()*73;
+        hash=hash+enabledPowerUps.hashCode()*85;
+        hash=hash+timeLimit*345;
+        return hash;
+    }
+
 }

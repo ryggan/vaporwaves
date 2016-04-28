@@ -34,4 +34,24 @@ public class AnimationFinishedEvent {
         return this.tile;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof AnimationFinishedEvent){
+            AnimationFinishedEvent other = (AnimationFinishedEvent) o;
+            if(this.movable==other.movable&&this.tile==other.tile){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        int hash = 23;
+        hash = movable.hashCode()*123;
+        hash = tile.hashCode()*52;
+        return hash;
+
+    }
+
 }

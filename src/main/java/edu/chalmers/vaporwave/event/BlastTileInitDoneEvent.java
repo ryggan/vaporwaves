@@ -26,6 +26,26 @@ public class BlastTileInitDoneEvent {
     public double getDamage() {
         return this.damage;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof  BlastTileInitDoneEvent){
+            BlastTileInitDoneEvent other = (BlastTileInitDoneEvent) o;
+            if(this.position==other.position&&this.range==other.range&&this.damage==other.damage){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        int hash=2467;
+        hash=hash+position.hashCode()*91;
+        hash=hash+range*263;
+        hash=hash+(int)damage*52;
+        return hash;
+    }
 }
 
 
