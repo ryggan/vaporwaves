@@ -6,9 +6,6 @@ import javafx.geometry.Dimension2D;
 
 import java.awt.Dimension;
 
-/**
- * Created by andreascarlsson on 2016-04-20.
- */
 public class ArenaMap {
     private String name;
     private MapObject[][] mapObjects;

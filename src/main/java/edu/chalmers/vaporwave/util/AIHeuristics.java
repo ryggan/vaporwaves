@@ -11,9 +11,6 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by FEngelbrektsson on 25/04/16.
- */
 public class AIHeuristics {
     private Set<GameCharacter> gameCharacters;
     private StaticTile[][] arenaTiles;

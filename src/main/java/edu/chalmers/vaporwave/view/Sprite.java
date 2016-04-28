@@ -6,11 +6,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-/**
- * A basic class for unanimated images to move about the canvas (which is nice in a game).
- *
- * Created by bob on 2016-04-15.
- */
 public class Sprite {
 
     private Image image;

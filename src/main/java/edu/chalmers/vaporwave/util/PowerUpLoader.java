@@ -9,9 +9,6 @@ import org.w3c.dom.NodeList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by FEngelbrektsson on 22/04/16.
- */
 public class PowerUpLoader {
     public static PowerUpProperties loadPowerUp(NodeList nodeList, String type) {
 

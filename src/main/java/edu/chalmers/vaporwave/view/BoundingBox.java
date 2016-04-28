@@ -1,8 +1,5 @@
 package edu.chalmers.vaporwave.view;
 
-/**
- * Created by bob on 2016-04-22.
- */
 public class BoundingBox {
 
     private double boundingBoxNorth;

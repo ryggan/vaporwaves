@@ -2,9 +2,6 @@ package edu.chalmers.vaporwave.event;
 
 import com.google.common.eventbus.*;
 
-/**
- * Created by andreascarlsson on 2016-04-21.
- */
 public class GameEventBus extends EventBus {
     private static GameEventBus eventBus;
 

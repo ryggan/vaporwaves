@@ -2,9 +2,6 @@ package edu.chalmers.vaporwave.view;
 
 import javafx.scene.image.Image;
 
-/**
- * Created by andreascarlsson on 2016-04-19.
- */
 public class CharacterSpriteProperties {
     private String state;
     private Image spritesheet;

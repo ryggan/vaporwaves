@@ -1,8 +1,5 @@
 package edu.chalmers.vaporwave.view;
 
-/**
- * Created by FEngelbrektsson on 22/04/16.
- */
 public class PowerUpSprite {
     private String type;
 

@@ -2,9 +2,6 @@ package edu.chalmers.vaporwave.model;
 
 import javafx.scene.image.Image;
 
-/**
- * Created by FEngelbrektsson on 22/04/16.
- */
 public class PowerUpSpriteProperties {
     private String state;
     private Image spritesheet;

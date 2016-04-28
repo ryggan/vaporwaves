@@ -4,12 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-/**
- * Created by FEngelbrektsson on 21/04/16.
- *
- *
- * Generates a 16x14 map
- */
 public class RandomMapGenerator {
     private Random random;
     private int numberOfRows = 14;

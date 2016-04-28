@@ -10,9 +10,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by andreascarlsson on 2016-04-19.
- */
 public class XMLReader {
     private String file;
 

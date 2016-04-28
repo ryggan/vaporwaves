@@ -4,9 +4,6 @@ import edu.chalmers.vaporwave.util.PowerUpState;
 
 import java.util.Map;
 
-/**
- * Created by FEngelbrektsson on 22/04/16.
- */
 public class PowerUpProperties {
     private String type;
     private Map<PowerUpState, PowerUpSpriteProperties> spriteProperties;

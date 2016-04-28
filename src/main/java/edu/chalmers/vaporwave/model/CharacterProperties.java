@@ -5,9 +5,6 @@ import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
 
 import java.util.Map;
 
-/**
- * Created by andreascarlsson on 2016-04-20.
- */
 public class CharacterProperties {
     private String name;
     private Map<MovableState, CharacterSpriteProperties> spriteProperties;

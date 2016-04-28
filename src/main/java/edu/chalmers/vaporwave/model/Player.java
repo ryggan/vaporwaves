@@ -2,9 +2,6 @@ package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
 
-/**
- * Created by FEngelbrektsson on 15/04/16.
- */
 public class Player {
     private int playerId;
     private String playerName;

@@ -4,9 +4,6 @@ import edu.chalmers.vaporwave.model.gameObjects.Blast;
 
 import java.awt.*;
 
-/**
- * Created by andreascarlsson on 2016-04-22.
- */
 public class BlastEvent {
 
     private Blast blast;
