@@ -162,7 +162,7 @@ public class GameController {
 
             if (powerUp.getPowerUpState() != null) {
                 this.arenaModel.setTile(null, playerCharacter.getGridPosition());
-                playerWalksOnPowerUp(playerCharacter, powerUp.getPowerUpState());
+                playerWalksOnPowerUp(powerUp.getPowerUpState());
                 updateStats();
             }
 
@@ -191,12 +191,15 @@ public class GameController {
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
         arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY), placeBombEvent.getGridPosition());
+        this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() - 1);
+        updateStats();
     }
 
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
-        arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
-        playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
+        this.arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
+        this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
+        updateStats();
     }
 
     /**
@@ -277,12 +280,13 @@ public class GameController {
 
     //TODO
     private void updateStats() {
-        this.arenaView.updateStats(
-                this.playerCharacter.getHealth(),
-                this.playerCharacter.getSpeed(),
-                this.playerCharacter.getBombRange(),
-                this.playerCharacter.getBombCount()
-        );
+        System.out.println(this.playerCharacter.getHealth() + " " + this.playerCharacter.getSpeed() + " " + this.playerCharacter.getBombRange() + " " + this.playerCharacter.getBombCount());
+//        this.arenaView.updateStats(
+//                this.playerCharacter.getHealth(),
+//                this.playerCharacter.getSpeed(),
+//                this.playerCharacter.getBombRange(),
+//                this.playerCharacter.getBombCount()
+//        );
     }
 
     public ArenaModel newGame(ArenaMap arenaMap) {
@@ -304,33 +308,26 @@ public class GameController {
         }
     }
 
-//    private void spawnPowerUp(Point position) {
-//        Random randomGenerator = new Random();
-//        if (randomGenerator.nextInt(10) < 2) {
-//            this.arenaModel.setTile(new TestPowerUp(PowerUpState.RANGE), position);
-//        } else if (randomGenerator.nextInt(10) < 2) {
-//            this.arenaModel.setTile(new TestPowerUp(PowerUpState.BOMB_COUNT), position);
-//        } else if (randomGenerator.nextInt(10) < 2) {
-//            this.arenaModel.setTile(new TestPowerUp(PowerUpState.SPEED), position);
-//        }
-//    }
-
     /**
      * Call on this method when player walks on PowerUpTile.
      * Will set the appropriate stat value on the character that walks on it.
-     * @param character
      * @param powerUpState
      */
-    public void playerWalksOnPowerUp(GameCharacter character, PowerUpState powerUpState) {
-
-        if(powerUpState.equals(PowerUpState.HEALTH)) {
-            character.setHealth(character.getHealth() + 10);
-        } else if(powerUpState.equals(PowerUpState.BOMB_COUNT)) {
-            character.setBombCount(character.getBombCount() + 1);
-        } else if(powerUpState.equals(PowerUpState.RANGE)) {
-            character.setBombRange(character.getBombRange() + 1);
-        } else if(powerUpState.equals(PowerUpState.SPEED)) {
-            character.setSpeed(character.getSpeed() + 0.2);
+    public void playerWalksOnPowerUp(PowerUpState powerUpState) {
+        System.out.println(powerUpState);
+        switch (powerUpState) {
+            case HEALTH:
+                this.playerCharacter.setHealth(this.playerCharacter.getHealth() + 10);
+                break;
+            case BOMB_COUNT:
+                this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
+                break;
+            case SPEED:
+                this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() + 0.2);
+                break;
+            case RANGE:
+                this.playerCharacter.setBombRange(this.playerCharacter.getBombRange() + 1);
+                break;
         }
     }
 }
