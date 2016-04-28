@@ -8,7 +8,6 @@ import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.gameObjects.*;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
-import edu.chalmers.vaporwave.view.HUDView;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -225,15 +224,12 @@ public class GameController {
         blastDirections.put(Direction.DOWN, true);
 
         if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-//            playerRecievesDamage();
             this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
-//            updateStats();
         }
 
         // Checks if enemy is ON the bomb.
         for (Enemy enemy : this.enemies) {
             if (enemy.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-//                enemy.death();
                 enemy.dealDamage(blastTileInitDoneEvent.getDamage());
                 deadEnemies.add(enemy);
             }
@@ -281,17 +277,6 @@ public class GameController {
                 position.x < this.arenaModel.getArenaTiles().length &&
                 position.y < this.arenaModel.getArenaTiles()[0].length;
     }
-
-//    private void playerRecievesDamage() {
-//        if (this.playerCharacter.getHealth() - this.playerCharacter.getDamage() > 0) {
-//            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - this.playerCharacter.getDamage());
-//        } else {
-//            this.playerCharacter.setHealth(100);
-//            this.playerCharacter.death();
-//        }
-//        updateStats();
-//    }
-
 
     //TODO
     private void updateStats() {

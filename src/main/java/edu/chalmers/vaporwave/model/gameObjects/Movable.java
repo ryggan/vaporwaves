@@ -196,12 +196,6 @@ public abstract class Movable {
             this.health = 100;
             death();
         }
-//        if (this.playerCharacter.getHealth() - this.playerCharacter.getDamage() > 0) {
-//            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - this.playerCharacter.getDamage());
-//        } else {
-//            this.playerCharacter.setHealth(100);
-//            this.playerCharacter.death();
-//        }
     }
 
     public Direction getDirection() {
