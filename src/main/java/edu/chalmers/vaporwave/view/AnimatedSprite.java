@@ -2,6 +2,8 @@ package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.model.gameObjects.Movable;
+import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,6 +22,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
     private ArrayList<int[]> frames;
     private int length;
+    private Image originalSpriteSheet;
     private Image spriteSheet;
     private Dimension spriteDimension;
     private Dimension sheetDimension;
@@ -28,11 +31,13 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     private double duration;
     private double timeOffset;
     private boolean startFromBeginning;
-    private boolean runAnimation;
+//    private boolean runAnimation;
     private int loops; // -1 gives infinite loops
     private double startTime;
+    private boolean playedYet;
 
     private boolean animationFinished;
+    private AnimationFinishedEvent animationFinishedEvent;
 
     /**
      * Constructor that takes an Image object, and uses it as an spritesheed, with some help from the other
@@ -59,6 +64,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
         this.frames = new ArrayList<int[]>();
 
+        this.originalSpriteSheet = spriteSheet;
         this.spriteSheet = spriteSheet;
         this.spriteDimension = spriteDimension;
         this.length = length;
@@ -68,9 +74,11 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
         this.timeOffset = 0;
         this.startFromBeginning = false;
-        this.runAnimation = true;
+//        this.runAnimation = true;
+        this.animationFinished = false;
         this.loops = -1;
         this.startTime = 0;
+        this.playedYet = false;
 
 
         setWidth(spriteDimension.getWidth());
@@ -166,7 +174,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     @Override
     public void setScale(double scale) {
         super.setScale(scale);
-        setSpriteSheet(Utils.resize(this.spriteSheet, scale));
+        setSpriteSheet(Utils.resize(this.originalSpriteSheet, scale));
     }
 
     /**
@@ -177,6 +185,8 @@ public class AnimatedSprite extends Sprite implements Cloneable {
      */
     @Override
     public void render(GraphicsContext gc, double time) {
+
+        this.playedYet = true;
 
         if (startFromBeginning && timeOffset == 0) {
             timeOffset = time;
@@ -203,25 +213,34 @@ public class AnimatedSprite extends Sprite implements Cloneable {
             targety = Math.round(targety * getScale()) / getScale();
         }
 
-        if (loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
-            runAnimation = false;
+        if (!animationFinished && loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
+//            if (runAnimation && loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
+            System.out.println("End of animation! "+this);
+//            runAnimation = false;
             this.animationFinished = true;
-            GameEventBus.getInstance().post(new AnimationFinishedEvent());
+            if (this.animationFinishedEvent == null) {
+                this.animationFinishedEvent = new AnimationFinishedEvent();
+            }
+            GameEventBus.getInstance().post(this.animationFinishedEvent);
         }
 
-        if (runAnimation) {
+        if (!animationFinished) {
+//            if (runAnimation) {
             gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
         }
     }
 
     public void resetLoops() {
-        runAnimation = true;
+//        runAnimation = true;
         startTime = 0;
+        timeOffset = 0;
+        playedYet = false;
+        animationFinished = false;
     }
 
     @Override
     public String toString() {
-        return "Animated "+super.toString() + " Length: "+length;
+        return "Animated"+super.toString() + " Length: "+length;
     }
 
     // GETTERS AND SETTERS:
@@ -246,5 +265,13 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
     public boolean isAnimationFinished() {
         return this.animationFinished;
+    }
+
+    public void setAnimationFinishedEvent(AnimationFinishedEvent animationFinishedEvent) {
+        this.animationFinishedEvent = animationFinishedEvent;
+    }
+
+    public boolean getPlayedYet() {
+        return this.playedYet;
     }
 }

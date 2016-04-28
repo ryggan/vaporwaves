@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
@@ -16,11 +15,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.*;
-import javafx.scene.text.Font;
 
 import java.awt.*;
-import java.io.File;
 import java.util.*;
 
 public class ArenaView {
@@ -394,15 +390,20 @@ public class ArenaView {
                 currentSprite = sprites.getWalkSprites();
             } else if (state == MovableState.FLINCH) {
                 currentSprite = sprites.getFlinchSprites();
-            } else if (state == MovableState.SPAWN) {
-                hudView.resetHealthBar();
-                currentSprite = sprites.getSpawnSprites();
-                ((AnimatedSprite)currentSprite[0]).resetLoops();
-            } else if (state == MovableState.DEATH) {
-                hudView.setZeroHealthBar();
-                currentSprite = sprites.getDeathSprites();
-                ((AnimatedSprite)currentSprite[0]).resetLoops();
-                ((AnimatedSprite)currentSprite[0]).setLoops(1);
+            } else if (state == MovableState.SPAWN || state == MovableState.DEATH) {
+                if (state == MovableState.SPAWN) {
+                    hudView.resetHealthBar();
+                    currentSprite = sprites.getSpawnSprites();
+                } else {
+                    hudView.setZeroHealthBar();
+                    currentSprite = sprites.getDeathSprites();
+                }
+                if (!((AnimatedSprite)currentSprite[0]).getPlayedYet() || ((AnimatedSprite)currentSprite[0]).isAnimationFinished()) {
+                    ((AnimatedSprite)currentSprite[0]).setAnimationFinishedEvent(new AnimationFinishedEvent(character));
+                    ((AnimatedSprite)currentSprite[0]).setStartFromBeginning(true);
+                    ((AnimatedSprite)currentSprite[0]).resetLoops();
+                    ((AnimatedSprite)currentSprite[0]).setLoops(1);
+                }
             }
 
             int spriteIndex = 0;
@@ -528,5 +529,19 @@ public class ArenaView {
             }
         }
 
+    }
+
+    @Subscribe
+    public void animationFinished(AnimationFinishedEvent animationFinishedEvent) {
+        if (animationFinishedEvent.getMovable() != null) {
+            Movable movable = animationFinishedEvent.getMovable();
+            if (movable.getState() == MovableState.DEATH) {
+                GameEventBus.getInstance().post(new DeathEvent(movable));
+            } else if (movable.getState() == MovableState.SPAWN) {
+                GameEventBus.getInstance().post(new SpawnEvent(movable));
+            }
+        } else if (animationFinishedEvent.getTile() != null) {
+
+        }
     }
 }

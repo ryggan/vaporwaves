@@ -1,18 +1,37 @@
 package edu.chalmers.vaporwave.event;
 
-import edu.chalmers.vaporwave.view.AnimatedSprite;
+import edu.chalmers.vaporwave.model.gameObjects.Movable;
+import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
 
 public class AnimationFinishedEvent {
-    private AnimatedSprite animatedSprite;
+
+    private Movable movable;
+    private StaticTile tile;
 
     public AnimationFinishedEvent() {}
 
-    public AnimationFinishedEvent(AnimatedSprite animatedSprite) {
-        this.animatedSprite = animatedSprite;
+    public AnimationFinishedEvent(Movable movable) {
+        this.movable = movable;
     }
 
-    public AnimatedSprite getAnimatedSprite() {
-        return this.animatedSprite;
+    public AnimationFinishedEvent(StaticTile tile) {
+        this.tile = tile;
+    }
+
+    public void setMovable(Movable movable) {
+        this.movable = movable;
+    }
+
+    public Movable getMovable() {
+        return this.movable;
+    }
+
+    public void setTile(StaticTile tile) {
+        this.tile = tile;
+    }
+
+    public StaticTile getTile() {
+        return this.tile;
     }
 
 }

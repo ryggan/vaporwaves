@@ -81,25 +81,25 @@ public class GameController {
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
 
-        Random random = new Random();
-        for (int k = 0; k < 10; k++) {
-            boolean free;
-            Point spawnPosition = new Point(0,0);
-            do {
-                spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
-                free = (arenaModel.getArenaTile(spawnPosition) == null);
-            } while (!free);
-            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPosition(spawnPosition.x), Utils.gridToCanvasPosition(spawnPosition.y), 0.2, new StupidAI());
-            enemies.add(enemy);
-        }
-
-        for(Enemy enemy : enemies) {
-            try {
-                arenaModel.addMovable(enemy);
-            } catch(ArrayIndexOutOfBoundsException e) {
-                System.out.println("Tile out of bounds!");
-            }
-        }
+//        Random random = new Random();
+//        for (int k = 0; k < 10; k++) {
+//            boolean free;
+//            Point spawnPosition = new Point(0,0);
+//            do {
+//                spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
+//                free = (arenaModel.getArenaTile(spawnPosition) == null);
+//            } while (!free);
+//            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPosition(spawnPosition.x), Utils.gridToCanvasPosition(spawnPosition.y), 0.2, new StupidAI());
+//            enemies.add(enemy);
+//        }
+//
+//        for(Enemy enemy : enemies) {
+//            try {
+//                arenaModel.addMovable(enemy);
+//            } catch(ArrayIndexOutOfBoundsException e) {
+//                System.out.println("Tile out of bounds!");
+//            }
+//        }
     }
 
     // This one is called every time the game-timer is updated
@@ -127,9 +127,9 @@ public class GameController {
                 case "RIGHT":
                     playerCharacter.move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
-                case "ENTER":
-                    playerCharacter.spawn();
-                    break;
+//                case "ENTER":
+//                    playerCharacter.spawn();
+//                    break;
                 case "ESCAPE":
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
@@ -231,15 +231,20 @@ public class GameController {
         blastDirections.put(Direction.RIGHT, true);
         blastDirections.put(Direction.DOWN, true);
 
-        if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-            this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
-        }
-
-        // Checks if enemy is ON the bomb.
-        for (Enemy enemy : this.enemies) {
-            if (enemy.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-                enemy.dealDamage(blastTileInitDoneEvent.getDamage());
-                deadEnemies.add(enemy);
+//        if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
+//            this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
+//        }
+//
+//        // Checks if enemy is ON the bomb.
+//        for (Enemy enemy : this.enemies) {
+//            if (enemy.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
+//                enemy.dealDamage(blastTileInitDoneEvent.getDamage());
+//                deadEnemies.add(enemy);
+//            }
+//        }
+        for (Movable movable : arenaModel.getArenaMovables()) {
+            if (movable.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
+                movable.dealDamage(blastTileInitDoneEvent.getDamage());
             }
         }
 
@@ -255,14 +260,18 @@ public class GameController {
                         blastDirections.put(direction, false);
                     } else if (this.arenaModel.getArenaTile(currentPosition) instanceof Bomb) {
                         ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
-                    } else if (this.playerCharacter.getGridPosition().equals(currentPosition)) {
-//                        playerRecievesDamage();
-                        this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
+//                    } else if (this.playerCharacter.getGridPosition().equals(currentPosition)) {
+//                        this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
                     } else {
-                        for (Enemy enemy : this.enemies) {
-                            if (enemy.getGridPosition().equals(currentPosition)) {
-                                enemy.death();
-                                deadEnemies.add(enemy);
+//                        for (Enemy enemy : this.enemies) {
+//                            if (enemy.getGridPosition().equals(currentPosition)) {
+//                                enemy.death();
+//                                deadEnemies.add(enemy);
+//                            }
+//                        }
+                        for (Movable movable : arenaModel.getArenaMovables()) {
+                            if (movable.getGridPosition().equals((currentPosition))) {
+                                movable.dealDamage(blastTileInitDoneEvent.getDamage());
                             }
                         }
                     }
@@ -340,6 +349,26 @@ public class GameController {
             case RANGE:
                 this.playerCharacter.setBombRange(this.playerCharacter.getBombRange() + 1);
                 break;
+        }
+    }
+
+    @Subscribe
+    public void movableDeath(DeathEvent deathEvent) {
+        Movable movable = deathEvent.getMovable();
+        if (movable instanceof GameCharacter) {
+            movable.spawn(new Point(6, 5));
+        } else if (movable instanceof Enemy) {
+
+        }
+    }
+
+    @Subscribe
+    public void movableSpawn(SpawnEvent spawnEvent) {
+        Movable movable = spawnEvent.getMovable();
+        if (movable instanceof GameCharacter) {
+            movable.idle();
+        } else if (movable instanceof Enemy) {
+
         }
     }
 }

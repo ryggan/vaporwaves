@@ -47,7 +47,7 @@ public abstract class Movable {
         this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());
 
         this.moving = false;
-        this.health = 50.0;
+        this.health = Constants.DEFAULT_START_HEALTH;
 
         this.movableState = MovableState.IDLE;
     }
@@ -81,7 +81,6 @@ public abstract class Movable {
 
         stop();
         movableState = MovableState.IDLE;
-//        setVelocity(0, 0);
         setCanvasPosition(Utils.gridToCanvasPosition(newGridPositionX), Utils.gridToCanvasPosition(newGridPositionY));
         setPreviousGridPositionX(newGridPositionX);
         setPreviousGridPositionY(newGridPositionY);
@@ -131,21 +130,26 @@ public abstract class Movable {
         return this.speed;
     }
 
-    public void death() {
-        stop();
-        movableState = movableState.DEATH;
-    }
-
-    public void spawn() {
-        if (movableState == movableState.IDLE) {
-            movableState = movableState.SPAWN;
-        }
+    public void idle() {
+        movableState = movableState.IDLE;
     }
 
     public void flinch() {
         stop();
         flinchTimer = flinchDelay;
         movableState = movableState.FLINCH;
+    }
+
+    public void death() {
+        stop();
+        movableState = movableState.DEATH;
+    }
+
+    public void spawn(Point spawningPoint) {
+        this.lastMove = null;
+        this.direction = Direction.DOWN;
+        stopAtTile((int)spawningPoint.getX(), (int)spawningPoint.getY());
+        this.movableState = movableState.SPAWN;
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
@@ -216,7 +220,7 @@ public abstract class Movable {
     public void dealDamage(double damage) {
         this.health -= damage;
         if (this.health <= 0) {
-            this.health = 100;
+            this.health = Constants.DEFAULT_START_HEALTH;
             death();
         } else {
             flinch();
@@ -293,5 +297,10 @@ public abstract class Movable {
 
     public void setFlinchDelay(int delay) {
         this.flinchDelay = delay;
+    }
+
+    @Override
+    public String toString() {
+        return "Movable[ Name="+getName()+"; State="+getState()+"; Velocity=["+getVelocityX()+", "+getVelocityY()+"] ]";
     }
 }

@@ -28,4 +28,6 @@ public class Constants {
 
     public static final double DEFAULT_BOMB_DELAY = 2.0;
     public static final int DEFAULT_BOMB_DAMAGE = 30;
+
+    public static final double DEFAULT_START_HEALTH = 50.0;
 }
