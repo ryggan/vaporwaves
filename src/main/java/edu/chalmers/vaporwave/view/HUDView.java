@@ -24,12 +24,11 @@ import java.util.ArrayList;
 
 public class HUDView {
 
-
     private int width;
     private int height;
     private int firstFrameX;
     private Point position;
-    Label stats = new Label();
+    private Label stats;
     private MenuButtonView healthbarSprite;
 
     private ImageView healthBarEmpty;
@@ -37,20 +36,18 @@ public class HUDView {
     private Canvas hudCanvas;
     private GraphicsContext hudGC;
 
-
-
-
     public HUDView(Group root){
 
+        this.root = root;
+        this.healthBarEmpty = new ImageView(new Image("images/healthbarempty.png"));
+        this.healthBarEmpty.setLayoutX(140);
+        this.healthBarEmpty.setLayoutY(-10);
 
-        this.root=root;
-        healthBarEmpty = new ImageView(new Image("images/healthbarempty.png"));
-        healthBarEmpty.setLayoutX(140);
-        healthBarEmpty.setLayoutY(-10);
+        this.stats = new Label();
 
-        hudCanvas= new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
-        root.getChildren().add(hudCanvas);
-        root.getChildren().add(healthBarEmpty);
+        hudCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
+        this.root.getChildren().add(hudCanvas);
+        this.root.getChildren().add(healthBarEmpty);
 
     }
 
