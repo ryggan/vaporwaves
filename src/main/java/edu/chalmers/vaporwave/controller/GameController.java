@@ -30,6 +30,8 @@ public class GameController {
 
     private int updatedEnemyDirection;
 
+    private double timeSinceStart;
+
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
 
@@ -42,7 +44,7 @@ public class GameController {
 
         // Initiates view
 
-
+        timeSinceStart = 0.0;
 
         ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
 
@@ -113,6 +115,8 @@ public class GameController {
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+
+        this.timeSinceStart = timeSinceStart;
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
@@ -194,14 +198,15 @@ public class GameController {
 
         }
 
-        // Calls view to update graphics
+        this.arenaModel.updateBombs(this.timeSinceStart);
 
+        // Calls view to update graphics
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);
     }
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.playerCharacter.getDamage()), placeBombEvent.getGridPosition());
+        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.playerCharacter.getDamage()), placeBombEvent.getGridPosition());
         this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
         updateStats();
     }

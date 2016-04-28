@@ -46,6 +46,15 @@ public class ArenaModel {
         }
     }
 
+    public void updateBombs(double timeSinceStart) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                if (arenaTiles[i][j] instanceof Bomb) {
+                    ((Bomb)arenaTiles[i][j]).updateTimer(timeSinceStart);
+                }
+            }
+        }
+    }
 
     public StaticTile[][] getArenaTiles() {
         return arenaTiles;
