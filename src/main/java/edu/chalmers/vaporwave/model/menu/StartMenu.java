@@ -14,8 +14,8 @@ public class StartMenu extends AbstractMenu {
 
     public MenuAction getMenuAction() {
         if (this.getSelectedSuper() == 0) {
-//            return MenuAction.NEXT;
-            return MenuAction.START_GAME;
+            return MenuAction.NEXT;
+//            return MenuAction.START_GAME;
         } else if (this.getSelectedSuper() == 1) {
             return MenuAction.EXIT_GAME;
         }

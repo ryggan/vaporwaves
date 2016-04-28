@@ -26,7 +26,6 @@ public class GameCharacter extends Movable {
                             Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
                             ), bombRange)
                     );
-            this.bombCount -= 1;
         }
     }
 
