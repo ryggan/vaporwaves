@@ -41,7 +41,7 @@ public abstract class Movable {
         this.moving = false;
         this.name = name;
         this.damage = 30;
-        this.flinchDelay = 30;
+        this.flinchDelay = 40;
 
         this.previousGridPositionX = Utils.canvasToGridPosition(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());

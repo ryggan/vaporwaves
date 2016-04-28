@@ -83,14 +83,12 @@ public class GameController {
 
         Random random = new Random();
         for (int k = 0; k < 10; k++) {
-            boolean free = false;
+            boolean free;
             Point spawnPosition = new Point(0,0);
-            while (!free) {
+            do {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
-                if (arenaModel.getArenaTile(spawnPosition) == null) {
-                    free = true;
-                }
-            }
+                free = (arenaModel.getArenaTile(spawnPosition) == null);
+            } while (!free);
             Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPosition(spawnPosition.x), Utils.gridToCanvasPosition(spawnPosition.y), 0.2, new StupidAI());
             enemies.add(enemy);
         }
