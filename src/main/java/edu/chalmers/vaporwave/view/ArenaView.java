@@ -390,9 +390,11 @@ public class ArenaView {
             } else if (state == MovableState.FLINCH) {
                 currentSprite = sprites.getFlinchSprites();
             } else if (state == MovableState.SPAWN) {
+                hudView.resetHealthBar();
                 currentSprite = sprites.getSpawnSprites();
                 ((AnimatedSprite)currentSprite[0]).resetLoops();
             } else if (state == MovableState.DEATH) {
+                hudView.setZeroHealthBar();
                 currentSprite = sprites.getDeathSprites();
                 ((AnimatedSprite)currentSprite[0]).resetLoops();
                 ((AnimatedSprite)currentSprite[0]).setLoops(1);
