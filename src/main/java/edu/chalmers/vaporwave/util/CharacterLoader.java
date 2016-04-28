@@ -12,18 +12,13 @@ import java.util.Map;
 public class CharacterLoader {
 
     public static CharacterProperties loadCharacter(NodeList nodeList, String name) {
-
         Map<MovableState, CharacterSpriteProperties> spritePropertiesMap = new HashMap<>();
-
         for (int i = 0; i < nodeList.getLength(); i++) {
-
             Element allCharacterNodes = (Element)nodeList.item(i);
-
             for (int j = 0; j < allCharacterNodes.getElementsByTagName("character").getLength(); j++) {
                 Element singleCharacterNodes = allCharacterNodes;
                 String currentName = singleCharacterNodes.getElementsByTagName("name").item(j).getTextContent();
                 if (currentName.equals(name)) {
-
                     for (int k = 0; k < Constants.CHARACTER_CHARACTER_STATE.length; k++) {
 
                         Element currentSpriteNodes = (Element)singleCharacterNodes.getElementsByTagName(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase()).item(j);
@@ -41,13 +36,9 @@ public class CharacterLoader {
                         CharacterSpriteProperties property = new CharacterSpriteProperties(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(),
                                 spritesheet, dimensionX, dimensionY, frames, duration, firstFrame, offset);
                         spritePropertiesMap.put(Constants.CHARACTER_CHARACTER_STATE[k], property);
-
                     }
-
                 }
-
             }
-
         }
 
         return new CharacterProperties(name, spritePropertiesMap);

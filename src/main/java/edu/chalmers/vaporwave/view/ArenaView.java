@@ -58,7 +58,7 @@ public class ArenaView {
     public enum Compass {
         NORTH, WEST, EAST, SOUTH
     }
-    
+
     public ArenaView(Group root) {
         this.root = root;
         this.arenaFrameSprites = new HashMap<>();

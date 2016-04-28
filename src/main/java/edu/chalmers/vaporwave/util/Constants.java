@@ -27,4 +27,5 @@ public class Constants {
     public static final int GRID_OFFSET_Y = 45;
 
     public static final int DEFAULT_BOMB_DELAY = 2000;
+    public static final int DEFAULT_BOMB_DAMAGE = 30;
 }
