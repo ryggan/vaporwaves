@@ -161,7 +161,7 @@
 
 
     <character>
-        <name>ENEMY</name>
+        <name>PCCHAN</name>
 
         <maxHealth>100</maxHealth>
         <speed>10.0</speed>
@@ -169,11 +169,11 @@
         <bombCount>1</bombCount>
 
         <walk>
-            <spritesheet>images/spritesheet-enemy-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
-            <frames>8</frames>
-            <duration>0.1</duration>
+            <frames>4</frames>
+            <duration>0.2</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
             <offsetX>16</offsetX>
@@ -181,51 +181,51 @@
         </walk>
 
         <idle>
-            <spritesheet>images/spritesheet-enemy-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>1</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
-            <firstFrameY>4</firstFrameY>
+            <firstFrameY>1</firstFrameY>
             <offsetX>16</offsetX>
             <offsetY>27</offsetY>
         </idle>
 
         <flinch>
-            <spritesheet>images/spritesheet-enemy-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
-            <frames>1</frames>
+            <frames>3</frames>
             <duration>0.1</duration>
-            <firstFrameX>4</firstFrameX>
-            <firstFrameY>4</firstFrameY>
+            <firstFrameX>0</firstFrameX>
+            <firstFrameY>2</firstFrameY>
             <offsetX>16</offsetX>
             <offsetY>27</offsetY>
         </flinch>
 
         <death>
-            <spritesheet>images/spritesheet-enemy-death-56x56.png</spritesheet>
-            <dimensionX>56</dimensionX>
-            <dimensionY>56</dimensionY>
-            <frames>28</frames>
+            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
+            <frames>16</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
-            <offsetX>20</offsetX>
-            <offsetY>40</offsetY>
+            <firstFrameY>4</firstFrameY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
         </death>
 
         <spawn>
-            <spritesheet>images/spritesheet-enemy-respawn-48x128.png</spritesheet>
+            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
             <dimensionX>48</dimensionX>
-            <dimensionY>128</dimensionY>
-            <frames>27</frames>
+            <dimensionY>48</dimensionY>
+            <frames>13</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
+            <firstFrameY>3</firstFrameY>
             <offsetX>16</offsetX>
-            <offsetY>112</offsetY>
+            <offsetY>27</offsetY>
         </spawn>
 
         <menu>

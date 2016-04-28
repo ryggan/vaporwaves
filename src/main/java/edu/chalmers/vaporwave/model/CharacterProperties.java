@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.util.MovableState;
+import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
 
 import java.util.Map;
 

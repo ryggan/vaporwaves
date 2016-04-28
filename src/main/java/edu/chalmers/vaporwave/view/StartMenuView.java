@@ -19,8 +19,8 @@ public class StartMenuView extends AbstractMenuView {
 
 
         menuButtonViewList = new ArrayList<>();
-        menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_menu_draft.png"), 365, 67, 0, new Point(640, 200)));
-        menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_menu_draft.png"), 365, 67, 1, new Point(640, 280)));
+        menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_singleplayer.png"), 308, 66, 0, new Point(640, 200)));
+        menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_exit.png"), 308, 66, 0, new Point(640, 280)));
 
     }
 

@@ -7,10 +7,12 @@ import java.awt.*;
 public class BlastTileInitDoneEvent {
     private Point position;
     private int range;
+    private double damage;
 
-    public BlastTileInitDoneEvent(Point position, int range) {
+    public BlastTileInitDoneEvent(Point position, int range, double damage) {
         this.position = position;
         this.range = range;
+        this.damage = damage;
     }
 
     public Point getPosition() {
@@ -19,6 +21,10 @@ public class BlastTileInitDoneEvent {
 
     public int getRange() {
         return this.range;
+    }
+
+    public double getDamage() {
+        return this.damage;
     }
 }
 

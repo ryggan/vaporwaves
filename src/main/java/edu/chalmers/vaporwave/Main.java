@@ -32,6 +32,8 @@ public class Main extends Application {
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
 
+
+
         // Design additions
 
         primaryStage.setResizable(false);

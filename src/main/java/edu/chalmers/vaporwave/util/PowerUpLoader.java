@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave.util;
 
-import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.model.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.model.PowerUpProperties;
 import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
 import javafx.scene.image.Image;
