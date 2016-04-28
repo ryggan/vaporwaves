@@ -36,6 +36,7 @@ public class HUDView {
     private Canvas hudCanvas;
     private GraphicsContext hudGC;
 
+
     public HUDView(Group root){
 
         this.root = root;

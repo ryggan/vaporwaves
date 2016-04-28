@@ -12,9 +12,9 @@ public class GameCharacterTest {
 
     @Test
     public void testPlaceBomb() throws Exception {
-        int i = gC.getBombCount();
+        int i = gC.getCurrentBombCount();
         gC.placeBomb();
-        assertTrue(gC.getBombCount() == i-1);
+        assertTrue(gC.getCurrentBombCount() == i-1);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class GameCharacterTest {
 
     @Test
     public void testGetBombCount() throws Exception {
-        gC.setBombCount(5);
-        assertTrue(gC.getBombCount() == 5);
+        gC.setCurrentBombCount(5);
+        assertTrue(gC.getCurrentBombCount() == 5);
     }
 }

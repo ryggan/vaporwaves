@@ -57,7 +57,14 @@ public class GameController {
 
         playerCharacter = new GameCharacter("CHARLOTTE");
 
-        updateStats();
+//        updateStats();
+
+        this.arenaView.updateStats(
+                this.playerCharacter.getHealth(),
+                this.playerCharacter.getSpeed(),
+                this.playerCharacter.getBombRange(),
+                this.playerCharacter.getCurrentBombCount()
+        );
 
         try {
             arenaModel.addMovable(playerCharacter);
@@ -191,15 +198,16 @@ public class GameController {
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
         arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY), placeBombEvent.getGridPosition());
-        this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() - 1);
+        this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
         updateStats();
     }
 
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
         this.arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
-        this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
-        updateStats();
+        if (this.playerCharacter.getCurrentBombCount() < this.playerCharacter.getMaxBombCount()) {
+            this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
+        }
     }
 
     /**
@@ -210,6 +218,7 @@ public class GameController {
      */
     @Subscribe
     public void blastTileInitDone(BlastTileInitDoneEvent blastTileInitDoneEvent) {
+        updateStats();
         Map<Direction, Boolean> blastDirections = new HashMap<>();
         blastDirections.put(Direction.LEFT, true);
         blastDirections.put(Direction.UP, true);
@@ -280,13 +289,13 @@ public class GameController {
 
     //TODO
     private void updateStats() {
-        System.out.println(this.playerCharacter.getHealth() + " " + this.playerCharacter.getSpeed() + " " + this.playerCharacter.getBombRange() + " " + this.playerCharacter.getBombCount());
-//        this.arenaView.updateStats(
-//                this.playerCharacter.getHealth(),
-//                this.playerCharacter.getSpeed(),
-//                this.playerCharacter.getBombRange(),
-//                this.playerCharacter.getBombCount()
-//        );
+        System.out.println(this.playerCharacter.getHealth() + "\nHealth: " + this.playerCharacter.getHealth() + " / " + this.playerCharacter.getMaxHealth() + "\nRange: " + this.playerCharacter.getBombRange() + "\nBombs: " + this.playerCharacter.getCurrentBombCount() + " / " + this.playerCharacter.getMaxBombCount());
+        this.arenaView.updateStats(
+                this.playerCharacter.getHealth(),
+                this.playerCharacter.getSpeed(),
+                this.playerCharacter.getBombRange(),
+                this.playerCharacter.getCurrentBombCount()
+        );
     }
 
     public ArenaModel newGame(ArenaMap arenaMap) {
@@ -318,9 +327,11 @@ public class GameController {
         switch (powerUpState) {
             case HEALTH:
                 this.playerCharacter.setHealth(this.playerCharacter.getHealth() + 10);
+                this.playerCharacter.setMaxHealth(this.playerCharacter.getMaxHealth() + 10);
                 break;
             case BOMB_COUNT:
-                this.playerCharacter.setBombCount(this.playerCharacter.getBombCount() + 1);
+                this.playerCharacter.setMaxBombCount(this.playerCharacter.getMaxBombCount() + 1);
+                this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
                 break;
             case SPEED:
                 this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() + 0.2);

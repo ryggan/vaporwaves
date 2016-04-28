@@ -9,19 +9,26 @@ public class GameCharacter extends Movable {
     private double maxHealth;
     private double health;
     private int bombRange;
-    private int bombCount;
+    private int maxBombCount;
+    private int currentBombCount;
 
     public GameCharacter(String name) {
         super(name, Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5), 1);
 
-        this.bombRange = 2;
-        this.bombCount = 5;
+        this.bombRange = 1;
+        this.maxBombCount = 1;
+        this.currentBombCount = 1;
         this.maxHealth = 100.0;
         this.health = 100.0;
     }
 
     public void placeBomb() {
-        if(this.bombCount > 0) {
+        if(this.currentBombCount > 0) {
+            System.out.println("placeBomb():");
+            System.out.println(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
+            ));
+            System.out.println(bombRange);
+
             GameEventBus.getInstance().post(new PlaceBombEvent(
                             Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
                             ), bombRange)
@@ -38,27 +45,35 @@ public class GameCharacter extends Movable {
         return this.maxHealth;
     }
 
-    public double getHealth() {
-        return this.health;
-    }
-
     public void setHealth(double health) {
         this.health = health;
     }
 
-    public int getBombRange() {
-        return this.bombRange;
+    public double getHealth() {
+        return this.health;
     }
 
     public void setBombRange(int bombRange) {
         this.bombRange = bombRange;
     }
 
-    public int getBombCount() {
-        return this.bombCount;
+    public int getBombRange() {
+        return this.bombRange;
     }
 
-    public void setBombCount(int bombCount) {
-        this.bombCount = bombCount;
+    public void setCurrentBombCount(int bombCount) {
+        this.currentBombCount = bombCount;
+    }
+
+    public int getCurrentBombCount() {
+        return this.currentBombCount;
+    }
+
+    public void setMaxBombCount(int bombCount) {
+        this.maxBombCount = bombCount;
+    }
+
+    public int getMaxBombCount() {
+        return this.maxBombCount;
     }
 }

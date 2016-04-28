@@ -71,6 +71,8 @@ public class ArenaView {
 
         root.getChildren().add(backgroundPattern);
 
+        this.hudView = new HUDView(root);
+        this.scoreboard = new Scoreboard(root);
 
 
         GameEventBus.getInstance().register(this);
@@ -182,14 +184,12 @@ public class ArenaView {
 
 
         createRandomBackgroundPattern();
-        hudView = new HUDView(root);
-        scoreboard = new Scoreboard(root);
         //make players a proper arraylist of the current players
         //scoreboard.addPlayersToScoreboard(players);
     }
 
     private void createRandomBackgroundPattern() {
-        int randomNum = 1 + (int)(Math.random() * 4 );
+//        int randomNum = 1 + (int)(Math.random() * 4);
         backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
 //        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
 
