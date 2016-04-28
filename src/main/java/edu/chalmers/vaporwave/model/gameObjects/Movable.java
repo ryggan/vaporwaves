@@ -26,7 +26,6 @@ public abstract class Movable {
     private int previousGridPositionY;
     private StaticTile[][] latestArenaTiles;
 
-    private double maxHealth;
     private double health;
     private int flinchTimer;
     private int flinchDelay;
@@ -48,8 +47,7 @@ public abstract class Movable {
         this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());
 
         this.moving = false;
-        this.maxHealth = 100.0;
-        this.health = 100.0;
+        this.health = 50.0;
 
         this.movableState = MovableState.IDLE;
     }
@@ -283,14 +281,6 @@ public abstract class Movable {
 
     public int getDamage() {
         return this.damage;
-    }
-
-    public void setMaxHealth(double maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public double getMaxHealth() {
-        return this.maxHealth;
     }
 
     public void setHealth(double health) {

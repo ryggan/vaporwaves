@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by FEngelbrektsson on 26/04/16.
- */
 public class GameCharacterTest {
     private GameCharacter gC = new GameCharacter("Pirre");
 
@@ -15,12 +12,6 @@ public class GameCharacterTest {
         int i = gC.getCurrentBombCount();
         gC.placeBomb();
         assertTrue(gC.getCurrentBombCount() == i-1);
-    }
-
-    @Test
-    public void testSetMaxHealth() throws Exception {
-        gC.setMaxHealth(10);
-        assertTrue(gC.getMaxHealth() == 10);
     }
 
     @Test

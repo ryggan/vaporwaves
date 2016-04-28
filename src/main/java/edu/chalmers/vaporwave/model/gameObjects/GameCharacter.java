@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.model.gameObjects;
 
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
+import edu.chalmers.vaporwave.event.PlaceMineEvent;
 import edu.chalmers.vaporwave.util.Utils;
 
 public class GameCharacter extends Movable {
@@ -21,9 +22,18 @@ public class GameCharacter extends Movable {
     public void placeBomb() {
         if(this.currentBombCount > 0) {
             GameEventBus.getInstance().post(new PlaceBombEvent(
-                            Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
-                            ), bombRange, getDamage())
-                    );
+                    Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
+                    ), bombRange, getDamage())
+            );
+        }
+    }
+
+    public void placeMine() {
+        if(this.currentBombCount > 0) {
+            GameEventBus.getInstance().post(new PlaceMineEvent(
+                    Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
+                    ), getDamage())
+            );
         }
     }
 

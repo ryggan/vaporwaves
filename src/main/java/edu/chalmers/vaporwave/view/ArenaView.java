@@ -41,6 +41,7 @@ public class ArenaView {
     private CharacterSprite[] characterSprites = new CharacterSprite[4];
     private CharacterSprite enemySprite;
     private Sprite[] bombSprite = new Sprite[4];
+    private Sprite mineSprite;
 
     private Sprite destructibleWallSprite;
     private Sprite destructibleWallDestroyedSprite;
@@ -135,6 +136,8 @@ public class ArenaView {
                 new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 2}, new double[] {1, 1});
         bombSprite[3] =
                 new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 3}, new double[] {1, 1});
+        mineSprite =
+                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 4}, new double[] {1, 1});
 
         Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
         destructibleWallSprite =
@@ -362,6 +365,8 @@ public class ArenaView {
                 } else if (name.equals("MEI")) {
                     return bombSprite[3];
                 }
+            } else if (tile instanceof Mine) {
+                return mineSprite;
             }
         } else if (tile instanceof StatPowerUp) {
             return powerUpSprites.get(((StatPowerUp) tile).getPowerUpState());

@@ -159,6 +159,9 @@ public class GameController {
                 case "SPACE":
                     playerCharacter.placeBomb();
                     break;
+                case "M":
+                    playerCharacter.placeMine();
+                    break;
             }
         }
 
@@ -207,6 +210,14 @@ public class GameController {
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
         arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.playerCharacter.getDamage()), placeBombEvent.getGridPosition());
+        this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
+        updateStats();
+    }
+
+    @Subscribe
+    public void minePlaced(PlaceMineEvent placeMineEvent) {
+        System.out.println("Placing mine");
+        arenaModel.setTile(new Mine(this.playerCharacter, 1, this.playerCharacter.getDamage()), placeMineEvent.getGridPosition());
         this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
         updateStats();
     }
@@ -291,7 +302,6 @@ public class GameController {
 
     //TODO
     private void updateStats() {
-        System.out.println(this.playerCharacter.getHealth() + "\nHealth: " + this.playerCharacter.getHealth() + " / " + this.playerCharacter.getMaxHealth() + "\nRange: " + this.playerCharacter.getBombRange() + "\nBombs: " + this.playerCharacter.getCurrentBombCount() + " / " + this.playerCharacter.getMaxBombCount());
         this.arenaView.updateStats(
                 this.playerCharacter.getHealth(),
                 this.playerCharacter.getSpeed(),
@@ -328,8 +338,11 @@ public class GameController {
         System.out.println(powerUpState);
         switch (powerUpState) {
             case HEALTH:
-                this.playerCharacter.setHealth(this.playerCharacter.getHealth() + 10);
-                this.playerCharacter.setMaxHealth(this.playerCharacter.getMaxHealth() + 10);
+                if (playerCharacter.getHealth() <= 90) {
+                    this.playerCharacter.setHealth(this.playerCharacter.getHealth() + 10);
+                } else if (playerCharacter.getHealth() < 100) {
+                    this.playerCharacter.setHealth(100);
+                }
                 break;
             case BOMB_COUNT:
                 this.playerCharacter.setMaxBombCount(this.playerCharacter.getMaxBombCount() + 1);
