@@ -34,6 +34,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setMinHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setMinWidth(Constants.WINDOW_WIDTH);
+		primaryStage.setTitle("VaporWave");
 
 		// This makes the application shut down properly when hitting cmd-q
 		// Solution found here: http://mail.openjdk.java.net/pipermail/openjfx-dev/2013-July/008598.html
