@@ -90,6 +90,7 @@ public class MainController {
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
+        this.root.getChildren().clear();
         this.gameController = new GameController(this.root);
         this.inGame = true;
     }
