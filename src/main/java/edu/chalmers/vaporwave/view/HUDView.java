@@ -1,14 +1,6 @@
 package edu.chalmers.vaporwave.view;
-
-import edu.chalmers.vaporwave.controller.ListenerController;
-import edu.chalmers.vaporwave.model.PowerUpProperties;
-import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
-import edu.chalmers.vaporwave.model.gameObjects.*;
-import edu.chalmers.vaporwave.model.menu.MenuButtonState;
+;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.PowerUpLoader;
-import edu.chalmers.vaporwave.util.PowerUpState;
-import edu.chalmers.vaporwave.util.XMLReader;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -17,22 +9,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
-import javafx.scene.text.*;
 import javafx.scene.text.Font;
-
-
 import java.awt.*;
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class HUDView {
 
@@ -60,12 +38,10 @@ public class HUDView {
 
     public HUDView(Group root) {
 
-
         this.root = root;
         this.healthBarEmpty = new ImageView(new Image("images/healthbarempty.png"));
         this.scoreBarFilled = new ImageView(new Image("images/scorebarfilled.png"));
         this.scoreBarEmpty = new ImageView(new Image("images/barempty.png"));
-
 
         Image filled = new Image("images/healthbarfilled.png");
         reader = filled.getPixelReader();
@@ -76,9 +52,9 @@ public class HUDView {
         this.healthBarEmpty.setLayoutY(-10);
         this.healthBarFilled.setLayoutX(184);
         this.healthBarFilled.setLayoutY(38);
-        this.scoreBarEmpty.setLayoutX(590);
+        this.scoreBarEmpty.setLayoutX(594);
         this.scoreBarEmpty.setLayoutY(34);
-        this.scoreBarFilled.setLayoutX(594);
+        this.scoreBarFilled.setLayoutX(598);
         this.scoreBarFilled.setLayoutY(38);
 
         this.stats = new Label();
