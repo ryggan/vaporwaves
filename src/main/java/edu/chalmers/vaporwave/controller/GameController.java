@@ -60,7 +60,7 @@ public class GameController {
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
 
-        playerCharacter = new GameCharacter("CHARLOTTE");
+        playerCharacter = new GameCharacter("ALYSSA");
 
         this.arenaView.updateStats(
                 this.playerCharacter.getHealth(),
@@ -81,25 +81,25 @@ public class GameController {
         Set<GameCharacter> gameCharacters = new HashSet<>();
         gameCharacters.add(playerCharacter);
 
-//        Random random = new Random();
-//        for (int k = 0; k < 10; k++) {
-//            boolean free;
-//            Point spawnPosition = new Point(0,0);
-//            do {
-//                spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
-//                free = (arenaModel.getArenaTile(spawnPosition) == null);
-//            } while (!free);
-//            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPosition(spawnPosition.x), Utils.gridToCanvasPosition(spawnPosition.y), 0.2, new StupidAI());
-//            enemies.add(enemy);
-//        }
-//
-//        for(Enemy enemy : enemies) {
-//            try {
-//                arenaModel.addMovable(enemy);
-//            } catch(ArrayIndexOutOfBoundsException e) {
-//                System.out.println("Tile out of bounds!");
-//            }
-//        }
+        Random random = new Random();
+        for (int k = 0; k < 10; k++) {
+            boolean free;
+            Point spawnPosition = new Point(0,0);
+            do {
+                spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
+                free = (arenaModel.getArenaTile(spawnPosition) == null);
+            } while (!free);
+            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPosition(spawnPosition.x), Utils.gridToCanvasPosition(spawnPosition.y), 0.2, new StupidAI());
+            enemies.add(enemy);
+        }
+
+        for(Enemy enemy : enemies) {
+            try {
+                arenaModel.addMovable(enemy);
+            } catch(ArrayIndexOutOfBoundsException e) {
+                System.out.println("Tile out of bounds!");
+            }
+        }
     }
 
     // This one is called every time the game-timer is updated
@@ -358,7 +358,7 @@ public class GameController {
         if (movable instanceof GameCharacter) {
             movable.spawn(new Point(6, 5));
         } else if (movable instanceof Enemy) {
-
+            deadEnemies.add((Enemy)movable);
         }
     }
 

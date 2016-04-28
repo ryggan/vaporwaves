@@ -31,7 +31,6 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     private double duration;
     private double timeOffset;
     private boolean startFromBeginning;
-//    private boolean runAnimation;
     private int loops; // -1 gives infinite loops
     private double startTime;
     private boolean playedYet;
@@ -74,7 +73,6 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
         this.timeOffset = 0;
         this.startFromBeginning = false;
-//        this.runAnimation = true;
         this.animationFinished = false;
         this.loops = -1;
         this.startTime = 0;
@@ -214,9 +212,6 @@ public class AnimatedSprite extends Sprite implements Cloneable {
         }
 
         if (!animationFinished && loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
-//            if (runAnimation && loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
-            System.out.println("End of animation! "+this);
-//            runAnimation = false;
             this.animationFinished = true;
             if (this.animationFinishedEvent == null) {
                 this.animationFinishedEvent = new AnimationFinishedEvent();
@@ -225,13 +220,11 @@ public class AnimatedSprite extends Sprite implements Cloneable {
         }
 
         if (!animationFinished) {
-//            if (runAnimation) {
             gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
         }
     }
 
     public void resetLoops() {
-//        runAnimation = true;
         startTime = 0;
         timeOffset = 0;
         playedYet = false;
@@ -259,7 +252,6 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
     // if loops = -1, then infinite loops
     public void setLoops(int loops) {
-//        System.out.println("Loops: " + loops);
         this.loops = loops;
     }
 
