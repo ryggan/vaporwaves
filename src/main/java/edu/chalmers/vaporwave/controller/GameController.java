@@ -170,7 +170,6 @@ public class GameController {
         }
 
         if (deadEnemies.size() > 0) {
-
             if (deadEnemiesAnimation == 0) {
                 for (Enemy enemy : deadEnemies) {
                     this.enemies.remove(enemy);
@@ -216,6 +215,14 @@ public class GameController {
 
         if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
             playerRecievesDamage();
+        }
+
+        // Checks if enemy is ON the bomb.
+        for (Enemy enemy : this.enemies) {
+            if (enemy.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
+                enemy.death();
+                deadEnemies.add(enemy);
+            }
         }
 
         for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
