@@ -17,6 +17,7 @@ public abstract class Movable {
     private double velocityY;
     private double speed;
     private boolean moving;
+    private int damage;
     private Direction lastMove;
     private Direction direction;
     private MovableState movableState;
@@ -35,6 +36,7 @@ public abstract class Movable {
         this.speed = speed;
         this.moving = false;
         this.name = name;
+        this.damage = 30;
 
         this.previousGridPositionX = Utils.canvasToGridPosition(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());
@@ -240,5 +242,9 @@ public abstract class Movable {
 
     public String getName() {
         return this.name;
+    }
+
+    public int getDamage() {
+        return this.damage;
     }
 }

@@ -277,8 +277,8 @@ public class GameController {
     }
 
     private void playerRecievesDamage() {
-        if (this.playerCharacter.getHealth() - 30 > 0) {
-            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - 30);
+        if (this.playerCharacter.getHealth() - this.playerCharacter.getDamage() > 0) {
+            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - this.playerCharacter.getDamage());
         } else {
             this.playerCharacter.setHealth(100);
             this.playerCharacter.death();

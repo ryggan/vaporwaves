@@ -24,11 +24,6 @@ public class GameCharacter extends Movable {
 
     public void placeBomb() {
         if(this.currentBombCount > 0) {
-            System.out.println("placeBomb():");
-            System.out.println(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
-            ));
-            System.out.println(bombRange);
-
             GameEventBus.getInstance().post(new PlaceBombEvent(
                             Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
                             ), bombRange)
