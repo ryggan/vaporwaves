@@ -26,6 +26,9 @@ public abstract class Movable {
     private int previousGridPositionY;
     private StaticTile[][] latestArenaTiles;
 
+    private double maxHealth;
+    private double health;
+
     protected Movable() { }
 
     public Movable(String name, double canvasPositionX, double canvasPositionY, double speed) {
@@ -42,6 +45,8 @@ public abstract class Movable {
         this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());
 
         this.moving = false;
+        this.maxHealth = 100.0;
+        this.health = 100.0;
 
         this.movableState = MovableState.IDLE;
     }
@@ -110,10 +115,8 @@ public abstract class Movable {
     }
 
     public void death() {
-//        if (movableState == movableState.IDLE) {
         this.setMoving(false);
         movableState = movableState.DEATH;
-//        }
     }
 
     public void spawn() {
@@ -125,7 +128,7 @@ public abstract class Movable {
     public void move(Direction direction, StaticTile[][] arenaTiles) {
         this.lastMove = direction;
         this.latestArenaTiles = arenaTiles;
-        if (direction != null && (movableState != movableState.WALK || oppositeDirection(direction))) {
+        if (direction != null && (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
             switch (direction) {
                 case UP:
                     moveUp();
@@ -187,6 +190,19 @@ public abstract class Movable {
                 && !(this.latestArenaTiles[getPreviousGridPositionX()][getPreviousGridPositionY()] instanceof Bomb));
     }
 
+    public void dealDamage(double damage) {
+        this.health -= damage;
+        if (this.health <= 0) {
+            this.health = 100;
+            death();
+        }
+//        if (this.playerCharacter.getHealth() - this.playerCharacter.getDamage() > 0) {
+//            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - this.playerCharacter.getDamage());
+//        } else {
+//            this.playerCharacter.setHealth(100);
+//            this.playerCharacter.death();
+//        }
+    }
 
     public Direction getDirection() {
         return direction;
@@ -246,5 +262,21 @@ public abstract class Movable {
 
     public int getDamage() {
         return this.damage;
+    }
+
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    public double getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
+    public double getHealth() {
+        return this.health;
     }
 }

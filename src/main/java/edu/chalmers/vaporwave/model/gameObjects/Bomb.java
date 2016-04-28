@@ -10,12 +10,11 @@ public class Bomb extends Explosive {
 
     private int delay;
 
-    public Bomb(GameCharacter owner, int range, int delay) {
-        super(owner, range);
+    public Bomb(GameCharacter owner, int range, int delay, double damage) {
+        super(owner, range, damage);
         this.delay = delay;
         startTimer();
     }
-
 
     public void startTimer() {
         Timer timer = new Timer();

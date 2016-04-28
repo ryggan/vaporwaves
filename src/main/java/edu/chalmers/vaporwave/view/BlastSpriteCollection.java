@@ -23,10 +23,13 @@ public class BlastSpriteCollection {
     private Map<Direction, AnimatedSprite> destructibleWallDestroyedSprites;
     private Map<Direction, Boolean> blastDirections;
     private boolean blastHasOccured;
+    private double damage;
 
-    public BlastSpriteCollection(Point position, int range) {
+    public BlastSpriteCollection(Point position, int range, double damage) {
         this.position = position;
         this.range = range;
+        this.damage = damage;
+
         this.spriteMap = new HashMap<>();
         this.destructibleWallDestroyedSprites = new HashMap<>(4);
         this.blastDirections = new HashMap<>();
@@ -108,7 +111,7 @@ public class BlastSpriteCollection {
         }
 
         // Posting to GameEventBus
-        GameEventBus.getInstance().post(new BlastTileInitDoneEvent(position, range));
+        GameEventBus.getInstance().post(new BlastTileInitDoneEvent(position, range, damage));
     }
 
     /**

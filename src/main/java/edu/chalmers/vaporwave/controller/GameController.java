@@ -196,7 +196,7 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY), placeBombEvent.getGridPosition());
+        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.playerCharacter.getDamage()), placeBombEvent.getGridPosition());
         this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
         updateStats();
     }
@@ -225,13 +225,16 @@ public class GameController {
         blastDirections.put(Direction.DOWN, true);
 
         if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-            playerRecievesDamage();
+//            playerRecievesDamage();
+            this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
+//            updateStats();
         }
 
         // Checks if enemy is ON the bomb.
         for (Enemy enemy : this.enemies) {
             if (enemy.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-                enemy.death();
+//                enemy.death();
+                enemy.dealDamage(blastTileInitDoneEvent.getDamage());
                 deadEnemies.add(enemy);
             }
         }
@@ -249,7 +252,8 @@ public class GameController {
                     } else if (this.arenaModel.getArenaTile(currentPosition) instanceof Bomb) {
                         ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
                     } else if (this.playerCharacter.getGridPosition().equals(currentPosition)) {
-                        playerRecievesDamage();
+//                        playerRecievesDamage();
+                        this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
                     } else {
                         for (Enemy enemy : this.enemies) {
                             if (enemy.getGridPosition().equals(currentPosition)) {
@@ -261,6 +265,8 @@ public class GameController {
                 }
             }
         }
+
+        updateStats();
     }
 
     /**
@@ -276,15 +282,15 @@ public class GameController {
                 position.y < this.arenaModel.getArenaTiles()[0].length;
     }
 
-    private void playerRecievesDamage() {
-        if (this.playerCharacter.getHealth() - this.playerCharacter.getDamage() > 0) {
-            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - this.playerCharacter.getDamage());
-        } else {
-            this.playerCharacter.setHealth(100);
-            this.playerCharacter.death();
-        }
-        updateStats();
-    }
+//    private void playerRecievesDamage() {
+//        if (this.playerCharacter.getHealth() - this.playerCharacter.getDamage() > 0) {
+//            this.playerCharacter.setHealth(this.playerCharacter.getHealth() - this.playerCharacter.getDamage());
+//        } else {
+//            this.playerCharacter.setHealth(100);
+//            this.playerCharacter.death();
+//        }
+//        updateStats();
+//    }
 
 
     //TODO

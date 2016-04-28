@@ -11,11 +11,13 @@ public abstract class Explosive extends StaticTile {
     private GameCharacter owner;
     private int range;
     private Point position;
+    private double damage;
 
-    public Explosive(GameCharacter owner, int range) {
+    public Explosive(GameCharacter owner, int range, double damage) {
         this.owner = owner;
         this.range = range;
         this.position = owner.getGridPosition();
+        this.damage = damage;
     }
 
     public GameCharacter getOwner() {
@@ -24,6 +26,10 @@ public abstract class Explosive extends StaticTile {
 
     public int getRange() {
         return this.range;
+    }
+
+    public double getDamage() {
+        return this.damage;
     }
 
     public void explode() {

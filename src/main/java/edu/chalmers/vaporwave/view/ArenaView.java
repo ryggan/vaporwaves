@@ -198,7 +198,7 @@ public class ArenaView {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange()));
+        blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange(), placeBombEvent.getDamage()));
     }
 
     public void updateStats(double health, double speed, int bombRange, int bombCount){

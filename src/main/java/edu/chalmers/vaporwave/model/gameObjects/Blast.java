@@ -14,12 +14,14 @@ public class Blast extends StaticTile {
 
     private int range;
     private Point position;
+    private double damage;
     private double time;
 
     public Blast(Explosive explosive) {
 
         this.range = explosive.getRange();
         this.position = explosive.getPosition();
+        this.damage = explosive.getDamage();
         this.time = 0;
 
         GameEventBus.getInstance().post(new BlastEvent(this));
@@ -31,5 +33,9 @@ public class Blast extends StaticTile {
 
     public int getRange() {
         return this.range;
+    }
+
+    public double getDamage() {
+        return this.damage;
     }
 }
