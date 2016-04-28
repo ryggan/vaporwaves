@@ -17,8 +17,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.*;
+import javafx.scene.text.Font;
 
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 
 public class ArenaView {
@@ -74,6 +77,12 @@ public class ArenaView {
         this.hudView = new HUDView(root);
         this.scoreboard = new Scoreboard(root);
 
+//        Label testLabel = new Label("Test");
+//        testLabel.setLayoutX(50);
+//        testLabel.setLayoutY(50);
+//
+//        testLabel.getStyleClass().add("testLabel");
+//        this.root.getChildren().add(testLabel);tLabel);
 
         GameEventBus.getInstance().register(this);
 

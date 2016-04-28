@@ -9,21 +9,28 @@ import java.util.TimerTask;
 public class Bomb extends Explosive {
 
     private int delay;
+    private Timer timer;
 
     public Bomb(GameCharacter owner, int range, int delay) {
         super(owner, range);
         this.delay = delay;
+        this.timer = new Timer();
         startTimer();
     }
 
 
-    public void startTimer() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask(){
-            public void run(){
+    private void startTimer() {
+        this.timer.schedule(new TimerTask(){
+            public void run() {
                 explode();
+                // Stops the timer when the explode method has been run.
+                stopTimer();
             }
-        }, delay);
+        }, this.delay);
+    }
+
+    private void stopTimer() {
+        this.timer.cancel();
     }
 
 }

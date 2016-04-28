@@ -72,7 +72,6 @@ public class GameController {
             System.out.println("Tile out of bounds!");
         }
 
-
         this.enemies = new HashSet<>();
         this.deadEnemies = new HashSet<>();
 
@@ -140,6 +139,13 @@ public class GameController {
                     playerCharacter.spawn();
                     break;
                 case "ESCAPE":
+                    this.arenaModel.getArenaMovables().clear();
+                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
+                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
+                            this.arenaModel.getArenaTiles()[j][k] = null;
+                        }
+                    }
+
                     GameEventBus.getInstance().post(new GoToMenuEvent());
             }
         }
@@ -204,7 +210,7 @@ public class GameController {
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
         this.arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
-        if (this.playerCharacter.getCurrentBombCount() < this.playerCharacter.getMaxBombCount()) {
+        if (this.playerCharacter != null && this.playerCharacter.getCurrentBombCount() < this.playerCharacter.getMaxBombCount()) {
             this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
         }
     }

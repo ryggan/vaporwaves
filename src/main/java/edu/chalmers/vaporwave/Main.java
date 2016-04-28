@@ -9,10 +9,13 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 
 public class Main extends Application {
 
@@ -45,6 +48,14 @@ public class Main extends Application {
 				System.exit(0);
 			}
 		});
+
+//		System.out.println(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf");
+
+//		Font.loadFont(Main.class.getResource(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf").toExternalForm(), 10);
+
+
+
+
 
         primaryStage.show();
 

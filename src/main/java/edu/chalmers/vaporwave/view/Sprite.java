@@ -36,14 +36,17 @@ public class Sprite {
         this.boundingBox = new BoundingBox();
         setImage(this.image);
     }
+
     public Sprite(Image image) {
         this();
         setImage(image);
     }
+
     public Sprite(String fileName) {
         this();
         setImage(fileName);
     }
+
     public Sprite(Sprite sprite) {
         this();
         this.scale = sprite.getScale();
@@ -62,6 +65,7 @@ public class Sprite {
             this.height = image.getHeight();
         }
     }
+
     public void setImage(String fileName) {
         Image i = new Image(fileName);
         this.setImage(i);

@@ -65,6 +65,8 @@ public class HUDView {
 
 
         this.stats = new Label();
+        stats.getStylesheets().add("css/style.css");
+        stats.getStyleClass().add("statsLabel");
 
         hudCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         this.root.getChildren().add(hudCanvas);
@@ -80,6 +82,7 @@ public class HUDView {
         int printSpeed = (int)(speed * 100);
 
         updateHealthBar((int) ((health/100) * 300));
+
 
         stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
         stats.setLayoutX(920);
