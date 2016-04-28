@@ -48,9 +48,9 @@ public class MapFileReader {
                 i++;
             }
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            e.printStackTrace();
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
