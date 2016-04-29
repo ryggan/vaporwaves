@@ -43,16 +43,36 @@ public class Utils {
         return output;
     }
 
-    public static int canvasToGridPosition(double canvasPosition) {
-        return (int)Math.round(canvasPosition / Constants.DEFAULT_TILE_WIDTH);
+    public static int canvasToGridPositionX(double x) {
+        return (int)Math.round(x / Constants.DEFAULT_TILE_WIDTH);
+//        return (int)Math.round((x - Constants.DEFAULT_TILE_WIDTH) / Constants.DEFAULT_TILE_WIDTH);
+    }
+    public static int canvasToGridPositionY(double y) {
+        return (int)Math.round(y / Constants.DEFAULT_TILE_HEIGHT);
+//        return (int)Math.round((y - Constants.DEFAULT_TILE_HEIGHT) / Constants.DEFAULT_TILE_HEIGHT);
     }
 
     public static Point canvasToGridPosition(double x, double y) {
-        return new Point(canvasToGridPosition(x), canvasToGridPosition(y));
+        return new Point(canvasToGridPositionX(x), canvasToGridPositionY(y));
+//        return new Point((int)Math.round(x / Constants.DEFAULT_TILE_WIDTH) - 2 * Constants.DEFAULT_TILE_WIDTH,
+//                (int)Math.round(y / Constants.DEFAULT_TILE_HEIGHT) - Constants.DEFAULT_TILE_HEIGHT);
     }
 
-    public static double gridToCanvasPosition(int gridPosition) {
-        return (double)(gridPosition * Constants.DEFAULT_TILE_WIDTH);
+//    public static double gridToCanvasPosition(int gridPosition) {
+//        return (double)(gridPosition * Constants.DEFAULT_TILE_WIDTH);
+//    }
+
+    public static double gridToCanvasPositionX(int gridPositionX) {
+        return (double)(gridPositionX * Constants.DEFAULT_TILE_WIDTH);
+//        return (double)((gridPositionX + 1) * Constants.DEFAULT_TILE_WIDTH);
+    }
+    public static double gridToCanvasPositionY(int gridPositionY) {
+        return (double)(gridPositionY * Constants.DEFAULT_TILE_HEIGHT);
+//        return (double)((gridPositionY + 1) * Constants.DEFAULT_TILE_HEIGHT);
+    }
+
+    public static Point gridToCanvasPosition(Point gridPosition) {
+        return new Point();
     }
 
     /**

@@ -15,7 +15,7 @@ public class GameCharacter extends Movable {
     private SoundPlayer placeBomb;
 
     public GameCharacter(String name) {
-        super(name, Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5), 1);
+        super(name, Utils.gridToCanvasPositionX(6), Utils.gridToCanvasPositionY(5), 1);
 
         this.placeBomb=new SoundPlayer("placebomb.wav");
 

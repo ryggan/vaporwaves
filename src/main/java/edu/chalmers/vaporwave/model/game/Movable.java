@@ -43,8 +43,9 @@ public abstract class Movable {
         this.damage = 30;
         this.flinchDelay = 40;
 
-        this.previousGridPositionX = Utils.canvasToGridPosition(getCanvasPositionX());
-        this.previousGridPositionY = Utils.canvasToGridPosition(getCanvasPositionY());
+        this.previousGridPositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
+        this.previousGridPositionY = Utils.canvasToGridPositionY(getCanvasPositionY());
+        System.out.println("prev grid x: "+previousGridPositionX+", prev grid y: "+previousGridPositionY+", canvas x: "+getCanvasPositionX()+", canvas y: "+getCanvasPositionY());
 
         this.moving = false;
         this.health = Constants.DEFAULT_START_HEALTH;
@@ -67,8 +68,8 @@ public abstract class Movable {
                     flinchTimer--;
                 } else {
                     movableState = MovableState.IDLE;
-                    if (Utils.gridToCanvasPosition(getPreviousGridPositionX()) != getCanvasPositionX()
-                            || Utils.gridToCanvasPosition(getPreviousGridPositionY()) != getCanvasPositionY()) {
+                    if (Utils.gridToCanvasPositionX(getPreviousGridPositionX()) != getCanvasPositionX()
+                            || Utils.gridToCanvasPositionY(getPreviousGridPositionY()) != getCanvasPositionY()) {
                         move(direction, latestArenaTiles);
                     }
                 }
@@ -81,7 +82,7 @@ public abstract class Movable {
 
         stop();
         movableState = MovableState.IDLE;
-        setCanvasPosition(Utils.gridToCanvasPosition(newGridPositionX), Utils.gridToCanvasPosition(newGridPositionY));
+        setCanvasPosition(Utils.gridToCanvasPositionX(newGridPositionX), Utils.gridToCanvasPositionY(newGridPositionY));
         setPreviousGridPositionX(newGridPositionX);
         setPreviousGridPositionY(newGridPositionY);
 
@@ -96,11 +97,11 @@ public abstract class Movable {
     }
 
     private void stopOnTileIfNeeded() {
-        int closestTilePositionX = Utils.canvasToGridPosition(getCanvasPositionX());
-        int closestTilePositionY = Utils.canvasToGridPosition(getCanvasPositionY());
+        int closestTilePositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
+        int closestTilePositionY = Utils.canvasToGridPositionY(getCanvasPositionY());
 
-        double compareX = Math.abs(Utils.gridToCanvasPosition(closestTilePositionX) - getCanvasPositionX());
-        double compareY = Math.abs(Utils.gridToCanvasPosition(closestTilePositionY) - getCanvasPositionY());
+        double compareX = Math.abs(Utils.gridToCanvasPositionX(closestTilePositionX) - getCanvasPositionX());
+        double compareY = Math.abs(Utils.gridToCanvasPositionY(closestTilePositionY) - getCanvasPositionY());
 
         boolean closeToPosition = (compareX <= this.getSpeed() / 2) && (compareY <= this.getSpeed() / 2)
                 && (moving || (closestTilePositionX != getPreviousGridPositionX() || closestTilePositionY != getPreviousGridPositionY()));
@@ -184,7 +185,7 @@ public abstract class Movable {
     }
     public void moveDown() {
         setDirection(Direction.DOWN);
-        if (allowMove(0, 1) && getCanvasPositionY() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_HEIGHT-1)) {
+        if (allowMove(0, 1) && getCanvasPositionY() < Utils.gridToCanvasPositionX(Constants.DEFAULT_GRID_HEIGHT-1)) {
             setVelocity(0, this.getSpeed());
         }
     }
@@ -196,7 +197,7 @@ public abstract class Movable {
     }
     public void moveRight() {
         setDirection(Direction.RIGHT);
-        if (allowMove(1, 0) && getCanvasPositionX() < Utils.gridToCanvasPosition(Constants.DEFAULT_GRID_WIDTH-1)) {
+        if (allowMove(1, 0) && getCanvasPositionX() < Utils.gridToCanvasPositionY(Constants.DEFAULT_GRID_WIDTH-1)) {
             setVelocity(this.getSpeed(), 0);
         }
     }

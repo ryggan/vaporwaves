@@ -280,7 +280,8 @@ public class ArenaView {
                 if (arenaTiles[i][j] instanceof Blast) {
 //                    if (arenaTiles[i][j] instanceof Blast && this.blastSpriteMap.get(new Point(i, j)) != null) {
 //                    renderBlast(this.blastSpriteMap.get(new Point(i, j)), timeSinceStart, arenaTiles);
-                    Point position = new Point(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+//                    Point position = new Point(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+                    Point position = new Point(i, j);
                     renderBlast((Blast)arenaTiles[i][j], position, timeSinceStart);
                 }
             }
@@ -364,8 +365,13 @@ public class ArenaView {
 //        }
 //    }
 
-    private void renderBlast(Blast blast, Point position, double timeSinceStart) {
+    private void renderBlast(Blast blast, Point gridPosition, double timeSinceStart) {
         double timeDifference = timeSinceStart - blast.getTimeStamp();
+        Point destinationCanvasPosition =
+                new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
+                        (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
+//        System.out.println("Time difference: "+timeDifference);
+
 //        System.out.println("Blast: "+blast+", time since start: "+timeSinceStart+", blasts time: "+blast.getTimeStamp()+", difference: "+timeDifference);
         Sprite currentSprite = blastSpriteCenter;
         if (blast.getState() == BlastState.BEAM) {
@@ -375,8 +381,14 @@ public class ArenaView {
         }
 //        System.out.println("position; "+position+", state: "+blast.getState());
 
-        currentSprite.setPosition(position);
-        currentSprite.render(this.tileGC, timeDifference);
+        if (timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
+            currentSprite.setPosition(destinationCanvasPosition);
+            currentSprite.render(this.tileGC, timeDifference);
+        } else {
+//            Point gridPosition = Utils.canvasToGridPosition(gridPosition.getX(), gridPosition.getY());
+//            System.out.println("Posting to eventbus: "+blast.getState()+", "+gridPosition+" canvas: "+gridPosition.getX()+", "+gridPosition.getY());
+            GameEventBus.getInstance().post(new BlastFinishedEvent(blast, gridPosition));
+        }
     }
 
 

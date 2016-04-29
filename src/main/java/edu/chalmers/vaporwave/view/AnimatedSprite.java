@@ -250,6 +250,10 @@ public class AnimatedSprite extends Sprite implements Cloneable {
         return length;
     }
 
+    public double getDuration() {
+        return this.duration;
+    }
+
     public void setStartFromBeginning(boolean startFromBeginning) {
         this.startFromBeginning = startFromBeginning;
     }

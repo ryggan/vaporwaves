@@ -1,17 +1,26 @@
 package edu.chalmers.vaporwave.event;
 
+import edu.chalmers.vaporwave.model.game.Blast;
+
 import java.awt.*;
 import java.util.Set;
 
 public class BlastFinishedEvent {
-    private Set<Point> destroyedWalls;
 
-    public BlastFinishedEvent(Set<Point> destroyedWalls) {
-        this.destroyedWalls = destroyedWalls;
+    private Blast blast;
+    private Point gridPosition;
+
+    public BlastFinishedEvent(Blast blast, Point gridPosition) {
+        this.blast = blast;
+        this.gridPosition = gridPosition;
     }
 
-    public Set<Point> getDestroyedWalls() {
-        return this.destroyedWalls;
+    public Blast getBlast() {
+        return this.blast;
+    }
+
+    public Point getGridPosition() {
+        return gridPosition;
     }
 
 }

@@ -129,12 +129,20 @@ public class ArenaModel {
         return temporaryString;
     }
 
+//    @Subscribe
+//    public void removeDestroyedWalls(BlastFinishedEvent blastFinishedEvent) {
+//        for (Point position : blastFinishedEvent.getDestroyedWalls()) {
+//            this.removeTile(position);
+////            this.setTile(new TestPowerUp(), position);
+//        }
+//    }
+
     @Subscribe
-    public void removeDestroyedWalls(BlastFinishedEvent blastFinishedEvent) {
-        for (Point position : blastFinishedEvent.getDestroyedWalls()) {
-            this.removeTile(position);
-//            this.setTile(new TestPowerUp(), position);
-        }
+    public void removeBlastTile(BlastFinishedEvent blastFinishedEvent) {
+        System.out.println("Removed blast tile at: "+blastFinishedEvent.getGridPosition());
+//        if (getArenaTile(blastFinishedEvent.getGridPosition()).equals(blastFinishedEvent.getBlast())) {
+            removeTile(blastFinishedEvent.getGridPosition());
+//        }
     }
 
     public int getWidth() {

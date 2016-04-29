@@ -92,7 +92,7 @@ public class GameController {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
                 free = (arenaModel.getArenaTile(spawnPosition) == null);
             } while (!free);
-            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPosition(spawnPosition.x), Utils.gridToCanvasPosition(spawnPosition.y), 0.2, new StupidAI());
+            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.2, new StupidAI());
             enemies.add(enemy);
         }
 
@@ -213,6 +213,8 @@ public class GameController {
 //            this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
 //        }
 
+        this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
+
         Map<Direction, Boolean> blastDirections = new HashMap<>();
         blastDirections.put(Direction.LEFT, true);
         blastDirections.put(Direction.UP, true);
@@ -226,23 +228,41 @@ public class GameController {
         for (int i = 0; i < explosive.getRange(); i++) {
             for (int j = 0; j < 4; j++) {
                 Direction direction = Utils.getDirectionFromInteger(j);
-                Point position = Utils.getRelativePoint(explosive.getPosition(), i+1, direction);
+
+                Point position = Utils.getRelativePoint(explosive.getPosition(), i + 1, direction);
+
+                if (!isValidPosition(position)) {
+                    blastDirections.put(direction, false);
+                }
 
                 BlastState state = BlastState.BEAM;
-                if (i == explosive.getRange()-1) {
+                if (i == explosive.getRange() - 1) {
                     state = BlastState.END;
                 }
 
-                if (this.arenaModel.getArenaTile(position) != null) {
-                    System.out.println("Blast not put on tile "+position+" because of previous owner: "+this.arenaModel.getArenaTile(position));
-                    if (this.arenaModel.getArenaTile(position) instanceof DestructibleWall) {
-                        System.out.println("Destroy wall!");
-                    } else if (this.arenaModel.getArenaTile(position) instanceof Explosive) {
-                        System.out.println("Detonate bomb!");
+                if (blastDirections.get(direction)) {
+                    StaticTile currentTile = this.arenaModel.getArenaTile(position);
+                    if (currentTile != null) {
+                        System.out.println("Blast not put on tile " + position + " because of previous owner: " + this.arenaModel.getArenaTile(position));
+                        if (currentTile instanceof DestructibleWall) {
+                            System.out.println("Destroy wall!");
+                        } else if (currentTile instanceof Explosive) {
+                            System.out.println("Detonate bomb!");
+                        }
+                        if (currentTile instanceof Blast && ((Blast)currentTile).getState() == BlastState.END) {
+                            if (state == BlastState.END) {
+                                state = BlastState.BEAM;
+                            }
+                            this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
+
+                        } else {
+                            blastDirections.put(direction, false);
+                        }
+                    } else {
+                        //                    System.out.println("Create blast: "+state+", "+direction);
+                        System.out.println("Bomb position: "+position+", player canvas position: "+this.playerCharacter.getCanvasPositionX()+", "+this.playerCharacter.getCanvasPositionY());
+                        this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
                     }
-                } else {
-//                    System.out.println("Create blast: "+state+", "+direction);
-                    this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
                 }
             }
         }
