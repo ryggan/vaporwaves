@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.model;
 import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.event.BlastFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.RemoveTileEvent;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.MapObject;
 
@@ -137,12 +138,17 @@ public class ArenaModel {
 //        }
 //    }
 
+//    @Subscribe
+//    public void removeBlastTile(BlastFinishedEvent blastFinishedEvent) {
+////        System.out.println("Removed blast tile at: "+blastFinishedEvent.getGridPosition());
+////        if (getArenaTile(blastFinishedEvent.getGridPosition()).equals(blastFinishedEvent.getBlast())) {
+//            removeTile(blastFinishedEvent.getGridPosition());
+////        }
+//    }
+
     @Subscribe
-    public void removeBlastTile(BlastFinishedEvent blastFinishedEvent) {
-//        System.out.println("Removed blast tile at: "+blastFinishedEvent.getGridPosition());
-//        if (getArenaTile(blastFinishedEvent.getGridPosition()).equals(blastFinishedEvent.getBlast())) {
-            removeTile(blastFinishedEvent.getGridPosition());
-//        }
+    public void removeTileEventCatcher(RemoveTileEvent removeTileEvent) {
+        removeTile(removeTileEvent.getGridPosition());
     }
 
     public int getWidth() {

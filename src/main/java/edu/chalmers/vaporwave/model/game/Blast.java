@@ -7,7 +7,7 @@ import edu.chalmers.vaporwave.util.BlastState;
 
 import java.awt.*;
 
-public class Blast extends StaticTile {
+public class Blast extends StaticTile implements AnimatedTile {
 
     private double damage;
     private Direction direction;

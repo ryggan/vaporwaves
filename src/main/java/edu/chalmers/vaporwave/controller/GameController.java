@@ -243,6 +243,7 @@ public class GameController {
                     if (currentTile != null) {
                         if (currentTile instanceof DestructibleWall) {
 //                            System.out.println("Destroy wall!");
+                            ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
                         } else if (currentTile instanceof Explosive) {
                             ((Explosive)currentTile).setDelay(0.03, timeSinceStart);
                         }

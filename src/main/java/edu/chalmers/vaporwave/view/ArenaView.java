@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
@@ -46,8 +47,8 @@ public class ArenaView {
 
     private Map<PowerUpState, Sprite> powerUpSprites;
 
-    private Map<Point, BlastSpriteCollection> blastSpriteMap;
-    private Set<Point> destroyedWalls;
+//    private Map<Point, BlastSpriteCollection> blastSpriteMap;
+//    private Set<Point> destroyedWalls;
 
     private Sprite blastSpriteCenter;
     private Sprite[] blastSpriteBeam = new Sprite[4];
@@ -66,8 +67,8 @@ public class ArenaView {
     public ArenaView(Group root) {
         this.root = root;
         this.arenaFrameSprites = new HashMap<>();
-        this.blastSpriteMap = new HashMap<>();
-        this.destroyedWalls = new HashSet<>();
+//        this.blastSpriteMap = new HashMap<>();
+//        this.destroyedWalls = new HashSet<>();
         this.fps = new Label();
         
         this.powerUpSprites = new HashMap<>();
@@ -135,7 +136,7 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 0}, new double[] {1, 1});
         destructibleWallDestroyedSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
-        ((AnimatedSprite)destructibleWallDestroyedSprite).setStartFromBeginning(true);
+//        ((AnimatedSprite)destructibleWallDestroyedSprite).setStartFromBeginning(true);
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 
@@ -203,10 +204,10 @@ public class ArenaView {
         backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
     }
 
-    @Subscribe
-    public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange(), placeBombEvent.getDamage()));
-    }
+//    @Subscribe
+//    public void bombPlaced(PlaceBombEvent placeBombEvent) {
+//        blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange(), placeBombEvent.getDamage()));
+//    }
 
     public void updateStats(double health, double speed, int bombRange, int bombCount){
         hudView.updateStats(health, speed, bombRange, bombCount);
@@ -248,22 +249,30 @@ public class ArenaView {
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null && !(arenaTiles[i][j] instanceof IndestructibleWall)) {
-                    Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
-                    if (tileSprite != null) {
-                        tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
-                        tileSprite.render(tileGC, timeSinceStart);
+
+                    if (arenaTiles[i][j] instanceof Blast) {
+                        renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
+                    } else if (arenaTiles[i][j] instanceof DestructibleWall) {
+                        renderDestructibleWall((DestructibleWall)arenaTiles[i][j], new Point(i, j), timeSinceStart);
+                    } else {
+//                        Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
+//                        if (tileSprite != null) {
+//                            tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+//                            tileSprite.render(tileGC, timeSinceStart);
+//                        }
+                        renderTile(arenaTiles[i][j], new Point(i, j), timeSinceStart);
                     }
                 }
             }
         }
 
-        for (int i = 0; i < arenaTiles.length; i++) {
-            for (int j = 0; j < arenaTiles[0].length; j++) {
-                if (arenaTiles[i][j] instanceof Blast) {
-                    renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
-                }
-            }
-        }
+//        for (int i = 0; i < arenaTiles.length; i++) {
+//            for (int j = 0; j < arenaTiles[0].length; j++) {
+//                if (arenaTiles[i][j] instanceof Blast) {
+//                    renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
+//                }
+//            }
+//        }
 
         for (Movable movable : arenaMovables) {
 
@@ -331,11 +340,19 @@ public class ArenaView {
         }
     }
 
+    private void renderTile(StaticTile tile, Point gridPosition, double timeSinceStart) {
+        Sprite tileSprite = getTileSprite(tile);
+        if (tileSprite != null) {
+            tileSprite.setPosition(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+            tileSprite.render(tileGC, timeSinceStart);
+        }
+    }
+
     private void renderBlast(Blast blast, Point gridPosition, double timeSinceStart) {
-        double timeDifference = timeSinceStart - blast.getTimeStamp();
-        Point destinationCanvasPosition =
-                new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
-                        (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
+//        double timeDifference = timeSinceStart - blast.getTimeStamp();
+//        Point destinationCanvasPosition =
+//                new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
+//                        (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
 
         Sprite currentSprite = blastSpriteCenter;
         if (blast.getState() == BlastState.BEAM) {
@@ -344,11 +361,44 @@ public class ArenaView {
             currentSprite = blastSpriteEnd[Utils.getIntegerFromDirection(blast.getDirection())];
         }
 
+//        if (timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
+//            currentSprite.setPosition(destinationCanvasPosition);
+//            currentSprite.render(this.tileGC, timeDifference);
+//        } else {
+////            GameEventBus.getInstance().post(new BlastFinishedEvent(blast, gridPosition));
+//            GameEventBus.getInstance().post(new RemoveTileEvent(blast, gridPosition));
+//        }
+
+        renderAnimatedTile(currentSprite, blast, gridPosition, timeSinceStart);
+    }
+
+    private void renderDestructibleWall(DestructibleWall wall, Point gridPosition, double timeSinceStart) {
+
+        if (wall.isDestroyed()) {
+//            AnimatedSprite currentSprite = (AnimatedSprite)destructibleWallDestroyedSprite;
+//            currentSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(wall));
+//            currentSprite.setStartFromBeginning(true);
+//            currentSprite.resetLoops();
+//            currentSprite.setLoops(1);
+            renderAnimatedTile(destructibleWallDestroyedSprite, wall, gridPosition, timeSinceStart);
+        } else {
+            renderTile(wall, gridPosition, timeSinceStart);
+        }
+    }
+
+    private void renderAnimatedTile(Sprite currentSprite, AnimatedTile tile, Point gridPosition, double timeSinceStart) {
+
+        double timeDifference = timeSinceStart - tile.getTimeStamp();
+
+        Point destinationCanvasPosition =
+                new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
+                        (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
+
         if (timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
             currentSprite.setPosition(destinationCanvasPosition);
             currentSprite.render(this.tileGC, timeDifference);
         } else {
-            GameEventBus.getInstance().post(new BlastFinishedEvent(blast, gridPosition));
+            GameEventBus.getInstance().post(new RemoveTileEvent((StaticTile)tile, gridPosition));
         }
     }
 

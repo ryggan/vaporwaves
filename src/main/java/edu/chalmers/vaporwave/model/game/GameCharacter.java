@@ -23,7 +23,7 @@ public class GameCharacter extends Movable {
         this.bombRange = 2;
         this.maxBombCount = 10;
         this.currentBombCount = this.maxBombCount;
-        setSpeed(2);
+        setSpeed(1.5);
     }
 
     public void placeBomb() {
