@@ -15,12 +15,19 @@ public abstract class Explosive extends StaticTile {
     private double damage;
     private SoundPlayer explosionSound;
 
-    public Explosive(GameCharacter owner, int range, double damage) {
+    private double delay;
+    private double timeStamp;
+
+    public Explosive(GameCharacter owner, int range, double delay, double timeStamp, double damage) {
         this.owner = owner;
         this.range = range;
         this.position = owner.getGridPosition();
         this.damage = damage;
+        
         this.explosionSound=new SoundPlayer("explosion.wav");
+
+        this.delay = delay;
+        this.timeStamp = timeStamp;
     }
 
     public GameCharacter getOwner() {
@@ -35,12 +42,27 @@ public abstract class Explosive extends StaticTile {
         return this.damage;
     }
 
+    public void updateTimer(double timeSinceStart) {
+        if (timeSinceStart - this.timeStamp > delay) {
+            explode();
+        }
+    }
+
     public void explode() {
         explosionSound.stopSound();
         explosionSound.playSound();
 
         GameEventBus.getInstance().post(new BlastEvent(this));
 
+    }
+
+    public void setTimeStamp(double timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void setDelay(double delay, double timeStamp) {
+        this.delay = delay;
+        setTimeStamp(timeStamp);
     }
 
     public Point getPosition() {

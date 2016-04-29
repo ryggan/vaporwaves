@@ -45,7 +45,7 @@ public abstract class Movable {
 
         this.previousGridPositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPositionY(getCanvasPositionY());
-        System.out.println("prev grid x: "+previousGridPositionX+", prev grid y: "+previousGridPositionY+", canvas x: "+getCanvasPositionX()+", canvas y: "+getCanvasPositionY());
+//        System.out.println("prev grid x: "+previousGridPositionX+", prev grid y: "+previousGridPositionY+", canvas x: "+getCanvasPositionX()+", canvas y: "+getCanvasPositionY());
 
         this.moving = false;
         this.health = Constants.DEFAULT_START_HEALTH;
