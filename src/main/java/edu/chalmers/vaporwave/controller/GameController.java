@@ -241,6 +241,7 @@ public class GameController {
                         System.out.println("Detonate bomb!");
                     }
                 } else {
+//                    System.out.println("Create blast: "+state+", "+direction);
                     this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
                 }
             }

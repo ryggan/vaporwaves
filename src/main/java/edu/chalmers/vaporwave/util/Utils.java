@@ -82,8 +82,8 @@ public class Utils {
         return newPosition;
     }
 
-    public static Direction getDirectionFromString(String direction) {
-        switch(direction) {
+    public static Direction getDirectionFromString(String string) {
+        switch(string) {
             case "LEFT":
                 return Direction.LEFT;
             case "UP":
@@ -108,6 +108,20 @@ public class Utils {
                 return Direction.DOWN;
         }
         return null;
+    }
+
+    public static int getIntegerFromDirection(Direction direction) {
+        switch (direction) {
+            case LEFT:
+                return 0;
+            case UP:
+                return 1;
+            case RIGHT:
+                return 2;
+            case DOWN:
+                return 3;
+        }
+        return -1;
     }
 
     public static Direction[] getDirectionsAsArray() {

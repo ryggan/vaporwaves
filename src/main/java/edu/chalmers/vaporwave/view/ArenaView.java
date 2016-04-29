@@ -49,6 +49,10 @@ public class ArenaView {
     private Map<Point, BlastSpriteCollection> blastSpriteMap;
     private Set<Point> destroyedWalls;
 
+    private Sprite blastSpriteCenter;
+    private Sprite[] blastSpriteBeam = new Sprite[4];
+    private Sprite[] blastSpriteEnd = new Sprite[4];
+
     private Group root;
 
     private Label fps;
@@ -124,18 +128,22 @@ public class ArenaView {
                 new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1});
         arenaFrameSprites.put(Compass.SOUTH, frameSouthSprite);
 
-        Image bombSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png");
+        Image bombBlastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png");
 
-        bombSprite[0] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1});
-        bombSprite[1] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 1}, new double[] {1, 1});
-        bombSprite[2] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 2}, new double[] {1, 1});
-        bombSprite[3] =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 3}, new double[] {1, 1});
+        for (int i = 0; i < 4; i++) {
+            bombSprite[i] =
+                    new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, i}, new double[] {1, 1});
+        }
+//        bombSprite[0] =
+//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1});
+//        bombSprite[1] =
+//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 1}, new double[] {1, 1});
+//        bombSprite[2] =
+//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 2}, new double[] {1, 1});
+//        bombSprite[3] =
+//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 3}, new double[] {1, 1});
         mineSprite =
-                new AnimatedSprite(bombSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 4}, new double[] {1, 1});
+                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 4}, new double[] {1, 1});
 
         Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
         destructibleWallSprite =
@@ -152,7 +160,14 @@ public class ArenaView {
         powerUpSprites.put(PowerUpState.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpState.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 3}, new double[] {1, 1}));
 
-
+        blastSpriteCenter =
+                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
+        for (int i = 0; i < 4; i++) {
+            blastSpriteEnd[i] =
+                    new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, i}, new double[] {1, 1});
+            blastSpriteBeam[i] =
+                    new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {9, i}, new double[] {1, 1});
+        }
     }
 
     public void initArena(StaticTile[][] arenaTiles) {
@@ -262,8 +277,11 @@ public class ArenaView {
 
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
-                if (arenaTiles[i][j] instanceof Blast && this.blastSpriteMap.get(new Point(i, j)) != null) {
+                if (arenaTiles[i][j] instanceof Blast) {
+//                    if (arenaTiles[i][j] instanceof Blast && this.blastSpriteMap.get(new Point(i, j)) != null) {
 //                    renderBlast(this.blastSpriteMap.get(new Point(i, j)), timeSinceStart, arenaTiles);
+                    Point position = new Point(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+                    renderBlast((Blast)arenaTiles[i][j], position, timeSinceStart);
                 }
             }
         }
@@ -346,8 +364,19 @@ public class ArenaView {
 //        }
 //    }
 
-    private void renderBlast(Blast blast, double timeSinceStart) {
+    private void renderBlast(Blast blast, Point position, double timeSinceStart) {
+        double timeDifference = timeSinceStart - blast.getTimeStamp();
+//        System.out.println("Blast: "+blast+", time since start: "+timeSinceStart+", blasts time: "+blast.getTimeStamp()+", difference: "+timeDifference);
+        Sprite currentSprite = blastSpriteCenter;
+        if (blast.getState() == BlastState.BEAM) {
+            currentSprite = blastSpriteBeam[Utils.getIntegerFromDirection(blast.getDirection())];
+        } else if (blast.getState() == BlastState.END) {
+            currentSprite = blastSpriteEnd[Utils.getIntegerFromDirection(blast.getDirection())];
+        }
+//        System.out.println("position; "+position+", state: "+blast.getState());
 
+        currentSprite.setPosition(position);
+        currentSprite.render(this.tileGC, timeDifference);
     }
 
 

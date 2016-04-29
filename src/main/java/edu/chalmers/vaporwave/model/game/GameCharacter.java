@@ -19,9 +19,9 @@ public class GameCharacter extends Movable {
 
         this.placeBomb=new SoundPlayer("placebomb.wav");
 
-        this.bombRange = 1;
-        this.maxBombCount = 1;
-        this.currentBombCount = 1;
+        this.bombRange = 2;
+        this.maxBombCount = 3;
+        this.currentBombCount = this.maxBombCount;
     }
 
     public void placeBomb() {

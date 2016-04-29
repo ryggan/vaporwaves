@@ -6,6 +6,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+import java.awt.*;
+
 public class Sprite {
 
     private Image image;
@@ -110,6 +112,9 @@ public class Sprite {
         this.positionX = positionX;
         this.positionY = positionY;
 //        System.out.println("sprite posx: "+positionX+", posy: "+positionY);
+    }
+    public void setPosition(Point point) {
+        this.setPosition(point.getX(), point.getY());
     }
 
     public void setWidth(double width) {
