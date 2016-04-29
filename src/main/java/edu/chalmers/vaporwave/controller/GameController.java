@@ -33,12 +33,20 @@ public class GameController {
 
     private double timeSinceStart;
 
+    private SoundPlayer backgroundMusic;
+
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
     }
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
         //Change this to proper values according to player preferences later, dummy values meanwhile
+        backgroundMusic = new SoundPlayer("bg1.mp3");
+        backgroundMusic.playSound();
+
+
+
+
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpState.BOMB_COUNT);
         enabledPowerUpList.add(PowerUpState.RANGE);
@@ -127,6 +135,7 @@ public class GameController {
                     localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
                 case "ESCAPE":
+                    backgroundMusic.stopSound();
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
                         for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {

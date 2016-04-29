@@ -73,7 +73,6 @@ public class MenuController {
                     break;
                 case "ENTER":
                 case "SPACE":
-                    ///Lina fix press animation plz
                     switch (menuList.get(activeMenu).getMenuAction()) {
                         case EXIT_GAME:
                             GameEventBus.getInstance().post(new ExitGameEvent());

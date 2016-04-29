@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.event.PlaceMineEvent;
 import edu.chalmers.vaporwave.util.MovableState;
+import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.util.Utils;
 
 public class GameCharacter extends Movable {
@@ -11,9 +12,12 @@ public class GameCharacter extends Movable {
     private int bombRange;
     private int maxBombCount;
     private int currentBombCount;
+    private SoundPlayer placeBomb;
 
     public GameCharacter(String name) {
         super(name, Utils.gridToCanvasPosition(6), Utils.gridToCanvasPosition(5), 1);
+
+        this.placeBomb=new SoundPlayer("placebomb.wav");
 
         this.bombRange = 1;
         this.maxBombCount = 1;
@@ -26,6 +30,8 @@ public class GameCharacter extends Movable {
                     Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
                     ), bombRange, getDamage())
             );
+            placeBomb.stopSound();
+            placeBomb.playSound();
         }
     }
 
@@ -60,6 +66,17 @@ public class GameCharacter extends Movable {
 
     public int getMaxBombCount() {
         return this.maxBombCount;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof GameCharacter){
+            GameCharacter other = (GameCharacter) o;
+            if(this.bombRange==other.bombRange&&this.currentBombCount==other.currentBombCount&&this.maxBombCount==other.maxBombCount){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
