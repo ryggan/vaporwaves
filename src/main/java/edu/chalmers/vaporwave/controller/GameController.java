@@ -25,7 +25,6 @@ public class GameController {
 
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
-    private int deadEnemiesAnimation = 0;
     private List<PowerUpState> enabledPowerUpList;
 
     private int updatedEnemyDirection;
@@ -113,7 +112,7 @@ public class GameController {
         if (this.updatedEnemyDirection == 15) {
             for (Enemy enemy : enemies) {
                 enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), playerCharacter.getGridPosition(), this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
-                enemy.placeBomb();
+//                enemy.placeBomb();
             }
             updatedEnemyDirection = 0;
         }
@@ -128,9 +127,6 @@ public class GameController {
                 case "RIGHT":
                     playerCharacter.move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
-//                case "ENTER":
-//                    playerCharacter.spawn();
-//                    break;
                 case "ESCAPE":
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
@@ -176,17 +172,11 @@ public class GameController {
         }
 
         if (deadEnemies.size() > 0) {
-            if (deadEnemiesAnimation == 0) {
-                for (Enemy enemy : deadEnemies) {
-                    this.enemies.remove(enemy);
-                    this.arenaModel.removeMovable(enemy);
-                }
-                deadEnemies.clear();
-                deadEnemiesAnimation = 0;
-            } else {
-                deadEnemiesAnimation += 1;
+            for (Enemy enemy : deadEnemies) {
+                this.enemies.remove(enemy);
+                this.arenaModel.removeMovable(enemy);
             }
-
+            deadEnemies.clear();
         }
 
         this.arenaModel.updateBombs(this.timeSinceStart);
@@ -232,17 +222,6 @@ public class GameController {
         blastDirections.put(Direction.RIGHT, true);
         blastDirections.put(Direction.DOWN, true);
 
-//        if (this.playerCharacter.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-//            this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
-//        }
-//
-//        // Checks if enemy is ON the bomb.
-//        for (Enemy enemy : this.enemies) {
-//            if (enemy.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-//                enemy.dealDamage(blastTileInitDoneEvent.getDamage());
-//                deadEnemies.add(enemy);
-//            }
-//        }
         for (Movable movable : arenaModel.getArenaMovables()) {
             if (movable.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
                 movable.dealDamage(blastTileInitDoneEvent.getDamage());
