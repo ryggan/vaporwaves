@@ -44,9 +44,6 @@ public class GameController {
         backgroundMusic = new SoundPlayer("bg1.mp3");
         backgroundMusic.playSound();
 
-
-
-
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpState.BOMB_COUNT);
         enabledPowerUpList.add(PowerUpState.RANGE);
@@ -112,6 +109,7 @@ public class GameController {
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         this.timeSinceStart = timeSinceStart;
+        System.out.println(timeSinceStart);
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
@@ -157,6 +155,9 @@ public class GameController {
                     break;
                 case "M":
                     localPlayer.getCharacter().placeMine();
+                    break;
+                case "X":
+                    backgroundMusic.stopSound();
                     break;
             }
         }

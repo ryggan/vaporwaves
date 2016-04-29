@@ -30,6 +30,7 @@ public class ArenaView {
 
     private HUDView hudView;
     private Scoreboard scoreboard;
+    private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;
     private Map<Compass, Sprite> arenaFrameSprites;
@@ -72,6 +73,7 @@ public class ArenaView {
 
         this.hudView = new HUDView(root);
         this.scoreboard = new Scoreboard(root);
+        this.timerView = new TimerView(root);
 
 //        Label testLabel = new Label("Test");
 //        testLabel.setLayoutX(50);
@@ -219,6 +221,10 @@ public class ArenaView {
         /**
          * Checks if player is holding tab, then shows the scoreboard.
          */
+
+        this.timerView.updateTimer((int)(timeSinceStart*100));
+
+
         if(ListenerController.getInstance().getInput().contains("TAB")) {
             scoreboard.showScoreboard();
         } else {

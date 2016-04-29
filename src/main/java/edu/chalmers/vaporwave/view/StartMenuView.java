@@ -38,6 +38,19 @@ public class StartMenuView extends AbstractMenuView {
         setActive();
     }
 
+    public void setPressed(int superSelected){
+        for (int i = 0; i < menuButtonViewList.size(); i++) {
+
+            if (superSelected == i) {
+                menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.PRESSED);
+            } else {
+                menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.UNSELECTED);
+            }
+        }
+        setActive();
+    }
+
+
 
 
 
