@@ -151,13 +151,13 @@ public class ArenaView {
         powerUpSprites.put(PowerUpState.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 1}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpState.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpState.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 3}, new double[] {1, 1}));
+
+
     }
 
     public void initArena(StaticTile[][] arenaTiles) {
 
         // Rendering background image to background canvas
-
-//        createBackground(backgroundGC);
 
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
@@ -263,7 +263,7 @@ public class ArenaView {
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof Blast && this.blastSpriteMap.get(new Point(i, j)) != null) {
-                    renderBlast(this.blastSpriteMap.get(new Point(i, j)), timeSinceStart, arenaTiles);
+//                    renderBlast(this.blastSpriteMap.get(new Point(i, j)), timeSinceStart, arenaTiles);
                 }
             }
         }
@@ -334,16 +334,20 @@ public class ArenaView {
         }
     }
 
-    private void renderBlast(BlastSpriteCollection blastSpriteCollection, double timeSinceStart, StaticTile[][] arenaTiles) {
+//    private void renderBlast(BlastSpriteCollection blastSpriteCollection, double timeSinceStart, StaticTile[][] arenaTiles) {
+//
+//        if(!blastSpriteCollection.getBlastHasOccured()) {
+//            blastSpriteCollection.initBlast(arenaTiles);
+//        }
+//
+//        Set<Point> keys = blastSpriteCollection.getSpriteMap().keySet();
+//        for (Point key : keys) {
+//            blastSpriteCollection.getSprite(new Point(key.x, key.y)).render(tileGC, timeSinceStart);
+//        }
+//    }
 
-        if(!blastSpriteCollection.getBlastHasOccured()) {
-            blastSpriteCollection.initBlast(arenaTiles);
-        }
+    private void renderBlast(Blast blast, double timeSinceStart) {
 
-        Set<Point> keys = blastSpriteCollection.getSpriteMap().keySet();
-        for (Point key : keys) {
-            blastSpriteCollection.getSprite(new Point(key.x, key.y)).render(tileGC, timeSinceStart);
-        }
     }
 
 

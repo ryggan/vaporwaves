@@ -1,23 +1,24 @@
 package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.game.Blast;
+import edu.chalmers.vaporwave.model.game.Explosive;
 
 public class BlastEvent {
 
-    private Blast blast;
+    private Explosive explosive;
 
-    public BlastEvent(Blast blast) {
-        this.blast = blast;
+    public BlastEvent(Explosive explosive) {
+        this.explosive = explosive;
     }
 
-    public Blast getBlast() {
-        return this.blast;
+    public Explosive getExplosive() {
+        return this.explosive;
     }
 
     public boolean equals(Object o){
         if(o instanceof BlastEvent){
             BlastEvent other = (BlastEvent) o;
-            if(this.blast==other.blast){
+            if(this.explosive==other.explosive){
                 return true;
             }
         }
@@ -26,9 +27,8 @@ public class BlastEvent {
 
     public int hashCode(){
         int hash=2563;
-        hash=hash + blast.hashCode()*647;
+        hash=hash + explosive.hashCode()*647;
         return hash;
     }
-
 
 }

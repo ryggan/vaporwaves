@@ -96,6 +96,20 @@ public class Utils {
         return null;
     }
 
+    public static Direction getDirectionFromInteger(int integer) {
+        switch (integer) {
+            case 0:
+                return Direction.LEFT;
+            case 1:
+                return Direction.UP;
+            case 2:
+                return Direction.RIGHT;
+            case 3:
+                return Direction.DOWN;
+        }
+        return null;
+    }
+
     public static Direction[] getDirectionsAsArray() {
         Direction[] directions = new Direction[4];
         directions[0] = Direction.LEFT;

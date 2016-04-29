@@ -1,7 +1,9 @@
 package edu.chalmers.vaporwave.model.game;
 
+import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.util.BlastState;
 
 import java.awt.*;
 
@@ -10,16 +12,21 @@ public class Blast extends StaticTile {
     private int range;
     private Point position;
     private double damage;
-    private double time;
+    private Direction direction;
+    private BlastState state;
+    private double timeStamp;
 
-    public Blast(Explosive explosive) {
+    public Blast(Explosive explosive, BlastState state, Direction direction, double timeStamp) {
 
         this.range = explosive.getRange();
         this.position = explosive.getPosition();
         this.damage = explosive.getDamage();
-        this.time = 0;
+        this.direction = direction;
+        this.state = state;
+        this.timeStamp = timeStamp;
 
-        GameEventBus.getInstance().post(new BlastEvent(this));
+//        GameEventBus.getInstance().post(new BlastEvent(this));
+        System.out.println("New blast: "+this);
     }
 
     public Point getPosition() {
@@ -30,7 +37,19 @@ public class Blast extends StaticTile {
         return this.range;
     }
 
+    public Direction getDirection() {
+        return this.direction;
+    }
+
+    public BlastState getState() {
+        return this.state;
+    }
+
     public double getDamage() {
         return this.damage;
+    }
+
+    public String toString() {
+        return "Explosive[ Range:"+range+", Position:"+position+", Damage:"+damage+", Direction:"+direction+", State:"+state+" ]";
     }
 }

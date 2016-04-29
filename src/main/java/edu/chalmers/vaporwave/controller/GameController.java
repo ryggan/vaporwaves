@@ -109,7 +109,6 @@ public class GameController {
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         this.timeSinceStart = timeSinceStart;
-        System.out.println(timeSinceStart);
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
@@ -209,9 +208,42 @@ public class GameController {
 
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
-        this.arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
-        if (this.localPlayer.getCharacter() != null && this.localPlayer.getCharacter().getCurrentBombCount() < this.localPlayer.getCharacter().getMaxBombCount()) {
-            this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() + 1);
+//        this.arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
+//        if (this.playerCharacter != null && this.playerCharacter.getCurrentBombCount() < this.playerCharacter.getMaxBombCount()) {
+//            this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
+//        }
+
+        Map<Direction, Boolean> blastDirections = new HashMap<>();
+        blastDirections.put(Direction.LEFT, true);
+        blastDirections.put(Direction.UP, true);
+        blastDirections.put(Direction.RIGHT, true);
+        blastDirections.put(Direction.DOWN, true);
+
+        Explosive explosive = blastEvent.getExplosive();
+
+        this.arenaModel.setTile(new Blast(explosive, BlastState.CENTER, null, this.timeSinceStart), explosive.getPosition());
+
+        for (int i = 0; i < explosive.getRange(); i++) {
+            for (int j = 0; j < 4; j++) {
+                Direction direction = Utils.getDirectionFromInteger(j);
+                Point position = Utils.getRelativePoint(explosive.getPosition(), i+1, direction);
+
+                BlastState state = BlastState.BEAM;
+                if (i == explosive.getRange()-1) {
+                    state = BlastState.END;
+                }
+
+                if (this.arenaModel.getArenaTile(position) != null) {
+                    System.out.println("Blast not put on tile "+position+" because of previous owner: "+this.arenaModel.getArenaTile(position));
+                    if (this.arenaModel.getArenaTile(position) instanceof DestructibleWall) {
+                        System.out.println("Destroy wall!");
+                    } else if (this.arenaModel.getArenaTile(position) instanceof Explosive) {
+                        System.out.println("Detonate bomb!");
+                    }
+                } else {
+                    this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
+                }
+            }
         }
     }
 
@@ -221,46 +253,46 @@ public class GameController {
      *
      * @param blastTileInitDoneEvent The event that gets sent from BlastSpriteCollection
      */
-    @Subscribe
-    public void blastTileInitDone(BlastTileInitDoneEvent blastTileInitDoneEvent) {
-        updateStats();
-        Map<Direction, Boolean> blastDirections = new HashMap<>();
-        blastDirections.put(Direction.LEFT, true);
-        blastDirections.put(Direction.UP, true);
-        blastDirections.put(Direction.RIGHT, true);
-        blastDirections.put(Direction.DOWN, true);
-
-        for (Movable movable : arenaModel.getArenaMovables()) {
-            if (movable.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-                movable.dealDamage(blastTileInitDoneEvent.getDamage());
-            }
-        }
-
-        for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
-            for (Direction direction : blastDirections.keySet()) {
-                Point currentPosition = Utils.getRelativePoint(blastTileInitDoneEvent.getPosition(), i, direction);
-                if (isValidPosition(currentPosition) && blastDirections.get(direction)) {
-                    if (this.arenaModel.getArenaTile(currentPosition) instanceof DestructibleWall) {
-                        blastDirections.put(direction, false);
-                        this.arenaModel.setTile(null, currentPosition);
-                        spawnPowerUp(currentPosition);
-                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof IndestructibleWall) {
-                        blastDirections.put(direction, false);
-                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof Bomb) {
-                        ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
-                    } else {
-                        for (Movable movable : arenaModel.getArenaMovables()) {
-                            if (movable.getGridPosition().equals((currentPosition))) {
-                                movable.dealDamage(blastTileInitDoneEvent.getDamage());
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        updateStats();
-    }
+//    @Subscribe
+//    public void blastTileInitDone(BlastTileInitDoneEvent blastTileInitDoneEvent) {
+//        updateStats();
+//        Map<Direction, Boolean> blastDirections = new HashMap<>();
+//        blastDirections.put(Direction.LEFT, true);
+//        blastDirections.put(Direction.UP, true);
+//        blastDirections.put(Direction.RIGHT, true);
+//        blastDirections.put(Direction.DOWN, true);
+//
+//        for (Movable movable : arenaModel.getArenaMovables()) {
+//            if (movable.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
+//                movable.dealDamage(blastTileInitDoneEvent.getDamage());
+//            }
+//        }
+//
+//        for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
+//            for (Direction direction : blastDirections.keySet()) {
+//                Point currentPosition = Utils.getRelativePoint(blastTileInitDoneEvent.getPosition(), i, direction);
+//                if (isValidPosition(currentPosition) && blastDirections.get(direction)) {
+//                    if (this.arenaModel.getArenaTile(currentPosition) instanceof DestructibleWall) {
+//                        blastDirections.put(direction, false);
+//                        this.arenaModel.setTile(null, currentPosition);
+//                        spawnPowerUp(currentPosition);
+//                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof IndestructibleWall) {
+//                        blastDirections.put(direction, false);
+//                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof Bomb) {
+//                        ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
+//                    } else {
+//                        for (Movable movable : arenaModel.getArenaMovables()) {
+//                            if (movable.getGridPosition().equals((currentPosition))) {
+//                                movable.dealDamage(blastTileInitDoneEvent.getDamage());
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        updateStats();
+//    }
 
     /**
      * Check if a specific position is within the bounds of the ArenaModel.

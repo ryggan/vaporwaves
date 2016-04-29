@@ -1,6 +1,9 @@
 package edu.chalmers.vaporwave.model.game;
 
 import edu.chalmers.vaporwave.util.SoundPlayer;
+import edu.chalmers.vaporwave.event.BlastEvent;
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.util.BlastState;
 
 import java.awt.*;
 
@@ -33,9 +36,11 @@ public abstract class Explosive extends StaticTile {
     }
 
     public void explode() {
-        new Blast(this);
         explosionSound.stopSound();
         explosionSound.playSound();
+
+        GameEventBus.getInstance().post(new BlastEvent(this));
+
     }
 
     public Point getPosition() {

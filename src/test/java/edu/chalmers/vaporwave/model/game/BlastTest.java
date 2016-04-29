@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.model.game;
 
+import edu.chalmers.vaporwave.util.BlastState;
 import org.junit.Test;
 
 import java.awt.*;
@@ -16,14 +17,14 @@ public class BlastTest {
     @Test
     public void testGetPosition() throws Exception {
         Explosive bombish = new Bomb(pirre, 1, 1, 1, 30);
-        Blast bMan = new Blast(bombish);
+        Blast bMan = new Blast(bombish, BlastState.CENTER, null);
         assertTrue(bMan.getPosition().equals(pirre.getGridPosition()));
     }
 
     @Test
     public void testGetRange() throws Exception {
         Explosive bombish = new Bomb(pirre, 1, 1, 1, 30);
-        Blast bMan = new Blast(bombish);
+        Blast bMan = new Blast(bombish, BlastState.CENTER, null);
         assertTrue(bMan.getRange() == 1);
     }
 }
