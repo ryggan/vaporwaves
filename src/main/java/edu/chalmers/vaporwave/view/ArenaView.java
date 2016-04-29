@@ -79,13 +79,6 @@ public class ArenaView {
         this.scoreboard = new Scoreboard(root);
         this.timerView = new TimerView(root);
 
-//        Label testLabel = new Label("Test");
-//        testLabel.setLayoutX(50);
-//        testLabel.setLayoutY(50);
-//
-//        testLabel.getStyleClass().add("testLabel");
-//        this.root.getChildren().add(testLabel);tLabel);
-
         GameEventBus.getInstance().register(this);
 
         // Setting up area to draw graphics
@@ -134,14 +127,6 @@ public class ArenaView {
             bombSprite[i] =
                     new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, i}, new double[] {1, 1});
         }
-//        bombSprite[0] =
-//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1});
-//        bombSprite[1] =
-//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 1}, new double[] {1, 1});
-//        bombSprite[2] =
-//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 2}, new double[] {1, 1});
-//        bombSprite[3] =
-//                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 3}, new double[] {1, 1});
         mineSprite =
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 4}, new double[] {1, 1});
 
@@ -214,11 +199,8 @@ public class ArenaView {
 
     private void createRandomBackgroundPattern() {
 //        int randomNum = 1 + (int)(Math.random() * 4);
-        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
 //        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
-
-
-
+        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
     }
 
     @Subscribe
@@ -278,11 +260,7 @@ public class ArenaView {
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof Blast) {
-//                    if (arenaTiles[i][j] instanceof Blast && this.blastSpriteMap.get(new Point(i, j)) != null) {
-//                    renderBlast(this.blastSpriteMap.get(new Point(i, j)), timeSinceStart, arenaTiles);
-//                    Point position = new Point(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
-                    Point position = new Point(i, j);
-                    renderBlast((Blast)arenaTiles[i][j], position, timeSinceStart);
+                    renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
                 }
             }
         }
@@ -353,40 +331,23 @@ public class ArenaView {
         }
     }
 
-//    private void renderBlast(BlastSpriteCollection blastSpriteCollection, double timeSinceStart, StaticTile[][] arenaTiles) {
-//
-//        if(!blastSpriteCollection.getBlastHasOccured()) {
-//            blastSpriteCollection.initBlast(arenaTiles);
-//        }
-//
-//        Set<Point> keys = blastSpriteCollection.getSpriteMap().keySet();
-//        for (Point key : keys) {
-//            blastSpriteCollection.getSprite(new Point(key.x, key.y)).render(tileGC, timeSinceStart);
-//        }
-//    }
-
     private void renderBlast(Blast blast, Point gridPosition, double timeSinceStart) {
         double timeDifference = timeSinceStart - blast.getTimeStamp();
         Point destinationCanvasPosition =
                 new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
                         (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
-//        System.out.println("Time difference: "+timeDifference);
 
-//        System.out.println("Blast: "+blast+", time since start: "+timeSinceStart+", blasts time: "+blast.getTimeStamp()+", difference: "+timeDifference);
         Sprite currentSprite = blastSpriteCenter;
         if (blast.getState() == BlastState.BEAM) {
             currentSprite = blastSpriteBeam[Utils.getIntegerFromDirection(blast.getDirection())];
         } else if (blast.getState() == BlastState.END) {
             currentSprite = blastSpriteEnd[Utils.getIntegerFromDirection(blast.getDirection())];
         }
-//        System.out.println("position; "+position+", state: "+blast.getState());
 
         if (timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
             currentSprite.setPosition(destinationCanvasPosition);
             currentSprite.render(this.tileGC, timeDifference);
         } else {
-//            Point gridPosition = Utils.canvasToGridPosition(gridPosition.getX(), gridPosition.getY());
-//            System.out.println("Posting to eventbus: "+blast.getState()+", "+gridPosition+" canvas: "+gridPosition.getX()+", "+gridPosition.getY());
             GameEventBus.getInstance().post(new BlastFinishedEvent(blast, gridPosition));
         }
     }
@@ -555,28 +516,6 @@ public class ArenaView {
                         startIndexX += characterSpriteProperties.getFrames();
                     }
                     break;
-//                case IDLE:
-//                    for (int i = 0; i < 4; i++) {
-//                        characterSprite.setIdleSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-//                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-//                                characterSpriteProperties.getFrames(),
-//                                characterSpriteProperties.getDuration(),
-//                                new int[]{i, characterSpriteProperties.getFirstFrame()[1]},
-//                                characterSpriteProperties.getOffset()),
-//                                i);
-//                    }
-//                    break;
-//                case FLINCH:
-//                    for (int i = 0; i < 4; i++) {
-//                        characterSprite.setFlinchSprite(new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-//                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-//                                characterSpriteProperties.getFrames(),
-//                                characterSpriteProperties.getDuration(),
-//                                new int[]{characterSpriteProperties.getFirstFrame()[0] + i, i},
-//                                characterSpriteProperties.getOffset()),
-//                                i);
-//                    }
-//                    break;
                 default:
                     break;
             }

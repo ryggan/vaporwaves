@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.model.game;
 
+import com.google.common.eventbus.EventBus;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.event.PlaceMineEvent;
@@ -20,18 +21,23 @@ public class GameCharacter extends Movable {
         this.placeBomb=new SoundPlayer("placebomb.wav");
 
         this.bombRange = 2;
-        this.maxBombCount = 3;
+        this.maxBombCount = 10;
         this.currentBombCount = this.maxBombCount;
+        setSpeed(2);
     }
 
     public void placeBomb() {
         if (this.currentBombCount > 0 && (getState() == MovableState.IDLE || getState() == MovableState.WALK)) {
-            GameEventBus.getInstance().post(new PlaceBombEvent(
-                    Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
-                    ), bombRange, getDamage())
-            );
             placeBomb.stopSound();
             placeBomb.playSound();
+            
+            PlaceBombEvent event =
+                    new PlaceBombEvent( Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()),
+                    bombRange,
+                    getDamage());
+            EventBus bus = GameEventBus.getInstance();
+
+            bus.post(event); // << performance thief!
         }
     }
 

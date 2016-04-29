@@ -139,7 +139,7 @@ public class ArenaModel {
 
     @Subscribe
     public void removeBlastTile(BlastFinishedEvent blastFinishedEvent) {
-        System.out.println("Removed blast tile at: "+blastFinishedEvent.getGridPosition());
+//        System.out.println("Removed blast tile at: "+blastFinishedEvent.getGridPosition());
 //        if (getArenaTile(blastFinishedEvent.getGridPosition()).equals(blastFinishedEvent.getBlast())) {
             removeTile(blastFinishedEvent.getGridPosition());
 //        }

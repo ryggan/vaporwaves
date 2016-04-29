@@ -53,7 +53,6 @@ public abstract class Explosive extends StaticTile {
         explosionSound.playSound();
 
         GameEventBus.getInstance().post(new BlastEvent(this));
-
     }
 
     public void setTimeStamp(double timeStamp) {

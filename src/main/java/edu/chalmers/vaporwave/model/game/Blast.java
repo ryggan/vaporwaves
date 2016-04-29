@@ -9,33 +9,17 @@ import java.awt.*;
 
 public class Blast extends StaticTile {
 
-//    private int range;
-//    private Point position;
     private double damage;
     private Direction direction;
     private BlastState state;
     private double timeStamp;
 
     public Blast(Explosive explosive, BlastState state, Direction direction, double timeStamp) {
-
-//        this.range = explosive.getRange();
-//        this.position = explosive.getPosition();
         this.damage = explosive.getDamage();
         this.direction = direction;
         this.state = state;
         this.timeStamp = timeStamp;
-
-//        GameEventBus.getInstance().post(new BlastEvent(this));
-        System.out.println("New blast: "+this);
     }
-
-//    public Point getPosition() {
-//        return this.position;
-//    }
-//
-//    public int getRange() {
-//        return this.range;
-//    }
 
     public Direction getDirection() {
         return this.direction;

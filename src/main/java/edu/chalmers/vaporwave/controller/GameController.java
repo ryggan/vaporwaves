@@ -18,8 +18,6 @@ import java.util.List;
 public class GameController {
 
     private ArenaView arenaView;
-
-
     private ArenaModel arenaModel;
 
     private Set<Player> remotePlayersSet;
@@ -32,11 +30,13 @@ public class GameController {
     private int updatedEnemyDirection;
 
     private double timeSinceStart;
+    private double systemNanoTime;
 
     private SoundPlayer backgroundMusic;
 
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
+        systemNanoTime = System.nanoTime();
     }
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
@@ -150,7 +150,9 @@ public class GameController {
             String key = pressed.get(i);
             switch (key) {
                 case "SPACE":
-                    localPlayer.getCharacter().placeBomb();
+                    if (arenaModel.getArenaTile(playerCharacter.getGridPosition()) == null) {
+                        playerCharacter.placeBomb();
+                    }
                     break;
                 case "M":
                     localPlayer.getCharacter().placeMine();
@@ -208,10 +210,6 @@ public class GameController {
 
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
-//        this.arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
-//        if (this.playerCharacter != null && this.playerCharacter.getCurrentBombCount() < this.playerCharacter.getMaxBombCount()) {
-//            this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
-//        }
 
         this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
 
@@ -243,9 +241,8 @@ public class GameController {
                 if (blastDirections.get(direction)) {
                     StaticTile currentTile = this.arenaModel.getArenaTile(position);
                     if (currentTile != null) {
-//                        System.out.println("Blast not put on tile " + position + " because of previous owner: " + this.arenaModel.getArenaTile(position));
                         if (currentTile instanceof DestructibleWall) {
-                            System.out.println("Destroy wall!");
+//                            System.out.println("Destroy wall!");
                         } else if (currentTile instanceof Explosive) {
                             ((Explosive)currentTile).setDelay(0.03, timeSinceStart);
                         }
@@ -259,61 +256,12 @@ public class GameController {
                             blastDirections.put(direction, false);
                         }
                     } else {
-                        //                    System.out.println("Create blast: "+state+", "+direction);
-//                        System.out.println("Bomb position: "+position+", player canvas position: "+this.playerCharacter.getCanvasPositionX()+", "+this.playerCharacter.getCanvasPositionY());
                         this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
                     }
                 }
             }
         }
     }
-
-    /**
-     * Gets called when a BlastSpriteCollection has finished its init-method.
-     * Updates the model according the to blast that has occurred.
-     *
-     * @param blastTileInitDoneEvent The event that gets sent from BlastSpriteCollection
-     */
-//    @Subscribe
-//    public void blastTileInitDone(BlastTileInitDoneEvent blastTileInitDoneEvent) {
-//        updateStats();
-//        Map<Direction, Boolean> blastDirections = new HashMap<>();
-//        blastDirections.put(Direction.LEFT, true);
-//        blastDirections.put(Direction.UP, true);
-//        blastDirections.put(Direction.RIGHT, true);
-//        blastDirections.put(Direction.DOWN, true);
-//
-//        for (Movable movable : arenaModel.getArenaMovables()) {
-//            if (movable.getGridPosition().equals(blastTileInitDoneEvent.getPosition())) {
-//                movable.dealDamage(blastTileInitDoneEvent.getDamage());
-//            }
-//        }
-//
-//        for (int i=1; i<=blastTileInitDoneEvent.getRange(); i++) {
-//            for (Direction direction : blastDirections.keySet()) {
-//                Point currentPosition = Utils.getRelativePoint(blastTileInitDoneEvent.getPosition(), i, direction);
-//                if (isValidPosition(currentPosition) && blastDirections.get(direction)) {
-//                    if (this.arenaModel.getArenaTile(currentPosition) instanceof DestructibleWall) {
-//                        blastDirections.put(direction, false);
-//                        this.arenaModel.setTile(null, currentPosition);
-//                        spawnPowerUp(currentPosition);
-//                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof IndestructibleWall) {
-//                        blastDirections.put(direction, false);
-//                    } else if (this.arenaModel.getArenaTile(currentPosition) instanceof Bomb) {
-//                        ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
-//                    } else {
-//                        for (Movable movable : arenaModel.getArenaMovables()) {
-//                            if (movable.getGridPosition().equals((currentPosition))) {
-//                                movable.dealDamage(blastTileInitDoneEvent.getDamage());
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        updateStats();
-//    }
 
     /**
      * Check if a specific position is within the bounds of the ArenaModel.
