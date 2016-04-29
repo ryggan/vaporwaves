@@ -29,6 +29,9 @@ public abstract class Movable {
     private double health;
     private int flinchTimer;
     private int flinchDelay;
+    private boolean flinchInvincible;
+    private int invincibleTimer;
+    private int invincibleDelay;
 
     protected Movable() { }
 
@@ -42,6 +45,8 @@ public abstract class Movable {
         this.name = name;
         this.damage = 30;
         this.flinchDelay = 40;
+        this.flinchInvincible = false;
+        this.invincibleDelay = 10;
 
         this.previousGridPositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPositionY(getCanvasPositionY());
@@ -71,6 +76,13 @@ public abstract class Movable {
                             || Utils.gridToCanvasPositionY(getPreviousGridPositionY()) != getCanvasPositionY()) {
                         move(direction, latestArenaTiles);
                     }
+                }
+                break;
+            case IDLE:
+                if (invincibleTimer > 0) {
+                    invincibleTimer--;
+                } else {
+                    flinchInvincible = false;
                 }
         }
 
@@ -138,6 +150,8 @@ public abstract class Movable {
         stop();
         flinchTimer = flinchDelay;
         movableState = movableState.FLINCH;
+        invincibleTimer = invincibleDelay;
+        flinchInvincible = true;
     }
 
     public void death() {
@@ -218,6 +232,7 @@ public abstract class Movable {
     }
 
     public void dealDamage(double damage) {
+        System.out.println(name+" dealt damage: "+damage);
         this.health -= damage;
         if (this.health <= 0) {
             this.health = Constants.DEFAULT_START_HEALTH;
@@ -297,6 +312,10 @@ public abstract class Movable {
 
     public void setFlinchDelay(int delay) {
         this.flinchDelay = delay;
+    }
+
+    public boolean isInvincible() {
+        return this.flinchInvincible;
     }
 
     @Override

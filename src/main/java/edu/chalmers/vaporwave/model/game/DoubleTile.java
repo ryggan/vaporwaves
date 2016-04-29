@@ -40,4 +40,22 @@ public class DoubleTile extends StaticTile {
         }
         return false;
     }
+
+    // Recursive method to fetch the topmost blast instance.
+    // todo: Maybe refactor and remove method above?
+    public Blast getBlast() {
+        if (upperTile instanceof Blast) {
+            return (Blast)upperTile;
+        } else if (lowerTile instanceof Blast) {
+            return (Blast)lowerTile;
+        } else if (upperTile instanceof DoubleTile) {
+            Blast blast = ((DoubleTile)upperTile).getBlast();
+            if (blast != null) {
+                return blast;
+            } else if (lowerTile instanceof DoubleTile) {
+                return ((DoubleTile)lowerTile).getBlast();
+            }
+        }
+        return null;
+    }
 }

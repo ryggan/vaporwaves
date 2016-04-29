@@ -385,7 +385,7 @@ public class ArenaView {
 
         // Movable rendering
         for (Movable movable : arenaMovables) {
-            renderCharacter(movable, timeSinceStart);
+            renderMovable(movable, timeSinceStart);
         }
     }
 
@@ -465,17 +465,17 @@ public class ArenaView {
         }
     }
 
-    public void renderCharacter(Movable character, double timeSinceStart) {
-        MovableState state = character.getState();
+    public void renderMovable(Movable movable, double timeSinceStart) {
+        MovableState state = movable.getState();
         CharacterSprite sprites = null;
 
-        if (character instanceof GameCharacter) {
+        if (movable instanceof GameCharacter) {
             for (int i = 0; i < 4; i++) {
-                if (characterSprites[i] != null && characterSprites[i].getName().equals(character.getName())) {
+                if (characterSprites[i] != null && characterSprites[i].getName().equals(movable.getName())) {
                     sprites = characterSprites[i];
                 }
             }
-        } else if (character instanceof Enemy) {
+        } else if (movable instanceof Enemy) {
             sprites = enemySprite;
         }
 
@@ -495,7 +495,7 @@ public class ArenaView {
                 }
                 AnimatedSprite currentAnimatedSprite = (AnimatedSprite)currentSprite[0];
                 if (!currentAnimatedSprite.getPlayedYet() || currentAnimatedSprite.isAnimationFinished()) {
-                    currentAnimatedSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(character));
+                    currentAnimatedSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(movable));
                     currentAnimatedSprite.setStartFromBeginning(true);
                     currentAnimatedSprite.resetLoops();
                     currentAnimatedSprite.setLoops(1);
@@ -504,19 +504,26 @@ public class ArenaView {
             }
 
             int spriteIndex = 0;
-            if (state == MovableState.SPAWN || state == MovableState.DEATH || character.getDirection() == Direction.DOWN) {
+            if (state == MovableState.SPAWN || state == MovableState.DEATH || movable.getDirection() == Direction.DOWN) {
                 spriteIndex = 0;
-            } else if (character.getDirection() == Direction.LEFT) {
+            } else if (movable.getDirection() == Direction.LEFT) {
                 spriteIndex = 1;
-            } else if (character.getDirection() == Direction.RIGHT) {
+            } else if (movable.getDirection() == Direction.RIGHT) {
                 spriteIndex = 2;
-            } else if (character.getDirection() == Direction.UP) {
+            } else if (movable.getDirection() == Direction.UP) {
                 spriteIndex = 3;
             }
 
             Sprite actualSprite = currentSprite[spriteIndex];
-            actualSprite.setPosition(character.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH, character.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-            actualSprite.render(tileGC, timeSinceStart);
+            actualSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
+                    movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+
+            // This little condition makes the movable flicker when invincible
+            if (movable.getState() == MovableState.FLINCH || !movable.isInvincible()
+                    || Math.round(timeSinceStart * 100) % 2 == 0) {
+
+                actualSprite.render(tileGC, timeSinceStart);
+            }
         }
     }
 

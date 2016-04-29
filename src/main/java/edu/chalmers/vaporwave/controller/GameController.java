@@ -166,6 +166,23 @@ public class GameController {
         // Updating positions
         for (Movable movable : arenaModel.getArenaMovables()) {
             movable.updatePosition();
+
+            // If moving into a blast, deal damage
+            if (!movable.isInvincible()
+                    && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
+
+                StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
+                Blast blast = null;
+                if (currentTile instanceof Blast) {
+                    blast = (Blast)currentTile;
+                } else if (currentTile instanceof DoubleTile) {
+                    blast = ((DoubleTile)currentTile).getBlast();
+                }
+                if (blast != null) {
+                    movable.dealDamage(blast.getDamage());
+                    updateStats();
+                }
+            }
         }
 
         if (this.localPlayer.getCharacter() != null &&
@@ -317,18 +334,6 @@ public class GameController {
 
         return new ArenaModel(arenaMap);
     }
-
-
-//    /** 10% chance to create a SuperPowerUp, 40% chance to create a StatPowerUp and 50% chance to return null.
-//     *
-//     * @return A powerup Tile.
-//     */
-//    public void spawnPowerUp(Point position) {
-//        Random randomGenerator = new Random();
-//        if(randomGenerator.nextInt(4) < 2) {
-//            this.arenaModel.setTile(new StatPowerUp(enabledPowerUpList), position);
-//        }
-//    }
 
     /**
      * Call on this method when player walks on PowerUpTile.
