@@ -78,10 +78,12 @@ public class ArenaModel {
         return this.arenaTiles[position.x][position.y];
     }
 
-    public void removeTile(Point position) throws ArrayIndexOutOfBoundsException {
+    // Simple removeTile()-method that allways clear a tile on the board
+    public void removeTile(Point position) {
         setTile(null, position.x, position.y);
     }
 
+    // Specific removeTile()-method that only checks for a specific tile and removes that one, if found, else nothing happens
     public void removeTile(Point position, StaticTile tile) {
         if (getArenaTile(position) != null) {
             if (getArenaTile(position).equals(tile)) {
@@ -92,6 +94,8 @@ public class ArenaModel {
         }
     }
 
+    // Special recursive removeTile-method that goes through the hierarchy of a DoubbleTile-tree and removes the
+    // specific tile, and IF it is found, it works its way backwards and removes DoubleTiles where necessary
     public StaticTile removeDoubleTile(DoubleTile doubleTile, StaticTile tile) {
         if (doubleTile.getLowerTile() != null) {
             if (doubleTile.getLowerTile().equals(tile)) {
@@ -176,25 +180,9 @@ public class ArenaModel {
         return null;
     }
 
-//    @Subscribe
-//    public void removeDestroyedWalls(BlastFinishedEvent blastFinishedEvent) {
-//        for (Point position : blastFinishedEvent.getDestroyedWalls()) {
-//            this.removeTile(position);
-////            this.setTile(new TestPowerUp(), position);
-//        }
-//    }
-
-//    @Subscribe
-//    public void removeBlastTile(BlastFinishedEvent blastFinishedEvent) {
-////        System.out.println("Removed blast tile at: "+blastFinishedEvent.getGridPosition());
-////        if (getArenaTile(blastFinishedEvent.getGridPosition()).equals(blastFinishedEvent.getBlast())) {
-//            removeTile(blastFinishedEvent.getGridPosition());
-////        }
-//    }
-
+    // RemoveTileEvent is posted from renderAnimatedTile() in ArenaView, when an animation is finished
     @Subscribe
     public void removeTileEventCatcher(RemoveTileEvent removeTileEvent) {
-//        removeTile(removeTileEvent.getGridPosition());
         removeTile(removeTileEvent.getGridPosition(), removeTileEvent.getTile());
     }
 

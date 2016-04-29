@@ -152,4 +152,19 @@ public class Utils {
         directions[3] = Direction.DOWN;
         return directions;
     }
+
+    public static boolean isOrtogonalDirections(Direction direction1, Direction direction2) {
+        return ((direction1 == Direction.DOWN || direction1 == Direction.UP)
+                && (direction2 == Direction.RIGHT || direction2 == Direction.LEFT))
+                || ((direction1 == Direction.RIGHT || direction1 == Direction.LEFT)
+                && (direction2 == Direction.DOWN || direction2 == Direction.UP));
+    }
+
+    public static boolean isParallellDirections(Direction direction1, Direction direction2) {
+        return (direction1 == direction2)
+                || (direction1 == Direction.DOWN && direction2 == Direction.UP)
+                || (direction1 == Direction.UP && direction2 == Direction.DOWN)
+                || (direction1 == Direction.RIGHT && direction2 == Direction.LEFT)
+                || (direction1 == Direction.LEFT && direction2 == Direction.RIGHT);
+    }
 }

@@ -208,11 +208,14 @@ public class GameController {
         updateStats();
     }
 
+    // This method is called via the eventbus, when a gamecharacter calls placeBomb()
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
 
+        // This is temporarily; when more than one character, this must be moved outside, or altered
         this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
 
+        // A map to keep track if there is an obstacle, or if the fire can keep burning
         Map<Direction, Boolean> blastDirections = new HashMap<>();
         blastDirections.put(Direction.LEFT, true);
         blastDirections.put(Direction.UP, true);
@@ -221,45 +224,62 @@ public class GameController {
 
         Explosive explosive = blastEvent.getExplosive();
 
+        // The center is ALLWAYS a blast
         this.arenaModel.setTile(new Blast(explosive, BlastState.CENTER, null, this.timeSinceStart), explosive.getPosition());
 
+        // Next, going through every tile within blast range
         for (int i = 0; i < explosive.getRange(); i++) {
             for (int j = 0; j < 4; j++) {
                 Direction direction = Utils.getDirectionFromInteger(j);
-
                 Point position = Utils.getRelativePoint(explosive.getPosition(), i + 1, direction);
 
+                // Checks if inside of game arena
                 if (!isValidPosition(position)) {
                     blastDirections.put(direction, false);
                 }
 
+                // Sets the state
                 BlastState state = BlastState.BEAM;
                 if (i == explosive.getRange() - 1) {
                     state = BlastState.END;
                 }
 
+                // If the way forward is clear, start placing and modifying blast-tile
                 if (blastDirections.get(direction)) {
+
+                    // If there is something in the way, lots of checks are done
                     StaticTile currentTile = this.arenaModel.getArenaTile(position);
                     if (currentTile != null) {
+
+                        // If a destructible wall is in the way, crack it and maybe also add an powerup
                         if (currentTile instanceof DestructibleWall) {
-//                            System.out.println("Destroy wall!");
                             ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
                             StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(enabledPowerUpList);
                             if (statPowerUp != null) {
                                 StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
                                 this.arenaModel.setTile(doubleTile, position);
                             }
+
+                        // If another explosive, detonate it with a tiny delay (makes for cool effects)
                         } else if (currentTile instanceof Explosive) {
                             ((Explosive)currentTile).setDelay(0.03, timeSinceStart);
                         }
-                        if (currentTile instanceof Blast && ((Blast)currentTile).getState() == BlastState.END) {
+
+                        // Multiple stacking if, 1; a blast end is in the way, or 2; if blasts are ortogonal to each other
+                        if ( (currentTile instanceof Blast && ( ((Blast)currentTile).getState() == BlastState.END
+                                || Utils.isOrtogonalDirections(((Blast)currentTile).getDirection(), direction) ) )
+                                || (currentTile instanceof DoubleTile && ((DoubleTile)currentTile).containBlast()) ) {
+
                             StaticTile doubleTile = new DoubleTile(currentTile,
                                     new Blast(explosive, state, direction, this.timeSinceStart));
                             this.arenaModel.setTile(doubleTile, position);
 
+                        // If no special multiple stacking, then the way is definitely shut, and blast ends here.
                         } else {
                             blastDirections.put(direction, false);
                         }
+
+                    // If nothing is in the way, simply but a blast there
                     } else {
                         this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
                     }

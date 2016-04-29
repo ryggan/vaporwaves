@@ -192,7 +192,6 @@ public class ArenaView {
 
         // Creating sub-elements
 
-
         createRandomBackgroundPattern();
         //make players a proper arraylist of the current players
         //scoreboard.addPlayersToScoreboard(players);
@@ -204,81 +203,88 @@ public class ArenaView {
         backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
     }
 
-//    @Subscribe
-//    public void bombPlaced(PlaceBombEvent placeBombEvent) {
-//        blastSpriteMap.put(placeBombEvent.getGridPosition(), new BlastSpriteCollection(placeBombEvent.getGridPosition(), placeBombEvent.getRange(), placeBombEvent.getDamage()));
-//    }
+    /**
+     * Reads character information from an XML-file and populate the instance variables for the sprites
+     */
+    private void initCharacterSprites(CharacterSprite characterSprite) {
+        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
-    public void updateStats(double health, double speed, int bombRange, int bombCount){
-        hudView.updateStats(health, speed, bombRange, bombCount);
-    }
+        for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
+            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
+            switch (characterState) {
+                case SPAWN:
+                    characterSprite.setSpawnSprite(
+                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                    characterSpriteProperties.getFrames(),
+                                    characterSpriteProperties.getDuration(),
+                                    characterSpriteProperties.getFirstFrame(),
+                                    characterSpriteProperties.getOffset())
+                    );
+                    break;
+                case DEATH:
+                    characterSprite.setDeathSprite(
+                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                    characterSpriteProperties.getFrames(),
+                                    characterSpriteProperties.getDuration(),
+                                    characterSpriteProperties.getFirstFrame(),
+                                    characterSpriteProperties.getOffset())
+                    );
+                    break;
+                case WALK:
+                case IDLE:
+                case FLINCH:
+                    int startIndexX = characterSpriteProperties.getFirstFrame()[0];
+                    int startIndexY = characterSpriteProperties.getFirstFrame()[1];
+                    int spritesheetWidth = (int)Math.floor(characterSpriteProperties.getSpritesheet().getWidth() / characterSpriteProperties.getDimensionX());
 
+                    for (int i = 0; i < 4; i++) {
 
-    public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
+                        if (startIndexX >= spritesheetWidth) {
+                            startIndexX -= spritesheetWidth;
+                            startIndexY++;
+                        }
 
-        /**
-         * Checks if player is holding tab, then shows the scoreboard.
-         */
+                        switch (characterState) {
+                            case WALK:
+                                characterSprite.setWalkSprite(
+                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                                characterSpriteProperties.getFrames(),
+                                                characterSpriteProperties.getDuration(),
+                                                new int[]{startIndexX, startIndexY},
+                                                characterSpriteProperties.getOffset()),
+                                        i);
+                            case IDLE:
+                                characterSprite.setIdleSprite(
+                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                                characterSpriteProperties.getFrames(),
+                                                characterSpriteProperties.getDuration(),
+                                                new int[]{startIndexX, startIndexY},
+                                                characterSpriteProperties.getOffset()),
+                                        i);
+                            case FLINCH:
+                                characterSprite.setFlinchSprite(
+                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+                                                characterSpriteProperties.getFrames(),
+                                                characterSpriteProperties.getDuration(),
+                                                new int[]{startIndexX, startIndexY},
+                                                characterSpriteProperties.getOffset()),
+                                        i);
+                        }
 
-        this.timerView.updateTimer((int)(timeSinceStart*100));
-
-
-        if(ListenerController.getInstance().getInput().contains("TAB")) {
-            scoreboard.showScoreboard();
-        } else {
-            scoreboard.hideScoreboard();
-        }
-
-        // Rendering:
-
-        arenaFrameSprites.get(Compass.SOUTH).render(backgroundGC, timeSinceStart);
-
-        tileGC.clearRect(0, 0, Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), Constants.GAME_HEIGHT + ((Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE) + 1);
-
-        // Method for printing current fps count.
-        // Updates every 10 frame
-        if (updateCounter == 10){
-            updateCounter = 0;
-            fps.setText("FPS: " + (int) (1 / timeSinceLastCall));
-            fps.setLayoutX(1029);
-            this.root.getChildren().remove(fps);
-            this.root.getChildren().add(fps);
-        }
-        updateCounter += 1;
-
-        for (int i = 0; i < arenaTiles.length; i++) {
-            for (int j = 0; j < arenaTiles[0].length; j++) {
-                if (arenaTiles[i][j] != null && !(arenaTiles[i][j] instanceof IndestructibleWall)) {
-
-//                    if (arenaTiles[i][j] instanceof Blast) {
-//                        renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
-//                    } else if (arenaTiles[i][j] instanceof DestructibleWall) {
-//                        renderDestructibleWall((DestructibleWall)arenaTiles[i][j], new Point(i, j), timeSinceStart);
-//                    } else {
-//                        renderTile(arenaTiles[i][j], new Point(i, j), timeSinceStart);
-//                    }
-                    renderChoosing(arenaTiles[i][j], new Point(i, j), timeSinceStart);
-                }
+                        startIndexX += characterSpriteProperties.getFrames();
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
-//        for (int i = 0; i < arenaTiles.length; i++) {
-//            for (int j = 0; j < arenaTiles[0].length; j++) {
-//                if (arenaTiles[i][j] instanceof Blast) {
-//                    renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
-//                }
-//            }
-//        }
-
-        for (Movable movable : arenaMovables) {
-
-            if (movable instanceof GameCharacter) {
-                renderCharacter(movable, timeSinceStart);
-
-            } else if (movable instanceof Enemy) {
-                renderCharacter(movable, timeSinceStart);
-            }
-        }
     }
 
     private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
@@ -336,6 +342,54 @@ public class ArenaView {
         }
     }
 
+    public void updateStats(double health, double speed, int bombRange, int bombCount){
+        hudView.updateStats(health, speed, bombRange, bombCount);
+    }
+
+    public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
+
+        /**
+         * Checks if player is holding tab, then shows the scoreboard.
+         */
+        if(ListenerController.getInstance().getInput().contains("TAB")) {
+            scoreboard.showScoreboard();
+        } else {
+            scoreboard.hideScoreboard();
+        }
+
+        // Rendering:
+
+        arenaFrameSprites.get(Compass.SOUTH).render(backgroundGC, timeSinceStart);
+
+        tileGC.clearRect(0, 0, Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), Constants.GAME_HEIGHT + ((Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE) + 1);
+
+        // Method for printing current fps count.
+        // Updates every 10 frame
+        if (updateCounter == 10){
+            updateCounter = 0;
+            fps.setText("FPS: " + (int) (1 / timeSinceLastCall));
+            fps.setLayoutX(1029);
+            this.root.getChildren().remove(fps);
+            this.root.getChildren().add(fps);
+        }
+        updateCounter += 1;
+
+        // ALL tile rendering should be done via renderChoosing, see below
+        for (int i = 0; i < arenaTiles.length; i++) {
+            for (int j = 0; j < arenaTiles[0].length; j++) {
+                if (arenaTiles[i][j] != null && !(arenaTiles[i][j] instanceof IndestructibleWall)) {
+                    renderChoosing(arenaTiles[i][j], new Point(i, j), timeSinceStart);
+                }
+            }
+        }
+
+        // Movable rendering
+        for (Movable movable : arenaMovables) {
+            renderCharacter(movable, timeSinceStart);
+        }
+    }
+
+    // Method that just moves through the alternatives of rendering, for static tiles
     private void renderChoosing(StaticTile tile, Point gridPosition, double timeSinceStart) {
         if (tile instanceof DoubleTile) {
             renderDoubleTile((DoubleTile)tile, gridPosition, timeSinceStart);
@@ -348,6 +402,7 @@ public class ArenaView {
         }
     }
 
+    // Standard method for rendering a static tile, if it has no specific one
     private void renderTile(StaticTile tile, Point gridPosition, double timeSinceStart) {
         Sprite tileSprite = getTileSprite(tile);
         if (tileSprite != null) {
@@ -356,6 +411,8 @@ public class ArenaView {
         }
     }
 
+    // This one calls the renderChoosing()-method for both of the DoubleTiles' StaticTiles, which could cause a
+    // recursive call until all StaticTiles are found and rendered
     private void renderDoubleTile(DoubleTile doubleTile, Point gridPosition, double timeSinceStart) {
         StaticTile[] tiles = new StaticTile[2];
         tiles[0] = doubleTile.getLowerTile();
@@ -367,44 +424,8 @@ public class ArenaView {
         }
     }
 
-    private void renderBlast(Blast blast, Point gridPosition, double timeSinceStart) {
-//        double timeDifference = timeSinceStart - blast.getTimeStamp();
-//        Point destinationCanvasPosition =
-//                new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
-//                        (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
-
-        Sprite currentSprite = blastSpriteCenter;
-        if (blast.getState() == BlastState.BEAM) {
-            currentSprite = blastSpriteBeam[Utils.getIntegerFromDirection(blast.getDirection())];
-        } else if (blast.getState() == BlastState.END) {
-            currentSprite = blastSpriteEnd[Utils.getIntegerFromDirection(blast.getDirection())];
-        }
-
-//        if (timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
-//            currentSprite.setPosition(destinationCanvasPosition);
-//            currentSprite.render(this.tileGC, timeDifference);
-//        } else {
-////            GameEventBus.getInstance().post(new BlastFinishedEvent(blast, gridPosition));
-//            GameEventBus.getInstance().post(new RemoveTileEvent(blast, gridPosition));
-//        }
-
-        renderAnimatedTile(currentSprite, blast, gridPosition, timeSinceStart);
-    }
-
-    private void renderDestructibleWall(DestructibleWall wall, Point gridPosition, double timeSinceStart) {
-
-        if (wall.isDestroyed()) {
-//            AnimatedSprite currentSprite = (AnimatedSprite)destructibleWallDestroyedSprite;
-//            currentSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(wall));
-//            currentSprite.setStartFromBeginning(true);
-//            currentSprite.resetLoops();
-//            currentSprite.setLoops(1);
-            renderAnimatedTile(destructibleWallDestroyedSprite, wall, gridPosition, timeSinceStart);
-        } else {
-            renderTile(wall, gridPosition, timeSinceStart);
-        }
-    }
-
+    // AnimatedTile is a semi-smooth solution that lets us have just the one Sprite for every animation, even though
+    // the animation in question is not supposed to be synched with all the other instances of the same object
     private void renderAnimatedTile(Sprite currentSprite, AnimatedTile tile, Point gridPosition, double timeSinceStart) {
 
         double timeDifference = timeSinceStart - tile.getTimeStamp();
@@ -421,34 +442,27 @@ public class ArenaView {
         }
     }
 
+    // Simple rendering of blast; it finds the current sprite and then calls renderAnimatedTile()
+    private void renderBlast(Blast blast, Point gridPosition, double timeSinceStart) {
 
-    public Sprite getTileSprite(StaticTile tile) {
-        if (tile instanceof Wall) {
-            if (tile instanceof DestructibleWall) {
-                return destructibleWallSprite;
-            } else if (tile instanceof IndestructibleWall) {
-                return indestructibleWallSprite;
-            }
-        } else if (tile instanceof Explosive) {
-            if (tile instanceof Bomb) {
-
-                String name = ((Bomb)tile).getOwner().getName();
-                if (name.equals("ALYSSA")) {
-                    return bombSprite[0];
-                } else if (name.equals("ZYPHER")) {
-                    return bombSprite[1];
-                } else if (name.equals("CHARLOTTE")) {
-                    return bombSprite[2];
-                } else if (name.equals("MEI")) {
-                    return bombSprite[3];
-                }
-            } else if (tile instanceof Mine) {
-                return mineSprite;
-            }
-        } else if (tile instanceof StatPowerUp) {
-            return powerUpSprites.get(((StatPowerUp) tile).getPowerUpState());
+        Sprite currentSprite = blastSpriteCenter;
+        if (blast.getState() == BlastState.BEAM) {
+            currentSprite = blastSpriteBeam[Utils.getIntegerFromDirection(blast.getDirection())];
+        } else if (blast.getState() == BlastState.END) {
+            currentSprite = blastSpriteEnd[Utils.getIntegerFromDirection(blast.getDirection())];
         }
-        return null;
+
+        renderAnimatedTile(currentSprite, blast, gridPosition, timeSinceStart);
+    }
+
+    // Does a renderAnimatedTile() when destroyed, because of animation, but otherwise goes with the standard renderTile()
+    private void renderDestructibleWall(DestructibleWall wall, Point gridPosition, double timeSinceStart) {
+
+        if (wall.isDestroyed()) {
+            renderAnimatedTile(destructibleWallDestroyedSprite, wall, gridPosition, timeSinceStart);
+        } else {
+            renderTile(wall, gridPosition, timeSinceStart);
+        }
     }
 
     public void renderCharacter(Movable character, double timeSinceStart) {
@@ -506,90 +520,33 @@ public class ArenaView {
         }
     }
 
-
-
-    /**
-     * Reads character information from an XML-file and populate the instance variables for the sprites
-     */
-    private void initCharacterSprites(CharacterSprite characterSprite) {
-        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
-        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
-
-        for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
-            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
-            switch (characterState) {
-                case SPAWN:
-                    characterSprite.setSpawnSprite(
-                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                            new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                            characterSpriteProperties.getFrames(),
-                            characterSpriteProperties.getDuration(),
-                            characterSpriteProperties.getFirstFrame(),
-                            characterSpriteProperties.getOffset())
-                            );
-                    break;
-                case DEATH:
-                    characterSprite.setDeathSprite(
-                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                            new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                            characterSpriteProperties.getFrames(),
-                            characterSpriteProperties.getDuration(),
-                            characterSpriteProperties.getFirstFrame(),
-                            characterSpriteProperties.getOffset())
-                            );
-                    break;
-                case WALK:
-                case IDLE:
-                case FLINCH:
-                    int startIndexX = characterSpriteProperties.getFirstFrame()[0];
-                    int startIndexY = characterSpriteProperties.getFirstFrame()[1];
-                    int spritesheetWidth = (int)Math.floor(characterSpriteProperties.getSpritesheet().getWidth() / characterSpriteProperties.getDimensionX());
-
-                    for (int i = 0; i < 4; i++) {
-
-                        if (startIndexX >= spritesheetWidth) {
-                            startIndexX -= spritesheetWidth;
-                            startIndexY++;
-                        }
-
-                        switch (characterState) {
-                            case WALK:
-                                characterSprite.setWalkSprite(
-                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                                characterSpriteProperties.getFrames(),
-                                                characterSpriteProperties.getDuration(),
-                                                new int[]{startIndexX, startIndexY},
-                                                characterSpriteProperties.getOffset()),
-                                        i);
-                            case IDLE:
-                                characterSprite.setIdleSprite(
-                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                                characterSpriteProperties.getFrames(),
-                                                characterSpriteProperties.getDuration(),
-                                                new int[]{startIndexX, startIndexY},
-                                                characterSpriteProperties.getOffset()),
-                                        i);
-                            case FLINCH:
-                                characterSprite.setFlinchSprite(
-                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                                characterSpriteProperties.getFrames(),
-                                                characterSpriteProperties.getDuration(),
-                                                new int[]{startIndexX, startIndexY},
-                                                characterSpriteProperties.getOffset()),
-                                        i);
-                        }
-
-                        startIndexX += characterSpriteProperties.getFrames();
-                    }
-                    break;
-                default:
-                    break;
+    public Sprite getTileSprite(StaticTile tile) {
+        if (tile instanceof Wall) {
+            if (tile instanceof DestructibleWall) {
+                return destructibleWallSprite;
+            } else if (tile instanceof IndestructibleWall) {
+                return indestructibleWallSprite;
             }
-        }
+        } else if (tile instanceof Explosive) {
+            if (tile instanceof Bomb) {
 
+                String name = ((Bomb)tile).getOwner().getName();
+                if (name.equals("ALYSSA")) {
+                    return bombSprite[0];
+                } else if (name.equals("ZYPHER")) {
+                    return bombSprite[1];
+                } else if (name.equals("CHARLOTTE")) {
+                    return bombSprite[2];
+                } else if (name.equals("MEI")) {
+                    return bombSprite[3];
+                }
+            } else if (tile instanceof Mine) {
+                return mineSprite;
+            }
+        } else if (tile instanceof StatPowerUp) {
+            return powerUpSprites.get(((StatPowerUp) tile).getPowerUpState());
+        }
+        return null;
     }
 
     @Subscribe
