@@ -6,9 +6,10 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.RemoveTileEvent;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.MapObject;
+import edu.chalmers.vaporwave.util.PowerUpState;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by andreascarlsson on 2016-04-18.
@@ -81,6 +82,42 @@ public class ArenaModel {
         setTile(null, position.x, position.y);
     }
 
+    public void removeTile(Point position, StaticTile tile) {
+        if (getArenaTile(position) != null) {
+            if (getArenaTile(position).equals(tile)) {
+                removeTile(position);
+            } else if (getArenaTile(position) instanceof DoubleTile) {
+                setTile(removeDoubleTile((DoubleTile) getArenaTile(position), tile), position);
+            }
+        }
+    }
+
+    public StaticTile removeDoubleTile(DoubleTile doubleTile, StaticTile tile) {
+        if (doubleTile.getLowerTile() != null) {
+            if (doubleTile.getLowerTile().equals(tile)) {
+                doubleTile.setLowerTile(null);
+            } else if (doubleTile.getLowerTile() instanceof DoubleTile) {
+                doubleTile.setLowerTile(removeDoubleTile((DoubleTile) doubleTile.getLowerTile(), tile));
+            }
+        }
+        if (doubleTile.getUpperTile() != null) {
+            if (doubleTile.getUpperTile().equals(tile)) {
+                doubleTile.setUpperTile(null);
+            } else if (doubleTile.getUpperTile() instanceof DoubleTile) {
+                doubleTile.setUpperTile(removeDoubleTile((DoubleTile) doubleTile.getUpperTile(), tile));
+            }
+        }
+        if (doubleTile.getLowerTile() == null && doubleTile.getUpperTile() != null) {
+            return doubleTile.getUpperTile();
+        } else if (doubleTile.getLowerTile() != null && doubleTile.getUpperTile() == null) {
+            return doubleTile.getLowerTile();
+        } else if (doubleTile.getLowerTile() == null && doubleTile.getUpperTile() == null) {
+            return null;
+        } else {
+            return doubleTile;
+        }
+    }
+
     public void addMovable(Movable movable) {
         arenaMovables.add(movable);
     }
@@ -130,6 +167,15 @@ public class ArenaModel {
         return temporaryString;
     }
 
+
+    public StatPowerUp spawnStatPowerUp(java.util.List<PowerUpState> enabledPowerUpList) {
+        Random randomGenerator = new Random();
+        if(randomGenerator.nextInt(4) < 2) {
+            return new StatPowerUp(enabledPowerUpList);
+        }
+        return null;
+    }
+
 //    @Subscribe
 //    public void removeDestroyedWalls(BlastFinishedEvent blastFinishedEvent) {
 //        for (Point position : blastFinishedEvent.getDestroyedWalls()) {
@@ -148,7 +194,8 @@ public class ArenaModel {
 
     @Subscribe
     public void removeTileEventCatcher(RemoveTileEvent removeTileEvent) {
-        removeTile(removeTileEvent.getGridPosition());
+//        removeTile(removeTileEvent.getGridPosition());
+        removeTile(removeTileEvent.getGridPosition(), removeTileEvent.getTile());
     }
 
     public int getWidth() {

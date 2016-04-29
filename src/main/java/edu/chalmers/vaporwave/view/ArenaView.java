@@ -250,18 +250,14 @@ public class ArenaView {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null && !(arenaTiles[i][j] instanceof IndestructibleWall)) {
 
-                    if (arenaTiles[i][j] instanceof Blast) {
-                        renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
-                    } else if (arenaTiles[i][j] instanceof DestructibleWall) {
-                        renderDestructibleWall((DestructibleWall)arenaTiles[i][j], new Point(i, j), timeSinceStart);
-                    } else {
-//                        Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
-//                        if (tileSprite != null) {
-//                            tileSprite.setPosition(i * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
-//                            tileSprite.render(tileGC, timeSinceStart);
-//                        }
-                        renderTile(arenaTiles[i][j], new Point(i, j), timeSinceStart);
-                    }
+//                    if (arenaTiles[i][j] instanceof Blast) {
+//                        renderBlast((Blast)arenaTiles[i][j], new Point(i, j), timeSinceStart);
+//                    } else if (arenaTiles[i][j] instanceof DestructibleWall) {
+//                        renderDestructibleWall((DestructibleWall)arenaTiles[i][j], new Point(i, j), timeSinceStart);
+//                    } else {
+//                        renderTile(arenaTiles[i][j], new Point(i, j), timeSinceStart);
+//                    }
+                    renderChoosing(arenaTiles[i][j], new Point(i, j), timeSinceStart);
                 }
             }
         }
@@ -340,11 +336,34 @@ public class ArenaView {
         }
     }
 
+    private void renderChoosing(StaticTile tile, Point gridPosition, double timeSinceStart) {
+        if (tile instanceof DoubleTile) {
+            renderDoubleTile((DoubleTile)tile, gridPosition, timeSinceStart);
+        } else if (tile instanceof Blast) {
+            renderBlast((Blast)tile, gridPosition, timeSinceStart);
+        } else if (tile instanceof DestructibleWall) {
+            renderDestructibleWall((DestructibleWall)tile, gridPosition, timeSinceStart);
+        } else {
+            renderTile(tile, gridPosition, timeSinceStart);
+        }
+    }
+
     private void renderTile(StaticTile tile, Point gridPosition, double timeSinceStart) {
         Sprite tileSprite = getTileSprite(tile);
         if (tileSprite != null) {
             tileSprite.setPosition(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH, (gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
             tileSprite.render(tileGC, timeSinceStart);
+        }
+    }
+
+    private void renderDoubleTile(DoubleTile doubleTile, Point gridPosition, double timeSinceStart) {
+        StaticTile[] tiles = new StaticTile[2];
+        tiles[0] = doubleTile.getLowerTile();
+        tiles[1] = doubleTile.getUpperTile();
+
+        for (int i = 0; i < tiles.length; i++) {
+            StaticTile tile = tiles[i];
+            renderChoosing(tile, gridPosition, timeSinceStart);
         }
     }
 

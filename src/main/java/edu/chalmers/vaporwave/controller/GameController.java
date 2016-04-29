@@ -244,14 +244,18 @@ public class GameController {
                         if (currentTile instanceof DestructibleWall) {
 //                            System.out.println("Destroy wall!");
                             ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
+                            StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(enabledPowerUpList);
+                            if (statPowerUp != null) {
+                                StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
+                                this.arenaModel.setTile(doubleTile, position);
+                            }
                         } else if (currentTile instanceof Explosive) {
                             ((Explosive)currentTile).setDelay(0.03, timeSinceStart);
                         }
                         if (currentTile instanceof Blast && ((Blast)currentTile).getState() == BlastState.END) {
-                            if (state == BlastState.END) {
-                                state = BlastState.BEAM;
-                            }
-                            this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
+                            StaticTile doubleTile = new DoubleTile(currentTile,
+                                    new Blast(explosive, state, direction, this.timeSinceStart));
+                            this.arenaModel.setTile(doubleTile, position);
 
                         } else {
                             blastDirections.put(direction, false);
@@ -295,16 +299,16 @@ public class GameController {
     }
 
 
-    /** 10% chance to create a SuperPowerUp, 40% chance to create a StatPowerUp and 50% chance to return null.
-     *
-     * @return A powerup Tile.
-     */
-    public void spawnPowerUp(Point position) {
-        Random randomGenerator = new Random();
-        if(randomGenerator.nextInt(4) < 2) {
-            this.arenaModel.setTile(new StatPowerUp(enabledPowerUpList), position);
-        }
-    }
+//    /** 10% chance to create a SuperPowerUp, 40% chance to create a StatPowerUp and 50% chance to return null.
+//     *
+//     * @return A powerup Tile.
+//     */
+//    public void spawnPowerUp(Point position) {
+//        Random randomGenerator = new Random();
+//        if(randomGenerator.nextInt(4) < 2) {
+//            this.arenaModel.setTile(new StatPowerUp(enabledPowerUpList), position);
+//        }
+//    }
 
     /**
      * Call on this method when player walks on PowerUpTile.
