@@ -1,13 +1,12 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
-import com.sun.org.apache.bcel.internal.generic.GOTO;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.network.GameServer;
 import edu.chalmers.vaporwave.util.LongValue;
-import edu.chalmers.vaporwave.util.MapFileReader;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
@@ -30,8 +29,11 @@ public class MainController {
     public MainController(Group root) {
 
 
-        GameEventBus.getInstance().register(this);
+
         // Trying out mapreader
+        GameEventBus.getInstance().register(this);
+
+//        GameServer gameServer = new GameServer();
 
 
         this.root = root;
@@ -79,7 +81,15 @@ public class MainController {
 
                 for (String code : ListenerController.getInstance().getPressed()) {
                     ListenerController.getInstance().updatePressed(code);
+
+
                 }
+
+//                System.out.println(ListenerController.getInstance().getInput().get(0));
+//                if (ListenerController.getInstance().getInput().size() > 0) {
+//                    gameServer.sendRequest("This is my request");
+//                }
+
             }
 
         }.start();

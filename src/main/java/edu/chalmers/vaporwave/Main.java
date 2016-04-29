@@ -1,6 +1,7 @@
 
 package edu.chalmers.vaporwave;
 
+import com.esotericsoftware.kryonet.Server;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.Constants;
@@ -16,10 +17,12 @@ import javafx.stage.WindowEvent;
 
 import javax.annotation.Nonnull;
 import java.io.File;
+import java.io.IOException;
 
 public class Main extends Application {
 
 	public static void main(String[] args) {
+
 		launch(args);
 	}
 
