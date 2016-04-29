@@ -5,49 +5,41 @@ import edu.chalmers.vaporwave.model.game.GameCharacter;
 public class Player {
     private int playerId;
     private String playerName;
-    private GameCharacter character;
+    private GameCharacter gameCharacter;
     private int score;
-    //name id character
-    //ListenerController
-    //everything that should be saved
-    //score
 
-    public Player(int id) {
-        this.playerId = id;
-        this.score = 0;
-    }
-
-    public Player(int id, String playerName) {
-        this.playerId = id;
+    public Player(int playerId, String playerName) {
+        this.playerId = playerId;
         this.playerName = playerName;
         this.score = 0;
     }
 
-    public void setScore(int score){
-        this.score=score;
+    public void setScore(int score) {
+        this.score = score;
     }
 
-    public void clearScore(){
+    public int getScore() {
+        return this.score;
+    }
+
+    public void clearScore() {
         this.score = 0;
     }
 
-    public void setCharacter(GameCharacter c){
-        character=c;
+    public void setCharacter(GameCharacter gameCharacter) {
+        this.gameCharacter = gameCharacter;
     }
 
     public GameCharacter getCharacter() {
-        return character;
+        return this.gameCharacter;
     }
 
     public void clearCharacter(){
-        this.character=null;
+        this.gameCharacter = null;
     }
 
-    public int getId() {
+    public int getPlayerId() {
         return this.playerId;
     }
 
-    public class KeyBindings {
-        // ?
-    }
 }

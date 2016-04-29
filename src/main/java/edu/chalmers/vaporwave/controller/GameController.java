@@ -5,6 +5,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
@@ -21,7 +22,8 @@ public class GameController {
 
     private ArenaModel arenaModel;
 
-    private GameCharacter playerCharacter;
+    private Set<Player> remotePlayersSet;
+    private Player localPlayer;
 
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
@@ -33,11 +35,9 @@ public class GameController {
 
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
-
-        initGame(root);
     }
 
-    public void initGame(Group root) {
+    public void initGame(Group root, NewGameEvent newGameEvent) {
         //Change this to proper values according to player preferences later, dummy values meanwhile
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpState.BOMB_COUNT);
@@ -45,9 +45,12 @@ public class GameController {
         enabledPowerUpList.add(PowerUpState.HEALTH);
         enabledPowerUpList.add(PowerUpState.SPEED);
 
+        this.localPlayer = newGameEvent.getLocalPlayer();
+
         // Initiates view
 
         timeSinceStart = 0.0;
+
 
         ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
 
@@ -59,26 +62,22 @@ public class GameController {
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
 
-        playerCharacter = new GameCharacter("ALYSSA");
 
         this.arenaView.updateStats(
-                this.playerCharacter.getHealth(),
-                this.playerCharacter.getSpeed(),
-                this.playerCharacter.getBombRange(),
-                this.playerCharacter.getCurrentBombCount()
+                this.localPlayer.getCharacter().getHealth(),
+                this.localPlayer.getCharacter().getSpeed(),
+                this.localPlayer.getCharacter().getBombRange(),
+                this.localPlayer.getCharacter().getCurrentBombCount()
         );
 
         try {
-            arenaModel.addMovable(playerCharacter);
+            arenaModel.addMovable(localPlayer.getCharacter());
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
 
         this.enemies = new HashSet<>();
         this.deadEnemies = new HashSet<>();
-
-        Set<GameCharacter> gameCharacters = new HashSet<>();
-        gameCharacters.add(playerCharacter);
 
         Random random = new Random();
         for (int k = 0; k < 10; k++) {
@@ -111,7 +110,7 @@ public class GameController {
 
         if (this.updatedEnemyDirection == 15) {
             for (Enemy enemy : enemies) {
-                enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), playerCharacter.getGridPosition(), this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
+                enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(), this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
 //                enemy.placeBomb();
             }
             updatedEnemyDirection = 0;
@@ -125,7 +124,7 @@ public class GameController {
                 case "LEFT":
                 case "DOWN":
                 case "RIGHT":
-                    playerCharacter.move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
+                    localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
                 case "ESCAPE":
                     this.arenaModel.getArenaMovables().clear();
@@ -136,7 +135,6 @@ public class GameController {
                     }
                     this.enemies.clear();
                     this.deadEnemies.clear();
-                    this.playerCharacter = null;
 
                     GameEventBus.getInstance().post(new GoToMenuEvent());
             }
@@ -146,10 +144,10 @@ public class GameController {
             String key = pressed.get(i);
             switch (key) {
                 case "SPACE":
-                    playerCharacter.placeBomb();
+                    localPlayer.getCharacter().placeBomb();
                     break;
                 case "M":
-                    playerCharacter.placeMine();
+                    localPlayer.getCharacter().placeMine();
                     break;
             }
         }
@@ -159,13 +157,13 @@ public class GameController {
             movable.updatePosition();
         }
 
-        if (this.playerCharacter != null &&
-                this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y]
+        if (this.localPlayer.getCharacter() != null &&
+                this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y]
                 instanceof StatPowerUp) {
-            StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[playerCharacter.getGridPosition().x][playerCharacter.getGridPosition().y];
+            StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y];
 
             if (powerUp.getPowerUpState() != null) {
-                this.arenaModel.setTile(null, playerCharacter.getGridPosition());
+                this.arenaModel.setTile(null, localPlayer.getCharacter().getGridPosition());
                 playerWalksOnPowerUp(powerUp.getPowerUpState());
                 updateStats();
             }
@@ -187,23 +185,23 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setTile(new Bomb(this.playerCharacter, this.playerCharacter.getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.playerCharacter.getDamage()), placeBombEvent.getGridPosition());
-        this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
+        arenaModel.setTile(new Bomb(this.localPlayer.getCharacter(), this.localPlayer.getCharacter().getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.localPlayer.getCharacter().getDamage()), placeBombEvent.getGridPosition());
+        this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() - 1);
         updateStats();
     }
 
     @Subscribe
     public void minePlaced(PlaceMineEvent placeMineEvent) {
-        arenaModel.setTile(new Mine(this.playerCharacter, 1, this.playerCharacter.getDamage()), placeMineEvent.getGridPosition());
-        this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() - 1);
+        arenaModel.setTile(new Mine(this.localPlayer.getCharacter(), 1, this.localPlayer.getCharacter().getDamage()), placeMineEvent.getGridPosition());
+        this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() - 1);
         updateStats();
     }
 
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
         this.arenaModel.setTile(blastEvent.getBlast(), blastEvent.getBlast().getPosition());
-        if (this.playerCharacter != null && this.playerCharacter.getCurrentBombCount() < this.playerCharacter.getMaxBombCount()) {
-            this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
+        if (this.localPlayer.getCharacter() != null && this.localPlayer.getCharacter().getCurrentBombCount() < this.localPlayer.getCharacter().getMaxBombCount()) {
+            this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() + 1);
         }
     }
 
@@ -270,10 +268,10 @@ public class GameController {
     //TODO
     private void updateStats() {
         this.arenaView.updateStats(
-                this.playerCharacter.getHealth(),
-                this.playerCharacter.getSpeed(),
-                this.playerCharacter.getBombRange(),
-                this.playerCharacter.getCurrentBombCount()
+                this.localPlayer.getCharacter().getHealth(),
+                this.localPlayer.getCharacter().getSpeed(),
+                this.localPlayer.getCharacter().getBombRange(),
+                this.localPlayer.getCharacter().getCurrentBombCount()
         );
     }
 
@@ -305,21 +303,21 @@ public class GameController {
         System.out.println(powerUpState);
         switch (powerUpState) {
             case HEALTH:
-                if (playerCharacter.getHealth() <= 90) {
-                    this.playerCharacter.setHealth(this.playerCharacter.getHealth() + 10);
-                } else if (playerCharacter.getHealth() < 100) {
-                    this.playerCharacter.setHealth(100);
+                if (localPlayer.getCharacter().getHealth() <= 90) {
+                    this.localPlayer.getCharacter().setHealth(this.localPlayer.getCharacter().getHealth() + 10);
+                } else if (localPlayer.getCharacter().getHealth() < 100) {
+                    this.localPlayer.getCharacter().setHealth(100);
                 }
                 break;
             case BOMB_COUNT:
-                this.playerCharacter.setMaxBombCount(this.playerCharacter.getMaxBombCount() + 1);
-                this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
+                this.localPlayer.getCharacter().setMaxBombCount(this.localPlayer.getCharacter().getMaxBombCount() + 1);
+                this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() + 1);
                 break;
             case SPEED:
-                this.playerCharacter.setSpeed(this.playerCharacter.getSpeed() + 0.2);
+                this.localPlayer.getCharacter().setSpeed(this.localPlayer.getCharacter().getSpeed() + 0.2);
                 break;
             case RANGE:
-                this.playerCharacter.setBombRange(this.playerCharacter.getBombRange() + 1);
+                this.localPlayer.getCharacter().setBombRange(this.localPlayer.getCharacter().getBombRange() + 1);
                 break;
         }
     }

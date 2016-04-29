@@ -4,6 +4,9 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.game.CPUPlayer;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.AbstractMenu;
 import edu.chalmers.vaporwave.model.menu.CharacterMenu;
 import edu.chalmers.vaporwave.model.menu.MenuCategory;
@@ -26,6 +29,14 @@ public class MenuController {
     public MenuController(Group root) {
 
         this.newGameEvent = new NewGameEvent();
+
+        Player thisPlayer = new Player(1, "PlayerOne");
+        thisPlayer.setCharacter(new GameCharacter("ALYSSA"));
+        this.newGameEvent.setLocalPlayer(thisPlayer);
+
+        Player testCPUPlayer = new CPUPlayer(2, "CPUPlayerOne");
+        testCPUPlayer.setCharacter(new GameCharacter("CHARLOTTE"));
+
         this.activeMenu = 0;
         this.menuList = new ArrayList<>();
         this.menuList.add(new StartMenu(this.newGameEvent));

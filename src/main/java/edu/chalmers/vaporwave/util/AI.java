@@ -7,6 +7,4 @@ import java.awt.*;
 
 public interface AI {
     public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles);
-    public boolean shouldPutBomb();
-
 }

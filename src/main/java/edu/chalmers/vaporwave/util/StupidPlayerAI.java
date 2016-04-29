@@ -6,10 +6,11 @@ import edu.chalmers.vaporwave.model.game.StaticTile;
 import java.awt.*;
 import java.util.Random;
 
-public class StupidAI implements AI {
+public class StupidPlayerAI implements PlayerAI {
+
     private Direction previousDirection;
 
-    public StupidAI() {
+    public StupidPlayerAI() {
         Random random = new Random();
         int nextRandom = random.nextInt(4);
 
@@ -27,5 +28,16 @@ public class StupidAI implements AI {
         }
 
         return previousDirection;
+    }
+
+    @Override
+    public boolean shouldPutBomb(){
+        Random random = new Random();
+        int nextRandom = random.nextInt(1000);
+        if(nextRandom==1){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

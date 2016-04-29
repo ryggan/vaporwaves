@@ -14,14 +14,15 @@ public class Enemy extends Movable {
         this.ai = ai;
     }
 
-    public void placeBomb() {
-        if(ai.shouldPutBomb()) {
-            GameEventBus.getInstance().post(new PlaceBombEvent(
-                    Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
-                    ), 1, getDamage())
-            );
-        }
-    }
+    // Todo: Implement this in a remote player instead
+//    public void placeBomb() {
+//        if(ai.shouldPutBomb()) {
+//            GameEventBus.getInstance().post(new PlaceBombEvent(
+//                    Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
+//                    ), 1, getDamage())
+//            );
+//        }
+//    }
 
     public AI getAI() {
         return this.ai;

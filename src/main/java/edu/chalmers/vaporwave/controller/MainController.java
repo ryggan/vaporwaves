@@ -101,7 +101,7 @@ public class MainController {
     public void newGame(NewGameEvent newGameEvent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(gameRoot);
-        this.gameController.initGame(gameRoot);
+        this.gameController.initGame(gameRoot, newGameEvent);
         this.inGame = true;
     }
 

@@ -88,7 +88,7 @@ public class HUDView {
     }
 
     public void updateHealthBar(int i) {
-        System.out.println(i);
+//        System.out.println(i);
         newImage = new WritableImage(reader, 0, 0, i, 17);
         ImageView healthBarFilledNew = new ImageView(newImage);
         healthBarFilledNew.setLayoutX(184);
