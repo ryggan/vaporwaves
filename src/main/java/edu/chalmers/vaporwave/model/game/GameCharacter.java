@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.model.game;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.event.PlaceMineEvent;
+import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.Utils;
 
 public class GameCharacter extends Movable {
@@ -20,7 +21,7 @@ public class GameCharacter extends Movable {
     }
 
     public void placeBomb() {
-        if(this.currentBombCount > 0) {
+        if (this.currentBombCount > 0 && (getState() == MovableState.IDLE || getState() == MovableState.WALK)) {
             GameEventBus.getInstance().post(new PlaceBombEvent(
                     Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
                     ), bombRange, getDamage())
