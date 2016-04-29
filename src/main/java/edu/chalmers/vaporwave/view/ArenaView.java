@@ -398,11 +398,13 @@ public class ArenaView {
                     hudView.setZeroHealthBar();
                     currentSprite = sprites.getDeathSprites();
                 }
-                if (!((AnimatedSprite)currentSprite[0]).getPlayedYet() || ((AnimatedSprite)currentSprite[0]).isAnimationFinished()) {
-                    ((AnimatedSprite)currentSprite[0]).setAnimationFinishedEvent(new AnimationFinishedEvent(character));
-                    ((AnimatedSprite)currentSprite[0]).setStartFromBeginning(true);
-                    ((AnimatedSprite)currentSprite[0]).resetLoops();
-                    ((AnimatedSprite)currentSprite[0]).setLoops(1);
+                AnimatedSprite currentAnimatedSprite = (AnimatedSprite)currentSprite[0];
+                if (!currentAnimatedSprite.getPlayedYet() || currentAnimatedSprite.isAnimationFinished()) {
+                    currentAnimatedSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(character));
+                    currentAnimatedSprite.setStartFromBeginning(true);
+                    currentAnimatedSprite.resetLoops();
+                    currentAnimatedSprite.setLoops(1);
+                    currentAnimatedSprite.setLingerOnLastFrame(true);
                 }
             }
 

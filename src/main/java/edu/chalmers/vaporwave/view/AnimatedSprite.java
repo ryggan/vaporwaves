@@ -31,6 +31,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     private double duration;
     private double timeOffset;
     private boolean startFromBeginning;
+    private boolean lingerOnLastFrame;
     private int loops; // -1 gives infinite loops
     private double startTime;
     private boolean playedYet;
@@ -73,6 +74,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
         this.timeOffset = 0;
         this.startFromBeginning = false;
+        this.lingerOnLastFrame = false;
         this.animationFinished = false;
         this.loops = -1;
         this.startTime = 0;
@@ -198,7 +200,19 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
         double timeToCheck = time - timeOffset;
 
+        if (!animationFinished && loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
+            this.animationFinished = true;
+            if (this.animationFinishedEvent == null) {
+                this.animationFinishedEvent = new AnimationFinishedEvent();
+            }
+            GameEventBus.getInstance().post(this.animationFinishedEvent);
+        }
+
         int index = (int)((timeToCheck % (length * duration)) / duration);
+        if (lingerOnLastFrame && animationFinished) {
+            index = length-1;
+        }
+
         double width = getWidth() * getScale();
         double height = getHeight() * getScale();
         int sourcex = frames.get(index)[0] * (int)width;
@@ -211,15 +225,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
             targety = Math.round(targety * getScale()) / getScale();
         }
 
-        if (!animationFinished && loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
-            this.animationFinished = true;
-            if (this.animationFinishedEvent == null) {
-                this.animationFinishedEvent = new AnimationFinishedEvent();
-            }
-            GameEventBus.getInstance().post(this.animationFinishedEvent);
-        }
-
-        if (!animationFinished) {
+        if (lingerOnLastFrame || !animationFinished) {
             gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
         }
     }
@@ -248,6 +254,10 @@ public class AnimatedSprite extends Sprite implements Cloneable {
 
     public void setStartFromBeginning(boolean startFromBeginning) {
         this.startFromBeginning = startFromBeginning;
+    }
+
+    public void setLingerOnLastFrame(boolean lingerOnLastFrame) {
+        this.lingerOnLastFrame = lingerOnLastFrame;
     }
 
     // if loops = -1, then infinite loops
