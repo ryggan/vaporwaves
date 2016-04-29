@@ -1,14 +1,11 @@
 package edu.chalmers.vaporwave.util;
 
-import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.model.ArenaModel;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
-import edu.chalmers.vaporwave.model.gameObjects.PowerUp;
-import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
-import edu.chalmers.vaporwave.model.gameObjects.Wall;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
+import edu.chalmers.vaporwave.model.game.PowerUp;
+import edu.chalmers.vaporwave.model.game.StaticTile;
+import edu.chalmers.vaporwave.model.game.Wall;
 
 import java.awt.*;
-import java.util.HashSet;
 import java.util.Set;
 
 public class AIHeuristics {

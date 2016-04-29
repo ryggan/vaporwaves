@@ -1,8 +1,4 @@
-package edu.chalmers.vaporwave.model.gameObjects;
-
-import edu.chalmers.vaporwave.view.Sprite;
-
-import java.awt.*;
+package edu.chalmers.vaporwave.model.game;
 
 public abstract class Wall extends StaticTile {
 

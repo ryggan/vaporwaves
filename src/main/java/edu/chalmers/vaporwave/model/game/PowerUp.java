@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.model.gameObjects;
+package edu.chalmers.vaporwave.model.game;
 
 import edu.chalmers.vaporwave.util.PowerUpState;
 

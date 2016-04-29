@@ -1,9 +1,8 @@
 package edu.chalmers.vaporwave.util;
 
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
-import edu.chalmers.vaporwave.model.gameObjects.IndestructibleWall;
-import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
-import edu.chalmers.vaporwave.model.gameObjects.Wall;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
+import edu.chalmers.vaporwave.model.game.IndestructibleWall;
+import edu.chalmers.vaporwave.model.game.StaticTile;
 import org.junit.Test;
 
 import java.util.HashSet;

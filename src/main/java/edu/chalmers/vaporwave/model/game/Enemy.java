@@ -1,15 +1,9 @@
-package edu.chalmers.vaporwave.model.gameObjects;
+package edu.chalmers.vaporwave.model.game;
 
-import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
-import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.AI;
-import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.Utils;
-import edu.chalmers.vaporwave.view.Sprite;
-
-import java.awt.*;
 
 public class Enemy extends Movable {
 

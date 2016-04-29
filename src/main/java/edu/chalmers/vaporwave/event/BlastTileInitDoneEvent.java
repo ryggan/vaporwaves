@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave.event;
 
-import edu.chalmers.vaporwave.model.gameObjects.Blast;
-
 import java.awt.*;
 
 public class BlastTileInitDoneEvent {

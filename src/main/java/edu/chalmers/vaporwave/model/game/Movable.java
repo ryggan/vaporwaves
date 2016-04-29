@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.model.gameObjects;
+package edu.chalmers.vaporwave.model.game;
 
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.util.Constants;

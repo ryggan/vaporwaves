@@ -1,7 +1,7 @@
 package edu.chalmers.vaporwave.event;
 
-import edu.chalmers.vaporwave.model.gameObjects.Movable;
-import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
+import edu.chalmers.vaporwave.model.game.Movable;
+import edu.chalmers.vaporwave.model.game.StaticTile;
 
 public class AnimationFinishedEvent {
 

@@ -5,7 +5,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
-import edu.chalmers.vaporwave.model.gameObjects.*;
+import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;

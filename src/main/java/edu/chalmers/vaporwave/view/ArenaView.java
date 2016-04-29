@@ -7,7 +7,7 @@ import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.PowerUpProperties;
 import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
-import edu.chalmers.vaporwave.model.gameObjects.*;
+import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;

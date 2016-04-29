@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
 
 public class Player {
     private int playerId;

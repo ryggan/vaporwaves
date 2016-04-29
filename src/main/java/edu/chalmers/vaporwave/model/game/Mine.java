@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.model.gameObjects;
+package edu.chalmers.vaporwave.model.game;
 
 public class Mine extends Explosive {
 

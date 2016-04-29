@@ -1,12 +1,7 @@
-package edu.chalmers.vaporwave.model.gameObjects;
+package edu.chalmers.vaporwave.model.game;
 
 import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.view.AnimatedSprite;
-import edu.chalmers.vaporwave.view.Sprite;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 
 import java.awt.*;
 

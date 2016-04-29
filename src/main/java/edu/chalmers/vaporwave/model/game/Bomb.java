@@ -1,10 +1,4 @@
-package edu.chalmers.vaporwave.model.gameObjects;
-
-import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.view.Sprite;
-
-import java.util.Timer;
-import java.util.TimerTask;
+package edu.chalmers.vaporwave.model.game;
 
 public class Bomb extends Explosive {
 
@@ -22,9 +16,5 @@ public class Bomb extends Explosive {
             explode();
         }
     }
-
-
-
-
 
 }

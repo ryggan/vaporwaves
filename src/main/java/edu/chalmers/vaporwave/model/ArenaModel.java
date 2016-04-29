@@ -3,14 +3,10 @@ package edu.chalmers.vaporwave.model;
 import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.event.BlastFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.model.gameObjects.*;
-import edu.chalmers.vaporwave.util.MapFileReader;
+import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.MapObject;
-import edu.chalmers.vaporwave.util.PowerUpLoader;
-import edu.chalmers.vaporwave.util.PowerUpState;
 
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
 
 /**

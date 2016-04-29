@@ -2,8 +2,6 @@ package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.model.gameObjects.Movable;
-import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.canvas.GraphicsContext;

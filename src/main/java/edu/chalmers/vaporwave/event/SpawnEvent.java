@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave.event;
 
-import edu.chalmers.vaporwave.model.gameObjects.Movable;
+import edu.chalmers.vaporwave.model.game.Movable;
 
 public class SpawnEvent {
 

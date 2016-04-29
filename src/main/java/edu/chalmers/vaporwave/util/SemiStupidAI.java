@@ -1,13 +1,10 @@
 package edu.chalmers.vaporwave.util;
 
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
-import edu.chalmers.vaporwave.model.gameObjects.StaticTile;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
+import edu.chalmers.vaporwave.model.game.StaticTile;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
 public class SemiStupidAI implements AI {

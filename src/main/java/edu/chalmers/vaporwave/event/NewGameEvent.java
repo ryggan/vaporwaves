@@ -1,10 +1,9 @@
 package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.ArenaMap;
-import edu.chalmers.vaporwave.model.gameObjects.GameCharacter;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.PowerUpState;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class NewGameEvent {
