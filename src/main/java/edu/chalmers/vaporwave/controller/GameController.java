@@ -240,15 +240,7 @@ public class GameController {
                         blastDirections.put(direction, false);
                     } else if (this.arenaModel.getArenaTile(currentPosition) instanceof Bomb) {
                         ((Bomb) this.arenaModel.getArenaTile(currentPosition)).explode();
-//                    } else if (this.playerCharacter.getGridPosition().equals(currentPosition)) {
-//                        this.playerCharacter.dealDamage(blastTileInitDoneEvent.getDamage());
                     } else {
-//                        for (Enemy enemy : this.enemies) {
-//                            if (enemy.getGridPosition().equals(currentPosition)) {
-//                                enemy.death();
-//                                deadEnemies.add(enemy);
-//                            }
-//                        }
                         for (Movable movable : arenaModel.getArenaMovables()) {
                             if (movable.getGridPosition().equals((currentPosition))) {
                                 movable.dealDamage(blastTileInitDoneEvent.getDamage());
