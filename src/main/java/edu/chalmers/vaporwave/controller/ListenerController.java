@@ -37,12 +37,17 @@ public class ListenerController {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
                         input.remove(code);
+                        released.add(code);
                     }
                 });
     }
 
-    public void updatePressed(String code) {
-        this.pressed.remove(code);
+    public void clearPressed() {
+        this.pressed.clear();
+    }
+
+    public void clearReleased() {
+        this.released.clear();
     }
 
     public static synchronized ListenerController getInstance() {

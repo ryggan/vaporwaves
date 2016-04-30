@@ -79,11 +79,8 @@ public class MainController {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 }
 
-                for (String code : ListenerController.getInstance().getPressed()) {
-                    ListenerController.getInstance().updatePressed(code);
-
-
-                }
+                ListenerController.getInstance().clearPressed();
+                ListenerController.getInstance().clearReleased();
 
 //                System.out.println(ListenerController.getInstance().getInput().get(0));
 //                if (ListenerController.getInstance().getInput().size() > 0) {

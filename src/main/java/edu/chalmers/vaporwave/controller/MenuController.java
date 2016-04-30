@@ -53,6 +53,9 @@ public class MenuController {
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+
+        System.out.println(ListenerController.getInstance().getReleased());
+
         if (!ListenerController.getInstance().getPressed().isEmpty()) {
             switch (ListenerController.getInstance().getPressed().get(0)) {
                 case "UP":
@@ -71,6 +74,11 @@ public class MenuController {
                     menuList.get(activeMenu).changeSelected(Direction.RIGHT);
                     updateViews();
                     break;
+            }
+        }
+
+        if (!ListenerController.getInstance().getReleased().isEmpty()) {
+            switch (ListenerController.getInstance().getReleased().get(0)) {
                 case "ENTER":
                 case "SPACE":
                     switch (menuList.get(activeMenu).getMenuAction()) {
@@ -96,6 +104,7 @@ public class MenuController {
                     break;
             }
         }
+
     }
 
     public void updateViews() {
