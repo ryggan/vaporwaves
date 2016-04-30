@@ -47,9 +47,6 @@ public class ArenaView {
 
     private Map<PowerUpState, Sprite> powerUpSprites;
 
-//    private Map<Point, BlastSpriteCollection> blastSpriteMap;
-//    private Set<Point> destroyedWalls;
-
     private Sprite blastSpriteCenter;
     private Sprite[] blastSpriteBeam = new Sprite[4];
     private Sprite[] blastSpriteEnd = new Sprite[4];
@@ -67,8 +64,6 @@ public class ArenaView {
     public ArenaView(Group root) {
         this.root = root;
         this.arenaFrameSprites = new HashMap<>();
-//        this.blastSpriteMap = new HashMap<>();
-//        this.destroyedWalls = new HashSet<>();
         this.fps = new Label();
         
         this.powerUpSprites = new HashMap<>();
@@ -287,60 +282,60 @@ public class ArenaView {
 
     }
 
-    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
-        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
-        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
-
-        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
-            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
-            switch(powerUpState) {
-                case HEALTH:
-                    powerUpSprite.setHealthSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case BOMB_COUNT:
-                    powerUpSprite.setBombCountSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case SPEED:
-                    powerUpSprite.setSpeedSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-                case RANGE:
-                    powerUpSprite.setRangeSprite(
-                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-                                            powerUpSpriteProperties.getDimensionY()),
-                                    powerUpSpriteProperties.getFrames(),
-                                    powerUpSpriteProperties.getDuration(),
-                                    powerUpSpriteProperties.getFirstFrame(),
-                                    powerUpSpriteProperties.getOffset())
-                    );
-                    break;
-            }
-        }
-    }
+//    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
+//        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+//        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
+//
+//        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
+//            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
+//            switch(powerUpState) {
+//                case HEALTH:
+//                    powerUpSprite.setHealthSprite(
+//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+//                                            powerUpSpriteProperties.getDimensionY()),
+//                                    powerUpSpriteProperties.getFrames(),
+//                                    powerUpSpriteProperties.getDuration(),
+//                                    powerUpSpriteProperties.getFirstFrame(),
+//                                    powerUpSpriteProperties.getOffset())
+//                    );
+//                    break;
+//                case BOMB_COUNT:
+//                    powerUpSprite.setBombCountSprite(
+//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+//                                            powerUpSpriteProperties.getDimensionY()),
+//                                    powerUpSpriteProperties.getFrames(),
+//                                    powerUpSpriteProperties.getDuration(),
+//                                    powerUpSpriteProperties.getFirstFrame(),
+//                                    powerUpSpriteProperties.getOffset())
+//                    );
+//                    break;
+//                case SPEED:
+//                    powerUpSprite.setSpeedSprite(
+//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+//                                            powerUpSpriteProperties.getDimensionY()),
+//                                    powerUpSpriteProperties.getFrames(),
+//                                    powerUpSpriteProperties.getDuration(),
+//                                    powerUpSpriteProperties.getFirstFrame(),
+//                                    powerUpSpriteProperties.getOffset())
+//                    );
+//                    break;
+//                case RANGE:
+//                    powerUpSprite.setRangeSprite(
+//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
+//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
+//                                            powerUpSpriteProperties.getDimensionY()),
+//                                    powerUpSpriteProperties.getFrames(),
+//                                    powerUpSpriteProperties.getDuration(),
+//                                    powerUpSpriteProperties.getFirstFrame(),
+//                                    powerUpSpriteProperties.getOffset())
+//                    );
+//                    break;
+//            }
+//        }
+//    }
 
     public void updateStats(double health, double speed, int bombRange, int bombCount){
         hudView.updateStats(health, speed, bombRange, bombCount);

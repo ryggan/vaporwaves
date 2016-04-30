@@ -1,7 +1,6 @@
 package edu.chalmers.vaporwave.model;
 
 import com.google.common.eventbus.Subscribe;
-import edu.chalmers.vaporwave.event.BlastFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.RemoveTileEvent;
 import edu.chalmers.vaporwave.model.game.*;
@@ -9,7 +8,8 @@ import edu.chalmers.vaporwave.util.MapObject;
 import edu.chalmers.vaporwave.util.PowerUpState;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by andreascarlsson on 2016-04-18.
