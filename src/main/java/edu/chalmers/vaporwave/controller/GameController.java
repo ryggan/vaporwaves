@@ -167,7 +167,7 @@ public class GameController {
         for (Movable movable : arenaModel.getArenaMovables()) {
             movable.updatePosition();
 
-            // If moving into a blast, deal damage
+            // If moving and not invincible, check for blast
             if (!movable.isInvincible()
                     && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
 
@@ -178,7 +178,9 @@ public class GameController {
                 } else if (currentTile instanceof DoubleTile) {
                     blast = ((DoubleTile)currentTile).getBlast();
                 }
-                if (blast != null) {
+
+                // If blast was found, and the blast still is dangerous, deal damage
+                if (blast != null && blast.isDangerous(timeSinceStart)) {
                     movable.dealDamage(blast.getDamage());
                     updateStats();
                 }

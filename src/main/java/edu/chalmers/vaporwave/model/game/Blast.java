@@ -13,12 +13,19 @@ public class Blast extends StaticTile implements AnimatedTile {
     private Direction direction;
     private BlastState state;
     private double timeStamp;
+    private double dangerousTime;
 
     public Blast(Explosive explosive, BlastState state, Direction direction, double timeStamp) {
         this.damage = explosive.getDamage();
         this.direction = direction;
         this.state = state;
         this.timeStamp = timeStamp;
+        this.dangerousTime = 0.6;
+    }
+
+    public boolean isDangerous(double timeSinceStart) {
+        double timeDifference = timeSinceStart - this.timeStamp;
+        return (timeDifference < dangerousTime);
     }
 
     public Direction getDirection() {

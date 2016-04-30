@@ -528,14 +528,13 @@ public class ArenaView {
             actualSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
                     movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
 
-
+            // This only runs if the movable is an enemy and in death-state, to keep track of more than one enemy
+            // animation and death event, at the same time
             if (movable instanceof Enemy && movable.getState() == MovableState.DEATH && ((Enemy)movable).getDeathTimeStamp() != -1) {
                 double timeDifference = timeSinceStart - ((Enemy)movable).getDeathTimeStamp();
                 if (timeDifference <= ((AnimatedSprite) actualSprite).getLength() * ((AnimatedSprite) actualSprite).getDuration()) {
                     actualSprite.render(this.tileGC, timeDifference);
                 } else {
-//                    GameEventBus.getInstance().post(new RemoveTileEvent((StaticTile) tile, gridPosition));
-//                    GameEventBus.getInstance().post(new AnimationFinishedEvent(movable));
                     GameEventBus.getInstance().post(new DeathEvent(movable));
                 }
 
