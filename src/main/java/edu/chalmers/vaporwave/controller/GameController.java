@@ -30,13 +30,11 @@ public class GameController {
     private int updatedEnemyDirection;
 
     private double timeSinceStart;
-    private double systemNanoTime;
 
     private SoundPlayer backgroundMusic;
 
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
-        systemNanoTime = System.nanoTime();
     }
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
@@ -150,8 +148,8 @@ public class GameController {
             String key = pressed.get(i);
             switch (key) {
                 case "SPACE":
-                    if (arenaModel.getArenaTile(playerCharacter.getGridPosition()) == null) {
-                        playerCharacter.placeBomb();
+                    if (arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition()) == null) {
+                        this.localPlayer.getCharacter().placeBomb();
                     }
                     break;
                 case "M":
@@ -232,7 +230,7 @@ public class GameController {
     public void bombDetonated(BlastEvent blastEvent) {
 
         // This is temporarily; when more than one character, this must be moved outside, or altered
-        this.playerCharacter.setCurrentBombCount(this.playerCharacter.getCurrentBombCount() + 1);
+        this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() + 1);
 
         // A map to keep track if there is an obstacle, or if the fire can keep burning
         Map<Direction, Boolean> blastDirections = new HashMap<>();
