@@ -481,25 +481,35 @@ public class ArenaView {
 
         if (sprites != null) {
             Sprite[] currentSprite = sprites.getIdleSprites(); // Always idle if no other state is active
+
             if (state == MovableState.WALK) {
                 currentSprite = sprites.getWalkSprites();
+
             } else if (state == MovableState.FLINCH) {
                 currentSprite = sprites.getFlinchSprites();
+
             } else if (state == MovableState.SPAWN || state == MovableState.DEATH) {
                 if (state == MovableState.SPAWN) {
-                    hudView.resetHealthBar();
+                    hudView.resetHealthBar(); // todo: changes for every character and enemy, not just user Character
                     currentSprite = sprites.getSpawnSprites();
                 } else {
-                    hudView.setZeroHealthBar();
+                    hudView.setZeroHealthBar(); // todo: same as above
                     currentSprite = sprites.getDeathSprites();
                 }
+
                 AnimatedSprite currentAnimatedSprite = (AnimatedSprite)currentSprite[0];
-                if (!currentAnimatedSprite.getPlayedYet() || currentAnimatedSprite.isAnimationFinished()) {
+
+                if (movable instanceof GameCharacter
+                        && (!currentAnimatedSprite.getPlayedYet() || currentAnimatedSprite.isAnimationFinished())) {
+
                     currentAnimatedSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(movable));
                     currentAnimatedSprite.setStartFromBeginning(true);
                     currentAnimatedSprite.resetLoops();
                     currentAnimatedSprite.setLoops(1);
                     currentAnimatedSprite.setLingerOnLastFrame(true);
+
+                } else if (movable instanceof Enemy && ((Enemy)movable).getDeathTimeStamp() == -1) {
+                    ((Enemy)movable).setDeathTimeStamp(timeSinceStart);
                 }
             }
 
@@ -518,11 +528,24 @@ public class ArenaView {
             actualSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
                     movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
 
-            // This little condition makes the movable flicker when invincible
-            if (movable.getState() == MovableState.FLINCH || !movable.isInvincible()
-                    || Math.round(timeSinceStart * 50) % 3 != 0) {
 
-                actualSprite.render(tileGC, timeSinceStart);
+            if (movable instanceof Enemy && movable.getState() == MovableState.DEATH && ((Enemy)movable).getDeathTimeStamp() != -1) {
+                double timeDifference = timeSinceStart - ((Enemy)movable).getDeathTimeStamp();
+                if (timeDifference <= ((AnimatedSprite) actualSprite).getLength() * ((AnimatedSprite) actualSprite).getDuration()) {
+                    actualSprite.render(this.tileGC, timeDifference);
+                } else {
+//                    GameEventBus.getInstance().post(new RemoveTileEvent((StaticTile) tile, gridPosition));
+//                    GameEventBus.getInstance().post(new AnimationFinishedEvent(movable));
+                    GameEventBus.getInstance().post(new DeathEvent(movable));
+                }
+
+            } else {
+                // This little condition makes the movable flicker when invincible
+                if (movable.getState() == MovableState.FLINCH || !movable.isInvincible()
+                        || Math.round(timeSinceStart * 50) % 3 != 0) {
+
+                    actualSprite.render(tileGC, timeSinceStart);
+                }
             }
         }
     }
@@ -561,6 +584,7 @@ public class ArenaView {
         if (animationFinishedEvent.getMovable() != null) {
             Movable movable = animationFinishedEvent.getMovable();
             if (movable.getState() == MovableState.DEATH) {
+//                System.out.println((System.nanoTime()/1000000)+" - Death event for movable "+movable.getName());
                 GameEventBus.getInstance().post(new DeathEvent(movable));
             } else if (movable.getState() == MovableState.SPAWN) {
                 GameEventBus.getInstance().post(new SpawnEvent(movable));

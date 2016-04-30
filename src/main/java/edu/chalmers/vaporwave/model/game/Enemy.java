@@ -9,23 +9,24 @@ public class Enemy extends Movable {
 
     private AI ai;
 
+    private double deathTimeStamp;
+
     public Enemy(String name, double canvasPositionX, double canvasPositionY, double speed, AI ai) {
         super(name, canvasPositionX, canvasPositionY, speed);
         this.ai = ai;
+        this.deathTimeStamp = -1;
     }
-
-    // Todo: Implement this in a remote player instead
-//    public void placeBomb() {
-//        if(ai.shouldPutBomb()) {
-//            GameEventBus.getInstance().post(new PlaceBombEvent(
-//                    Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
-//                    ), 1, getDamage())
-//            );
-//        }
-//    }
 
     public AI getAI() {
         return this.ai;
+    }
+
+    public void setDeathTimeStamp(double deathTimeStamp) {
+        this.deathTimeStamp = deathTimeStamp;
+    }
+
+    public double getDeathTimeStamp() {
+        return this.deathTimeStamp;
     }
 
     @Override

@@ -71,7 +71,6 @@ public abstract class Movable {
             case IDLE:
                 if (invincibleTimer > 0) {
                     invincibleTimer--;
-                    System.out.println(getName()+" - Invincible timer: "+invincibleTimer);
                 } else {
                     flinchInvincible = false;
                 }
@@ -164,6 +163,7 @@ public abstract class Movable {
     }
 
     public void spawn(Point spawningPoint) {
+//        this.health = Constants.DEFAULT_START_HEALTH;
         this.lastMove = null;
         this.direction = Direction.DOWN;
         stopAtTile((int)spawningPoint.getX(), (int)spawningPoint.getY());
@@ -236,10 +236,10 @@ public abstract class Movable {
     }
 
     public void dealDamage(double damage) {
-        System.out.println(name+" dealt damage: "+damage);
         this.health -= damage;
         if (this.health <= 0) {
             this.health = Constants.DEFAULT_START_HEALTH;
+//            this.health = 0;
             death();
         } else {
             flinch();

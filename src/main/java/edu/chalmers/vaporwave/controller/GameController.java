@@ -369,7 +369,9 @@ public class GameController {
         if (movable instanceof GameCharacter) {
             movable.spawn(new Point(6, 5));
         } else if (movable instanceof Enemy) {
-            deadEnemies.add((Enemy)movable);
+            if (!deadEnemies.contains((Enemy)movable)) {
+                deadEnemies.add((Enemy)movable);
+            }
         }
     }
 
