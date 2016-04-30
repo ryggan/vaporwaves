@@ -46,7 +46,7 @@ public abstract class Movable {
         this.damage = 30;
         this.flinchDelay = 40;
         this.flinchInvincible = false;
-        this.invincibleDelay = 10;
+        this.invincibleDelay = 60;
 
         this.previousGridPositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPositionY(getCanvasPositionY());
@@ -64,9 +64,19 @@ public abstract class Movable {
         moving = (getVelocityX() != 0 || getVelocityY() != 0);
 
         switch (movableState) {
+
             case WALK:
                 stopOnTileIfNeeded();
+
+            case IDLE:
+                if (invincibleTimer > 0) {
+                    invincibleTimer--;
+                    System.out.println(getName()+" - Invincible timer: "+invincibleTimer);
+                } else {
+                    flinchInvincible = false;
+                }
                 break;
+
             case FLINCH:
                 if (flinchTimer > 0) {
                     flinchTimer--;
@@ -78,12 +88,6 @@ public abstract class Movable {
                     }
                 }
                 break;
-            case IDLE:
-                if (invincibleTimer > 0) {
-                    invincibleTimer--;
-                } else {
-                    flinchInvincible = false;
-                }
         }
 
         this.lastMove = null;

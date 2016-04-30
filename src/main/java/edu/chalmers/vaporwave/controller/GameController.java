@@ -92,7 +92,7 @@ public class GameController {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getWidth()), random.nextInt(this.arenaModel.getHeight()));
                 free = (arenaModel.getArenaTile(spawnPosition) == null);
             } while (!free);
-            Enemy enemy = new Enemy("Enemy", Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.2, new StupidAI());
+            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.2, new StupidAI());
             enemies.add(enemy);
         }
 

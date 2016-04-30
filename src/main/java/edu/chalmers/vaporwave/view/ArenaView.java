@@ -520,7 +520,7 @@ public class ArenaView {
 
             // This little condition makes the movable flicker when invincible
             if (movable.getState() == MovableState.FLINCH || !movable.isInvincible()
-                    || Math.round(timeSinceStart * 100) % 2 == 0) {
+                    || Math.round(timeSinceStart * 50) % 3 != 0) {
 
                 actualSprite.render(tileGC, timeSinceStart);
             }
