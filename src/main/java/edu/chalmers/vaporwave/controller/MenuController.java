@@ -54,7 +54,6 @@ public class MenuController {
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        System.out.println(ListenerController.getInstance().getReleased());
 
         if (!ListenerController.getInstance().getPressed().isEmpty()) {
             switch (ListenerController.getInstance().getPressed().get(0)) {

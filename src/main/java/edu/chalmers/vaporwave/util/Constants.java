@@ -30,4 +30,6 @@ public class Constants {
     public static final int DEFAULT_BOMB_DAMAGE = 30;
 
     public static final double DEFAULT_START_HEALTH = 50.0;
+
+    public static final int FRAMES_HELD_KEYS_UPDATE = 40;
 }

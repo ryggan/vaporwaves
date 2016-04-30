@@ -1,11 +1,14 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.util.Constants;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ListenerController {
 
@@ -14,6 +17,8 @@ public class ListenerController {
     private List<String> input = new ArrayList<>();
     private List<String> pressed = new ArrayList<>();
     private List<String> released = new ArrayList<>();
+
+    private Map<String, Integer> heldDown = new HashMap<>();
 
     private ListenerController() { }
 
@@ -43,10 +48,26 @@ public class ListenerController {
     }
 
     public void clearPressed() {
+        for (String key : this.pressed) {
+            this.heldDown.put(key, 0);
+        }
         this.pressed.clear();
     }
 
     public void clearReleased() {
+        for (String key : this.released) {
+            if(this.heldDown.keySet().contains(key)) {
+                this.heldDown.remove(key);
+            }
+        }
+        for (String key : this.heldDown.keySet()) {
+            if (this.heldDown.get(key).equals(new Integer(Constants.FRAMES_HELD_KEYS_UPDATE))) {
+                this.pressed.add(key);
+                this.heldDown.remove(key);
+            } else {
+                this.heldDown.put(key, this.heldDown.get(key) + 1);
+            }
+        }
         this.released.clear();
     }
 

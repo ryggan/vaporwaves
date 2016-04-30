@@ -63,7 +63,6 @@ public class MainController {
         new AnimationTimer() {
 
             public void handle(long currentNanoTime) {
-
                 // Time management
 
                 double timeSinceLastCall = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
