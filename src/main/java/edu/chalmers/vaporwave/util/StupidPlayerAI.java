@@ -6,29 +6,7 @@ import edu.chalmers.vaporwave.model.game.StaticTile;
 import java.awt.*;
 import java.util.Random;
 
-public class StupidPlayerAI implements PlayerAI {
-
-    private Direction previousDirection;
-
-    public StupidPlayerAI() {
-        Random random = new Random();
-        int nextRandom = random.nextInt(4);
-
-        previousDirection = Utils.getDirectionsAsArray()[nextRandom];
-    }
-
-    @Override
-    public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles) {
-
-        Random random = new Random();
-        int nextRandom = random.nextInt(10);
-
-        if (nextRandom < 8) {
-            previousDirection = Utils.getDirectionsAsArray()[nextRandom / 2];
-        }
-
-        return previousDirection;
-    }
+public class StupidPlayerAI extends StupidAI implements PlayerAI {
 
     @Override
     public boolean shouldPutBomb(){

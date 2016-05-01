@@ -15,10 +15,15 @@ public class SoundPlayer {
     private MediaPlayer sound;
 
     public SoundPlayer(String fileName){
-
-            Media soundFile = new Media(Paths.get("src/main/resources/sounds/"+fileName).toUri().toString());
-            this.sound = new MediaPlayer(soundFile);
+        Media soundFile = new Media(Paths.get("src/main/resources/sounds/"+fileName).toUri().toString());
+        this.sound = new MediaPlayer(soundFile);
     }
+
+    public SoundPlayer(String fileName, double volume){
+        this(fileName);
+        this.sound.setVolume(volume);
+    }
+
 
     public void playSound(){
         this.sound.play();

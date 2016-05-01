@@ -39,7 +39,7 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
         //Change this to proper values according to player preferences later, dummy values meanwhile
-        backgroundMusic = new SoundPlayer("bg1.mp3");
+        backgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
         backgroundMusic.playSound();
 
         enabledPowerUpList = new ArrayList<>();

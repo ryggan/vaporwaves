@@ -18,7 +18,7 @@ public class GameCharacter extends Movable {
     public GameCharacter(String name) {
         super(name, Utils.gridToCanvasPositionX(6), Utils.gridToCanvasPositionY(5), 1);
 
-        this.placeBomb=new SoundPlayer("placebomb.wav");
+        this.placeBomb = new SoundPlayer("placebomb.wav");
 
         this.bombRange = 2;
         this.maxBombCount = 10;
@@ -37,7 +37,7 @@ public class GameCharacter extends Movable {
                     getDamage());
             EventBus bus = GameEventBus.getInstance();
 
-            bus.post(event); // << performance thief!
+            bus.post(event); // << performance thief! :(
         }
     }
 

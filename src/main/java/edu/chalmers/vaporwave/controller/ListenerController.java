@@ -5,10 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ListenerController {
 
@@ -60,14 +57,20 @@ public class ListenerController {
                 this.heldDown.remove(key);
             }
         }
+
+        Set<String> keysToRemove = new HashSet<>();
         for (String key : this.heldDown.keySet()) {
             if (this.heldDown.get(key).equals(new Integer(Constants.FRAMES_HELD_KEYS_UPDATE))) {
                 this.pressed.add(key);
-                this.heldDown.remove(key);
+                keysToRemove.add(key);
             } else {
                 this.heldDown.put(key, this.heldDown.get(key) + 1);
             }
         }
+        for (String key : keysToRemove) {
+            this.heldDown.remove(key);
+        }
+
         this.released.clear();
     }
 
