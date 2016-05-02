@@ -128,12 +128,12 @@ public class ArenaView {
 
         Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
         destructibleWallSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 0}, new double[] {1, 1});
+                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
         destructibleWallDestroyedSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 0}, new double[] {1, 1});
+                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 1}, new double[] {1, 1});
 //        ((AnimatedSprite)destructibleWallDestroyedSprite).setStartFromBeginning(true);
         indestructibleWallSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
+                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {4, 2}, new double[] {1, 1});
 
         Image powerupSpritesheet = new Image("images/spritesheet-powerups-18x18.png");
         powerUpSprites.put(PowerUpState.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 0}, new double[] {1, 1}));
