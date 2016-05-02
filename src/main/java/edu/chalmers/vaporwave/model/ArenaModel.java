@@ -11,42 +11,29 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by andreascarlsson on 2016-04-18.
- *
- * Contains all arena objects
- *
- */
 public class ArenaModel {
 
     private ArenaMap arenaMap;
     private StaticTile[][] arenaTiles;
     private ArrayList<Movable> arenaMovables;
-    private int width;
-    private int height;
+    private int gridWidth;
+    private int gridHeight;
 
     public ArenaModel(ArenaMap arenaMap) {
 
         GameEventBus.getInstance().register(this);
-
         this.arenaMap = arenaMap;
-
-        this.width = arenaMap.getMapSize().width;
-        this.height = arenaMap.getMapSize().height;
-        this.arenaTiles = new StaticTile[width][height];
-
+        this.gridWidth = arenaMap.getMapSize().width;
+        this.gridHeight = arenaMap.getMapSize().height;
+        this.arenaTiles = new StaticTile[this.gridWidth][this.gridHeight];
         this.arenaMovables = new ArrayList<>();
 
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                arenaTiles[i][j] = createMapObject(arenaMap.getMapObjects()[i][j]);
-            }
-        }
+        initArenaMap(arenaMap);
     }
 
     public void updateBombs(double timeSinceStart) {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < this.gridWidth; i++) {
+            for (int j = 0; j < this.gridHeight; j++) {
                 if (arenaTiles[i][j] instanceof Bomb) {
                     ((Bomb)arenaTiles[i][j]).updateTimer(timeSinceStart);
                 }
@@ -63,7 +50,7 @@ public class ArenaModel {
     }
 
     public void setTile(StaticTile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
-        if (posx <= width && posy <= height && posx >= 0 && posy >= 0) {
+        if (posx <= this.gridWidth && posy <= this.gridHeight && posx >= 0 && posy >= 0) {
             arenaTiles[posx][posy] = tile;
         } else {
             throw new ArrayIndexOutOfBoundsException();
@@ -130,26 +117,14 @@ public class ArenaModel {
         arenaMovables.remove(movable);
     }
 
-    /**
-     * Iterates through our mapMatrix and calls on createObject to create the appropriate object
-     * @param arenaMap going to be changed to String[][]
-     * @throws Exception
-     */
-//    public void loadObjectsToMap(ArenaMap arenaMap) throws Exception {
-//        //Första raden skall göras någon annanstans, behövs även då byta args till en String[][]
-//       String[][] mapMatrix = mapFileReader.createMapArray(mapFile);
-//        for(int i = 0; i < mapMatrix.length; i++) {
-//            for(int j = 0; i < mapMatrix[i].length; j++) {
-////               arena[i][j].add(createObject(mapMatrix[i][j], i, j));
-//            }
-//        }
-//    }
+    public void initArenaMap(ArenaMap arenaMap) {
+        for (int i = 0; i < this.gridWidth; i++) {
+            for (int j = 0; j < this.gridHeight; j++) {
+                arenaTiles[i][j] = createMapObject(arenaMap.getMapObjects()[i][j]);
+            }
+        }
+    }
 
-    /**
-     *
-     * @param mapObject
-     * @return appropriate Tile
-     */
     public StaticTile createMapObject(MapObject mapObject) {
         switch(mapObject) {
             case DESTRUCTIBLE_WALL:
@@ -186,11 +161,11 @@ public class ArenaModel {
         removeTile(removeTileEvent.getGridPosition(), removeTileEvent.getTile());
     }
 
-    public int getWidth() {
-        return this.width;
+    public int getGridWidth() {
+        return this.gridWidth;
     }
 
-    public int getHeight() {
-        return this.height;
+    public int getGridHeight() {
+        return this.gridHeight;
     }
 }
