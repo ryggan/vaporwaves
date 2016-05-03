@@ -33,11 +33,15 @@ public class GameController {
 
     private SoundPlayer backgroundMusic;
 
+    // settings for one specific game:
+    private boolean destroyablePowerUps;
+
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
     }
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
+
         //Change this to proper values according to player preferences later, dummy values meanwhile
         backgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
         backgroundMusic.playSound();
@@ -50,10 +54,11 @@ public class GameController {
 
         this.localPlayer = newGameEvent.getLocalPlayer();
 
+        this.destroyablePowerUps = true;
+
         // Initiates view
 
         timeSinceStart = 0.0;
-
 
         ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
 
@@ -192,9 +197,6 @@ public class GameController {
             StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y];
 
             if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
-//                this.arenaModel.setTile(null, localPlayer.getCharacter().getGridPosition());
-//                powerUp.setState(PowerUp.PowerUpState.PICKUP);
-//                powerUp.setTimeStamp(timeSinceStart);
                 powerUp.pickUp(timeSinceStart);
                 localPlayer.getCharacter().pickedUpPowerUp(timeSinceStart);
                 playerWalksOnPowerUp(powerUp.getPowerUpType());
@@ -276,22 +278,29 @@ public class GameController {
                         // If a destructible wall is in the way, crack it and maybe also add an powerup
                         if (currentTile instanceof DestructibleWall) {
                             ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
-                            StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(enabledPowerUpList);
+                            StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(this.enabledPowerUpList);
                             if (statPowerUp != null) {
                                 statPowerUp.setTimeStamp(this.timeSinceStart);
                                 StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
                                 this.arenaModel.setTile(doubleTile, position);
                             }
 
+                        // If a powerup, and destroyable powerups has been enabled in settings, simply destroy it
+                        } else if (destroyablePowerUps && currentTile instanceof PowerUp
+                                        && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.IDLE) {
+                                ((PowerUp) currentTile).destroy(this.timeSinceStart);
+
                         // If another explosive, detonate it with a tiny delay (makes for cool effects)
                         } else if (currentTile instanceof Explosive) {
-                            ((Explosive)currentTile).setDelay(0.03, timeSinceStart);
+                            ((Explosive)currentTile).setDelay(0.03, this.timeSinceStart);
                         }
 
-                        // Multiple stacking if, 1; a blast end is in the way, or 2; if blasts are ortogonal to each other
+                        // Multiple stacking if, 1; a blast end is in the way, 2; if blasts are ortogonal to each other,
+                        // or 3: if it's the pickup-animation for powerups
                         if ( (currentTile instanceof Blast && ( ((Blast)currentTile).getState() == BlastState.END
                                 || Utils.isOrtogonalDirections(((Blast)currentTile).getDirection(), direction) ) )
-                                || (currentTile instanceof DoubleTile && ((DoubleTile)currentTile).containBlast()) ) {
+                                || (currentTile instanceof DoubleTile && ((DoubleTile)currentTile).containBlast())
+                        /* 3 */ || (currentTile instanceof PowerUp && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.PICKUP ) ) {
 
                             StaticTile doubleTile = new DoubleTile(currentTile,
                                     new Blast(explosive, state, direction, this.timeSinceStart));

@@ -32,6 +32,11 @@ public abstract class PowerUp extends StaticTile implements AnimatedTile {
         setTimeStamp(timeStamp);
     }
 
+    public void destroy(double timeStamp) {
+        setState(PowerUpState.DESTROY);
+        setTimeStamp(timeStamp);
+    }
+
     public int getSpawnChance(){
         return spawnChance;
     }

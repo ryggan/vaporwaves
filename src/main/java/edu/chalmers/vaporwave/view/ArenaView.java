@@ -50,6 +50,7 @@ public class ArenaView {
     private Map<PowerUpType, Sprite> powerUpSprites;
     private Map<PowerUpType, Sprite> powerUpSpawnSprites;
     private Map<PowerUpType, Sprite> powerUpPickupSprites;
+    private Map<PowerUpType, Sprite> powerUpDestroySprites;
 
     private Sprite blastSpriteCenter;
     private Sprite[] blastSpriteBeam = new Sprite[4];
@@ -73,6 +74,7 @@ public class ArenaView {
         this.powerUpSprites = new HashMap<>();
         this.powerUpSpawnSprites = new HashMap<>();
         this.powerUpPickupSprites = new HashMap<>();
+        this.powerUpDestroySprites = new HashMap<>();
 
         this.backgroundPattern = new ImageView();
 
@@ -162,6 +164,11 @@ public class ArenaView {
         powerUpPickupSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 5}, new double[] {1, 1}));
         powerUpPickupSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 6}, new double[] {1, 1}));
         powerUpPickupSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 7}, new double[] {1, 1}));
+
+        powerUpDestroySprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 4}, new double[] {1, 1}));
+        powerUpDestroySprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 5}, new double[] {1, 1}));
+        powerUpDestroySprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 6}, new double[] {1, 1}));
+        powerUpDestroySprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 7}, new double[] {1, 1}));
 
         blastSpriteCenter =
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
@@ -440,9 +447,6 @@ public class ArenaView {
 
         if (powerup.getState() != PowerUp.PowerUpState.IDLE) {
             renderAnimatedTile(getTileSprite(powerup), powerup, gridPosition, timeSinceStart);
-            if (powerup.getState() == PowerUp.PowerUpState.PICKUP) {
-                renderAnimatedTile(getTileSprite(powerup), powerup, gridPosition, timeSinceStart);
-            }
         } else {
             renderTile(powerup, gridPosition, timeSinceStart);
         }
@@ -576,6 +580,8 @@ public class ArenaView {
                 return powerUpSpawnSprites.get(((PowerUp) tile).getPowerUpType());
             } else if (((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP) {
                 return powerUpPickupSprites.get(((PowerUp) tile).getPowerUpType());
+            } else if (((PowerUp) tile).getState() == PowerUp.PowerUpState.DESTROY) {
+                return powerUpDestroySprites.get(((PowerUp) tile).getPowerUpType());
             } else {
                 return powerUpSprites.get(((PowerUp) tile).getPowerUpType());
             }
