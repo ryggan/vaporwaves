@@ -12,7 +12,7 @@ public abstract class PowerUp extends StaticTile implements AnimatedTile {
     private double timeStamp;
 
     public enum PowerUpState {
-        INTRO, IDLE, END
+        SPAWN, IDLE, PICKUP, DESTROY
     }
 
     public PowerUp(int spawnChance, int statusEffect, PowerUpType powerUpType){
@@ -23,8 +23,13 @@ public abstract class PowerUp extends StaticTile implements AnimatedTile {
     }
 
     public PowerUp() {
-        this.powerUpState = PowerUpState.INTRO;
+        this.powerUpState = PowerUpState.SPAWN;
         this.timeStamp = -1;
+    }
+
+    public void pickUp(double timeStamp) {
+        setState(PowerUp.PowerUpState.PICKUP);
+        setTimeStamp(timeStamp);
     }
 
     public int getSpawnChance(){

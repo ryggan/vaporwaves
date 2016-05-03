@@ -61,6 +61,23 @@ public class ArenaModel {
         setTile(tile, position.x, position.y);
     }
 
+    public void setDoubleTile(StaticTile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
+        if (posx <= this.gridWidth && posy <= this.gridHeight && posx >= 0 && posy >= 0) {
+            if (arenaTiles[posx][posy] == null) {
+                setTile(tile, posx, posy);
+            } else {
+                StaticTile doubleTile = new DoubleTile(tile, arenaTiles[posx][posy]);
+                setTile(doubleTile, posx, posy);
+            }
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    public void setDoubleTile(StaticTile tile, Point position) throws ArrayIndexOutOfBoundsException {
+        setDoubleTile(tile, position.x, position.y);
+    }
+
     public StaticTile getArenaTile(Point position) {
         return this.arenaTiles[position.x][position.y];
     }

@@ -46,7 +46,8 @@ public class ArenaView {
     private Sprite indestructibleWallSprite;
 
     private Map<PowerUpType, Sprite> powerUpSprites;
-    private Map<PowerUpType, Sprite> powerUpIntroSprites;
+    private Map<PowerUpType, Sprite> powerUpSpawnSprites;
+    private Map<PowerUpType, Sprite> powerUpPickupSprites;
 
     private Sprite blastSpriteCenter;
     private Sprite[] blastSpriteBeam = new Sprite[4];
@@ -68,7 +69,9 @@ public class ArenaView {
         this.fps = new Label();
 
         this.powerUpSprites = new HashMap<>();
-        this.powerUpIntroSprites = new HashMap<>();
+        this.powerUpSpawnSprites = new HashMap<>();
+        this.powerUpPickupSprites = new HashMap<>();
+
         this.backgroundPattern = new ImageView();
 
         root.getChildren().add(backgroundPattern);
@@ -144,10 +147,15 @@ public class ArenaView {
         powerUpSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 3}, new double[] {1, 1}));
 
-        powerUpIntroSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 0}, new double[] {1, 1}));
-        powerUpIntroSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 1}, new double[] {1, 1}));
-        powerUpIntroSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 2}, new double[] {1, 1}));
-        powerUpIntroSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 3}, new double[] {1, 1}));
+        powerUpSpawnSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 0}, new double[] {1, 1}));
+        powerUpSpawnSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 1}, new double[] {1, 1}));
+        powerUpSpawnSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 2}, new double[] {1, 1}));
+        powerUpSpawnSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 3}, new double[] {1, 1}));
+
+        powerUpPickupSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 4}, new double[] {1, 1}));
+        powerUpPickupSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 5}, new double[] {1, 1}));
+        powerUpPickupSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 6}, new double[] {1, 1}));
+        powerUpPickupSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 7}, new double[] {1, 1}));
 
         blastSpriteCenter =
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
@@ -389,7 +397,7 @@ public class ArenaView {
             currentSprite.render(this.tileGC, timeDifference);
         } else {
 
-            if (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.INTRO) {
+            if (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.SPAWN) {
                 ((PowerUp) tile).setState(PowerUp.PowerUpState.IDLE);
                 renderTile((StaticTile)tile, gridPosition, timeSinceStart);
             } else {
@@ -424,7 +432,7 @@ public class ArenaView {
     // Does a renderAnimatedTile() when destroyed, because of animation, but otherwise goes with the standard renderTile()
     private void renderPowerUp(PowerUp powerup, Point gridPosition, double timeSinceStart) {
 
-        if (powerup.getState() == PowerUp.PowerUpState.INTRO) {
+        if (powerup.getState() != PowerUp.PowerUpState.IDLE) {
             renderAnimatedTile(getTileSprite(powerup), powerup, gridPosition, timeSinceStart);
         } else {
             renderTile(powerup, gridPosition, timeSinceStart);
@@ -539,8 +547,10 @@ public class ArenaView {
                 return mineSprite;
             }
         } else if (tile instanceof PowerUp) {
-            if (((PowerUp) tile).getState() == PowerUp.PowerUpState.INTRO) {
-                return powerUpIntroSprites.get(((PowerUp) tile).getPowerUpType());
+            if (((PowerUp) tile).getState() == PowerUp.PowerUpState.SPAWN) {
+                return powerUpSpawnSprites.get(((PowerUp) tile).getPowerUpType());
+            } else if (((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP) {
+                return powerUpPickupSprites.get(((PowerUp) tile).getPowerUpType());
             } else {
                 return powerUpSprites.get(((PowerUp) tile).getPowerUpType());
             }

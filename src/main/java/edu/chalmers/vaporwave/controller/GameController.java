@@ -148,7 +148,8 @@ public class GameController {
             String key = pressed.get(i);
             switch (key) {
                 case "SPACE":
-                    if (arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition()) == null) {
+                    StaticTile tile = arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition());
+                    if (tile == null || (tile instanceof PowerUp /*&& ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP*/)) {
                         this.localPlayer.getCharacter().placeBomb();
                     }
                     break;
@@ -190,8 +191,11 @@ public class GameController {
                 instanceof StatPowerUp) {
             StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y];
 
-            if (powerUp.getPowerUpType() != null) {
-                this.arenaModel.setTile(null, localPlayer.getCharacter().getGridPosition());
+            if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
+//                this.arenaModel.setTile(null, localPlayer.getCharacter().getGridPosition());
+//                powerUp.setState(PowerUp.PowerUpState.PICKUP);
+//                powerUp.setTimeStamp(timeSinceStart);
+                powerUp.pickUp(timeSinceStart);
                 playerWalksOnPowerUp(powerUp.getPowerUpType());
                 updateStats();
             }
@@ -213,7 +217,7 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setTile(new Bomb(this.localPlayer.getCharacter(), this.localPlayer.getCharacter().getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.localPlayer.getCharacter().getDamage()), placeBombEvent.getGridPosition());
+        arenaModel.setDoubleTile(new Bomb(this.localPlayer.getCharacter(), this.localPlayer.getCharacter().getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.localPlayer.getCharacter().getDamage()), placeBombEvent.getGridPosition());
         this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() - 1);
         updateStats();
     }
