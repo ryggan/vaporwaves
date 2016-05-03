@@ -8,12 +8,18 @@ import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.util.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameCharacter extends Movable {
 
     private int bombRange;
     private int maxBombCount;
     private int currentBombCount;
     private SoundPlayer placeBomb;
+
+//    private double powerUpTimeStamp;
+    private List<Double> powerUpPickedUp;
 
     public GameCharacter(String name) {
         super(name, Utils.gridToCanvasPositionX(6), Utils.gridToCanvasPositionY(5), 1);
@@ -24,6 +30,9 @@ public class GameCharacter extends Movable {
         this.maxBombCount = 10;
         this.currentBombCount = this.maxBombCount;
         setSpeed(1.5);
+
+//        this.powerUpTimeStamp = -1;
+        this.powerUpPickedUp = new ArrayList<>();
     }
 
     public void placeBomb() {
@@ -37,7 +46,7 @@ public class GameCharacter extends Movable {
                     getDamage());
             EventBus bus = GameEventBus.getInstance();
 
-            bus.post(event); // << performance thief! :(
+            bus.post(event);
         }
     }
 
@@ -72,6 +81,14 @@ public class GameCharacter extends Movable {
 
     public int getMaxBombCount() {
         return this.maxBombCount;
+    }
+
+    public void pickedUpPowerUp(double timeStamp) {
+        powerUpPickedUp.add(timeStamp);
+    }
+
+    public List<Double> getPowerUpPickedUp() {
+        return powerUpPickedUp;
     }
 
     @Override

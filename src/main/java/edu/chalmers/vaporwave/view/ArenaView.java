@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class ArenaView {
 
@@ -37,6 +38,7 @@ public class ArenaView {
     private Map<Compass, Sprite> arenaFrameSprites;
 
     private CharacterSprite[] characterSprites = new CharacterSprite[4];
+    private Sprite characterSparkleSprite;
     private CharacterSprite enemySprite;
     private Sprite[] bombSprite = new Sprite[4];
     private Sprite mineSprite;
@@ -109,6 +111,10 @@ public class ArenaView {
 //        initCharacterSprites(characterSprites[2]);
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
+
+        Image characterMiscSpritesheet = new Image("images/spritesheet-character-misc-48x48.png");
+        characterSparkleSprite =
+                new AnimatedSprite(characterMiscSpritesheet, new Dimension(48, 48), 9, 0.08, new int[] {0, 0}, new double[] {16, 27});
 
         enemySprite = new CharacterSprite("PCCHAN");
         initCharacterSprites(enemySprite);
@@ -434,6 +440,9 @@ public class ArenaView {
 
         if (powerup.getState() != PowerUp.PowerUpState.IDLE) {
             renderAnimatedTile(getTileSprite(powerup), powerup, gridPosition, timeSinceStart);
+            if (powerup.getState() == PowerUp.PowerUpState.PICKUP) {
+                renderAnimatedTile(getTileSprite(powerup), powerup, gridPosition, timeSinceStart);
+            }
         } else {
             renderTile(powerup, gridPosition, timeSinceStart);
         }
@@ -518,6 +527,22 @@ public class ArenaView {
                         || Math.round(timeSinceStart * 50) % 3 != 0) {
 
                     actualSprite.render(tileGC, timeSinceStart);
+                }
+            }
+
+            // This last thing puts sparkles around character for every recently picked up powerup
+            if (movable instanceof GameCharacter) {
+                List<Double> list = ((GameCharacter) movable).getPowerUpPickedUp();
+                ListIterator<Double> iterator = list.listIterator();
+                while (iterator.hasNext()) {
+                    double timeStamp = iterator.next();
+                    if (timeSinceStart - timeStamp > ((AnimatedSprite)characterSparkleSprite).getTotalTime()) {
+                        iterator.remove();
+                    } else {
+                        characterSparkleSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
+                                movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+                        characterSparkleSprite.render(tileGC, timeSinceStart - timeStamp);
+                    }
                 }
             }
         }

@@ -278,4 +278,8 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     public boolean getPlayedYet() {
         return this.playedYet;
     }
+
+    public double getTotalTime() {
+        return length * duration;
+    }
 }

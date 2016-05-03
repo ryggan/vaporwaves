@@ -196,6 +196,7 @@ public class GameController {
 //                powerUp.setState(PowerUp.PowerUpState.PICKUP);
 //                powerUp.setTimeStamp(timeSinceStart);
                 powerUp.pickUp(timeSinceStart);
+                localPlayer.getCharacter().pickedUpPowerUp(timeSinceStart);
                 playerWalksOnPowerUp(powerUp.getPowerUpType());
                 updateStats();
             }
@@ -343,11 +344,12 @@ public class GameController {
     /**
      * Call on this method when player walks on PowerUpTile.
      * Will set the appropriate stat value on the character that walks on it.
-     * @param powerUpState
+     * @param powerUpType
      */
-    public void playerWalksOnPowerUp(PowerUpType powerUpState) {
-        System.out.println(powerUpState);
-        switch (powerUpState) {
+    public void playerWalksOnPowerUp(PowerUpType powerUpType) {
+//        System.out.println(powerUpType);
+
+        switch (powerUpType) {
             case HEALTH:
                 if (localPlayer.getCharacter().getHealth() <= 90) {
                     this.localPlayer.getCharacter().setHealth(this.localPlayer.getCharacter().getHealth() + 10);
