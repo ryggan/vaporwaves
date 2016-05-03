@@ -7,66 +7,78 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class GameServer {
 
     private Server server;
     private Client client;
 
+    public boolean isServer = false;
+
     public GameServer() {
 
         try {
-            this.server = new Server();
-            server.start();
 
-            server.bind(54556, 54778);
+            if (isServer) {
+                System.out.println("Server");
+                this.server = new Server();
+                server.start();
+
+                server.bind(54555, 54777);
 
 
-            server.addListener(new Listener() {
-                public void received (Connection connection, Object object) {
-                    if (object instanceof SomeRequest) {
-                        SomeRequest request = (SomeRequest) object;
-                        System.out.println(request.text);
+                server.addListener(new Listener() {
+                    public void received(Connection connection, Object object) {
+                        if (object instanceof SomeRequest) {
+                            SomeRequest request = (SomeRequest) object;
+                            System.out.println(request.text);
 
-                        SomeResponse response = new SomeResponse();
-                        response.text = "And here's da response!";
-                        connection.sendTCP(response);
+                            SomeResponse response = new SomeResponse();
+                            response.text = "And here's da response! " + System.nanoTime() * 10000;
+                            connection.sendTCP(response);
+                        }
                     }
-                }
-            });
+                });
 
+
+                Kryo kryoServer = server.getKryo();
+                kryoServer.register(SomeRequest.class);
+                kryoServer.register(SomeResponse.class);
+
+            } else {
+                System.out.println("Client");
+            }
 
             this.client = new Client();
             client.start();
 
 
-            Kryo kryoServer = server.getKryo();
-            kryoServer.register(SomeRequest.class);
-            kryoServer.register(SomeResponse.class);
-
             Kryo kryoClient = client.getKryo();
             kryoClient.register(SomeRequest.class);
             kryoClient.register(SomeResponse.class);
 
-            client.connect(5000, "129.16.178.67", 54555, 54777);
+            client.connect(5000, "129.16.193.23", 54555, 54777);
+            client.setTimeout(0);
 
+            InetAddress address = client.discoverHost(54777, 5000);
+            System.out.println(address);
 
-
-            client.addListener(new Listener() {
-                public void received (Connection connection, Object object) {
-                    if (object instanceof SomeResponse) {
-                        SomeResponse response = (SomeResponse)object;
-                        System.out.println(response.text);
+            if(!isServer) {
+                client.addListener(new Listener() {
+                    public void received(Connection connection, Object object) {
+                        if (object instanceof SomeResponse) {
+                            SomeResponse response = (SomeResponse) object;
+                            System.out.println(response.text);
+                        }
                     }
-                }
-            });
+                });
+            }
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        sendRequest("Hej");
 
     }
 
@@ -76,7 +88,7 @@ public class GameServer {
 
         if(client != null) {
             SomeRequest request = new SomeRequest();
-            request.text = "Here is the request";
+            request.text = "Here is the request from Andreas " + System.nanoTime() * 10000;
             client.sendTCP(request);
         }
 
