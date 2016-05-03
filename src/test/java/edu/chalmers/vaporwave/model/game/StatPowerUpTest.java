@@ -1,32 +1,32 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.util.PowerUpState;
+import edu.chalmers.vaporwave.util.PowerUpType;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by FEngelbrektsson on 26/04/16.
  */
 public class StatPowerUpTest {
 
-    List<PowerUpState> pList = new ArrayList<PowerUpState>();
+    List<PowerUpType> pList = new ArrayList<PowerUpType>();
 
     @Test
     public void testPowerUps() {
-        pList.add(PowerUpState.BOMB_COUNT);
-        pList.add(PowerUpState.HEALTH);
-        pList.add(PowerUpState.RANGE);
-        pList.add(PowerUpState.SPEED);
+        pList.add(PowerUpType.BOMB_COUNT);
+        pList.add(PowerUpType.HEALTH);
+        pList.add(PowerUpType.RANGE);
+        pList.add(PowerUpType.SPEED);
 
         StatPowerUp stat = new StatPowerUp(pList);
 
-        System.out.println("The state is: " + stat.getPowerUpState());
-        assertTrue(stat.getPowerUpState().equals(PowerUpState.HEALTH) || stat.getPowerUpState().equals(PowerUpState.BOMB_COUNT)
-        || stat.getPowerUpState().equals(PowerUpState.RANGE) || stat.getPowerUpState().equals(PowerUpState.SPEED));
+        System.out.println("The state is: " + stat.getPowerUpType());
+        assertTrue(stat.getPowerUpType().equals(PowerUpType.HEALTH) || stat.getPowerUpType().equals(PowerUpType.BOMB_COUNT)
+        || stat.getPowerUpType().equals(PowerUpType.RANGE) || stat.getPowerUpType().equals(PowerUpType.SPEED));
 
     }
 

@@ -25,7 +25,7 @@ public class GameController {
 
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
-    private List<PowerUpState> enabledPowerUpList;
+    private List<PowerUpType> enabledPowerUpList;
 
     private int updatedEnemyDirection;
 
@@ -43,10 +43,10 @@ public class GameController {
         backgroundMusic.playSound();
 
         enabledPowerUpList = new ArrayList<>();
-        enabledPowerUpList.add(PowerUpState.BOMB_COUNT);
-        enabledPowerUpList.add(PowerUpState.RANGE);
-        enabledPowerUpList.add(PowerUpState.HEALTH);
-        enabledPowerUpList.add(PowerUpState.SPEED);
+        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
+        enabledPowerUpList.add(PowerUpType.RANGE);
+        enabledPowerUpList.add(PowerUpType.HEALTH);
+        enabledPowerUpList.add(PowerUpType.SPEED);
 
         this.localPlayer = newGameEvent.getLocalPlayer();
 
@@ -190,9 +190,9 @@ public class GameController {
                 instanceof StatPowerUp) {
             StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y];
 
-            if (powerUp.getPowerUpState() != null) {
+            if (powerUp.getPowerUpType() != null) {
                 this.arenaModel.setTile(null, localPlayer.getCharacter().getGridPosition());
-                playerWalksOnPowerUp(powerUp.getPowerUpState());
+                playerWalksOnPowerUp(powerUp.getPowerUpType());
                 updateStats();
             }
         }
@@ -273,6 +273,7 @@ public class GameController {
                             ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
                             StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(enabledPowerUpList);
                             if (statPowerUp != null) {
+                                statPowerUp.setTimeStamp(this.timeSinceStart);
                                 StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
                                 this.arenaModel.setTile(doubleTile, position);
                             }
@@ -340,7 +341,7 @@ public class GameController {
      * Will set the appropriate stat value on the character that walks on it.
      * @param powerUpState
      */
-    public void playerWalksOnPowerUp(PowerUpState powerUpState) {
+    public void playerWalksOnPowerUp(PowerUpType powerUpState) {
         System.out.println(powerUpState);
         switch (powerUpState) {
             case HEALTH:

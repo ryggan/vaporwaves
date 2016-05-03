@@ -45,7 +45,8 @@ public class ArenaView {
     private Sprite destructibleWallDestroyedSprite;
     private Sprite indestructibleWallSprite;
 
-    private Map<PowerUpState, Sprite> powerUpSprites;
+    private Map<PowerUpType, Sprite> powerUpSprites;
+    private Map<PowerUpType, Sprite> powerUpIntroSprites;
 
     private Sprite blastSpriteCenter;
     private Sprite[] blastSpriteBeam = new Sprite[4];
@@ -65,9 +66,10 @@ public class ArenaView {
         this.root = root;
         this.arenaFrameSprites = new HashMap<>();
         this.fps = new Label();
-        
+
         this.powerUpSprites = new HashMap<>();
-        this.backgroundPattern=new ImageView();
+        this.powerUpIntroSprites = new HashMap<>();
+        this.backgroundPattern = new ImageView();
 
         root.getChildren().add(backgroundPattern);
 
@@ -129,17 +131,23 @@ public class ArenaView {
         Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
         destructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
+//        new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {9, 1}, new double[] {1, 1});
         destructibleWallDestroyedSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 1}, new double[] {1, 1});
-//        ((AnimatedSprite)destructibleWallDestroyedSprite).setStartFromBeginning(true);
         indestructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {4, 2}, new double[] {1, 1});
+//        new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {5, 2}, new double[] {1, 1});
 
         Image powerupSpritesheet = new Image("images/spritesheet-powerups-18x18.png");
-        powerUpSprites.put(PowerUpState.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 0}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpState.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 1}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpState.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpState.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 3}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 0}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 1}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
+        powerUpSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 3}, new double[] {1, 1}));
+
+        powerUpIntroSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 0}, new double[] {1, 1}));
+        powerUpIntroSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 1}, new double[] {1, 1}));
+        powerUpIntroSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 2}, new double[] {1, 1}));
+        powerUpIntroSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 3}, new double[] {1, 1}));
 
         blastSpriteCenter =
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
@@ -282,61 +290,6 @@ public class ArenaView {
 
     }
 
-//    private void initPowerUpSprites(PowerUpSprite powerUpSprite) {
-//        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
-//        PowerUpProperties powerUpProperties = PowerUpLoader.loadPowerUp(reader.read(), powerUpSprite.getType());
-//
-//        for(PowerUpState powerUpState : Constants.POWERUP_STATE) {
-//            PowerUpSpriteProperties powerUpSpriteProperties = powerUpProperties.getSpriteProperties(powerUpState);
-//            switch(powerUpState) {
-//                case HEALTH:
-//                    powerUpSprite.setHealthSprite(
-//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-//                                            powerUpSpriteProperties.getDimensionY()),
-//                                    powerUpSpriteProperties.getFrames(),
-//                                    powerUpSpriteProperties.getDuration(),
-//                                    powerUpSpriteProperties.getFirstFrame(),
-//                                    powerUpSpriteProperties.getOffset())
-//                    );
-//                    break;
-//                case BOMB_COUNT:
-//                    powerUpSprite.setBombCountSprite(
-//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-//                                            powerUpSpriteProperties.getDimensionY()),
-//                                    powerUpSpriteProperties.getFrames(),
-//                                    powerUpSpriteProperties.getDuration(),
-//                                    powerUpSpriteProperties.getFirstFrame(),
-//                                    powerUpSpriteProperties.getOffset())
-//                    );
-//                    break;
-//                case SPEED:
-//                    powerUpSprite.setSpeedSprite(
-//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-//                                            powerUpSpriteProperties.getDimensionY()),
-//                                    powerUpSpriteProperties.getFrames(),
-//                                    powerUpSpriteProperties.getDuration(),
-//                                    powerUpSpriteProperties.getFirstFrame(),
-//                                    powerUpSpriteProperties.getOffset())
-//                    );
-//                    break;
-//                case RANGE:
-//                    powerUpSprite.setRangeSprite(
-//                            new AnimatedSprite(powerUpSpriteProperties.getSpritesheet(),
-//                                    new Dimension(powerUpSpriteProperties.getDimensionX(),
-//                                            powerUpSpriteProperties.getDimensionY()),
-//                                    powerUpSpriteProperties.getFrames(),
-//                                    powerUpSpriteProperties.getDuration(),
-//                                    powerUpSpriteProperties.getFirstFrame(),
-//                                    powerUpSpriteProperties.getOffset())
-//                    );
-//                    break;
-//            }
-//        }
-//    }
-
     public void updateStats(double health, double speed, int bombRange, int bombCount){
         hudView.updateStats(health, speed, bombRange, bombCount);
     }
@@ -392,6 +345,8 @@ public class ArenaView {
             renderBlast((Blast)tile, gridPosition, timeSinceStart);
         } else if (tile instanceof DestructibleWall) {
             renderDestructibleWall((DestructibleWall)tile, gridPosition, timeSinceStart);
+        } else if (tile instanceof PowerUp) {
+            renderPowerUp((PowerUp)tile, gridPosition, timeSinceStart);
         } else {
             renderTile(tile, gridPosition, timeSinceStart);
         }
@@ -433,7 +388,13 @@ public class ArenaView {
             currentSprite.setPosition(destinationCanvasPosition);
             currentSprite.render(this.tileGC, timeDifference);
         } else {
-            GameEventBus.getInstance().post(new RemoveTileEvent((StaticTile)tile, gridPosition));
+
+            if (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.INTRO) {
+                ((PowerUp) tile).setState(PowerUp.PowerUpState.IDLE);
+                renderTile((StaticTile)tile, gridPosition, timeSinceStart);
+            } else {
+                GameEventBus.getInstance().post(new RemoveTileEvent((StaticTile) tile, gridPosition));
+            }
         }
     }
 
@@ -457,6 +418,16 @@ public class ArenaView {
             renderAnimatedTile(destructibleWallDestroyedSprite, wall, gridPosition, timeSinceStart);
         } else {
             renderTile(wall, gridPosition, timeSinceStart);
+        }
+    }
+
+    // Does a renderAnimatedTile() when destroyed, because of animation, but otherwise goes with the standard renderTile()
+    private void renderPowerUp(PowerUp powerup, Point gridPosition, double timeSinceStart) {
+
+        if (powerup.getState() == PowerUp.PowerUpState.INTRO) {
+            renderAnimatedTile(getTileSprite(powerup), powerup, gridPosition, timeSinceStart);
+        } else {
+            renderTile(powerup, gridPosition, timeSinceStart);
         }
     }
 
@@ -567,8 +538,12 @@ public class ArenaView {
             } else if (tile instanceof Mine) {
                 return mineSprite;
             }
-        } else if (tile instanceof StatPowerUp) {
-            return powerUpSprites.get(((StatPowerUp) tile).getPowerUpState());
+        } else if (tile instanceof PowerUp) {
+            if (((PowerUp) tile).getState() == PowerUp.PowerUpState.INTRO) {
+                return powerUpIntroSprites.get(((PowerUp) tile).getPowerUpType());
+            } else {
+                return powerUpSprites.get(((PowerUp) tile).getPowerUpType());
+            }
         }
         return null;
     }

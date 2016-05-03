@@ -1,22 +1,30 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.util.PowerUpState;
+import edu.chalmers.vaporwave.util.PowerUpType;
 
 
-public abstract class PowerUp extends StaticTile {
+public abstract class PowerUp extends StaticTile implements AnimatedTile {
 
-    int spawnChance;
-    int statusEffect;
-    PowerUpState powerUpState;
+    private int spawnChance;
+    private int statusEffect;
+    private PowerUpType powerUpType;
+    private PowerUpState powerUpState;
+    private double timeStamp;
 
-    public PowerUp(int spawnChance, int statusEffect, PowerUpState powerUpState){
+    public enum PowerUpState {
+        INTRO, IDLE, END
+    }
+
+    public PowerUp(int spawnChance, int statusEffect, PowerUpType powerUpType){
+        this();
         this.spawnChance = spawnChance;
         this.statusEffect = statusEffect;
-        this.powerUpState = powerUpState;
+        this.powerUpType = powerUpType;
     }
 
     public PowerUp() {
-
+        this.powerUpState = PowerUpState.INTRO;
+        this.timeStamp = -1;
     }
 
     public int getSpawnChance(){
@@ -27,8 +35,28 @@ public abstract class PowerUp extends StaticTile {
         return statusEffect;
     }
 
-    public PowerUpState getPowerType(){
-        return powerUpState;
+    public void setPowerUpType(PowerUpType powerUpType) {
+        this.powerUpType = powerUpType;
+    }
+
+    public PowerUpType getPowerUpType(){
+        return this.powerUpType;
+    }
+
+    public void setState(PowerUpState state) {
+        this.powerUpState = state;
+    }
+
+    public PowerUpState getState() {
+        return this.powerUpState;
+    }
+
+    public void setTimeStamp(double timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public double getTimeStamp() {
+        return this.timeStamp;
     }
 
 }

@@ -5,7 +5,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.RemoveTileEvent;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.MapObject;
-import edu.chalmers.vaporwave.util.PowerUpState;
+import edu.chalmers.vaporwave.util.PowerUpType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -147,7 +147,7 @@ public class ArenaModel {
     }
 
 
-    public StatPowerUp spawnStatPowerUp(java.util.List<PowerUpState> enabledPowerUpList) {
+    public StatPowerUp spawnStatPowerUp(java.util.List<PowerUpType> enabledPowerUpList) {
         Random randomGenerator = new Random();
         if(randomGenerator.nextInt(4) < 2) {
             return new StatPowerUp(enabledPowerUpList);
