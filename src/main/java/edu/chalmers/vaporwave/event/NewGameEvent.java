@@ -2,8 +2,7 @@ package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.util.PowerUpState;
+import edu.chalmers.vaporwave.util.PowerUpType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +11,7 @@ public class NewGameEvent {
     private ArenaMap arenaMap;
     private Set<Player> remotePlayersSet;
     private Player localPlayer;
-    private Set<PowerUpState> enabledPowerUps;
+    private Set<PowerUpType> enabledPowerUps;
     private int timeLimit;
 
     public NewGameEvent() {
@@ -28,11 +27,11 @@ public class NewGameEvent {
         return this.arenaMap;
     }
 
-    public void addPowerUp(PowerUpState powerUpState) {
+    public void addPowerUp(PowerUpType powerUpState) {
         this.enabledPowerUps.add(powerUpState);
     }
 
-    public void removePowerUp(PowerUpState powerUpState) {
+    public void removePowerUp(PowerUpType powerUpState) {
         if(enabledPowerUps.contains(powerUpState)) {
             enabledPowerUps.remove(powerUpState);
         }

@@ -5,7 +5,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.RemoveTileEvent;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.MapObject;
-import edu.chalmers.vaporwave.util.PowerUpState;
+import edu.chalmers.vaporwave.util.PowerUpType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -59,6 +59,23 @@ public class ArenaModel {
 
     public void setTile(StaticTile tile, Point position) throws ArrayIndexOutOfBoundsException {
         setTile(tile, position.x, position.y);
+    }
+
+    public void setDoubleTile(StaticTile tile, int posx, int posy) throws ArrayIndexOutOfBoundsException {
+        if (posx <= this.gridWidth && posy <= this.gridHeight && posx >= 0 && posy >= 0) {
+            if (arenaTiles[posx][posy] == null) {
+                setTile(tile, posx, posy);
+            } else {
+                StaticTile doubleTile = new DoubleTile(tile, arenaTiles[posx][posy]);
+                setTile(doubleTile, posx, posy);
+            }
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    public void setDoubleTile(StaticTile tile, Point position) throws ArrayIndexOutOfBoundsException {
+        setDoubleTile(tile, position.x, position.y);
     }
 
     public StaticTile getArenaTile(Point position) {
@@ -147,7 +164,7 @@ public class ArenaModel {
     }
 
 
-    public StatPowerUp spawnStatPowerUp(java.util.List<PowerUpState> enabledPowerUpList) {
+    public StatPowerUp spawnStatPowerUp(java.util.List<PowerUpType> enabledPowerUpList) {
         Random randomGenerator = new Random();
         if(randomGenerator.nextInt(4) < 2) {
             return new StatPowerUp(enabledPowerUpList);

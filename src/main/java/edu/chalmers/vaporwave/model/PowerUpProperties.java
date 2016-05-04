@@ -1,14 +1,14 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.util.PowerUpState;
+import edu.chalmers.vaporwave.util.PowerUpType;
 
 import java.util.Map;
 
 public class PowerUpProperties {
     private String type;
-    private Map<PowerUpState, PowerUpSpriteProperties> spriteProperties;
+    private Map<PowerUpType, PowerUpSpriteProperties> spriteProperties;
 
-    public PowerUpProperties(String type, Map<PowerUpState, PowerUpSpriteProperties> spriteProperties) {
+    public PowerUpProperties(String type, Map<PowerUpType, PowerUpSpriteProperties> spriteProperties) {
         this.type = type;
         this.spriteProperties = spriteProperties;
     }
@@ -21,7 +21,7 @@ public class PowerUpProperties {
         return this.spriteProperties;
     }
 
-    public PowerUpSpriteProperties getSpriteProperties(PowerUpState powerUpState) {
+    public PowerUpSpriteProperties getSpriteProperties(PowerUpType powerUpState) {
         return this.spriteProperties.get(powerUpState);
     }
 

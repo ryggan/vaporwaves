@@ -12,7 +12,7 @@ import java.util.Map;
 public class PowerUpLoader {
     public static PowerUpProperties loadPowerUp(NodeList nodeList, String type) {
 
-        Map<PowerUpState, PowerUpSpriteProperties> spritePropertiesMap = new HashMap<PowerUpState, PowerUpSpriteProperties>();
+        Map<PowerUpType, PowerUpSpriteProperties> spritePropertiesMap = new HashMap<PowerUpType, PowerUpSpriteProperties>();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
 
