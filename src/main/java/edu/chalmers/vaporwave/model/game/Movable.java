@@ -243,12 +243,10 @@ public abstract class Movable {
         this.health -= damage;
         if (this.health <= 0) {
             this.health = Constants.DEFAULT_START_HEALTH;
-//            this.health = 0;
             death();
         } else {
             flinch();
         }
-        System.out.println("Dealing damage to "+getName()+"; "+damage+" - Health left: "+this.health);
     }
 
     public Direction getDirection() {
