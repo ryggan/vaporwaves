@@ -15,6 +15,7 @@ public class Enemy extends Movable {
         super(name, canvasPositionX, canvasPositionY, speed);
         this.ai = ai;
         this.deathTimeStamp = -1;
+        setDamage(20);
     }
 
     public AI getAI() {

@@ -171,10 +171,22 @@ public class GameController {
         for (Movable movable : arenaModel.getArenaMovables()) {
             movable.updatePosition();
 
-            // If moving and not invincible, check for blast
+            // If moving and not invincible, check for things that will deal damage
             if (!movable.isInvincible()
                     && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
 
+                // The enemy-check for characters only:
+                if (movable instanceof GameCharacter) {
+                    for (Movable otherMovable : arenaModel.getArenaMovables()) {
+                        if (otherMovable instanceof Enemy && movable.intersects(otherMovable)) {
+                            movable.dealDamage(otherMovable.getDamage());
+                            updateStats();
+                            break;
+                        }
+                    }
+                }
+
+                // The blast-check:
                 StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
                 Blast blast = null;
                 if (currentTile instanceof Blast) {

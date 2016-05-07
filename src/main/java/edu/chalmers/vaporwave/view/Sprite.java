@@ -19,7 +19,7 @@ public class Sprite {
     private boolean stayOnPixel;
     private double offsetX;
     private double offsetY;
-    private BoundingBox boundingBox;
+//    private BoundingBox boundingBox;
 
     /**
      * Constructors, one simple which leaves the Sprite object without Image, and the other two with an Image
@@ -30,7 +30,7 @@ public class Sprite {
         this.positionY = 0;
         this.scale = Constants.GAME_SCALE;
         this.stayOnPixel = true;
-        this.boundingBox = new BoundingBox();
+//        this.boundingBox = new BoundingBox();
         setImage(this.image);
     }
 
@@ -83,14 +83,14 @@ public class Sprite {
         gc.drawImage(this.image, posx, posy);
     }
 
-    /**
-     * Basic colission test between sprites.
-     * @param sprite
-     * @return
-     */
-    public boolean intersects(Sprite sprite) {
-        return sprite.getBoundary().intersects(this.getBoundary());
-    }
+//    /**
+//     * Basic colission test between sprites.
+//     * @param sprite
+//     * @return
+//     */
+//    public boolean intersects(Sprite sprite) {
+//        return sprite.getBoundary().intersects(this.getBoundary());
+//    }
 
     /**
      * Besides setting the scale, also updates the Image, via Utils, to the new resized scale.
@@ -146,10 +146,10 @@ public class Sprite {
         return this.scale;
     }
 
-    public Rectangle2D getBoundary() {
-        return new Rectangle2D(positionX + boundingBox.getWest(), positionY + boundingBox.getNorth(),
-                width + boundingBox.getEast(), height + boundingBox.getSouth());
-    }
+//    public Rectangle2D getBoundary() {
+//        return new Rectangle2D(positionX + boundingBox.getWest(), positionY + boundingBox.getNorth(),
+//                width + boundingBox.getEast(), height + boundingBox.getSouth());
+//    }
 
     public boolean getStayOnPixel() {
         return stayOnPixel;
@@ -177,22 +177,23 @@ public class Sprite {
         return this.offsetY;
     }
 
-    public BoundingBox getBoundingBox() {
-        return this.boundingBox;
-    }
-
-    public void setBoundingBox(BoundingBox boundingBox) {
-        this.boundingBox = boundingBox;
-    }
+//    public BoundingBox getBoundingBox() {
+//        return this.boundingBox;
+//    }
+//
+//    public void setBoundingBox(BoundingBox boundingBox) {
+//        this.boundingBox = boundingBox;
+//    }
 
     @Override
     public boolean equals(Object o){
         if(o instanceof Sprite){
            Sprite other =(Sprite) o;
-            if(other.getStayOnPixel()==this.getStayOnPixel()&&other.getBoundary()==this.getBoundary()&&
-                    this.getHeight()==other.getHeight()&&other.getWidth()==this.getWidth()&&other.getImage()==this.getImage()&&
-                    this.getOffsetX()==other.getOffsetX()&&this.getOffsetY()==other.getOffsetY()&&this.getPositionX()==other.getPositionX()&&
-                    this.getPositionY()==other.getPositionY()){
+            if(other.getStayOnPixel() == this.getStayOnPixel() /*&& other.getBoundary() == this.getBoundary()*/
+                    && this.getHeight() == other.getHeight() && other.getWidth() == this.getWidth()
+                    && other.getImage() == this.getImage() && this.getOffsetX() == other.getOffsetX()
+                    && this.getOffsetY() == other.getOffsetY() && this.getPositionX() == other.getPositionX()
+                    && this.getPositionY() == other.getPositionY()){
                 return true;
             }
         }

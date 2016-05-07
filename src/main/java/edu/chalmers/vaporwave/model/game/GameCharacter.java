@@ -30,6 +30,7 @@ public class GameCharacter extends Movable {
         this.maxBombCount = 10;
         this.currentBombCount = this.maxBombCount;
         setSpeed(1.5);
+        setDamage(30);
 
 //        this.powerUpTimeStamp = -1;
         this.powerUpPickedUp = new ArrayList<>();
@@ -37,8 +38,8 @@ public class GameCharacter extends Movable {
 
     public void placeBomb() {
         if (this.currentBombCount > 0 && (getState() == MovableState.IDLE || getState() == MovableState.WALK)) {
-            placeBomb.stopSound();
-            placeBomb.playSound();
+//            placeBomb.stopSound();
+//            placeBomb.playSound();
             
             PlaceBombEvent event =
                     new PlaceBombEvent( Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()),

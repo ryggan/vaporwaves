@@ -4,6 +4,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.Utils;
+import javafx.geometry.BoundingBox;
 
 import java.awt.*;
 
@@ -33,26 +34,29 @@ public abstract class Movable {
     private int invincibleTimer;
     private int invincibleDelay;
 
-    protected Movable() { }
+    private BoundingBox boundingBox;
 
     public Movable(String name, double canvasPositionX, double canvasPositionY, double speed) {
+
         this.canvasPositionX = canvasPositionX;
         this.canvasPositionY = canvasPositionY;
-        this.velocityX = 0;
-        this.velocityY = 0;
-        this.speed = speed;
-        this.moving = false;
-        this.name = name;
-        this.damage = 30;
-        this.flinchDelay = 40;
-        this.flinchInvincible = false;
-        this.invincibleDelay = 60;
-
         this.previousGridPositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
         this.previousGridPositionY = Utils.canvasToGridPositionY(getCanvasPositionY());
 
+        this.boundingBox = new BoundingBox(1, 1, Constants.DEFAULT_TILE_WIDTH - 1, Constants.DEFAULT_TILE_HEIGHT - 1);
+
+        this.velocityX = 0;
+        this.velocityY = 0;
         this.moving = false;
+
+        this.speed = speed;
+        this.name = name;
+        this.damage = 0;
         this.health = Constants.DEFAULT_START_HEALTH;
+
+        this.flinchDelay = 40;
+        this.flinchInvincible = false;
+        this.invincibleDelay = 60;
 
         this.movableState = MovableState.IDLE;
     }
@@ -244,6 +248,7 @@ public abstract class Movable {
         } else {
             flinch();
         }
+        System.out.println("Dealing damage to "+getName()+"; "+damage+" - Health left: "+this.health);
     }
 
     public Direction getDirection() {
@@ -306,6 +311,10 @@ public abstract class Movable {
         return this.damage;
     }
 
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     public void setHealth(double health) {
         this.health = health;
     }
@@ -320,6 +329,15 @@ public abstract class Movable {
 
     public boolean isInvincible() {
         return this.flinchInvincible;
+    }
+
+    public BoundingBox getBoundingBox() {
+        return new BoundingBox(this.boundingBox.getMinX() + this.getCanvasPositionX(),
+                this.boundingBox.getMinY() + this.getCanvasPositionY(), this.boundingBox.getWidth(), this.boundingBox.getHeight());
+    }
+
+    public boolean intersects(Movable movable) {
+        return this.getBoundingBox().intersects(movable.getBoundingBox());
     }
 
     @Override
