@@ -170,7 +170,8 @@ public class GameController {
                 // The enemy-check for characters only:
                 if (movable instanceof GameCharacter) {
                     for (Movable otherMovable : arenaModel.getArenaMovables()) {
-                        if (otherMovable instanceof Enemy && movable.intersects(otherMovable)) {
+                        if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
+                                && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
                             movable.dealDamage(otherMovable.getDamage());
                             updateStats();
                             break;
