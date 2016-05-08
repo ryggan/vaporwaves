@@ -8,15 +8,18 @@ import com.esotericsoftware.kryonet.Server;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class GameServer {
 
     private Server server;
     private Client client;
 
-    public boolean isServer = false;
+    public boolean isServer = true;
 
     public GameServer() {
+
+//        checkHosts("10.0.1");
 
         try {
 
@@ -58,7 +61,7 @@ public class GameServer {
             kryoClient.register(SomeRequest.class);
             kryoClient.register(SomeResponse.class);
 
-            client.connect(5000, "129.16.193.23", 54555, 54777);
+            client.connect(5000, "10.0.1.4", 54555, 54777);
             client.setTimeout(0);
 
             InetAddress address = client.discoverHost(54777, 5000);
@@ -92,5 +95,22 @@ public class GameServer {
             client.sendTCP(request);
         }
 
+    }
+
+    // Example of subnet parameter: "192.168.0", will check 0-254 at last digit, i.e "192.168.0.0", "192.168.0.1" and so forth
+    public static void checkHosts(String subnet) {
+        int timeout=500;
+        for (int i=1;i<255;i++){
+            String host=subnet + "." + i;
+            try {
+                if (InetAddress.getByName(host).isReachable(timeout)) {
+                    System.out.println(host + " is reachable");
+                } else {
+                    System.out.println(host + " is NOT reachable");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
