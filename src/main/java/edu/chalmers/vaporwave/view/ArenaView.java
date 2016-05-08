@@ -315,11 +315,12 @@ public class ArenaView {
         hudView.updateStats(health, speed, bombRange, bombCount);
     }
 
-    public void updateView(ArrayList<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
+    // todo - UPDATE VIEW SECTION
 
-        /**
-         * Checks if player is holding tab, then shows the scoreboard.
-         */
+    public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
+
+        // Checks if player is holding tab, then shows the scoreboard.
+
         if(ListenerController.getInstance().getInput().contains("TAB")) {
             scoreboard.showScoreboard();
         } else {

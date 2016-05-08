@@ -65,8 +65,6 @@ public class GameController {
         arenaView.initArena(arenaModel.getArenaTiles());
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
-
-
         this.arenaView.updateStats(
                 this.localPlayer.getCharacter().getHealth(),
                 this.localPlayer.getCharacter().getSpeed(),
@@ -197,11 +195,13 @@ public class GameController {
             }
         }
 
+        // Walking over powerup?
         if (this.localPlayer.getCharacter() != null &&
                 this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y]
                 instanceof StatPowerUp) {
             StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y];
 
+            // If so, pick it up
             if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
                 powerUp.pickUp(timeSinceStart);
                 localPlayer.getCharacter().pickedUpPowerUp(timeSinceStart);
@@ -210,6 +210,7 @@ public class GameController {
             }
         }
 
+        // Removes enemies
         if (deadEnemies.size() > 0) {
             for (Enemy enemy : deadEnemies) {
                 this.enemies.remove(enemy);
@@ -218,7 +219,9 @@ public class GameController {
             deadEnemies.clear();
         }
 
+        // Model updating, before letting view have at it
         this.arenaModel.updateBombs(this.timeSinceStart);
+        this.arenaModel.sortMovables();
 
         // Calls view to update graphics
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);
