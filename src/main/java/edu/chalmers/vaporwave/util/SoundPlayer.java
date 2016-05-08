@@ -22,7 +22,9 @@ public class SoundPlayer {
         this.sound.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
-                sound.stop();
+                if (sound.getCycleCount() != MediaPlayer.INDEFINITE) {
+                    sound.stop();
+                }
             }
         });
     }
@@ -41,11 +43,16 @@ public class SoundPlayer {
         this.sound.stop();
     }
 
-    public void loopSound(){
-        // todo: implement this?
+    public void loopSound(boolean loop){
+        if (loop) {
+            this.sound.setCycleCount(MediaPlayer.INDEFINITE);
+        } else {
+            this.sound.setCycleCount(0);
+        }
     }
 
     public boolean isPlaying() {
         return this.sound.getStatus() == MediaPlayer.Status.PLAYING;
     }
+
 }

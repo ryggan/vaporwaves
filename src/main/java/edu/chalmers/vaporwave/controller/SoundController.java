@@ -29,6 +29,7 @@ public class SoundController {
         }
 
         this.gameBackgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
+        this.gameBackgroundMusic.loopSound(true);
     }
 
     public static SoundController getInstance() {
@@ -77,5 +78,12 @@ public class SoundController {
             player.stopSound();
         }
     }
+
+//    public void loopSound(Sound sound, boolean loop) {
+//        SoundPlayer player = getSound(sound);
+//        if (player != null) {
+//            player.loopSound(loop);
+//        }
+//    }
 
 }
