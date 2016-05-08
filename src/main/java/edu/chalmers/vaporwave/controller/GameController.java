@@ -31,8 +31,6 @@ public class GameController {
 
     private double timeSinceStart;
 
-    private SoundPlayer backgroundMusic;
-
     // settings for one specific game:
     private boolean destroyablePowerUps;
 
@@ -42,8 +40,7 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        backgroundMusic = SoundController.getInstance().getSound("gameBackgroundMusic");
-        backgroundMusic.playSound();
+        SoundController.getInstance().playSound(Sound.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -117,8 +114,8 @@ public class GameController {
 
         if (this.updatedEnemyDirection == 15) {
             for (Enemy enemy : enemies) {
-                enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(), this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
-//                enemy.placeBomb();
+                enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(),
+                        this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
             }
             updatedEnemyDirection = 0;
         }
@@ -149,10 +146,8 @@ public class GameController {
                     localPlayer.getCharacter().placeMine();
                     break;
                 case "X":
-//                    backgroundMusic.stopSound();
-//                    break;
                 case "ESCAPE":
-                    backgroundMusic.stopSound();
+                    SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
                         for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {

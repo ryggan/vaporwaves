@@ -17,6 +17,14 @@ public class SoundPlayer {
     public SoundPlayer(String fileName){
         Media soundFile = new Media(Paths.get("src/main/resources/sounds/"+fileName).toUri().toString());
         this.sound = new MediaPlayer(soundFile);
+
+        // Stops the sound when done:
+        this.sound.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                sound.stop();
+            }
+        });
     }
 
     public SoundPlayer(String fileName, double volume){
@@ -27,7 +35,6 @@ public class SoundPlayer {
 
     public void playSound(){
         this.sound.play();
-//        System.out.println("playing");
     }
 
     public void stopSound(){
@@ -35,6 +42,10 @@ public class SoundPlayer {
     }
 
     public void loopSound(){
+        // todo: implement this?
+    }
 
+    public boolean isPlaying() {
+        return this.sound.getStatus() == MediaPlayer.Status.PLAYING;
     }
 }
