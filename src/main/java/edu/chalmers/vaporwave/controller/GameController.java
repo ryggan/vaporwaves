@@ -42,8 +42,7 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        //Change this to proper values according to player preferences later, dummy values meanwhile
-        backgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
+        backgroundMusic = SoundController.getInstance().getSound("gameBackgroundMusic");
         backgroundMusic.playSound();
 
         enabledPowerUpList = new ArrayList<>();
@@ -134,18 +133,6 @@ public class GameController {
                 case "RIGHT":
                     localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
-                case "ESCAPE":
-                    backgroundMusic.stopSound();
-                    this.arenaModel.getArenaMovables().clear();
-                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
-                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
-                            this.arenaModel.getArenaTiles()[j][k] = null;
-                        }
-                    }
-                    this.enemies.clear();
-                    this.deadEnemies.clear();
-
-                    GameEventBus.getInstance().post(new GoToMenuEvent());
             }
         }
 
@@ -162,8 +149,20 @@ public class GameController {
                     localPlayer.getCharacter().placeMine();
                     break;
                 case "X":
+//                    backgroundMusic.stopSound();
+//                    break;
+                case "ESCAPE":
                     backgroundMusic.stopSound();
-                    break;
+                    this.arenaModel.getArenaMovables().clear();
+                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
+                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
+                            this.arenaModel.getArenaTiles()[j][k] = null;
+                        }
+                    }
+                    this.enemies.clear();
+                    this.deadEnemies.clear();
+
+                    GameEventBus.getInstance().post(new GoToMenuEvent());
             }
         }
 

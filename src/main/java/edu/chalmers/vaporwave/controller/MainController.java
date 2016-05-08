@@ -53,6 +53,8 @@ public class MainController {
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
 
+        SoundController.initialize();
+
         // Animation timer setup
 
         final long startNanoTime = System.nanoTime();

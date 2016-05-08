@@ -6,9 +6,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
-import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class GameServer {
 

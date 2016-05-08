@@ -27,7 +27,7 @@ public class SoundPlayer {
 
     public void playSound(){
         this.sound.play();
-        System.out.println("playing");
+//        System.out.println("playing");
     }
 
     public void stopSound(){
