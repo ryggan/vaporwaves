@@ -54,7 +54,7 @@ public abstract class Movable {
         this.damage = 0;
         this.health = Constants.DEFAULT_START_HEALTH;
 
-        this.flinchDelay = 40;
+        this.flinchDelay = 20;
         this.flinchInvincible = false;
         this.invincibleDelay = 60;
 

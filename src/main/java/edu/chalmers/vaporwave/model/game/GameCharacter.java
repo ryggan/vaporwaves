@@ -58,6 +58,11 @@ public class GameCharacter extends Movable {
         }
     }
 
+    public void flinch() {
+        super.flinch();
+        SoundController.getInstance().playSound(Sound.CHARACTER_FLINCH);
+    }
+
     public void setBombRange(int bombRange) {
         this.bombRange = bombRange;
     }

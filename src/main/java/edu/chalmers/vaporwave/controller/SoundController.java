@@ -13,6 +13,7 @@ public class SoundController {
     private SoundPlayer[] placeBomb;
     private SoundPlayer[] explosion;
     private SoundPlayer[] powerUp;
+    private SoundPlayer[] characterFlinch;
     private SoundPlayer gameBackgroundMusic;
 
     private SoundController() {
@@ -32,7 +33,13 @@ public class SoundController {
         amountOfSounds = 10;
         this.powerUp = new SoundPlayer[amountOfSounds];
         for (int i = 0; i < amountOfSounds; i++) {
-            this.powerUp[i] = new SoundPlayer("powerup1.wav");
+            this.powerUp[i] = new SoundPlayer("powerup1.wav", 0.8);
+        }
+
+        amountOfSounds = 4;
+        this.characterFlinch = new SoundPlayer[amountOfSounds];
+        for (int i = 0; i < amountOfSounds; i++) {
+            this.characterFlinch[i] = new SoundPlayer("girl_moan4.wav");
         }
 
         this.gameBackgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
@@ -70,6 +77,13 @@ public class SoundController {
                 for (int i = 0; i < powerUp.length; i++) {
                     if (!powerUp[i].isPlaying()) {
                         return powerUp[i];
+                    }
+                }
+                break;
+            case CHARACTER_FLINCH:
+                for (int i = 0; i < characterFlinch.length; i++) {
+                    if (!characterFlinch[i].isPlaying()) {
+                        return characterFlinch[i];
                     }
                 }
                 break;
