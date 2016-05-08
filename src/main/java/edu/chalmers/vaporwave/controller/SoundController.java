@@ -16,34 +16,42 @@ public class SoundController {
     private SoundPlayer[] characterFlinch;
     private SoundPlayer gameBackgroundMusic;
 
+    private double soundVolume;
+    private double musicVolume;
+
     private SoundController() {
 
-        int amountOfSounds= 10;
-        this.placeBomb = new SoundPlayer[amountOfSounds];
-        for (int i = 0; i < amountOfSounds; i++) {
-            this.placeBomb[i] = new SoundPlayer("placebomb.wav");
-        }
+//        this.soundVolume = 1.0;
+//        this.musicVolume = 1.0;
 
-        amountOfSounds = 30;
-        this.explosion = new SoundPlayer[amountOfSounds];
-        for (int i = 0; i < amountOfSounds; i++) {
-            this.explosion[i] = new SoundPlayer("explosion.wav");
-        }
+        this.soundVolume = 0;
+        this.musicVolume = 0;
 
-        amountOfSounds = 10;
-        this.powerUp = new SoundPlayer[amountOfSounds];
-        for (int i = 0; i < amountOfSounds; i++) {
-            this.powerUp[i] = new SoundPlayer("powerup1.wav", 0.8);
-        }
+        this.placeBomb = new SoundPlayer[10];
+        setUpSoundArray(this.placeBomb, 10, "placebomb.wav");
 
-        amountOfSounds = 4;
-        this.characterFlinch = new SoundPlayer[amountOfSounds];
-        for (int i = 0; i < amountOfSounds; i++) {
-            this.characterFlinch[i] = new SoundPlayer("girl_moan4.wav");
-        }
+        this.explosion = new SoundPlayer[30];
+        setUpSoundArray(this.explosion, 30, "explosion.wav");
+
+        this.powerUp = new SoundPlayer[10];
+        setUpSoundArray(this.powerUp, 10, "powerup1.wav", 0.8);
+
+        this.characterFlinch = new SoundPlayer[4];
+        setUpSoundArray(this.characterFlinch, 4, "girl_moan4.wav");
 
         this.gameBackgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
         this.gameBackgroundMusic.loopSound(true);
+    }
+
+    private void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName, double volume) {
+        array[0] = new SoundPlayer(fileName, volume);
+        for (int i = 1; i < numberOfSounds; i++) {
+            array[i] = new SoundPlayer(array[0]);
+        }
+    }
+
+    private void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName) {
+        setUpSoundArray(array, numberOfSounds, fileName, 1.0);
     }
 
     public static SoundController getInstance() {
@@ -96,7 +104,11 @@ public class SoundController {
     public void playSound(Sound sound) {
         SoundPlayer player = getSound(sound);
         if (player != null) {
-            player.playSound();
+            double masterVolume = soundVolume;
+            if (sound == Sound.GAME_MUSIC) {
+                masterVolume = musicVolume;
+            }
+            player.playSound(masterVolume);
         }
     }
 

@@ -486,16 +486,17 @@ public class ArenaView {
 
                 AnimatedSprite currentAnimatedSprite = (AnimatedSprite)currentSprite[0];
 
-                if (movable instanceof GameCharacter
-                        && (!currentAnimatedSprite.getPlayedYet() || currentAnimatedSprite.isAnimationFinished())) {
-
-                    currentAnimatedSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(movable));
-                    currentAnimatedSprite.setStartFromBeginning(true);
-                    currentAnimatedSprite.resetLoops();
-                    currentAnimatedSprite.setLoops(1);
-                    currentAnimatedSprite.setLingerOnLastFrame(true);
-
-                } else if (movable instanceof Enemy && ((Enemy)movable).getDeathTimeStamp() == -1) {
+//                if (movable instanceof GameCharacter
+//                        && (!currentAnimatedSprite.getPlayedYet() || currentAnimatedSprite.isAnimationFinished())) {
+//
+//                    currentAnimatedSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(movable));
+//                    currentAnimatedSprite.setStartFromBeginning(true);
+//                    currentAnimatedSprite.resetLoops();
+//                    currentAnimatedSprite.setLoops(1);
+//                    currentAnimatedSprite.setLingerOnLastFrame(true);
+//
+//                } else
+                if (movable instanceof Enemy && ((Enemy)movable).getDeathTimeStamp() == -1) {
                     ((Enemy)movable).setDeathTimeStamp(timeSinceStart);
                 }
             }
@@ -511,9 +512,19 @@ public class ArenaView {
                 spriteIndex = 3;
             }
 
-            Sprite actualSprite = currentSprite[spriteIndex];
+            AnimatedSprite actualSprite = (AnimatedSprite) currentSprite[spriteIndex];
             actualSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
                     movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+
+            if ((state == MovableState.SPAWN || state == MovableState.DEATH || state == MovableState.FLINCH)
+                    && movable instanceof GameCharacter && (!actualSprite.getPlayedYet() || actualSprite.isAnimationFinished())) {
+
+                actualSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(movable));
+                actualSprite.setStartFromBeginning(true);
+                actualSprite.resetLoops();
+                actualSprite.setLoops(1);
+                actualSprite.setLingerOnLastFrame(true);
+            }
 
             // This only runs if the movable is an enemy and in death-state, to keep track of more than one enemy
             // animation and death event, at the same time
@@ -581,7 +592,7 @@ public class ArenaView {
             } else if (((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP) {
                 return powerUpPickupSprites.get(((PowerUp) tile).getPowerUpType());
             } else if (((PowerUp) tile).getState() == PowerUp.PowerUpState.DESTROY) {
-                return powerUpDestroySprites.get(((PowerUp) tile).getPowerUpType());
+                return powerUpPickupSprites.get(((PowerUp) tile).getPowerUpType());
             } else {
                 return powerUpSprites.get(((PowerUp) tile).getPowerUpType());
             }
