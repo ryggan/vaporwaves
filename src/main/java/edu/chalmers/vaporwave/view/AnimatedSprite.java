@@ -203,6 +203,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
             if (this.animationFinishedEvent == null) {
                 this.animationFinishedEvent = new AnimationFinishedEvent();
             }
+            this.animationFinishedEvent.setSprite(this);
             GameEventBus.getInstance().post(this.animationFinishedEvent);
         }
 

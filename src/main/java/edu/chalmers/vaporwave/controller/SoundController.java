@@ -21,10 +21,10 @@ public class SoundController {
 
     private SoundController() {
 
-//        this.soundVolume = 1.0;
+        this.soundVolume = 1.0;
 //        this.musicVolume = 1.0;
 
-        this.soundVolume = 0;
+//        this.soundVolume = 0;
         this.musicVolume = 0;
 
         this.placeBomb = new SoundPlayer[10];

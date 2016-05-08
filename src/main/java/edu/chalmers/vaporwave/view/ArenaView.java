@@ -484,18 +484,6 @@ public class ArenaView {
                     currentSprite = sprites.getDeathSprites();
                 }
 
-                AnimatedSprite currentAnimatedSprite = (AnimatedSprite)currentSprite[0];
-
-//                if (movable instanceof GameCharacter
-//                        && (!currentAnimatedSprite.getPlayedYet() || currentAnimatedSprite.isAnimationFinished())) {
-//
-//                    currentAnimatedSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(movable));
-//                    currentAnimatedSprite.setStartFromBeginning(true);
-//                    currentAnimatedSprite.resetLoops();
-//                    currentAnimatedSprite.setLoops(1);
-//                    currentAnimatedSprite.setLingerOnLastFrame(true);
-//
-//                } else
                 if (movable instanceof Enemy && ((Enemy)movable).getDeathTimeStamp() == -1) {
                     ((Enemy)movable).setDeathTimeStamp(timeSinceStart);
                 }
@@ -511,13 +499,17 @@ public class ArenaView {
             } else if (movable.getDirection() == Direction.UP) {
                 spriteIndex = 3;
             }
+//            int spriteIndex = 0;
+//            if (state != MovableState.SPAWN && state != MovableState.DEATH) {
+//                spriteIndex = Utils.getIntegerFromDirection(movable.getDirection());
+//            }
 
             AnimatedSprite actualSprite = (AnimatedSprite) currentSprite[spriteIndex];
             actualSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
                     movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
 
             if ((state == MovableState.SPAWN || state == MovableState.DEATH || state == MovableState.FLINCH)
-                    && movable instanceof GameCharacter && (!actualSprite.getPlayedYet() || actualSprite.isAnimationFinished())) {
+                    && movable instanceof GameCharacter && (!actualSprite.getPlayedYet() || movable.hasChangedState())) {
 
                 actualSprite.setAnimationFinishedEvent(new AnimationFinishedEvent(movable));
                 actualSprite.setStartFromBeginning(true);
@@ -530,7 +522,7 @@ public class ArenaView {
             // animation and death event, at the same time
             if (movable instanceof Enemy && movable.getState() == MovableState.DEATH && ((Enemy)movable).getDeathTimeStamp() != -1) {
                 double timeDifference = timeSinceStart - ((Enemy)movable).getDeathTimeStamp();
-                if (timeDifference <= ((AnimatedSprite) actualSprite).getLength() * ((AnimatedSprite) actualSprite).getDuration()) {
+                if (timeDifference <= actualSprite.getLength() * actualSprite.getDuration()) {
                     actualSprite.render(this.tileGC, timeDifference);
                 } else {
                     GameEventBus.getInstance().post(new DeathEvent(movable));

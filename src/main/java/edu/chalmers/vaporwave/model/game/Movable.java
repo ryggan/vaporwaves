@@ -21,7 +21,9 @@ public abstract class Movable {
     private int damage;
     private Direction lastMove;
     private Direction direction;
+    private MovableState comingState;
     private MovableState movableState;
+    private MovableState previousState;
 
     private int previousGridPositionX;
     private int previousGridPositionY;
@@ -58,10 +60,19 @@ public abstract class Movable {
         this.flinchInvincible = false;
         this.invincibleDelay = 60;
 
-        this.movableState = MovableState.IDLE;
+        this.direction = Direction.DOWN;
+        this.movableState= MovableState.IDLE;
+        this.previousState = this.movableState;
     }
 
     public void updatePosition() {
+        this.previousState = this.movableState;
+
+        if (this.comingState != null) {
+            this.movableState = this.comingState;
+            this.comingState = null;
+        }
+
         this.canvasPositionX += this.velocityX;
         this.canvasPositionY += this.velocityY;
 
@@ -84,7 +95,7 @@ public abstract class Movable {
                 if (flinchTimer > 0) {
                     flinchTimer--;
                 } else {
-                    movableState = MovableState.IDLE;
+                    setState(MovableState.IDLE);
                     if (Utils.gridToCanvasPositionX(getPreviousGridPositionX()) != getCanvasPositionX()
                             || Utils.gridToCanvasPositionY(getPreviousGridPositionY()) != getCanvasPositionY()) {
                         move(direction, latestArenaTiles);
@@ -99,7 +110,7 @@ public abstract class Movable {
     private void stopAtTile(int newGridPositionX, int newGridPositionY) {
 
         stop();
-        movableState = MovableState.IDLE;
+        setState(MovableState.IDLE);
         setCanvasPosition(Utils.gridToCanvasPositionX(newGridPositionX), Utils.gridToCanvasPositionY(newGridPositionY));
         setPreviousGridPositionX(newGridPositionX);
         setPreviousGridPositionY(newGridPositionY);
@@ -150,20 +161,20 @@ public abstract class Movable {
     }
 
     public void idle() {
-        movableState = movableState.IDLE;
+        setState(MovableState.IDLE);
     }
 
     public void flinch() {
         stop();
         flinchTimer = flinchDelay;
-        movableState = movableState.FLINCH;
         invincibleTimer = invincibleDelay;
         flinchInvincible = true;
+        setState(MovableState.FLINCH);
     }
 
     public void death() {
         stop();
-        movableState = movableState.DEATH;
+        setState(MovableState.DEATH);
     }
 
     public void spawn(Point spawningPoint) {
@@ -171,7 +182,7 @@ public abstract class Movable {
         this.lastMove = null;
         this.direction = Direction.DOWN;
         stopAtTile((int)spawningPoint.getX(), (int)spawningPoint.getY());
-        this.movableState = movableState.SPAWN;
+        setComingState(MovableState.SPAWN);
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
@@ -193,7 +204,7 @@ public abstract class Movable {
                     break;
             }
             if (getVelocityY() != 0 || getVelocityX() != 0) {
-                movableState = movableState.WALK;
+                setState(MovableState.WALK);
             }
         }
     }
@@ -263,6 +274,14 @@ public abstract class Movable {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    public void setState(MovableState state) {
+        this.movableState = state;
+    }
+
+    public void setComingState(MovableState state) {
+        this.comingState = state;
     }
 
     public MovableState getState() {
@@ -336,6 +355,11 @@ public abstract class Movable {
 
     public boolean intersects(Movable movable) {
         return this.getBoundingBox().intersects(movable.getBoundingBox());
+    }
+
+    public boolean hasChangedState() {
+//        System.out.println("has changed? "+(movableState != previousState)+" cur state: "+movableState+", prev state: "+previousState);
+        return (this.movableState != this.previousState);
     }
 
     @Override
