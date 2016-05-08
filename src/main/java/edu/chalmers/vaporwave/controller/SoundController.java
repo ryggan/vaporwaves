@@ -12,6 +12,7 @@ public class SoundController {
 
     private SoundPlayer[] placeBomb;
     private SoundPlayer[] explosion;
+    private SoundPlayer[] powerUp;
     private SoundPlayer gameBackgroundMusic;
 
     private SoundController() {
@@ -26,6 +27,12 @@ public class SoundController {
         this.explosion = new SoundPlayer[amountOfSounds];
         for (int i = 0; i < amountOfSounds; i++) {
             this.explosion[i] = new SoundPlayer("explosion.wav");
+        }
+
+        amountOfSounds = 10;
+        this.powerUp = new SoundPlayer[amountOfSounds];
+        for (int i = 0; i < amountOfSounds; i++) {
+            this.powerUp[i] = new SoundPlayer("powerup1.wav");
         }
 
         this.gameBackgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
@@ -56,6 +63,13 @@ public class SoundController {
                 for (int i = 0; i < explosion.length; i++) {
                     if (!explosion[i].isPlaying()) {
                         return explosion[i];
+                    }
+                }
+                break;
+            case POWERUP:
+                for (int i = 0; i < powerUp.length; i++) {
+                    if (!powerUp[i].isPlaying()) {
+                        return powerUp[i];
                     }
                 }
                 break;
