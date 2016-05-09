@@ -20,6 +20,8 @@ public class GameController {
     private ArenaView arenaView;
     private ArenaModel arenaModel;
 
+    private TimerModel timerModel;
+
     private Set<Player> remotePlayersSet;
     private Player localPlayer;
 
@@ -30,6 +32,11 @@ public class GameController {
     private int updatedEnemyDirection;
 
     private double timeSinceStart;
+
+    //seconds
+    private double timeLimit;
+
+
 
     // settings for one specific game:
     private boolean destroyablePowerUps;
@@ -56,10 +63,11 @@ public class GameController {
 
         timeSinceStart = 0.0;
 
+        timeLimit=10.0;
         ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
 
         // Starting new game
-        this.arenaModel = newGame(arenaMap);
+        this.arenaModel = newGame(arenaMap,timeLimit);
         this.arenaView = new ArenaView(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());
@@ -106,6 +114,10 @@ public class GameController {
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         this.timeSinceStart = timeSinceStart;
+        if(timeLimit-timeSinceLastCall>0) {
+            timeLimit = timeLimit - timeSinceLastCall;
+        }
+        TimerModel.getInstance().updateTimer(timeLimit);
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
@@ -353,10 +365,9 @@ public class GameController {
         );
     }
 
-    public ArenaModel newGame(ArenaMap arenaMap) {
-
+    public ArenaModel newGame(ArenaMap arenaMap, double timeLimit) {
+        TimerModel.getInstance().updateTimer(timeLimit);
         // Here goes all code for setting up the environment for a new game
-
         return new ArenaModel(arenaMap);
     }
 

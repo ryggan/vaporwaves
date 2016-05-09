@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
@@ -20,6 +19,7 @@ import javafx.scene.image.ImageView;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class ArenaView {
 
@@ -61,6 +61,7 @@ public class ArenaView {
     private Label fps;
 
     private int updateCounter;
+
 
     public enum Compass {
         NORTH, WEST, EAST, SOUTH
@@ -181,6 +182,10 @@ public class ArenaView {
     }
 
     public void initArena(StaticTile[][] arenaTiles) {
+
+
+
+       // TimerModel.getInstance().updateTimer(timeSinceArenaInit);
 
         // Rendering background image to background canvas
 
@@ -357,6 +362,10 @@ public class ArenaView {
         for (Movable movable : arenaMovables) {
             renderMovable(movable, timeSinceStart);
         }
+
+        // Update timer
+        this.timerView.updateTimer();
+
     }
 
     // Method that just moves through the alternatives of rendering, for static tiles

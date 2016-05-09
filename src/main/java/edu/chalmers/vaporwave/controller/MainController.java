@@ -107,10 +107,9 @@ public class MainController {
                 ListenerController.getInstance().clearPressed();
                 ListenerController.getInstance().clearReleased();
 
-//                System.out.println(ListenerController.getInstance().getInput().get(0));
-//                if (ListenerController.getInstance().getPressed().size() > 0 && gameServer.isServer) {
-//                    gameServer.sendRequest("This is my request");
-//                }
+                if (ListenerController.getInstance().getInput().size() > 0) {
+                   // gameServer.sendRequest("This is my request");
+                }
 
             }
 
