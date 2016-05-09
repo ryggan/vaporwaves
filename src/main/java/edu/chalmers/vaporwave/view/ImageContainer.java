@@ -30,6 +30,14 @@ public class ImageContainer {
 
         // todo: GAME STUFF:
 
+        // HUD stuff:
+        this.imageContainer.put(ImageID.HUD_HEALTHBAR_EMPTY, new Image("images/healthbarempty.png"));
+        this.imageContainer.put(ImageID.HUD_HEALTHBAR_FILLED, new Image("images/healthbarfilled.png"));
+        this.imageContainer.put(ImageID.HUD_SCOREBAR_EMPTY, new Image("images/barempty.png"));
+        this.imageContainer.put(ImageID.HUD_SCOREBAR_FILLED, new Image("images/scorebarfilled.png"));
+
+        this.imageContainer.put(ImageID.SCOREBOARD_BACK, new Image("images/scoreboardBackground.png"));
+
         // Background stuff:
         this.imageContainer.put(ImageID.BACKGROUND_PATTERN_1, new Image("images/backgroundPatterns/pattern1.png"));
 

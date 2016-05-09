@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.ImageID;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.canvas.*;
@@ -40,7 +41,7 @@ public class Scoreboard {
     public Scoreboard(Group root) {
         this.root = root;
         //fix filepath after creating image
-        scoreboardBackground = new Sprite("images/scoreboardBackground.png");
+        scoreboardBackground = new Sprite(ImageContainer.getInstance().getImage(ImageID.SCOREBOARD_BACK));
         scoreboard = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
                 Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
         scoreboardGC = scoreboard.getGraphicsContext2D();
