@@ -68,7 +68,7 @@ public class GameController {
                 (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
-        this.arenaModel = newGame(arenaMap);
+        this.arenaModel = newGame(arenaMap, timeLimit);
         this.arenaView = new ArenaView(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());

@@ -1,25 +1,14 @@
 package edu.chalmers.vaporwave.controller;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.EndPoint;
-import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Serialization;
-import com.esotericsoftware.minlog.Log;
 import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
-import edu.chalmers.vaporwave.network.GameServer;
-import edu.chalmers.vaporwave.networktest.Network;
-import edu.chalmers.vaporwave.networktest.PositionClient;
-import edu.chalmers.vaporwave.networktest.PositionServer;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.view.ImageContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
-
-import java.io.IOException;
 
 public class MainController {
 
