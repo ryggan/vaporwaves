@@ -10,7 +10,8 @@
         <bombCount>1</bombCount>
 
         <walk>
-            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>
+            <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>8</frames>
@@ -22,7 +23,8 @@
         </walk>
 
         <idle>
-            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>
+            <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>2</frames>
@@ -34,7 +36,8 @@
         </idle>
 
         <flinch>
-            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>
+            <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>2</frames>
@@ -46,7 +49,8 @@
         </flinch>
 
         <death>
-            <spritesheet>images/characters/spritesheet-alyssa-death-56x56.png</spritesheet>
+            <spritesheet>CHARACTER_ALYSSA_DEATH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-alyssa-death-56x56.png</spritesheet>-->
             <dimensionX>56</dimensionX>
             <dimensionY>56</dimensionY>
             <frames>28</frames>
@@ -58,7 +62,8 @@
         </death>
 
         <spawn>
-            <spritesheet>images/characters/spritesheet-alyssa-respawn-48x128.png</spritesheet>
+            <spritesheet>CHARACTER_ALYSSA_SPAWN</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-alyssa-respawn-48x128.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>128</dimensionY>
             <frames>27</frames>
@@ -89,7 +94,8 @@
         <bombCount>1</bombCount>
 
         <walk>
-            <spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>CHARACTER_CHARLOTTE_WALKIDLEFLINCH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>8</frames>
@@ -101,7 +107,8 @@
         </walk>
 
         <idle>
-            <spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>CHARACTER_CHARLOTTE_WALKIDLEFLINCH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>1</frames>
@@ -113,7 +120,8 @@
         </idle>
 
         <flinch>
-            <spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>CHARACTER_CHARLOTTE_WALKIDLEFLINCH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>1</frames>
@@ -125,7 +133,8 @@
         </flinch>
 
         <death>
-            <spritesheet>images/characters/spritesheet-charlotte-death-48x48.png</spritesheet>
+            <spritesheet>CHARACTER_CHARLOTTE_DEATH</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-charlotte-death-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>12</frames>
@@ -137,7 +146,8 @@
         </death>
 
         <spawn>
-            <spritesheet>images/characters/spritesheet-charlotte-respawn-48x128.png</spritesheet>
+            <spritesheet>CHARACTER_CHARLOTTE_SPAWN</spritesheet>
+            <!--<spritesheet>images/characters/spritesheet-charlotte-respawn-48x128.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>128</dimensionY>
             <frames>27</frames>
@@ -169,7 +179,8 @@
         <bombCount>1</bombCount>
 
         <walk>
-            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
+            <spritesheet>ENEMY_PCCHAN</spritesheet>
+            <!--<spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>4</frames>
@@ -181,7 +192,8 @@
         </walk>
 
         <idle>
-            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
+            <spritesheet>ENEMY_PCCHAN</spritesheet>
+            <!--<spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>1</frames>
@@ -193,7 +205,8 @@
         </idle>
 
         <flinch>
-            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
+            <spritesheet>ENEMY_PCCHAN</spritesheet>
+            <!--<spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>3</frames>
@@ -205,7 +218,8 @@
         </flinch>
 
         <death>
-            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
+            <spritesheet>ENEMY_PCCHAN</spritesheet>
+            <!--<spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>16</frames>
@@ -217,7 +231,8 @@
         </death>
 
         <spawn>
-            <spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>
+            <spritesheet>ENEMY_PCCHAN</spritesheet>
+            <!--<spritesheet>images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>13</frames>

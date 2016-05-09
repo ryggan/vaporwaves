@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.util;
 
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
+import edu.chalmers.vaporwave.view.ImageContainer;
 import javafx.scene.image.Image;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -21,9 +22,12 @@ public class CharacterLoader {
                 if (currentName.equals(name)) {
                     for (int k = 0; k < Constants.CHARACTER_CHARACTER_STATE.length; k++) {
 
-                        Element currentSpriteNodes = (Element)singleCharacterNodes.getElementsByTagName(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase()).item(j);
+                        Element currentSpriteNodes =(Element)singleCharacterNodes.getElementsByTagName(
+                                Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase()).item(j);
 
-                        Image spritesheet = new Image(currentSpriteNodes.getElementsByTagName("spritesheet").item(0).getTextContent());
+                        Image spritesheet = ImageContainer.getInstance().getImage(ImageID.valueOf(
+                                currentSpriteNodes.getElementsByTagName("spritesheet").item(0).getTextContent()));
+
                         int dimensionX = Integer.parseInt(currentSpriteNodes.getElementsByTagName("dimensionX").item(0).getTextContent());
                         int dimensionY = Integer.parseInt(currentSpriteNodes.getElementsByTagName("dimensionY").item(0).getTextContent());
                         int frames = Integer.parseInt(currentSpriteNodes.getElementsByTagName("frames").item(0).getTextContent());

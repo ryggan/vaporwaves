@@ -61,12 +61,14 @@ public class GameController {
         // Initiates view
 
         timeSinceStart = 0.0;
+        timeSinceStart = 0.0;
 
-        timeLimit = 10.0;
-        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
+//        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
+        ArenaMap arenaMap = new ArenaMap("default",
+                (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
-        this.arenaModel = newGame(arenaMap,timeLimit);
+        this.arenaModel = newGame(arenaMap);
         this.arenaView = new ArenaView(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());

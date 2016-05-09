@@ -5,8 +5,6 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.model.PowerUpProperties;
-import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
@@ -17,8 +15,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.*;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ArenaView {
@@ -114,6 +114,7 @@ public class ArenaView {
 //        initCharacterSprites(characterSprites[2]);
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
+
 
 //        Image characterMiscSpritesheet = new Image("images/spritesheet-character-misc-48x48.png");
         Image characterMiscSpritesheet = ImageContainer.getInstance().getImage(ImageID.CHARACTER_MISC);
@@ -238,7 +239,8 @@ public class ArenaView {
      * Reads character information from an XML-file and populate the instance variables for the sprites
      */
     private void initCharacterSprites(CharacterSprite characterSprite) {
-        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+//        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
         for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {

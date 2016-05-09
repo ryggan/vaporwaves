@@ -37,6 +37,24 @@ public class ImageContainer {
         // Character/Enemy spritesheets:
         this.imageContainer.put(ImageID.CHARACTER_MISC, new Image("images/characters/spritesheet-character-misc-48x48.png"));
 
+        this.imageContainer.put(ImageID.CHARACTER_ALYSSA_WALKIDLEFLINCH, new Image("images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png"));
+        this.imageContainer.put(ImageID.CHARACTER_ALYSSA_DEATH, new Image("images/characters/spritesheet-alyssa-death-56x56.png"));
+        this.imageContainer.put(ImageID.CHARACTER_ALYSSA_SPAWN, new Image("images/characters/spritesheet-alyssa-respawn-48x128.png"));
+
+        this.imageContainer.put(ImageID.CHARACTER_CHARLOTTE_WALKIDLEFLINCH, new Image("images/characters/spritesheet-charlotte-walkidleflinch-48x48.png"));
+        this.imageContainer.put(ImageID.CHARACTER_CHARLOTTE_DEATH, new Image("images/characters/spritesheet-charlotte-death-48x48.png"));
+        this.imageContainer.put(ImageID.CHARACTER_CHARLOTTE_SPAWN, new Image("images/characters/spritesheet-charlotte-respawn-48x128.png"));
+
+        this.imageContainer.put(ImageID.CHARACTER_ZYPHER_WALKIDLEFLINCH, new Image("images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png"));
+        this.imageContainer.put(ImageID.CHARACTER_ZYPHER_DEATH, new Image("images/characters/spritesheet-alyssa-death-56x56.png"));
+        this.imageContainer.put(ImageID.CHARACTER_ZYPHER_SPAWN, new Image("images/characters/spritesheet-alyssa-respawn-48x128.png"));
+
+        this.imageContainer.put(ImageID.CHARACTER_MEI_WALKIDLEFLINCH, new Image("images/characters/spritesheet-charlotte-walkidleflinch-48x48.png"));
+        this.imageContainer.put(ImageID.CHARACTER_MEI_DEATH, new Image("images/characters/spritesheet-charlotte-death-48x48.png"));
+        this.imageContainer.put(ImageID.CHARACTER_MEI_SPAWN, new Image("images/characters/spritesheet-charlotte-respawn-48x128.png"));
+
+        this.imageContainer.put(ImageID.ENEMY_PCCHAN, new Image("images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png"));
+
         // Tile spritesheets:
         this.imageContainer.put(ImageID.BOMBS_EXPLOSIONS, new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png"));
         this.imageContainer.put(ImageID.WALLS, new Image("images/spritesheet-walls_both-18x18.png"));

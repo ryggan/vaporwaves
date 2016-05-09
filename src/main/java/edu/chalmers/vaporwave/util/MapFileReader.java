@@ -6,15 +6,17 @@ public class MapFileReader {
     private MapObject[][] mapObjects;
     private BufferedReader reader;
 
-    public MapFileReader(String filename) {
+    public MapFileReader(File file) {
+//        public MapFileReader(String filename) {
         try {
-            reader = new BufferedReader(new FileReader(filename));
+//            reader = new BufferedReader(new FileReader(filename));
+            reader = new BufferedReader(new FileReader(file));
             int width = ((reader.readLine()).replace(" ", "")).length();
             LineNumberReader numbers = new LineNumberReader(reader);
             numbers.skip(Integer.MAX_VALUE);
             int height = (numbers.getLineNumber() + 2);
             this.mapObjects = new MapObject[width][height];
-            reader = new BufferedReader(new FileReader(filename));
+            reader = new BufferedReader(new FileReader(file));
             String line;
             int i = 0;
             while((line = reader.readLine()) != null) {

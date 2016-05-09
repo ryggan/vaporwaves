@@ -11,9 +11,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class XMLReader {
-    private String file;
 
-    public XMLReader(String file) {
+    private File file;
+
+    public XMLReader(File file) {
         this.file = file;
     }
 
@@ -24,10 +25,9 @@ public class XMLReader {
      */
     public NodeList read() {
         try {
-            File file = new File(this.file);
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-            Document document = documentBuilder.parse(file);
+            Document document = documentBuilder.parse(this.file);
             document.getDocumentElement().normalize();
 
             NodeList characterList = document.getElementsByTagName("gameCharacters");
