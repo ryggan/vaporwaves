@@ -24,7 +24,6 @@ public class GameController {
 
     private Player localPlayer;
     private Player remotePlayer;
-    private Set<Player> playerSet;
 
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
@@ -56,10 +55,6 @@ public class GameController {
 
         this.localPlayer = newGameEvent.getLocalPlayer();
         this.remotePlayer = newGameEvent.getRemotePlayer();
-
-        this.playerSet = new HashSet<>();
-        playerSet.add(localPlayer);
-        playerSet.add(remotePlayer);
 
         this.destroyablePowerUps = true;
 
