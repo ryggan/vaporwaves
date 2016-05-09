@@ -14,7 +14,7 @@ public class GameServer {
     private Server server;
     private Client client;
 
-    public boolean isServer = false;
+    public boolean isServer = true;
 
     public GameServer() {
 
@@ -58,7 +58,7 @@ public class GameServer {
             kryoClient.register(SomeRequest.class);
             kryoClient.register(SomeResponse.class);
 
-            client.connect(5000, "129.16.193.23", 54555, 54777);
+            client.connect(5000, "127.0.0.1", 54555, 54777);
             client.setTimeout(0);
 
             InetAddress address = client.discoverHost(54777, 5000);

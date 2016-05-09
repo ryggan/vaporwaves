@@ -24,7 +24,7 @@ public abstract class Explosive extends StaticTile {
         this.position = owner.getGridPosition();
         this.damage = damage;
         
-        this.explosionSound=new SoundPlayer("explosion.wav");
+        this.explosionSound = new SoundPlayer("explosion.wav");
 
         this.delay = delay;
         this.timeStamp = timeStamp;
