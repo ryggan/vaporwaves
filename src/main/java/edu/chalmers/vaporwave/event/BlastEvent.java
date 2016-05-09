@@ -26,9 +26,7 @@ public class BlastEvent {
     }
 
     public int hashCode(){
-        int hash=2563;
-        hash=hash + explosive.hashCode()*647;
-        return hash;
+        return explosive.hashCode();
     }
 
 }

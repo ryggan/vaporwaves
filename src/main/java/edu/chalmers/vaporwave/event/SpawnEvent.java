@@ -18,16 +18,13 @@ public class SpawnEvent {
     public boolean equals(Object o){
         if(o instanceof SpawnEvent){
             SpawnEvent other = (SpawnEvent) o;
-            if(this.movable==other.movable);
+            return this.movable.equals(other.movable);
         }
-        return true;
+        return false;
     }
 
     @Override
     public int hashCode(){
-        int hash = 1246;
-        hash=hash+movable.hashCode()*75;
-        return hash;
+        return movable.hashCode();
     }
-
 }

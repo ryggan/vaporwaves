@@ -22,8 +22,8 @@ public class GameController {
 
     private TimerModel timerModel;
 
-    private Set<Player> remotePlayersSet;
     private Player localPlayer;
+    private Player remotePlayer;
 
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
@@ -35,8 +35,6 @@ public class GameController {
 
     //seconds
     private double timeLimit;
-
-
 
     // settings for one specific game:
     private boolean destroyablePowerUps;
@@ -56,6 +54,7 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.SPEED);
 
         this.localPlayer = newGameEvent.getLocalPlayer();
+        this.remotePlayer = newGameEvent.getRemotePlayer();
 
         this.destroyablePowerUps = true;
 
@@ -63,7 +62,7 @@ public class GameController {
 
         timeSinceStart = 0.0;
 
-        timeLimit=10.0;
+        timeLimit = 10.0;
         ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
 
         // Starting new game
@@ -138,6 +137,15 @@ public class GameController {
                 case "LEFT":
                 case "DOWN":
                 case "RIGHT":
+                    remotePlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
+                    break;
+            }
+
+            switch (key) {
+                case "W":
+                case "A":
+                case "S":
+                case "D":
                     localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
             }
@@ -145,29 +153,36 @@ public class GameController {
 
         for (int i = 0; i < pressed.size(); i++) {
             String key = pressed.get(i);
-            switch (key) {
-                case "SPACE":
-                    StaticTile tile = arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition());
-                    if (tile == null || (tile instanceof PowerUp /*&& ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP*/)) {
+            StaticTile tile = arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition());
+            if (tile == null || (tile instanceof PowerUp)) {
+                switch (key) {
+                    case "SHIFT":
                         this.localPlayer.getCharacter().placeBomb();
-                    }
                     break;
-                case "M":
-                    localPlayer.getCharacter().placeMine();
-                    break;
-                case "X":
-                case "ESCAPE":
-                    SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
-                    this.arenaModel.getArenaMovables().clear();
-                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
-                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
-                            this.arenaModel.getArenaTiles()[j][k] = null;
-                        }
-                    }
-                    this.enemies.clear();
-                    this.deadEnemies.clear();
+                    case "CAPS":
+                        this.localPlayer.getCharacter().placeMine();
+                        break;
+                    case "SPACE":
+                        this.remotePlayer.getCharacter().placeBomb();
+                        break;
+                    case "M":
+                        this.remotePlayer.getCharacter().placeMine();
+                        break;
+                }
+            }
 
-                    GameEventBus.getInstance().post(new GoToMenuEvent());
+            if (key.equals("ESCAPE")) {
+                SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
+                this.arenaModel.getArenaMovables().clear();
+                for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
+                    for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
+                        this.arenaModel.getArenaTiles()[j][k] = null;
+                    }
+                }
+                this.enemies.clear();
+                this.deadEnemies.clear();
+
+                GameEventBus.getInstance().post(new GoToMenuEvent());
             }
         }
 

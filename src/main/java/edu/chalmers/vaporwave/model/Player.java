@@ -34,7 +34,7 @@ public class Player {
         return this.gameCharacter;
     }
 
-    public void clearCharacter(){
+    public void clearCharacter() {
         this.gameCharacter = null;
     }
 

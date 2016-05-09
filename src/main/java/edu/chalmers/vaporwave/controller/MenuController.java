@@ -30,12 +30,13 @@ public class MenuController {
 
         this.newGameEvent = new NewGameEvent();
 
-        Player thisPlayer = new Player(1, "PlayerOne");
-        thisPlayer.setCharacter(new GameCharacter("ALYSSA"));
-        this.newGameEvent.setLocalPlayer(thisPlayer);
+        Player localPlayer = new Player(1, "PlayerOne");
+        localPlayer.setCharacter(new GameCharacter("ALYSSA"));
+        this.newGameEvent.setLocalPlayer(localPlayer);
 
-        Player testCPUPlayer = new CPUPlayer(2, "CPUPlayerOne");
-        testCPUPlayer.setCharacter(new GameCharacter("CHARLOTTE"));
+        Player remotePlayer = new Player(2, "PlayerTwo");
+        remotePlayer.setCharacter(new GameCharacter("CHARLOTTE"));
+        this.newGameEvent.setRemotePlayer(remotePlayer);
 
         this.activeMenu = 0;
         this.menuList = new ArrayList<>();

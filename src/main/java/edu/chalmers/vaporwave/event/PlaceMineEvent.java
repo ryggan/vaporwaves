@@ -23,18 +23,13 @@ public class PlaceMineEvent {
     public boolean equals(Object o){
         if(o instanceof PlaceMineEvent){
             PlaceMineEvent other = (PlaceMineEvent) o;
-            if(this.damage==other.damage&&this.position==other.position){
-                return true;
-            }
-
+            return this.damage == other.damage &&
+                    this.position.equals(other.position);
         }
         return false;
     }
 
     public int hashCode(){
-        int hash = 9631;
-        hash=hash + position.hashCode()*25;
-        hash=hash + ((int)damage)*34;
-        return hash;
+        return position.hashCode() + ((int)damage);
     }
 }
