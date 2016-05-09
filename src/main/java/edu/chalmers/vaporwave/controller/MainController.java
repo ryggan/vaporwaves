@@ -5,8 +5,8 @@ import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
-import edu.chalmers.vaporwave.network.GameServer;
 import edu.chalmers.vaporwave.util.LongValue;
+import edu.chalmers.vaporwave.view.ImageContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
@@ -28,13 +28,10 @@ public class MainController {
      */
     public MainController(Group root) {
 
-
-
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
         //GameServer gameServer = new GameServer();
-
 
         this.root = root;
         // Initiating variables and controllers
@@ -54,6 +51,7 @@ public class MainController {
         this.gameController = new GameController(gameRoot);
 
         SoundController.initialize();
+        ImageContainer.initialize();
 
         // Animation timer setup
 
@@ -97,6 +95,7 @@ public class MainController {
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
+
         this.root.getChildren().clear();
         this.root.getChildren().add(gameRoot);
         this.gameController.initGame(gameRoot, newGameEvent);

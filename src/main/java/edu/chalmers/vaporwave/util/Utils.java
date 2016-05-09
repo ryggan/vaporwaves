@@ -97,12 +97,16 @@ public class Utils {
     public static Direction getDirectionFromString(String string) {
         switch(string) {
             case "LEFT":
+            case "A":
                 return Direction.LEFT;
             case "UP":
+            case "W":
                 return Direction.UP;
             case "RIGHT":
+            case "D":
                 return Direction.RIGHT;
             case "DOWN":
+            case "S":
                 return Direction.DOWN;
         }
         return null;

@@ -36,8 +36,8 @@ public class SoundController {
         this.powerUp = new SoundPlayer[10];
         setUpSoundArray(this.powerUp, 10, "powerup1.wav", 0.8);
 
-        this.characterFlinch = new SoundPlayer[4];
-        setUpSoundArray(this.characterFlinch, 4, "girl_moan4.wav");
+        //this.characterFlinch = new SoundPlayer[4];
+        //setUpSoundArray(this.characterFlinch, 4, "girl_moan4.wav");
 
         this.gameBackgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
         this.gameBackgroundMusic.loopSound(true);
@@ -88,13 +88,13 @@ public class SoundController {
                     }
                 }
                 break;
-            case CHARACTER_FLINCH:
-                for (int i = 0; i < characterFlinch.length; i++) {
-                    if (!characterFlinch[i].isPlaying()) {
-                        return characterFlinch[i];
-                    }
-                }
-                break;
+           // case CHARACTER_FLINCH:
+             //   for (int i = 0; i < characterFlinch.length; i++) {
+              //      if (!characterFlinch[i].isPlaying()) {
+                //        return characterFlinch[i];
+                  //  }
+               // }
+                //break;
             case GAME_MUSIC:
                 return gameBackgroundMusic;
         }

@@ -6,6 +6,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
+import java.io.IOException;
 import java.net.InetAddress;
 
 public class GameServer {
@@ -16,8 +17,6 @@ public class GameServer {
     public boolean isServer = false;
 
     public GameServer() {
-
-//        checkHosts("10.0.1");
 
         try {
 
@@ -93,22 +92,5 @@ public class GameServer {
             client.sendTCP(request);
         }
 
-    }
-
-    // Example of subnet parameter: "192.168.0", will check 0-254 at last digit, i.e "192.168.0.0", "192.168.0.1" and so forth
-    public static void checkHosts(String subnet) {
-        int timeout=500;
-        for (int i=1;i<255;i++){
-            String host=subnet + "." + i;
-            try {
-                if (InetAddress.getByName(host).isReachable(timeout)) {
-                    System.out.println(host + " is reachable");
-                } else {
-                    System.out.println(host + " is NOT reachable");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

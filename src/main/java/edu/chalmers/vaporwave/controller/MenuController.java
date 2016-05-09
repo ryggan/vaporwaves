@@ -16,6 +16,7 @@ import edu.chalmers.vaporwave.view.CharacterSelectView;
 import edu.chalmers.vaporwave.view.StartMenuView;
 import javafx.scene.Group;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +31,13 @@ public class MenuController {
 
         this.newGameEvent = new NewGameEvent();
 
-        Player thisPlayer = new Player(1, "PlayerOne");
-        thisPlayer.setCharacter(new GameCharacter("ALYSSA"));
-        this.newGameEvent.setLocalPlayer(thisPlayer);
+        Player localPlayer = new Player(1, "PlayerOne");
+        localPlayer.setCharacter(new GameCharacter("ALYSSA", new Point(0,0)));
+        this.newGameEvent.setLocalPlayer(localPlayer);
 
-        Player testCPUPlayer = new CPUPlayer(2, "CPUPlayerOne");
-        testCPUPlayer.setCharacter(new GameCharacter("CHARLOTTE"));
+        Player remotePlayer = new Player(2, "PlayerTwo");
+        remotePlayer.setCharacter(new GameCharacter("CHARLOTTE", new Point(20,0)));
+        this.newGameEvent.setRemotePlayer(remotePlayer);
 
         this.activeMenu = 0;
         this.menuList = new ArrayList<>();

@@ -20,8 +20,10 @@ public class GameController {
     private ArenaView arenaView;
     private ArenaModel arenaModel;
 
-    private Set<Player> remotePlayersSet;
+    private TimerModel timerModel;
+
     private Player localPlayer;
+    private Player remotePlayer;
 
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
@@ -30,6 +32,9 @@ public class GameController {
     private int updatedEnemyDirection;
 
     private double timeSinceStart;
+
+    //seconds
+    private double timeLimit;
 
     // settings for one specific game:
     private boolean destroyablePowerUps;
@@ -49,17 +54,21 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.SPEED);
 
         this.localPlayer = newGameEvent.getLocalPlayer();
+        this.remotePlayer = newGameEvent.getRemotePlayer();
 
         this.destroyablePowerUps = true;
 
         // Initiates view
 
         timeSinceStart = 0.0;
+        timeSinceStart = 0.0;
 
-        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
+//        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
+        ArenaMap arenaMap = new ArenaMap("default",
+                (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
-        this.arenaModel = newGame(arenaMap);
+        this.arenaModel = newGame(arenaMap, timeLimit);
         this.arenaView = new ArenaView(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());
@@ -74,6 +83,7 @@ public class GameController {
 
         try {
             arenaModel.addMovable(localPlayer.getCharacter());
+            arenaModel.addMovable(remotePlayer.getCharacter());
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
@@ -106,6 +116,10 @@ public class GameController {
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         this.timeSinceStart = timeSinceStart;
+        if(timeLimit-timeSinceLastCall>0) {
+            timeLimit = timeLimit - timeSinceLastCall;
+        }
+        TimerModel.getInstance().updateTimer(timeLimit);
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
@@ -126,6 +140,15 @@ public class GameController {
                 case "LEFT":
                 case "DOWN":
                 case "RIGHT":
+                    remotePlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
+                    break;
+            }
+
+            switch (key) {
+                case "W":
+                case "A":
+                case "S":
+                case "D":
                     localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
             }
@@ -133,27 +156,32 @@ public class GameController {
 
         for (int i = 0; i < pressed.size(); i++) {
             String key = pressed.get(i);
-            switch (key) {
-                case "P":
-                    // todo remove the remove/setpaused and move it to controller class.
-                    if(arenaView.isGamePaused()) {
-                        arenaView.hidePauseMenu();
-                        arenaView.removePaused();
-                    } else if(!arenaView.isGamePaused()) {
-                        arenaView.showPauseMenu();
-                        arenaView.setPaused();
-                    }
-                    break;
-                case "SPACE":
-                    StaticTile tile = arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition());
-                    if (tile == null || (tile instanceof PowerUp /*&& ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP*/)) {
+            StaticTile tile = arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition());
+            if (tile == null || (tile instanceof PowerUp)) {
+                switch (key) {
+                    case "SHIFT":
                         this.localPlayer.getCharacter().placeBomb();
-                    }
-                    break;
-                case "M":
-                    localPlayer.getCharacter().placeMine();
-                    break;
-                case "X":
+                        break;
+                    case "CAPS":
+                        this.localPlayer.getCharacter().placeMine();
+                        break;
+                }
+            }
+
+            tile = arenaModel.getArenaTile(this.remotePlayer.getCharacter().getGridPosition());
+            if (tile == null || (tile instanceof PowerUp)) {
+                switch (key) {
+                    case "SPACE":
+                        this.remotePlayer.getCharacter().placeBomb();
+                        break;
+                    case "M":
+                        this.remotePlayer.getCharacter().placeMine();
+                        break;
+                }
+            }
+
+            switch (key) {
+
                 case "ESCAPE":
                     SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
@@ -166,7 +194,19 @@ public class GameController {
                     this.deadEnemies.clear();
 
                     GameEventBus.getInstance().post(new GoToMenuEvent());
+                    break;
+                case "P":
+                    // todo remove the remove/setpaused and move it to controller class.
+                    if(arenaView.isGamePaused()) {
+                        arenaView.hidePauseMenu();
+                        arenaView.removePaused();
+                    } else if(!arenaView.isGamePaused()) {
+                        arenaView.showPauseMenu();
+                        arenaView.setPaused();
+                    }
+                    break;
             }
+
         }
 
         // Updating positions
@@ -240,7 +280,7 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setDoubleTile(new Bomb(this.localPlayer.getCharacter(), this.localPlayer.getCharacter().getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.localPlayer.getCharacter().getDamage()), placeBombEvent.getGridPosition());
+        arenaModel.setDoubleTile(new Bomb(placeBombEvent.getCharacter(), placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
         this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() - 1);
         updateStats();
     }
@@ -363,10 +403,9 @@ public class GameController {
         );
     }
 
-    public ArenaModel newGame(ArenaMap arenaMap) {
-
+    public ArenaModel newGame(ArenaMap arenaMap, double timeLimit) {
+        TimerModel.getInstance().updateTimer(timeLimit);
         // Here goes all code for setting up the environment for a new game
-
         return new ArenaModel(arenaMap);
     }
 
