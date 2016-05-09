@@ -100,21 +100,20 @@ public class GameCharacter extends Movable {
 
     @Override
     public boolean equals(Object o){
-        if(o instanceof GameCharacter){
+        if(o instanceof GameCharacter) {
             GameCharacter other = (GameCharacter) o;
-            if(this.bombRange==other.bombRange&&this.currentBombCount==other.currentBombCount&&this.maxBombCount==other.maxBombCount){
-                return true;
-            }
+            return this.bombRange == other.bombRange &&
+                    this.currentBombCount==other.currentBombCount &&
+                    this.maxBombCount==other.maxBombCount;
         }
         return false;
     }
 
     @Override
     public int hashCode(){
-        int hash = super.hashCode();
-        hash = hash + bombRange*23;
-        hash=hash + currentBombCount*62;
-        hash=hash + maxBombCount*71;
-        return hash;
+        return super.hashCode() +
+                (bombRange * 5) +
+                (currentBombCount * 7) +
+                (maxBombCount * 11);
     }
 }
