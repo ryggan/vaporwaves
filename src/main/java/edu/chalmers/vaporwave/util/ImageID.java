@@ -2,6 +2,19 @@ package edu.chalmers.vaporwave.util;
 
 public enum ImageID {
 
+    // todo: MENU STUFF
+
+    // backrounds
+    MENU_BACKGROUND_1,
+
+    // buttons
+    BUTTON_SINGLEPLAYER, BUTTON_EXIT,
+
+    // misc
+    MENU_CHARACTER_SELECT,
+
+    // todo: GAME STUFF
+
     // background stuff
     BACKGROUND_PATTERN_1, GAME_BACKGROUND_1, GAME_FRAME_NORTH_1, GAME_FRAME_WEST_1, GAME_FRAME_EAST_1, GAME_FRAME_SOUTH_1,
 

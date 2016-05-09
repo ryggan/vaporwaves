@@ -6,9 +6,6 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by bob on 2016-05-09.
- */
 public class ImageContainer {
 
     private static ImageContainer instance;
@@ -21,7 +18,15 @@ public class ImageContainer {
 
         // todo: MENU STUFF:
 
+        // Backgrounds:
+        this.imageContainer.put(ImageID.MENU_BACKGROUND_1, new Image("images/menu-background-2.bmp"));
 
+        // Start menu:
+        this.imageContainer.put(ImageID.BUTTON_SINGLEPLAYER, new Image("images/spritesheet_singleplayer.png"));
+        this.imageContainer.put(ImageID.BUTTON_EXIT, new Image("images/spritesheet_exit.png"));
+
+        // Character select:
+        this.imageContainer.put(ImageID.MENU_CHARACTER_SELECT, new Image("images/spritesheet_character_menu_draft.png"));
 
         // todo: GAME STUFF:
 
@@ -59,8 +64,6 @@ public class ImageContainer {
         this.imageContainer.put(ImageID.BOMBS_EXPLOSIONS, new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png"));
         this.imageContainer.put(ImageID.WALLS, new Image("images/spritesheet-walls_both-18x18.png"));
         this.imageContainer.put(ImageID.POWERUPS, new Image("images/spritesheet-powerups-18x18.png"));
-
-//        this.imageContainer.put(ImageID.CHARACTER_MISC, new Image());
 
     }
 
