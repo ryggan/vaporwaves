@@ -10,6 +10,7 @@ import edu.chalmers.vaporwave.util.Sound;
 import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.util.Utils;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,15 +24,17 @@ public class GameCharacter extends Movable {
     private List<Double> powerUpPickedUp;
 
     public GameCharacter(String name) {
-        super(name, Utils.gridToCanvasPositionX(6), Utils.gridToCanvasPositionY(5), 1);
+        this(name, new Point(0,0));
+    }
+
+    public GameCharacter(String name, Point spawnPosition) {
+        super(name, Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 1.5);
 
         this.bombRange = 2;
         this.maxBombCount = 10;
         this.currentBombCount = this.maxBombCount;
-        setSpeed(1.5);
-        setDamage(30);
+        this.setDamage(30);
 
-//        this.powerUpTimeStamp = -1;
         this.powerUpPickedUp = new ArrayList<>();
     }
 
@@ -40,7 +43,7 @@ public class GameCharacter extends Movable {
             SoundController.getInstance().playSound(Sound.PLACE_BOMB);
             
             PlaceBombEvent event =
-                    new PlaceBombEvent( Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()),
+                    new PlaceBombEvent(this, Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()),
                     bombRange,
                     getDamage());
             EventBus bus = GameEventBus.getInstance();

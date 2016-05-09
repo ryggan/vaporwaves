@@ -1,17 +1,25 @@
 package edu.chalmers.vaporwave.event;
 
+import edu.chalmers.vaporwave.model.game.GameCharacter;
+
 import java.awt.*;
 
 public class PlaceBombEvent {
 
+    private GameCharacter character;
     private Point position;
     private int range;
     private double damage;
 
-    public PlaceBombEvent(Point position, int range, double damage) {
+    public PlaceBombEvent(GameCharacter character, Point position, int range, double damage) {
+        this.character = character;
         this.position = position;
         this.range = range;
         this.damage = damage;
+    }
+
+    public GameCharacter getCharacter() {
+        return this.character;
     }
 
     public Point getGridPosition() {

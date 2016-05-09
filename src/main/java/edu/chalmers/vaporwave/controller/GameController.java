@@ -81,6 +81,7 @@ public class GameController {
 
         try {
             arenaModel.addMovable(localPlayer.getCharacter());
+            arenaModel.addMovable(remotePlayer.getCharacter());
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
@@ -158,10 +159,16 @@ public class GameController {
                 switch (key) {
                     case "SHIFT":
                         this.localPlayer.getCharacter().placeBomb();
-                    break;
+                        break;
                     case "CAPS":
                         this.localPlayer.getCharacter().placeMine();
                         break;
+                }
+            }
+
+            tile = arenaModel.getArenaTile(this.remotePlayer.getCharacter().getGridPosition());
+            if (tile == null || (tile instanceof PowerUp)) {
+                switch (key) {
                     case "SPACE":
                         this.remotePlayer.getCharacter().placeBomb();
                         break;
@@ -257,7 +264,7 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setDoubleTile(new Bomb(this.localPlayer.getCharacter(), this.localPlayer.getCharacter().getBombRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, this.localPlayer.getCharacter().getDamage()), placeBombEvent.getGridPosition());
+        arenaModel.setDoubleTile(new Bomb(placeBombEvent.getCharacter(), placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
         this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() - 1);
         updateStats();
     }
