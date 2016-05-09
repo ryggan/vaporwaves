@@ -323,9 +323,15 @@ public class ArenaView {
 
     }
 
-    public void updateStats(double health, double speed, int bombRange, int bombCount){
+    public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
         hudView.updateStats(health, speed, bombRange, bombCount);
     }
+
+    public void updateHealth(int health){
+        hudView.updateHealthBar(health);
+    }
+
+
 
     // todo - UPDATE VIEW SECTION
 
@@ -338,6 +344,8 @@ public class ArenaView {
         } else {
             scoreboard.hideScoreboard();
         }
+
+
 
         // Rendering:
 
@@ -494,13 +502,11 @@ public class ArenaView {
 
             } else if (state == MovableState.SPAWN || state == MovableState.DEATH) {
                 if (state == MovableState.SPAWN) {
-                    hudView.resetHealthBar(); // todo: changes for every character and enemy, not just user Character
+                     // todo: changes for every character and enemy, not just user Character
                     currentSprite = sprites.getSpawnSprites();
                 } else {
-                    hudView.setZeroHealthBar(); // todo: same as above
                     currentSprite = sprites.getDeathSprites();
                 }
-
                 if (movable instanceof Enemy && ((Enemy)movable).getDeathTimeStamp() == -1) {
                     ((Enemy)movable).setDeathTimeStamp(timeSinceStart);
                 }

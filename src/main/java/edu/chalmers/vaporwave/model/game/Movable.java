@@ -175,6 +175,7 @@ public abstract class Movable {
     public void death() {
         stop();
         setState(MovableState.DEATH);
+        this.health=0;
     }
 
     public void spawn(Point spawningPoint) {
@@ -183,6 +184,8 @@ public abstract class Movable {
         this.direction = Direction.DOWN;
         stopAtTile((int)spawningPoint.getX(), (int)spawningPoint.getY());
         setComingState(MovableState.SPAWN);
+        this.health = Constants.DEFAULT_START_HEALTH;
+        System.out.println(Constants.DEFAULT_START_HEALTH);
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
