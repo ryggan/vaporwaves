@@ -57,9 +57,6 @@ public class ArenaView {
     private Sprite[] blastSpriteBeam = new Sprite[4];
     private Sprite[] blastSpriteEnd = new Sprite[4];
 
-    // Determines if the game is showing pausemenu.
-    private boolean gameIsPaused = false;
-
     private Group root;
 
     private Label fps;
@@ -627,9 +624,6 @@ public class ArenaView {
         }
     }
 
-    public boolean isGamePaused() {
-        return gameIsPaused;
-    }
 
     public void hidePauseMenu() {
         pauseMenu.hide();
@@ -637,15 +631,5 @@ public class ArenaView {
 
     public void showPauseMenu() {
         pauseMenu.show();
-    }
-
-    //Temporary functions for testing pausemenu
-
-    public void setPaused() {
-        gameIsPaused = true;
-    }
-
-    public void removePaused() {
-        gameIsPaused = false;
     }
 }
