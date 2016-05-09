@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.model.game;
 
+import edu.chalmers.vaporwave.controller.SoundController;
 import edu.chalmers.vaporwave.util.PowerUpType;
+import edu.chalmers.vaporwave.util.Sound;
 
 
 public abstract class PowerUp extends StaticTile implements AnimatedTile {
@@ -30,6 +32,8 @@ public abstract class PowerUp extends StaticTile implements AnimatedTile {
     public void pickUp(double timeStamp) {
         setState(PowerUp.PowerUpState.PICKUP);
         setTimeStamp(timeStamp);
+
+        SoundController.getInstance().playSound(Sound.POWERUP);
     }
 
     public void destroy(double timeStamp) {

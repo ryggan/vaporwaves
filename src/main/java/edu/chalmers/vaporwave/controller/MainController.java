@@ -57,7 +57,7 @@ public class MainController {
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
-        GameServer gameServer = new GameServer();
+//        GameServer gameServer = new GameServer();
 
 
         this.root = root;
@@ -76,6 +76,8 @@ public class MainController {
 
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
+
+        SoundController.initialize();
 
         // Animation timer setup
 
@@ -106,9 +108,9 @@ public class MainController {
                 ListenerController.getInstance().clearReleased();
 
 //                System.out.println(ListenerController.getInstance().getInput().get(0));
-                if (ListenerController.getInstance().getPressed().size() > 0 && gameServer.isServer) {
-                    gameServer.sendRequest("This is my request");
-                }
+//                if (ListenerController.getInstance().getPressed().size() > 0 && gameServer.isServer) {
+//                    gameServer.sendRequest("This is my request");
+//                }
 
             }
 

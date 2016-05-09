@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.model.game;
 
+import edu.chalmers.vaporwave.controller.SoundController;
+import edu.chalmers.vaporwave.util.Sound;
 import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
@@ -13,7 +15,6 @@ public abstract class Explosive extends StaticTile {
     private int range;
     private Point position;
     private double damage;
-    private SoundPlayer explosionSound;
 
     private double delay;
     private double timeStamp;
@@ -23,8 +24,6 @@ public abstract class Explosive extends StaticTile {
         this.range = range;
         this.position = owner.getGridPosition();
         this.damage = damage;
-        
-        this.explosionSound = new SoundPlayer("explosion.wav");
 
         this.delay = delay;
         this.timeStamp = timeStamp;
@@ -49,8 +48,7 @@ public abstract class Explosive extends StaticTile {
     }
 
     public void explode() {
-        explosionSound.stopSound();
-        explosionSound.playSound();
+        SoundController.getInstance().playSound(Sound.EXPLOSION);
 
         GameEventBus.getInstance().post(new BlastEvent(this));
     }

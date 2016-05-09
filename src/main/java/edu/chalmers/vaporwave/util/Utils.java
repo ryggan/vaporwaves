@@ -7,6 +7,8 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class Utils {
 

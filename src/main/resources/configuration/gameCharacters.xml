@@ -10,7 +10,7 @@
         <bombCount>1</bombCount>
 
         <walk>
-            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>8</frames>
@@ -22,25 +22,25 @@
         </walk>
 
         <idle>
-            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
-            <frames>1</frames>
-            <duration>0.1</duration>
+            <frames>2</frames>
+            <duration>0.8</duration>
             <firstFrameX>0</firstFrameX>
-            <firstFrameY>4</firstFrameY>
+            <firstFrameY>2</firstFrameY>
             <offsetX>16</offsetX>
             <offsetY>27</offsetY>
         </idle>
 
         <flinch>
-            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch-48x48.png</spritesheet>
+            <spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
-            <frames>1</frames>
+            <frames>2</frames>
             <duration>0.1</duration>
-            <firstFrameX>4</firstFrameX>
-            <firstFrameY>4</firstFrameY>
+            <firstFrameX>0</firstFrameX>
+            <firstFrameY>3</firstFrameY>
             <offsetX>16</offsetX>
             <offsetY>27</offsetY>
         </flinch>

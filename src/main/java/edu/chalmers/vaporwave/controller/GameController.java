@@ -31,8 +31,6 @@ public class GameController {
 
     private double timeSinceStart;
 
-    private SoundPlayer backgroundMusic;
-
     // settings for one specific game:
     private boolean destroyablePowerUps;
 
@@ -42,9 +40,7 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        //Change this to proper values according to player preferences later, dummy values meanwhile
-        backgroundMusic = new SoundPlayer("bg1.mp3", 0.5);
-        backgroundMusic.playSound();
+        SoundController.getInstance().playSound(Sound.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -68,8 +64,6 @@ public class GameController {
 
         arenaView.initArena(arenaModel.getArenaTiles());
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
-
-
 
         this.arenaView.updateStats(
                 this.localPlayer.getCharacter().getHealth(),
@@ -118,8 +112,8 @@ public class GameController {
 
         if (this.updatedEnemyDirection == 15) {
             for (Enemy enemy : enemies) {
-                enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(), this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
-//                enemy.placeBomb();
+                enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(),
+                        this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
             }
             updatedEnemyDirection = 0;
         }
@@ -134,18 +128,6 @@ public class GameController {
                 case "RIGHT":
                     localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     break;
-                case "ESCAPE":
-                    backgroundMusic.stopSound();
-                    this.arenaModel.getArenaMovables().clear();
-                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
-                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
-                            this.arenaModel.getArenaTiles()[j][k] = null;
-                        }
-                    }
-                    this.enemies.clear();
-                    this.deadEnemies.clear();
-
-                    GameEventBus.getInstance().post(new GoToMenuEvent());
             }
         }
 
@@ -162,8 +144,18 @@ public class GameController {
                     localPlayer.getCharacter().placeMine();
                     break;
                 case "X":
-                    backgroundMusic.stopSound();
-                    break;
+                case "ESCAPE":
+                    SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
+                    this.arenaModel.getArenaMovables().clear();
+                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
+                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
+                            this.arenaModel.getArenaTiles()[j][k] = null;
+                        }
+                    }
+                    this.enemies.clear();
+                    this.deadEnemies.clear();
+
+                    GameEventBus.getInstance().post(new GoToMenuEvent());
             }
         }
 
@@ -171,10 +163,23 @@ public class GameController {
         for (Movable movable : arenaModel.getArenaMovables()) {
             movable.updatePosition();
 
-            // If moving and not invincible, check for blast
+            // If moving and not invincible, check for things that will deal damage
             if (!movable.isInvincible()
                     && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
 
+                // The enemy-check for characters only:
+                if (movable instanceof GameCharacter) {
+                    for (Movable otherMovable : arenaModel.getArenaMovables()) {
+                        if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
+                                && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
+                            movable.dealDamage(otherMovable.getDamage());
+                            updateStats();
+                            break;
+                        }
+                    }
+                }
+
+                // The blast-check:
                 StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
                 Blast blast = null;
                 if (currentTile instanceof Blast) {
@@ -191,11 +196,13 @@ public class GameController {
             }
         }
 
+        // Walking over powerup?
         if (this.localPlayer.getCharacter() != null &&
                 this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y]
                 instanceof StatPowerUp) {
             StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y];
 
+            // If so, pick it up
             if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
                 powerUp.pickUp(timeSinceStart);
                 localPlayer.getCharacter().pickedUpPowerUp(timeSinceStart);
@@ -204,6 +211,7 @@ public class GameController {
             }
         }
 
+        // Removes enemies
         if (deadEnemies.size() > 0) {
             for (Enemy enemy : deadEnemies) {
                 this.enemies.remove(enemy);
@@ -212,7 +220,9 @@ public class GameController {
             deadEnemies.clear();
         }
 
+        // Model updating, before letting view have at it
         this.arenaModel.updateBombs(this.timeSinceStart);
+        this.arenaModel.sortMovables();
 
         // Calls view to update graphics
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);

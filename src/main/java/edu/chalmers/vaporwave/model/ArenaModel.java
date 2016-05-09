@@ -9,13 +9,14 @@ import edu.chalmers.vaporwave.util.PowerUpType;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class ArenaModel {
 
     private ArenaMap arenaMap;
     private StaticTile[][] arenaTiles;
-    private ArrayList<Movable> arenaMovables;
+    private List<Movable> arenaMovables;
     private int gridWidth;
     private int gridHeight;
 
@@ -45,7 +46,7 @@ public class ArenaModel {
         return arenaTiles;
     }
 
-    public ArrayList<Movable> getArenaMovables() {
+    public List<Movable> getArenaMovables() {
         return arenaMovables;
     }
 
@@ -184,5 +185,20 @@ public class ArenaModel {
 
     public int getGridHeight() {
         return this.gridHeight;
+    }
+
+    // Ye good olde Bubblesort, so that every movable is behind or in front of other movables in a correct way.
+    // (timed around 2000 nanoseconds with 11 movables on screen at the same time, should be ok)
+    public void sortMovables() {
+        int index = arenaMovables.size() - 1;
+        for (int i = index; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (arenaMovables.get(j).getCanvasPositionY() > arenaMovables.get(j + 1).getCanvasPositionY()) {
+                    Movable movable = arenaMovables.get(j);
+                    arenaMovables.set(j, arenaMovables.get(j + 1));
+                    arenaMovables.set(j + 1, movable);
+                }
+            }
+        }
     }
 }

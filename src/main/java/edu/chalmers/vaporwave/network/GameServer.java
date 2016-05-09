@@ -6,7 +6,6 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
-import java.io.IOException;
 import java.net.InetAddress;
 
 public class GameServer {
@@ -14,9 +13,11 @@ public class GameServer {
     private Server server;
     private Client client;
 
-    public boolean isServer = true;
+    public boolean isServer = false;
 
     public GameServer() {
+
+//        checkHosts("10.0.1");
 
         try {
 
@@ -25,7 +26,7 @@ public class GameServer {
                 this.server = new Server();
                 server.start();
 
-                server.bind(54555, 54777);
+                server.bind(9999, 54777);
 
 
                 server.addListener(new Listener() {
@@ -58,10 +59,10 @@ public class GameServer {
             kryoClient.register(SomeRequest.class);
             kryoClient.register(SomeResponse.class);
 
-            client.connect(5000, "127.0.0.1", 54555, 54777);
+            client.connect(5000, "172.20.10.3", 9999, 54777);
             client.setTimeout(0);
 
-            InetAddress address = client.discoverHost(54777, 5000);
+            InetAddress address = client.discoverHost(9999, 5000);
             System.out.println(address);
 
             if(!isServer) {
@@ -92,5 +93,22 @@ public class GameServer {
             client.sendTCP(request);
         }
 
+    }
+
+    // Example of subnet parameter: "192.168.0", will check 0-254 at last digit, i.e "192.168.0.0", "192.168.0.1" and so forth
+    public static void checkHosts(String subnet) {
+        int timeout=500;
+        for (int i=1;i<255;i++){
+            String host=subnet + "." + i;
+            try {
+                if (InetAddress.getByName(host).isReachable(timeout)) {
+                    System.out.println(host + " is reachable");
+                } else {
+                    System.out.println(host + " is NOT reachable");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
