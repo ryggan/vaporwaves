@@ -32,6 +32,7 @@ public class ArenaView {
 
     private HUDView hudView;
     private Scoreboard scoreboard;
+    private PauseMenu pauseMenu;
     private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;
@@ -55,6 +56,9 @@ public class ArenaView {
     private Sprite blastSpriteCenter;
     private Sprite[] blastSpriteBeam = new Sprite[4];
     private Sprite[] blastSpriteEnd = new Sprite[4];
+
+    // Determines if the game is showing pausemenu.
+    private boolean gameIsPaused = false;
 
     private Group root;
 
@@ -81,7 +85,6 @@ public class ArenaView {
         root.getChildren().add(backgroundPattern);
 
         this.hudView = new HUDView(root);
-        this.scoreboard = new Scoreboard(root);
         this.timerView = new TimerView(root);
 
         GameEventBus.getInstance().register(this);
@@ -102,6 +105,9 @@ public class ArenaView {
 
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
+
+        this.scoreboard = new Scoreboard(root);
+        this.pauseMenu = new PauseMenu(root);
 
         // Setting up sprites
 
@@ -606,5 +612,27 @@ public class ArenaView {
         } else if (animationFinishedEvent.getTile() != null) {
 
         }
+    }
+
+    public boolean isGamePaused() {
+        return gameIsPaused;
+    }
+
+    public void hidePauseMenu() {
+        pauseMenu.hide();
+    }
+
+    public void showPauseMenu() {
+        pauseMenu.show();
+    }
+
+    //Temporary functions for testing pausemenu
+
+    public void setPaused() {
+        gameIsPaused = true;
+    }
+
+    public void removePaused() {
+        gameIsPaused = false;
     }
 }

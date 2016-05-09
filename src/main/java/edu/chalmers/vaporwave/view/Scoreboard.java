@@ -29,8 +29,12 @@ public class Scoreboard {
     private static final double ELEMENT_SIZE = 100;
     private static final double GAP = ELEMENT_SIZE / 10;
 
-    private static double xoffset = Math.floor((Constants.WINDOW_WIDTH - (Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE) / 2));
-    private static double yoffset = Math.floor((Constants.WINDOW_HEIGHT - (Constants.DEFAULT_TILE_HEIGHT * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE) / 2));
+    private static double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE)  + 2*Constants.DEFAULT_TILE_WIDTH;
+
+            //Math.floor((Constants.WINDOW_WIDTH - (Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE) / 2));
+    private static double yoffset = 8*Constants.DEFAULT_TILE_HEIGHT;
+
+            //Math.floor((Constants.WINDOW_HEIGHT - (Constants.DEFAULT_TILE_HEIGHT * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE) / 2));
 
     //For testing purposes
     public Scoreboard(Group root) {

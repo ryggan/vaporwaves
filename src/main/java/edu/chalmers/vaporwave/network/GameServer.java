@@ -13,7 +13,7 @@ public class GameServer {
     private Server server;
     private Client client;
 
-    public boolean isServer = true;
+    public boolean isServer = false;
 
     public GameServer() {
 
@@ -26,7 +26,7 @@ public class GameServer {
                 this.server = new Server();
                 server.start();
 
-                server.bind(54555, 54777);
+                server.bind(9999, 54777);
 
 
                 server.addListener(new Listener() {
@@ -59,10 +59,10 @@ public class GameServer {
             kryoClient.register(SomeRequest.class);
             kryoClient.register(SomeResponse.class);
 
-            client.connect(5000, "10.0.1.4", 54555, 54777);
+            client.connect(5000, "172.20.10.3", 9999, 54777);
             client.setTimeout(0);
 
-            InetAddress address = client.discoverHost(54777, 5000);
+            InetAddress address = client.discoverHost(9999, 5000);
             System.out.println(address);
 
             if(!isServer) {

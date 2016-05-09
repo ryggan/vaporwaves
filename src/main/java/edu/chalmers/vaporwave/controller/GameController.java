@@ -134,6 +134,16 @@ public class GameController {
         for (int i = 0; i < pressed.size(); i++) {
             String key = pressed.get(i);
             switch (key) {
+                case "P":
+                    // todo remove the remove/setpaused and move it to controller class.
+                    if(arenaView.isGamePaused()) {
+                        arenaView.hidePauseMenu();
+                        arenaView.removePaused();
+                    } else if(!arenaView.isGamePaused()) {
+                        arenaView.showPauseMenu();
+                        arenaView.setPaused();
+                    }
+                    break;
                 case "SPACE":
                     StaticTile tile = arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition());
                     if (tile == null || (tile instanceof PowerUp /*&& ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP*/)) {

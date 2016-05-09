@@ -33,7 +33,7 @@ public class MainController {
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
-//        GameServer gameServer = new GameServer();
+        //GameServer gameServer = new GameServer();
 
 
         this.root = root;
@@ -84,9 +84,9 @@ public class MainController {
                 ListenerController.getInstance().clearReleased();
 
 //                System.out.println(ListenerController.getInstance().getInput().get(0));
-//                if (ListenerController.getInstance().getInput().size() > 0) {
-//                    gameServer.sendRequest("This is my request");
-//                }
+/*                if (ListenerController.getInstance().getInput().size() > 0) {
+                    gameServer.sendRequest("This is my request");
+                }*/
 
             }
 
