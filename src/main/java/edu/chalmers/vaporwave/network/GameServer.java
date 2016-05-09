@@ -59,7 +59,6 @@ public class GameServer {
             kryoClient.register(SomeResponse.class);
 
             client.connect(5000, "172.20.10.3", 9999, 54777);
-
             client.setTimeout(0);
 
             InetAddress address = client.discoverHost(9999, 5000);

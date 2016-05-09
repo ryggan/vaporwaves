@@ -101,8 +101,9 @@ public class AnimatedSprite extends Sprite implements Cloneable {
                 posx -= sheetDimension.getWidth();
                 posy++;
             }
-            if (posy >= sheetDimension.getHeight())
+            if (posy >= sheetDimension.getHeight()) {
                 throw new IllegalArgumentException();
+            }
 
             int[] frame = {posx, posy};
             frames.add(frame);
@@ -113,11 +114,6 @@ public class AnimatedSprite extends Sprite implements Cloneable {
         this(new Image(fileName), spriteDimension, length, duration, startPosition, offset);
     }
 
-    /**
-     * Not working yet
-     *
-     * @param sprite
-     */
     public AnimatedSprite(AnimatedSprite sprite) {
         for(int[] i : sprite.frames) {
             int[] frame = {i[0], i[1]};

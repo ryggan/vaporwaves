@@ -5,8 +5,6 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.model.PowerUpProperties;
-import edu.chalmers.vaporwave.model.PowerUpSpriteProperties;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
@@ -17,8 +15,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.*;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ArenaView {
@@ -32,6 +32,7 @@ public class ArenaView {
 
     private HUDView hudView;
     private Scoreboard scoreboard;
+    private PauseMenu pauseMenu;
     private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;
@@ -55,6 +56,9 @@ public class ArenaView {
     private Sprite blastSpriteCenter;
     private Sprite[] blastSpriteBeam = new Sprite[4];
     private Sprite[] blastSpriteEnd = new Sprite[4];
+
+    // Determines if the game is showing pausemenu.
+    private boolean gameIsPaused = false;
 
     private Group root;
 
@@ -82,7 +86,6 @@ public class ArenaView {
         root.getChildren().add(backgroundPattern);
 
         this.hudView = new HUDView(root);
-        this.scoreboard = new Scoreboard(root);
         this.timerView = new TimerView(root);
 
         GameEventBus.getInstance().register(this);
@@ -104,6 +107,9 @@ public class ArenaView {
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
+        this.scoreboard = new Scoreboard(root);
+        this.pauseMenu = new PauseMenu(root);
+
         // Setting up sprites
 
         characterSprites[0] = new CharacterSprite("ALYSSA");
@@ -115,23 +121,25 @@ public class ArenaView {
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
 
-        Image characterMiscSpritesheet = new Image("images/spritesheet-character-misc-48x48.png");
+
+//        Image characterMiscSpritesheet = new Image("images/spritesheet-character-misc-48x48.png");
+        Image characterMiscSpritesheet = ImageContainer.getInstance().getImage(ImageID.CHARACTER_MISC);
         characterSparkleSprite =
                 new AnimatedSprite(characterMiscSpritesheet, new Dimension(48, 48), 9, 0.08, new int[] {0, 0}, new double[] {16, 27});
 
         enemySprite = new CharacterSprite("PCCHAN");
         initCharacterSprites(enemySprite);
 
-        arenaBackgroundSprite = new Sprite("images/background/sprite-arenabackground-03.png");
-        arenaFrameSprites.put(Compass.NORTH, new Sprite("images/background/sprite-frame-beach-north.png"));
-        arenaFrameSprites.put(Compass.WEST, new Sprite("images/background/sprite-frame-beach-west.png"));
-        arenaFrameSprites.put(Compass.EAST, new Sprite("images/background/sprite-frame-beach-east.png"));
-        Image frameSouthSheet = new Image("images/background/spritesheet-frame-beach-south-402x54.png");
+        arenaBackgroundSprite = new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_BACKGROUND_1));
+        arenaFrameSprites.put(Compass.NORTH, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_NORTH_1)));
+        arenaFrameSprites.put(Compass.WEST, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_WEST_1)));
+        arenaFrameSprites.put(Compass.EAST, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_EAST_1)));
+        Image frameSouthSheet = ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_SOUTH_1);
         AnimatedSprite frameSouthSprite =
                 new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1});
         arenaFrameSprites.put(Compass.SOUTH, frameSouthSprite);
 
-        Image bombBlastSpriteSheet = new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png");
+        Image bombBlastSpriteSheet = ImageContainer.getInstance().getImage(ImageID.BOMBS_EXPLOSIONS);
 
         for (int i = 0; i < 4; i++) {
             bombSprite[i] =
@@ -140,7 +148,7 @@ public class ArenaView {
         mineSprite =
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 4}, new double[] {1, 1});
 
-        Image wallSpriteSheet = new Image("images/spritesheet-walls_both-18x18.png");
+        Image wallSpriteSheet = ImageContainer.getInstance().getImage(ImageID.WALLS);
         destructibleWallSprite =
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
 //        new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {9, 1}, new double[] {1, 1});
@@ -150,7 +158,7 @@ public class ArenaView {
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {4, 2}, new double[] {1, 1});
 //        new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {5, 2}, new double[] {1, 1});
 
-        Image powerupSpritesheet = new Image("images/spritesheet-powerups-18x18.png");
+        Image powerupSpritesheet = ImageContainer.getInstance().getImage(ImageID.POWERUPS);
         powerUpSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 0}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 1}, new double[] {1, 1}));
         powerUpSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
@@ -229,14 +237,16 @@ public class ArenaView {
     private void createRandomBackgroundPattern() {
 //        int randomNum = 1 + (int)(Math.random() * 4);
 //        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
-        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
+//        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
+        backgroundPattern.setImage(ImageContainer.getInstance().getImage(ImageID.BACKGROUND_PATTERN_1));
     }
 
     /**
      * Reads character information from an XML-file and populate the instance variables for the sprites
      */
     private void initCharacterSprites(CharacterSprite characterSprite) {
-        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+//        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
+        XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
         for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
@@ -594,7 +604,7 @@ public class ArenaView {
             } else if (((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP) {
                 return powerUpPickupSprites.get(((PowerUp) tile).getPowerUpType());
             } else if (((PowerUp) tile).getState() == PowerUp.PowerUpState.DESTROY) {
-                return powerUpPickupSprites.get(((PowerUp) tile).getPowerUpType());
+                return powerUpDestroySprites.get(((PowerUp) tile).getPowerUpType());
             } else {
                 return powerUpSprites.get(((PowerUp) tile).getPowerUpType());
             }
@@ -615,5 +625,27 @@ public class ArenaView {
         } else if (animationFinishedEvent.getTile() != null) {
 
         }
+    }
+
+    public boolean isGamePaused() {
+        return gameIsPaused;
+    }
+
+    public void hidePauseMenu() {
+        pauseMenu.hide();
+    }
+
+    public void showPauseMenu() {
+        pauseMenu.show();
+    }
+
+    //Temporary functions for testing pausemenu
+
+    public void setPaused() {
+        gameIsPaused = true;
+    }
+
+    public void removePaused() {
+        gameIsPaused = false;
     }
 }

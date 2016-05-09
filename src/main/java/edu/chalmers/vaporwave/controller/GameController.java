@@ -66,12 +66,14 @@ public class GameController {
         // Initiates view
 
         timeSinceStart = 0.0;
+        timeSinceStart = 0.0;
 
-        timeLimit = 10.0;
-        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
+//        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
+        ArenaMap arenaMap = new ArenaMap("default",
+                (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
-        this.arenaModel = newGame(arenaMap,timeLimit);
+        this.arenaModel = newGame(arenaMap, timeLimit);
         this.arenaView = new ArenaView(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());
@@ -183,19 +185,33 @@ public class GameController {
                 }
             }
 
-            if (key.equals("ESCAPE")) {
-                SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
-                this.arenaModel.getArenaMovables().clear();
-                for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
-                    for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
-                        this.arenaModel.getArenaTiles()[j][k] = null;
-                    }
-                }
-                this.enemies.clear();
-                this.deadEnemies.clear();
+            switch (key) {
 
-                GameEventBus.getInstance().post(new GoToMenuEvent());
+                case "ESCAPE":
+                    SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
+                    this.arenaModel.getArenaMovables().clear();
+                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
+                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
+                            this.arenaModel.getArenaTiles()[j][k] = null;
+                        }
+                    }
+                    this.enemies.clear();
+                    this.deadEnemies.clear();
+
+                    GameEventBus.getInstance().post(new GoToMenuEvent());
+                    break;
+                case "P":
+                    // todo remove the remove/setpaused and move it to controller class.
+                    if(arenaView.isGamePaused()) {
+                        arenaView.hidePauseMenu();
+                        arenaView.removePaused();
+                    } else if(!arenaView.isGamePaused()) {
+                        arenaView.showPauseMenu();
+                        arenaView.setPaused();
+                    }
+                    break;
             }
+
         }
 
         // Updating positions

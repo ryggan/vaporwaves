@@ -1,24 +1,14 @@
 package edu.chalmers.vaporwave.controller;
 
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryonet.EndPoint;
-import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Serialization;
-import com.esotericsoftware.minlog.Log;
 import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
-import edu.chalmers.vaporwave.network.GameServer;
-import edu.chalmers.vaporwave.networktest.Network;
-import edu.chalmers.vaporwave.networktest.PositionClient;
-import edu.chalmers.vaporwave.networktest.PositionServer;
 import edu.chalmers.vaporwave.util.LongValue;
+import edu.chalmers.vaporwave.view.ImageContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
-
-import java.io.IOException;
 
 public class MainController {
 
@@ -38,27 +28,10 @@ public class MainController {
      */
     public MainController(Group root) {
 
-
-//        boolean server = false;
-//        Log.set(Log.LEVEL_DEBUG);
-//        try {
-//
-//            if (server) {
-//                new PositionServer();
-//            } else {
-//                new PositionClient();
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
-//        GameServer gameServer = new GameServer();
-
+        //GameServer gameServer = new GameServer();
 
         this.root = root;
         // Initiating variables and controllers
@@ -78,6 +51,7 @@ public class MainController {
         this.gameController = new GameController(gameRoot);
 
         SoundController.initialize();
+        ImageContainer.initialize();
 
         // Animation timer setup
 
@@ -107,10 +81,10 @@ public class MainController {
                 ListenerController.getInstance().clearPressed();
                 ListenerController.getInstance().clearReleased();
 
-
-//                if (ListenerController.getInstance().getInput().size() > 0) {
-//                    gameServer.sendRequest("This is my request");
-//                }
+//                System.out.println(ListenerController.getInstance().getInput().get(0));
+/*                if (ListenerController.getInstance().getInput().size() > 0) {
+                    gameServer.sendRequest("This is my request");
+                }*/
 
             }
 
