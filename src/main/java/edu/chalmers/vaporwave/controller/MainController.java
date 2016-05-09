@@ -15,6 +15,7 @@ import edu.chalmers.vaporwave.networktest.Network;
 import edu.chalmers.vaporwave.networktest.PositionClient;
 import edu.chalmers.vaporwave.networktest.PositionServer;
 import edu.chalmers.vaporwave.util.LongValue;
+import edu.chalmers.vaporwave.view.ImageContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
@@ -38,27 +39,10 @@ public class MainController {
      */
     public MainController(Group root) {
 
-
-//        boolean server = false;
-//        Log.set(Log.LEVEL_DEBUG);
-//        try {
-//
-//            if (server) {
-//                new PositionServer();
-//            } else {
-//                new PositionClient();
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
 //        GameServer gameServer = new GameServer();
-
 
         this.root = root;
         // Initiating variables and controllers
@@ -78,6 +62,7 @@ public class MainController {
         this.gameController = new GameController(gameRoot);
 
         SoundController.initialize();
+        ImageContainer.initialize();
 
         // Animation timer setup
 
