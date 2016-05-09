@@ -24,6 +24,7 @@ public class GameController {
 
     private Player localPlayer;
     private Player remotePlayer;
+    private Set<Player> playerSet;
 
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
@@ -55,6 +56,10 @@ public class GameController {
 
         this.localPlayer = newGameEvent.getLocalPlayer();
         this.remotePlayer = newGameEvent.getRemotePlayer();
+
+        this.playerSet = new HashSet<>();
+        playerSet.add(localPlayer);
+        playerSet.add(remotePlayer);
 
         this.destroyablePowerUps = true;
 
@@ -203,6 +208,9 @@ public class GameController {
 
                 // The enemy-check for characters only:
                 if (movable instanceof GameCharacter) {
+
+                    GameCharacter gameCharacter = (GameCharacter)movable;
+
                     for (Movable otherMovable : arenaModel.getArenaMovables()) {
                         if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
                                 && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
@@ -211,6 +219,21 @@ public class GameController {
                             break;
                         }
                     }
+
+                    // Walking over powerup?
+                    if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof StatPowerUp) {
+                        StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
+
+                        // If so, pick it up
+                        if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
+                            powerUp.pickUp(timeSinceStart);
+                            gameCharacter.pickedUpPowerUp(timeSinceStart);
+                            playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
+                            updateStats();
+                        }
+                    }
+
+
                 }
 
                 // The blast-check:
@@ -230,20 +253,7 @@ public class GameController {
             }
         }
 
-        // Walking over powerup?
-        if (this.localPlayer.getCharacter() != null &&
-                this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y]
-                instanceof StatPowerUp) {
-            StatPowerUp powerUp = (StatPowerUp)this.arenaModel.getArenaTiles()[localPlayer.getCharacter().getGridPosition().x][localPlayer.getCharacter().getGridPosition().y];
 
-            // If so, pick it up
-            if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
-                powerUp.pickUp(timeSinceStart);
-                localPlayer.getCharacter().pickedUpPowerUp(timeSinceStart);
-                playerWalksOnPowerUp(powerUp.getPowerUpType());
-                updateStats();
-            }
-        }
 
         // Removes enemies
         if (deadEnemies.size() > 0) {
@@ -398,26 +408,26 @@ public class GameController {
      * Will set the appropriate stat value on the character that walks on it.
      * @param powerUpType
      */
-    public void playerWalksOnPowerUp(PowerUpType powerUpType) {
-//        System.out.println(powerUpType);
+    public void playerWalksOnPowerUp(PowerUpType powerUpType, GameCharacter gameCharacter) {
+
 
         switch (powerUpType) {
             case HEALTH:
-                if (localPlayer.getCharacter().getHealth() <= 90) {
-                    this.localPlayer.getCharacter().setHealth(this.localPlayer.getCharacter().getHealth() + 10);
-                } else if (localPlayer.getCharacter().getHealth() < 100) {
-                    this.localPlayer.getCharacter().setHealth(100);
+                if (gameCharacter.getHealth() <= 90) {
+                    gameCharacter.setHealth(this.localPlayer.getCharacter().getHealth() + 10);
+                } else if (gameCharacter.getHealth() < 100) {
+                    gameCharacter.setHealth(100);
                 }
                 break;
             case BOMB_COUNT:
-                this.localPlayer.getCharacter().setMaxBombCount(this.localPlayer.getCharacter().getMaxBombCount() + 1);
-                this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() + 1);
+                gameCharacter.setMaxBombCount(gameCharacter.getMaxBombCount() + 1);
+                gameCharacter.setCurrentBombCount(gameCharacter.getCurrentBombCount() + 1);
                 break;
             case SPEED:
-                this.localPlayer.getCharacter().setSpeed(this.localPlayer.getCharacter().getSpeed() + 0.2);
+                gameCharacter.setSpeed(gameCharacter.getSpeed() + 0.2);
                 break;
             case RANGE:
-                this.localPlayer.getCharacter().setBombRange(this.localPlayer.getCharacter().getBombRange() + 1);
+                gameCharacter.setBombRange(gameCharacter.getBombRange() + 1);
                 break;
         }
     }
