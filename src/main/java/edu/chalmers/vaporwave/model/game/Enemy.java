@@ -1,9 +1,6 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.util.AI;
-import edu.chalmers.vaporwave.util.Utils;
 
 public class Enemy extends Movable {
 
@@ -31,9 +28,8 @@ public class Enemy extends Movable {
     }
 
     @Override
-    public int hashCode(){
-        int hash = super.hashCode() + ai.hashCode();
-        return hash;
+    public int hashCode() {
+        return (super.hashCode() * 5) + (ai.hashCode() * 7);
     }
 
 }
