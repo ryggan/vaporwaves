@@ -84,9 +84,9 @@ public class MainController {
                 ListenerController.getInstance().clearReleased();
 
 //                System.out.println(ListenerController.getInstance().getInput().get(0));
-//                if (ListenerController.getInstance().getInput().size() > 0) {
-//                    gameServer.sendRequest("This is my request");
-//                }
+                if (ListenerController.getInstance().getInput().size() > 0) {
+                   // gameServer.sendRequest("This is my request");
+                                }
 
             }
 
