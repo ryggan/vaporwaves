@@ -369,20 +369,18 @@ public abstract class Movable {
 
     @Override
     public int hashCode(){
-        int hash = 1 + (int) canvasPositionX*23;
-        hash = hash + (int) canvasPositionY*17;
-        hash = hash + (int) velocityX*36;
-        hash = hash + (int) velocityY*42;
-        hash = hash + (int) speed*13;
-        hash = hash + damage*34;
-        hash = hash + previousGridPositionX*35;
-        hash = hash + previousGridPositionY*14;
-        hash = hash + (int) health *51;
-        hash = hash + flinchTimer*56;
-        hash = hash + flinchDelay*36;
-        hash = hash + name.hashCode();
-
-        return hash;
+        return ((int) canvasPositionX * 5) +
+                ((int) canvasPositionY * 7) +
+                ((int) velocityX * 11) +
+                ((int) velocityY * 13) +
+                ((int) speed * 17) +
+                (damage * 19) +
+                (previousGridPositionX * 23) +
+                (previousGridPositionY * 29) +
+                ((int) health * 31) +
+                (flinchTimer * 37) +
+                (flinchDelay * 41) +
+                (name.hashCode() + 43);
 
     }
 }
