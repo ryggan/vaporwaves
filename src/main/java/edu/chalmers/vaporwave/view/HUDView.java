@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.ImageID;
 import edu.chalmers.vaporwave.util.TimerModel;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -51,9 +52,8 @@ public class HUDView {
 
         this.root = root;
 
-
-        this.healthBarEmpty = new ImageView(new Image("images/healthbarempty.png"));
-        Image filled = new Image("images/healthbarfilled.png");
+        this.healthBarEmpty = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_HEALTHBAR_EMPTY));
+        Image filled = ImageContainer.getInstance().getImage(ImageID.HUD_HEALTHBAR_FILLED);
         reader = filled.getPixelReader();
         newImage = new WritableImage(reader, 0, 0, 300, 17);
         this.healthBarFilled = new ImageView(newImage);
@@ -67,8 +67,8 @@ public class HUDView {
         root.getChildren().add(healthBarFilled);
 
 
-        this.scoreBarFilled = new ImageView(new Image("images/scorebarfilled.png"));
-        this.scoreBarEmpty = new ImageView(new Image("images/barempty.png"));
+        this.scoreBarFilled = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_SCOREBAR_FILLED));
+        this.scoreBarEmpty = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_SCOREBAR_EMPTY));
 
         this.scoreBarEmpty.setLayoutX(594);
         this.scoreBarEmpty.setLayoutY(34);

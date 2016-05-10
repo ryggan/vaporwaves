@@ -29,7 +29,7 @@ public class HealthBarModel {
         } else if(this.currentHealth<this.newHealth) {
             this.currentHealth++;
         }
-        System.out.println(currentHealth);
+//        System.out.println(currentHealth);
 
     }
 
