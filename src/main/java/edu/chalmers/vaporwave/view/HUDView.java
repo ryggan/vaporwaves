@@ -1,7 +1,7 @@
 package edu.chalmers.vaporwave.view;
 ;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.ImageID;
+import edu.chalmers.vaporwave.util.TimerModel;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -23,6 +23,8 @@ public class HUDView {
     private Label healthPercentage;
 
 
+
+
     private ImageView healthBarEmpty;
     private ImageView healthBarFilled;
     private ImageView scoreBarFilled;
@@ -36,16 +38,20 @@ public class HUDView {
     private PixelReader reader;
     private WritableImage newImage;
 
+    private double healthBarSpeed;
+    private int lastHealth;
+
+    private HealthBarView healthBar;
+
     private Font bauhaus10;
 
     public HUDView(Group root) {
 
         this.root = root;
-        this.healthBarEmpty = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_HEALTHBAR_EMPTY));
-        this.scoreBarFilled = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_SCOREBAR_FILLED));
-        this.scoreBarEmpty = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_SCOREBAR_EMPTY));
 
-        Image filled = ImageContainer.getInstance().getImage(ImageID.HUD_HEALTHBAR_FILLED);
+
+        this.healthBarEmpty = new ImageView(new Image("images/healthbarempty.png"));
+        Image filled = new Image("images/healthbarfilled.png");
         reader = filled.getPixelReader();
         newImage = new WritableImage(reader, 0, 0, 300, 17);
         this.healthBarFilled = new ImageView(newImage);
@@ -54,6 +60,14 @@ public class HUDView {
         this.healthBarEmpty.setLayoutY(-10);
         this.healthBarFilled.setLayoutX(184);
         this.healthBarFilled.setLayoutY(38);
+
+        root.getChildren().add(healthBarEmpty);
+        root.getChildren().add(healthBarFilled);
+
+
+        this.scoreBarFilled = new ImageView(new Image("images/scorebarfilled.png"));
+        this.scoreBarEmpty = new ImageView(new Image("images/barempty.png"));
+
         this.scoreBarEmpty.setLayoutX(594);
         this.scoreBarEmpty.setLayoutY(34);
         this.scoreBarFilled.setLayoutX(598);
@@ -66,44 +80,48 @@ public class HUDView {
 
         hudCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         this.root.getChildren().add(hudCanvas);
-        this.root.getChildren().add(healthBarEmpty);
+
         this.root.getChildren().add(scoreBarEmpty);
         this.root.getChildren().add(scoreBarFilled);
 
-        resetHealthBar();
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
-        int printHealth = (int) health;
         double printSpeed = (double) (speed);
-        //50
+
+        int newHealth = (int) health;
         updateHealthBar((int) ((health / 100) * 300));
-        stats.setText("Health: " + printHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
+
+
+        stats.setText("Health: " + newHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
 
         stats.setLayoutX(920);
         stats.setLayoutY(152);
 
         this.root.getChildren().remove(stats);
         this.root.getChildren().add(stats);
+        lastHealth = (int) health;
 
     }
 
     public void updateHealthBar(int health) {
-        newImage = new WritableImage(reader, 0, 0, health, 17);
-        ImageView healthBarFilledNew = new ImageView(newImage);
-        healthBarFilledNew.setLayoutX(184);
-        healthBarFilledNew.setLayoutY(38);
-        this.root.getChildren().remove(healthBarFilled);
-        this.root.getChildren().add(healthBarFilledNew);
-        this.healthBarFilled = healthBarFilledNew;
+        if(health==0){
+            setZeroHealthBar();
+        } else {
+            newImage = new WritableImage(reader, 0, 0, health, 17);
+            ImageView healthBarFilledNew = new ImageView(newImage);
+            healthBarFilledNew.setLayoutX(184);
+            healthBarFilledNew.setLayoutY(38);
+            this.root.getChildren().remove(healthBarFilled);
+            this.root.getChildren().add(healthBarFilledNew);
+            this.healthBarFilled = healthBarFilledNew;
+        }
     }
+
 
     public void setZeroHealthBar(){
         this.root.getChildren().remove(healthBarFilled);
     }
 
-    public void resetHealthBar(){
 
-        updateHealthBar(300);
-    }
 }
