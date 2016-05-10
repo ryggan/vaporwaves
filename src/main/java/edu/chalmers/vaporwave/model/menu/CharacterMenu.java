@@ -21,7 +21,8 @@ public class CharacterMenu extends AbstractMenu {
 
     public MenuAction getMenuAction() {
         if (getSelectedSuper() == 0) {
-            return MenuAction.PREVIOUS;
+//            return MenuAction.PREVIOUS;
+            return MenuAction.BACK;
         } else if (getSelectedSuper() == 2) {
             return MenuAction.START_GAME;
         }
