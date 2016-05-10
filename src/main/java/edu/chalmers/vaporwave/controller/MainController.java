@@ -35,10 +35,10 @@ public class MainController {
      */
     public MainController(Group root) {
 
-//        initLoader(root);
+        initLoader(root);
 
-        initApplication(root);
-        initTimer();
+//        initApplication(root);
+//        initTimer();
 
     }
 
@@ -46,7 +46,13 @@ public class MainController {
         this.loader = new LoadingScreen(this);
         this.loaderView = new LoadingScreenView(root);
 
-        this.loaderThread = new Thread(this.loader);
+//        this.loaderThread = new Thread(this.loader);
+        this.loaderThread = new Thread(new Runnable() {
+            public void run() {
+                loader.updateLoader();
+                loaderView.updateView();
+            }
+        });
         this.loaderThread.start();
     }
 

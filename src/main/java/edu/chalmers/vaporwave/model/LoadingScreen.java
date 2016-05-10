@@ -2,7 +2,7 @@ package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.controller.MainController;
 
-public class LoadingScreen implements Runnable {
+public class LoadingScreen {
 
     private MainController mainController;
 
@@ -13,7 +13,7 @@ public class LoadingScreen implements Runnable {
         this.percentLoaded = 0;
     }
 
-    public void run() {
+    public void updateLoader() {
         while(true) {
             System.out.println("Loading! "+percentLoaded);
 
