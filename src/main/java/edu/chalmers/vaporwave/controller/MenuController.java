@@ -17,8 +17,6 @@ import java.util.Map;
 public class MenuController {
 
     private NewGameEvent newGameEvent;
-    //    private List<AbstractMenu> menuList;
-//    private List<AbstractMenuView> menuViewList;
     private Map<MenuState, AbstractMenu> menuMap;
     private Map<MenuState, AbstractMenuView> menuViewMap;
     private MenuState activeMenu;
@@ -37,17 +35,11 @@ public class MenuController {
 
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
-//        this.menuList.add(new StartMenu(this.newGameEvent));
-//        this.menuList.add(new CharacterMenu(this.newGameEvent));
-//        this.menuMap.put(MenuState.LOADING, new LoadingScreen());
         this.menuMap.put(MenuState.START_MENU, new StartMenu(this.newGameEvent));
         this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterMenu(this.newGameEvent));
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
 
         this.menuViewMap = new HashMap<>();
-//        this.menuViewList.add(new StartMenuView(root));
-//        this.menuViewList.add(new CharacterSelectView(root));
-//        this.menuViewMap.put(MenuState.LOADING, new LoadingScreenView(root));
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
         this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root));

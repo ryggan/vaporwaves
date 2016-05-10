@@ -27,5 +27,6 @@ public class LoadingScreenView  {
     }
 
     public void updateView() {
+
     }
 }
