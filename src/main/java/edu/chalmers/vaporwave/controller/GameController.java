@@ -101,7 +101,7 @@ public class GameController {
         gameCharacters.add(localPlayer.getCharacter());
         gameCharacters.add(remotePlayer.getCharacter());
 
-        Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 2, new SemiStupidAI(gameCharacters));
+        Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 0.4, new SemiStupidAI(gameCharacters));
         enemies.add(felixBot);
         //
 
