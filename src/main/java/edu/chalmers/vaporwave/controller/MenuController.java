@@ -7,10 +7,7 @@ import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.*;
-import edu.chalmers.vaporwave.view.AbstractMenuView;
-import edu.chalmers.vaporwave.view.CharacterSelectView;
-import edu.chalmers.vaporwave.view.LoadingScreenView;
-import edu.chalmers.vaporwave.view.StartMenuView;
+import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -45,6 +42,7 @@ public class MenuController {
 //        this.menuMap.put(MenuState.LOADING, new LoadingScreen());
         this.menuMap.put(MenuState.START_MENU, new StartMenu(this.newGameEvent));
         this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterMenu(this.newGameEvent));
+        this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
 
         this.menuViewMap = new HashMap<>();
 //        this.menuViewList.add(new StartMenuView(root));
@@ -52,6 +50,7 @@ public class MenuController {
 //        this.menuViewMap.put(MenuState.LOADING, new LoadingScreenView(root));
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
+        this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root));
 
         this.menuViewMap.get(activeMenu).updateView(
                 this.menuMap.get(activeMenu).getSelectedSuper(),
@@ -119,6 +118,10 @@ public class MenuController {
                 this.menuMap.get(activeMenu).getSelectedSuper(),
                 this.menuMap.get(activeMenu).getSelectedSub()
         );
+    }
+
+    public void setActiveMenu(MenuState activeMenu){
+        this.activeMenu=activeMenu;
     }
 
 
