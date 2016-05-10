@@ -6,6 +6,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.util.LongValue;
+import edu.chalmers.vaporwave.util.SoundContainer;
 import edu.chalmers.vaporwave.view.ImageContainer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -50,7 +51,7 @@ public class MainController {
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
 
-        SoundController.initialize();
+        SoundContainer.initialize();
         ImageContainer.initialize();
 
         // Animation timer setup

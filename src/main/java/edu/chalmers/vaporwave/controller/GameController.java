@@ -48,7 +48,7 @@ public class GameController {
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
 
-        SoundController.getInstance().playSound(Sound.GAME_MUSIC);
+        SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -209,7 +209,7 @@ public class GameController {
             switch (key) {
 
                 case "ESCAPE":
-                    SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
+                    SoundContainer.getInstance().stopSound(SoundID.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
                         for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
