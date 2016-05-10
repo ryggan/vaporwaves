@@ -13,6 +13,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 ;
 
@@ -75,8 +76,10 @@ public class HUDView {
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
-        double newSpeed = (double) (speed);
+        double newSpeed = Double.parseDouble(new DecimalFormat("##.#").format(speed));
         int newHealth = (int) health;
+
+
 
         stats.setText("Health: " + newHealth + "\nBombs: " + bombCount + "\nSpeed: " + newSpeed + "\nRange: " + range);
 

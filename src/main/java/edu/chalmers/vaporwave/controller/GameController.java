@@ -7,6 +7,7 @@ import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.*;
+import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
@@ -65,6 +66,8 @@ public class GameController {
 
         timeSinceStart = 0.0;
         timeSinceStart = 0.0;
+
+        timeLimit=10;
 
 //        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
         ArenaMap arenaMap = new ArenaMap("default",
@@ -137,6 +140,9 @@ public class GameController {
         this.timeSinceStart = timeSinceStart;
         if(timeLimit-timeSinceLastCall>0) {
             timeLimit = timeLimit - timeSinceLastCall;
+        } else {
+
+            GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
         }
         TimerModel.getInstance().updateTimer(timeLimit);
 

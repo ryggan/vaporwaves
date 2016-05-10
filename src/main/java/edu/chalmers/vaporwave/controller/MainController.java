@@ -128,7 +128,9 @@ public class MainController {
     public void goToMenu(GoToMenuEvent goToMenuEvent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(menuRoot);
+        this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
         this.menuController.updateViews();
+
         this.inGame = false;
     }
 }

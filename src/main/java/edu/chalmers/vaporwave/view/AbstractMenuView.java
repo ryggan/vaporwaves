@@ -46,13 +46,14 @@ public abstract class AbstractMenuView {
     public void setActive() {
         this.root.getChildren().clear();
 //        Image backgroundImage = new Image("images/menu-background-2.bmp");
-
+        this.root.getChildren().remove(backgroundImage);
         this.root.getChildren().add(new ImageView(backgroundImage));
         this.root.getChildren().add(backgroundCanvas);
     }
 
     public void setBackgroundImage(Image image) {
         this.backgroundImage = image;
+
     }
 
 }
