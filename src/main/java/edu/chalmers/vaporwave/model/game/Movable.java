@@ -170,12 +170,14 @@ public abstract class Movable {
         invincibleTimer = invincibleDelay;
         flinchInvincible = true;
         setState(MovableState.FLINCH);
+        System.out.println("Flinch! "+getName());
     }
 
     public void death() {
         stop();
         setState(MovableState.DEATH);
         this.health=0;
+        System.out.println("Death! "+getName());
     }
 
     public void spawn(Point spawningPoint) {
@@ -184,6 +186,7 @@ public abstract class Movable {
         stopAtTile((int)spawningPoint.getX(), (int)spawningPoint.getY());
         setComingState(MovableState.SPAWN);
         this.health = Constants.DEFAULT_START_HEALTH;
+        System.out.println("Spawn! "+getName());
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {

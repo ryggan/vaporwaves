@@ -234,45 +234,45 @@ public class GameController {
 
         }
 
-        // Updating positions
+        // Updating positions (if not paused)
         if(!gameIsPaused) {
-        for (Movable movable : arenaModel.getArenaMovables()) {
-            movable.updatePosition();
 
-            // If moving and not invincible, check for things that will deal damage
-            if (!movable.isInvincible()
-                    && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
+            for (Movable movable : arenaModel.getArenaMovables()) {
+                movable.updatePosition();
 
-                // The enemy-check for characters only:
-                if (movable instanceof GameCharacter) {
+                // If moving and not invincible, check for things that will deal damage
+                if (!movable.isInvincible()
+                        && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
 
-                    GameCharacter gameCharacter = (GameCharacter) movable;
+                    // The enemy-check for characters only:
+                    if (movable instanceof GameCharacter) {
 
-                    for (Movable otherMovable : arenaModel.getArenaMovables()) {
-                        if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
-                                && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
-                            movable.dealDamage(otherMovable.getDamage());
-                            updateStats();
-                            break;
+                        GameCharacter gameCharacter = (GameCharacter) movable;
+
+                        for (Movable otherMovable : arenaModel.getArenaMovables()) {
+                            if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
+                                    && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
+                                movable.dealDamage(otherMovable.getDamage());
+                                updateStats();
+                                break;
+                            }
                         }
-                    }
 
-                    // Walking over powerup?
-                    if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof StatPowerUp) {
-                        StatPowerUp powerUp = (StatPowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
+                        // Walking over powerup?
+                        if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof StatPowerUp) {
+                            StatPowerUp powerUp = (StatPowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
 
-                        // If so, pick it up
-                        if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
-                            powerUp.pickUp(timeSinceStart);
-                            gameCharacter.pickedUpPowerUp(timeSinceStart);
-                            playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
-                            updateStats();
+                            // If so, pick it up
+                            if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
+                                powerUp.pickUp(timeSinceStart);
+                                gameCharacter.pickedUpPowerUp(timeSinceStart);
+                                playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
+                                updateStats();
+                            }
                         }
+
+
                     }
-
-
-                }
-            }
 
                     // The blast-check:
                     StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
@@ -290,6 +290,7 @@ public class GameController {
                     }
                 }
             }
+        }
     
 
 
