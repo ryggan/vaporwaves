@@ -330,6 +330,7 @@ public class ArenaView {
 
     public void updateHealth(int health){
         hudView.updateHealthBar(health);
+       // System.out.println(health);
     }
 
 
