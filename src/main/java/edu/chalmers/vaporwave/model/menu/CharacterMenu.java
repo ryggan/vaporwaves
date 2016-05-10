@@ -12,7 +12,7 @@ public class CharacterMenu extends AbstractMenu {
 
 
     public CharacterMenu(NewGameEvent newGameEvent) {
-        super(newGameEvent, new int[]{0, 3, 0});
+        super(new int[]{0, 3, 0}, newGameEvent);
 
 
 

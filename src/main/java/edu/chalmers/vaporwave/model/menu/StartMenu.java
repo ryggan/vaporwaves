@@ -4,9 +4,7 @@ import edu.chalmers.vaporwave.event.NewGameEvent;
 
 public class StartMenu extends AbstractMenu {
     public StartMenu(NewGameEvent newGameEvent) {
-        super(newGameEvent, new int[]{1, 0} );
-
-
+        super(new int[]{1, 0}, newGameEvent);
     }
 
 

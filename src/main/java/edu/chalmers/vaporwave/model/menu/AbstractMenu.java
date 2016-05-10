@@ -3,9 +3,6 @@ package edu.chalmers.vaporwave.model.menu;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class AbstractMenu {
 
     private int[] menuItems;
@@ -13,7 +10,11 @@ public abstract class AbstractMenu {
     private int currentSelected;
     private NewGameEvent newGameEvent;
 
-    public AbstractMenu(NewGameEvent newGameEvent, int[] menuItems) {
+    public AbstractMenu(int[] menuItems) {
+        this(menuItems, null);
+    }
+
+    public AbstractMenu(int[] menuItems, NewGameEvent newGameEvent) {
         this.selectedItems = new int[menuItems.length];
         this.currentSelected = 0;
         this.menuItems = menuItems;

@@ -1,8 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
-import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.model.menu.MenuButtonState;
-import edu.chalmers.vaporwave.model.menu.MenuCategory;
+import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.ImageID;
 import javafx.scene.Group;
@@ -11,8 +9,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +19,7 @@ public abstract class AbstractMenuView {
     private GraphicsContext backgroundGC;
     private Image backgroundImage;
 
-    private Map<MenuCategory, List<MenuButtonView>> menuCategoryMap;
+    private Map<MenuState, List<MenuButtonView>> menuCategoryMap;
 
     private Group root;
 

@@ -4,7 +4,7 @@ package edu.chalmers.vaporwave.model.menu;
 
 public class MenuOld {
     private static MenuOld instance;
-    private MenuCategory activeMenu;
+    private MenuState activeMenu;
     private int activeSuperMenu;
     private int activeSubMenu;
 
@@ -17,11 +17,11 @@ public class MenuOld {
         return instance;
     }
 
-    public void setActiveMenu(MenuCategory activeMenu) {
+    public void setActiveMenu(MenuState activeMenu) {
         this.activeMenu = activeMenu;
     }
 
-    public MenuCategory getActiveMenu() {
+    public MenuState getActiveMenu() {
         return this.getActiveMenu();
     }
 
