@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 
 import javax.swing.text.Position;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PauseMenu {
     private Player localPlayer;
@@ -34,7 +35,7 @@ public class PauseMenu {
     private static double yoffset = 8 * Constants.DEFAULT_TILE_HEIGHT;
 
     //For testing purposes
-    public PauseMenu(Group root) {
+    public PauseMenu(Group root, List<Label> labels) {
         this.root = root;
 
         //pauseMenuBackground = new Sprite("pausemenu");
@@ -73,9 +74,9 @@ public class PauseMenu {
 
 
         pauseMenuPane.getChildren().add(gridPane);
-        resumeGame = new Label("Resume");
-        options = new Label("Options");
-        quitGame = new Label("Quit");
+        resumeGame = labels.get(0);
+        options = labels.get(1);
+        quitGame = labels.get(2);
 
         //resumeGame.getStyleClass().add("labels");
         resumeGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");

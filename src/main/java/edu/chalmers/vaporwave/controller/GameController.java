@@ -7,6 +7,7 @@ import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.*;
+import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
@@ -48,7 +49,7 @@ public class GameController {
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
 
-        SoundController.getInstance().playSound(Sound.GAME_MUSIC);
+        SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -65,6 +66,8 @@ public class GameController {
 
         timeSinceStart = 0.0;
         timeSinceStart = 0.0;
+
+        timeLimit=10;
 
 //        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
         ArenaMap arenaMap = new ArenaMap("default",
@@ -96,6 +99,15 @@ public class GameController {
         this.enemies = new HashSet<>();
         this.deadEnemies = new HashSet<>();
 
+        //Felix code
+        Set<GameCharacter> gameCharacters = new HashSet<>();
+        gameCharacters.add(localPlayer.getCharacter());
+        gameCharacters.add(remotePlayer.getCharacter());
+
+        Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 0.4, new SemiStupidAI(gameCharacters));
+        enemies.add(felixBot);
+        //
+
         Random random = new Random();
         for (int k = 0; k < 10; k++) {
             boolean free;
@@ -104,7 +116,7 @@ public class GameController {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getGridWidth()), random.nextInt(this.arenaModel.getGridHeight()));
                 free = (arenaModel.getArenaTile(spawnPosition) == null);
             } while (!free);
-            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.2, new StupidAI());
+            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.2, new SemiStupidAI(gameCharacters));
             enemies.add(enemy);
         }
 
@@ -128,6 +140,9 @@ public class GameController {
         this.timeSinceStart = timeSinceStart;
         if(timeLimit-timeSinceLastCall>0) {
             timeLimit = timeLimit - timeSinceLastCall;
+        } else {
+
+            GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
         }
         TimerModel.getInstance().updateTimer(timeLimit);
 
@@ -209,7 +224,7 @@ public class GameController {
             switch (key) {
 
                 case "ESCAPE":
-                    SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
+                    SoundContainer.getInstance().stopSound(SoundID.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
                         for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
@@ -234,8 +249,10 @@ public class GameController {
 
         }
 
-        // Updating positions
+        // Updating positions (if not paused)
         if(!gameIsPaused) {
+
+
             for (Movable movable : arenaModel.getArenaMovables()) {
                 movable.updatePosition();
 
@@ -291,7 +308,6 @@ public class GameController {
 
 
 
-
         // Removes enemies
         if (deadEnemies.size() > 0) {
             for (Enemy enemy : deadEnemies) {
@@ -308,6 +324,7 @@ public class GameController {
         }
 
         this.healthBarModel.updateHealth((int)this.localPlayer.getCharacter().getHealth());
+
         arenaView.updateHealth((int)this.healthBarModel.getHealth());
 
         // Calls view to update graphics

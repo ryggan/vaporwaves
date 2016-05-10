@@ -1,35 +1,30 @@
 package edu.chalmers.vaporwave.view;
-;
+
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.ImageID;
 import edu.chalmers.vaporwave.util.TimerModel;
 import javafx.scene.Group;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
+
 import java.awt.*;
+import java.text.DecimalFormat;
+
+;
 
 public class HUDView {
 
-    private int width;
-    private int height;
-    private int firstFrameX;
-    private Point position;
     private Label stats;
-    private Label healthPercentage;
-
-
-
 
     private ImageView healthBarEmpty;
     private ImageView healthBarFilled;
     private ImageView scoreBarFilled;
     private ImageView scoreBarEmpty;
-
 
     private ImageView emptyBar;
     private Group root;
@@ -38,20 +33,14 @@ public class HUDView {
     private PixelReader reader;
     private WritableImage newImage;
 
-    private double healthBarSpeed;
-    private int lastHealth;
-
-    private HealthBarView healthBar;
-
     private Font bauhaus10;
 
     public HUDView(Group root) {
 
         this.root = root;
 
-
-        this.healthBarEmpty = new ImageView(new Image("images/healthbarempty.png"));
-        Image filled = new Image("images/healthbarfilled.png");
+        this.healthBarEmpty = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_HEALTHBAR_EMPTY));
+        Image filled = ImageContainer.getInstance().getImage(ImageID.HUD_HEALTHBAR_FILLED);
         reader = filled.getPixelReader();
         newImage = new WritableImage(reader, 0, 0, 300, 17);
         this.healthBarFilled = new ImageView(newImage);
@@ -65,8 +54,8 @@ public class HUDView {
         root.getChildren().add(healthBarFilled);
 
 
-        this.scoreBarFilled = new ImageView(new Image("images/scorebarfilled.png"));
-        this.scoreBarEmpty = new ImageView(new Image("images/barempty.png"));
+        this.scoreBarFilled = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_SCOREBAR_FILLED));
+        this.scoreBarEmpty = new ImageView(ImageContainer.getInstance().getImage(ImageID.HUD_SCOREBAR_EMPTY));
 
         this.scoreBarEmpty.setLayoutX(594);
         this.scoreBarEmpty.setLayoutY(34);
@@ -87,28 +76,28 @@ public class HUDView {
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
-        double printSpeed = (double) (speed);
-
+        double newSpeed = Double.parseDouble(new DecimalFormat("##.#").format(speed));
         int newHealth = (int) health;
-        updateHealthBar((int) ((health / 100) * 300));
 
 
-        stats.setText("Health: " + newHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
+
+        stats.setText("Health: " + newHealth + "\nBombs: " + bombCount + "\nSpeed: " + newSpeed + "\nRange: " + range);
 
         stats.setLayoutX(920);
         stats.setLayoutY(152);
 
         this.root.getChildren().remove(stats);
         this.root.getChildren().add(stats);
-        lastHealth = (int) health;
 
     }
 
     public void updateHealthBar(int health) {
-        if(health==0){
+
+        if((int) (health *3 )==0){
             setZeroHealthBar();
+
         } else {
-            newImage = new WritableImage(reader, 0, 0, health, 17);
+            newImage = new WritableImage(reader, 0, 0, (int) (health * 3), 17);
             ImageView healthBarFilledNew = new ImageView(newImage);
             healthBarFilledNew.setLayoutX(184);
             healthBarFilledNew.setLayoutY(38);
@@ -122,6 +111,5 @@ public class HUDView {
     public void setZeroHealthBar(){
         this.root.getChildren().remove(healthBarFilled);
     }
-
 
 }

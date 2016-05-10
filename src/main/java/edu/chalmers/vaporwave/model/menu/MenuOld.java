@@ -1,25 +1,27 @@
 package edu.chalmers.vaporwave.model.menu;
 
-public class Menu {
-    private static Menu instance;
-    private MenuCategory activeMenu;
+// TODO: Obsolete code? Doesn't seem to be used anywhere, should be deleted maybe?
+
+public class MenuOld {
+    private static MenuOld instance;
+    private MenuState activeMenu;
     private int activeSuperMenu;
     private int activeSubMenu;
 
-    private Menu() {}
+    private MenuOld() {}
 
-    public static synchronized Menu getInstance() {
+    public static synchronized MenuOld getInstance() {
         if (instance == null) {
-            instance = new Menu();
+            instance = new MenuOld();
         }
         return instance;
     }
 
-    public void setActiveMenu(MenuCategory activeMenu) {
+    public void setActiveMenu(MenuState activeMenu) {
         this.activeMenu = activeMenu;
     }
 
-    public MenuCategory getActiveMenu() {
+    public MenuState getActiveMenu() {
         return this.getActiveMenu();
     }
 

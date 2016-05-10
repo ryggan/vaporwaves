@@ -12,7 +12,7 @@ public class CharacterMenu extends AbstractMenu {
 
 
     public CharacterMenu(NewGameEvent newGameEvent) {
-        super(newGameEvent, new int[]{0, 3, 0});
+        super(new int[]{0, 3, 0}, newGameEvent);
 
 
 
@@ -21,7 +21,8 @@ public class CharacterMenu extends AbstractMenu {
 
     public MenuAction getMenuAction() {
         if (getSelectedSuper() == 0) {
-            return MenuAction.PREVIOUS;
+//            return MenuAction.PREVIOUS;
+            return MenuAction.BACK;
         } else if (getSelectedSuper() == 2) {
             return MenuAction.START_GAME;
         }

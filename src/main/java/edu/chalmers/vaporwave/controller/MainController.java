@@ -5,8 +5,11 @@ import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.model.menu.LoadingScreen;
 import edu.chalmers.vaporwave.util.LongValue;
+import edu.chalmers.vaporwave.util.SoundContainer;
 import edu.chalmers.vaporwave.view.ImageContainer;
+import edu.chalmers.vaporwave.view.LoadingScreenView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 
@@ -19,6 +22,9 @@ public class MainController {
     private Group menuRoot;
     private Group gameRoot;
 
+    private LoadingScreen loader;
+    private LoadingScreenView loaderView;
+
     private boolean inGame;
 
     /**
@@ -27,6 +33,22 @@ public class MainController {
      * @param root
      */
     public MainController(Group root) {
+
+//        initLoader(root);
+
+        initApplication(root);
+        initTimer();
+
+    }
+
+    public void initLoader(Group root) {
+        this.loader = new LoadingScreen(this);
+        this.loaderView = new LoadingScreenView(root);
+
+
+    }
+
+    public void initApplication(Group root) {
 
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
@@ -50,14 +72,16 @@ public class MainController {
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
 
-        SoundController.initialize();
+        SoundContainer.initialize();
         ImageContainer.initialize();
+    }
+
+    public void initTimer() {
 
         // Animation timer setup
 
         final long startNanoTime = System.nanoTime();
         LongValue lastNanoTime = new LongValue(System.nanoTime());
-
 
         // Game loop
         new AnimationTimer() {
@@ -81,17 +105,10 @@ public class MainController {
                 ListenerController.getInstance().clearPressed();
                 ListenerController.getInstance().clearReleased();
 
-//                System.out.println(ListenerController.getInstance().getInput().get(0));
-/*                if (ListenerController.getInstance().getInput().size() > 0) {
-                    gameServer.sendRequest("This is my request");
-                }*/
-
             }
 
         }.start();
-
     }
-
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
@@ -111,7 +128,9 @@ public class MainController {
     public void goToMenu(GoToMenuEvent goToMenuEvent) {
         this.root.getChildren().clear();
         this.root.getChildren().add(menuRoot);
+        this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
         this.menuController.updateViews();
+
         this.inGame = false;
     }
 }

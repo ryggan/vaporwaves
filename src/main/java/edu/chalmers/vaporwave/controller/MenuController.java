@@ -5,27 +5,26 @@ import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.model.menu.AbstractMenu;
-import edu.chalmers.vaporwave.model.menu.CharacterMenu;
-import edu.chalmers.vaporwave.model.menu.MenuCategory;
-import edu.chalmers.vaporwave.model.menu.StartMenu;
+import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.view.AbstractMenuView;
 import edu.chalmers.vaporwave.view.CharacterSelectView;
+import edu.chalmers.vaporwave.view.LoadingScreenView;
 import edu.chalmers.vaporwave.view.StartMenuView;
 import javafx.scene.Group;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MenuController {
 
     private NewGameEvent newGameEvent;
-    private List<AbstractMenu> menuList;
-    private List<AbstractMenuView> menuViewList;
-    private int activeMenu;
+    //    private List<AbstractMenu> menuList;
+//    private List<AbstractMenuView> menuViewList;
+    private Map<MenuState, AbstractMenu> menuMap;
+    private Map<MenuState, AbstractMenuView> menuViewMap;
+    private MenuState activeMenu;
 
     public MenuController(Group root) {
 
@@ -39,18 +38,24 @@ public class MenuController {
         remotePlayer.setCharacter(new GameCharacter("CHARLOTTE", new Point(20,0)));
         this.newGameEvent.setRemotePlayer(remotePlayer);
 
-        this.activeMenu = 0;
-        this.menuList = new ArrayList<>();
-        this.menuList.add(new StartMenu(this.newGameEvent));
-        this.menuList.add(new CharacterMenu(this.newGameEvent));
+        this.activeMenu = MenuState.START_MENU;
+        this.menuMap = new HashMap<>();
+//        this.menuList.add(new StartMenu(this.newGameEvent));
+//        this.menuList.add(new CharacterMenu(this.newGameEvent));
+//        this.menuMap.put(MenuState.LOADING, new LoadingScreen());
+        this.menuMap.put(MenuState.START_MENU, new StartMenu(this.newGameEvent));
+        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterMenu(this.newGameEvent));
 
-        this.menuViewList = new ArrayList<>();
-        this.menuViewList.add(new StartMenuView(root));
-        this.menuViewList.add(new CharacterSelectView(root));
+        this.menuViewMap = new HashMap<>();
+//        this.menuViewList.add(new StartMenuView(root));
+//        this.menuViewList.add(new CharacterSelectView(root));
+//        this.menuViewMap.put(MenuState.LOADING, new LoadingScreenView(root));
+        this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
+        this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
 
-        this.menuViewList.get(activeMenu).updateView(
-                this.menuList.get(activeMenu).getSelectedSuper(),
-                this.menuList.get(activeMenu).getSelectedSub()
+        this.menuViewMap.get(activeMenu).updateView(
+                this.menuMap.get(activeMenu).getSelectedSuper(),
+                this.menuMap.get(activeMenu).getSelectedSub()
         );
     }
 
@@ -60,19 +65,19 @@ public class MenuController {
         if (!ListenerController.getInstance().getPressed().isEmpty()) {
             switch (ListenerController.getInstance().getPressed().get(0)) {
                 case "UP":
-                    menuList.get(activeMenu).changeSelected(Direction.UP);
+                    menuMap.get(activeMenu).changeSelected(Direction.UP);
                     updateViews();
                     break;
                 case "DOWN":
-                    menuList.get(activeMenu).changeSelected(Direction.DOWN);
+                    menuMap.get(activeMenu).changeSelected(Direction.DOWN);
                     updateViews();
                     break;
                 case "LEFT":
-                    menuList.get(activeMenu).changeSelected(Direction.LEFT);
+                    menuMap.get(activeMenu).changeSelected(Direction.LEFT);
                     updateViews();
                     break;
                 case "RIGHT":
-                    menuList.get(activeMenu).changeSelected(Direction.RIGHT);
+                    menuMap.get(activeMenu).changeSelected(Direction.RIGHT);
                     updateViews();
                     break;
             }
@@ -82,24 +87,25 @@ public class MenuController {
             switch (ListenerController.getInstance().getReleased().get(0)) {
                 case "ENTER":
                 case "SPACE":
-                    switch (menuList.get(activeMenu).getMenuAction()) {
-                        case EXIT_GAME:
+                    switch (menuMap.get(activeMenu).getMenuAction()) {
+                        case EXIT_PROGRAM:
                             GameEventBus.getInstance().post(new ExitGameEvent());
                             break;
                         case START_GAME:
-                            for (AbstractMenuView menu : this.menuViewList) {
-                                menu.clearView();
+                            for (Map.Entry<MenuState, AbstractMenuView> menu : this.menuViewMap.entrySet()) {
+                                menu.getValue().clearView();
                             }
                             GameEventBus.getInstance().post(newGameEvent);
                             break;
-                        case NEXT:
-                            this.activeMenu += 1;
-                            updateViews();
-                            break;
-                        case PREVIOUS:
-                            this.activeMenu -= 1;
-                            updateViews();
-                            break;
+
+//                        case NEXT:
+//                            this.activeMenu += 1;
+//                            updateViews();
+//                            break;
+//                        case PREVIOUS:
+//                            this.activeMenu -= 1;
+//                            updateViews();
+//                            break;
                     }
 
                     break;
@@ -109,9 +115,9 @@ public class MenuController {
     }
 
     public void updateViews() {
-        this.menuViewList.get(activeMenu).updateView(
-                this.menuList.get(activeMenu).getSelectedSuper(),
-                this.menuList.get(activeMenu).getSelectedSub()
+        this.menuViewMap.get(activeMenu).updateView(
+                this.menuMap.get(activeMenu).getSelectedSuper(),
+                this.menuMap.get(activeMenu).getSelectedSub()
         );
     }
 

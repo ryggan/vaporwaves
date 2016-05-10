@@ -12,6 +12,7 @@ public class TimerModel {
     private String time;
     private static TimerModel instance;
     private double timeLimit;
+    private boolean isFinished;
 
     private TimerModel(){
         this.time="";
