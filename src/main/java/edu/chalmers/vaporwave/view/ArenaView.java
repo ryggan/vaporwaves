@@ -225,7 +225,6 @@ public class ArenaView {
         }
 
         // Creating sub-elements
-
         createRandomBackgroundPattern();
         //make players a proper arraylist of the current players
         //scoreboard.addPlayersToScoreboard(players);
@@ -242,12 +241,12 @@ public class ArenaView {
      * Reads character information from an XML-file and populate the instance variables for the sprites
      */
     private void initCharacterSprites(CharacterSprite characterSprite) {
-//        XMLReader reader = new XMLReader(Constants.GAME_CHARACTER_XML_FILE);
         XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
         for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
             CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
+
             switch (characterState) {
                 case SPAWN:
                     characterSprite.setSpawnSprite(
@@ -315,8 +314,6 @@ public class ArenaView {
 
                         startIndexX += characterSpriteProperties.getFrames();
                     }
-                    break;
-                default:
                     break;
             }
         }
