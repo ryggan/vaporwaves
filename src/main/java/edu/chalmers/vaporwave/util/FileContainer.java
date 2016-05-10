@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by bob on 2016-05-09.
- */
 public class FileContainer {
 
     private static FileContainer instance;
@@ -18,9 +15,7 @@ public class FileContainer {
         this.fileContainer = new HashMap<>();
 
         this.fileContainer.put(FileID.XML_CHARACTER_ENEMY, new File(Constants.GAME_CHARACTER_XML_FILE));
-
         this.fileContainer.put(FileID.VAPORMAP_DEFAULT, new File(Constants.DEFAULT_MAP_FILE));
-
     }
 
     public File getFile(FileID fileID) {
