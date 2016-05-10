@@ -1,13 +1,13 @@
 package edu.chalmers.vaporwave.model.menu;
 
-public class LoadingScreen extends AbstractMenu {
+import edu.chalmers.vaporwave.controller.MainController;
 
-    public LoadingScreen() {
-        super(new int[0]);
-    }
+public class LoadingScreen {
 
-    public MenuAction getMenuAction() {
-        return MenuAction.NO_ACTION;
+    private MainController mainController;
+
+    public LoadingScreen(MainController mainController) {
+        this.mainController = mainController;
     }
 
 }
