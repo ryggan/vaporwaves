@@ -12,12 +12,10 @@ public class ResultsMenuView extends AbstractMenuView {
     public ResultsMenuView(Group root){
         super(root);
         setBackgroundImage(ImageContainer.getInstance().getImage(ImageID.BUTTON_EXIT));
-        setActive();
-
     }
 
     @Override
     public void updateView(int superSelected, int[] subSelected) {
-
+        setActive();
     }
 }

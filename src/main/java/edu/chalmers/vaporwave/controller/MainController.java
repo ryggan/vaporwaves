@@ -52,6 +52,10 @@ public class MainController {
 
     public void initApplication(Group root) {
 
+        SoundContainer.initialize();
+        ImageContainer.initialize();
+        FileContainer.initialize();
+
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
@@ -73,10 +77,6 @@ public class MainController {
 
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
-
-        SoundContainer.initialize();
-        ImageContainer.initialize();
-        FileContainer.initialize();
     }
 
     public void initTimer() {
