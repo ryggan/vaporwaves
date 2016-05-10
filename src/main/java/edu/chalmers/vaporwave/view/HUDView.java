@@ -76,7 +76,8 @@ public class HUDView {
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
-        double newSpeed = Double.parseDouble(new DecimalFormat("##.#").format(speed));
+//        double newSpeed = Double.parseDouble(new DecimalFormat("##.#").format(speed));
+        double newSpeed = Math.floor(speed * 10)/ 10;
         int newHealth = (int) health;
 
 
