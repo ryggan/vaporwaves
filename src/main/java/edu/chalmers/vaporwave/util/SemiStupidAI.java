@@ -53,23 +53,23 @@ public class SemiStupidAI implements AI {
             return takeARandomStep();
         }
 
-        if(i == 2) {
-            // Print the board
-            System.out.println("BOAAAAAAARD");
-            for (int i = 0; i < aiHeuristics.getAIHeuristics().length; i++) {
-                for (int j = 0; j < aiHeuristics.getAIHeuristics()[0].length; j++) {
-                    if (aiHeuristics.getAIHeuristics()[i][j] == 0) {
-                        System.out.print("0   ");
-                    } else if (aiHeuristics.getAIHeuristics()[i][j] < 100) {
-                        System.out.print(aiHeuristics.getAIHeuristics()[i][j] + "  ");
-                    } else {
-                        System.out.print(aiHeuristics.getAIHeuristics()[i][j] + " ");
-                    }
-
-                }
-                System.out.println();
-            }
-        }
+//        if(i == 2) {
+//            // Print the board
+//            System.out.println("BOAAAAAAARD");
+//            for (int i = 0; i < aiHeuristics.getAIHeuristics().length; i++) {
+//                for (int j = 0; j < aiHeuristics.getAIHeuristics()[0].length; j++) {
+//                    if (aiHeuristics.getAIHeuristics()[i][j] == 0) {
+//                        System.out.print("0   ");
+//                    } else if (aiHeuristics.getAIHeuristics()[i][j] < 100) {
+//                        System.out.print(aiHeuristics.getAIHeuristics()[i][j] + "  ");
+//                    } else {
+//                        System.out.print(aiHeuristics.getAIHeuristics()[i][j] + " ");
+//                    }
+//
+//                }
+//                System.out.println();
+//            }
+//        }
 
         for (int i = 0; i < 4; i++) {
             if(Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).x >= 0 && Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).y >= 0
