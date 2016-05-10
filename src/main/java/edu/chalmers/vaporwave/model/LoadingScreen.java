@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.controller.MainController;
+import edu.chalmers.vaporwave.util.SoundContainer;
 
 public class LoadingScreen {
 
@@ -8,21 +9,27 @@ public class LoadingScreen {
 
     private double percentLoaded;
 
+    private int hasLoaded;
+
     public LoadingScreen(MainController mainController) {
         this.mainController = mainController;
         this.percentLoaded = 0;
+        this.hasLoaded = 0;
     }
 
     public void updateLoader() {
-        while(true) {
-            System.out.println("Loading! "+percentLoaded);
+        percentLoaded = SoundContainer.getTasksDone();
+        System.out.println("Loading! "+percentLoaded);
 
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+    }
+
+    public double getPercentLoaded() {
+        return this.percentLoaded;
     }
 
 }
