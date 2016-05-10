@@ -20,7 +20,7 @@ public class GameController {
     private ArenaView arenaView;
     private ArenaModel arenaModel;
 
-    private TimerModel timerModel;
+    private HealthBarModel healthBarModel;
 
     private Player localPlayer;
     private Player remotePlayer;
@@ -47,7 +47,8 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        SoundController.getInstance().playSound(Sound.GAME_MUSIC);
+
+        SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -73,6 +74,7 @@ public class GameController {
         this.arenaModel = newGame(arenaMap, timeLimit);
         this.arenaView = new ArenaView(root);
 
+
         arenaView.initArena(arenaModel.getArenaTiles());
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
@@ -80,7 +82,8 @@ public class GameController {
                 this.localPlayer.getCharacter().getHealth(),
                 this.localPlayer.getCharacter().getSpeed(),
                 this.localPlayer.getCharacter().getBombRange(),
-                this.localPlayer.getCharacter().getCurrentBombCount()
+                this.localPlayer.getCharacter().getCurrentBombCount(),
+                timeSinceStart
         );
 
         try {
@@ -112,10 +115,15 @@ public class GameController {
                 System.out.println("Tile out of bounds!");
             }
         }
+        this.healthBarModel=new HealthBarModel((int)this.localPlayer.getCharacter().getHealth());
     }
+
+
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+
+
 
         this.timeSinceStart = timeSinceStart;
         if(timeLimit-timeSinceLastCall>0) {
@@ -201,7 +209,7 @@ public class GameController {
             switch (key) {
 
                 case "ESCAPE":
-                    SoundController.getInstance().stopSound(Sound.GAME_MUSIC);
+                    SoundContainer.getInstance().stopSound(SoundID.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
                         for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
@@ -226,45 +234,45 @@ public class GameController {
 
         }
 
-        // Updating positions
+        // Updating positions (if not paused)
         if(!gameIsPaused) {
-        for (Movable movable : arenaModel.getArenaMovables()) {
-            movable.updatePosition();
 
-            // If moving and not invincible, check for things that will deal damage
-            if (!movable.isInvincible()
-                    && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
+            for (Movable movable : arenaModel.getArenaMovables()) {
+                movable.updatePosition();
 
-                // The enemy-check for characters only:
-                if (movable instanceof GameCharacter) {
+                // If moving and not invincible, check for things that will deal damage
+                if (!movable.isInvincible()
+                        && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
 
-                    GameCharacter gameCharacter = (GameCharacter) movable;
+                    // The enemy-check for characters only:
+                    if (movable instanceof GameCharacter) {
 
-                    for (Movable otherMovable : arenaModel.getArenaMovables()) {
-                        if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
-                                && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
-                            movable.dealDamage(otherMovable.getDamage());
-                            updateStats();
-                            break;
+                        GameCharacter gameCharacter = (GameCharacter) movable;
+
+                        for (Movable otherMovable : arenaModel.getArenaMovables()) {
+                            if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
+                                    && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
+                                movable.dealDamage(otherMovable.getDamage());
+                                updateStats();
+                                break;
+                            }
                         }
-                    }
 
-                    // Walking over powerup?
-                    if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof StatPowerUp) {
-                        StatPowerUp powerUp = (StatPowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
+                        // Walking over powerup?
+                        if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof StatPowerUp) {
+                            StatPowerUp powerUp = (StatPowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
 
-                        // If so, pick it up
-                        if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
-                            powerUp.pickUp(timeSinceStart);
-                            gameCharacter.pickedUpPowerUp(timeSinceStart);
-                            playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
-                            updateStats();
+                            // If so, pick it up
+                            if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
+                                powerUp.pickUp(timeSinceStart);
+                                gameCharacter.pickedUpPowerUp(timeSinceStart);
+                                playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
+                                updateStats();
+                            }
                         }
+
+
                     }
-
-
-                }
-            }
 
                     // The blast-check:
                     StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
@@ -283,6 +291,7 @@ public class GameController {
                 }
             }
 
+        }
 
 
 
@@ -300,6 +309,9 @@ public class GameController {
             this.arenaModel.updateBombs(this.timeSinceStart);
             this.arenaModel.sortMovables();
         }
+
+        this.healthBarModel.updateHealth((int)this.localPlayer.getCharacter().getHealth());
+        arenaView.updateHealth((int)this.healthBarModel.getHealth());
 
         // Calls view to update graphics
         if(!gameIsPaused) {
@@ -428,9 +440,12 @@ public class GameController {
                 this.localPlayer.getCharacter().getHealth(),
                 this.localPlayer.getCharacter().getSpeed(),
                 this.localPlayer.getCharacter().getBombRange(),
-                this.localPlayer.getCharacter().getCurrentBombCount()
+                this.localPlayer.getCharacter().getCurrentBombCount(),
+                timeSinceStart
         );
     }
+
+
 
     public ArenaModel newGame(ArenaMap arenaMap, double timeLimit) {
         TimerModel.getInstance().updateTimer(timeLimit);
@@ -471,7 +486,11 @@ public class GameController {
     public void movableDeath(DeathEvent deathEvent) {
         Movable movable = deathEvent.getMovable();
         if (movable instanceof GameCharacter) {
+
+            //TODO
             movable.spawn(new Point(6, 5));
+            updateStats();
+
         } else if (movable instanceof Enemy) {
             if (!deadEnemies.contains((Enemy)movable)) {
                 deadEnemies.add((Enemy)movable);
@@ -483,7 +502,10 @@ public class GameController {
     public void movableSpawn(SpawnEvent spawnEvent) {
         Movable movable = spawnEvent.getMovable();
         if (movable instanceof GameCharacter) {
+
             movable.idle();
+
+
         } else if (movable instanceof Enemy) {
 
         }
