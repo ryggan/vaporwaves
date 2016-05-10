@@ -96,6 +96,15 @@ public class GameController {
         this.enemies = new HashSet<>();
         this.deadEnemies = new HashSet<>();
 
+        //Felix code
+        Set<GameCharacter> gameCharacters = new HashSet<>();
+        gameCharacters.add(localPlayer.getCharacter());
+        gameCharacters.add(remotePlayer.getCharacter());
+
+        Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 2, new SemiStupidAI(gameCharacters));
+        enemies.add(felixBot);
+        //
+
         Random random = new Random();
         for (int k = 0; k < 10; k++) {
             boolean free;
