@@ -316,6 +316,7 @@ public abstract class Movable {
     public double getCanvasPositionX() {
         return this.canvasPositionX;
     }
+
     public double getCanvasPositionY() {
         return this.canvasPositionY;
     }
