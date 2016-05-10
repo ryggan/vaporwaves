@@ -91,7 +91,7 @@ public class Utils {
                 newPosition.setLocation(initialPosition.x, initialPosition.y + distance);
                 break;
         }
-        return newPosition;
+            return newPosition;
     }
 
     public static Direction getDirectionFromString(String string) {

@@ -17,7 +17,7 @@ public class AIHeuristics {
         int x = position.x;
         int y = position.y;
 
-        if(x > 0 && y > 0 && x < 15 && y < 13) {
+        if(x > 0 && y > 0 && x < 20 && y < 14) {
             heuristicMatrix[x][y] = previousValue;
             previousValue = 90;
             if(x > 0) {
@@ -30,7 +30,7 @@ public class AIHeuristics {
             }
         }
 
-        if(x > 1 && y > 1 && x < 14 && y < 12) {
+        if(x > 1 && y > 1 && x < 19 && y < 14) {
             previousValue = 80;
             heuristicMatrix[x - 2][y] = previousValue;
             heuristicMatrix[x - 1][y + 1] = previousValue;
@@ -49,7 +49,7 @@ public class AIHeuristics {
             heuristicMatrix[x + 1][y - 1] = previousValue;
         }
 
-        if(x > 2 && y > 2 && x < 13 && y < 11) {
+        if(x > 2 && y > 2 && x < 18 && y < 13) {
             previousValue = 70;
             heuristicMatrix[x - 3][y] = previousValue;
             heuristicMatrix[x - 2][y + 1] = previousValue;
@@ -72,7 +72,8 @@ public class AIHeuristics {
     public AIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters) {
         this.arenaTiles = arenaTiles;
         this.gameCharacters = gameCharacters;
-        heuristicMatrix = new int[this.arenaTiles.length][this.arenaTiles[0].length];
+        heuristicMatrix = new int[21][15];
+       // heuristicMatrix = new int[this.arenaTiles.length][this.arenaTiles[0].length];
 
     }
 
