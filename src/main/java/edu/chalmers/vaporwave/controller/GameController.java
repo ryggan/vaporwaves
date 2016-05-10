@@ -320,6 +320,7 @@ public class GameController {
         }
 
         this.healthBarModel.updateHealth((int)this.localPlayer.getCharacter().getHealth());
+
         arenaView.updateHealth((int)this.healthBarModel.getHealth());
 
         // Calls view to update graphics

@@ -5,11 +5,12 @@ package edu.chalmers.vaporwave.util;
  */
 public class HealthBarModel {
     int newHealth;
-    int lastHealth;
     int currentHealth;
+    int change;
 
     public HealthBarModel(int i){
         this.currentHealth=i;
+        this.change=2;
     }
 
     public void setHealth(int i){
@@ -22,14 +23,17 @@ public class HealthBarModel {
 
     public void updateHealth(int newHealth){
         this.newHealth=newHealth;
+
+        int symbol=0;
+
         if(this.newHealth==this.currentHealth){
 
         } else if(this.currentHealth>this.newHealth) {
-            this.currentHealth--;
+            symbol=-1;
         } else if(this.currentHealth<this.newHealth) {
-            this.currentHealth++;
+            symbol=1;
         }
-//        System.out.println(currentHealth);
+        this.currentHealth=currentHealth+(symbol*change);
 
     }
 

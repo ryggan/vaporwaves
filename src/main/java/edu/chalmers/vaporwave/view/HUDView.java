@@ -18,21 +18,12 @@ import java.awt.*;
 
 public class HUDView {
 
-    private int width;
-    private int height;
-    private int firstFrameX;
-    private Point position;
     private Label stats;
-    private Label healthPercentage;
-
-
-
 
     private ImageView healthBarEmpty;
     private ImageView healthBarFilled;
     private ImageView scoreBarFilled;
     private ImageView scoreBarEmpty;
-
 
     private ImageView emptyBar;
     private Group root;
@@ -40,11 +31,6 @@ public class HUDView {
 
     private PixelReader reader;
     private WritableImage newImage;
-
-    private double healthBarSpeed;
-    private int lastHealth;
-
-    private HealthBarView healthBar;
 
     private Font bauhaus10;
 
@@ -89,28 +75,26 @@ public class HUDView {
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
-        double printSpeed = (double) (speed);
-
+        double newSpeed = (double) (speed);
         int newHealth = (int) health;
-        updateHealthBar((int) ((health / 100) * 300));
 
-
-        stats.setText("Health: " + newHealth + "\nBombs: " + bombCount + "\nSpeed: " + printSpeed + "\nRange: " + range);
+        stats.setText("Health: " + newHealth + "\nBombs: " + bombCount + "\nSpeed: " + newSpeed + "\nRange: " + range);
 
         stats.setLayoutX(920);
         stats.setLayoutY(152);
 
         this.root.getChildren().remove(stats);
         this.root.getChildren().add(stats);
-        lastHealth = (int) health;
 
     }
 
     public void updateHealthBar(int health) {
-        if(health==0){
+
+        if((int) (health *3 )==0){
             setZeroHealthBar();
+
         } else {
-            newImage = new WritableImage(reader, 0, 0, health, 17);
+            newImage = new WritableImage(reader, 0, 0, (int) (health * 3), 17);
             ImageView healthBarFilledNew = new ImageView(newImage);
             healthBarFilledNew.setLayoutX(184);
             healthBarFilledNew.setLayoutY(38);
@@ -124,6 +108,5 @@ public class HUDView {
     public void setZeroHealthBar(){
         this.root.getChildren().remove(healthBarFilled);
     }
-
 
 }

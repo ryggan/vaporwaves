@@ -1,5 +1,5 @@
 package edu.chalmers.vaporwave.model.menu;
 
 public enum MenuAction {
-    NO_ACTION, PREVIOUS, NEXT, START_GAME, EXIT_GAME
+    NO_ACTION, START_GAME, OPTIONS, EXIT_PROGRAM, EXIT_TO_MENU, BACK, NEXT
 }
