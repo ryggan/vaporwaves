@@ -5,7 +5,8 @@ import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
-import edu.chalmers.vaporwave.model.menu.LoadingScreen;
+import edu.chalmers.vaporwave.model.LoadingScreen;
+import edu.chalmers.vaporwave.util.FileContainer;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.util.SoundContainer;
 import edu.chalmers.vaporwave.view.ImageContainer;
@@ -17,11 +18,11 @@ public class MainController {
 
     private MenuController menuController;
     private GameController gameController;
-    private ListenerController listenerController;
     private Group root;
     private Group menuRoot;
     private Group gameRoot;
 
+    private Thread loaderThread;
     private LoadingScreen loader;
     private LoadingScreenView loaderView;
 
@@ -45,10 +46,15 @@ public class MainController {
         this.loader = new LoadingScreen(this);
         this.loaderView = new LoadingScreenView(root);
 
-
+        this.loaderThread = new Thread(this.loader);
+        this.loaderThread.start();
     }
 
     public void initApplication(Group root) {
+
+        SoundContainer.initialize();
+        ImageContainer.initialize();
+        FileContainer.initialize();
 
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
@@ -71,9 +77,6 @@ public class MainController {
 
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
-
-        SoundContainer.initialize();
-        ImageContainer.initialize();
     }
 
     public void initTimer() {

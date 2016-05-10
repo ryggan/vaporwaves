@@ -76,6 +76,7 @@ public class HUDView {
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
+        double newSpeed = Math.floor(speed * 10)/ 10;
         int newHealth = (int) health;
 
 
