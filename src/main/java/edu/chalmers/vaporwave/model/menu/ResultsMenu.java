@@ -8,7 +8,7 @@ public class ResultsMenu extends AbstractMenu {
         super( new int[]{0, 3, 0});
     }
 
-
+    //exit
 
     @Override
     public MenuState getMenuAction() {

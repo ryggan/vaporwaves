@@ -18,4 +18,19 @@ public class ResultsMenuView extends AbstractMenuView {
     public void updateView(int superSelected, int[] subSelected) {
         setActive();
     }
+
+
+    //characters killed
+    //score
+    //deathcount
+    //enemies killed
+    //picture of character (sad/glad)
+    //results title
+    //highscore screen after?
+    //if new highscore
+    //winner name
+    //victory/defeat
+    //rank (noob, ok, pro, hacker)
+    //powerups picked up
+    //
 }
