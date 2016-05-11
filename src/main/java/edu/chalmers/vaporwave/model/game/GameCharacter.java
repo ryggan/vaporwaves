@@ -5,7 +5,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.event.PlaceMineEvent;
 import edu.chalmers.vaporwave.util.MovableState;
-import edu.chalmers.vaporwave.util.SoundContainer;
+import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
 import edu.chalmers.vaporwave.util.SoundID;
 import edu.chalmers.vaporwave.util.Utils;
 

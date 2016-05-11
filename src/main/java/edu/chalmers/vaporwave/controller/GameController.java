@@ -2,6 +2,8 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.assetcontainer.FileContainer;
+import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;

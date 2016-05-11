@@ -2,6 +2,8 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.assetcontainer.FileContainer;
+import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.PauseMenuController;
 import edu.chalmers.vaporwave.event.*;
@@ -20,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class ArenaView {
 

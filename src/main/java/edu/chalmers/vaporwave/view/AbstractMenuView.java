@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.ImageID;

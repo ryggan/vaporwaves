@@ -1,8 +1,8 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.ImageID;
-import edu.chalmers.vaporwave.util.TimerModel;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
@@ -11,9 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Font;
-
-import java.awt.*;
-import java.text.DecimalFormat;
 
 ;
 

@@ -1,8 +1,8 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.util.ImageID;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 
 /**
  * Created by Lina on 5/10/2016.

@@ -1,10 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
-import edu.chalmers.vaporwave.event.ExitGameEvent;
-import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.event.GoToMenuEvent;
-import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.LoadingScreen;
 import edu.chalmers.vaporwave.assetcontainer.FileContainer;
 import edu.chalmers.vaporwave.util.LongValue;
@@ -35,10 +32,12 @@ public class MainController {
      */
     public MainController(Group root) {
 
-//        initLoader(root);
+        this.root = root;
 
-        initApplication(root);
-        initTimer();
+        initLoader(root);
+
+//        initApplication();
+//        initTimer();
 
     }
 
@@ -46,28 +45,42 @@ public class MainController {
         this.loader = new LoadingScreen(this);
         this.loaderView = new LoadingScreenView(root);
 
-//        this.loaderThread = new Thread(this.loader);
-        this.loaderThread = new Thread(new Runnable() {
-            public void run() {
+        new AnimationTimer() {
+            public void handle(long currentNanoTime) {
                 loader.updateLoader();
                 loaderView.updateView();
+
+                if (loader.getPercentLoaded() == 2) {
+                    initApplication();
+                    initTimer();
+                    this.stop();
+                }
             }
-        });
-        this.loaderThread.start();
+        }.start();
+
+        new Thread(new Runnable() {
+            public void run() {
+                SoundContainer.initialize();
+                ImageContainer.initialize();
+                FileContainer.initialize();
+                return;
+            }
+        }).start();
     }
 
-    public void initApplication(Group root) {
+    public void initApplication() {
 
-        SoundContainer.initialize();
-        ImageContainer.initialize();
-        FileContainer.initialize();
+        System.out.println("initApplication()");
+//
+//        SoundContainer.initialize();
+//        ImageContainer.initialize();
+//        FileContainer.initialize();
 
         // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
         //GameServer gameServer = new GameServer();
 
-        this.root = root;
         // Initiating variables and controllers
 
         this.inGame = false;
@@ -86,6 +99,8 @@ public class MainController {
     }
 
     public void initTimer() {
+
+        System.out.println("initTimer()");
 
         // Animation timer setup
 
@@ -142,4 +157,10 @@ public class MainController {
 
         this.inGame = false;
     }
+
+//    @Subscribe
+//    public void loaderInitiated(LoaderInitiatedEvent loaderInitiatedEvent) {
+//        System.out.println("loaderInitiated()");
+//        initApplication();
+//    }
 }

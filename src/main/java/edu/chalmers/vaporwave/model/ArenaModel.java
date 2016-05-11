@@ -83,7 +83,7 @@ public class ArenaModel {
         return this.arenaTiles[position.x][position.y];
     }
 
-    // Simple removeTile()-method that allways clear a tile on the board
+    // Simple removeTile()-method that always clear a tile on the board
     public void removeTile(Point position) {
         setTile(null, position.x, position.y);
     }
@@ -99,7 +99,7 @@ public class ArenaModel {
         }
     }
 
-    // Special recursive removeTile-method that goes through the hierarchy of a DoubbleTile-tree and removes the
+    // Special recursive removeTile-method that goes through the hierarchy of a DoubleTile-tree and removes the
     // specific tile, and IF it is found, it works its way backwards and removes DoubleTiles where necessary
     public StaticTile removeDoubleTile(DoubleTile doubleTile, StaticTile tile) {
         if (doubleTile.getLowerTile() != null) {
