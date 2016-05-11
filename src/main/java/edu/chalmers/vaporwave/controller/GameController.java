@@ -56,6 +56,7 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
+        double time = System.currentTimeMillis();
 
         SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
 
@@ -75,16 +76,14 @@ public class GameController {
         timeSinceStart = 0.0;
         timeSinceStart = 0.0;
 
-        timeLimit=10;
+        timeLimit = 10;
 
-//        ArenaMap arenaMap = new ArenaMap("default", (new MapFileReader(Constants.DEFAULT_MAP_FILE)).getMapObjects());
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
         this.arenaModel = newGame(arenaMap, timeLimit);
         this.arenaView = new ArenaView(root);
-
 
         arenaView.initArena(arenaModel.getArenaTiles());
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
@@ -144,16 +143,14 @@ public class GameController {
         playerList.add(remotePlayer);
         this.scoreboard = new Scoreboard(root, playerList);
 
+        System.out.println("Game started, timed: "+(System.currentTimeMillis() - time)+" millis");
     }
 
 
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
-
-
-
-
+        
         this.timeSinceStart = timeSinceStart;
         if(timeLimit-timeSinceLastCall>0) {
             timeLimit = timeLimit - timeSinceLastCall;

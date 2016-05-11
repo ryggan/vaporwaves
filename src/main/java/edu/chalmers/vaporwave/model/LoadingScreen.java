@@ -1,9 +1,6 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteContainer;
-import edu.chalmers.vaporwave.assetcontainer.FileContainer;
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
-import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
+import edu.chalmers.vaporwave.assetcontainer.*;
 
 public class LoadingScreen {
 
@@ -18,11 +15,13 @@ public class LoadingScreen {
         double soundLoaded = SoundContainer.getTasksDone();
         double imageLoaded = ImageContainer.getTasksDone();
         double fileLoaded = FileContainer.getTasksDone();
-        double spriteLoaded = CharacterSpriteContainer.getTasksDone();
+        double characterSpriteLoaded = CharacterSpriteContainer.getTasksDone();
+        double spriteLoaded = SpriteContainer.getTasksDone();
         double totalTasks = SoundContainer.getTotalTasks() + ImageContainer.getTotalTasks()
-                + FileContainer.getTotalTasks() + CharacterSpriteContainer.getTotalTasks();
+                + FileContainer.getTotalTasks() + CharacterSpriteContainer.getTotalTasks() + SpriteContainer.getTotalTasks();
 
-        percentLoaded = (soundLoaded + imageLoaded + fileLoaded + spriteLoaded) / totalTasks;
+        percentLoaded = (soundLoaded + imageLoaded + fileLoaded + characterSpriteLoaded + spriteLoaded) / totalTasks;
+//        System.out.println(percentLoaded);
 
         try {
             Thread.sleep(100);
