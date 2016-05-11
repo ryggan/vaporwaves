@@ -168,10 +168,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     @Override
     public void setScale(double scale) {
         super.setScale(scale);
-//        setWidth(spriteDimension.getWidth());
-//        setHeight(spriteDimension.getHeight());
         setSpriteSheet(this.originalSpriteSheet);
-//        setSpriteSheet(Utils.resize(this.originalSpriteSheet, scale));
     }
 
     /**

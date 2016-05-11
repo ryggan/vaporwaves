@@ -56,8 +56,6 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        double time = System.currentTimeMillis();
-
         SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
@@ -74,9 +72,8 @@ public class GameController {
         // Initiates view
 
         timeSinceStart = 0.0;
-        timeSinceStart = 0.0;
 
-        timeLimit = 10;
+        timeLimit = 60;
 
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
@@ -142,8 +139,6 @@ public class GameController {
         playerList.add(localPlayer);
         playerList.add(remotePlayer);
         this.scoreboard = new Scoreboard(root, playerList);
-
-        System.out.println("Game started, timed: "+(System.currentTimeMillis() - time)+" millis");
     }
 
 
@@ -309,21 +304,21 @@ public class GameController {
                             }
                         }
                     }
-                }
 
-                // The blast-check:
-                StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
-                Blast blast = null;
-                if (currentTile instanceof Blast) {
-                    blast = (Blast) currentTile;
-                } else if (currentTile instanceof DoubleTile) {
-                    blast = ((DoubleTile) currentTile).getBlast();
-                }
+                    // The blast-check:
+                    StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
+                    Blast blast = null;
+                    if (currentTile instanceof Blast) {
+                        blast = (Blast) currentTile;
+                    } else if (currentTile instanceof DoubleTile) {
+                        blast = ((DoubleTile) currentTile).getBlast();
+                    }
 
-                // If blast was found, and the blast still is dangerous, deal damage
-                if (blast != null && blast.isDangerous(timeSinceStart)) {
-                    movable.dealDamage(blast.getDamage());
-                    updateStats();
+                    // If blast was found, and the blast still is dangerous, deal damage
+                    if (blast != null && blast.isDangerous(timeSinceStart)) {
+                        movable.dealDamage(blast.getDamage());
+                        updateStats();
+                    }
                 }
             }
         }

@@ -52,10 +52,6 @@ public class Sprite {
 
     public void setImage(Image image) {
         this.originalImage = image;
-//        if (image == null) {
-//            this.width = -1;
-//            this.height = -1;
-//        } else {
         if (image != null) {
             this.image = Utils.resize(this.originalImage, this.scale);
             this.width = image.getWidth();
@@ -89,9 +85,6 @@ public class Sprite {
      */
     public void setScale(double scale) {
         this.scale = scale;
-//        if (this.originalImage != null) {
-//            setImage(Utils.resize(this.originalImage, this.scale));
-//        }
         setImage(this.originalImage);
     }
 
@@ -104,7 +97,6 @@ public class Sprite {
     public void setPosition(double positionX, double positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
-//        System.out.println("sprite posx: "+positionX+", posy: "+positionY);
     }
     public void setPosition(Point point) {
         this.setPosition(point.getX(), point.getY());
