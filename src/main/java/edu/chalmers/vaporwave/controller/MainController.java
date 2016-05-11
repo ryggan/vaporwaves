@@ -112,6 +112,9 @@ public class MainController {
 
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
+
+        ListenerController.getInstance().clearPressed();
+        ListenerController.getInstance().clearReleased();
     }
 
     public void initTimer() {
