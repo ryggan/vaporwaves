@@ -64,7 +64,7 @@ public abstract class AbstractMenu {
         return this.selectedItems;
     }
 
-    public abstract MenuAction getMenuAction();
+    public abstract MenuState getMenuAction();
 
     public NewGameEvent getNewGameEvent() {
         return this.newGameEvent;

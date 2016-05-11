@@ -8,14 +8,13 @@ public class StartMenu extends AbstractMenu {
     }
 
 
-    public MenuAction getMenuAction() {
+    public MenuState getMenuAction() {
         if (this.getSelectedSuper() == 0) {
-//            return MenuAction.NEXT;
-            return MenuAction.START_GAME;
+            return MenuState.CHARACTER_SELECT;
         } else if (this.getSelectedSuper() == 1) {
-            return MenuAction.EXIT_PROGRAM;
+            return MenuState.EXIT_PROGRAM;
         }
 
-        return MenuAction.NO_ACTION;
+        return MenuState.NO_ACTION;
     }
 }

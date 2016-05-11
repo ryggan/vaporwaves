@@ -2,9 +2,6 @@ package edu.chalmers.vaporwave.model.menu;
 
 import edu.chalmers.vaporwave.event.NewGameEvent;
 
-/**
- * Created by Lina on 5/10/2016.
- */
 public class ResultsMenu extends AbstractMenu {
 
     public ResultsMenu(NewGameEvent newGameEvent) {
@@ -14,7 +11,7 @@ public class ResultsMenu extends AbstractMenu {
 
 
     @Override
-    public MenuAction getMenuAction() {
+    public MenuState getMenuAction() {
         return null;
     }
 }

@@ -19,13 +19,13 @@ public class CharacterMenu extends AbstractMenu {
     }
 
 
-    public MenuAction getMenuAction() {
+    public MenuState getMenuAction() {
         if (getSelectedSuper() == 0) {
 
         } else if (getSelectedSuper() == 2) {
-            return MenuAction.START_GAME;
+            return MenuState.START_GAME;
         }
-        return MenuAction.NO_ACTION;
+        return MenuState.NO_ACTION;
     }
 
 
