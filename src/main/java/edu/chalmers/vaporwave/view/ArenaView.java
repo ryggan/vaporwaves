@@ -107,7 +107,6 @@ public class ArenaView {
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
-
         this.pauseMenuController = new PauseMenuController(root);
 
         // Character sprites
@@ -186,19 +185,19 @@ public class ArenaView {
         // Rendering gamebackground image to gamebackground canvas
 
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
+//        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.NORTH).setPosition(0, -Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.NORTH).setScale(Constants.GAME_SCALE);
+//        arenaFrameSprites.get(Compass.NORTH).setScale(Constants.GAME_SCALE);
         arenaFrameSprites.get(Compass.NORTH).render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.WEST).setPosition(0, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.WEST).setScale(Constants.GAME_SCALE);
+//        arenaFrameSprites.get(Compass.WEST).setScale(Constants.GAME_SCALE);
         arenaFrameSprites.get(Compass.WEST).render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.EAST).setPosition(Constants.DEFAULT_TILE_WIDTH * (2 + Constants.DEFAULT_GRID_WIDTH), Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.EAST).setScale(Constants.GAME_SCALE);
+//        arenaFrameSprites.get(Compass.EAST).setScale(Constants.GAME_SCALE);
         arenaFrameSprites.get(Compass.EAST).render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.SOUTH).setPosition(0, (Constants.DEFAULT_GRID_HEIGHT + 1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);

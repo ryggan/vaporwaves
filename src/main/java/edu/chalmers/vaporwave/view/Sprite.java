@@ -10,6 +10,7 @@ import java.awt.*;
 public class Sprite {
 
     private Image image;
+    private Image originalImage;
     private double positionX;
     private double positionY;
     private double width;
@@ -50,11 +51,13 @@ public class Sprite {
     }
 
     public void setImage(Image image) {
-        this.image = image;
-        if (image == null) {
-            this.width = -1;
-            this.height = -1;
-        } else {
+        this.originalImage = image;
+//        if (image == null) {
+//            this.width = -1;
+//            this.height = -1;
+//        } else {
+        if (image != null) {
+            this.image = Utils.resize(this.originalImage, this.scale);
             this.width = image.getWidth();
             this.height = image.getHeight();
         }
@@ -86,9 +89,10 @@ public class Sprite {
      */
     public void setScale(double scale) {
         this.scale = scale;
-        if (this.image != null) {
-            setImage(Utils.resize(this.image, this.scale));
-        }
+//        if (this.originalImage != null) {
+//            setImage(Utils.resize(this.originalImage, this.scale));
+//        }
+        setImage(this.originalImage);
     }
 
     public String toString() {
