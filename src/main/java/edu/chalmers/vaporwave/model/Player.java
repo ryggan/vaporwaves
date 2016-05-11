@@ -7,11 +7,19 @@ public class Player {
     private String playerName;
     private GameCharacter gameCharacter;
     private int score;
+    private int kills;
+    private int deaths;
+    private int creeps;
+    private String[] playerInfo;
 
     public Player(int playerId, String playerName) {
         this.playerId = playerId;
         this.playerName = playerName;
         this.score = 0;
+        this.deaths = 0;
+        this.creeps = 0;
+        this.kills = 0;
+        playerInfo = new String[5];
     }
 
     public void setScore(int score) {
@@ -20,6 +28,30 @@ public class Player {
 
     public int getScore() {
         return this.score;
+    }
+
+    public void incrementKills() {
+        kills++;
+    }
+
+    public int getKills() {
+        return this.kills;
+    }
+
+    public void incrementDeaths() {
+        deaths++;
+    }
+
+    public int getDeaths() {
+        return this.deaths;
+    }
+
+    public void incrementCreeps() {
+        creeps++;
+    }
+
+    public int getCreeps() {
+        return this.creeps;
     }
 
     public void clearScore() {
@@ -41,5 +73,15 @@ public class Player {
     public int getPlayerId() {
         return this.playerId;
     }
+
+    public String[] getPlayerInfo() {
+        playerInfo[0] = playerName;
+        playerInfo[1] = kills + "";
+        playerInfo[2] = deaths + "";
+        playerInfo[3] = creeps + "";
+        playerInfo[4] = score + "";
+        return playerInfo;
+    }
+
 
 }

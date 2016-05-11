@@ -5,24 +5,29 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import jdk.nashorn.internal.ir.Labels;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Scoreboard {
     private Player localPlayer;
     private Sprite scoreboardBackground;
     private Canvas scoreboard;
     private GraphicsContext scoreboardGC;
-    private ArrayList<Label> labels;
+    private List<Player> playerList;
     private Group root;
     private AnchorPane scoreboardPane;
-    private TilePane tilePane;
+    private GridPane gridPane;
+    private Label[][] playerLabels;
 
     private static final double ELEMENT_SIZE = 100;
     private static final double GAP = ELEMENT_SIZE / 10;
@@ -35,8 +40,11 @@ public class Scoreboard {
             //Math.floor((Constants.WINDOW_HEIGHT - (Constants.DEFAULT_TILE_HEIGHT * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE) / 2));
 
     //For testing purposes
-    public Scoreboard(Group root) {
+    public Scoreboard(Group root, List<Player> playerList) {
         this.root = root;
+        this.playerList = playerList;
+        playerLabels = new Label[playerList.size()][5];
+
         //fix filepath after creating image
         scoreboardBackground = new Sprite(ImageContainer.getInstance().getImage(ImageID.SCOREBOARD_BACK));
         scoreboard = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
@@ -71,6 +79,7 @@ public class Scoreboard {
     }
 
     public void showScoreboard() {
+        updateScoreboard();
         scoreboard.setVisible(true);
         scoreboardPane.setVisible(true);
         scoreboardPane.toFront();
@@ -83,33 +92,24 @@ public class Scoreboard {
 
     //should have "ArrayList<Player> players" as argument, made dummy list in method for testing purposes
     public void addPlayersToScoreboard(/*ArrayList<Player> players*/) {
-        labels = new ArrayList<Label>();
-        tilePane = new TilePane();
-        tilePane.setPrefSize(512,448);
-        tilePane.setPrefRows(/*players.size()*/ 2);
-        tilePane.setPrefColumns(5);
-        tilePane.setHgap(GAP);
-        tilePane.setVgap(GAP + 30);
-        tilePane.setLayoutX(xoffset);
-        tilePane.setLayoutY(yoffset);
-        tilePane.setPadding(new Insets(20, 20, 20, 80));
+        gridPane = new GridPane();
+        gridPane.setPrefSize(512,448);
+        gridPane.setHgap(GAP + 20);
+        gridPane.setVgap(GAP + 30);
+        gridPane.setLayoutX(xoffset);
+        gridPane.setLayoutY(yoffset);
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+
+        gridPane.setAlignment(Pos.TOP_CENTER);
         //tilePane.setAlignment();
 
         String[] str = {"Player1", "3", "5", "10", "1000"};
-        scoreboardPane.getChildren().add(tilePane);
-        createElements(str);
-       /* for(int i = 0; i < players.size(); i++) {
-            labels.add(i, new Label("Player"));
-            //Some logic for setting it dynamicly, got a good idea
-            scoreboardPane.getChildren().add(labels.get(i));
-            labels.get(i).setLayoutX(0);
-            labels.get(i).setLayoutY(0);
-            labels.get(i).setVisible(true);
-        }*/
+        scoreboardPane.getChildren().add(gridPane);
+        createElements();
     }
 
-    private void createElements(String[] str) {
-        tilePane.getChildren().clear();
+    private void createElements() {
+        gridPane.getChildren().clear();
         Group labels = new Group();
         Label name = new Label("Player:", labels);
         name.setStyle("-fx-text-fill: white; -fx-font-size: 16;");
@@ -121,21 +121,42 @@ public class Scoreboard {
         creeps.setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
         Label score = new Label("Score:", labels);
         score.setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
-        tilePane.getChildren().add(name);
-        tilePane.getChildren().add(kills);
-        tilePane.getChildren().add(deaths);
-        tilePane.getChildren().add(creeps);
-        tilePane.getChildren().add(score);
+        gridPane.add(name, 0, 0);
+        gridPane.add(kills, 1, 0);
+        gridPane.add(deaths, 2 , 0);
+        gridPane.add(creeps, 3, 0);
+        gridPane.add(score, 4, 0);
 
-        for (int i = 0; i < 5; i++) {
+        System.out.println("playerList.size: " + playerList.size());
+
+        for(int i = 0; i < playerList.size(); i++) {
+            for(int j = 0; j < 5; j++) {
+//                System.out.println(playerList.size() + " is the playerList size");
+//                System.out.println(playerList.get(i-1).getPlayerInfo()[j] + " some stats");
+
+                playerLabels[i][j] = new Label(playerList.get(i).getPlayerInfo()[j] + "");
+                playerLabels[i][j].setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
+                gridPane.add(playerLabels[i][j], j, i+1);
+            }
+        }
+
+ /*       for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 1; j++) {
                 Label label = new Label(str[i]);
                 label.setStyle("-fx-text-fill: white; -fx-font-size: 16;");
                 tilePane.getChildren().add(label);
             }
-        }
+        }*/
     }
 
+
+    public void updateScoreboard() {
+        for(int i = 0; i < playerList.size(); i++) {
+            for(int j = 0; j < 5; j++) {
+                playerLabels[i][j].setText(playerList.get(i).getPlayerInfo()[j] + "");
+            }
+        }
+    }
     //private void createElement(String str) {
         //Rectangle rectangle = new Rectangle(ELEMENT_SIZE-20, ELEMENT_SIZE/3);
         //rectangle.setStroke(Color.ORANGE);

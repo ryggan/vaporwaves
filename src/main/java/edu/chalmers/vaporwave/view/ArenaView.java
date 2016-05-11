@@ -105,7 +105,7 @@ public class ArenaView {
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
-        this.scoreboard = new Scoreboard(root);
+
         this.pauseMenuController = new PauseMenuController(root);
 
         // Setting up sprites
@@ -341,13 +341,6 @@ public class ArenaView {
 
     public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
 
-        // Checks if player is holding tab, then shows the scoreboard.
-
-        if(ListenerController.getInstance().getInput().contains("TAB")) {
-            scoreboard.showScoreboard();
-        } else {
-            scoreboard.hideScoreboard();
-        }
 
 
 

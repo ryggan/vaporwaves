@@ -14,6 +14,7 @@ import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
+import edu.chalmers.vaporwave.view.Scoreboard;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -21,6 +22,9 @@ import java.util.*;
 import java.util.List;
 
 public class GameController {
+    private Boolean scoreboardIsShowing = false;
+    private List<Player> playerList;
+    private Scoreboard scoreboard;
 
     private ArenaView arenaView;
     private ArenaModel arenaModel;
@@ -132,12 +136,21 @@ public class GameController {
             }
         }
         this.healthBarModel=new HealthBarModel((int)this.localPlayer.getCharacter().getHealth());
+
+        // // TODO: 11/05/16 fix this to some other class, probably arenaView
+
+        playerList = new ArrayList<>();
+        playerList.add(localPlayer);
+        playerList.add(remotePlayer);
+        this.scoreboard = new Scoreboard(root, playerList);
+
     }
 
 
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+
 
 
 
@@ -249,6 +262,14 @@ public class GameController {
                         gameIsPaused = true;
                     }
                     break;
+                case "TAB":
+                    if(!scoreboardIsShowing) {
+                        scoreboard.showScoreboard();
+                        scoreboardIsShowing = true;
+                    } else if(scoreboardIsShowing) {
+                        scoreboard.hideScoreboard();
+                        scoreboardIsShowing = false;
+                    }
             }
 
         }
