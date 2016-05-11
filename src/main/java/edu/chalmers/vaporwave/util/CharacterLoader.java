@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.util;
 
+import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.assetcontainer.ImageContainer;

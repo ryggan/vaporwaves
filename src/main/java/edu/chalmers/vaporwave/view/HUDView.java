@@ -2,7 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.ImageID;
+import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;

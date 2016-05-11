@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.util;
+package edu.chalmers.vaporwave.assetcontainer;
 
 public enum ImageID {
 
