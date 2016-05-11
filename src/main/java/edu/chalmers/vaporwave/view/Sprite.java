@@ -86,8 +86,9 @@ public class Sprite {
      */
     public void setScale(double scale) {
         this.scale = scale;
-        if (this.image != null)
+        if (this.image != null) {
             setImage(Utils.resize(this.image, this.scale));
+        }
     }
 
     public String toString() {

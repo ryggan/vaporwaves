@@ -24,13 +24,15 @@ public class SoundContainer {
     private SoundContainer() {
 
         tasksDone = 0;
-        totalTasks = 20;
+        totalTasks = 10 + 30 + 10 + 1;
 
         this.soundVolume = 1.0;
 //        this.musicVolume = 1.0;
 
 //        this.soundVolume = 0.0;
         this.musicVolume = 0.0;
+
+        // TODO: OBS!!! IF ADDING SOUNDS; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         this.soundContainer = new HashMap<>();
         SoundPlayer[] soundPlayer;
@@ -42,8 +44,6 @@ public class SoundContainer {
         soundPlayer = new SoundPlayer[30];
         setUpSoundArray(soundPlayer, 30, "explosion.wav");
         this.soundContainer.put(SoundID.EXPLOSION, soundPlayer);
-
-        tasksDone++;
 
         soundPlayer = new SoundPlayer[10];
         setUpSoundArray(soundPlayer, 10, "powerup1.wav", 0.8);
@@ -57,14 +57,15 @@ public class SoundContainer {
         soundPlayer[0] = new SoundPlayer("bg1.mp3", 0.5);
         soundPlayer[0].loopSound(true);
         this.soundContainer.put(SoundID.GAME_MUSIC, soundPlayer);
-
         tasksDone++;
     }
 
     private void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName, double volume) {
         array[0] = new SoundPlayer(fileName, volume);
+        tasksDone++;
         for (int i = 1; i < numberOfSounds; i++) {
             array[i] = new SoundPlayer(array[0]);
+            tasksDone++;
         }
     }
 

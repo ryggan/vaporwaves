@@ -18,7 +18,7 @@ public class LoadingScreen {
     }
 
     public void updateLoader() {
-        percentLoaded = SoundContainer.getTasksDone();
+        percentLoaded = (double)SoundContainer.getTasksDone() / (double)SoundContainer.getTotalTasks();
         System.out.println("Loading! "+percentLoaded);
 
         try {

@@ -19,9 +19,9 @@ public class MainController {
     private Group menuRoot;
     private Group gameRoot;
 
-    private Thread loaderThread;
     private LoadingScreen loader;
     private LoadingScreenView loaderView;
+    private boolean loadingDone;
 
     private boolean inGame;
 
@@ -44,13 +44,16 @@ public class MainController {
     public void initLoader(Group root) {
         this.loader = new LoadingScreen(this);
         this.loaderView = new LoadingScreenView(root);
+        this.loadingDone = false;
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 loader.updateLoader();
-                loaderView.updateView();
+                loaderView.updateView(loader.getPercentLoaded());
 
-                if (loader.getPercentLoaded() == 2) {
+                if (loader.getPercentLoaded() == 1 && !loadingDone) {
+                    loadingDone = true;
+                } else if (loadingDone) {
                     initApplication();
                     initTimer();
                     this.stop();
@@ -71,17 +74,10 @@ public class MainController {
     public void initApplication() {
 
         System.out.println("initApplication()");
-//
-//        SoundContainer.initialize();
-//        ImageContainer.initialize();
-//        FileContainer.initialize();
 
-        // Trying out mapreader
         GameEventBus.getInstance().register(this);
 
         //GameServer gameServer = new GameServer();
-
-        // Initiating variables and controllers
 
         this.inGame = false;
 
