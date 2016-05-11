@@ -30,6 +30,8 @@ public class CharacterSpriteContainer {
 
         spriteContainer = new HashMap<>();
 
+        // TODO: OBS!!! IF ADDING CHARACTER SPRITES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
+
         initCharacterSprites(CharacterSpriteID.ALYSSA);
         initCharacterSprites(CharacterSpriteID.CHARLOTTE);
         initCharacterSprites(CharacterSpriteID.ZYPHER);

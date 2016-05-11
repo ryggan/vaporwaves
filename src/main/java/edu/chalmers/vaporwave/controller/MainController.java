@@ -1,17 +1,14 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
-import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteContainer;
+import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
-import edu.chalmers.vaporwave.assetcontainer.FileContainer;
 import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.LongValue;
-import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.view.LoadingScreenView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -76,10 +73,21 @@ public class MainController {
         // without hinderance. Instantly terminates thread when done.
         new Thread(new Runnable() {
             public void run() {
+                double time = System.currentTimeMillis();
                 ImageContainer.initialize();
+                System.out.println("Image loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
+                time = System.currentTimeMillis();
                 FileContainer.initialize();
+                System.out.println("File loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
+                time = System.currentTimeMillis();
                 SoundContainer.initialize();
+                System.out.println("Sound loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
+                time = System.currentTimeMillis();
                 CharacterSpriteContainer.initialize();
+                System.out.println("Character sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
+                time = System.currentTimeMillis();
+                SpriteContainer.initialize();
+                System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
                 return;
             }
         }).start();

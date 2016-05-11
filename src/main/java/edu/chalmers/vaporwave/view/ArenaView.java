@@ -70,8 +70,10 @@ public class ArenaView {
     }
 
     public ArenaView(Group root) {
+
         this.root = root;
         this.arenaFrameSprites = new HashMap<>();
+
         this.fps = new Label();
 
         this.powerUpSprites = new HashMap<>();
@@ -108,17 +110,7 @@ public class ArenaView {
         this.scoreboard = new Scoreboard(root);
         this.pauseMenuController = new PauseMenuController(root);
 
-        // Setting up sprites
-
-//        characterSprites[0] = new CharacterSprite("ALYSSA");
-//        initCharacterSprites(characterSprites[0]);
-//        characterSprites[1] = new CharacterSprite("CHARLOTTE");
-//        initCharacterSprites(characterSprites[1]);
-//        characterSprites[2] = new CharacterSprite("ZYPHER");
-//        initCharacterSprites(characterSprites[2]);
-//        characterSprites[3] = new CharacterSprite("MEI");
-//        initCharacterSprites(characterSprites[3]);
-
+        // Character sprites
         characterSprites[0] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ALYSSA);
         characterSprites[1] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.CHARLOTTE);
         characterSprites[2] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ZYPHER);
@@ -128,68 +120,61 @@ public class ArenaView {
         characterSparkleSprite =
                 new AnimatedSprite(characterMiscSpritesheet, new Dimension(48, 48), 9, 0.08, new int[] {0, 0}, new double[] {16, 27});
 
-//        enemySprite = new CharacterSprite("PCCHAN");
-//        initCharacterSprites(enemySprite);
-
         enemySprite = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.PCCHAN);
 
-        arenaBackgroundSprite = new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_BACKGROUND_1));
-        arenaFrameSprites.put(Compass.NORTH, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_NORTH_1)));
-        arenaFrameSprites.put(Compass.WEST, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_WEST_1)));
-        arenaFrameSprites.put(Compass.EAST, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_EAST_1)));
-        Image frameSouthSheet = ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_SOUTH_1);
-        AnimatedSprite frameSouthSprite =
-                new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1});
-        arenaFrameSprites.put(Compass.SOUTH, frameSouthSprite);
+        // Background and frame
+        arenaBackgroundSprite = SpriteContainer.getInstance().getSprite(SpriteID.GAME_BACKGROUND_1);
+        arenaFrameSprites.put(Compass.NORTH, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_NORTH_1));
+        arenaFrameSprites.put(Compass.WEST, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_WEST_1));
+        arenaFrameSprites.put(Compass.EAST, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_EAST_1));
+        arenaFrameSprites.put(Compass.SOUTH, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_SOUTH_1));
 
-        Image bombBlastSpriteSheet = ImageContainer.getInstance().getImage(ImageID.BOMBS_EXPLOSIONS);
+        // Bombs
+        bombSprite[0] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_ALYSSA);
+        bombSprite[1] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_CHARLOTTE);
+        bombSprite[2] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_ZYPHER);
+        bombSprite[3] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_MEI);
+        mineSprite = SpriteContainer.getInstance().getSprite(SpriteID.MINE);
 
-        for (int i = 0; i < 4; i++) {
-            bombSprite[i] =
-                    new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, i}, new double[] {1, 1});
-        }
-        mineSprite =
-                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 4}, new double[] {1, 1});
+        // Walls
+        destructibleWallSprite = SpriteContainer.getInstance().getSprite(SpriteID.WALL_DESTR_PARASOL);
+        destructibleWallDestroyedSprite = SpriteContainer.getInstance().getSprite(SpriteID.WALL_DESTR_PARASOL_DESTROYED);
+        indestructibleWallSprite = SpriteContainer.getInstance().getSprite(SpriteID.WALL_INDESTR_BEACHSTONE);
 
-        Image wallSpriteSheet = ImageContainer.getInstance().getImage(ImageID.WALLS);
-        destructibleWallSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1});
-//        new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {9, 1}, new double[] {1, 1});
-        destructibleWallDestroyedSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {1, 1}, new double[] {1, 1});
-        indestructibleWallSprite =
-                new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {4, 2}, new double[] {1, 1});
-//        new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {5, 2}, new double[] {1, 1});
+        // Powerups
+        powerUpSprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH));
+        powerUpSprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT));
+        powerUpSprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE));
+        powerUpSprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED));
 
-        Image powerupSpritesheet = ImageContainer.getInstance().getImage(ImageID.POWERUPS);
-        powerUpSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 0}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 1}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 2}, new double[] {1, 1}));
-        powerUpSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 3}, new double[] {1, 1}));
+        powerUpSpawnSprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED_SPAWN));
 
-        powerUpSpawnSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 0}, new double[] {1, 1}));
-        powerUpSpawnSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 1}, new double[] {1, 1}));
-        powerUpSpawnSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 2}, new double[] {1, 1}));
-        powerUpSpawnSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 11, 0.1, new int[] {8, 3}, new double[] {1, 1}));
+        powerUpPickupSprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED_PICKUP));
 
-        powerUpPickupSprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 4}, new double[] {1, 1}));
-        powerUpPickupSprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 5}, new double[] {1, 1}));
-        powerUpPickupSprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 6}, new double[] {1, 1}));
-        powerUpPickupSprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {0, 7}, new double[] {1, 1}));
+        powerUpDestroySprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED_DESTROY));
 
-        powerUpDestroySprites.put(PowerUpType.HEALTH, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 4}, new double[] {1, 1}));
-        powerUpDestroySprites.put(PowerUpType.BOMB_COUNT, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 5}, new double[] {1, 1}));
-        powerUpDestroySprites.put(PowerUpType.RANGE, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 6}, new double[] {1, 1}));
-        powerUpDestroySprites.put(PowerUpType.SPEED, new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 7}, new double[] {1, 1}));
+        // Blasts
+        blastSpriteCenter = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_CENTER);
 
-        blastSpriteCenter =
-                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1});
-        for (int i = 0; i < 4; i++) {
-            blastSpriteEnd[i] =
-                    new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, i}, new double[] {1, 1});
-            blastSpriteBeam[i] =
-                    new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {9, i}, new double[] {1, 1});
-        }
+        blastSpriteBeam[0] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_WEST);
+        blastSpriteBeam[1] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_NORTH);
+        blastSpriteBeam[2] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_EAST);
+        blastSpriteBeam[3] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_SOUTH);
+
+        blastSpriteEnd[0] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_WEST);
+        blastSpriteEnd[1] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_NORTH);
+        blastSpriteEnd[2] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_EAST);
+        blastSpriteEnd[3] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_SOUTH);
+
     }
 
     public void initArena(StaticTile[][] arenaTiles) {
