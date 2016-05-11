@@ -12,13 +12,10 @@ public class FileContainer {
 
     private Map<FileID, File> fileContainer;
 
-    private static double tasksDone;
-    private static double totalTasks;
+    private static double tasksDone = 0;
+    private static double totalTasks = 2;
 
     private FileContainer() {
-
-        tasksDone = 0.0;
-        totalTasks = (double)(2) / 10.0;
 
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
@@ -30,7 +27,7 @@ public class FileContainer {
 
     private void addFile(FileID fileID, File file) {
         this.fileContainer.put(fileID, file);
-        tasksDone += 0.1;
+        tasksDone++;
     }
 
     public File getFile(FileID fileID) {

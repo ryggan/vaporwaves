@@ -14,8 +14,8 @@ public class SoundContainer {
     private double soundVolume;
     private double musicVolume;
 
-    private static int tasksDone;
-    private static int totalTasks;
+    private static double tasksDone = 0;
+    private static double totalTasks = 10 + 30 + 10 + 1;
 
     private static final int NR_OF_PLACEBOMB = 10;
     private static final int NR_OF_EXPLOSION = 20;
@@ -120,11 +120,11 @@ public class SoundContainer {
         }
     }
 
-    public static int getTasksDone() {
+    public static double getTasksDone() {
         return tasksDone;
     }
 
-    public static int getTotalTasks() {
+    public static double getTotalTasks() {
         return totalTasks;
     }
 }

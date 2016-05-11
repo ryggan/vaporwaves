@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
+import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteContainer;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
@@ -78,6 +79,7 @@ public class MainController {
                 ImageContainer.initialize();
                 FileContainer.initialize();
                 SoundContainer.initialize();
+                CharacterSpriteContainer.initialize();
                 return;
             }
         }).start();

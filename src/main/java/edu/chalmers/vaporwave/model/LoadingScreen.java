@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.model;
 
+import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteContainer;
 import edu.chalmers.vaporwave.assetcontainer.FileContainer;
 import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
@@ -13,33 +14,15 @@ public class LoadingScreen {
     }
 
     public void updateLoader() {
-        double soundLoaded = (double) SoundContainer.getTasksDone() / (double) SoundContainer.getTotalTasks();
-        if (Double.isNaN(soundLoaded)) {
-            soundLoaded = 0.0;
-        }
-        double imageLoaded = ImageContainer.getTasksDone() / ImageContainer.getTotalTasks();
-        if (Double.isNaN(imageLoaded)) {
-            imageLoaded = 0.0;
-        }
-        double fileLoaded = FileContainer.getTasksDone() / FileContainer.getTotalTasks();
-        if (Double.isNaN(fileLoaded)) {
-            fileLoaded = 0.0;
-        }
 
-        if (Math.floor(imageLoaded) == 1) {
-            imageLoaded = 0.1;
-        } else {
-            imageLoaded = 0.0;
-        }
-        if (Math.floor(fileLoaded) == 1) {
-            fileLoaded = 0.1;
-        } else {
-            fileLoaded = 0.0;
-        }
+        double soundLoaded = SoundContainer.getTasksDone();
+        double imageLoaded = ImageContainer.getTasksDone();
+        double fileLoaded = FileContainer.getTasksDone();
+        double spriteLoaded = CharacterSpriteContainer.getTasksDone();
+        double totalTasks = SoundContainer.getTotalTasks() + ImageContainer.getTotalTasks()
+                + FileContainer.getTotalTasks() + CharacterSpriteContainer.getTotalTasks();
 
-//        percentLoaded = (soundLoaded + imageLoaded + fileLoaded) / 3.0;
-        percentLoaded = (soundLoaded + imageLoaded + fileLoaded) / 1.2;
-//        System.out.println("Loading! "+percentLoaded);
+        percentLoaded = (soundLoaded + imageLoaded + fileLoaded + spriteLoaded) / totalTasks;
 
         try {
             Thread.sleep(100);

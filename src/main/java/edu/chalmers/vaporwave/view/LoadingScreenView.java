@@ -27,9 +27,9 @@ public class LoadingScreenView  {
         this.backgroundCanvas = new Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         this.backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
-        this.backgroundImage = new Image("images/menu-background.jpg");
-        this.loadingBarEmpty = new Image("images/healthbarempty.png");
-        this.loadingBarFilled = new Image("images/healthbarfilled.png");
+        this.backgroundImage = new Image("images/menu/menu-background.jpg");
+        this.loadingBarEmpty = new Image("images/hud/healthbarempty.png");
+        this.loadingBarFilled = new Image("images/hud/healthbarfilled.png");
 
         double positionX = Constants.WINDOW_WIDTH / 2 - this.loadingBarEmpty.getWidth() / 2;
         double positionY = Constants.WINDOW_HEIGHT / 2 - this.loadingBarEmpty.getHeight() / 2;

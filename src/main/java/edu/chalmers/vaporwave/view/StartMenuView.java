@@ -31,7 +31,7 @@ public class StartMenuView extends AbstractMenuView {
     public void updateView(int superSelected, int[] subSelected) {
         clearView();
 
-//        setBackgroundImage(new Image("images/menu-background.jpg"));
+//        setBackgroundImage(new Image("images/menu-gamebackground.jpg"));
         for (int i = 0; i < menuButtonViewList.size(); i++) {
 
             if (superSelected == i) {

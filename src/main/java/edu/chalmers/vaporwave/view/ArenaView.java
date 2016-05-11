@@ -2,10 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.assetcontainer.FileContainer;
-import edu.chalmers.vaporwave.assetcontainer.FileID;
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
+import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.PauseMenuController;
 import edu.chalmers.vaporwave.event.*;
@@ -113,23 +110,28 @@ public class ArenaView {
 
         // Setting up sprites
 
-        characterSprites[0] = new CharacterSprite("ALYSSA");
-        initCharacterSprites(characterSprites[0]);
-        characterSprites[1] = new CharacterSprite("CHARLOTTE");
-        initCharacterSprites(characterSprites[1]);
+//        characterSprites[0] = new CharacterSprite("ALYSSA");
+//        initCharacterSprites(characterSprites[0]);
+//        characterSprites[1] = new CharacterSprite("CHARLOTTE");
+//        initCharacterSprites(characterSprites[1]);
 //        characterSprites[2] = new CharacterSprite("ZYPHER");
 //        initCharacterSprites(characterSprites[2]);
 //        characterSprites[3] = new CharacterSprite("MEI");
 //        initCharacterSprites(characterSprites[3]);
 
+        characterSprites[0] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ALYSSA);
+        characterSprites[1] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.CHARLOTTE);
+        characterSprites[2] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ZYPHER);
+        characterSprites[3] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.MEI);
 
-//        Image characterMiscSpritesheet = new Image("images/spritesheet-character-misc-48x48.png");
         Image characterMiscSpritesheet = ImageContainer.getInstance().getImage(ImageID.CHARACTER_MISC);
         characterSparkleSprite =
                 new AnimatedSprite(characterMiscSpritesheet, new Dimension(48, 48), 9, 0.08, new int[] {0, 0}, new double[] {16, 27});
 
-        enemySprite = new CharacterSprite("PCCHAN");
-        initCharacterSprites(enemySprite);
+//        enemySprite = new CharacterSprite("PCCHAN");
+//        initCharacterSprites(enemySprite);
+
+        enemySprite = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.PCCHAN);
 
         arenaBackgroundSprite = new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_BACKGROUND_1));
         arenaFrameSprites.put(Compass.NORTH, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_NORTH_1)));
@@ -196,7 +198,7 @@ public class ArenaView {
 
        // TimerModel.getInstance().updateTimer(timeSinceArenaInit);
 
-        // Rendering background image to background canvas
+        // Rendering gamebackground image to gamebackground canvas
 
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
@@ -217,7 +219,7 @@ public class ArenaView {
         arenaFrameSprites.get(Compass.SOUTH).setPosition(0, (Constants.DEFAULT_GRID_HEIGHT + 1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
         arenaFrameSprites.get(Compass.SOUTH).render(backgroundGC, 0);
 
-        // Rendering indestructible walls on background canvas
+        // Rendering indestructible walls on gamebackground canvas
         for (int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] != null && arenaTiles[i][j] instanceof IndestructibleWall) {
@@ -244,85 +246,85 @@ public class ArenaView {
     /**
      * Reads character information from an XML-file and populate the instance variables for the sprites
      */
-    private void initCharacterSprites(CharacterSprite characterSprite) {
-        XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
-        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
-
-        for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
-            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
-
-            switch (characterState) {
-                case SPAWN:
-                    characterSprite.setSpawnSprite(
-                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                    characterSpriteProperties.getFrames(),
-                                    characterSpriteProperties.getDuration(),
-                                    characterSpriteProperties.getFirstFrame(),
-                                    characterSpriteProperties.getOffset())
-                    );
-                    break;
-                case DEATH:
-                    characterSprite.setDeathSprite(
-                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                    characterSpriteProperties.getFrames(),
-                                    characterSpriteProperties.getDuration(),
-                                    characterSpriteProperties.getFirstFrame(),
-                                    characterSpriteProperties.getOffset())
-                    );
-                    break;
-                case WALK:
-                case IDLE:
-                case FLINCH:
-                    int startIndexX = characterSpriteProperties.getFirstFrame()[0];
-                    int startIndexY = characterSpriteProperties.getFirstFrame()[1];
-                    int spritesheetWidth = (int)Math.floor(characterSpriteProperties.getSpritesheet().getWidth() / characterSpriteProperties.getDimensionX());
-
-                    for (int i = 0; i < 4; i++) {
-
-                        if (startIndexX >= spritesheetWidth) {
-                            startIndexX -= spritesheetWidth;
-                            startIndexY++;
-                        }
-
-                        switch (characterState) {
-                            case WALK:
-                                characterSprite.setWalkSprite(
-                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                                characterSpriteProperties.getFrames(),
-                                                characterSpriteProperties.getDuration(),
-                                                new int[]{startIndexX, startIndexY},
-                                                characterSpriteProperties.getOffset()),
-                                        i);
-                            case IDLE:
-                                characterSprite.setIdleSprite(
-                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                                characterSpriteProperties.getFrames(),
-                                                characterSpriteProperties.getDuration(),
-                                                new int[]{startIndexX, startIndexY},
-                                                characterSpriteProperties.getOffset()),
-                                        i);
-                            case FLINCH:
-                                characterSprite.setFlinchSprite(
-                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-                                                characterSpriteProperties.getFrames(),
-                                                characterSpriteProperties.getDuration(),
-                                                new int[]{startIndexX, startIndexY},
-                                                characterSpriteProperties.getOffset()),
-                                        i);
-                        }
-
-                        startIndexX += characterSpriteProperties.getFrames();
-                    }
-                    break;
-            }
-        }
-
-    }
+//    private void initCharacterSprites(CharacterSprite characterSprite) {
+//        XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
+//        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
+//
+//        for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
+//            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
+//
+//            switch (characterState) {
+//                case SPAWN:
+//                    characterSprite.setSpawnSprite(
+//                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+//                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+//                                    characterSpriteProperties.getFrames(),
+//                                    characterSpriteProperties.getDuration(),
+//                                    characterSpriteProperties.getFirstFrame(),
+//                                    characterSpriteProperties.getOffset())
+//                    );
+//                    break;
+//                case DEATH:
+//                    characterSprite.setDeathSprite(
+//                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+//                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+//                                    characterSpriteProperties.getFrames(),
+//                                    characterSpriteProperties.getDuration(),
+//                                    characterSpriteProperties.getFirstFrame(),
+//                                    characterSpriteProperties.getOffset())
+//                    );
+//                    break;
+//                case WALK:
+//                case IDLE:
+//                case FLINCH:
+//                    int startIndexX = characterSpriteProperties.getFirstFrame()[0];
+//                    int startIndexY = characterSpriteProperties.getFirstFrame()[1];
+//                    int spritesheetWidth = (int)Math.floor(characterSpriteProperties.getSpritesheet().getWidth() / characterSpriteProperties.getDimensionX());
+//
+//                    for (int i = 0; i < 4; i++) {
+//
+//                        if (startIndexX >= spritesheetWidth) {
+//                            startIndexX -= spritesheetWidth;
+//                            startIndexY++;
+//                        }
+//
+//                        switch (characterState) {
+//                            case WALK:
+//                                characterSprite.setWalkSprite(
+//                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+//                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+//                                                characterSpriteProperties.getFrames(),
+//                                                characterSpriteProperties.getDuration(),
+//                                                new int[]{startIndexX, startIndexY},
+//                                                characterSpriteProperties.getOffset()),
+//                                        i);
+//                            case IDLE:
+//                                characterSprite.setIdleSprite(
+//                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+//                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+//                                                characterSpriteProperties.getFrames(),
+//                                                characterSpriteProperties.getDuration(),
+//                                                new int[]{startIndexX, startIndexY},
+//                                                characterSpriteProperties.getOffset()),
+//                                        i);
+//                            case FLINCH:
+//                                characterSprite.setFlinchSprite(
+//                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
+//                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
+//                                                characterSpriteProperties.getFrames(),
+//                                                characterSpriteProperties.getDuration(),
+//                                                new int[]{startIndexX, startIndexY},
+//                                                characterSpriteProperties.getOffset()),
+//                                        i);
+//                        }
+//
+//                        startIndexX += characterSpriteProperties.getFrames();
+//                    }
+//                    break;
+//            }
+//        }
+//
+//    }
 
     public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
         hudView.updateStats(health, speed, bombRange, bombCount);
