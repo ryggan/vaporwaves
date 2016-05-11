@@ -15,7 +15,7 @@ public class LoadingScreen {
 
     public void updateLoader() {
         while(true) {
-            System.out.println("Loading! "+percentLoaded);
+            System.out.println("Loading! " + percentLoaded);
 
             try {
                 Thread.sleep(100);

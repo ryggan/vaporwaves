@@ -1,4 +1,7 @@
-package edu.chalmers.vaporwave.util;
+package edu.chalmers.vaporwave.assetcontainer;
+
+import edu.chalmers.vaporwave.util.SoundID;
+import edu.chalmers.vaporwave.util.SoundPlayer;
 
 import java.util.HashMap;
 import java.util.Map;

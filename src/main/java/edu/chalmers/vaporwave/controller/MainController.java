@@ -6,10 +6,10 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
-import edu.chalmers.vaporwave.util.FileContainer;
+import edu.chalmers.vaporwave.assetcontainer.FileContainer;
 import edu.chalmers.vaporwave.util.LongValue;
-import edu.chalmers.vaporwave.util.SoundContainer;
-import edu.chalmers.vaporwave.view.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
+import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.view.LoadingScreenView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
@@ -35,10 +35,10 @@ public class MainController {
      */
     public MainController(Group root) {
 
-        initLoader(root);
+//        initLoader(root);
 
-//        initApplication(root);
-//        initTimer();
+        initApplication(root);
+        initTimer();
 
     }
 

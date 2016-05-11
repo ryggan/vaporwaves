@@ -1,4 +1,7 @@
-package edu.chalmers.vaporwave.util;
+package edu.chalmers.vaporwave.assetcontainer;
+
+import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.FileID;
 
 import java.io.File;
 import java.util.HashMap;
