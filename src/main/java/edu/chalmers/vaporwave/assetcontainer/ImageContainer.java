@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.util.ImageID;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;
