@@ -67,13 +67,13 @@ public class SpriteContainer {
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {9, 3}, new double[] {1, 1}));
 
         addSprite(SpriteID.BLAST_END_WEST,
-                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {9, 0}, new double[] {1, 1}));
+                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 0}, new double[] {1, 1}));
         addSprite(SpriteID.BLAST_END_NORTH,
-                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {9, 1}, new double[] {1, 1}));
+                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 1}, new double[] {1, 1}));
         addSprite(SpriteID.BLAST_END_EAST,
-                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {9, 2}, new double[] {1, 1}));
+                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 2}, new double[] {1, 1}));
         addSprite(SpriteID.BLAST_END_SOUTH,
-                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {9, 3}, new double[] {1, 1}));
+                new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 3}, new double[] {1, 1}));
 
         // Walls (3)
 
