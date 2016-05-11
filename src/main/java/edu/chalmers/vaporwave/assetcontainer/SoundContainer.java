@@ -5,9 +5,6 @@ import edu.chalmers.vaporwave.util.SoundPlayer;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by bob on 2016-05-08.
- */
 public class SoundContainer {
 
     private static SoundContainer instance;
@@ -20,10 +17,16 @@ public class SoundContainer {
     private static int tasksDone;
     private static int totalTasks;
 
+    private static final int NR_OF_PLACEBOMB = 10;
+    private static final int NR_OF_EXPLOSION = 20;
+    private static final int NR_OF_POWERUP = 10;
+    private static final int NR_OF_BACKGROUND = 1;
+
+
     private SoundContainer() {
 
         tasksDone = 0;
-        totalTasks = 10 + 30 + 10 + 1;
+        totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
         this.soundVolume = 1.0;
 //        this.musicVolume = 1.0;
@@ -36,24 +39,24 @@ public class SoundContainer {
         this.soundContainer = new HashMap<>();
         SoundPlayer[] soundPlayer;
 
-        soundPlayer = new SoundPlayer[10];
-        setUpSoundArray(soundPlayer, 10, "placebomb.wav");
+        soundPlayer = new SoundPlayer[NR_OF_PLACEBOMB];
+        setUpSoundArray(soundPlayer, NR_OF_PLACEBOMB, "placebomb.mp3");
         this.soundContainer.put(SoundID.PLACE_BOMB, soundPlayer);
 
-        soundPlayer = new SoundPlayer[30];
-        setUpSoundArray(soundPlayer, 30, "explosion.wav");
+        soundPlayer = new SoundPlayer[NR_OF_EXPLOSION];
+        setUpSoundArray(soundPlayer, NR_OF_EXPLOSION, "explosion.mp3");
         this.soundContainer.put(SoundID.EXPLOSION, soundPlayer);
 
-        soundPlayer = new SoundPlayer[10];
-        setUpSoundArray(soundPlayer, 10, "powerup1.wav", 0.8);
+        soundPlayer = new SoundPlayer[NR_OF_POWERUP];
+        setUpSoundArray(soundPlayer, NR_OF_POWERUP, "powerup1.mp3", 0.8);
         this.soundContainer.put(SoundID.POWERUP, soundPlayer);
 
 //        soundPlayer = new SoundPlayer[4];
-//        setUpSoundArray(soundPlayer, 4, "girl_moan4.wav");
+//        setUpSoundArray(soundPlayer, 4, "girl_moan4.mp3");
 //        this.soundContainer.put(SoundID.CHARACTER_FLINCH, soundPlayer);
 
         soundPlayer = new SoundPlayer[1];
-        soundPlayer[0] = new SoundPlayer("bg1.mp3", 0.5);
+        soundPlayer[0] = new SoundPlayer("bg3.mp3", 0.5);
         soundPlayer[0].loopSound(true);
         this.soundContainer.put(SoundID.GAME_MUSIC, soundPlayer);
         tasksDone++;
