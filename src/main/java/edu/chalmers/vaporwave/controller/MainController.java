@@ -84,8 +84,6 @@ public class MainController {
 
     public void initApplication() {
 
-        System.out.println("initApplication()");
-
         GameEventBus.getInstance().register(this);
 
         //GameServer gameServer = new GameServer();
@@ -106,8 +104,6 @@ public class MainController {
     }
 
     public void initTimer() {
-
-        System.out.println("initTimer()");
 
         // Animation timer setup
 

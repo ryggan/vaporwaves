@@ -1,8 +1,8 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.util.FileContainer;
-import edu.chalmers.vaporwave.util.SoundContainer;
-import edu.chalmers.vaporwave.view.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.FileContainer;
+import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
 
 public class LoadingScreen {
 
