@@ -29,9 +29,6 @@ public class SoundContainer {
         totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
         this.soundVolume = 1.0;
-//        this.musicVolume = 1.0;
-
-//        this.soundVolume = 0.0;
         this.musicVolume = 0.0;
 
         // TODO: OBS!!! IF ADDING SOUNDS; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
