@@ -1,25 +1,45 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.controller.MainController;
-import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
+import edu.chalmers.vaporwave.util.FileContainer;
+import edu.chalmers.vaporwave.util.SoundContainer;
+import edu.chalmers.vaporwave.view.ImageContainer;
 
 public class LoadingScreen {
 
-    private MainController mainController;
-
     private double percentLoaded;
 
-    private int hasLoaded;
-
-    public LoadingScreen(MainController mainController) {
-        this.mainController = mainController;
-        this.percentLoaded = 0;
-        this.hasLoaded = 0;
+    public LoadingScreen() {
+        this.percentLoaded = 0.0;
     }
 
     public void updateLoader() {
-        percentLoaded = (double)SoundContainer.getTasksDone() / (double)SoundContainer.getTotalTasks();
-        System.out.println("Loading! "+percentLoaded);
+        double soundLoaded = (double) SoundContainer.getTasksDone() / (double) SoundContainer.getTotalTasks();
+        if (Double.isNaN(soundLoaded)) {
+            soundLoaded = 0.0;
+        }
+        double imageLoaded = ImageContainer.getTasksDone() / ImageContainer.getTotalTasks();
+        if (Double.isNaN(imageLoaded)) {
+            imageLoaded = 0.0;
+        }
+        double fileLoaded = FileContainer.getTasksDone() / FileContainer.getTotalTasks();
+        if (Double.isNaN(fileLoaded)) {
+            fileLoaded = 0.0;
+        }
+
+        if (Math.floor(imageLoaded) == 1) {
+            imageLoaded = 0.1;
+        } else {
+            imageLoaded = 0.0;
+        }
+        if (Math.floor(fileLoaded) == 1) {
+            fileLoaded = 0.1;
+        } else {
+            fileLoaded = 0.0;
+        }
+
+//        percentLoaded = (soundLoaded + imageLoaded + fileLoaded) / 3.0;
+        percentLoaded = (soundLoaded + imageLoaded + fileLoaded) / 1.2;
+//        System.out.println("Loading! "+percentLoaded);
 
         try {
             Thread.sleep(100);
@@ -29,7 +49,7 @@ public class LoadingScreen {
     }
 
     public double getPercentLoaded() {
-        return this.percentLoaded;
+        return Math.round(this.percentLoaded * 1000.0) / 1000.0;
     }
 
 }

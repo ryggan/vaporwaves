@@ -1,7 +1,10 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
-import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.event.ExitGameEvent;
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.GoToMenuEvent;
+import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
 import edu.chalmers.vaporwave.assetcontainer.FileContainer;
 import edu.chalmers.vaporwave.util.LongValue;
@@ -41,18 +44,24 @@ public class MainController {
 
     }
 
+    // Creates loader and it's view, and then set's up the loading loop
     public void initLoader(Group root) {
-        this.loader = new LoadingScreen(this);
+        this.loader = new LoadingScreen();
         this.loaderView = new LoadingScreenView(root);
         this.loadingDone = false;
 
+        // Loading loop
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
+                // Updates loading percentage and then updates view
                 loader.updateLoader();
                 loaderView.updateView(loader.getPercentLoaded());
 
+                // Only to delay loading done by one frame
                 if (loader.getPercentLoaded() == 1 && !loadingDone) {
                     loadingDone = true;
+
+                // Initiates the rest of the game and starts game-timer, and finally ends the loading loop
                 } else if (loadingDone) {
                     initApplication();
                     initTimer();
@@ -61,11 +70,13 @@ public class MainController {
             }
         }.start();
 
+        // A separate thread that initializes all file loading, so that the loading loop can read it's progress
+        // without hinderance. Instantly terminates thread when done.
         new Thread(new Runnable() {
             public void run() {
-                SoundContainer.initialize();
                 ImageContainer.initialize();
                 FileContainer.initialize();
+                SoundContainer.initialize();
                 return;
             }
         }).start();
