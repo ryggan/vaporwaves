@@ -14,19 +14,16 @@ public class SoundContainer {
     private double soundVolume;
     private double musicVolume;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 10 + 30 + 10 + 1;
-
     private static final int NR_OF_PLACEBOMB = 10;
     private static final int NR_OF_EXPLOSION = 20;
     private static final int NR_OF_POWERUP = 10;
     private static final int NR_OF_BACKGROUND = 1;
 
+    private static double tasksDone = 0;
+    private static double totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
+
 
     private SoundContainer() {
-
-        tasksDone = 0;
-        totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
         this.soundVolume = 1.0;
         this.musicVolume = 0.0;
