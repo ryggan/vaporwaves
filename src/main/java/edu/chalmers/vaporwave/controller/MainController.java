@@ -7,6 +7,7 @@ import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
 import edu.chalmers.vaporwave.assetcontainer.FileContainer;
+import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
 import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
@@ -153,12 +154,11 @@ public class MainController {
 
     @Subscribe
     public void goToMenu(GoToMenuEvent goToMenuEvent) {
+        this.inGame = false;
         this.root.getChildren().clear();
         this.root.getChildren().add(menuRoot);
-        this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
+        this.menuController.setActiveMenu(MenuState.START_MENU);
         this.menuController.updateViews();
-
-        this.inGame = false;
     }
 
 //    @Subscribe

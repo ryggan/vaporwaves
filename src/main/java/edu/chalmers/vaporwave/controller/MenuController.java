@@ -75,6 +75,9 @@ public class MenuController {
         }
 
         if (!ListenerController.getInstance().getReleased().isEmpty()) {
+
+            System.out.println("active Menu : " + activeMenu);
+
             switch (ListenerController.getInstance().getReleased().get(0)) {
                 case "ENTER":
                 case "SPACE":
@@ -88,21 +91,18 @@ public class MenuController {
                             }
                             GameEventBus.getInstance().post(newGameEvent);
                             break;
-
-//                        case NEXT:
-//                            this.activeMenu += 1;
-//                            updateViews();
-//                            break;
-//                        case PREVIOUS:
-//                            this.activeMenu -= 1;
-//                            updateViews();
-//                            break;
+                        case NO_ACTION:
+                            break;
+                        default:
+                            System.out.println("Do menu action :D");
+                            this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
+                            updateViews();
+                            break;
                     }
 
                     break;
             }
         }
-
     }
 
     public void updateViews() {
