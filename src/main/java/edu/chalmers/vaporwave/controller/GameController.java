@@ -150,7 +150,7 @@ public class GameController {
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
-        
+
         this.timeSinceStart = timeSinceStart;
         if(timeLimit-timeSinceLastCall>0) {
             timeLimit = timeLimit - timeSinceLastCall;
@@ -158,7 +158,7 @@ public class GameController {
 
             GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
         }
-        TimerModel.getInstance().updateTimer(timeLimit);
+            TimerModel.getInstance().updateTimer(timeLimit);
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
