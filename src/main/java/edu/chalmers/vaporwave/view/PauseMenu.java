@@ -50,10 +50,11 @@ public class PauseMenu {
         pauseMenuBackground.render(pauseMenuGC, -1);*/
 
         pauseMenuPane = new AnchorPane();
-        pauseMenuPane.setPrefSize(512, 448);
+        //old size was 512 448
+        pauseMenuPane.setPrefSize(400, 100);
         //Get proper values for middle of screen
-        pauseMenuPane.setLayoutX(280);
-        pauseMenuPane.setLayoutY(150);
+        pauseMenuPane.setLayoutX(340);
+        pauseMenuPane.setLayoutY(250);
         root.getChildren().add(pauseMenuPane);
         pauseMenuPane.setStyle("-fx-background-color: #00ffc3;");
         pauseMenuPane.setVisible(false);
@@ -68,7 +69,8 @@ public class PauseMenu {
         gridPane.setPrefRows(3);*/
         gridPane.setLayoutX(pauseMenuPane.getWidth()/2);
         gridPane.setVgap(50);
-        gridPane.setPrefSize(512, 448);
+        //old size was 512 448
+        gridPane.setPrefSize(400, 100);
         gridPane.setAlignment(Pos.TOP_CENTER);
         gridPane.setPadding(new Insets(40, 0, 40, 0));
 
@@ -83,9 +85,10 @@ public class PauseMenu {
         quitGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
         options.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
 
-        gridPane.add(resumeGame, 0, 0);
-        gridPane.add(options, 0, 1);
-        gridPane.add(quitGame, 0, 2);
+        //Consider adding these options later, but for now only let one be there
+        //gridPane.add(resumeGame, 0, 0);
+        gridPane.add(options, 0, 0);
+        //gridPane.add(quitGame, 0, 2);
         gridPane.setVisible(true);
         gridPane.toFront();
     }
