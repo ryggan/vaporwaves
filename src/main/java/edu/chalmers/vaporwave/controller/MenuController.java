@@ -84,18 +84,22 @@ public class MenuController {
                     switch (menuMap.get(activeMenu).getMenuAction()) {
                         case EXIT_PROGRAM:
                             GameEventBus.getInstance().post(new ExitGameEvent());
+                            updateViews();
                             break;
                         case START_GAME:
                             for (Map.Entry<MenuState, AbstractMenuView> menu : this.menuViewMap.entrySet()) {
                                 menu.getValue().clearView();
+                                updateViews();
                             }
                             GameEventBus.getInstance().post(newGameEvent);
                             break;
                         case NO_ACTION:
+                            updateViews();
                             break;
                         default:
                             System.out.println("Do menu action :D");
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
+                            updateViews();
                             break;
                     }
 
