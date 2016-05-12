@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameCharacterTest {
-    private GameCharacter gC = new GameCharacter("Pirre");
+    private GameCharacter gC = new GameCharacter("Pirre", 0);
 
     @Test
     public void testPlaceBomb() throws Exception {

@@ -139,6 +139,9 @@ public class GameController {
         playerList.add(localPlayer);
         playerList.add(remotePlayer);
         this.scoreboard = new Scoreboard(root, playerList);
+
+        //Assigning player IDs
+        assignPlayerId();
     }
 
 
@@ -295,6 +298,9 @@ public class GameController {
                                     && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
                                 movable.dealDamage(otherMovable.getDamage());
                                 updateStats();
+                                if(movable.getHealth() <= 0) {
+                                    playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                                }
                                 break;
                             }
                         }
@@ -552,5 +558,11 @@ public class GameController {
 
     public boolean isGamePaused() {
         return gameIsPaused;
+    }
+
+    public void assignPlayerId() {
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).setPlayerId(i);
+        }
     }
 }

@@ -74,6 +74,10 @@ public class Player {
         return this.playerId;
     }
 
+    public void setPlayerId(int i) {
+        this.playerId = i;
+    }
+
     public String[] getPlayerInfo() {
         playerInfo[0] = playerName;
         playerInfo[1] = kills + "";
