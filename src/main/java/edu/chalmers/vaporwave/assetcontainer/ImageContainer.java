@@ -12,7 +12,7 @@ public class ImageContainer {
     private Map<ImageID, Image> imageContainer;
 
     private static double tasksDone = 0;
-    private static double totalTasks = 1 + 2 + 1 + 5 + 6 + 14 + 3;
+    private static double totalTasks = 1 + 2 + 1 + 5 + 6 + 13 + 3;
 
     private ImageContainer() {
 
@@ -51,7 +51,7 @@ public class ImageContainer {
         addImage(ImageID.GAME_FRAME_EAST_1, new Image("images/gamebackground/sprite-frame-beach-east.png"));
         addImage(ImageID.GAME_FRAME_SOUTH_1, new Image("images/gamebackground/spritesheet-frame-beach-south-402x54.png"));
 
-        // Character/Enemy spritesheets (14):
+        // Character/Enemy spritesheets (13):
         addImage(ImageID.CHARACTER_MISC, new Image("images/characters/spritesheet-character-misc-48x48.png"));
 
         addImage(ImageID.CHARACTER_ALYSSA_WALKIDLEFLINCH, new Image("images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png"));
@@ -66,9 +66,8 @@ public class ImageContainer {
         addImage(ImageID.CHARACTER_ZYPHER_DEATH, new Image("images/characters/spritesheet-alyssa-death-56x56.png"));
         addImage(ImageID.CHARACTER_ZYPHER_SPAWN, new Image("images/characters/spritesheet-alyssa-respawn-48x128.png"));
 
-        addImage(ImageID.CHARACTER_MEI_WALKIDLEFLINCH, new Image("images/characters/spritesheet-charlotte-walkidleflinch-48x48.png"));
-        addImage(ImageID.CHARACTER_MEI_DEATH, new Image("images/characters/spritesheet-charlotte-death-48x48.png"));
-        addImage(ImageID.CHARACTER_MEI_SPAWN, new Image("images/characters/spritesheet-charlotte-respawn-48x128.png"));
+        addImage(ImageID.CHARACTER_MEI_WALKIDLEFLINCHDEATH, new Image("images/characters/spritesheet-mei-walkidleflinchdeath-48x48.png"));
+        addImage(ImageID.CHARACTER_MEI_SPAWN, new Image("images/characters/spritesheet-mei-respawn-48x128.png"));
 
         addImage(ImageID.ENEMY_PCCHAN, new Image("images/spritesheet-enemy-pcchan-walkidleflinchspawndeath-48x48.png"));
 

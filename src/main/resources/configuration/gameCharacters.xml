@@ -262,11 +262,11 @@
         <bombCount>1</bombCount>
 
         <walk>
-            <spritesheet>CHARACTER_CHARLOTTE_WALKIDLEFLINCH</spritesheet>
+            <spritesheet>CHARACTER_MEI_WALKIDLEFLINCHDEATH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
-            <frames>8</frames>
+            <frames>4</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
@@ -275,46 +275,46 @@
         </walk>
 
         <idle>
-            <spritesheet>CHARACTER_CHARLOTTE_WALKIDLEFLINCH</spritesheet>
+            <spritesheet>CHARACTER_MEI_WALKIDLEFLINCHDEATH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>1</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
-            <firstFrameY>4</firstFrameY>
+            <firstFrameY>1</firstFrameY>
             <offsetX>16</offsetX>
             <offsetY>27</offsetY>
         </idle>
 
         <flinch>
-            <spritesheet>CHARACTER_CHARLOTTE_WALKIDLEFLINCH</spritesheet>
+            <spritesheet>CHARACTER_MEI_WALKIDLEFLINCHDEATH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-charlotte-walkidleflinch-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
             <frames>1</frames>
             <duration>0.1</duration>
-            <firstFrameX>4</firstFrameX>
-            <firstFrameY>4</firstFrameY>
+            <firstFrameX>0</firstFrameX>
+            <firstFrameY>2</firstFrameY>
             <offsetX>16</offsetX>
             <offsetY>27</offsetY>
         </flinch>
 
         <death>
-            <spritesheet>CHARACTER_CHARLOTTE_DEATH</spritesheet>
+            <spritesheet>CHARACTER_MEI_WALKIDLEFLINCHDEATH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-charlotte-death-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
-            <frames>12</frames>
+            <frames>25</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
-            <firstFrameY>0</firstFrameY>
+            <firstFrameY>3</firstFrameY>
             <offsetX>16</offsetX>
             <offsetY>27</offsetY>
         </death>
 
         <spawn>
-            <spritesheet>CHARACTER_CHARLOTTE_SPAWN</spritesheet>
+            <spritesheet>CHARACTER_MEI_SPAWN</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-charlotte-respawn-48x128.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>128</dimensionY>
