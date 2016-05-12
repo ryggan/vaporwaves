@@ -107,7 +107,6 @@ public class ArenaView {
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
-
         this.pauseMenuController = new PauseMenuController(root);
 
         // Character sprites
@@ -186,19 +185,15 @@ public class ArenaView {
         // Rendering gamebackground image to gamebackground canvas
 
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaBackgroundSprite.setScale(Constants.GAME_SCALE);
         arenaBackgroundSprite.render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.NORTH).setPosition(0, -Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.NORTH).setScale(Constants.GAME_SCALE);
         arenaFrameSprites.get(Compass.NORTH).render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.WEST).setPosition(0, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.WEST).setScale(Constants.GAME_SCALE);
         arenaFrameSprites.get(Compass.WEST).render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.EAST).setPosition(Constants.DEFAULT_TILE_WIDTH * (2 + Constants.DEFAULT_GRID_WIDTH), Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.EAST).setScale(Constants.GAME_SCALE);
         arenaFrameSprites.get(Compass.EAST).render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.SOUTH).setPosition(0, (Constants.DEFAULT_GRID_HEIGHT + 1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
@@ -228,89 +223,6 @@ public class ArenaView {
         backgroundPattern.setImage(ImageContainer.getInstance().getImage(ImageID.BACKGROUND_PATTERN_1));
     }
 
-    /**
-     * Reads character information from an XML-file and populate the instance variables for the sprites
-     */
-//    private void initCharacterSprites(CharacterSprite characterSprite) {
-//        XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
-//        CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
-//
-//        for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
-//            CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
-//
-//            switch (characterState) {
-//                case SPAWN:
-//                    characterSprite.setSpawnSprite(
-//                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-//                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-//                                    characterSpriteProperties.getFrames(),
-//                                    characterSpriteProperties.getDuration(),
-//                                    characterSpriteProperties.getFirstFrame(),
-//                                    characterSpriteProperties.getOffset())
-//                    );
-//                    break;
-//                case DEATH:
-//                    characterSprite.setDeathSprite(
-//                            new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-//                                    new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-//                                    characterSpriteProperties.getFrames(),
-//                                    characterSpriteProperties.getDuration(),
-//                                    characterSpriteProperties.getFirstFrame(),
-//                                    characterSpriteProperties.getOffset())
-//                    );
-//                    break;
-//                case WALK:
-//                case IDLE:
-//                case FLINCH:
-//                    int startIndexX = characterSpriteProperties.getFirstFrame()[0];
-//                    int startIndexY = characterSpriteProperties.getFirstFrame()[1];
-//                    int spritesheetWidth = (int)Math.floor(characterSpriteProperties.getSpritesheet().getWidth() / characterSpriteProperties.getDimensionX());
-//
-//                    for (int i = 0; i < 4; i++) {
-//
-//                        if (startIndexX >= spritesheetWidth) {
-//                            startIndexX -= spritesheetWidth;
-//                            startIndexY++;
-//                        }
-//
-//                        switch (characterState) {
-//                            case WALK:
-//                                characterSprite.setWalkSprite(
-//                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-//                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-//                                                characterSpriteProperties.getFrames(),
-//                                                characterSpriteProperties.getDuration(),
-//                                                new int[]{startIndexX, startIndexY},
-//                                                characterSpriteProperties.getOffset()),
-//                                        i);
-//                            case IDLE:
-//                                characterSprite.setIdleSprite(
-//                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-//                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-//                                                characterSpriteProperties.getFrames(),
-//                                                characterSpriteProperties.getDuration(),
-//                                                new int[]{startIndexX, startIndexY},
-//                                                characterSpriteProperties.getOffset()),
-//                                        i);
-//                            case FLINCH:
-//                                characterSprite.setFlinchSprite(
-//                                        new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
-//                                                new Dimension(characterSpriteProperties.getDimensionX(), characterSpriteProperties.getDimensionY()),
-//                                                characterSpriteProperties.getFrames(),
-//                                                characterSpriteProperties.getDuration(),
-//                                                new int[]{startIndexX, startIndexY},
-//                                                characterSpriteProperties.getOffset()),
-//                                        i);
-//                        }
-//
-//                        startIndexX += characterSpriteProperties.getFrames();
-//                    }
-//                    break;
-//            }
-//        }
-//
-//    }
-
     public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
         hudView.updateStats(health, speed, bombRange, bombCount);
     }
@@ -320,14 +232,9 @@ public class ArenaView {
        // System.out.println(health);
     }
 
-
-
     // todo - UPDATE VIEW SECTION
 
     public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
-
-
-
 
         // Rendering:
 

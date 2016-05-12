@@ -112,6 +112,9 @@ public class MainController {
 
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
+
+        ListenerController.getInstance().clearPressed();
+        ListenerController.getInstance().clearReleased();
     }
 
     public void initTimer() {
@@ -167,7 +170,7 @@ public class MainController {
         this.inGame = false;
         this.root.getChildren().clear();
         this.root.getChildren().add(menuRoot);
-        this.menuController.setActiveMenu(MenuState.START_MENU);
+        this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
         this.menuController.updateViews();
     }
 

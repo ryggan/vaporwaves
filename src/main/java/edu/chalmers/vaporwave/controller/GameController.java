@@ -56,8 +56,6 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        double time = System.currentTimeMillis();
-
         SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
@@ -73,7 +71,6 @@ public class GameController {
 
         // Initiates view
 
-        timeSinceStart = 0.0;
         timeSinceStart = 0.0;
 
         timeLimit = 10;
@@ -142,28 +139,32 @@ public class GameController {
         playerList.add(localPlayer);
         playerList.add(remotePlayer);
         this.scoreboard = new Scoreboard(root, playerList);
-
-        System.out.println("Game started, timed: "+(System.currentTimeMillis() - time)+" millis");
     }
-
 
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         this.timeSinceStart = timeSinceStart;
-        if(timeLimit-timeSinceLastCall>0) {
-            timeLimit = timeLimit - timeSinceLastCall;
-        } else {
 
-            GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
-        }
+
+        if(!TimerModel.getInstance().isPaused()) {
+            if (timeLimit - timeSinceLastCall > 0) {
+                timeLimit = timeLimit - timeSinceLastCall;
+            } else {
+
+                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+            }
             TimerModel.getInstance().updateTimer(timeLimit);
+        }
+
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
 
         if(!gameIsPaused) {
+
+            TimerModel.getInstance().setPaused(false);
 
             if (this.updatedEnemyDirection == 15) {
                 for (Enemy enemy : enemies) {
@@ -173,6 +174,8 @@ public class GameController {
                 updatedEnemyDirection = 0;
             }
             updatedEnemyDirection += 1;
+        } else {
+            TimerModel.getInstance().setPaused(true);
         }
 
         for (int i = 0; i < input.size(); i++) {
@@ -309,21 +312,21 @@ public class GameController {
                             }
                         }
                     }
-                }
 
-                // The blast-check:
-                StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
-                Blast blast = null;
-                if (currentTile instanceof Blast) {
-                    blast = (Blast) currentTile;
-                } else if (currentTile instanceof DoubleTile) {
-                    blast = ((DoubleTile) currentTile).getBlast();
-                }
+                    // The blast-check:
+                    StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
+                    Blast blast = null;
+                    if (currentTile instanceof Blast) {
+                        blast = (Blast) currentTile;
+                    } else if (currentTile instanceof DoubleTile) {
+                        blast = ((DoubleTile) currentTile).getBlast();
+                    }
 
-                // If blast was found, and the blast still is dangerous, deal damage
-                if (blast != null && blast.isDangerous(timeSinceStart)) {
-                    movable.dealDamage(blast.getDamage());
-                    updateStats();
+                    // If blast was found, and the blast still is dangerous, deal damage
+                    if (blast != null && blast.isDangerous(timeSinceStart)) {
+                        movable.dealDamage(blast.getDamage());
+                        updateStats();
+                    }
                 }
             }
         }

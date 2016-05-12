@@ -168,7 +168,7 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     @Override
     public void setScale(double scale) {
         super.setScale(scale);
-        setSpriteSheet(Utils.resize(this.originalSpriteSheet, scale));
+        setSpriteSheet(this.originalSpriteSheet);
     }
 
     /**
@@ -240,7 +240,8 @@ public class AnimatedSprite extends Sprite implements Cloneable {
     // GETTERS AND SETTERS:
 
     public void setSpriteSheet(Image spriteSheet) {
-        this.spriteSheet = spriteSheet;
+        this.originalSpriteSheet = spriteSheet;
+        this.spriteSheet = Utils.resize(this.originalSpriteSheet, getScale());
     }
 
     public int getLength() {
