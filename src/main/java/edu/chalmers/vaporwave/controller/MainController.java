@@ -170,7 +170,7 @@ public class MainController {
         this.inGame = false;
         this.root.getChildren().clear();
         this.root.getChildren().add(menuRoot);
-        this.menuController.setActiveMenu(MenuState.START_MENU);
+        this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
         this.menuController.updateViews();
     }
 

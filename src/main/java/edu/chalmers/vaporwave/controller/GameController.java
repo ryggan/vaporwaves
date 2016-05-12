@@ -142,23 +142,28 @@ public class GameController {
     }
 
 
-
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
         
         this.timeSinceStart = timeSinceStart;
-        if(timeLimit-timeSinceLastCall>0) {
-            timeLimit = timeLimit - timeSinceLastCall;
-        } else {
 
-            GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+
+        if(!TimerModel.getInstance().isPaused()) {
+            if (timeLimit - timeSinceLastCall > 0) {
+                timeLimit = timeLimit - timeSinceLastCall;
+            } else {
+
+                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+            }
+            TimerModel.getInstance().updateTimer(timeLimit);
         }
-        TimerModel.getInstance().updateTimer(timeLimit);
 
         List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
 
         if(!gameIsPaused) {
+
+            TimerModel.getInstance().setPaused(false);
 
             if (this.updatedEnemyDirection == 15) {
                 for (Enemy enemy : enemies) {
@@ -168,6 +173,8 @@ public class GameController {
                 updatedEnemyDirection = 0;
             }
             updatedEnemyDirection += 1;
+        } else {
+            TimerModel.getInstance().setPaused(true);
         }
 
         for (int i = 0; i < input.size(); i++) {
