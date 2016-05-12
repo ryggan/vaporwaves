@@ -32,6 +32,7 @@ public class CharacterSelectView extends AbstractMenuView {
         this.position = new Point(520, 170);
     }
 
+    @Override
     public void updateView(int superSelected, int[] subSelected) {
         clearView();
 
@@ -48,6 +49,11 @@ public class CharacterSelectView extends AbstractMenuView {
         this.getBackgroundGC().drawImage(spriteSheet, subSelected[1] * 500, 0, 500, 406, position.x, position.y, 500, 406);
 //        return getBackgroundGC();
         setActive();
+
+    }
+
+    public void updateView(int superSelected, int[] subSelected, boolean isPressed) {
+
     }
 
 

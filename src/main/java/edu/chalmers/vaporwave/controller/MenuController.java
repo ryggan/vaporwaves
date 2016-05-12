@@ -96,7 +96,6 @@ public class MenuController {
                         default:
                             System.out.println("Do menu action :D");
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
-                            updateViews();
                             break;
                     }
 
@@ -111,6 +110,7 @@ public class MenuController {
                 this.menuMap.get(activeMenu).getSelectedSub()
         );
     }
+
 
     public void setActiveMenu(MenuState activeMenu){
         this.activeMenu=activeMenu;

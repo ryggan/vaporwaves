@@ -73,7 +73,7 @@ public class GameController {
 
         timeSinceStart = 0.0;
 
-        timeLimit = 60;
+        timeLimit = 10;
 
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());

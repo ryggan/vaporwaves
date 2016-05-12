@@ -5,13 +5,18 @@ import edu.chalmers.vaporwave.event.NewGameEvent;
 public class ResultsMenu extends AbstractMenu {
 
     public ResultsMenu(NewGameEvent newGameEvent) {
-        super( new int[]{0, 3, 0});
+        super( new int[]{1, 0});
     }
 
     //exit
 
     @Override
-    public MenuState getMenuAction() {
-        return null;
+    public MenuState getMenuAction(){
+            if (this.getSelectedSuper() == 0) {
+                return MenuState.START_MENU;
+            }
+
+            return MenuState.NO_ACTION;
+
     }
 }

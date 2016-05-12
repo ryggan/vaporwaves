@@ -36,6 +36,8 @@ public abstract class AbstractMenuView {
 
     public abstract void updateView(int superSelected, int[] subSelected);
 
+    //public abstract void updateView(int superSelected, int[] subSelected, boolean isPressed);
+
     public GraphicsContext getBackgroundGC() {
         return this.backgroundGC;
     }
