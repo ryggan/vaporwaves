@@ -30,7 +30,7 @@ public class AIHeuristics {
             }
         }
 
-        if(x > 1 && y > 1 && x < 19 && y < 14) {
+        if(x > 1 && y > 1 && x < 19 && y < 13) {
             previousValue = 80;
             heuristicMatrix[x - 2][y] = previousValue;
             heuristicMatrix[x - 1][y + 1] = previousValue;
@@ -49,7 +49,7 @@ public class AIHeuristics {
             heuristicMatrix[x + 1][y - 1] = previousValue;
         }
 
-        if(x > 2 && y > 2 && x < 18 && y < 13) {
+        if(x > 2 && y > 2 && x < 18 && y < 12) {
             previousValue = 70;
             heuristicMatrix[x - 3][y] = previousValue;
             heuristicMatrix[x - 2][y + 1] = previousValue;

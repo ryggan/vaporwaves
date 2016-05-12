@@ -39,9 +39,8 @@ public class TimerModel {
         String millis="" + (int)((time*1000)%100);
         String seconds="" + (int)time%60;
         String minutes="" + (int) TimeUnit.SECONDS.toMinutes((long)time);
-
-        System.out.println(time);
-        System.out.println(millis);
+/*        System.out.println(time);
+        System.out.println(millis);*/
 
         if((int)(time*1000%100)<10){
             millis="0"+ millis;
