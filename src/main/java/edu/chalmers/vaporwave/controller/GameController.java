@@ -25,6 +25,7 @@ public class GameController {
     private Boolean scoreboardIsShowing = false;
     private List<Player> playerList;
     private Scoreboard scoreboard;
+    private PauseMenuController pauseMenuController;
 
     private ArenaView arenaView;
     private ArenaModel arenaModel;
@@ -41,6 +42,8 @@ public class GameController {
     private int updatedEnemyDirection;
 
     private double timeSinceStart;
+    private double timeSinceStartOffset;
+    private double pausedTime;
 
     private boolean gameIsPaused = false;
 
@@ -72,6 +75,8 @@ public class GameController {
         // Initiates view
 
         timeSinceStart = 0.0;
+        timeSinceStartOffset = 0.0;
+        pausedTime = 0.0;
 
         timeLimit = 1000;
 
@@ -81,6 +86,7 @@ public class GameController {
         // Starting new game
         this.arenaModel = newGame(arenaMap, timeLimit);
         this.arenaView = new ArenaView(root);
+        this.pauseMenuController = new PauseMenuController(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
@@ -146,8 +152,9 @@ public class GameController {
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        this.timeSinceStart = timeSinceStart;
-
+        if (!gameIsPaused) {
+            this.timeSinceStart = timeSinceStart - this.timeSinceStartOffset;
+        }
 
         if(!TimerModel.getInstance().isPaused()) {
             if (timeLimit - timeSinceLastCall > 0) {
@@ -256,11 +263,9 @@ public class GameController {
                     break;
                 case "P":
                     if(gameIsPaused) {
-                        arenaView.hidePauseMenu();
-                        gameIsPaused = false;
+                        unpauseGame();
                     } else if(!gameIsPaused) {
-                        arenaView.showPauseMenu();
-                        gameIsPaused = true;
+                        pauseGame();
                     }
                     break;
             }
@@ -302,8 +307,8 @@ public class GameController {
 
                             // If so, pick it up
                             if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
-                                powerUp.pickUp(timeSinceStart);
-                                gameCharacter.pickedUpPowerUp(timeSinceStart);
+                                powerUp.pickUp(this.timeSinceStart);
+                                gameCharacter.pickedUpPowerUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
                                 updateStats();
                                 if(movable instanceof GameCharacter) {
@@ -323,7 +328,7 @@ public class GameController {
                     }
 
                     // If blast was found, and the blast still is dangerous, deal damage
-                    if (blast != null && blast.isDangerous(timeSinceStart)) {
+                    if (blast != null && blast.isDangerous(this.timeSinceStart)) {
                         movable.dealDamage(blast.getDamage());
                         updateStats();
                         if(movable.getHealth() <= 0) {
@@ -364,7 +369,7 @@ public class GameController {
 
         // Calls view to update graphics
         if(!gameIsPaused) {
-            arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), timeSinceStart, timeSinceLastCall);
+            arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.timeSinceStart, timeSinceLastCall);
         }
 
 
@@ -575,4 +580,19 @@ public class GameController {
         return gameIsPaused;
     }
 
+    private void pauseGame() {
+        this.pauseMenuController.getPauseMenuView().show();
+        gameIsPaused = true;
+        this.pausedTime = System.nanoTime();
+
+//        System.out.println("Paused time: "+this.pausedTime);
+    }
+
+    private void unpauseGame() {
+        this.pauseMenuController.getPauseMenuView().hide();
+        gameIsPaused = false;
+        this.timeSinceStartOffset += (System.nanoTime() - this.pausedTime) / 1000000000.0;
+
+//        System.out.println("Time since start: "+this.timeSinceStart+", time since start offset: "+this.timeSinceStartOffset);
+    }
 }

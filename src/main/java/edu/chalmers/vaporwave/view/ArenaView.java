@@ -3,10 +3,7 @@ package edu.chalmers.vaporwave.view;
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.*;
-import edu.chalmers.vaporwave.controller.ListenerController;
-import edu.chalmers.vaporwave.controller.PauseMenuController;
 import edu.chalmers.vaporwave.event.*;
-import edu.chalmers.vaporwave.model.CharacterProperties;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
@@ -33,7 +30,6 @@ public class ArenaView {
 
     private HUDView hudView;
     private Scoreboard scoreboard;
-    private PauseMenuController pauseMenuController;
     private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;
@@ -106,8 +102,6 @@ public class ArenaView {
 
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
-
-        this.pauseMenuController = new PauseMenuController(root);
 
         // Character sprites
         characterSprites[0] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ALYSSA);
@@ -519,12 +513,4 @@ public class ArenaView {
         }
     }
 
-
-    public void hidePauseMenu() {
-        pauseMenuController.getPauseMenuView().hide();
-    }
-
-    public void showPauseMenu() {
-        pauseMenuController.getPauseMenuView().show();
-    }
 }

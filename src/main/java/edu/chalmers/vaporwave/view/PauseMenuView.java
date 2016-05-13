@@ -18,7 +18,7 @@ import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PauseMenu {
+public class PauseMenuView {
     private Player localPlayer;
     private Sprite pauseMenuBackground;
     private Canvas pauseMenu;
@@ -35,7 +35,7 @@ public class PauseMenu {
     private static double yoffset = 8 * Constants.DEFAULT_TILE_HEIGHT;
 
     //For testing purposes
-    public PauseMenu(Group root, List<Label> labels) {
+    public PauseMenuView(Group root, List<Label> labels) {
         this.root = root;
 
         //pauseMenuBackground = new Sprite("pausemenu");
