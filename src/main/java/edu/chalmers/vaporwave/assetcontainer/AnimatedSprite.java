@@ -22,10 +22,7 @@ public class AnimatedSprite extends Sprite {
     private int length;
     private Image originalSpriteSheet;
     private Image spriteSheet;
-    private Dimension spriteDimension;
     private Dimension sheetDimension;
-    private int[] startPosition;
-    private double[] offset;
     private double duration;
     private double timeOffset;
     private boolean startFromBeginning;
@@ -64,11 +61,8 @@ public class AnimatedSprite extends Sprite {
 
         this.originalSpriteSheet = spriteSheet;
         this.spriteSheet = spriteSheet;
-        this.spriteDimension = spriteDimension;
         this.length = length;
         this.duration = duration;
-        this.startPosition = new int[] {startPosition[0], startPosition[1]};
-        this.offset = new double[] {offset[0], offset[1]};
 
         this.timeOffset = 0;
         this.startFromBeginning = false;
@@ -113,38 +107,6 @@ public class AnimatedSprite extends Sprite {
     public AnimatedSprite(String fileName, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
         this(new Image(fileName), spriteDimension, length, duration, startPosition, offset);
     }
-
-//    public AnimatedSprite(AnimatedSprite sprite) {
-//        for(int[] i : sprite.frames) {
-//            int[] frame = {i[0], i[1]};
-//            frames.add(frame);
-//        }
-//
-//        this.length = sprite.length;
-//        this.spriteSheet = sprite.spriteSheet;
-//        this.spriteDimension = sprite.spriteDimension;
-//        this.duration = sprite.duration;
-//
-//        setWidth(sprite.spriteDimension.getWidth());
-//        setHeight(sprite.spriteDimension.getHeight());
-//
-//        this.sheetDimension = sprite.sheetDimension;
-//
-//        this.resetLoops();
-//    }
-
-//    public AnimatedSprite clone() {
-//        AnimatedSprite clone = new AnimatedSprite(this.spriteSheet, this.spriteDimension, this.length, this.duration, this.startPosition, this.offset);
-//        clone.setLoops(this.loops);
-//        clone.setScale(Constants.GAME_SCALE);
-//
-//
-////        System.out.println("spriteSheet: " + this.spriteSheet +
-////                "\ndimension: " + this.spriteDimension +
-////                "\nlength: " + this.length);
-//
-//        return clone;
-//    }
 
     /**
      * Sets the coordinates in the spritesheet for a specific frame in the frames list.

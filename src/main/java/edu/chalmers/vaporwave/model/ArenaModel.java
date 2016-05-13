@@ -15,7 +15,6 @@ import java.util.Random;
 
 public class ArenaModel {
 
-    private ArenaMap arenaMap;
     private StaticTile[][] arenaTiles;
     private List<Movable> arenaMovables;
     private int gridWidth;
@@ -24,7 +23,6 @@ public class ArenaModel {
     public ArenaModel(ArenaMap arenaMap) {
 
         GameEventBus.getInstance().register(this);
-        this.arenaMap = arenaMap;
         this.gridWidth = arenaMap.getMapSize().width;
         this.gridHeight = arenaMap.getMapSize().height;
         this.arenaTiles = new StaticTile[this.gridWidth][this.gridHeight];

@@ -23,14 +23,14 @@ public class HUDView {
     private ImageView scoreBarFilled;
     private ImageView scoreBarEmpty;
 
-    private ImageView emptyBar;
+//    private ImageView emptyBar;
     private Group root;
     private Canvas hudCanvas;
 
     private PixelReader reader;
     private WritableImage newImage;
 
-    private Font bauhaus10;
+//    private Font bauhaus10;
 
     public HUDView(Group root) {
 
