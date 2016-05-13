@@ -1,8 +1,4 @@
-package edu.chalmers.vaporwave.util;
-
-import edu.chalmers.vaporwave.view.TimerView;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
+package edu.chalmers.vaporwave.model;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,8 +7,8 @@ public class TimerModel {
 
     private String time;
     private static TimerModel instance;
-    private double timeLimit;
-    private boolean isFinished;
+//    private double timeLimit;
+//    private boolean isFinished;
     private boolean isPaused;
 
     private TimerModel(){
@@ -59,8 +55,8 @@ public class TimerModel {
         return time;
     }
 
-    public double getTimeLimit(){
-        return timeLimit;
-    }
+//    public double getTimeLimit(){
+//        return timeLimit;
+//    }
 
 }

@@ -507,8 +507,6 @@ public class ArenaView {
             } else if (movable.getState() == MovableState.SPAWN) {
                 GameEventBus.getInstance().post(new SpawnEvent(movable));
             }
-        } else if (animationFinishedEvent.getTile() != null) {
-
         }
     }
 

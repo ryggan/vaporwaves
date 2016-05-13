@@ -7,16 +7,11 @@ import edu.chalmers.vaporwave.assetcontainer.AnimatedSprite;
 public class AnimationFinishedEvent {
 
     private Movable movable;
-    private StaticTile tile;
 
     public AnimationFinishedEvent() {}
 
     public AnimationFinishedEvent(Movable movable) {
         this.movable = movable;
-    }
-
-    public AnimationFinishedEvent(StaticTile tile) {
-        this.tile = tile;
     }
 
     public void setMovable(Movable movable) {
@@ -27,19 +22,11 @@ public class AnimationFinishedEvent {
         return this.movable;
     }
 
-    public void setTile(StaticTile tile) {
-        this.tile = tile;
-    }
-
-    public StaticTile getTile() {
-        return this.tile;
-    }
-
     @Override
     public boolean equals(Object o){
         if(o instanceof AnimationFinishedEvent){
             AnimationFinishedEvent other = (AnimationFinishedEvent) o;
-            if(this.movable==other.movable&&this.tile==other.tile){
+            if (this.movable == other.movable){
                 return true;
             }
         }
@@ -49,8 +36,7 @@ public class AnimationFinishedEvent {
     @Override
     public int hashCode(){
         int hash = 23;
-        hash = movable.hashCode()*123;
-        hash = tile.hashCode()*52;
+        hash += movable.hashCode()*123;
         return hash;
 
     }

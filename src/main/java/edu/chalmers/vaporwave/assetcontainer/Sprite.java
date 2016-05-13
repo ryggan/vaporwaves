@@ -29,7 +29,6 @@ public class Sprite {
         this.positionY = 0;
         this.scale = Constants.GAME_SCALE;
         this.stayOnPixel = true;
-        setImage(this.image);
     }
 
     public Sprite(Image image) {
