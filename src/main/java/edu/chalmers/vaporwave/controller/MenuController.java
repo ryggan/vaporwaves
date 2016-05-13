@@ -38,7 +38,7 @@ public class MenuController {
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
         this.menuMap.put(MenuState.START_MENU, new StartMenu(this.newGameEvent));
-        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterMenu(this.newGameEvent));
+        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelect(this.newGameEvent));
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
 
         this.menuViewMap = new HashMap<>();
