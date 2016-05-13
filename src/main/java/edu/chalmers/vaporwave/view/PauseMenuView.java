@@ -19,12 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PauseMenuView {
-    private Player localPlayer;
-    private Sprite pauseMenuBackground;
+   // private Sprite pauseMenuBackground;
     private Canvas pauseMenu;
-    private GraphicsContext pauseMenuGC;
-    private ArrayList<Label> labels;
-    private Group root;
+    //private GraphicsContext pauseMenuGC;
+    //private ArrayList<Label> labels;
+    //private Group root;
     private AnchorPane pauseMenuPane;
     private Label options;
     private Label resumeGame;
@@ -36,12 +35,12 @@ public class PauseMenuView {
 
     //For testing purposes
     public PauseMenuView(Group root, List<Label> labels) {
-        this.root = root;
+        //this.root = root;
 
         //pauseMenuBackground = new Sprite("pausemenu");
         pauseMenu = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
                 Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
-        pauseMenuGC = pauseMenu.getGraphicsContext2D();
+        //pauseMenuGC = pauseMenu.getGraphicsContext2D();
         pauseMenu.setLayoutX(xoffset);
         pauseMenu.setLayoutY(yoffset);
 

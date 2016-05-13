@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Scoreboard {
-    private Player localPlayer;
     private Sprite scoreboardBackground;
     private Canvas scoreboard;
     private GraphicsContext scoreboardGC;
@@ -70,11 +69,6 @@ public class Scoreboard {
         root.getChildren().add(scoreboard);
         scoreboard.setVisible(false);
         addPlayersToScoreboard();
-
-    }
-
-    public Scoreboard(Group root, Player localPlayer) {
-        this.localPlayer = localPlayer;
 
     }
 
