@@ -57,7 +57,6 @@ public class FelixTestAI implements AI {
             nextDirection = Direction.LEFT;
         }
 
-        System.out.println(nextDirection + "");
         return nextDirection;
     }
 
