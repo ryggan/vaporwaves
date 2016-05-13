@@ -37,7 +37,6 @@ public class SemiStupidAI implements AI {
 
     @Override
     public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles) {
-        AIHeuristics aiHeuristics = new AIHeuristics(arenaTiles, this.gameCharacterSet);
 
         class NextDirectionClass {
             public int value;
@@ -74,11 +73,11 @@ public class SemiStupidAI implements AI {
             if(Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).x >= 0 && Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).y >= 0
                     && Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).x <= 20 && Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).y <= 14) {
                 Point positionToCheck = Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]);
-                int heuristicValue = aiHeuristics.getAIHeuristics()[positionToCheck.x][positionToCheck.y];
-                aiHeuristics.setHeuristicValue(enemyPosition, 1);
+                int heuristicValue = AIHeuristics.getAIHeuristics(arenaTiles, this.gameCharacterSet)[positionToCheck.x][positionToCheck.y];
+                AIHeuristics.setHeuristicValue(enemyPosition, 1);
                 if (heuristicValue > nextDirection.value) {
                     nextDirection.direction = Utils.getDirectionsAsArray()[i];
-                    nextDirection.value = aiHeuristics.getAIHeuristics()[positionToCheck.x][positionToCheck.y];
+                    nextDirection.value = AIHeuristics.getAIHeuristics(arenaTiles, this.gameCharacterSet)[positionToCheck.x][positionToCheck.y];
                 }
             } else {
                 int x = random.nextInt(4);

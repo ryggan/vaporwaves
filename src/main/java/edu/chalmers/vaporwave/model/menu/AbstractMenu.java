@@ -84,7 +84,7 @@ public abstract class AbstractMenu {
     }
 
     public int[] getSelectedSub() {
-        return this.selectedItems;
+        return intArrayCloner(this.selectedItems);
     }
 
     public abstract MenuState getMenuAction();
@@ -94,7 +94,15 @@ public abstract class AbstractMenu {
     }
 
     public int[] getMenuItems() {
-        return this.menuItems;
+        return intArrayCloner(this.menuItems);
+    }
+
+    public int[] intArrayCloner(int[] intArray) {
+        int[] temporary = new int[intArray.length];
+        for(int i = 0; i < intArray.length; i++) {
+            temporary[i] = intArray[i];
+        }
+        return temporary;
     }
 
 }

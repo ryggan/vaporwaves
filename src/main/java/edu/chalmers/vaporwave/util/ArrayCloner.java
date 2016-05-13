@@ -72,4 +72,19 @@ public class ArrayCloner {
         return temporary;
     }
 
+    public static int[] intArrayCloner(int[] intArray) {
+        int[] temporary = new int[intArray.length];
+        for(int i = 0; i < intArray.length; i++) {
+            temporary[i] = intArray[i];
+        }
+        return temporary;
+    }
+
+    public static double[] doubleArrayCloner(double[] doubleArray) {
+        double[] temporary = new double[doubleArray.length];
+        for (int i = 0; i < doubleArray.length; i++) {
+            temporary[i] = doubleArray[i];
+        }
+        return temporary;
+    }
 }
