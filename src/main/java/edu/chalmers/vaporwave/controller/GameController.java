@@ -146,8 +146,6 @@ public class GameController {
         playerList.add(remotePlayer);
         this.scoreboard = new Scoreboard(root, playerList);
 
-        //Assigning player IDs
-        assignPlayerId();
     }
 
 
@@ -270,15 +268,8 @@ public class GameController {
                         pauseGame();
                     }
                     break;
-                case "TAB":
-                    if(!scoreboardIsShowing) {
-                        scoreboard.showScoreboard();
-                        scoreboardIsShowing = true;
-                    } else if(scoreboardIsShowing) {
-                        scoreboard.hideScoreboard();
-                        scoreboardIsShowing = false;
-                    }
             }
+
 
         }
 
@@ -379,6 +370,17 @@ public class GameController {
         // Calls view to update graphics
         if(!gameIsPaused) {
             arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.timeSinceStart, timeSinceLastCall);
+        }
+
+
+        if (ListenerController.getInstance().getInput().contains("TAB")) {
+            if(!scoreboardIsShowing) {
+                scoreboard.showScoreboard();
+                scoreboardIsShowing = true;
+            }
+        } else {
+            scoreboard.hideScoreboard();
+            scoreboardIsShowing = false;
         }
     }
 
@@ -576,12 +578,6 @@ public class GameController {
 
     public boolean isGamePaused() {
         return gameIsPaused;
-    }
-
-    public void assignPlayerId() {
-        for (int i = 0; i < playerList.size(); i++) {
-            playerList.get(i).setPlayerId(i);
-        }
     }
 
     private void pauseGame() {

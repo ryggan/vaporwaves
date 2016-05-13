@@ -8,10 +8,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharacterMenu extends AbstractMenu {
+public class CharacterSelect extends AbstractMenu {
 
 
-    public CharacterMenu(NewGameEvent newGameEvent) {
+    public CharacterSelect(NewGameEvent newGameEvent) {
         super(new int[]{0, 3, 0}, newGameEvent);
 
 
