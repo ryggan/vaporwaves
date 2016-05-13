@@ -1,9 +1,5 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.util.PowerUpType;
-import edu.chalmers.vaporwave.view.AnimatedSprite;
-import edu.chalmers.vaporwave.view.ArenaView;
-import edu.chalmers.vaporwave.view.Sprite;
 import javafx.scene.image.Image;
 
 import java.awt.*;

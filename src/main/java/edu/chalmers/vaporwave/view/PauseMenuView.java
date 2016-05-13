@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.geometry.Insets;
@@ -10,11 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.List;
 

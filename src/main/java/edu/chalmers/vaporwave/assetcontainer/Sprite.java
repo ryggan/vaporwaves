@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.view;
+package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;

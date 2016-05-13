@@ -503,7 +503,6 @@ public class ArenaView {
         if (animationFinishedEvent.getMovable() != null) {
             Movable movable = animationFinishedEvent.getMovable();
             if (movable.getState() == MovableState.DEATH) {
-//                System.out.println((System.nanoTime()/1000000)+" - Death event for movable "+movable.getName());
                 GameEventBus.getInstance().post(new DeathEvent(movable));
             } else if (movable.getState() == MovableState.SPAWN) {
                 GameEventBus.getInstance().post(new SpawnEvent(movable));
