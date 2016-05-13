@@ -15,8 +15,8 @@ class CharacterSpriteContainer {
 
     private Map<CharacterSpriteID, CharacterSprite> spriteContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 14 * 5;
+    private static double tasksDone;
+    private static final double totalTasks = 14 * 5;
 
     CharacterSpriteContainer() {
 

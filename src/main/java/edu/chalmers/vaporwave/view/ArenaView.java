@@ -96,8 +96,6 @@ public class ArenaView {
         tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
         root.getChildren().add(tileCanvas);
 
-//        double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
-//        double yoffset = 0;
         tileCanvas.setLayoutX(xoffset);
         tileCanvas.setLayoutY(yoffset);
         backgroundCanvas.setLayoutX(xoffset - Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
@@ -316,7 +314,8 @@ public class ArenaView {
                 new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
                         (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
 
-        if (timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
+        if (currentSprite instanceof AnimatedSprite &&
+                timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
             currentSprite.setPosition(destinationCanvasPosition);
             currentSprite.render(this.tileGC, timeDifference);
         } else {

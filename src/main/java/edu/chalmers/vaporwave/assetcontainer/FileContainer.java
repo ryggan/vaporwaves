@@ -10,8 +10,8 @@ class FileContainer {
 
     private Map<FileID, File> fileContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 2;
+    private static double tasksDone;
+    private static final double totalTasks = 2;
 
     FileContainer() {
 

@@ -9,8 +9,8 @@ class ImageContainer {
 
     private Map<ImageID, Image> imageContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 1 + 2 + 3 + 5 + 6 + 13 + 3;
+    private static double tasksDone;
+    private static final double totalTasks = 1 + 2 + 3 + 5 + 6 + 13 + 3;
     
     ImageContainer() {
 

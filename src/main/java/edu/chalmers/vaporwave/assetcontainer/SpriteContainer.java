@@ -10,8 +10,8 @@ class SpriteContainer {
 
     private Map<SpriteID, Sprite> spriteContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 17 + 5 + 5 + 9 + 3 + 16;
+    private static double tasksDone;
+    private static final double totalTasks = 17 + 5 + 5 + 9 + 3 + 16;
 
     SpriteContainer() {
 

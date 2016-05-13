@@ -41,9 +41,11 @@ public class CharacterSprite {
     }
 
     public void setDeathSprite(Sprite sprite) {
-        ((AnimatedSprite)sprite).setStartFromBeginning(true);
-        ((AnimatedSprite)sprite).setLoops(1);
-        deathSprite[0] = sprite;
+        if (sprite instanceof AnimatedSprite) {
+            ((AnimatedSprite) sprite).setStartFromBeginning(true);
+            ((AnimatedSprite) sprite).setLoops(1);
+            deathSprite[0] = sprite;
+        }
     }
 
     public Sprite[] getDeathSprites() {

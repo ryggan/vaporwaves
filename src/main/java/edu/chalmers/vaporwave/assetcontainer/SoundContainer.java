@@ -17,9 +17,8 @@ class SoundContainer {
     private static final int NR_OF_POWERUP = 10;
     private static final int NR_OF_BACKGROUND = 1;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
-
+    private static double tasksDone;
+    private static final double totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
     SoundContainer() {
 
