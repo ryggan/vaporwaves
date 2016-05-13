@@ -29,7 +29,7 @@ public class ArenaView {
     private ImageView backgroundPattern;
 
     private HUDView hudView;
-    private Scoreboard scoreboard;
+    //private Scoreboard scoreboard;
     private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;

@@ -21,7 +21,7 @@ public class Scoreboard {
     private Canvas scoreboard;
     private GraphicsContext scoreboardGC;
     private List<Player> playerList;
-    private Group root;
+    //private Group root;
     private AnchorPane scoreboardPane;
     private GridPane gridPane;
     private Label[][] playerLabels;
@@ -38,7 +38,7 @@ public class Scoreboard {
 
     //For testing purposes
     public Scoreboard(Group root, List<Player> playerList) {
-        this.root = root;
+        //this.root = root;
         this.playerList = playerList;
         playerLabels = new Label[playerList.size()][5];
 

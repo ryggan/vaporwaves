@@ -73,7 +73,7 @@ public class PauseMenuView {
 
         pauseMenuPane.getChildren().add(gridPane);
         //resumeGame = labels.get(0);
-        options = labels.get(1);
+        options = labels.get(0);
        // quitGame = labels.get(2);
 
         //resumeGame.getStyleClass().add("labels");
