@@ -8,9 +8,6 @@ import javafx.scene.Group;
 import java.awt.*;
 import java.util.*;
 
-/**
- * Created by Lina on 5/10/2016.
- */
 public class ResultsMenuView extends AbstractMenuView {
 
     private java.util.List<MenuButtonView> menuButtonViewList;
@@ -27,7 +24,7 @@ public class ResultsMenuView extends AbstractMenuView {
     }
 
     @Override
-    public void updateView(int superSelected, int[] subSelected) {
+    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, int playerActionPerformed) {
         clearView();
 
         for (int i = 0; i < menuButtonViewList.size(); i++) {

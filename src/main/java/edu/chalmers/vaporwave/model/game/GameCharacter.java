@@ -104,8 +104,8 @@ public class GameCharacter extends Movable {
         if(o instanceof GameCharacter) {
             GameCharacter other = (GameCharacter) o;
             return this.bombRange == other.bombRange &&
-                    this.currentBombCount==other.currentBombCount &&
-                    this.maxBombCount==other.maxBombCount;
+                    this.currentBombCount == other.currentBombCount &&
+                    this.maxBombCount == other.maxBombCount;
         }
         return false;
     }

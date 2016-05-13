@@ -17,7 +17,7 @@ public class SpriteContainer {
     private Map<SpriteID, Sprite> spriteContainer;
 
     private static double tasksDone = 0;
-    private static double totalTasks = 13 + 5 + 5 + 9 + 3 + 16;
+    private static double totalTasks = 17 + 5 + 5 + 9 + 3 + 16;
 
     private SpriteContainer() {
 
@@ -29,14 +29,22 @@ public class SpriteContainer {
         Image menuCharacter = ImageContainer.getInstance().getImage(ImageID.MENU_CHARACTER);
         addSprite(SpriteID.MENU_CHARACTER_ALL,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {0, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_ALYSSA,
+        addSprite(SpriteID.MENU_CHARACTER_MEI_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {1, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE,
+        addSprite(SpriteID.MENU_CHARACTER_ALYSSA_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {2, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_ZYPHER,
+        addSprite(SpriteID.MENU_CHARACTER_ZYPHER_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {3, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_MEI,
+        addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {4, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_MEI_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {1, 1}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_ALYSSA_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {2, 1}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_ZYPHER_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {3, 1}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {4, 1}, new double[] {1, 1}));
 
         Image menuCharacterSelector = ImageContainer.getInstance().getImage(ImageID.MENU_CHARACTER_SELECTOR);
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_1,

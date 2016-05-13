@@ -28,7 +28,7 @@ public class StartMenuView extends AbstractMenuView {
 
     }
 
-    public void updateView(int superSelected, int[] subSelected) {
+    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, int playerActionPerformed) {
         clearView();
 
         for (int i = 0; i < menuButtonViewList.size(); i++) {

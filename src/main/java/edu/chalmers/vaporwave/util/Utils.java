@@ -163,4 +163,15 @@ public class Utils {
                 || (direction1 == Direction.RIGHT && direction2 == Direction.LEFT)
                 || (direction1 == Direction.LEFT && direction2 == Direction.RIGHT);
     }
+
+    public static int calculateRemoteSelected(int[] remoteSelected, int playerID, int modulus) {
+        int selected = remoteSelected[playerID];
+        if (selected < 0) {
+            while(selected < 0) {
+                selected += modulus;
+            }
+        }
+        return selected % modulus;
+
+    }
 }

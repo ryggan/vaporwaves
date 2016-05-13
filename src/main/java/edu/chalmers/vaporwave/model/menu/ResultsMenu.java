@@ -19,4 +19,10 @@ public class ResultsMenu extends AbstractMenu {
             return MenuState.NO_ACTION;
 
     }
+
+    @Override
+    public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
+
+    }
+
 }

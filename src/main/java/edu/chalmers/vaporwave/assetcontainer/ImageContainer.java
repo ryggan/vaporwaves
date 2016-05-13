@@ -14,7 +14,7 @@ public class ImageContainer {
     private static double tasksDone = 0;
 
     private static double totalTasks = 1 + 2 + 3 + 5 + 6 + 13 + 3;
-    
+
     private ImageContainer() {
 
         // TODO: OBS!!! IF ADDING IMAGES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!

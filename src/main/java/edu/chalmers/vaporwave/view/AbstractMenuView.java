@@ -34,7 +34,7 @@ public abstract class AbstractMenuView {
 
     }
 
-    public abstract void updateView(int superSelected, int[] subSelected);
+    public abstract void updateView(int superSelected, int[] subSelected, int[] remoteSelected, int playerActionPerformed);
 
     //public abstract void updateView(int superSelected, int[] subSelected, boolean isPressed);
 
@@ -56,7 +56,6 @@ public abstract class AbstractMenuView {
 
     public void setBackgroundImage(Image image) {
         this.backgroundImage = image;
-
     }
 
 }

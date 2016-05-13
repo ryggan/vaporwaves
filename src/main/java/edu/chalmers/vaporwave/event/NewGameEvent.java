@@ -16,6 +16,8 @@ public class NewGameEvent {
 
     public NewGameEvent() {
         this.enabledPowerUps = new HashSet<>();
+
+
     }
 
     public void setArenaMap(ArenaMap arenaMap) {
