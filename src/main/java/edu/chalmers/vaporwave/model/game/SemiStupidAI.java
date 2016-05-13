@@ -35,13 +35,14 @@ public class SemiStupidAI implements AI {
         return null;
     }
 
+    private static class NextDirectionClass {
+        public int value;
+        public Direction direction;
+    }
+
     @Override
     public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles) {
 
-        class NextDirectionClass {
-            public int value;
-            public Direction direction;
-        }
         //for testing
         i++;
 

@@ -71,27 +71,14 @@ public class MainController {
 
         // A separate thread that initializes all file loading, so that the loading loop can read it's progress
         // without hinderance. Instantly terminates thread when done.
-        new Thread(new Runnable() {
-            public void run() {
-//                double time = System.currentTimeMillis();
-//                ImageContainer.initialize();
-//                System.out.println("Image loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-//                time = System.currentTimeMillis();
-//                FileContainer.initialize();
-//                System.out.println("File loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-//                time = System.currentTimeMillis();
-//                SoundContainer.initialize();
-//                System.out.println("Sound loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-//                time = System.currentTimeMillis();
-//                CharacterSpriteContainer.initialize();
-//                System.out.println("Character sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
-//                time = System.currentTimeMillis();
-//                SpriteContainer.initialize();
-//                System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
-                Container.initialize();
-                return;
-            }
-        }).start();
+        new Thread(new InitializationRunnable()).start();
+    }
+
+    private static class InitializationRunnable implements Runnable {
+        public void run() {
+            Container.initialize();
+            return;
+        }
     }
 
     public void initApplication() {
@@ -174,10 +161,4 @@ public class MainController {
         this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
         this.menuController.updateViews();
     }
-
-//    @Subscribe
-//    public void loaderInitiated(LoaderInitiatedEvent loaderInitiatedEvent) {
-//        System.out.println("loaderInitiated()");
-//        initApplication();
-//    }
 }

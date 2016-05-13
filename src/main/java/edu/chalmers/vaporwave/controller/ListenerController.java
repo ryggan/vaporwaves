@@ -59,14 +59,15 @@ public class ListenerController {
         }
 
         Set<String> keysToRemove = new HashSet<>();
-        for (String key : this.heldDown.keySet()) {
-            if (this.heldDown.get(key).equals(new Integer(Constants.FRAMES_HELD_KEYS_UPDATE))) {
-                this.pressed.add(key);
-                keysToRemove.add(key);
+        for (Map.Entry<String, Integer> entry : this.heldDown.entrySet()) {
+            if (this.heldDown.get(entry.getKey()).equals(new Integer(Constants.FRAMES_HELD_KEYS_UPDATE))) {
+                this.pressed.add(entry.getKey());
+                keysToRemove.add(entry.getKey());
             } else {
-                this.heldDown.put(key, this.heldDown.get(key) + 1);
+                this.heldDown.put(entry.getKey(), this.heldDown.get(entry.getKey()) + 1);
             }
         }
+
         for (String key : keysToRemove) {
             this.heldDown.remove(key);
         }
