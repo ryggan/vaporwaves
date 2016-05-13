@@ -60,7 +60,7 @@ public class ListenerController {
 
         Set<String> keysToRemove = new HashSet<>();
         for (Map.Entry<String, Integer> entry : this.heldDown.entrySet()) {
-            if (this.heldDown.get(entry.getKey()).equals(new Integer(Constants.FRAMES_HELD_KEYS_UPDATE))) {
+            if (this.heldDown.get(entry.getKey()).equals(Integer.valueOf(Constants.FRAMES_HELD_KEYS_UPDATE))) {
                 this.pressed.add(entry.getKey());
                 keysToRemove.add(entry.getKey());
             } else {

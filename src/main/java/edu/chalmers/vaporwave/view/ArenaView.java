@@ -22,6 +22,13 @@ import java.util.Map;
 
 public class ArenaView {
 
+    public enum Compass {
+        NORTH, WEST, EAST, SOUTH
+    }
+
+    private static final double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
+    private static final double yoffset = 0;
+
     private Canvas backgroundCanvas;
     private Canvas tileCanvas;
     private GraphicsContext backgroundGC;
@@ -61,11 +68,6 @@ public class ArenaView {
 
     private int updateCounter;
 
-
-    public enum Compass {
-        NORTH, WEST, EAST, SOUTH
-    }
-
     public ArenaView(Group root) {
 
         this.root = root;
@@ -94,8 +96,8 @@ public class ArenaView {
         tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
         root.getChildren().add(tileCanvas);
 
-        double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
-        double yoffset = 0;
+//        double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
+//        double yoffset = 0;
         tileCanvas.setLayoutX(xoffset);
         tileCanvas.setLayoutY(yoffset);
         backgroundCanvas.setLayoutX(xoffset - Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
