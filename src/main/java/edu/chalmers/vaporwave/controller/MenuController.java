@@ -26,13 +26,9 @@ public class MenuController {
         this.newGameEvent = new NewGameEvent();
 
         Player localPlayer = new Player(1, "PlayerOne");
-        //TODO: dummy playerID
-        localPlayer.setCharacter(new GameCharacter("ALYSSA", new Point(0,0), 0));
         this.newGameEvent.setLocalPlayer(localPlayer);
 
         Player remotePlayer = new Player(2, "PlayerTwo");
-        //TODO: dummy playerID
-        remotePlayer.setCharacter(new GameCharacter("MEI", new Point(20,0), 1));
         this.newGameEvent.setRemotePlayer(remotePlayer);
 
         this.activeMenu = MenuState.START_MENU;
@@ -48,7 +44,9 @@ public class MenuController {
 
         this.menuViewMap.get(activeMenu).updateView(
                 this.menuMap.get(activeMenu).getSelectedSuper(),
-                this.menuMap.get(activeMenu).getSelectedSub()
+                this.menuMap.get(activeMenu).getSelectedSub(),
+                null,
+                -1
         );
     }
 
@@ -59,28 +57,29 @@ public class MenuController {
             switch (ListenerController.getInstance().getPressed().get(0)) {
                 case "UP":
                     menuMap.get(activeMenu).changeSelected(Direction.UP, 0);
-                    updateViews();
+                    updateViews(0);
                     break;
                 case "DOWN":
                     menuMap.get(activeMenu).changeSelected(Direction.DOWN, 0);
-                    updateViews();
+                    updateViews(0);
                     break;
                 case "LEFT":
                     menuMap.get(activeMenu).changeSelected(Direction.LEFT, 0);
-                    updateViews();
+                    updateViews(0);
                     break;
                 case "RIGHT":
                     menuMap.get(activeMenu).changeSelected(Direction.RIGHT, 0);
-                    updateViews();
+                    updateViews(0);
                     break;
                 case "A":
                     menuMap.get(activeMenu).changeSelected(Direction.LEFT, 1);
-                    updateViews();
+                    updateViews(1);
                     break;
                 case "D":
                     menuMap.get(activeMenu).changeSelected(Direction.RIGHT, 1);
-                    updateViews();
+                    updateViews(1);
                     break;
+                default:
             }
         }
 
@@ -94,44 +93,68 @@ public class MenuController {
                     switch (menuMap.get(activeMenu).getMenuAction()) {
                         case EXIT_PROGRAM:
                             GameEventBus.getInstance().post(new ExitGameEvent());
-                            updateViews();
+                            updateViews(0);
                             break;
                         case START_GAME:
-                            for (Map.Entry<MenuState, AbstractMenuView> menu : this.menuViewMap.entrySet()) {
-                                menu.getValue().clearView();
-                                updateViews();
+                            if (isNewGameEventReady()) {
+//                                for (Map.Entry<MenuState, AbstractMenuView> menu : this.menuViewMap.entrySet()) {
+//                                    menu.getValue().clearView();
+//                                    updateViews(-1);
+//                                }
+                                GameEventBus.getInstance().post(newGameEvent);
                             }
-                            GameEventBus.getInstance().post(newGameEvent);
                             break;
                         case NO_ACTION:
-                            updateViews();
+                            menuMap.get(activeMenu).performMenuAction(newGameEvent, 0);
+
+                            if (menuMap.get(activeMenu) instanceof CharacterSelect && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+                                ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
+                                        ((CharacterSelect)menuMap.get(activeMenu)).getSelectedCharacters()
+                                );
+                            }
+
+                            updateViews(0);
                             break;
                         default:
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
-                            updateViews();
+                            updateViews(0);
                             break;
                     }
 
                     break;
                 case "SHIFT":
-                    updateViews();
+                    menuMap.get(activeMenu).performMenuAction(newGameEvent, 1);
+
+                    if (menuMap.get(activeMenu) instanceof CharacterSelect && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+                        ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
+                                ((CharacterSelect)menuMap.get(activeMenu)).getSelectedCharacters()
+                        );
+                    }
+
+                    updateViews(1);
                     break;
+                default:
             }
         }
     }
 
-    public void updateViews() {
+    public void updateViews(int playerID) {
         this.menuViewMap.get(activeMenu).updateView(
                 this.menuMap.get(activeMenu).getSelectedSuper(),
-                this.menuMap.get(activeMenu).getSelectedSub()
+                this.menuMap.get(activeMenu).getSelectedSub(),
+                this.menuMap.get(activeMenu).getRemoteSelected(),
+                playerID
         );
     }
 
 
     public void setActiveMenu(MenuState activeMenu){
-        this.activeMenu=activeMenu;
+        this.activeMenu = activeMenu;
     }
 
-
+    private boolean isNewGameEventReady() {
+        return this.newGameEvent.getLocalPlayer().getCharacter() != null &&
+                this.newGameEvent.getRemotePlayer().getCharacter() != null;
+    }
 
 }

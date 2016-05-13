@@ -11,16 +11,14 @@ import java.util.Map;
 /**
  * Created by bob on 2016-05-11.
  */
-public class CharacterSpriteContainer {
-
-    private static CharacterSpriteContainer instance;
+class CharacterSpriteContainer {
 
     private Map<CharacterSpriteID, CharacterSprite> spriteContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 14 * 5;
+    private static double tasksDone;
+    private static final double totalTasks = 14 * 5;
 
-    private CharacterSpriteContainer() {
+    CharacterSpriteContainer() {
 
         spriteContainer = new HashMap<>();
 
@@ -34,7 +32,7 @@ public class CharacterSpriteContainer {
         initCharacterSprites(CharacterSpriteID.PCCHAN);
     }
 
-    public CharacterSprite getCharacterSprite(CharacterSpriteID characterSpriteID) {
+    CharacterSprite getCharacterSprite(CharacterSpriteID characterSpriteID) {
         return this.spriteContainer.get(characterSpriteID);
     }
 
@@ -42,7 +40,7 @@ public class CharacterSpriteContainer {
         CharacterSprite characterSprite = new CharacterSprite(characterSpriteID.toString());
         this.spriteContainer.put(characterSpriteID, characterSprite);
 
-        XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
+        XMLReader reader = new XMLReader(Container.getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
         for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
@@ -115,33 +113,25 @@ public class CharacterSpriteContainer {
                                                 new int[]{startIndexX, startIndexY},
                                                 characterSpriteProperties.getOffset()),
                                         i);
+                                break;
+                            default:
                         }
 
                         tasksDone++;
                         startIndexX += characterSpriteProperties.getFrames();
                     }
                     break;
+                default:
             }
         }
 
     }
 
-    public static CharacterSpriteContainer getInstance() {
-        initialize();
-        return instance;
-    }
-
-    public static void initialize() {
-        if (instance == null) {
-            instance = new CharacterSpriteContainer();
-        }
-    }
-
-    public static double getTasksDone() {
+    static double getTasksDone() {
         return tasksDone;
     }
 
-    public static double getTotalTasks() {
+    static double getTotalTasks() {
         return totalTasks;
     }
 }

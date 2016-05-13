@@ -6,16 +6,14 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FileContainer {
-
-    private static FileContainer instance;
+class FileContainer {
 
     private Map<FileID, File> fileContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 2;
+    private static double tasksDone;
+    private static final double totalTasks = 2;
 
-    private FileContainer() {
+    FileContainer() {
 
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
@@ -30,26 +28,15 @@ public class FileContainer {
         tasksDone++;
     }
 
-    public File getFile(FileID fileID) {
+    File getFile(FileID fileID) {
         return this.fileContainer.get(fileID);
     }
 
-    public static FileContainer getInstance() {
-        initialize();
-        return instance;
-    }
-
-    public static void initialize() {
-        if (instance == null) {
-            instance = new FileContainer();
-        }
-    }
-
-    public static double getTasksDone() {
+    static double getTasksDone() {
         return tasksDone;
     }
 
-    public static double getTotalTasks() {
+    static double getTotalTasks() {
         return totalTasks;
     }
 

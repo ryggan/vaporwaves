@@ -20,8 +20,8 @@ public class CharacterSpriteProperties {
         this.dimensionY = dimensionY;
         this.frames = frames;
         this.duration = duration;
-        this.firstFrame = firstFrame;
-        this.offset = offset;
+        this.firstFrame = new int[] {firstFrame[0], firstFrame[1]};
+        this.offset = new double[] {offset[0], offset[1]};
     }
 
     public String getState() {

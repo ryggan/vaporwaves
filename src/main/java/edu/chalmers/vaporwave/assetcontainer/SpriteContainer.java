@@ -6,35 +6,41 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SpriteContainer {
-
-    private static SpriteContainer instance;
+class SpriteContainer {
 
     private Map<SpriteID, Sprite> spriteContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 13 + 5 + 5 + 9 + 3 + 16;
+    private static double tasksDone;
+    private static final double totalTasks = 17 + 5 + 5 + 9 + 3 + 16;
 
-    private SpriteContainer() {
+    SpriteContainer() {
 
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         this.spriteContainer = new HashMap<>();
 
         // Menu images and controls (9)
-        Image menuCharacter = ImageContainer.getInstance().getImage(ImageID.MENU_CHARACTER);
+        Image menuCharacter = Container.getImage(ImageID.MENU_CHARACTER);
         addSprite(SpriteID.MENU_CHARACTER_ALL,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {0, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_ALYSSA,
+        addSprite(SpriteID.MENU_CHARACTER_MEI_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {1, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE,
+        addSprite(SpriteID.MENU_CHARACTER_ALYSSA_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {2, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_ZYPHER,
+        addSprite(SpriteID.MENU_CHARACTER_ZYPHER_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {3, 0}, new double[] {1, 1}));
-        addSprite(SpriteID.MENU_CHARACTER_MEI,
+        addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {4, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_MEI_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {1, 1}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_ALYSSA_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {2, 1}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_ZYPHER_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {3, 1}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_2,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {4, 1}, new double[] {1, 1}));
 
-        Image menuCharacterSelector = ImageContainer.getInstance().getImage(ImageID.MENU_CHARACTER_SELECTOR);
+        Image menuCharacterSelector = Container.getImage(ImageID.MENU_CHARACTER_SELECTOR);
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_1,
                 new AnimatedSprite(menuCharacterSelector, new Dimension(22, 33), 1, 1, new int[] {0, 0}, new double[] {1, 1}));
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_2,
@@ -44,7 +50,7 @@ public class SpriteContainer {
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_4,
                 new AnimatedSprite(menuCharacterSelector, new Dimension(22, 33), 1, 1, new int[] {3, 0}, new double[] {1, 1}));
 
-        Image menuCheckbox = ImageContainer.getInstance().getImage(ImageID.MENU_CHECKBOX);
+        Image menuCheckbox = Container.getImage(ImageID.MENU_CHECKBOX);
         addSprite(SpriteID.MENU_CHECKBOX_UNSELECTED_OFF,
                 new AnimatedSprite(menuCheckbox, new Dimension(111, 118), 1, 1, new int[] {0, 0}, new double[] {1, 1}));
         addSprite(SpriteID.MENU_CHECKBOX_UNSELECTED_ON,
@@ -56,20 +62,20 @@ public class SpriteContainer {
 
         // Game background and frame (5)
 
-        addSprite(SpriteID.GAME_BACKGROUND_1, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_BACKGROUND_1)));
+        addSprite(SpriteID.GAME_BACKGROUND_1, new Sprite(Container.getImage(ImageID.GAME_BACKGROUND_1)));
 
-        addSprite(SpriteID.GAME_FRAME_NORTH_1, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_NORTH_1)));
-        addSprite(SpriteID.GAME_FRAME_WEST_1, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_WEST_1)));
-        addSprite(SpriteID.GAME_FRAME_EAST_1, new Sprite(ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_EAST_1)));
+        addSprite(SpriteID.GAME_FRAME_NORTH_1, new Sprite(Container.getImage(ImageID.GAME_FRAME_NORTH_1)));
+        addSprite(SpriteID.GAME_FRAME_WEST_1, new Sprite(Container.getImage(ImageID.GAME_FRAME_WEST_1)));
+        addSprite(SpriteID.GAME_FRAME_EAST_1, new Sprite(Container.getImage(ImageID.GAME_FRAME_EAST_1)));
 
-        Image frameSouthSheet = ImageContainer.getInstance().getImage(ImageID.GAME_FRAME_SOUTH_1);
+        Image frameSouthSheet = Container.getImage(ImageID.GAME_FRAME_SOUTH_1);
         AnimatedSprite frameSouthSprite =
                 new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1});
         addSprite(SpriteID.GAME_FRAME_SOUTH_1, frameSouthSprite);
 
         // Bombs (5)
 
-        Image bombBlastSpriteSheet = ImageContainer.getInstance().getImage(ImageID.BOMBS_EXPLOSIONS);
+        Image bombBlastSpriteSheet = Container.getImage(ImageID.BOMBS_EXPLOSIONS);
         addSprite(SpriteID.BOMB_ALYSSA,
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1}));
         addSprite(SpriteID.BOMB_CHARLOTTE,
@@ -106,7 +112,7 @@ public class SpriteContainer {
 
         // Walls (3)
 
-        Image wallSpriteSheet = ImageContainer.getInstance().getImage(ImageID.WALLS);
+        Image wallSpriteSheet = Container.getImage(ImageID.WALLS);
 
         addSprite(SpriteID.WALL_DESTR_PARASOL,
                 new AnimatedSprite(wallSpriteSheet, new Dimension(18, 18), 1, 1.0, new int[] {0, 1}, new double[] {1, 1}));
@@ -117,7 +123,7 @@ public class SpriteContainer {
 
         // Powerups (16)
 
-        Image powerupSpritesheet = ImageContainer.getInstance().getImage(ImageID.POWERUPS);
+        Image powerupSpritesheet = Container.getImage(ImageID.POWERUPS);
 
         addSprite(SpriteID.POWERUP_HEALTH,
                 new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 8, 0.1, new int[] {0, 0}, new double[] {1, 1}));
@@ -162,26 +168,15 @@ public class SpriteContainer {
         tasksDone++;
     }
 
-    public Sprite getSprite(SpriteID spriteID) {
+    Sprite getSprite(SpriteID spriteID) {
         return this.spriteContainer.get(spriteID);
     }
 
-    public static SpriteContainer getInstance() {
-        initialize();
-        return instance;
-    }
-
-    public static void initialize() {
-        if (instance == null) {
-            instance = new SpriteContainer();
-        }
-    }
-
-    public static double getTasksDone() {
+    static double getTasksDone() {
         return tasksDone;
     }
 
-    public static double getTotalTasks() {
+    static double getTotalTasks() {
         return totalTasks;
     }
 

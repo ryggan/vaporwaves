@@ -100,6 +100,7 @@ public abstract class Movable {
                     }
                 }
                 break;
+            default:
         }
 
         this.lastMove = null;
@@ -188,7 +189,8 @@ public abstract class Movable {
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
         this.lastMove = direction;
-        this.latestArenaTiles = arenaTiles;
+//        this.latestArenaTiles = arenaTiles;
+        this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
         if (direction != null && this.comingState != MovableState.SPAWN &&
                 (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
             switch (direction) {
@@ -204,11 +206,22 @@ public abstract class Movable {
                 case RIGHT:
                     moveRight();
                     break;
+                default:
             }
             if (getVelocityY() != 0 || getVelocityX() != 0) {
                 setState(MovableState.WALK);
             }
         }
+    }
+
+    private StaticTile[][] staticTileMatrixClone(StaticTile[][] matrix) {
+        StaticTile[][] newMatrix = new StaticTile[matrix.length][matrix[0].length];
+        for(int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                newMatrix[i][j] = matrix[i][j];
+            }
+        }
+        return newMatrix;
     }
 
     public void moveUp() {

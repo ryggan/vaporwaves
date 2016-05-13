@@ -4,7 +4,7 @@ import edu.chalmers.vaporwave.event.NewGameEvent;
 
 public class StartMenu extends AbstractMenu {
     public StartMenu(NewGameEvent newGameEvent) {
-        super(new int[]{1, 0}, newGameEvent);
+        super(new int[]{0, 0}, newGameEvent, 0);
     }
 
     public MenuState getMenuAction() {
@@ -15,5 +15,10 @@ public class StartMenu extends AbstractMenu {
         }
         return MenuState.NO_ACTION;
 
+    }
+
+    @Override
+    public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
+        System.out.println("Performing menu event in characterSelect");
     }
 }

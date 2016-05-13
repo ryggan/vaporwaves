@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.view;
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
@@ -20,6 +21,13 @@ import java.util.ListIterator;
 import java.util.Map;
 
 public class ArenaView {
+
+    public enum Compass {
+        NORTH, WEST, EAST, SOUTH
+    }
+
+    private static final double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
+    private static final double yoffset = 0;
 
     private Canvas backgroundCanvas;
     private Canvas tileCanvas;
@@ -60,11 +68,6 @@ public class ArenaView {
 
     private int updateCounter;
 
-
-    public enum Compass {
-        NORTH, WEST, EAST, SOUTH
-    }
-
     public ArenaView(Group root) {
 
         this.root = root;
@@ -93,8 +96,6 @@ public class ArenaView {
         tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
         root.getChildren().add(tileCanvas);
 
-        double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
-        double yoffset = 0;
         tileCanvas.setLayoutX(xoffset);
         tileCanvas.setLayoutY(yoffset);
         backgroundCanvas.setLayoutX(xoffset - Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
@@ -104,69 +105,69 @@ public class ArenaView {
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
         // Character sprites
-        characterSprites[0] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ALYSSA);
-        characterSprites[1] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.CHARLOTTE);
-        characterSprites[2] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ZYPHER);
-        characterSprites[3] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.MEI);
+        characterSprites[0] = Container.getCharacterSprite(CharacterSpriteID.ALYSSA);
+        characterSprites[1] = Container.getCharacterSprite(CharacterSpriteID.CHARLOTTE);
+        characterSprites[2] = Container.getCharacterSprite(CharacterSpriteID.ZYPHER);
+        characterSprites[3] = Container.getCharacterSprite(CharacterSpriteID.MEI);
 
-        Image characterMiscSpritesheet = ImageContainer.getInstance().getImage(ImageID.CHARACTER_MISC);
+        Image characterMiscSpritesheet = Container.getImage(ImageID.CHARACTER_MISC);
         characterSparkleSprite =
                 new AnimatedSprite(characterMiscSpritesheet, new Dimension(48, 48), 9, 0.08, new int[] {0, 0}, new double[] {16, 27});
 
-        enemySprite = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.PCCHAN);
+        enemySprite = Container.getCharacterSprite(CharacterSpriteID.PCCHAN);
 
         // Background and frame
-        arenaBackgroundSprite = SpriteContainer.getInstance().getSprite(SpriteID.GAME_BACKGROUND_1);
-        arenaFrameSprites.put(Compass.NORTH, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_NORTH_1));
-        arenaFrameSprites.put(Compass.WEST, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_WEST_1));
-        arenaFrameSprites.put(Compass.EAST, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_EAST_1));
-        arenaFrameSprites.put(Compass.SOUTH, SpriteContainer.getInstance().getSprite(SpriteID.GAME_FRAME_SOUTH_1));
+        arenaBackgroundSprite = Container.getSprite(SpriteID.GAME_BACKGROUND_1);
+        arenaFrameSprites.put(Compass.NORTH, Container.getSprite(SpriteID.GAME_FRAME_NORTH_1));
+        arenaFrameSprites.put(Compass.WEST, Container.getSprite(SpriteID.GAME_FRAME_WEST_1));
+        arenaFrameSprites.put(Compass.EAST, Container.getSprite(SpriteID.GAME_FRAME_EAST_1));
+        arenaFrameSprites.put(Compass.SOUTH, Container.getSprite(SpriteID.GAME_FRAME_SOUTH_1));
 
         // Bombs
-        bombSprite[0] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_ALYSSA);
-        bombSprite[1] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_CHARLOTTE);
-        bombSprite[2] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_ZYPHER);
-        bombSprite[3] = SpriteContainer.getInstance().getSprite(SpriteID.BOMB_MEI);
-        mineSprite = SpriteContainer.getInstance().getSprite(SpriteID.MINE);
+        bombSprite[0] = Container.getSprite(SpriteID.BOMB_ALYSSA);
+        bombSprite[1] = Container.getSprite(SpriteID.BOMB_CHARLOTTE);
+        bombSprite[2] = Container.getSprite(SpriteID.BOMB_ZYPHER);
+        bombSprite[3] = Container.getSprite(SpriteID.BOMB_MEI);
+        mineSprite = Container.getSprite(SpriteID.MINE);
 
         // Walls
-        destructibleWallSprite = SpriteContainer.getInstance().getSprite(SpriteID.WALL_DESTR_PARASOL);
-        destructibleWallDestroyedSprite = SpriteContainer.getInstance().getSprite(SpriteID.WALL_DESTR_PARASOL_DESTROYED);
-        indestructibleWallSprite = SpriteContainer.getInstance().getSprite(SpriteID.WALL_INDESTR_BEACHSTONE);
+        destructibleWallSprite = Container.getSprite(SpriteID.WALL_DESTR_PARASOL);
+        destructibleWallDestroyedSprite = Container.getSprite(SpriteID.WALL_DESTR_PARASOL_DESTROYED);
+        indestructibleWallSprite = Container.getSprite(SpriteID.WALL_INDESTR_BEACHSTONE);
 
         // Powerups
-        powerUpSprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH));
-        powerUpSprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT));
-        powerUpSprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE));
-        powerUpSprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED));
+        powerUpSprites.put(PowerUpType.HEALTH, Container.getSprite(SpriteID.POWERUP_HEALTH));
+        powerUpSprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT));
+        powerUpSprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE));
+        powerUpSprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED));
 
-        powerUpSpawnSprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH_SPAWN));
-        powerUpSpawnSprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT_SPAWN));
-        powerUpSpawnSprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE_SPAWN));
-        powerUpSpawnSprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.HEALTH, Container.getSprite(SpriteID.POWERUP_HEALTH_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED_SPAWN));
 
-        powerUpPickupSprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH_PICKUP));
-        powerUpPickupSprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT_PICKUP));
-        powerUpPickupSprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE_PICKUP));
-        powerUpPickupSprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.HEALTH, Container.getSprite(SpriteID.POWERUP_HEALTH_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED_PICKUP));
 
-        powerUpDestroySprites.put(PowerUpType.HEALTH, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_HEALTH_DESTROY));
-        powerUpDestroySprites.put(PowerUpType.BOMB_COUNT, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_BOMBCOUNT_DESTROY));
-        powerUpDestroySprites.put(PowerUpType.RANGE, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_RANGE_DESTROY));
-        powerUpDestroySprites.put(PowerUpType.SPEED, SpriteContainer.getInstance().getSprite(SpriteID.POWERUP_SPEED_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.HEALTH, Container.getSprite(SpriteID.POWERUP_HEALTH_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED_DESTROY));
 
         // Blasts
-        blastSpriteCenter = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_CENTER);
+        blastSpriteCenter = Container.getSprite(SpriteID.BLAST_CENTER);
 
-        blastSpriteBeam[0] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_WEST);
-        blastSpriteBeam[1] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_NORTH);
-        blastSpriteBeam[2] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_EAST);
-        blastSpriteBeam[3] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_BEAM_SOUTH);
+        blastSpriteBeam[0] = Container.getSprite(SpriteID.BLAST_BEAM_WEST);
+        blastSpriteBeam[1] = Container.getSprite(SpriteID.BLAST_BEAM_NORTH);
+        blastSpriteBeam[2] = Container.getSprite(SpriteID.BLAST_BEAM_EAST);
+        blastSpriteBeam[3] = Container.getSprite(SpriteID.BLAST_BEAM_SOUTH);
 
-        blastSpriteEnd[0] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_WEST);
-        blastSpriteEnd[1] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_NORTH);
-        blastSpriteEnd[2] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_EAST);
-        blastSpriteEnd[3] = SpriteContainer.getInstance().getSprite(SpriteID.BLAST_END_SOUTH);
+        blastSpriteEnd[0] = Container.getSprite(SpriteID.BLAST_END_WEST);
+        blastSpriteEnd[1] = Container.getSprite(SpriteID.BLAST_END_NORTH);
+        blastSpriteEnd[2] = Container.getSprite(SpriteID.BLAST_END_EAST);
+        blastSpriteEnd[3] = Container.getSprite(SpriteID.BLAST_END_SOUTH);
 
     }
 
@@ -214,7 +215,7 @@ public class ArenaView {
 //        int randomNum = 1 + (int)(Math.random() * 4);
 //        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
 //        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
-        backgroundPattern.setImage(ImageContainer.getInstance().getImage(ImageID.BACKGROUND_PATTERN_1));
+        backgroundPattern.setImage(Container.getImage(ImageID.BACKGROUND_PATTERN_1));
     }
 
     public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
@@ -313,7 +314,8 @@ public class ArenaView {
                 new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
                         (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
 
-        if (timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
+        if (currentSprite instanceof AnimatedSprite &&
+                timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
             currentSprite.setPosition(destinationCanvasPosition);
             currentSprite.render(this.tileGC, timeDifference);
         } else {

@@ -1,9 +1,9 @@
 package edu.chalmers.vaporwave.model.game;
 
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
-import edu.chalmers.vaporwave.assetcontainer.SoundID;
 
 import java.awt.*;
 
@@ -46,7 +46,7 @@ public abstract class Explosive extends StaticTile {
     }
 
     public void explode() {
-        SoundContainer.getInstance().playSound(SoundID.EXPLOSION);
+        Container.playSound(SoundID.EXPLOSION);
 
         GameEventBus.getInstance().post(new BlastEvent(this));
     }

@@ -1,33 +1,28 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.model.menu.MenuButtonState;
 import javafx.scene.Group;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 
-/**
- * Created by Lina on 5/10/2016.
- */
 public class ResultsMenuView extends AbstractMenuView {
 
     private java.util.List<MenuButtonView> menuButtonViewList;
 
     public ResultsMenuView(Group root){
         super(root);
-        setBackgroundImage(ImageContainer.getInstance().getImage(ImageID.MENU_BACKGROUND_1));
+        setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_1));
 
         menuButtonViewList = new ArrayList<>();
-//        menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_singleplayer.png"), 308, 66, 0, new Point(640, 200)));
-//        menuButtonViewList.add(new MenuButtonView(new Image("images/spritesheet_exit.png"), 308, 66, 0, new Point(640, 280)));
-        menuButtonViewList.add(new MenuButtonView(ImageContainer.getInstance().getImage(ImageID.BUTTON_EXIT),
+        menuButtonViewList.add(new MenuButtonView(Container.getImage(ImageID.BUTTON_EXIT),
                 308, 66, 0, new Point(640, 280)));
     }
 
     @Override
-    public void updateView(int superSelected, int[] subSelected) {
+    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, int playerActionPerformed) {
         clearView();
 
         for (int i = 0; i < menuButtonViewList.size(); i++) {

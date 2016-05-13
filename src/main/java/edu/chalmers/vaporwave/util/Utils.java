@@ -90,8 +90,9 @@ public class Utils {
             case DOWN:
                 newPosition.setLocation(initialPosition.x, initialPosition.y + distance);
                 break;
+            default:
         }
-            return newPosition;
+        return newPosition;
     }
 
     public static Direction getDirectionFromString(String string) {
@@ -108,6 +109,7 @@ public class Utils {
             case "DOWN":
             case "S":
                 return Direction.DOWN;
+            default:
         }
         return null;
     }
@@ -122,6 +124,7 @@ public class Utils {
                 return Direction.RIGHT;
             case 3:
                 return Direction.DOWN;
+            default:
         }
         return null;
     }
@@ -136,6 +139,7 @@ public class Utils {
                 return 2;
             case DOWN:
                 return 3;
+            default:
         }
         return -1;
     }
@@ -162,5 +166,16 @@ public class Utils {
                 || (direction1 == Direction.UP && direction2 == Direction.DOWN)
                 || (direction1 == Direction.RIGHT && direction2 == Direction.LEFT)
                 || (direction1 == Direction.LEFT && direction2 == Direction.RIGHT);
+    }
+
+    public static int calculateRemoteSelected(int[] remoteSelected, int playerID, int modulus) {
+        int selected = remoteSelected[playerID];
+        if (selected < 0) {
+            while(selected < 0) {
+                selected += modulus;
+            }
+        }
+        return selected % modulus;
+
     }
 }

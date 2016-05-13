@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class CharacterLoader {
@@ -26,9 +27,9 @@ public class CharacterLoader {
                     for (int k = 0; k < Constants.CHARACTER_CHARACTER_STATE.length; k++) {
 
                         Element currentSpriteNodes =(Element)singleCharacterNodes.getElementsByTagName(
-                                Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase()).item(j);
+                                Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(Locale.ENGLISH)).item(j);
 
-                        Image spritesheet = ImageContainer.getInstance().getImage(ImageID.valueOf(
+                        Image spritesheet = Container.getImage(ImageID.valueOf(
                                 currentSpriteNodes.getElementsByTagName("spritesheet").item(0).getTextContent()));
 
                         int dimensionX = Integer.parseInt(currentSpriteNodes.getElementsByTagName("dimensionX").item(0).getTextContent());
@@ -40,7 +41,8 @@ public class CharacterLoader {
                         double[] offset = { Double.parseDouble(currentSpriteNodes.getElementsByTagName("offsetX").item(0).getTextContent()),
                                 Integer.parseInt(currentSpriteNodes.getElementsByTagName("offsetY").item(0).getTextContent())};
 
-                        CharacterSpriteProperties property = new CharacterSpriteProperties(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(),
+                        CharacterSpriteProperties property =
+                                new CharacterSpriteProperties(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(Locale.ENGLISH),
                                 spritesheet, dimensionX, dimensionY, frames, duration, firstFrame, offset);
                         spritePropertiesMap.put(Constants.CHARACTER_CHARACTER_STATE[k], property);
                     }

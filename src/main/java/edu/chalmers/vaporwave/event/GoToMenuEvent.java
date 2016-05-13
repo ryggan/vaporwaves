@@ -6,12 +6,12 @@ public class GoToMenuEvent {
 
     private MenuState activeMenu;
 
-    public GoToMenuEvent(){
+    public GoToMenuEvent() {
 
     }
 
     public GoToMenuEvent(MenuState activeMenu){
-        this.activeMenu=activeMenu;
+        this.activeMenu = activeMenu;
     }
 
     public MenuState getActiveMenu(){

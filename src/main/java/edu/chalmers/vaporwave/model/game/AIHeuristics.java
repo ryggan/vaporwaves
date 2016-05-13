@@ -106,7 +106,7 @@ public class AIHeuristics {
             }
             System.out.println();
         }*/
-        return ArrayCloner.intMatriceCloner(heuristicMatrix);
+        return ArrayCloner.intMatrixCloner(heuristicMatrix);
     }
 
 

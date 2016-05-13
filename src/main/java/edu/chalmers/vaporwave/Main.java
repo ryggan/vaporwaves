@@ -47,20 +47,11 @@ public class Main extends Application {
 		// This makes the application shut down properly when hitting cmd-q
 		// Solution found here: http://mail.openjdk.java.net/pipermail/openjfx-dev/2013-July/008598.html
 		// Slightly modified
-		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(final @Nonnull WindowEvent event) {
-				System.exit(0);
-			}
-		});
+		primaryStage.setOnCloseRequest(new CloseWindowEventHandler());
 
 //		System.out.println(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf");
 
 //		Font.loadFont(Main.class.getResource(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf").toExternalForm(), 10);
-
-
-
-
 
         primaryStage.show();
 
@@ -69,5 +60,12 @@ public class Main extends Application {
 		ListenerController.getInstance().initiateListener(scene);
 		new MainController(root);
 //		new ListenerController(scene, mc);
+	}
+
+	private static class CloseWindowEventHandler implements EventHandler<WindowEvent> {
+		@Override
+		public void handle(final @Nonnull WindowEvent event) {
+			System.exit(0);
+		}
 	}
 }

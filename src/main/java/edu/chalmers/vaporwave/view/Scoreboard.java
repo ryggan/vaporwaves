@@ -1,15 +1,15 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -43,7 +43,7 @@ public class Scoreboard {
         playerLabels = new Label[playerList.size()][5];
 
         //fix filepath after creating image
-        scoreboardBackground = new Sprite(ImageContainer.getInstance().getImage(ImageID.SCOREBOARD_BACK));
+        scoreboardBackground = new Sprite(Container.getImage(ImageID.SCOREBOARD_BACK));
         scoreboard = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
                 Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
         scoreboardGC = scoreboard.getGraphicsContext2D();

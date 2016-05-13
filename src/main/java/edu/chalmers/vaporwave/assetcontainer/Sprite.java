@@ -159,7 +159,7 @@ public class Sprite {
     @Override
     public boolean equals(Object o){
         if(o instanceof Sprite){
-           Sprite other =(Sprite) o;
+            Sprite other = (Sprite) o;
             if(other.getStayOnPixel() == this.getStayOnPixel() /*&& other.getBoundary() == this.getBoundary()*/
                     && this.getHeight() == other.getHeight() && other.getWidth() == this.getWidth()
                     && other.getImage() == this.getImage() && this.getOffsetX() == other.getOffsetX()

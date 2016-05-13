@@ -15,7 +15,6 @@ import java.util.Random;
 
 public class ArenaModel {
 
-    private ArenaMap arenaMap;
     private StaticTile[][] arenaTiles;
     private List<Movable> arenaMovables;
     private int gridWidth;
@@ -24,7 +23,6 @@ public class ArenaModel {
     public ArenaModel(ArenaMap arenaMap) {
 
         GameEventBus.getInstance().register(this);
-        this.arenaMap = arenaMap;
         this.gridWidth = arenaMap.getMapSize().width;
         this.gridHeight = arenaMap.getMapSize().height;
         this.arenaTiles = new StaticTile[this.gridWidth][this.gridHeight];
@@ -44,7 +42,15 @@ public class ArenaModel {
     }
 
     public StaticTile[][] getArenaTiles() {
-        return (ArrayCloner.staticTileMatriceCloner(this.arenaTiles));
+//        return (ArrayCloner.staticTileMatrixCloner(this.arenaTiles));
+//        return ((StaticTile[][]) ArrayCloner.objectMatrixCloner(this.arenaTiles));
+        StaticTile[][] newArenaTiles = new StaticTile[this.arenaTiles.length][this.arenaTiles[0].length];
+        for(int i = 0; i < this.arenaTiles.length; i++) {
+            for (int j = 0; j < this.arenaTiles[0].length; j++) {
+                newArenaTiles[i][j] = this.arenaTiles[i][j];
+            }
+        }
+        return newArenaTiles;
     }
 
     public List<Movable> getArenaMovables() {

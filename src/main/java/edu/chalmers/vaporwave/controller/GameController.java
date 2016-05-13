@@ -2,10 +2,8 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.assetcontainer.FileContainer;
-import edu.chalmers.vaporwave.assetcontainer.FileID;
-import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
-import edu.chalmers.vaporwave.assetcontainer.SoundID;
+import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
@@ -60,7 +58,7 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
+        Container.playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -79,10 +77,10 @@ public class GameController {
         timeSinceStartOffset = 0.0;
         pausedTime = 0.0;
 
-        timeLimit = 1000;
+        timeLimit = 10;
 
         ArenaMap arenaMap = new ArenaMap("default",
-                (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
+                (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
         this.arenaModel = newGame(arenaMap, timeLimit);
@@ -138,7 +136,7 @@ public class GameController {
                 System.out.println("Tile out of bounds!");
             }
         }
-        this.healthBarModel=new HealthBarModel((int)this.localPlayer.getCharacter().getHealth());
+        this.healthBarModel = new HealthBarModel((int)this.localPlayer.getCharacter().getHealth());
 
         // // TODO: 11/05/16 fix this to some other class, probably arenaView
 
@@ -162,7 +160,8 @@ public class GameController {
                 timeLimit = timeLimit - timeSinceLastCall;
             } else {
 
-                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+                // todo: Change this to some other kind of event
+//                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
             }
             TimerModel.getInstance().updateTimer(timeLimit);
         }
@@ -198,6 +197,7 @@ public class GameController {
                         remotePlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     }
                     break;
+                default:
             }
 
             switch (key) {
@@ -209,6 +209,7 @@ public class GameController {
                         localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     }
                     break;
+                default:
             }
         }
 
@@ -227,6 +228,7 @@ public class GameController {
                             this.localPlayer.getCharacter().placeMine();
                         }
                         break;
+                    default:
                 }
             }
 
@@ -243,6 +245,7 @@ public class GameController {
                             this.remotePlayer.getCharacter().placeMine();
                         }
                         break;
+                    default:
                 }
             }
 
@@ -250,7 +253,7 @@ public class GameController {
             switch (key) {
 
                 case "ESCAPE":
-                    SoundContainer.getInstance().stopSound(SoundID.GAME_MUSIC);
+                    Container.stopSound(SoundID.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
                         for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
@@ -260,7 +263,7 @@ public class GameController {
                     this.enemies.clear();
                     this.deadEnemies.clear();
 
-                    GameEventBus.getInstance().post(new GoToMenuEvent());
+                    GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.START_MENU));
                     break;
                 case "P":
                     if(gameIsPaused) {
@@ -270,8 +273,6 @@ public class GameController {
                     }
                     break;
             }
-
-
         }
 
         // Updating positions (if not paused)
