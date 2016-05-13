@@ -25,7 +25,8 @@ public class PauseMenuController {
     public PauseMenuController(Group root) {
         pauseMenuLabels = new ArrayList<>();
         pauseMenuLabels.add(new Label("Resume"));
-        pauseMenuLabels.add(new Label("Options"));
+        //should be options
+        pauseMenuLabels.add(new Label("[Game is paused!]"));
         pauseMenuLabels.add(new Label("Quit"));
 
         pauseMenuView = new PauseMenu(root, pauseMenuLabels);

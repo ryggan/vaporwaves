@@ -14,6 +14,7 @@ public class Blast extends StaticTile implements AnimatedTile {
     private BlastState state;
     private double timeStamp;
     private double dangerousTime;
+    private int playerId;
 
     public Blast(Explosive explosive, BlastState state, Direction direction, double timeStamp) {
         this.damage = explosive.getDamage();
@@ -21,6 +22,7 @@ public class Blast extends StaticTile implements AnimatedTile {
         this.state = state;
         this.timeStamp = timeStamp;
         this.dangerousTime = 0.6;
+        this.playerId = explosive.getOwner().getPlayerId();
     }
 
     public boolean isDangerous(double timeSinceStart) {
@@ -42,6 +44,10 @@ public class Blast extends StaticTile implements AnimatedTile {
 
     public double getDamage() {
         return this.damage;
+    }
+
+    public int getPlayerId() {
+        return this.playerId;
     }
 
     public String toString() {

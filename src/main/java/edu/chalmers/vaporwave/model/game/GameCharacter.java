@@ -18,21 +18,23 @@ public class GameCharacter extends Movable {
     private int bombRange;
     private int maxBombCount;
     private int currentBombCount;
+    private int playerId;
 
 //    private double powerUpTimeStamp;
     private List<Double> powerUpPickedUp;
 
-    public GameCharacter(String name) {
-        this(name, new Point(0,0));
+    public GameCharacter(String name, int playerId) {
+        this(name, new Point(0,0), playerId);
     }
 
-    public GameCharacter(String name, Point spawnPosition) {
+    public GameCharacter(String name, Point spawnPosition, int playerId) {
         super(name, Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 1.5);
 
         this.bombRange = 2;
         this.maxBombCount = 10;
         this.currentBombCount = this.maxBombCount;
         this.setDamage(30);
+        this.playerId = playerId;
 
         this.powerUpPickedUp = new ArrayList<>();
     }
@@ -114,5 +116,9 @@ public class GameCharacter extends Movable {
                 (bombRange * 5) +
                 (currentBombCount * 7) +
                 (maxBombCount * 11);
+    }
+
+    public int getPlayerId() {
+        return this.playerId;
     }
 }

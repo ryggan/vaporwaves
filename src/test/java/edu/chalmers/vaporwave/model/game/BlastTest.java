@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * Created by FEngelbrektsson on 26/04/16.
  */
 public class BlastTest {
-    GameCharacter pirre = new GameCharacter("pirre");
+    GameCharacter pirre = new GameCharacter("pirre", 0);
     Point posish = pirre.getGridPosition();
 
     @Test

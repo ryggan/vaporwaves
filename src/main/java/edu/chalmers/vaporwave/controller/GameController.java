@@ -73,7 +73,7 @@ public class GameController {
 
         timeSinceStart = 0.0;
 
-        timeLimit = 10;
+        timeLimit = 1000;
 
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
@@ -139,6 +139,9 @@ public class GameController {
         playerList.add(localPlayer);
         playerList.add(remotePlayer);
         this.scoreboard = new Scoreboard(root, playerList);
+
+        //Assigning player IDs
+        assignPlayerId();
     }
 
 
@@ -295,6 +298,9 @@ public class GameController {
                                     && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
                                 movable.dealDamage(otherMovable.getDamage());
                                 updateStats();
+                                if(movable.getHealth() <= 0) {
+                                    playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                                }
                                 break;
                             }
                         }
@@ -309,6 +315,9 @@ public class GameController {
                                 gameCharacter.pickedUpPowerUp(timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
                                 updateStats();
+                                if(movable instanceof GameCharacter) {
+                                    playerList.get(((GameCharacter) movable).getPlayerId()).incrementPowerUpScore();
+                                }
                             }
                         }
                     }
@@ -326,6 +335,16 @@ public class GameController {
                     if (blast != null && blast.isDangerous(timeSinceStart)) {
                         movable.dealDamage(blast.getDamage());
                         updateStats();
+                        if(movable.getHealth() <= 0) {
+                            if(movable instanceof GameCharacter) {
+                                if(blast.getPlayerId() != ((GameCharacter) movable).getPlayerId()) {
+                                    playerList.get(blast.getPlayerId()).incrementKills();
+                                }
+                                playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                            } else if(movable instanceof Enemy) {
+                                playerList.get(blast.getPlayerId()).incrementCreeps();
+                            }
+                        }
                     }
                 }
             }
@@ -552,5 +571,11 @@ public class GameController {
 
     public boolean isGamePaused() {
         return gameIsPaused;
+    }
+
+    public void assignPlayerId() {
+        for (int i = 0; i < playerList.size(); i++) {
+            playerList.get(i).setPlayerId(i);
+        }
     }
 }

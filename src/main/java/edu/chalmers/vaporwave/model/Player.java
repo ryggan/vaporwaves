@@ -10,6 +10,7 @@ public class Player {
     private int kills;
     private int deaths;
     private int creeps;
+    private int powerUpScore;
     private String[] playerInfo;
 
     public Player(int playerId, String playerName) {
@@ -19,15 +20,23 @@ public class Player {
         this.deaths = 0;
         this.creeps = 0;
         this.kills = 0;
+        this.powerUpScore = 0;
         playerInfo = new String[5];
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void incrementPowerUpScore() {
+        powerUpScore++;
+        System.out.println("Powerupscore after update is " + powerUpScore);
     }
 
     public int getScore() {
-        return this.score;
+        this.score = this.powerUpScore*50 + this.kills*1000 + this.creeps*100 - this.deaths*200;
+        if(this.score >= 0) {
+            return this.score;
+        } else {
+            this.score = this.score + this.deaths*200 - this.powerUpScore*50 + this.kills*1000 + this.creeps*100;
+            return this.score;
+        }
     }
 
     public void incrementKills() {
@@ -74,7 +83,12 @@ public class Player {
         return this.playerId;
     }
 
+    public void setPlayerId(int i) {
+        this.playerId = i;
+    }
+
     public String[] getPlayerInfo() {
+        this.score = getScore();
         playerInfo[0] = playerName;
         playerInfo[1] = kills + "";
         playerInfo[2] = deaths + "";
