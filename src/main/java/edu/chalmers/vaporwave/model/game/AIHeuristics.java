@@ -20,14 +20,10 @@ public class AIHeuristics {
         if(x > 0 && y > 0 && x < 20 && y < 14) {
             heuristicMatrix[x][y] = previousValue;
             previousValue = 90;
-            if(x > 0) {
-                heuristicMatrix[x - 1][y] = previousValue;
-                heuristicMatrix[x + 1][y] = previousValue;
-            }
-            if(y > 0) {
-                heuristicMatrix[x][y - 1] = previousValue;
-                heuristicMatrix[x][y + 1] = previousValue;
-            }
+            heuristicMatrix[x - 1][y] = previousValue;
+            heuristicMatrix[x + 1][y] = previousValue;
+            heuristicMatrix[x][y - 1] = previousValue;
+            heuristicMatrix[x][y + 1] = previousValue;
         }
 
         if(x > 1 && y > 1 && x < 19 && y < 13) {

@@ -94,8 +94,6 @@ public class Scoreboard {
 
         gridPane.setAlignment(Pos.TOP_CENTER);
         //tilePane.setAlignment();
-
-        String[] str = {"Player1", "3", "5", "10", "1000"};
         scoreboardPane.getChildren().add(gridPane);
         createElements();
     }
@@ -119,13 +117,9 @@ public class Scoreboard {
         gridPane.add(creeps, 3, 0);
         gridPane.add(score, 4, 0);
 
-        System.out.println("playerList.size: " + playerList.size());
 
         for(int i = 0; i < playerList.size(); i++) {
             for(int j = 0; j < 5; j++) {
-//                System.out.println(playerList.size() + " is the playerList size");
-//                System.out.println(playerList.get(i-1).getPlayerInfo()[j] + " some stats");
-
                 playerLabels[i][j] = new Label(playerList.get(i).getPlayerInfo()[j] + "");
                 playerLabels[i][j].setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
                 gridPane.add(playerLabels[i][j], j, i+1);

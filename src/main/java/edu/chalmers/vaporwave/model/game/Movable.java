@@ -82,13 +82,11 @@ public abstract class Movable {
 
             case WALK:
                 stopOnTileIfNeeded();
+                updateInvincibleTimer();
+                break;
 
             case IDLE:
-                if (invincibleTimer > 0) {
-                    invincibleTimer--;
-                } else {
-                    flinchInvincible = false;
-                }
+                updateInvincibleTimer();
                 break;
 
             case FLINCH:
@@ -388,4 +386,13 @@ public abstract class Movable {
                 (name.hashCode() + 43);
 
     }
+
+    public void updateInvincibleTimer() {
+        if (invincibleTimer > 0) {
+            invincibleTimer--;
+        } else {
+            flinchInvincible = false;
+        }
+    }
+
 }

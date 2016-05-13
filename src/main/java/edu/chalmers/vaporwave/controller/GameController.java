@@ -264,7 +264,7 @@ public class GameController {
                 case "P":
                     if(gameIsPaused) {
                         unpauseGame();
-                    } else if(!gameIsPaused) {
+                    } else {
                         pauseGame();
                     }
                     break;
@@ -311,9 +311,7 @@ public class GameController {
                                 gameCharacter.pickedUpPowerUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
                                 updateStats();
-                                if(movable instanceof GameCharacter) {
-                                    playerList.get(((GameCharacter) movable).getPlayerId()).incrementPowerUpScore();
-                                }
+                                playerList.get(((GameCharacter) movable).getPlayerId()).incrementPowerUpScore();
                             }
                         }
                     }

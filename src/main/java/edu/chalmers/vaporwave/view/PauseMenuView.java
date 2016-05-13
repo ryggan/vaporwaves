@@ -23,8 +23,8 @@ public class PauseMenuView {
     //private Group root;
     private AnchorPane pauseMenuPane;
     private Label options;
-    private Label resumeGame;
-    private Label quitGame;
+   // private Label resumeGame;
+   // private Label quitGame;
     private GridPane gridPane;
 
     private static double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE) + 2 * Constants.DEFAULT_TILE_WIDTH;
@@ -72,13 +72,13 @@ public class PauseMenuView {
 
 
         pauseMenuPane.getChildren().add(gridPane);
-        resumeGame = labels.get(0);
+        //resumeGame = labels.get(0);
         options = labels.get(1);
-        quitGame = labels.get(2);
+       // quitGame = labels.get(2);
 
         //resumeGame.getStyleClass().add("labels");
-        resumeGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
-        quitGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
+       // resumeGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
+       // quitGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
         options.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
 
         //Consider adding these options later, but for now only let one be there
