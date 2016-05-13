@@ -96,10 +96,10 @@ public class MenuController {
                             break;
                         case START_GAME:
                             if (isNewGameEventReady()) {
-                                for (Map.Entry<MenuState, AbstractMenuView> menu : this.menuViewMap.entrySet()) {
-                                    menu.getValue().clearView();
-                                    updateViews(-1);
-                                }
+//                                for (Map.Entry<MenuState, AbstractMenuView> menu : this.menuViewMap.entrySet()) {
+//                                    menu.getValue().clearView();
+//                                    updateViews(-1);
+//                                }
                                 GameEventBus.getInstance().post(newGameEvent);
                             }
                             break;

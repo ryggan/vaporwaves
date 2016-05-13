@@ -77,7 +77,7 @@ public class GameController {
         timeSinceStartOffset = 0.0;
         pausedTime = 0.0;
 
-        timeLimit = 1000;
+        timeLimit = 10;
 
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
@@ -136,7 +136,7 @@ public class GameController {
                 System.out.println("Tile out of bounds!");
             }
         }
-        this.healthBarModel=new HealthBarModel((int)this.localPlayer.getCharacter().getHealth());
+        this.healthBarModel = new HealthBarModel((int)this.localPlayer.getCharacter().getHealth());
 
         // // TODO: 11/05/16 fix this to some other class, probably arenaView
 
@@ -160,7 +160,8 @@ public class GameController {
                 timeLimit = timeLimit - timeSinceLastCall;
             } else {
 
-                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+                // todo: Change this to some other kind of event
+//                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
             }
             TimerModel.getInstance().updateTimer(timeLimit);
         }
@@ -258,7 +259,7 @@ public class GameController {
                     this.enemies.clear();
                     this.deadEnemies.clear();
 
-                    GameEventBus.getInstance().post(new GoToMenuEvent());
+                    GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.START_MENU));
                     break;
                 case "P":
                     if(gameIsPaused) {
@@ -268,8 +269,6 @@ public class GameController {
                     }
                     break;
             }
-
-
         }
 
         // Updating positions (if not paused)

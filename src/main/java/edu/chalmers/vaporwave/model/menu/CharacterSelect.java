@@ -14,6 +14,7 @@ import java.util.List;
 public class CharacterSelect extends AbstractMenu {
 
     private int[] selectedCharacters;
+    private static final String[] characterNames = { "MEI", "ALYSSA", "ZYPHER", "CHARLOTTE" };
 
     public CharacterSelect(NewGameEvent newGameEvent) {
         super(new int[]{0, 3, 0}, newGameEvent, 1);
@@ -34,13 +35,12 @@ public class CharacterSelect extends AbstractMenu {
     @Override
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
 
-        String[] characterNames = { "MEI", "ALYSSA", "ZYPHER", "CHARLOTTE" };
 
-        if (this.getSelectedSuper() == 1 && playerID == 0) {
+        if (this.getSelectedSuper() == 1 && playerID == 0 && this.selectedCharacters[getSelectedSub()[1]] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[getSelectedSub()[1]] = 0;
             newGameEvent.getLocalPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
-        } else if (playerID >= 1) {
+        } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, 4)] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), 1, 4)] = playerID;
             newGameEvent.getRemotePlayer().setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, 4)], 0));
