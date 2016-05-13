@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.util.TimerModel;
+import edu.chalmers.vaporwave.model.TimerModel;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 
