@@ -30,4 +30,15 @@ public class Enemy extends Movable {
         return (super.hashCode() * 5) + (ai.hashCode() * 7);
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Enemy){
+            Enemy other = (Enemy) o;
+            if (this.ai == other.ai) {
+                return super.equals(o);
+            }
+        }
+        return false;
+    }
+
 }

@@ -387,6 +387,17 @@ public abstract class Movable {
 
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Movable){
+            Movable other = (Movable) o;
+            if (this.name.equals(other.name) && this.speed == other.speed && this.damage == other.damage) {
+                return super.equals(o);
+            }
+        }
+        return false;
+    }
+
     public void updateInvincibleTimer() {
         if (invincibleTimer > 0) {
             invincibleTimer--;
