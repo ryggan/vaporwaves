@@ -2,10 +2,8 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.assetcontainer.FileContainer;
-import edu.chalmers.vaporwave.assetcontainer.FileID;
-import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
-import edu.chalmers.vaporwave.assetcontainer.SoundID;
+import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
@@ -60,7 +58,7 @@ public class GameController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        SoundContainer.getInstance().playSound(SoundID.GAME_MUSIC);
+        Container.playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -82,7 +80,7 @@ public class GameController {
         timeLimit = 1000;
 
         ArenaMap arenaMap = new ArenaMap("default",
-                (new MapFileReader(FileContainer.getInstance().getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
+                (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
         this.arenaModel = newGame(arenaMap, timeLimit);
@@ -250,7 +248,7 @@ public class GameController {
             switch (key) {
 
                 case "ESCAPE":
-                    SoundContainer.getInstance().stopSound(SoundID.GAME_MUSIC);
+                    Container.stopSound(SoundID.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
                     for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
                         for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {

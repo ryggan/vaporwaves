@@ -73,21 +73,22 @@ public class MainController {
         // without hinderance. Instantly terminates thread when done.
         new Thread(new Runnable() {
             public void run() {
-                double time = System.currentTimeMillis();
-                ImageContainer.initialize();
-                System.out.println("Image loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-                time = System.currentTimeMillis();
-                FileContainer.initialize();
-                System.out.println("File loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-                time = System.currentTimeMillis();
-                SoundContainer.initialize();
-                System.out.println("Sound loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-                time = System.currentTimeMillis();
-                CharacterSpriteContainer.initialize();
-                System.out.println("Character sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
-                time = System.currentTimeMillis();
-                SpriteContainer.initialize();
-                System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
+//                double time = System.currentTimeMillis();
+//                ImageContainer.initialize();
+//                System.out.println("Image loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
+//                time = System.currentTimeMillis();
+//                FileContainer.initialize();
+//                System.out.println("File loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
+//                time = System.currentTimeMillis();
+//                SoundContainer.initialize();
+//                System.out.println("Sound loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
+//                time = System.currentTimeMillis();
+//                CharacterSpriteContainer.initialize();
+//                System.out.println("Character sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
+//                time = System.currentTimeMillis();
+//                SpriteContainer.initialize();
+//                System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
+                Container.initialize();
                 return;
             }
         }).start();

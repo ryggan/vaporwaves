@@ -1,12 +1,8 @@
 package edu.chalmers.vaporwave.view;
 
-
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
-import edu.chalmers.vaporwave.assetcontainer.SpriteContainer;
-import edu.chalmers.vaporwave.assetcontainer.SpriteID;
+import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.menu.MenuButtonState;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
-import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 
@@ -38,18 +34,18 @@ public class CharacterSelectView extends AbstractMenuView {
         menuButtonViewList.add(null);
         menuButtonViewList.add(new MenuButtonView(new Image("images/menu/spritesheet_menu_draft.png"), 365, 67, 3, new Point(740, 580)));
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(new Point(550,160));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_ALL).setScale(1);
+        Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(new Point(550,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setScale(1);
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(new Point(550,160));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setScale(1);
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(new Point(550,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setScale(1);
     }
 
     @Override
     public void updateView(int superSelected, int[] subSelected) {
         clearView();
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
+        Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
 
 
@@ -66,8 +62,8 @@ public class CharacterSelectView extends AbstractMenuView {
 
         System.out.println(subSelected[1]);
         System.out.println("subSelected[1]: " + ((subSelected[1] * 90) + 550));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
 
         setActive();
 

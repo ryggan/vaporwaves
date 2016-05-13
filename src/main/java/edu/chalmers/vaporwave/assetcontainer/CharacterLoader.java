@@ -28,7 +28,7 @@ public class CharacterLoader {
                         Element currentSpriteNodes =(Element)singleCharacterNodes.getElementsByTagName(
                                 Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase()).item(j);
 
-                        Image spritesheet = ImageContainer.getInstance().getImage(ImageID.valueOf(
+                        Image spritesheet = Container.getImage(ImageID.valueOf(
                                 currentSpriteNodes.getElementsByTagName("spritesheet").item(0).getTextContent()));
 
                         int dimensionX = Integer.parseInt(currentSpriteNodes.getElementsByTagName("dimensionX").item(0).getTextContent());
