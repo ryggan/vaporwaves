@@ -25,6 +25,7 @@ public class GameController {
     private Boolean scoreboardIsShowing = false;
     private List<Player> playerList;
     private Scoreboard scoreboard;
+    private PauseMenuController pauseMenuController;
 
     private ArenaView arenaView;
     private ArenaModel arenaModel;
@@ -81,6 +82,7 @@ public class GameController {
         // Starting new game
         this.arenaModel = newGame(arenaMap, timeLimit);
         this.arenaView = new ArenaView(root);
+        this.pauseMenuController = new PauseMenuController(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
@@ -258,10 +260,10 @@ public class GameController {
                     break;
                 case "P":
                     if(gameIsPaused) {
-                        arenaView.hidePauseMenu();
+                        this.pauseMenuController.getPauseMenuView().hide();
                         gameIsPaused = false;
                     } else if(!gameIsPaused) {
-                        arenaView.showPauseMenu();
+                        this.pauseMenuController.getPauseMenuView().show();
                         gameIsPaused = true;
                     }
                     break;

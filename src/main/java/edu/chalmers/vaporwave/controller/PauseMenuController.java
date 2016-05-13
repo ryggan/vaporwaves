@@ -1,7 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
 import edu.chalmers.vaporwave.view.MenuButtonView;
-import edu.chalmers.vaporwave.view.PauseMenu;
+import edu.chalmers.vaporwave.view.PauseMenuView;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 
@@ -17,7 +17,7 @@ public class PauseMenuController {
     private List<MenuButtonView> optionsMenuButtons;
 
     //chaning name to pauseMenuView
-    private PauseMenu pauseMenuView;
+    private PauseMenuView pauseMenuView;
 
     //should be menubuttonview instead of labels when we've got sprites
     private List<Label> pauseMenuLabels;
@@ -29,10 +29,10 @@ public class PauseMenuController {
         pauseMenuLabels.add(new Label("[Game is paused!]"));
         pauseMenuLabels.add(new Label("Quit"));
 
-        pauseMenuView = new PauseMenu(root, pauseMenuLabels);
+        pauseMenuView = new PauseMenuView(root, pauseMenuLabels);
     }
 
-    public PauseMenu getPauseMenuView() {
+    public PauseMenuView getPauseMenuView() {
         return this.pauseMenuView;
     }
 }

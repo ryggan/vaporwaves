@@ -33,7 +33,6 @@ public class ArenaView {
 
     private HUDView hudView;
     private Scoreboard scoreboard;
-    private PauseMenuController pauseMenuController;
     private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;
@@ -106,8 +105,6 @@ public class ArenaView {
 
         tileGC = tileCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
-
-        this.pauseMenuController = new PauseMenuController(root);
 
         // Character sprites
         characterSprites[0] = CharacterSpriteContainer.getInstance().getCharacterSprite(CharacterSpriteID.ALYSSA);
@@ -519,12 +516,4 @@ public class ArenaView {
         }
     }
 
-
-    public void hidePauseMenu() {
-        pauseMenuController.getPauseMenuView().hide();
-    }
-
-    public void showPauseMenu() {
-        pauseMenuController.getPauseMenuView().show();
-    }
 }
