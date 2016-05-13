@@ -160,7 +160,8 @@ public class Sprite {
     public boolean equals(Object o){
         if(o instanceof Sprite){
             Sprite other = (Sprite) o;
-            return (this.originalImage == other.originalImage
+            return (this.hashCode() == other.hashCode()
+                    && this.originalImage == other.originalImage
                     && Math.round(this.width) == Math.round(other.width)
                     && Math.round(this.height) == Math.round(other.height)
                     && Math.round(this.offsetX) == Math.round(this.offsetX)

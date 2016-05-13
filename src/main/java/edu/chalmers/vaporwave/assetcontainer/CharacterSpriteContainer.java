@@ -13,6 +13,8 @@ import java.util.Map;
  */
 class CharacterSpriteContainer {
 
+    private static final MovableState[] CHARACTER_CHARACTER_STATE = { MovableState.WALK, MovableState.IDLE, MovableState.FLINCH, MovableState.DEATH, MovableState.SPAWN };
+
     private Map<CharacterSpriteID, CharacterSprite> spriteContainer;
 
     private static double tasksDone;
@@ -43,7 +45,7 @@ class CharacterSpriteContainer {
         XMLReader reader = new XMLReader(Container.getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
-        for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
+        for (MovableState characterState : CHARACTER_CHARACTER_STATE) {
             CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
 
             switch (characterState) {

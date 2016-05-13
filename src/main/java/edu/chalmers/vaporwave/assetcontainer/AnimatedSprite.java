@@ -242,6 +242,15 @@ public class AnimatedSprite extends Sprite {
     }
 
     @Override
+    public int hashCode(){
+        int hash = 17 + super.hashCode();
+        hash += this.length * 31;
+        hash += this.duration * 73;
+        hash += this.originalSpriteSheet.hashCode() * 57;
+        return hash;
+    }
+
+    @Override
     public boolean equals(Object o){
         if (super.equals(o) && o instanceof AnimatedSprite) {
             AnimatedSprite sprite = (AnimatedSprite) o;

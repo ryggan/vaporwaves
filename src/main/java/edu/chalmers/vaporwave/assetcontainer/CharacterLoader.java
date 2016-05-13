@@ -1,9 +1,5 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
-import edu.chalmers.vaporwave.assetcontainer.CharacterProperties;
-import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteProperties;
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MovableState;
 import javafx.scene.image.Image;
@@ -16,6 +12,8 @@ import java.util.Map;
 
 public class CharacterLoader {
 
+    private static final MovableState[] CHARACTER_CHARACTER_STATE = { MovableState.WALK, MovableState.IDLE, MovableState.FLINCH, MovableState.DEATH, MovableState.SPAWN };
+
     public static CharacterProperties loadCharacter(NodeList nodeList, String name) {
         Map<MovableState, CharacterSpriteProperties> spritePropertiesMap = new HashMap<>();
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -24,10 +22,10 @@ public class CharacterLoader {
                 Element singleCharacterNodes = allCharacterNodes;
                 String currentName = singleCharacterNodes.getElementsByTagName("name").item(j).getTextContent();
                 if (currentName.equals(name)) {
-                    for (int k = 0; k < Constants.CHARACTER_CHARACTER_STATE.length; k++) {
+                    for (int k = 0; k < CHARACTER_CHARACTER_STATE.length; k++) {
 
                         Element currentSpriteNodes =(Element)singleCharacterNodes.getElementsByTagName(
-                                Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(Locale.ENGLISH)).item(j);
+                                CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(Locale.ENGLISH)).item(j);
 
                         Image spritesheet = Container.getImage(ImageID.valueOf(
                                 currentSpriteNodes.getElementsByTagName("spritesheet").item(0).getTextContent()));
@@ -42,9 +40,9 @@ public class CharacterLoader {
                                 Integer.parseInt(currentSpriteNodes.getElementsByTagName("offsetY").item(0).getTextContent())};
 
                         CharacterSpriteProperties property =
-                                new CharacterSpriteProperties(Constants.CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(Locale.ENGLISH),
+                                new CharacterSpriteProperties(CHARACTER_CHARACTER_STATE[k].toString().toLowerCase(Locale.ENGLISH),
                                 spritesheet, dimensionX, dimensionY, frames, duration, firstFrame, offset);
-                        spritePropertiesMap.put(Constants.CHARACTER_CHARACTER_STATE[k], property);
+                        spritePropertiesMap.put(CHARACTER_CHARACTER_STATE[k], property);
                     }
                 }
             }

@@ -4,6 +4,8 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 
+import java.util.ArrayList;
+
 public abstract class AbstractMenu {
 
     private int[] menuItems;
@@ -96,11 +98,11 @@ public abstract class AbstractMenu {
     }
 
     public int[] getSelectedSub() {
-        return intArrayCloner(this.selectedItems);
+        return ArrayCloner.intArrayCloner(this.selectedItems);
     }
 
     public int[] getRemoteSelected() {
-        return this.remoteSelected;
+        return ArrayCloner.intArrayCloner(this.remoteSelected);
     }
 
     public abstract MenuState getMenuAction();
@@ -110,16 +112,16 @@ public abstract class AbstractMenu {
     }
 
     public int[] getMenuItems() {
-        return intArrayCloner(this.menuItems);
+        return ArrayCloner.intArrayCloner(this.menuItems);
     }
 
-    public int[] intArrayCloner(int[] intArray) {
-        int[] temporary = new int[intArray.length];
-        for(int i = 0; i < intArray.length; i++) {
-            temporary[i] = intArray[i];
-        }
-        return temporary;
-    }
+//    public int[] intArrayCloner(int[] intArray) {
+//        int[] temporary = new int[intArray.length];
+//        for(int i = 0; i < intArray.length; i++) {
+//            temporary[i] = intArray[i];
+//        }
+//        return temporary;
+//    }
 
     public abstract void performMenuAction(NewGameEvent newGameEvent, int playerID);
 }

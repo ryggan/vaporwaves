@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Server;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.MovableState;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

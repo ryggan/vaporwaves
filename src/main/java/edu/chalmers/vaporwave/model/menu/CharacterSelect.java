@@ -3,13 +3,8 @@ package edu.chalmers.vaporwave.model.menu;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
+import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Utils;
-import edu.chalmers.vaporwave.view.MenuButtonView;
-import javafx.scene.image.Image;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CharacterSelect extends AbstractMenu {
 
@@ -93,6 +88,6 @@ public class CharacterSelect extends AbstractMenu {
     }
 
     public int[] getSelectedCharacters() {
-        return this.selectedCharacters;
+        return ArrayCloner.intArrayCloner(this.selectedCharacters);
     }
 }

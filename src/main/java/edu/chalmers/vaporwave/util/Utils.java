@@ -170,10 +170,8 @@ public class Utils {
 
     public static int calculateRemoteSelected(int[] remoteSelected, int playerID, int modulus) {
         int selected = remoteSelected[playerID];
-        if (selected < 0) {
-            while(selected < 0) {
-                selected += modulus;
-            }
+        while(selected < 0) {
+            selected += modulus;
         }
         return selected % modulus;
 

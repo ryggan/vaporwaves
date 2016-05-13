@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.menu.MenuButtonState;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
+import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
@@ -109,10 +110,10 @@ public class CharacterSelectView extends AbstractMenuView {
     }
 
     public void setSelectedCharacters(int[] selectedCharacter) {
-        this.selectedCharacter = selectedCharacter;
+        this.selectedCharacter = ArrayCloner.intArrayCloner(selectedCharacter);
     }
 
-    // ?
+    // todo: what is dis
     public void updateView(int superSelected, int[] subSelected, boolean isPressed) {
 
     }

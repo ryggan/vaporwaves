@@ -7,14 +7,6 @@ import java.util.List;
 
 public class ArrayCloner {
 
-    public static Object[] arrayCloner(Object[] objectArray) {
-        Object[] temporary = new Object[objectArray.length];
-        for(int i = 0; i < objectArray.length; i++) {
-            temporary[i] = objectArray[i];
-        }
-        return temporary;
-    }
-
     public static String[] stringArrayCloner(String[] objectArray) {
         String[] temporary = new String[objectArray.length];
         for(int i = 0; i < objectArray.length; i++) {
@@ -28,16 +20,6 @@ public class ArrayCloner {
         List<Object> temporary = new ArrayList<>();
         for(int i = 0; i < objectList.size(); i++) {
             temporary.add(objectList.get(i));
-        }
-        return temporary;
-    }
-
-    public static Object[][] matrixCloner(Object[][] objectMatrix) {
-        Object[][] temporary = new Object[objectMatrix.length][objectMatrix[0].length];
-        for(int i = 0; i < objectMatrix[0].length; i++) {
-            for (int j = 0; j < objectMatrix.length; j++) {
-                temporary[j][i] = objectMatrix[j][i];
-            }
         }
         return temporary;
     }
@@ -57,16 +39,6 @@ public class ArrayCloner {
         for(int i = 0; i < mapObjectMatrix[0].length; i++) {
             for (int j = 0; j < mapObjectMatrix.length; j++) {
                 temporary[j][i] = mapObjectMatrix[j][i];
-            }
-        }
-        return temporary;
-    }
-
-    public static Object[][] objectMatrixCloner(Object[][] objectMatrix) {
-        Object[][] temporary = new Object[objectMatrix.length][objectMatrix[0].length];
-        for(int i = 0; i < objectMatrix[0].length; i++) {
-            for (int j = 0; j < objectMatrix.length; j++) {
-                temporary[j][i] = objectMatrix[j][i];
             }
         }
         return temporary;
