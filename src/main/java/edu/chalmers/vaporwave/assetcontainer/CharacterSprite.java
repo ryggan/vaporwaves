@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.view;
+package edu.chalmers.vaporwave.assetcontainer;
 
 public class CharacterSprite {
 

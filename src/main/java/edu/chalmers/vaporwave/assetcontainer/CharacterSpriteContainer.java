@@ -1,14 +1,8 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.util.CharacterLoader;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.XMLReader;
-import edu.chalmers.vaporwave.view.AnimatedSprite;
-import edu.chalmers.vaporwave.view.CharacterSprite;
-import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
-import edu.chalmers.vaporwave.view.Sprite;
 
 import java.awt.*;
 import java.util.HashMap;

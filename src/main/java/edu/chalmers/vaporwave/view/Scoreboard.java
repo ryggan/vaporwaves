@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
@@ -12,10 +13,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import jdk.nashorn.internal.ir.Labels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Scoreboard {

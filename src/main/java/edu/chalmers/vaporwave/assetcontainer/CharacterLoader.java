@@ -1,9 +1,11 @@
-package edu.chalmers.vaporwave.util;
+package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
-import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
+import edu.chalmers.vaporwave.assetcontainer.CharacterProperties;
+import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteProperties;
 import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
+import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.MovableState;
 import javafx.scene.image.Image;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;

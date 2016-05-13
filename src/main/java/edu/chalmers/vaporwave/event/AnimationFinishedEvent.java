@@ -2,14 +2,12 @@ package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.game.Movable;
 import edu.chalmers.vaporwave.model.game.StaticTile;
-import edu.chalmers.vaporwave.view.AnimatedSprite;
+import edu.chalmers.vaporwave.assetcontainer.AnimatedSprite;
 
 public class AnimationFinishedEvent {
 
     private Movable movable;
     private StaticTile tile;
-
-    private AnimatedSprite activeSprite;
 
     public AnimationFinishedEvent() {}
 
@@ -35,14 +33,6 @@ public class AnimationFinishedEvent {
 
     public StaticTile getTile() {
         return this.tile;
-    }
-
-    public void setSprite(AnimatedSprite activeSprite) {
-        this.activeSprite = activeSprite;
-    }
-
-    public AnimatedSprite getSprite() {
-        return this.activeSprite;
     }
 
     @Override
