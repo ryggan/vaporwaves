@@ -88,6 +88,6 @@ public class AIHeuristics {
         }
 
 
-        return ArrayCloner.intMatriceCloner(heuristicMatrix);
+        return ArrayCloner.intMatrixCloner(heuristicMatrix);
     }
 }

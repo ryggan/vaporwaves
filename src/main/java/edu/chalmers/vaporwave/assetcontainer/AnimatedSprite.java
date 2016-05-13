@@ -67,8 +67,8 @@ public class AnimatedSprite extends Sprite {
         this.spriteDimension = spriteDimension;
         this.length = length;
         this.duration = duration;
-        this.startPosition = startPosition;
-        this.offset = offset;
+        this.startPosition = new int[] {startPosition[0], startPosition[1]};
+        this.offset = new double[] {offset[0], offset[1]};
 
         this.timeOffset = 0;
         this.startFromBeginning = false;

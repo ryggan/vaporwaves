@@ -32,41 +32,41 @@ public class ArrayCloner {
         return temporary;
     }
 
-    public static Object[][] matriceCloner(Object[][] objectMatrice) {
-        Object[][] temporary = new Object[objectMatrice.length][objectMatrice[0].length];
-        for(int i = 0; i < objectMatrice[0].length; i++) {
-            for (int j = 0; j < objectMatrice.length; j++) {
-                temporary[j][i] = objectMatrice[j][i];
+    public static Object[][] matrixCloner(Object[][] objectMatrix) {
+        Object[][] temporary = new Object[objectMatrix.length][objectMatrix[0].length];
+        for(int i = 0; i < objectMatrix[0].length; i++) {
+            for (int j = 0; j < objectMatrix.length; j++) {
+                temporary[j][i] = objectMatrix[j][i];
             }
         }
         return temporary;
     }
 
-    public static int[][] intMatriceCloner(int[][] intMatrice) {
-        int[][] temporary = new int[intMatrice.length][intMatrice[0].length];
-        for(int i = 0; i < intMatrice[0].length; i++) {
-            for (int j = 0; j < intMatrice.length; j++) {
-                temporary[j][i] = intMatrice[j][i];
+    public static int[][] intMatrixCloner(int[][] intMatrix) {
+        int[][] temporary = new int[intMatrix.length][intMatrix[0].length];
+        for(int i = 0; i < intMatrix[0].length; i++) {
+            for (int j = 0; j < intMatrix.length; j++) {
+                temporary[j][i] = intMatrix[j][i];
             }
         }
         return temporary;
     }
 
-    public static MapObject[][] mapObjectMatriceCloner(MapObject[][] mapObjectMatrice) {
-        MapObject[][] temporary = new MapObject[mapObjectMatrice.length][mapObjectMatrice[0].length];
-        for(int i = 0; i < mapObjectMatrice[0].length; i++) {
-            for (int j = 0; j < mapObjectMatrice.length; j++) {
-                temporary[j][i] = mapObjectMatrice[j][i];
+    public static MapObject[][] mapObjectMatrixCloner(MapObject[][] mapObjectMatrix) {
+        MapObject[][] temporary = new MapObject[mapObjectMatrix.length][mapObjectMatrix[0].length];
+        for(int i = 0; i < mapObjectMatrix[0].length; i++) {
+            for (int j = 0; j < mapObjectMatrix.length; j++) {
+                temporary[j][i] = mapObjectMatrix[j][i];
             }
         }
         return temporary;
     }
 
-    public static StaticTile[][] staticTileMatriceCloner(StaticTile[][] staticTileMatrice) {
-        StaticTile[][] temporary = new StaticTile[staticTileMatrice.length][staticTileMatrice[0].length];
-        for(int i = 0; i < staticTileMatrice[0].length; i++) {
-            for (int j = 0; j < staticTileMatrice.length; j++) {
-                temporary[j][i] = staticTileMatrice[j][i];
+    public static Object[][] objectMatrixCloner(Object[][] objectMatrix) {
+        Object[][] temporary = new Object[objectMatrix.length][objectMatrix[0].length];
+        for(int i = 0; i < objectMatrix[0].length; i++) {
+            for (int j = 0; j < objectMatrix.length; j++) {
+                temporary[j][i] = objectMatrix[j][i];
             }
         }
         return temporary;
