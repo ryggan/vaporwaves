@@ -4,6 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.RemoveTileEvent;
 import edu.chalmers.vaporwave.model.game.*;
+import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.MapObject;
 import edu.chalmers.vaporwave.util.PowerUpType;
 
@@ -43,7 +44,7 @@ public class ArenaModel {
     }
 
     public StaticTile[][] getArenaTiles() {
-        return arenaTiles;
+        return (ArrayCloner.staticTileMatriceCloner(this.arenaTiles));
     }
 
     public List<Movable> getArenaMovables() {

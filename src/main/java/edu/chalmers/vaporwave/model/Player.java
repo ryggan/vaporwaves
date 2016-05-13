@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.game.GameCharacter;
+import edu.chalmers.vaporwave.util.ArrayCloner;
 
 public class Player {
     private int playerId;
@@ -94,7 +95,7 @@ public class Player {
         playerInfo[2] = deaths + "";
         playerInfo[3] = creeps + "";
         playerInfo[4] = score + "";
-        return playerInfo;
+        return ArrayCloner.stringArrayCloner(this.playerInfo);
     }
 
 
