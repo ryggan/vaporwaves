@@ -160,13 +160,14 @@ public class Sprite {
     public boolean equals(Object o){
         if(o instanceof Sprite){
             Sprite other = (Sprite) o;
-            if(other.getStayOnPixel() == this.getStayOnPixel() /*&& other.getBoundary() == this.getBoundary()*/
-                    && this.getHeight() == other.getHeight() && other.getWidth() == this.getWidth()
-                    && other.getImage() == this.getImage() && this.getOffsetX() == other.getOffsetX()
-                    && this.getOffsetY() == other.getOffsetY() && this.getPositionX() == other.getPositionX()
-                    && this.getPositionY() == other.getPositionY()){
-                return true;
-            }
+            return (this.originalImage == other.originalImage
+                    && Math.round(this.width) == Math.round(other.width)
+                    && Math.round(this.height) == Math.round(other.height)
+                    && Math.round(this.offsetX) == Math.round(this.offsetX)
+                    && Math.round(this.offsetY) == Math.round(this.offsetY)
+                    && Math.round(this.positionX) == Math.round(this.positionX)
+                    && Math.round(this.positionY) == Math.round(this.positionY)
+                    && this.stayOnPixel == other.stayOnPixel);
         }
         return false;
     }

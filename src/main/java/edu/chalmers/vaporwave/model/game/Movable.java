@@ -94,8 +94,8 @@ public abstract class Movable {
                     flinchTimer--;
                 } else {
                     setState(MovableState.IDLE);
-                    if (Utils.gridToCanvasPositionX(getPreviousGridPositionX()) != getCanvasPositionX()
-                            || Utils.gridToCanvasPositionY(getPreviousGridPositionY()) != getCanvasPositionY()) {
+                    if (Math.round(Utils.gridToCanvasPositionX(getPreviousGridPositionX())) != Math.round(getCanvasPositionX())
+                            || Math.round(Utils.gridToCanvasPositionY(getPreviousGridPositionY())) != Math.round(getCanvasPositionY())) {
                         move(direction, latestArenaTiles);
                     }
                 }
@@ -189,7 +189,6 @@ public abstract class Movable {
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
         this.lastMove = direction;
-//        this.latestArenaTiles = arenaTiles;
         this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
         if (direction != null && this.comingState != MovableState.SPAWN &&
                 (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {

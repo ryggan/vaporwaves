@@ -571,9 +571,10 @@ public class GameController {
             movable.idle();
 
 
-        } else if (movable instanceof Enemy) {
-
         }
+//        else if (movable instanceof Enemy) {
+//
+//        }
     }
 
     public boolean isGamePaused() {
