@@ -11,7 +11,9 @@ public enum ImageID {
     BUTTON_SINGLEPLAYER, BUTTON_EXIT,
 
     // misc
-    MENU_CHARACTER_SELECT,
+    MENU_CHARACTER,
+    MENU_CHARACTER_SELECTOR,
+    MENU_CHECKBOX,
 
     // todo: GAME STUFF
 

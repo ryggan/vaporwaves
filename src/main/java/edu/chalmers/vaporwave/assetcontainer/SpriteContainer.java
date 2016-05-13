@@ -17,13 +17,46 @@ public class SpriteContainer {
     private Map<SpriteID, Sprite> spriteContainer;
 
     private static double tasksDone = 0;
-    private static double totalTasks = 5 + 5 + 9 + 3 + 16;
+    private static double totalTasks = 13 + 5 + 5 + 9 + 3 + 16;
 
     private SpriteContainer() {
 
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         this.spriteContainer = new HashMap<>();
+
+        // Menu images and controls (9)
+        Image menuCharacter = ImageContainer.getInstance().getImage(ImageID.MENU_CHARACTER);
+        addSprite(SpriteID.MENU_CHARACTER_ALL,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {0, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_ALYSSA,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {1, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {2, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_ZYPHER,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {3, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_MEI,
+                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {4, 0}, new double[] {1, 1}));
+
+        Image menuCharacterSelector = ImageContainer.getInstance().getImage(ImageID.MENU_CHARACTER_SELECTOR);
+        addSprite(SpriteID.MENU_CHARACTER_SELECTOR_1,
+                new AnimatedSprite(menuCharacterSelector, new Dimension(22, 33), 1, 1, new int[] {0, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_SELECTOR_2,
+                new AnimatedSprite(menuCharacterSelector, new Dimension(22, 33), 1, 1, new int[] {1, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_SELECTOR_3,
+                new AnimatedSprite(menuCharacterSelector, new Dimension(22, 33), 1, 1, new int[] {2, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHARACTER_SELECTOR_4,
+                new AnimatedSprite(menuCharacterSelector, new Dimension(22, 33), 1, 1, new int[] {3, 0}, new double[] {1, 1}));
+
+        Image menuCheckbox = ImageContainer.getInstance().getImage(ImageID.MENU_CHECKBOX);
+        addSprite(SpriteID.MENU_CHECKBOX_UNSELECTED_OFF,
+                new AnimatedSprite(menuCheckbox, new Dimension(111, 118), 1, 1, new int[] {0, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHECKBOX_UNSELECTED_ON,
+                new AnimatedSprite(menuCheckbox, new Dimension(111, 118), 1, 1, new int[] {1, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHECKBOX_SELECTED_OFF,
+                new AnimatedSprite(menuCheckbox, new Dimension(111, 118), 1, 1, new int[] {2, 0}, new double[] {1, 1}));
+        addSprite(SpriteID.MENU_CHECKBOX_SELECTED_ON,
+                new AnimatedSprite(menuCheckbox, new Dimension(111, 118), 1, 1, new int[] {3, 0}, new double[] {1, 1}));
 
         // Game background and frame (5)
 

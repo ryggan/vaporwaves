@@ -12,7 +12,7 @@ public class ImageContainer {
     private Map<ImageID, Image> imageContainer;
 
     private static double tasksDone = 0;
-    private static double totalTasks = 1 + 2 + 1 + 5 + 6 + 14 + 3;
+    private static double totalTasks = 1 + 3 + 2 + 5 + 6 + 14 + 3;
 
     private ImageContainer() {
 
@@ -29,8 +29,10 @@ public class ImageContainer {
         addImage(ImageID.BUTTON_SINGLEPLAYER, new Image("images/menu/spritesheet_singleplayer.png"));
         addImage(ImageID.BUTTON_EXIT, new Image("images/menu/spritesheet_exit.png"));
 
-        // Character select (1):
-        addImage(ImageID.MENU_CHARACTER_SELECT, new Image("images/menu/spritesheet_character_menu_draft.png"));
+        // Character select (2):
+        addImage(ImageID.MENU_CHARACTER, new Image("images/menu/spritesheet-character-select-442x378.png"));
+        addImage(ImageID.MENU_CHARACTER_SELECTOR, new Image("images/menu/spritesheet-character-selector-22x33.png"));
+        addImage(ImageID.MENU_CHECKBOX, new Image("images/menu/spritesheet-menu-checkbox-111x118.png"));
 
         // >>> GAME STUFF: <<<
 

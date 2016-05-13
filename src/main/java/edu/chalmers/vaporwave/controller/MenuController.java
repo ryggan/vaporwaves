@@ -56,19 +56,27 @@ public class MenuController {
         if (!ListenerController.getInstance().getPressed().isEmpty()) {
             switch (ListenerController.getInstance().getPressed().get(0)) {
                 case "UP":
-                    menuMap.get(activeMenu).changeSelected(Direction.UP);
+                    menuMap.get(activeMenu).changeSelected(Direction.UP, 0);
                     updateViews();
                     break;
                 case "DOWN":
-                    menuMap.get(activeMenu).changeSelected(Direction.DOWN);
+                    menuMap.get(activeMenu).changeSelected(Direction.DOWN, 0);
                     updateViews();
                     break;
                 case "LEFT":
-                    menuMap.get(activeMenu).changeSelected(Direction.LEFT);
+                    menuMap.get(activeMenu).changeSelected(Direction.LEFT, 0);
                     updateViews();
                     break;
                 case "RIGHT":
-                    menuMap.get(activeMenu).changeSelected(Direction.RIGHT);
+                    menuMap.get(activeMenu).changeSelected(Direction.RIGHT, 0);
+                    updateViews();
+                    break;
+                case "A":
+                    menuMap.get(activeMenu).changeSelected(Direction.LEFT, 1);
+                    updateViews();
+                    break;
+                case "D":
+                    menuMap.get(activeMenu).changeSelected(Direction.RIGHT, 1);
                     updateViews();
                     break;
             }
@@ -97,12 +105,14 @@ public class MenuController {
                             updateViews();
                             break;
                         default:
-                            System.out.println("Do menu action :D");
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
                             updateViews();
                             break;
                     }
 
+                    break;
+                case "SHIFT":
+                    updateViews();
                     break;
             }
         }

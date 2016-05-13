@@ -8,6 +8,7 @@ public abstract class AbstractMenu {
     private int[] menuItems;
     private int[] selectedItems;
     private int currentSelected;
+    private int[] remotePlayersSelected;
     private NewGameEvent newGameEvent;
 
     public AbstractMenu(int[] menuItems) {
@@ -19,38 +20,60 @@ public abstract class AbstractMenu {
         this.currentSelected = 0;
         this.menuItems = menuItems;
         this.newGameEvent = newGameEvent;
+        this.remotePlayersSelected = new int[]{0, 0, 0, 0};
     }
 
-    public void changeSelected(Direction direction) {
-        switch (direction) {
-            case UP:
-                if (currentSelected > 0) {
-                    currentSelected -= 1;
-                } else {
-                    currentSelected = menuItems.length - 1;
-                }
-                break;
-            case DOWN:
-                if (currentSelected != menuItems.length - 1) {
-                    currentSelected += 1;
-                } else {
-                    currentSelected = 0;
-                }
-                break;
-            case LEFT:
-                if (selectedItems[currentSelected] > 0) {
-                    selectedItems[currentSelected] -= 1;
-                } else {
-                    selectedItems[currentSelected] = menuItems[currentSelected];
-                }
-                break;
-            case RIGHT:
-                if (selectedItems[currentSelected] < menuItems[currentSelected]) {
-                    selectedItems[currentSelected] += 1;
-                } else {
-                    selectedItems[currentSelected] = 0;
-                }
-                break;
+    public void changeSelected(Direction direction, int playerID) {
+        if(playerID == 0) {
+            switch (direction) {
+                case UP:
+                    if (currentSelected > 0) {
+                        currentSelected -= 1;
+                    } else {
+                        currentSelected = menuItems.length - 1;
+                    }
+                    break;
+                case DOWN:
+                    if (currentSelected != menuItems.length - 1) {
+                        currentSelected += 1;
+                    } else {
+                        currentSelected = 0;
+                    }
+                    break;
+                case LEFT:
+                    if (selectedItems[currentSelected] > 0) {
+                        selectedItems[currentSelected] -= 1;
+                    } else {
+                        selectedItems[currentSelected] = menuItems[currentSelected];
+                    }
+                    break;
+                case RIGHT:
+                    if (selectedItems[currentSelected] < menuItems[currentSelected]) {
+                        selectedItems[currentSelected] += 1;
+                    } else {
+                        selectedItems[currentSelected] = 0;
+                    }
+                    break;
+            }
+        } else {
+
+            // todo: Only for character select, needs to be refactored if other player should be able to choose maps etc
+            switch (direction) {
+                case LEFT:
+                    if (this.remotePlayersSelected[playerID] == 0) {
+                        this.remotePlayersSelected[playerID] = 4;
+                    } else {
+                        this.remotePlayersSelected[playerID] -= 1;
+                    }
+                    break;
+                case RIGHT:
+                    if (this.remotePlayersSelected[playerID] == 4) {
+                        this.remotePlayersSelected[playerID] = 0;
+                    } else {
+                        this.remotePlayersSelected[playerID] += 1;
+                    }
+                    break;
+            }
         }
     }
 
