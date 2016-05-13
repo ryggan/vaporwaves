@@ -47,9 +47,9 @@ public class SemiStupidAI implements AI {
 
         NextDirectionClass nextDirection = new NextDirectionClass();
         nextDirection.value = 0;
-        if(random.nextInt(3) == 1) {
+/*        if(random.nextInt(3) == 1) {
             return takeARandomStep();
-        }
+        }*/
 
 //        if(i == 2) {
 //            // Print the board
@@ -73,11 +73,11 @@ public class SemiStupidAI implements AI {
             if(Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).x >= 0 && Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).y >= 0
                     && Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).x <= 20 && Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]).y <= 14) {
                 Point positionToCheck = Utils.getRelativePoint(enemyPosition, 1, Utils.getDirectionsAsArray()[i]);
-                int heuristicValue = AIHeuristics.getAIHeuristics(arenaTiles, this.gameCharacterSet)[positionToCheck.x][positionToCheck.y];
-                AIHeuristics.setHeuristicValue(enemyPosition, 1);
+                int heuristicValue = AIHeuristics.getAIHeuristics(arenaTiles, this.gameCharacterSet, enemyPosition)[positionToCheck.x][positionToCheck.y];
+                //AIHeuristics.setHeuristicValue(enemyPosition, 1);
                 if (heuristicValue > nextDirection.value) {
                     nextDirection.direction = Utils.getDirectionsAsArray()[i];
-                    nextDirection.value = AIHeuristics.getAIHeuristics(arenaTiles, this.gameCharacterSet)[positionToCheck.x][positionToCheck.y];
+                    nextDirection.value = AIHeuristics.getAIHeuristics(arenaTiles, this.gameCharacterSet, enemyPosition)[positionToCheck.x][positionToCheck.y];
                 }
             } else {
                 int x = random.nextInt(4);
@@ -99,7 +99,11 @@ public class SemiStupidAI implements AI {
 
         }
 
-
+/*        System.out.println("Bot does this");
+        for (int j = 0; j < 4 ; j++) {
+            System.out.print(AIHeuristics.getSpecificHeuristics(enemyPosition)[j] + " ");
+        }
+        System.out.println("bot did that");*/
         return nextDirection.direction;
 
     }
