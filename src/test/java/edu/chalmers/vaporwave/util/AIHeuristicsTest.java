@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.util;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.game.IndestructibleWall;
 import edu.chalmers.vaporwave.model.game.StaticTile;
+import edu.chalmers.vaporwave.model.game.AIHeuristics;
 import org.junit.Test;
 
 import java.util.HashSet;

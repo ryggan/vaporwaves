@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.util;
+package edu.chalmers.vaporwave.model.game;
 
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.game.PowerUp;

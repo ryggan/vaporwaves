@@ -1,9 +1,5 @@
-package edu.chalmers.vaporwave.util;
+package edu.chalmers.vaporwave.model.game;
 
-import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.model.game.StaticTile;
-
-import java.awt.*;
 import java.util.Random;
 
 public class StupidPlayerAI extends StupidAI implements PlayerAI {

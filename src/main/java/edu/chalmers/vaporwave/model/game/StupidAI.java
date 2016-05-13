@@ -1,7 +1,7 @@
-package edu.chalmers.vaporwave.util;
+package edu.chalmers.vaporwave.model.game;
 
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.model.game.StaticTile;
+import edu.chalmers.vaporwave.util.Utils;
 
 import java.awt.*;
 import java.util.Random;

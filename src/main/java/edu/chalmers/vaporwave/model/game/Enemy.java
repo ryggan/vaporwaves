@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.util.AI;
-
 public class Enemy extends Movable {
 
     private AI ai;
