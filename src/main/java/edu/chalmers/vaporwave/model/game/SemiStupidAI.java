@@ -31,6 +31,7 @@ public class SemiStupidAI implements AI {
                 return Direction.LEFT;
             case 3:
                 return Direction.RIGHT;
+            default:
         }
         return null;
     }
@@ -95,6 +96,7 @@ public class SemiStupidAI implements AI {
                     case 3:
                         nextDirection.direction = Direction.RIGHT;
                         break;
+                    default:
                 }
             }
 

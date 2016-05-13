@@ -90,8 +90,9 @@ public class Utils {
             case DOWN:
                 newPosition.setLocation(initialPosition.x, initialPosition.y + distance);
                 break;
+            default:
         }
-            return newPosition;
+        return newPosition;
     }
 
     public static Direction getDirectionFromString(String string) {
@@ -108,6 +109,7 @@ public class Utils {
             case "DOWN":
             case "S":
                 return Direction.DOWN;
+            default:
         }
         return null;
     }
@@ -122,6 +124,7 @@ public class Utils {
                 return Direction.RIGHT;
             case 3:
                 return Direction.DOWN;
+            default:
         }
         return null;
     }
@@ -136,6 +139,7 @@ public class Utils {
                 return 2;
             case DOWN:
                 return 3;
+            default:
         }
         return -1;
     }

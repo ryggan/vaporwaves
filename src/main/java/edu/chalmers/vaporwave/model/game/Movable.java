@@ -100,6 +100,7 @@ public abstract class Movable {
                     }
                 }
                 break;
+            default:
         }
 
         this.lastMove = null;
@@ -205,6 +206,7 @@ public abstract class Movable {
                 case RIGHT:
                     moveRight();
                     break;
+                default:
             }
             if (getVelocityY() != 0 || getVelocityX() != 0) {
                 setState(MovableState.WALK);

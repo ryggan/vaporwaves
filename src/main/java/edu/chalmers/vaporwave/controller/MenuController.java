@@ -79,6 +79,7 @@ public class MenuController {
                     menuMap.get(activeMenu).changeSelected(Direction.RIGHT, 1);
                     updateViews(1);
                     break;
+                default:
             }
         }
 
@@ -132,6 +133,7 @@ public class MenuController {
 
                     updateViews(1);
                     break;
+                default:
             }
         }
     }

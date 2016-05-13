@@ -38,6 +38,7 @@ public abstract class AbstractMenu {
             case RIGHT:
                 menuMoveRight(playerID);
                 break;
+            default:
         }
     }
 

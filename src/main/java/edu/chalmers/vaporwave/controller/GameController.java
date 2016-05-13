@@ -197,6 +197,7 @@ public class GameController {
                         remotePlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     }
                     break;
+                default:
             }
 
             switch (key) {
@@ -208,6 +209,7 @@ public class GameController {
                         localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
                     }
                     break;
+                default:
             }
         }
 
@@ -226,6 +228,7 @@ public class GameController {
                             this.localPlayer.getCharacter().placeMine();
                         }
                         break;
+                    default:
                 }
             }
 
@@ -242,6 +245,7 @@ public class GameController {
                             this.remotePlayer.getCharacter().placeMine();
                         }
                         break;
+                    default:
                 }
             }
 

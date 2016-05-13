@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.model.game.AnimatedTile;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,6 +10,7 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * An extended version of Sprite that functions in much the same way, with the only addition
@@ -237,5 +239,15 @@ public class AnimatedSprite extends Sprite {
 
     public double getTotalTime() {
         return length * duration;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (super.equals(o) && o instanceof AnimatedSprite) {
+            AnimatedSprite sprite = (AnimatedSprite) o;
+            return (this.length == sprite.length && this.duration == sprite.duration
+                    && this.originalSpriteSheet == sprite.originalSpriteSheet);
+        }
+        return false;
     }
 }

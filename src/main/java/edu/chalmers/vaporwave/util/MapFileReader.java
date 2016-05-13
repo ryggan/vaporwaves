@@ -11,7 +11,13 @@ public class MapFileReader {
         try {
 //            reader = new BufferedReader(new FileReader(filename));
             reader = new BufferedReader(new FileReader(file));
-            int width = ((reader.readLine()).replace(" ", "")).length();
+            String widthString = reader.readLine();
+            int width;
+            if (widthString != null) {
+                width = widthString.replace(" ", "").length();
+            } else {
+                throw new IOException();
+            }
             LineNumberReader numbers = new LineNumberReader(reader);
             numbers.skip(Integer.MAX_VALUE);
             int height = (numbers.getLineNumber() + 2);

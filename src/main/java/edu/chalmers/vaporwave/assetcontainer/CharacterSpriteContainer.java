@@ -113,12 +113,15 @@ class CharacterSpriteContainer {
                                                 new int[]{startIndexX, startIndexY},
                                                 characterSpriteProperties.getOffset()),
                                         i);
+                                break;
+                            default:
                         }
 
                         tasksDone++;
                         startIndexX += characterSpriteProperties.getFrames();
                     }
                     break;
+                default:
             }
         }
 
