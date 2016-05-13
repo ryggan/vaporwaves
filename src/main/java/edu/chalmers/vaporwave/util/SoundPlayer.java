@@ -15,14 +15,22 @@ public class SoundPlayer {
         this.volume = 1.0;
 
         // Stops the sound when done:
-        this.sound.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                if (sound.getCycleCount() != MediaPlayer.INDEFINITE) {
-                    sound.stop();
-                }
+        this.sound.setOnEndOfMedia(new EndOfMediaRunnable(this.sound));
+    }
+
+    private static class EndOfMediaRunnable implements Runnable {
+        private MediaPlayer sound;
+
+        EndOfMediaRunnable (MediaPlayer sound) {
+            this.sound = sound;
+        }
+
+        @Override
+        public void run() {
+            if (this.sound.getCycleCount() != MediaPlayer.INDEFINITE) {
+                this.sound.stop();
             }
-        });
+        }
     }
 
     public SoundPlayer(String fileName){

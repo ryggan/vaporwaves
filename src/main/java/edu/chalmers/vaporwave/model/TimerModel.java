@@ -24,9 +24,10 @@ public class TimerModel {
         return isPaused;
     }
 
-    public static TimerModel getInstance(){
-        if (instance == null)
+    public static synchronized TimerModel getInstance() {
+        if (instance == null) {
             instance = new TimerModel();
+        }
         return instance;
     }
 
