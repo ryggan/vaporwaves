@@ -5,17 +5,14 @@ import javafx.scene.image.Image;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ImageContainer {
-
-    private static ImageContainer instance;
+class ImageContainer {
 
     private Map<ImageID, Image> imageContainer;
 
     private static double tasksDone = 0;
-
     private static double totalTasks = 1 + 2 + 3 + 5 + 6 + 13 + 3;
-
-    private ImageContainer() {
+    
+    ImageContainer() {
 
         // TODO: OBS!!! IF ADDING IMAGES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
@@ -86,26 +83,15 @@ public class ImageContainer {
         tasksDone++;
     }
 
-    public Image getImage(ImageID imageID) {
+    Image getImage(ImageID imageID) {
         return this.imageContainer.get(imageID);
     }
 
-    public static ImageContainer getInstance() {
-        initialize();
-        return instance;
-    }
-
-    public static void initialize() {
-        if (instance == null) {
-            instance = new ImageContainer();
-        }
-    }
-
-    public static double getTasksDone() {
+    static double getTasksDone() {
         return tasksDone;
     }
 
-    public static double getTotalTasks() {
+    static double getTotalTasks() {
         return totalTasks;
     }
 }

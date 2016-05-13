@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.view;
+package edu.chalmers.vaporwave.assetcontainer;
 
 public class CharacterSprite {
 
@@ -47,23 +47,23 @@ public class CharacterSprite {
     }
 
     public Sprite[] getDeathSprites() {
-        return deathSprite;
+        return spriteArrayCloner(deathSprite);
     }
 
     public Sprite[] getIdleSprites() {
-        return idleSprite;
+        return spriteArrayCloner(idleSprite);
     }
 
     public Sprite[] getWalkSprites() {
-        return walkSprite;
+        return spriteArrayCloner(walkSprite);
     }
 
     public Sprite[] getFlinchSprites() {
-        return flinchSprite;
+        return spriteArrayCloner(flinchSprite);
     }
 
     public Sprite[] getSpawnSprites() {
-        return spawnSprite;
+        return spriteArrayCloner(spawnSprite);
     }
 
     // Not sure if these are needed, maybe delete later:
@@ -114,4 +114,12 @@ public class CharacterSprite {
 //            flinchSprite[i] = sprites[i];
 //        }
 //    }
+
+    public Sprite[] spriteArrayCloner(Sprite[] spriteArray) {
+        Sprite[] temporary = new Sprite[spriteArray.length];
+        for (int i = 0; i < spriteArray.length; i++) {
+            temporary[i] = spriteArray[i];
+        }
+        return temporary;
+    }
 }

@@ -82,13 +82,11 @@ public abstract class Movable {
 
             case WALK:
                 stopOnTileIfNeeded();
+                updateInvincibleTimer();
+                break;
 
             case IDLE:
-                if (invincibleTimer > 0) {
-                    invincibleTimer--;
-                } else {
-                    flinchInvincible = false;
-                }
+                updateInvincibleTimer();
                 break;
 
             case FLINCH:
@@ -190,7 +188,8 @@ public abstract class Movable {
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
         this.lastMove = direction;
-        this.latestArenaTiles = arenaTiles;
+//        this.latestArenaTiles = arenaTiles;
+        this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
         if (direction != null && this.comingState != MovableState.SPAWN &&
                 (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
             switch (direction) {
@@ -211,6 +210,16 @@ public abstract class Movable {
                 setState(MovableState.WALK);
             }
         }
+    }
+
+    private StaticTile[][] staticTileMatrixClone(StaticTile[][] matrix) {
+        StaticTile[][] newMatrix = new StaticTile[matrix.length][matrix[0].length];
+        for(int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                newMatrix[i][j] = matrix[i][j];
+            }
+        }
+        return newMatrix;
     }
 
     public void moveUp() {
@@ -388,4 +397,24 @@ public abstract class Movable {
                 (name.hashCode() + 43);
 
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Movable){
+            Movable other = (Movable) o;
+            if (this.name.equals(other.name) && this.speed == other.speed && this.damage == other.damage) {
+                return super.equals(o);
+            }
+        }
+        return false;
+    }
+
+    public void updateInvincibleTimer() {
+        if (invincibleTimer > 0) {
+            invincibleTimer--;
+        } else {
+            flinchInvincible = false;
+        }
+    }
+
 }

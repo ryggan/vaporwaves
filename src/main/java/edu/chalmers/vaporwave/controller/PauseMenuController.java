@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class PauseMenuController {
 
-    private List<MenuButtonView> pauseMenuButtons;
-    private List<MenuButtonView> optionsMenuButtons;
+    //private List<MenuButtonView> pauseMenuButtons;
+   // private List<MenuButtonView> optionsMenuButtons;
 
     //chaning name to pauseMenuView
     private PauseMenuView pauseMenuView;
@@ -24,10 +24,10 @@ public class PauseMenuController {
 
     public PauseMenuController(Group root) {
         pauseMenuLabels = new ArrayList<>();
-        pauseMenuLabels.add(new Label("Resume"));
+        //pauseMenuLabels.add(new Label("Resume"));
         //should be options
         pauseMenuLabels.add(new Label("[Game is paused!]"));
-        pauseMenuLabels.add(new Label("Quit"));
+        //pauseMenuLabels.add(new Label("Quit"));
 
         pauseMenuView = new PauseMenuView(root, pauseMenuLabels);
     }

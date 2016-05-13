@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.geometry.Insets;
@@ -10,25 +11,20 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-import javax.swing.text.Position;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PauseMenuView {
-    private Player localPlayer;
-    private Sprite pauseMenuBackground;
+   // private Sprite pauseMenuBackground;
     private Canvas pauseMenu;
-    private GraphicsContext pauseMenuGC;
-    private ArrayList<Label> labels;
-    private Group root;
+    //private GraphicsContext pauseMenuGC;
+    //private ArrayList<Label> labels;
+    //private Group root;
     private AnchorPane pauseMenuPane;
     private Label options;
-    private Label resumeGame;
-    private Label quitGame;
+   // private Label resumeGame;
+   // private Label quitGame;
     private GridPane gridPane;
 
     private static double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE) + 2 * Constants.DEFAULT_TILE_WIDTH;
@@ -36,12 +32,12 @@ public class PauseMenuView {
 
     //For testing purposes
     public PauseMenuView(Group root, List<Label> labels) {
-        this.root = root;
+        //this.root = root;
 
         //pauseMenuBackground = new Sprite("pausemenu");
         pauseMenu = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
                 Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
-        pauseMenuGC = pauseMenu.getGraphicsContext2D();
+        //pauseMenuGC = pauseMenu.getGraphicsContext2D();
         pauseMenu.setLayoutX(xoffset);
         pauseMenu.setLayoutY(yoffset);
 
@@ -76,13 +72,13 @@ public class PauseMenuView {
 
 
         pauseMenuPane.getChildren().add(gridPane);
-        resumeGame = labels.get(0);
-        options = labels.get(1);
-        quitGame = labels.get(2);
+        //resumeGame = labels.get(0);
+        options = labels.get(0);
+       // quitGame = labels.get(2);
 
         //resumeGame.getStyleClass().add("labels");
-        resumeGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
-        quitGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
+       // resumeGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
+       // quitGame.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
         options.setStyle("-fx-font-size: 30; -fx-text-fill: WHITE;");
 
         //Consider adding these options later, but for now only let one be there

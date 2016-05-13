@@ -1,9 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
-
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
-import edu.chalmers.vaporwave.assetcontainer.SpriteContainer;
-import edu.chalmers.vaporwave.assetcontainer.SpriteID;
+import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.menu.MenuButtonState;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.util.Constants;
@@ -62,21 +60,21 @@ public class CharacterSelectView extends AbstractMenuView {
         menuButtonViewList.add(null);
         menuButtonViewList.add(new MenuButtonView(new Image("images/menu/spritesheet_menu_draft.png"), 365, 67, 3, new Point(740, 580)));
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_ALL).setScale(1);
+        Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
+        Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setScale(1);
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(new Point(550,160));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setScale(1);
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(new Point(550,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setScale(1);
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(new Point(580,160));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setScale(1);
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(new Point(580,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setScale(1);
     }
 
     @Override
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, int playerActionPerformed) {
         clearView();
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
+        Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
         for (int i = 0; i < menuButtonViewList.size(); i++) {
             if (menuButtonViewList.get(i) != null) {
@@ -88,11 +86,11 @@ public class CharacterSelectView extends AbstractMenuView {
             }
         }
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
 
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));
-        SpriteContainer.getInstance().getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).render(getBackgroundGC(), 0);
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).render(getBackgroundGC(), 0);
 
         for (int i = 0; i < selectedCharacter.length; i++) {
             System.out.println("selectedCharacter["+i+"] = " + selectedCharacter[i]);
@@ -100,9 +98,9 @@ public class CharacterSelectView extends AbstractMenuView {
 
         for (int i = 0; i < selectedCharacter.length; i++) {
             if (selectedCharacter[i] >= 0) {
-                SpriteContainer.getInstance().getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setPosition(CHARACTERS_POSITION);
-                SpriteContainer.getInstance().getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setScale(1);
-                SpriteContainer.getInstance().getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).render(getBackgroundGC(), 0);
+                Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setPosition(CHARACTERS_POSITION);
+                Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setScale(1);
+                Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).render(getBackgroundGC(), 0);
             }
         }
 

@@ -3,11 +3,6 @@ package edu.chalmers.vaporwave.util;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Paths;
 
 public class SoundPlayer {
@@ -68,10 +63,6 @@ public class SoundPlayer {
 
     public boolean isPlaying() {
         return this.sound.getStatus() == MediaPlayer.Status.PLAYING;
-    }
-
-    public SoundPlayer clone() {
-        return new SoundPlayer(this);
     }
 
 }

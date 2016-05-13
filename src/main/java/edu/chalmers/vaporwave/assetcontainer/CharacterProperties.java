@@ -1,7 +1,7 @@
-package edu.chalmers.vaporwave.model;
+package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.util.MovableState;
-import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
+import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteProperties;
 
 import java.util.Map;
 

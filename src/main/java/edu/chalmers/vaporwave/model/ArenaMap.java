@@ -1,10 +1,9 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.MapObject;
-import javafx.geometry.Dimension2D;
 
-import java.awt.Dimension;
+import java.awt.*;
 
 public class ArenaMap {
     private String name;
@@ -13,7 +12,7 @@ public class ArenaMap {
 
     public ArenaMap(String name, MapObject[][] mapObjects) {
         this.name = name;
-        this.mapObjects = mapObjects;
+        this.mapObjects = ArrayCloner.mapObjectMatrixCloner(mapObjects);
         this.mapSize = new Dimension(mapObjects.length, mapObjects[0].length);
     }
 
@@ -22,7 +21,7 @@ public class ArenaMap {
     }
 
     public MapObject[][] getMapObjects() {
-        return this.mapObjects;
+        return ArrayCloner.mapObjectMatrixCloner(this.mapObjects);
     }
 
     public Dimension getMapSize() {

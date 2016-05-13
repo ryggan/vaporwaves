@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
@@ -28,7 +28,7 @@ public abstract class AbstractMenuView {
         this.root = root;
         backgroundCanvas = new Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
-        backgroundImage = ImageContainer.getInstance().getImage(ImageID.MENU_BACKGROUND_1);
+        backgroundImage = Container.getImage(ImageID.MENU_BACKGROUND_1);
 
         menuCategoryMap = new HashMap<>();
 

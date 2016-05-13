@@ -5,9 +5,7 @@ import edu.chalmers.vaporwave.util.SoundPlayer;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SoundContainer {
-
-    private static SoundContainer instance;
+class SoundContainer {
 
     private Map<SoundID, SoundPlayer[]> soundContainer;
 
@@ -23,7 +21,7 @@ public class SoundContainer {
     private static double totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
 
-    private SoundContainer() {
+    SoundContainer() {
 
         this.soundVolume = 1.0;
         this.musicVolume = 0.0;
@@ -67,17 +65,6 @@ public class SoundContainer {
 
     private void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName) {
         setUpSoundArray(array, numberOfSounds, fileName, 1.0);
-    }
-
-    public static SoundContainer getInstance() {
-        initialize();
-        return instance;
-    }
-
-    public static void initialize() {
-        if (instance == null) {
-            instance = new SoundContainer();
-        }
     }
 
     public SoundPlayer[] getSoundPlayers(SoundID soundID) {

@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.util.ArrayCloner;
 
 public abstract class AbstractMenu {
 
@@ -18,7 +19,7 @@ public abstract class AbstractMenu {
     public AbstractMenu(int[] menuItems, NewGameEvent newGameEvent, int currentSelected) {
         this.selectedItems = new int[menuItems.length];
         this.currentSelected = currentSelected;
-        this.menuItems = menuItems;
+        this.menuItems = ArrayCloner.intArrayCloner(menuItems);
         this.newGameEvent = newGameEvent;
         this.remoteSelected = new int[4];
     }
@@ -94,7 +95,7 @@ public abstract class AbstractMenu {
     }
 
     public int[] getSelectedSub() {
-        return this.selectedItems;
+        return intArrayCloner(this.selectedItems);
     }
 
     public int[] getRemoteSelected() {
@@ -108,7 +109,15 @@ public abstract class AbstractMenu {
     }
 
     public int[] getMenuItems() {
-        return this.menuItems;
+        return intArrayCloner(this.menuItems);
+    }
+
+    public int[] intArrayCloner(int[] intArray) {
+        int[] temporary = new int[intArray.length];
+        for(int i = 0; i < intArray.length; i++) {
+            temporary[i] = intArray[i];
+        }
+        return temporary;
     }
 
     public abstract void performMenuAction(NewGameEvent newGameEvent, int playerID);

@@ -1,30 +1,27 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.assetcontainer.ImageContainer;
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.ImageID;
+import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.TilePane;
-import jdk.nashorn.internal.ir.Labels;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Scoreboard {
-    private Player localPlayer;
     private Sprite scoreboardBackground;
     private Canvas scoreboard;
     private GraphicsContext scoreboardGC;
     private List<Player> playerList;
-    private Group root;
+    //private Group root;
     private AnchorPane scoreboardPane;
     private GridPane gridPane;
     private Label[][] playerLabels;
@@ -41,12 +38,12 @@ public class Scoreboard {
 
     //For testing purposes
     public Scoreboard(Group root, List<Player> playerList) {
-        this.root = root;
+        //this.root = root;
         this.playerList = playerList;
         playerLabels = new Label[playerList.size()][5];
 
         //fix filepath after creating image
-        scoreboardBackground = new Sprite(ImageContainer.getInstance().getImage(ImageID.SCOREBOARD_BACK));
+        scoreboardBackground = new Sprite(Container.getImage(ImageID.SCOREBOARD_BACK));
         scoreboard = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
                 Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
         scoreboardGC = scoreboard.getGraphicsContext2D();
@@ -70,11 +67,6 @@ public class Scoreboard {
         root.getChildren().add(scoreboard);
         scoreboard.setVisible(false);
         addPlayersToScoreboard();
-
-    }
-
-    public Scoreboard(Group root, Player localPlayer) {
-        this.localPlayer = localPlayer;
 
     }
 
@@ -102,8 +94,6 @@ public class Scoreboard {
 
         gridPane.setAlignment(Pos.TOP_CENTER);
         //tilePane.setAlignment();
-
-        String[] str = {"Player1", "3", "5", "10", "1000"};
         scoreboardPane.getChildren().add(gridPane);
         createElements();
     }
@@ -127,13 +117,9 @@ public class Scoreboard {
         gridPane.add(creeps, 3, 0);
         gridPane.add(score, 4, 0);
 
-        System.out.println("playerList.size: " + playerList.size());
 
         for(int i = 0; i < playerList.size(); i++) {
             for(int j = 0; j < 5; j++) {
-//                System.out.println(playerList.size() + " is the playerList size");
-//                System.out.println(playerList.get(i-1).getPlayerInfo()[j] + " some stats");
-
                 playerLabels[i][j] = new Label(playerList.get(i).getPlayerInfo()[j] + "");
                 playerLabels[i][j].setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
                 gridPane.add(playerLabels[i][j], j, i+1);

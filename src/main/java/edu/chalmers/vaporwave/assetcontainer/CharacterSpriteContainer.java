@@ -1,14 +1,8 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.model.CharacterProperties;
-import edu.chalmers.vaporwave.util.CharacterLoader;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.XMLReader;
-import edu.chalmers.vaporwave.view.AnimatedSprite;
-import edu.chalmers.vaporwave.view.CharacterSprite;
-import edu.chalmers.vaporwave.view.CharacterSpriteProperties;
-import edu.chalmers.vaporwave.view.Sprite;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -17,16 +11,14 @@ import java.util.Map;
 /**
  * Created by bob on 2016-05-11.
  */
-public class CharacterSpriteContainer {
-
-    private static CharacterSpriteContainer instance;
+class CharacterSpriteContainer {
 
     private Map<CharacterSpriteID, CharacterSprite> spriteContainer;
 
     private static double tasksDone = 0;
     private static double totalTasks = 14 * 5;
 
-    private CharacterSpriteContainer() {
+    CharacterSpriteContainer() {
 
         spriteContainer = new HashMap<>();
 
@@ -40,7 +32,7 @@ public class CharacterSpriteContainer {
         initCharacterSprites(CharacterSpriteID.PCCHAN);
     }
 
-    public CharacterSprite getCharacterSprite(CharacterSpriteID characterSpriteID) {
+    CharacterSprite getCharacterSprite(CharacterSpriteID characterSpriteID) {
         return this.spriteContainer.get(characterSpriteID);
     }
 
@@ -48,7 +40,7 @@ public class CharacterSpriteContainer {
         CharacterSprite characterSprite = new CharacterSprite(characterSpriteID.toString());
         this.spriteContainer.put(characterSpriteID, characterSprite);
 
-        XMLReader reader = new XMLReader(FileContainer.getInstance().getFile(FileID.XML_CHARACTER_ENEMY));
+        XMLReader reader = new XMLReader(Container.getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
 
         for (MovableState characterState : Constants.CHARACTER_CHARACTER_STATE) {
@@ -132,22 +124,11 @@ public class CharacterSpriteContainer {
 
     }
 
-    public static CharacterSpriteContainer getInstance() {
-        initialize();
-        return instance;
-    }
-
-    public static void initialize() {
-        if (instance == null) {
-            instance = new CharacterSpriteContainer();
-        }
-    }
-
-    public static double getTasksDone() {
+    static double getTasksDone() {
         return tasksDone;
     }
 
-    public static double getTotalTasks() {
+    static double getTotalTasks() {
         return totalTasks;
     }
 }

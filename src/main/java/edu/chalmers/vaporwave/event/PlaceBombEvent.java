@@ -10,14 +10,14 @@ public class PlaceBombEvent {
     private Point position;
     private int range;
     private double damage;
-    private int playerId;
+   // private int playerId;
 
     public PlaceBombEvent(GameCharacter character, Point position, int range, double damage) {
         this.character = character;
         this.position = position;
         this.range = range;
         this.damage = damage;
-        this.playerId = character.getPlayerId();
+       // this.playerId = character.getPlayerId();
     }
 
     public GameCharacter getCharacter() {

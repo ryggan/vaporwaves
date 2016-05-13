@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.util.StupidAI;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

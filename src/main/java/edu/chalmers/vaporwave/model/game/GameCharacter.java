@@ -1,12 +1,12 @@
 package edu.chalmers.vaporwave.model.game;
 
 import com.google.common.eventbus.EventBus;
+import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.event.PlaceMineEvent;
 import edu.chalmers.vaporwave.util.MovableState;
-import edu.chalmers.vaporwave.assetcontainer.SoundContainer;
-import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.util.Utils;
 
 import java.awt.*;
@@ -41,7 +41,7 @@ public class GameCharacter extends Movable {
 
     public void placeBomb() {
         if (this.currentBombCount > 0 && (getState() == MovableState.IDLE || getState() == MovableState.WALK)) {
-            SoundContainer.getInstance().playSound(SoundID.PLACE_BOMB);
+            Container.playSound(SoundID.PLACE_BOMB);
             
             PlaceBombEvent event =
                     new PlaceBombEvent(this, Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()),
@@ -64,7 +64,7 @@ public class GameCharacter extends Movable {
 
     public void flinch() {
         super.flinch();
-        SoundContainer.getInstance().playSound(SoundID.CHARACTER_FLINCH);
+        Container.playSound(SoundID.CHARACTER_FLINCH);
     }
 
     public void setBombRange(int bombRange) {

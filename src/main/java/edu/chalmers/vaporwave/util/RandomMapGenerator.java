@@ -75,6 +75,9 @@ public class RandomMapGenerator {
                     case EMPTY:
                         System.out.print("° ");
                         break;
+                    default:
+                        System.out.print("° ");
+                        break;
                 }
             }
             System.out.println();

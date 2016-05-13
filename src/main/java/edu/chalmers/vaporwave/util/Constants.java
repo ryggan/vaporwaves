@@ -17,7 +17,7 @@ public class Constants {
     public static final double GAME_SCALE = 2.0;
 
     public static final MovableState[] CHARACTER_CHARACTER_STATE = { MovableState.WALK, MovableState.IDLE, MovableState.FLINCH, MovableState.DEATH, MovableState.SPAWN };
-    public static final PowerUpType[] POWERUP_STATE = { PowerUpType.BOMB_COUNT, PowerUpType.HEALTH, PowerUpType.RANGE, PowerUpType.SPEED };
+//    static final PowerUpType[] POWERUP_STATE = { PowerUpType.BOMB_COUNT, PowerUpType.HEALTH, PowerUpType.RANGE, PowerUpType.SPEED };
 
     public static final String GAME_CHARACTER_XML_FILE = "src/main/resources/configuration/gameCharacters.xml";
 
