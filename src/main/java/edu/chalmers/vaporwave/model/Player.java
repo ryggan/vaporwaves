@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ArrayCloner;
+import net.java.games.input.Controller;
 
 public class Player {
     private int playerId;
@@ -13,6 +14,8 @@ public class Player {
     private int creeps;
     private int powerUpScore;
     private String[] playerInfo;
+
+    private Controller gamePad;
 
     public Player(int playerId, String playerName) {
         this.playerId = playerId;
@@ -98,5 +101,11 @@ public class Player {
         return ArrayCloner.stringArrayCloner(this.playerInfo);
     }
 
+    public void setGamePad(Controller gamePad) {
+        this.gamePad = gamePad;
+    }
 
+    public Controller getGamePad() {
+        return this.gamePad;
+    }
 }

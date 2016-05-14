@@ -12,6 +12,9 @@ import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.view.LoadingScreenView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
 
 public class MainController {
 
@@ -101,6 +104,8 @@ public class MainController {
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
 
+//        jinputTest();
+
         ListenerController.getInstance().clearPressed();
         ListenerController.getInstance().clearReleased();
     }
@@ -131,12 +136,54 @@ public class MainController {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 }
 
+//                jinputTest();
+
                 ListenerController.getInstance().clearPressed();
                 ListenerController.getInstance().clearReleased();
 
             }
 
         }.start();
+    }
+
+    private void jinputTest() {
+        Controller[] controllerArray = ControllerEnvironment.getDefaultEnvironment().getControllers();
+
+        for(int i =0;i < controllerArray.length;i++) {
+
+            if (controllerArray[i].getType() == Controller.Type.GAMEPAD) {
+
+                /* Get the name of the controller */
+                System.out.println(controllerArray[i].getName());
+
+                System.out.println("Type: " + controllerArray[i].getType().toString());
+
+                /* Get this controllers components (buttons and axis) */
+                Component[] components = controllerArray[i].getComponents();
+                System.out.println("Component Count: " + components.length);
+
+                for (int j = 0; j < components.length; j++) {
+
+                    /* Get the components name */
+                    System.out.println("Component " + j + ": " + components[j].getName());
+
+                    System.out.println("    Identifier: " + components[j].getIdentifier().getName());
+
+                    System.out.print("    ComponentType: ");
+                    if (components[j].isRelative()) {
+                        System.out.print("Relative");
+                    } else {
+                        System.out.print("Absolute");
+                    }
+                    if (components[j].isAnalog()) {
+                        System.out.print(" Analog");
+                    } else {
+                        System.out.print(" Digital");
+                    }
+                    System.out.println();
+                }
+            }
+        }
     }
 
     @Subscribe

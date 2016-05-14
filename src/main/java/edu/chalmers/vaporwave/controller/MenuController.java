@@ -9,10 +9,11 @@ import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
+import net.java.games.input.Controller;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class MenuController {
 
@@ -25,11 +26,20 @@ public class MenuController {
 
         this.newGameEvent = new NewGameEvent();
 
+//        Map<Integer, Controller> gamePads = ListenerController.getInstance().getGamePads();
+        List<Controller> gamePads = ListenerController.getInstance().getGamePads();
+
         Player localPlayer = new Player(1, "PlayerOne");
         this.newGameEvent.setLocalPlayer(localPlayer);
+        if (gamePads.size() > 0) {
+            localPlayer.setGamePad(gamePads.get(0));
+        }
 
         Player remotePlayer = new Player(2, "PlayerTwo");
         this.newGameEvent.setRemotePlayer(remotePlayer);
+        if (gamePads.size() > 1) {
+            localPlayer.setGamePad(gamePads.get(1));
+        }
 
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
