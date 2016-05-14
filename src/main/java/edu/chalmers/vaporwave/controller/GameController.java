@@ -186,106 +186,15 @@ public class GameController {
             TimerModel.getInstance().setPaused(true);
         }
 
+        // All player-specific input and pressed etc.
         if (!gameIsPaused) {
             playerInputAction(localPlayer);
             playerInputAction(remotePlayer);
         }
 
-//        List<String> allInputP1 = new ArrayList<>();
-//        allInputP1.addAll(input);
-//        if (remotePlayer.getGamePad() != null) {
-//            allInputP1.addAll(ListenerController.getInstance().getGamePadInput(remotePlayer.getGamePad()));
-//        }
-//        for (int i = 0; i < allInputP1.size(); i++) {
-//            String key1 = allInputP1.get(i);
-//            switch (key1) {
-//                case "UP":
-//                case "LEFT":
-//                case "DOWN":
-//                case "RIGHT":
-//                case "LS_UP":
-//                case "LS_LEFT":
-//                case "LS_DOWN":
-//                case "LS_RIGHT":
-//                case "DPAD_UP":
-//                case "DPAD_LEFT":
-//                case "DPAD_DOWN":
-//                case "DPAD_RIGHT":
-//                    if (!gameIsPaused) {
-//                        remotePlayer.getCharacter().move(Utils.getDirectionFromString(key1), arenaModel.getArenaTiles());
-//                    }
-//                    break;
-//                default:
-//            }
-//        }
-
-//        List<String> allInputP2 = new ArrayList<>();
-//        allInputP2.addAll(input);
-//        if (localPlayer.getGamePad() != null) {
-//            allInputP2.addAll(ListenerController.getInstance().getGamePadInput(localPlayer.getGamePad()));
-//        }
-//        for (int i = 0; i < allInputP2.size(); i++) {
-//            String key2 = allInputP2.get(i);
-//            switch (key2) {
-//                case "W":
-//                case "A":
-//                case "S":
-//                case "D":
-//                case "LS_UP":
-//                case "LS_LEFT":
-//                case "LS_DOWN":
-//                case "LS_RIGHT":
-//                case "DPAD_UP":
-//                case "DPAD_LEFT":
-//                case "DPAD_DOWN":
-//                case "DPAD_RIGHT":
-//                    if(!gameIsPaused) {
-//                        localPlayer.getCharacter().move(Utils.getDirectionFromString(key2), arenaModel.getArenaTiles());
-//                    }
-//                    break;
-//                default:
-//            }
-//        }
-
         for (int i = 0; i < pressed.size(); i++) {
             String key = pressed.get(i);
-//            StaticTile tile = arenaModel.getArenaTile(this.localPlayer.getCharacter().getGridPosition());
-//            if (tile == null || (tile instanceof PowerUp)) {
-//                switch (key) {
-//                    case "SHIFT":
-//                        if(!gameIsPaused) {
-//                            this.localPlayer.getCharacter().placeBomb();
-//                        }
-//                        break;
-//                    case "CAPS":
-//                        if(!gameIsPaused) {
-//                            this.localPlayer.getCharacter().placeMine();
-//                        }
-//                        break;
-//                    default:
-//                }
-//            }
-//
-//            tile = arenaModel.getArenaTile(this.remotePlayer.getCharacter().getGridPosition());
-//            if (tile == null || (tile instanceof PowerUp)) {
-//                switch (key) {
-//                    case "SPACE":
-//                        if(!gameIsPaused) {
-//                            this.remotePlayer.getCharacter().placeBomb();
-//                        }
-//                        break;
-//                    case "M":
-//                        if(!gameIsPaused) {
-//                            this.remotePlayer.getCharacter().placeMine();
-//                        }
-//                        break;
-//                    default:
-//                }
-//            }
-
-
             switch (key) {
-
                 case "ESCAPE":
                     Container.stopSound(SoundID.GAME_MUSIC);
                     this.arenaModel.getArenaMovables().clear();
@@ -432,25 +341,6 @@ public class GameController {
 
                 player.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
             }
-//            switch (key) {
-//                case "UP":
-//                case "LEFT":
-//                case "DOWN":
-//                case "RIGHT":
-//                case "LS_UP":
-//                case "LS_LEFT":
-//                case "LS_DOWN":
-//                case "LS_RIGHT":
-//                case "DPAD_UP":
-//                case "DPAD_LEFT":
-//                case "DPAD_DOWN":
-//                case "DPAD_RIGHT":
-//                    if (!gameIsPaused) {
-//                        player.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
-//                    }
-//                    break;
-//                default:
-//            }
         }
 
         List<String> allPressed = new ArrayList<>();
@@ -467,15 +357,6 @@ public class GameController {
                 } else if (key.equals(player.getMineControl()) || key.equals("BTN_B")) {
                     player.getCharacter().placeMine();
                 }
-//                switch (key) {
-//                    case "SHIFT":
-//                        this.localPlayer.getCharacter().placeBomb();
-//                        break;
-//                    case "CAPS":
-//                        this.localPlayer.getCharacter().placeMine();
-//                        break;
-//                    default:
-//                }
             }
         }
     }
