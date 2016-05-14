@@ -186,6 +186,16 @@ public class GameController {
             TimerModel.getInstance().setPaused(true);
         }
 
+        ListenerController.getInstance().updateGamePadInputs();
+        if (localPlayer.getGamePad() != null) {
+//            ListenerController.getInstance().getGamePadInput(localPlayer.getGamePad());
+//            ListenerController.getInstance().getGamePadWalkDirection(localPlayer.getGamePad());
+            List<String> p1GamePadInput = ListenerController.getInstance().getGamePadInput(localPlayer.getGamePad());
+            if (p1GamePadInput.size() > 0) {
+                System.out.println("P1 gamepad input: " + p1GamePadInput);
+            }
+        }
+
         for (int i = 0; i < input.size(); i++) {
             String key = input.get(i);
             switch (key) {

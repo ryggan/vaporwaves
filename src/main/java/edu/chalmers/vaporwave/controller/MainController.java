@@ -16,6 +16,8 @@ import net.java.games.input.Component;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 
+import java.util.List;
+
 public class MainController {
 
     private MenuController menuController;
@@ -137,6 +139,15 @@ public class MainController {
                 }
 
 //                jinputTest();
+
+                ListenerController.getInstance().updateGamePadInputs();
+                if (ListenerController.getInstance().getGamePads().size() > 0) {
+                    Controller gamePad1 = ListenerController.getInstance().getGamePads().get(0);
+                    List<String> gamePad1Input = ListenerController.getInstance().getGamePadInput(gamePad1);
+                    if (gamePad1Input.size() > 0) {
+                        System.out.println("P1 gamepad input: " + gamePad1Input);
+                    }
+                }
 
                 ListenerController.getInstance().clearPressed();
                 ListenerController.getInstance().clearReleased();
