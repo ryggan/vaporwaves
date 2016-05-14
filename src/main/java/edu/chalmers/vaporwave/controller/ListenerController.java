@@ -18,7 +18,6 @@ public class ListenerController {
 
     private Map<String, Integer> heldDown;
 
-//    private Map<Integer, Controller> gamePads;
     private List<Controller> gamePads;
     private Map<Controller, List<String>> gamePadInputs;
     private Map<Controller, List<String>> gamePadPressed;
@@ -30,7 +29,7 @@ public class ListenerController {
         released = new ArrayList<>();
 
         heldDown = new HashMap<>();
-//        gamePads = new HashMap<>();
+
         gamePads = new ArrayList<>();
         gamePadInputs = new HashMap<>();
         gamePadPressed = new HashMap<>();
@@ -44,12 +43,6 @@ public class ListenerController {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
                         onKeyPressed(input, pressed, code);
-//                        if (!input.contains(code)) {
-//                            input.add(code);
-//                            pressed.add(code);
-//                        }
-
-
                     }
                 });
 
@@ -58,8 +51,6 @@ public class ListenerController {
                     public void handle(KeyEvent e) {
                         String code = e.getCode().toString();
                         onKeyReleased(input, released, code);
-//                        input.remove(code);
-//                        released.add(code);
                     }
                 });
 
@@ -82,15 +73,6 @@ public class ListenerController {
         Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
 
         for(int i =0;i < controllers.length;i++) {
-//            if (controllers[i].getType() == Controller.Type.GAMEPAD && !this.gamePads.values().contains(controllers[i])) {
-//                Random generator = new Random();
-//                Integer id;
-//                do {
-//                    id = new Integer(Math.abs(generator.nextInt()));
-//                } while (this.gamePads.keySet().contains(id));
-//                this.gamePads.put(id, controllers[i]);
-//            }
-
             if (controllers[i].getType() == Controller.Type.GAMEPAD && !this.gamePads.contains(controllers[i])) {
                 this.gamePads.add(controllers[i]);
                 List<String> inputList = new ArrayList<>();
@@ -103,10 +85,6 @@ public class ListenerController {
         }
 
         System.out.println("Active gamepads: "+this.gamePads);
-//        if (this.gamePads.size() > 1) {
-//            System.out.println("Is the same? pad1 == pad1: "+(this.gamePads.get(0) == this.gamePads.get(0)));
-//            System.out.println("Is the same? pad1 == pad2: "+(this.gamePads.get(0) == this.gamePads.get(1)));
-//        }
     }
 
     public void clearPressed() {
@@ -142,49 +120,25 @@ public class ListenerController {
 
     public List<String> getInput() {
         List<String> inputReturn = new ArrayList<>();
-        for (String s: this.input) {
-            inputReturn.add(s);
-        }
+        inputReturn.addAll(this.input);
         return inputReturn;
     }
 
     public List<String> getPressed() {
         List<String> pressedReturn = new ArrayList<>();
-        for (String s: this.pressed) {
-            pressedReturn.add(s);
-        }
+        pressedReturn.addAll(this.pressed);
         return pressedReturn;
     }
 
     public List<String> getReleased() {
         List<String> releasedReturn = new ArrayList<>();
-        for (String s: this.released) {
-            releasedReturn.add(s);
-        }
+        releasedReturn.addAll(this.released);
         return releasedReturn;
     }
-
-//    public Map<Integer, Controller> getGamePads() {
-//        return this.gamePads;
-//    }
 
     public List<Controller> getGamePads() {
         return this.gamePads;
     }
-
-//    public Controller getGamePad(int id) {
-//        return this.gamePads.get(id);
-//    }
-
-//    public int getGamePadID(Controller gamePad) {
-//        int id = -1;
-//        for (Map.Entry<Integer, Controller> entry : this.gamePads.entrySet()) {
-//            if (entry.getValue() == gamePad) {
-//                id = entry.getKey();
-//            }
-//        }
-//        return id;
-//    }
 
     private List<String[]> getGamePadInputRaw(Controller gamePad) {
         gamePad.poll();
@@ -194,28 +148,21 @@ public class ListenerController {
         List<String[]> gamePadInput = new ArrayList<>();
 
         while(queue.getNextEvent(event)) {
-            StringBuffer buffer = new StringBuffer(gamePad.getName());
             String[] button = new String[2];
-            buffer.append(" at ");
-            buffer.append(event.getNanos()).append(", ");
             Component comp = event.getComponent();
-            buffer.append(comp.getName()).append(" changed to ");
             button[0] = comp.getName();
             float value = event.getValue();
             if(comp.isAnalog()) {
-                buffer.append(value);
                 button[1] = ""+value;
             } else {
                 if(value==1.0f) {
-                    buffer.append("On");
                     button[1] = "On";
                 } else {
-                    buffer.append("Off");
                     button[1] = "Off";
                 }
             }
-//            System.out.println(buffer.toString());
             gamePadInput.add(button);
+//            System.out.println("Button; "+button[0]);
         }
 
         return gamePadInput;
@@ -228,119 +175,71 @@ public class ListenerController {
             List<String> released = this.gamePadReleased.get(gamePad);
             List<String[]> inputRaw = getGamePadInputRaw(gamePad);
 
-            double x = 0;
-            double y = 0;
+            double x = 100;
+            double y = 100;
+            boolean xChanged = false;
+            boolean yChanged = false;
 
             for (String[] button : inputRaw) {
                 if (button[1].equals("On") || button[1].equals("Off")) {
                     if (button[0].equals("11")) {
-                        if (button[1].equals("On")) {
-                            onKeyPressed(input, pressed, "UP");
-                        } else {
-                            onKeyReleased(input, released, "UP");
-                        }
+                        gamePadOnOffButton(button[1], "DPAD_UP", input, pressed, released);
                     } else if (button[0].equals("12")) {
-                        if (button[1].equals("On")) {
-                            onKeyPressed(input, pressed, "DOWN");
-                        } else {
-                            onKeyReleased(input, released, "DOWN");
-                        }
+                        gamePadOnOffButton(button[1], "DPAD_DOWN", input, pressed, released);
                     } else if (button[0].equals("13")) {
-                        if (button[1].equals("On")) {
-                            onKeyPressed(input, pressed, "LEFT");
-                        } else {
-                            onKeyReleased(input, released, "LEFT");
-                        }
+                        gamePadOnOffButton(button[1], "DPAD_LEFT", input, pressed, released);
                     } else if (button[0].equals("14")) {
-                        if (button[1].equals("On")) {
-                            onKeyPressed(input, pressed, "RIGHT");
-                        } else {
-                            onKeyReleased(input, released, "RIGHT");
-                        }
+                        gamePadOnOffButton(button[1], "DPAD_RIGHT", input, pressed, released);
+
+                    } else if (button[0].equals("0")) {
+                        gamePadOnOffButton(button[1], "BTN_A", input, pressed, released);
                     }
                 } else {
                     if (button[0].equals("x")) {
                         x = Double.valueOf(button[1]);
+                        xChanged = true;
                     } else if (button[0].equals("y")) {
                         y = Double.valueOf(button[1]);
+                        yChanged = true;
                     }
                 }
             }
 
-            if (Math.abs(x) > 0.5 || Math.abs(y) > 0.5) {
-                if (Math.abs(x) > Math.abs(y)) {
-                    if (x > 0.5) {
-                        onKeyPressed(input, pressed, "LS_RIGHT");
-                        onKeyReleased(input, released, "LS_LEFT");
-                    } else if (x < -0.5){
-                        onKeyPressed(input, pressed, "LS_LEFT");
-                        onKeyReleased(input, released, "LS_RIGHT");
-                    }
+            if (xChanged) {
+                if (x > 0.5) {
+                    onKeyPressed(input, pressed, "LS_RIGHT");
+                    onKeyReleased(input, released, "LS_LEFT");
+                } else if (x < -0.5) {
+                    onKeyReleased(input, released, "LS_RIGHT");
+                    onKeyPressed(input, pressed, "LS_LEFT");
                 } else {
-                    if (y > 0.5) {
-                        onKeyPressed(input, pressed, "LS_DOWN");
-                        onKeyReleased(input, released, "LS_UP");
-                    } else if (y < -0.5){
-                        onKeyPressed(input, pressed, "LS_UP");
-                        onKeyReleased(input, released, "LS_DOWN");
-                    }
+                    onKeyReleased(input, released, "LS_RIGHT");
+                    onKeyReleased(input, released, "LS_LEFT");
                 }
             }
-            if (Math.abs(x) <= 0.5) {
-                onKeyReleased(input, released, "LS_RIGHT");
-                onKeyReleased(input, released, "LS_LEFT");
-            }
-            if (Math.abs(y) <= 0.5) {
-                onKeyReleased(input, released, "LS_UP");
-                onKeyReleased(input, released, "LS_DOWN");
+
+            if (yChanged) {
+                if (y > 0.5) {
+                    onKeyPressed(input, pressed, "LS_DOWN");
+                    onKeyReleased(input, released, "LS_UP");
+                } else if (y < -0.5) {
+                    onKeyReleased(input, released, "LS_DOWN");
+                    onKeyPressed(input, pressed, "LS_UP");
+                } else {
+                    onKeyReleased(input, released, "LS_DOWN");
+                    onKeyReleased(input, released, "LS_UP");
+                }
             }
         }
     }
 
-//    public String getGamePadWalkDirection(Controller gamePad) {
-//        String walkDirection = "";
-//        List<String[]> input = getGamePadInput(gamePad);
-//        List<String> quedButtons = new ArrayList<>();
-//        double x = 0;
-//        double y = 0;
-//
-//        for (String[] button : input) {
-//            if (button[1].equals("On")) {
-//                if (button[0].equals("11")) {
-//                    quedButtons.add("UP");
-//                } else if (button[0].equals("12")) {
-//                    quedButtons.add("DOWN");
-//                } else if (button[0].equals("13")) {
-//                    quedButtons.add("LEFT");
-//                } else if (button[0].equals("14")) {
-//                    quedButtons.add("RIGHT");
-//                }
-//            } else {
-//                if (button[0].equals("x")) {
-//                    x = Double.valueOf(button[1]);
-//                } else if (button[0].equals("y")) {
-//                    y = Double.valueOf(button[1]);
-//                }
-//            }
-//        }
-//
-//        if (Math.abs(x) > 0.5 || Math.abs(y) > 0.5) {
-//            if (Math.abs(x) > Math.abs(y)) {
-//                if (x > 0) {
-//                    quedButtons.add("RIGHT");
-//                }
-//            } else {
-//
-//            }
-//        }
-//
-//        if (quedButtons.size() > 0) {
-//            System.out.println("All buttons pressed: " + quedButtons);
-//        }
-//        return walkDirection;
-//    }
-
-
+    private void gamePadOnOffButton(String onOff, String key, List<String> input, List<String> pressed, List<String> released) {
+        if (onOff.equals("On")) {
+            onKeyPressed(input, pressed, key);
+        } else {
+            onKeyReleased(input, released, key);
+        }
+    }
 
     public List<String> getGamePadInput(Controller gamePad) {
         List<String> inputReturn = new ArrayList<>();

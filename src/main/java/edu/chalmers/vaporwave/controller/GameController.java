@@ -186,37 +186,56 @@ public class GameController {
             TimerModel.getInstance().setPaused(true);
         }
 
-        ListenerController.getInstance().updateGamePadInputs();
-        if (localPlayer.getGamePad() != null) {
-//            ListenerController.getInstance().getGamePadInput(localPlayer.getGamePad());
-//            ListenerController.getInstance().getGamePadWalkDirection(localPlayer.getGamePad());
-            List<String> p1GamePadInput = ListenerController.getInstance().getGamePadInput(localPlayer.getGamePad());
-            if (p1GamePadInput.size() > 0) {
-                System.out.println("P1 gamepad input: " + p1GamePadInput);
-            }
+        List<String> allInputP1 = new ArrayList<>();
+        allInputP1.addAll(input);
+        if (remotePlayer.getGamePad() != null) {
+            allInputP1.addAll(ListenerController.getInstance().getGamePadInput(remotePlayer.getGamePad()));
         }
-
-        for (int i = 0; i < input.size(); i++) {
-            String key = input.get(i);
-            switch (key) {
+        for (int i = 0; i < allInputP1.size(); i++) {
+            String key1 = allInputP1.get(i);
+            switch (key1) {
                 case "UP":
                 case "LEFT":
                 case "DOWN":
                 case "RIGHT":
-                    if(!gameIsPaused) {
-                        remotePlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
+                case "LS_UP":
+                case "LS_LEFT":
+                case "LS_DOWN":
+                case "LS_RIGHT":
+                case "DPAD_UP":
+                case "DPAD_LEFT":
+                case "DPAD_DOWN":
+                case "DPAD_RIGHT":
+                    if (!gameIsPaused) {
+                        remotePlayer.getCharacter().move(Utils.getDirectionFromString(key1), arenaModel.getArenaTiles());
                     }
                     break;
                 default:
             }
+        }
 
-            switch (key) {
+        List<String> allInputP2 = new ArrayList<>();
+        allInputP2.addAll(input);
+        if (localPlayer.getGamePad() != null) {
+            allInputP2.addAll(ListenerController.getInstance().getGamePadInput(localPlayer.getGamePad()));
+        }
+        for (int i = 0; i < allInputP2.size(); i++) {
+            String key2 = allInputP2.get(i);
+            switch (key2) {
                 case "W":
                 case "A":
                 case "S":
                 case "D":
+                case "LS_UP":
+                case "LS_LEFT":
+                case "LS_DOWN":
+                case "LS_RIGHT":
+                case "DPAD_UP":
+                case "DPAD_LEFT":
+                case "DPAD_DOWN":
+                case "DPAD_RIGHT":
                     if(!gameIsPaused) {
-                        localPlayer.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
+                        localPlayer.getCharacter().move(Utils.getDirectionFromString(key2), arenaModel.getArenaTiles());
                     }
                     break;
                 default:

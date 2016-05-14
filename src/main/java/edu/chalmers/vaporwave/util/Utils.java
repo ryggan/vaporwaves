@@ -99,15 +99,23 @@ public class Utils {
         switch(string) {
             case "LEFT":
             case "A":
+            case "LS_LEFT":
+            case "DPAD_LEFT":
                 return Direction.LEFT;
             case "UP":
             case "W":
+            case "LS_UP":
+            case "DPAD_UP":
                 return Direction.UP;
             case "RIGHT":
             case "D":
+            case "LS_RIGHT":
+            case "DPAD_RIGHT":
                 return Direction.RIGHT;
             case "DOWN":
             case "S":
+            case "LS_DOWN":
+            case "DPAD_DOWN":
                 return Direction.DOWN;
             default:
         }

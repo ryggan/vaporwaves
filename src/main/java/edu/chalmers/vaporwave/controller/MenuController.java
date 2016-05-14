@@ -26,7 +26,6 @@ public class MenuController {
 
         this.newGameEvent = new NewGameEvent();
 
-//        Map<Integer, Controller> gamePads = ListenerController.getInstance().getGamePads();
         List<Controller> gamePads = ListenerController.getInstance().getGamePads();
 
         Player localPlayer = new Player(1, "PlayerOne");
@@ -38,7 +37,7 @@ public class MenuController {
         Player remotePlayer = new Player(2, "PlayerTwo");
         this.newGameEvent.setRemotePlayer(remotePlayer);
         if (gamePads.size() > 1) {
-            localPlayer.setGamePad(gamePads.get(1));
+            remotePlayer.setGamePad(gamePads.get(1));
         }
 
         this.activeMenu = MenuState.START_MENU;
