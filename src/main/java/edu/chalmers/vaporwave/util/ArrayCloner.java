@@ -7,10 +7,10 @@ import java.util.List;
 
 public class ArrayCloner {
 
-    public static String[] stringArrayCloner(String[] objectArray) {
-        String[] temporary = new String[objectArray.length];
-        for(int i = 0; i < objectArray.length; i++) {
-            temporary[i] = objectArray[i];
+    public static String[] stringArrayCloner(String[] stringArray) {
+        String[] temporary = new String[stringArray.length];
+        for(int i = 0; i < stringArray.length; i++) {
+            temporary[i] = stringArray[i];
         }
         return temporary;
     }

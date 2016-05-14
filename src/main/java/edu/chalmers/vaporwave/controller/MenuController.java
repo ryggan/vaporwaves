@@ -30,12 +30,18 @@ public class MenuController {
 
         Player localPlayer = new Player(1, "PlayerOne");
         this.newGameEvent.setLocalPlayer(localPlayer);
+        localPlayer.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
+        localPlayer.setBombControl("SPACE");
+        localPlayer.setMineControl("M");
         if (gamePads.size() > 0) {
             localPlayer.setGamePad(gamePads.get(0));
         }
 
         Player remotePlayer = new Player(2, "PlayerTwo");
         this.newGameEvent.setRemotePlayer(remotePlayer);
+        remotePlayer.setDirectionControls(new String[] {"A", "W", "D", "S"});
+        remotePlayer.setBombControl("SHIFT");
+        remotePlayer.setMineControl("CAPS");
         if (gamePads.size() > 1) {
             remotePlayer.setGamePad(gamePads.get(1));
         }

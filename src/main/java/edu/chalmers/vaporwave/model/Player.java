@@ -15,6 +15,9 @@ public class Player {
     private int powerUpScore;
     private String[] playerInfo;
 
+    private String[] directionControls;
+    private String bombControl;
+    private String mineControl;
     private Controller gamePad;
 
     public Player(int playerId, String playerName) {
@@ -107,5 +110,27 @@ public class Player {
 
     public Controller getGamePad() {
         return this.gamePad;
+    }
+
+    public void setDirectionControls(String[] directionControls) {
+        this.directionControls = ArrayCloner.stringArrayCloner(directionControls);
+    }
+
+    public String[] getDirectionControls() {
+        return ArrayCloner.stringArrayCloner(this.directionControls);
+    }
+
+    public void setBombControl(String bombControl) {
+        this.bombControl = bombControl;
+    }
+    public void setMineControl(String mineControl) {
+        this.mineControl = mineControl;
+    }
+
+    public String getBombControl() {
+        return this.bombControl;
+    }
+    public String getMineControl() {
+        return this.mineControl;
     }
 }

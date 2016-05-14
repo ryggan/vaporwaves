@@ -170,10 +170,14 @@ public class ListenerController {
 
     public void updateGamePadInputs() {
         for (Controller gamePad : this.gamePads) {
+
             List<String> input = this.gamePadInputs.get(gamePad);
             List<String> pressed = this.gamePadPressed.get(gamePad);
             List<String> released = this.gamePadReleased.get(gamePad);
             List<String[]> inputRaw = getGamePadInputRaw(gamePad);
+
+            pressed.clear();
+            released.clear();
 
             double x = 100;
             double y = 100;
@@ -193,6 +197,8 @@ public class ListenerController {
 
                     } else if (button[0].equals("0")) {
                         gamePadOnOffButton(button[1], "BTN_A", input, pressed, released);
+                    } else if (button[0].equals("1")) {
+                        gamePadOnOffButton(button[1], "BTN_B", input, pressed, released);
                     }
                 } else {
                     if (button[0].equals("x")) {
@@ -236,6 +242,7 @@ public class ListenerController {
     private void gamePadOnOffButton(String onOff, String key, List<String> input, List<String> pressed, List<String> released) {
         if (onOff.equals("On")) {
             onKeyPressed(input, pressed, key);
+//            System.out.println("Pressed: "+pressed);
         } else {
             onKeyReleased(input, released, key);
         }
