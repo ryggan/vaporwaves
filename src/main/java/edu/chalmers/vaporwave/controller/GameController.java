@@ -166,8 +166,6 @@ public class GameController {
             TimerModel.getInstance().updateTimer(timeLimit);
         }
 
-
-        List<String> input = ListenerController.getInstance().getInput();
         List<String> pressed = ListenerController.getInstance().getPressed();
 
         if(!gameIsPaused) {
@@ -188,8 +186,9 @@ public class GameController {
 
         // All player-specific input and pressed etc.
         if (!gameIsPaused) {
-            playerInputAction(localPlayer);
-            playerInputAction(remotePlayer);
+            for (Player player : this.playerList) {
+                playerInputAction(player);
+            }
         }
 
         for (int i = 0; i < pressed.size(); i++) {

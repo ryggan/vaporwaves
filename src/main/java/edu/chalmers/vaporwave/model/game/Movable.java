@@ -7,6 +7,8 @@ import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.BoundingBox;
 
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public abstract class Movable {
 
@@ -19,7 +21,7 @@ public abstract class Movable {
     private double speed;
     private boolean moving;
     private int damage;
-    private Direction lastMove;
+    private List<Direction> lastMove;
     private Direction direction;
     private MovableState comingState;
     private MovableState movableState;
@@ -63,6 +65,7 @@ public abstract class Movable {
         this.direction = Direction.DOWN;
         this.movableState= MovableState.IDLE;
         this.previousState = this.movableState;
+        this.lastMove = new ArrayList<>();
     }
 
     public void updatePosition() {
@@ -103,7 +106,7 @@ public abstract class Movable {
             default:
         }
 
-        this.lastMove = null;
+        this.lastMove.clear();
     }
 
     public void updateInvincibleTimer() {
@@ -121,10 +124,6 @@ public abstract class Movable {
         setCanvasPosition(Utils.gridToCanvasPositionX(newGridPositionX), Utils.gridToCanvasPositionY(newGridPositionY));
         setPreviousGridPositionX(newGridPositionX);
         setPreviousGridPositionY(newGridPositionY);
-
-        if (this.lastMove != null) {
-            move(lastMove, this.latestArenaTiles);
-        }
     }
 
     private void stop() {
@@ -142,12 +141,32 @@ public abstract class Movable {
         boolean closeToPosition = (compareX <= this.getSpeed() / 2) && (compareY <= this.getSpeed() / 2)
                 && (moving || (closestTilePositionX != getPreviousGridPositionX() || closestTilePositionY != getPreviousGridPositionY()));
 
-
-//        boolean movingFlow = ();
-
         if(closeToPosition) {
-            System.out.println("Stopping at "+closestTilePositionX+":"+closestTilePositionY);
             stopAtTile(closestTilePositionX, closestTilePositionY);
+
+            Direction foundNewDirection = null;
+            for(Direction direction : this.lastMove) {
+                if (Utils.isOrtogonalDirections(this.direction, direction)) {
+                    if (allowMove(direction)) {
+                        foundNewDirection = direction;
+                        break;
+                    } else if (!allowMove(direction) && allowMove(this.direction)) {
+                        foundNewDirection = this.direction;
+                        break;
+                    }
+                }
+            }
+            if (foundNewDirection != null) {
+                move(foundNewDirection, this.latestArenaTiles);
+
+            } else {
+                for (Direction direction : this.lastMove) {
+                    if (allowMove(direction)) {
+                        move(direction, this.latestArenaTiles);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -200,7 +219,7 @@ public abstract class Movable {
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
-        this.lastMove = direction;
+        this.lastMove.add(direction);
         this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
         if (direction != null && this.comingState != MovableState.SPAWN &&
                 (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
@@ -265,7 +284,16 @@ public abstract class Movable {
         int nextGridPositionY = Math.min(Math.max(getPreviousGridPositionY() + gridDirectionY, 0), Constants.DEFAULT_GRID_HEIGHT-1);
         StaticTile nextTile = this.latestArenaTiles[nextGridPositionX][nextGridPositionY];
 
-        return nextTile == null || !(nextTile instanceof Wall) && !(nextTile instanceof Bomb);
+        return (nextTile == null) || !(nextTile instanceof Wall) && !(nextTile instanceof Bomb);
+    }
+
+    private boolean allowMove(double gridDirectionX, double gridDirectionY) {
+        return this.allowMove((int)gridDirectionX, (int)gridDirectionY);
+    }
+
+    private boolean allowMove(Direction direction) {
+        Point directionToPoint = Utils.getRelativePoint(new Point(0, 0), 1, direction);
+        return allowMove(directionToPoint.getX(), directionToPoint.getY());
     }
 
     private boolean oppositeDirection(Direction direction) {
