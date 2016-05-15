@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.XMLReader;
 
@@ -11,39 +11,42 @@ import java.util.Map;
 /**
  * Created by bob on 2016-05-11.
  */
-class CharacterSpriteContainer {
+class CharacterContainer {
 
     private static final MovableState[] CHARACTER_CHARACTER_STATE = { MovableState.WALK, MovableState.IDLE, MovableState.FLINCH, MovableState.DEATH, MovableState.SPAWN };
 
-    private Map<CharacterSpriteID, CharacterSprite> spriteContainer;
+    private Map<CharacterID, CharacterSprite> spriteContainer;
+    private Map<CharacterID, CharacterProperties> propertiesContainer;
 
     private static double tasksDone;
     private static final double totalTasks = 14 * 5;
 
-    CharacterSpriteContainer() {
+    CharacterContainer() {
 
         spriteContainer = new HashMap<>();
+        propertiesContainer = new HashMap<>();
 
         // TODO: OBS!!! IF ADDING CHARACTER SPRITES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
-        initCharacterSprites(CharacterSpriteID.ALYSSA);
-        initCharacterSprites(CharacterSpriteID.CHARLOTTE);
-        initCharacterSprites(CharacterSpriteID.ZYPHER);
-        initCharacterSprites(CharacterSpriteID.MEI);
+        initCharacterSprites(CharacterID.ALYSSA);
+        initCharacterSprites(CharacterID.CHARLOTTE);
+        initCharacterSprites(CharacterID.ZYPHER);
+        initCharacterSprites(CharacterID.MEI);
 
-        initCharacterSprites(CharacterSpriteID.PCCHAN);
+        initCharacterSprites(CharacterID.PCCHAN);
     }
 
-    CharacterSprite getCharacterSprite(CharacterSpriteID characterSpriteID) {
-        return this.spriteContainer.get(characterSpriteID);
+    CharacterSprite getCharacterSprite(CharacterID characterID) {
+        return this.spriteContainer.get(characterID);
     }
 
-    private void initCharacterSprites(CharacterSpriteID characterSpriteID) {
-        CharacterSprite characterSprite = new CharacterSprite(characterSpriteID.toString());
-        this.spriteContainer.put(characterSpriteID, characterSprite);
+    private void initCharacterSprites(CharacterID characterID) {
+        CharacterSprite characterSprite = new CharacterSprite(characterID.toString());
+        this.spriteContainer.put(characterID, characterSprite);
 
         XMLReader reader = new XMLReader(Container.getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
+        this.propertiesContainer.put(characterID, characterProperties);
 
         for (MovableState characterState : CHARACTER_CHARACTER_STATE) {
             CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
@@ -127,6 +130,10 @@ class CharacterSpriteContainer {
             }
         }
 
+    }
+
+    double getCharacterStat(CharacterID characterID, CharacterStat characterStat) {
+        return this.propertiesContainer.get(characterID).getCharacterStat(characterStat);
     }
 
     static double getTasksDone() {

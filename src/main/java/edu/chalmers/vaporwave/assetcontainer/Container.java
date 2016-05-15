@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.SoundPlayer;
 import javafx.scene.image.Image;
 
@@ -13,7 +14,7 @@ public class Container {
     private static FileContainer fileContainer;
     private static ImageContainer imageContainer;
     private static SoundContainer soundContainer;
-    private static CharacterSpriteContainer characterSpriteContainer;
+    private static CharacterContainer characterContainer;
     private static SpriteContainer spriteContainer;
 
     public static void initialize() {
@@ -27,8 +28,8 @@ public class Container {
         soundContainer = new SoundContainer();
         System.out.println("Sound loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
         time = System.currentTimeMillis();
-        characterSpriteContainer = new CharacterSpriteContainer();
-        System.out.println("Character sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
+        characterContainer = new CharacterContainer();
+        System.out.println("Characters done, timed: "+(System.currentTimeMillis() - time)+" millis");
         time = System.currentTimeMillis();
         spriteContainer = new SpriteContainer();
         System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
@@ -54,8 +55,24 @@ public class Container {
         soundContainer.stopSound(soundID);
     }
 
-    public static CharacterSprite getCharacterSprite(CharacterSpriteID characterSpriteID) {
-        return characterSpriteContainer.getCharacterSprite(characterSpriteID);
+    public static CharacterSprite getCharacterSprite(CharacterID characterID) {
+        return characterContainer.getCharacterSprite(characterID);
+    }
+
+    public static double getCharacterHealth(CharacterID characterID) {
+        return characterContainer.getCharacterStat(characterID, CharacterStat.HEALTH);
+    }
+    public static double getCharacterSpeed(CharacterID characterID) {
+        return characterContainer.getCharacterStat(characterID, CharacterStat.SPEED);
+    }
+    public static int getCharacterBombRange(CharacterID characterID) {
+        return (int)characterContainer.getCharacterStat(characterID, CharacterStat.BOMB_RANGE);
+    }
+    public static int getCharacterBombCount(CharacterID characterID) {
+        return (int)characterContainer.getCharacterStat(characterID, CharacterStat.BOMB_COUNT);
+    }
+    public static double getCharacterDamage(CharacterID characterID) {
+        return characterContainer.getCharacterStat(characterID, CharacterStat.DAMAGE);
     }
 
     public static Sprite getSprite(SpriteID spriteID) {
@@ -64,11 +81,11 @@ public class Container {
 
     public static double getTasksDone() {
         return FileContainer.getTasksDone() + ImageContainer.getTasksDone() + SoundContainer.getTasksDone()
-                + CharacterSpriteContainer.getTasksDone() + SpriteContainer.getTasksDone();
+                + CharacterContainer.getTasksDone() + SpriteContainer.getTasksDone();
     }
 
     public static double getTotalTasks() {
         return FileContainer.getTotalTasks() + ImageContainer.getTotalTasks() + SoundContainer.getTotalTasks()
-                + CharacterSpriteContainer.getTotalTasks() + SpriteContainer.getTotalTasks();
+                + CharacterContainer.getTotalTasks() + SpriteContainer.getTotalTasks();
     }
 }

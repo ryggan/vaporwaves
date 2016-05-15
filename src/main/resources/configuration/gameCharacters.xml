@@ -4,10 +4,11 @@
     <character>
         <name>ALYSSA</name>
 
-        <maxHealth>100</maxHealth>
-        <speed>10.0</speed>
-        <bombRange>3</bombRange>
+        <health>50</health>
+        <speed>1.5</speed>
+        <bombRange>1</bombRange>
         <bombCount>1</bombCount>
+        <damage>30.0</damage>
 
         <walk>
             <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
@@ -88,10 +89,11 @@
     <character>
         <name>CHARLOTTE</name>
 
-        <maxHealth>100</maxHealth>
-        <speed>10.0</speed>
-        <bombRange>3</bombRange>
+        <health>50</health>
+        <speed>1.3</speed>
+        <bombRange>2</bombRange>
         <bombCount>1</bombCount>
+        <damage>30.0</damage>
 
         <walk>
             <spritesheet>CHARACTER_CHARLOTTE_WALKIDLEFLINCH</spritesheet>
@@ -172,10 +174,11 @@
     <character>
         <name>ZYPHER</name>
 
-        <maxHealth>100</maxHealth>
-        <speed>10.0</speed>
-        <bombRange>3</bombRange>
-        <bombCount>1</bombCount>
+        <health>50</health>
+        <speed>1.5</speed>
+        <bombRange>1</bombRange>
+        <bombCount>2</bombCount>
+        <damage>25.0</damage>
 
         <walk>
             <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
@@ -256,10 +259,11 @@
     <character>
         <name>MEI</name>
 
-        <maxHealth>100</maxHealth>
-        <speed>10.0</speed>
-        <bombRange>3</bombRange>
+        <health>40</health>
+        <speed>1.7</speed>
+        <bombRange>1</bombRange>
         <bombCount>1</bombCount>
+        <damage>30.0</damage>
 
         <walk>
             <spritesheet>CHARACTER_MEI_WALKIDLEFLINCHDEATH</spritesheet>
@@ -341,10 +345,11 @@
     <character>
         <name>PCCHAN</name>
 
-        <maxHealth>100</maxHealth>
-        <speed>10.0</speed>
-        <bombRange>3</bombRange>
+        <health>50</health>
+        <speed>1.5</speed>
+        <bombRange>2</bombRange>
         <bombCount>1</bombCount>
+        <damage>30.0</damage>
 
         <walk>
             <spritesheet>ENEMY_PCCHAN</spritesheet>

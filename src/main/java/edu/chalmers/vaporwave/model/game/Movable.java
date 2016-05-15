@@ -20,7 +20,7 @@ public abstract class Movable {
     private double velocityY;
     private double speed;
     private boolean moving;
-    private int damage;
+    private double damage;
     private List<Direction> lastMove;
     private Direction direction;
     private MovableState comingState;
@@ -202,14 +202,12 @@ public abstract class Movable {
         invincibleTimer = invincibleDelay;
         flinchInvincible = true;
         setState(MovableState.FLINCH);
-//        System.out.println("Flinch! "+getName());
     }
 
     public void death() {
         stop();
         setState(MovableState.DEATH);
         this.health=0;
-//        System.out.println("Death! "+getName());
     }
 
     public void spawn(Point spawningPoint) {
@@ -381,11 +379,11 @@ public abstract class Movable {
         return this.name;
     }
 
-    public int getDamage() {
+    public double getDamage() {
         return this.damage;
     }
 
-    public void setDamage(int damage) {
+    public void setDamage(double damage) {
         this.damage = damage;
     }
 
@@ -431,7 +429,7 @@ public abstract class Movable {
                 ((int) velocityX * 11) +
                 ((int) velocityY * 13) +
                 ((int) speed * 17) +
-                (damage * 19) +
+                ((int)damage * 19) +
                 (previousGridPositionX * 23) +
                 (previousGridPositionY * 29) +
                 ((int) health * 31) +

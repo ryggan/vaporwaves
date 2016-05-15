@@ -354,15 +354,18 @@ public class GameController {
 
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
-        arenaModel.setDoubleTile(new Bomb(placeBombEvent.getCharacter(), placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY, this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
-        this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() - 1);
+        GameCharacter character = placeBombEvent.getCharacter();
+        arenaModel.setDoubleTile(new Bomb(character, placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY,
+                this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
+        placeBombEvent.getCharacter().setCurrentBombCount(character.getCurrentBombCount() - 1);
         updateStats();
     }
 
     @Subscribe
     public void minePlaced(PlaceMineEvent placeMineEvent) {
-        arenaModel.setTile(new Mine(this.localPlayer.getCharacter(), 1, this.localPlayer.getCharacter().getDamage()), placeMineEvent.getGridPosition());
-        this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() - 1);
+        GameCharacter character = placeMineEvent.getCharacter();
+        arenaModel.setTile(new Mine(character, placeMineEvent.getRange(), placeMineEvent.getDamage()), placeMineEvent.getGridPosition());
+        character.setCurrentBombCount(character.getCurrentBombCount() - 1);
         updateStats();
     }
 
@@ -370,8 +373,8 @@ public class GameController {
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
 
-        // This is temporarily; when more than one character, this must be moved outside, or altered
-        this.localPlayer.getCharacter().setCurrentBombCount(this.localPlayer.getCharacter().getCurrentBombCount() + 1);
+        GameCharacter owner = blastEvent.getExplosive().getOwner();
+        owner.setCurrentBombCount(owner.getCurrentBombCount() + 1);
 
         // A map to keep track if there is an obstacle, or if the fire can keep burning
         Map<Direction, Boolean> blastDirections = new HashMap<>();
@@ -520,8 +523,7 @@ public class GameController {
         Movable movable = deathEvent.getMovable();
         if (movable instanceof GameCharacter) {
 
-            //TODO
-//            movable.spawn(new Point(6, 5));
+            // null => gameCharacter uses it's inherent startPosition
             movable.spawn(null);
             updateStats();
 

@@ -16,11 +16,11 @@ import java.util.List;
 
 public class GameCharacter extends Movable {
 
+    private double startHealth;
+    private double startSpeed;
     private int startBombRange;
     private int startMaxBombCount;
-    private double startHealth;
-    private int startDamage;
-    private double startSpeed;
+    private double startDamage;
     private Point startPosition;
 
     private int bombRange;
@@ -28,7 +28,6 @@ public class GameCharacter extends Movable {
     private int currentBombCount;
     private int playerId;
 
-//    private double powerUpTimeStamp;
     private List<Double> powerUpPickedUp;
 
     public GameCharacter(String name, int playerId) {
@@ -39,21 +38,18 @@ public class GameCharacter extends Movable {
         super(name, Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0);
 
         this.startPosition = (Point)spawnPosition.clone();
-        this.startHealth = Constants.DEFAULT_START_HEALTH;
-        this.startSpeed = 1.5;
-        this.startBombRange = 2;
-        this.startMaxBombCount = 10;
-        this.startDamage = 30;
+
+        CharacterID characterID = CharacterID.valueOf(name);
+        this.startHealth = Container.getCharacterHealth(characterID);
+        this.startSpeed = Container.getCharacterSpeed(characterID);
+        this.startBombRange = Container.getCharacterBombRange(characterID);
+        this.startMaxBombCount = Container.getCharacterBombCount(characterID);
+        this.startDamage = Container.getCharacterDamage(characterID);
+
+        System.out.println("GameCharacter "+name+", bomb count: "+this.startMaxBombCount);
+
         this.playerId = playerId;
 
-//        setHealth(this.startHealth);
-//        setSpeed(this.startSpeed);
-//        this.bombRange = this.startBombRange;
-//        this.maxBombCount = this.startMaxBombCount;
-//        this.currentBombCount = this.maxBombCount;
-//        this.setDamage(this.startDamage);
-
-//        resetStats();
         spawn(null);
 
         this.powerUpPickedUp = new ArrayList<>();
@@ -84,10 +80,10 @@ public class GameCharacter extends Movable {
 
     public void placeMine() {
         if(this.currentBombCount > 0) {
-            GameEventBus.getInstance().post(new PlaceMineEvent(
-                    Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()
-                    ), getDamage())
-            );
+            GameEventBus.getInstance().post(
+                    new PlaceMineEvent(this, Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()),
+                    bombRange,
+                    getDamage()));
         }
     }
 
@@ -135,12 +131,12 @@ public class GameCharacter extends Movable {
 
     @Override
     public void spawn(Point spawningPosition) {
-        resetStats();
         if (spawningPosition == null) {
             super.spawn(this.startPosition);
         } else {
             super.spawn(spawningPosition);
         }
+        resetStats();
     }
 
     @Override

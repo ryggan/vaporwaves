@@ -105,16 +105,16 @@ public class ArenaView {
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
         // Character sprites
-        characterSprites[0] = Container.getCharacterSprite(CharacterSpriteID.ALYSSA);
-        characterSprites[1] = Container.getCharacterSprite(CharacterSpriteID.CHARLOTTE);
-        characterSprites[2] = Container.getCharacterSprite(CharacterSpriteID.ZYPHER);
-        characterSprites[3] = Container.getCharacterSprite(CharacterSpriteID.MEI);
+        characterSprites[0] = Container.getCharacterSprite(CharacterID.ALYSSA);
+        characterSprites[1] = Container.getCharacterSprite(CharacterID.CHARLOTTE);
+        characterSprites[2] = Container.getCharacterSprite(CharacterID.ZYPHER);
+        characterSprites[3] = Container.getCharacterSprite(CharacterID.MEI);
 
         Image characterMiscSpritesheet = Container.getImage(ImageID.CHARACTER_MISC);
         characterSparkleSprite =
                 new AnimatedSprite(characterMiscSpritesheet, new Dimension(48, 48), 9, 0.08, new int[] {0, 0}, new double[] {16, 27});
 
-        enemySprite = Container.getCharacterSprite(CharacterSpriteID.PCCHAN);
+        enemySprite = Container.getCharacterSprite(CharacterID.PCCHAN);
 
         // Background and frame
         arenaBackgroundSprite = Container.getSprite(SpriteID.GAME_BACKGROUND_1);

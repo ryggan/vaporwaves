@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MovableState;
 import javafx.scene.image.Image;
@@ -16,6 +17,7 @@ public class CharacterLoader {
 
     public static CharacterProperties loadCharacter(NodeList nodeList, String name) {
         Map<MovableState, CharacterSpriteProperties> spritePropertiesMap = new HashMap<>();
+        Map<CharacterStat, Double> characterStats = new HashMap<>();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Element allCharacterNodes = (Element)nodeList.item(i);
             for (int j = 0; j < allCharacterNodes.getElementsByTagName("character").getLength(); j++) {
@@ -44,11 +46,22 @@ public class CharacterLoader {
                                 spritesheet, dimensionX, dimensionY, frames, duration, firstFrame, offset);
                         spritePropertiesMap.put(CHARACTER_CHARACTER_STATE[k], property);
                     }
+
+                    Double health = Double.parseDouble(singleCharacterNodes.getElementsByTagName("health").item(j).getTextContent());
+                    characterStats.put(CharacterStat.HEALTH, health);
+                    Double speed = Double.parseDouble(singleCharacterNodes.getElementsByTagName("speed").item(j).getTextContent());
+                    characterStats.put(CharacterStat.SPEED, speed);
+                    Double bombRange = Double.parseDouble(singleCharacterNodes.getElementsByTagName("bombRange").item(j).getTextContent());
+                    characterStats.put(CharacterStat.BOMB_RANGE, bombRange);
+                    Double bombCount = Double.parseDouble(singleCharacterNodes.getElementsByTagName("bombCount").item(j).getTextContent());
+                    characterStats.put(CharacterStat.BOMB_COUNT, bombCount);
+                    Double damage = Double.parseDouble(singleCharacterNodes.getElementsByTagName("damage").item(j).getTextContent());
+                    characterStats.put(CharacterStat.DAMAGE, damage);
                 }
             }
         }
 
-        return new CharacterProperties(name, spritePropertiesMap);
+        return new CharacterProperties(name, spritePropertiesMap, characterStats);
 
     }
 
