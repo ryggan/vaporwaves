@@ -138,63 +138,17 @@ public class MainController {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 }
 
-//                jinputTest();
+//                if (ListenerController.getInstance().getInput().contains("U")) {
+//                    ListenerController.getInstance().updateGamePads();
+//                }
 
                 ListenerController.getInstance().updateGamePadInputs();
-                if (ListenerController.getInstance().getGamePads().size() > 0) {
-                    Controller gamePad1 = ListenerController.getInstance().getGamePads().get(0);
-                    List<String> gamePad1Input = ListenerController.getInstance().getGamePadPressed(gamePad1);
-                    if (gamePad1Input.size() > 0) {
-                        System.out.println("P1 gamepad pressed: " + gamePad1Input);
-                    }
-                }
-
                 ListenerController.getInstance().clearPressed();
                 ListenerController.getInstance().clearReleased();
 
             }
 
         }.start();
-    }
-
-    private void jinputTest() {
-        Controller[] controllerArray = ControllerEnvironment.getDefaultEnvironment().getControllers();
-
-        for(int i =0;i < controllerArray.length;i++) {
-
-            if (controllerArray[i].getType() == Controller.Type.GAMEPAD) {
-
-                /* Get the name of the controller */
-                System.out.println(controllerArray[i].getName());
-
-                System.out.println("Type: " + controllerArray[i].getType().toString());
-
-                /* Get this controllers components (buttons and axis) */
-                Component[] components = controllerArray[i].getComponents();
-                System.out.println("Component Count: " + components.length);
-
-                for (int j = 0; j < components.length; j++) {
-
-                    /* Get the components name */
-                    System.out.println("Component " + j + ": " + components[j].getName());
-
-                    System.out.println("    Identifier: " + components[j].getIdentifier().getName());
-
-                    System.out.print("    ComponentType: ");
-                    if (components[j].isRelative()) {
-                        System.out.print("Relative");
-                    } else {
-                        System.out.print("Absolute");
-                    }
-                    if (components[j].isAnalog()) {
-                        System.out.print(" Analog");
-                    } else {
-                        System.out.print(" Digital");
-                    }
-                    System.out.println();
-                }
-            }
-        }
     }
 
     @Subscribe

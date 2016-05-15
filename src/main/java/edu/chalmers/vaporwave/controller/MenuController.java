@@ -25,30 +25,28 @@ public class MenuController {
 
     private Player localPlayer;
     private Player remotePlayer;
+    private List<Player> players;
 
     public MenuController(Group root) {
 
         this.newGameEvent = new NewGameEvent();
-
-        List<Controller> gamePads = ListenerController.getInstance().getGamePads();
+        this.players = new ArrayList<>();
 
         this.localPlayer = new Player(1, "PlayerOne");
         this.newGameEvent.setLocalPlayer(this.localPlayer);
         this.localPlayer.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
         this.localPlayer.setBombControl("SPACE");
         this.localPlayer.setMineControl("M");
-        if (gamePads.size() > 0) {
-            this.localPlayer.setGamePad(gamePads.get(0));
-        }
+        this.players.add(this.localPlayer);
 
         this.remotePlayer = new Player(2, "PlayerTwo");
         this.newGameEvent.setRemotePlayer(this.remotePlayer);
         this.remotePlayer.setDirectionControls(new String[] {"A", "W", "D", "S"});
         this.remotePlayer.setBombControl("SHIFT");
         this.remotePlayer.setMineControl("CAPS");
-        if (gamePads.size() > 1) {
-            this.remotePlayer.setGamePad(gamePads.get(1));
-        }
+        this.players.add(this.remotePlayer);
+
+        updatePlayerGamePads(this.players);
 
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
@@ -69,6 +67,17 @@ public class MenuController {
         );
     }
 
+    public void updatePlayerGamePads(List<Player> players) {
+        ListenerController.getInstance().updateGamePads();
+
+        List<Controller> gamePads = ListenerController.getInstance().getGamePads();
+        for (int i = 0; i < players.size(); i++) {
+            if (gamePads.size() > i) {
+                players.get(i).setGamePad(gamePads.get(i));
+            }
+        }
+    }
+
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         localPlayerInput(this.localPlayer);
@@ -78,7 +87,6 @@ public class MenuController {
     }
 
     private void changeSelected(Direction direction, int playerID) {
-        System.out.println("Direction: "+direction+", player: "+playerID);
         menuMap.get(activeMenu).changeSelected(direction, playerID);
         updateViews(playerID);
     }
@@ -194,6 +202,9 @@ public class MenuController {
 
 
     public void setActiveMenu(MenuState activeMenu){
+        if (activeMenu == MenuState.START_MENU) {
+            updatePlayerGamePads(this.players);
+        }
         this.activeMenu = activeMenu;
     }
 

@@ -141,9 +141,11 @@ public abstract class Movable {
         boolean closeToPosition = (compareX <= this.getSpeed() / 2) && (compareY <= this.getSpeed() / 2)
                 && (moving || (closestTilePositionX != getPreviousGridPositionX() || closestTilePositionY != getPreviousGridPositionY()));
 
+        // Stop when in middle of tile
         if(closeToPosition) {
             stopAtTile(closestTilePositionX, closestTilePositionY);
 
+            // Following makes movable keep on moving, to not stop flow
             Direction foundNewDirection = null;
             for(Direction direction : this.lastMove) {
                 if (Utils.isOrtogonalDirections(this.direction, direction)) {
@@ -211,7 +213,7 @@ public abstract class Movable {
     }
 
     public void spawn(Point spawningPoint) {
-        this.lastMove = null;
+        this.lastMove.clear();
         this.direction = Direction.DOWN;
         stopAtTile((int)spawningPoint.getX(), (int)spawningPoint.getY());
         setComingState(MovableState.SPAWN);

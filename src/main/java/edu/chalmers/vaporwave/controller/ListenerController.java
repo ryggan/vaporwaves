@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import net.java.games.input.*;
 
+import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class ListenerController {
@@ -58,6 +59,7 @@ public class ListenerController {
         updateGamePads();
     }
 
+    // These is used both by above listeners and by gampad-input-update below
     private void onKeyPressed(List<String> input, List<String> pressed, String code) {
         if (!input.contains(code)) {
             input.add(code);
@@ -70,22 +72,48 @@ public class ListenerController {
         released.add(code);
     }
 
-    private void updateGamePads() {
-        Controller[] controllers = ControllerEnvironment.getDefaultEnvironment().getControllers();
+    // This method updates the list of gamepads connected to the game
+    // - OBS!! Even if only ONE of several gamepads has changed (from connected to not, e.g); ALL gamepads in the
+    //   updated list will be different and therefor all Player gamepads needs to be re-maped (see MenuController)
+    public void updateGamePads() {
 
-        for(int i =0;i < controllers.length;i++) {
-            if (controllers[i].getType() == Controller.Type.GAMEPAD && !this.gamePads.contains(controllers[i])) {
-                this.gamePads.add(controllers[i]);
-                List<String> inputList = new ArrayList<>();
-                this.gamePadInputs.put(controllers[i], inputList);
-                List<String> pressedList = new ArrayList<>();
-                this.gamePadPressed.put(controllers[i], pressedList);
-                List<String> releasedList = new ArrayList<>();
-                this.gamePadReleased.put(controllers[i], releasedList);
+        this.gamePads.clear();
+
+        Controller[] controllers = createDefaultEnvironment().getControllers();
+
+        if (controllers != null) {
+            for (int i = 0; i < controllers.length; i++) {
+                if (controllers[i].getType() == Controller.Type.GAMEPAD) {
+                    this.gamePads.add(controllers[i]);
+                    List<String> inputList = new ArrayList<>();
+                    this.gamePadInputs.put(controllers[i], inputList);
+                    List<String> pressedList = new ArrayList<>();
+                    this.gamePadPressed.put(controllers[i], pressedList);
+                    List<String> releasedList = new ArrayList<>();
+                    this.gamePadReleased.put(controllers[i], releasedList);
+                }
             }
         }
 
-        System.out.println("Active gamepads: "+this.gamePads);
+        System.out.println("Updated gamepads, active ones: "+this.gamePads);
+    }
+
+    // Method that goes around the fact that a give ControllerEnvironment is a singleton and therefor
+    // cannot be re-created, which is necessary when updating the list of gamepads
+    private static ControllerEnvironment createDefaultEnvironment() {
+        try {
+            // Find constructor (class is package private, so we can't access it directly)
+            Constructor<ControllerEnvironment> constructor = (Constructor<ControllerEnvironment>)
+                    Class.forName("net.java.games.input.DefaultControllerEnvironment").getDeclaredConstructors()[0];
+            // Constructor is package private, so we have to deactivate access control checks
+            constructor.setAccessible(true);
+            // Create object with default constructor
+            return constructor.newInstance();
+
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void clearPressed() {
@@ -119,6 +147,7 @@ public class ListenerController {
         this.released.clear();
     }
 
+    // Keyboard-specific input getters
     public List<String> getInput() {
         List<String> inputReturn = new ArrayList<>();
         inputReturn.addAll(this.input);
@@ -141,35 +170,60 @@ public class ListenerController {
         return this.gamePads;
     }
 
+    // Gets raw input info from given gamepad and returns it
     private List<String[]> getGamePadInputRaw(Controller gamePad) {
-        gamePad.poll();
-        EventQueue queue = gamePad.getEventQueue();
-        Event event = new Event();
-
         List<String[]> gamePadInput = new ArrayList<>();
+        boolean poll = gamePad.poll();
 
-        while(queue.getNextEvent(event)) {
-            String[] button = new String[2];
-            Component comp = event.getComponent();
-            button[0] = comp.getName();
-            float value = event.getValue();
-            if(comp.isAnalog()) {
-                button[1] = ""+value;
-            } else {
-                if(value==1.0f) {
-                    button[1] = "On";
+        if (poll) {
+            EventQueue queue = gamePad.getEventQueue();
+            Event event = new Event();
+
+            while (queue.getNextEvent(event)) {
+                String[] button = new String[2];
+                Component comp = event.getComponent();
+                button[0] = comp.getName();
+                float value = event.getValue();
+                if (comp.isAnalog()) {
+                    button[1] = "" + value;
                 } else {
-                    button[1] = "Off";
+                    if (value == 1.0f) {
+                        button[1] = "On";
+                    } else {
+                        button[1] = "Off";
+                    }
                 }
+                gamePadInput.add(button);
             }
-            gamePadInput.add(button);
-//            System.out.println("Button; "+button[0]);
         }
 
         return gamePadInput;
     }
 
+    // Polls every gamepad to check if there still is one there, and removes it from the list, if it's not.
+    // Returns list of removed ones, if ever needed to adjust other lists.
+    private List<Controller> pollAndRemove() {
+        List<Controller> removedControllers = new ArrayList<>();
+        Iterator<Controller> iterator = this.gamePads.iterator();
+        while(iterator.hasNext()) {
+            Controller controller = iterator.next();
+            if (!controller.poll()) {
+                removedControllers.add(controller);
+                this.gamePadInputs.remove(controller);
+                this.gamePadPressed.remove(controller);
+                this.gamePadReleased.remove(controller);
+                iterator.remove();
+            }
+        }
+        return removedControllers;
+    }
+
+    // Must run every iteration so that saved input data is up to date.
+    // Translates raw input data to key String values, which is interpretable by the rest of the game.
     public void updateGamePadInputs() {
+
+        pollAndRemove();
+
         for (Controller gamePad : this.gamePads) {
 
             List<String> input = this.gamePadInputs.get(gamePad);
@@ -201,6 +255,7 @@ public class ListenerController {
                     } else if (button[0].equals("1")) {
                         gamePadOnOffButton(button[1], "BTN_B", input, pressed, released);
                     }
+
                 } else {
                     if (button[0].equals("x")) {
                         x = Double.valueOf(button[1]);
@@ -212,11 +267,15 @@ public class ListenerController {
                 }
             }
 
+            // Since x and y values are in doubles, i.e the left directional stick has a scaled off/on-state,
+            // it has to be manually determined if it points left/right/up/down etc.
+            double borderValue = 0.4;
+
             if (xChanged) {
-                if (x > 0.5) {
+                if (x > borderValue) {
                     onKeyPressed(input, pressed, "LS_RIGHT");
                     onKeyReleased(input, released, "LS_LEFT");
-                } else if (x < -0.5) {
+                } else if (x < -borderValue) {
                     onKeyReleased(input, released, "LS_RIGHT");
                     onKeyPressed(input, pressed, "LS_LEFT");
                 } else {
@@ -226,10 +285,10 @@ public class ListenerController {
             }
 
             if (yChanged) {
-                if (y > 0.5) {
+                if (y > borderValue) {
                     onKeyPressed(input, pressed, "LS_DOWN");
                     onKeyReleased(input, released, "LS_UP");
-                } else if (y < -0.5) {
+                } else if (y < -borderValue) {
                     onKeyReleased(input, released, "LS_DOWN");
                     onKeyPressed(input, pressed, "LS_UP");
                 } else {
@@ -240,15 +299,16 @@ public class ListenerController {
         }
     }
 
+    // All press-down-buttons need to go through this step
     private void gamePadOnOffButton(String onOff, String key, List<String> input, List<String> pressed, List<String> released) {
         if (onOff.equals("On")) {
             onKeyPressed(input, pressed, key);
-//            System.out.println("Pressed: "+pressed);
         } else {
             onKeyReleased(input, released, key);
         }
     }
 
+    // Gamepad-specific input-getters
     public List<String> getGamePadInput(Controller gamePad) {
         List<String> inputReturn = new ArrayList<>();
         inputReturn.addAll(this.gamePadInputs.get(gamePad));
@@ -267,6 +327,36 @@ public class ListenerController {
         return releasedReturn;
     }
 
+    // Gamepad AND keyboard (at the same time) input getters
+    // Should generally allways be these that is used
+    public List<String> getAllInput(Player player) {
+        List<String> allInput = new ArrayList<>();
+        allInput.addAll(getInput());
+        if (player.getGamePad() != null) {
+            allInput.addAll(getGamePadInput(player.getGamePad()));
+        }
+        return allInput;
+    }
+
+    public List<String> getAllPressed(Player player) {
+        List<String> allPressed = new ArrayList<>();
+        allPressed.addAll(getPressed());
+        if (player.getGamePad() != null) {
+            allPressed.addAll(getGamePadPressed(player.getGamePad()));
+        }
+        return allPressed;
+    }
+
+    public List<String> getAllReleased(Player player) {
+        List<String> allReleased = new ArrayList<>();
+        allReleased.addAll(getReleased());
+        if (player.getGamePad() != null) {
+            allReleased.addAll(getGamePadReleased(player.getGamePad()));
+        }
+        return allReleased;
+    }
+
+    // Classic static singleton methods
     public static synchronized ListenerController getInstance() {
         initialize();
         return instance;
@@ -276,32 +366,5 @@ public class ListenerController {
         if (instance == null) {
             instance = new ListenerController();
         }
-    }
-
-    public List<String> getAllInput(Player player) {
-        List<String> allInput = new ArrayList<>();
-        allInput.addAll(ListenerController.getInstance().getInput());
-        if (player.getGamePad() != null) {
-            allInput.addAll(ListenerController.getInstance().getGamePadInput(player.getGamePad()));
-        }
-        return allInput;
-    }
-
-    public List<String> getAllPressed(Player player) {
-        List<String> allPressed = new ArrayList<>();
-        allPressed.addAll(ListenerController.getInstance().getPressed());
-        if (player.getGamePad() != null) {
-            allPressed.addAll(ListenerController.getInstance().getGamePadPressed(player.getGamePad()));
-        }
-        return allPressed;
-    }
-
-    public List<String> getAllReleased(Player player) {
-        List<String> allReleased = new ArrayList<>();
-        allReleased.addAll(ListenerController.getInstance().getReleased());
-        if (player.getGamePad() != null) {
-            allReleased.addAll(ListenerController.getInstance().getGamePadReleased(player.getGamePad()));
-        }
-        return allReleased;
     }
 }
