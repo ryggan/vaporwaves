@@ -224,26 +224,26 @@ public abstract class Movable {
     }
 
     public void moveUp() {
-        setDirection(Direction.UP);
         if (allowMove(0, -1) && getCanvasPositionY() > 0) {
+            setDirection(Direction.UP);
             setVelocity(0, -this.getSpeed());
         }
     }
     public void moveDown() {
-        setDirection(Direction.DOWN);
         if (allowMove(0, 1) && getCanvasPositionY() < Utils.gridToCanvasPositionX(Constants.DEFAULT_GRID_HEIGHT-1)) {
+            setDirection(Direction.DOWN);
             setVelocity(0, this.getSpeed());
         }
     }
     public void moveLeft() {
-        setDirection(Direction.LEFT);
         if (allowMove(-1, 0) && getCanvasPositionX() > 0) {
+            setDirection(Direction.LEFT);
             setVelocity(-this.getSpeed(), 0);
         }
     }
     public void moveRight() {
-        setDirection(Direction.RIGHT);
         if (allowMove(1, 0) && getCanvasPositionX() < Utils.gridToCanvasPositionY(Constants.DEFAULT_GRID_WIDTH-1)) {
+            setDirection(Direction.RIGHT);
             setVelocity(this.getSpeed(), 0);
         }
     }

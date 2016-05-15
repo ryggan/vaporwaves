@@ -74,7 +74,7 @@ public class MenuController {
         localPlayerInput(this.localPlayer);
 
         remotePlayerInput(this.remotePlayer);
-        
+
     }
 
     private void changeSelected(Direction direction, int playerID) {
