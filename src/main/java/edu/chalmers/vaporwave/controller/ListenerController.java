@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -275,5 +276,32 @@ public class ListenerController {
         if (instance == null) {
             instance = new ListenerController();
         }
+    }
+
+    public List<String> getAllInput(Player player) {
+        List<String> allInput = new ArrayList<>();
+        allInput.addAll(ListenerController.getInstance().getInput());
+        if (player.getGamePad() != null) {
+            allInput.addAll(ListenerController.getInstance().getGamePadInput(player.getGamePad()));
+        }
+        return allInput;
+    }
+
+    public List<String> getAllPressed(Player player) {
+        List<String> allPressed = new ArrayList<>();
+        allPressed.addAll(ListenerController.getInstance().getPressed());
+        if (player.getGamePad() != null) {
+            allPressed.addAll(ListenerController.getInstance().getGamePadPressed(player.getGamePad()));
+        }
+        return allPressed;
+    }
+
+    public List<String> getAllReleased(Player player) {
+        List<String> allReleased = new ArrayList<>();
+        allReleased.addAll(ListenerController.getInstance().getReleased());
+        if (player.getGamePad() != null) {
+            allReleased.addAll(ListenerController.getInstance().getGamePadReleased(player.getGamePad()));
+        }
+        return allReleased;
     }
 }

@@ -327,11 +327,7 @@ public class GameController {
     }
 
     private void playerInputAction(Player player) {
-        List<String> allInput = new ArrayList<>();
-        allInput.addAll(ListenerController.getInstance().getInput());
-        if (player.getGamePad() != null) {
-            allInput.addAll(ListenerController.getInstance().getGamePadInput(player.getGamePad()));
-        }
+        List<String> allInput = ListenerController.getInstance().getAllInput(player);
         for (int i = 0; i < allInput.size(); i++) {
             String key = allInput.get(i);
             if (key.equals(player.getDirectionControls()[0]) || key.equals(player.getDirectionControls()[1])
@@ -343,11 +339,7 @@ public class GameController {
             }
         }
 
-        List<String> allPressed = new ArrayList<>();
-        allPressed.addAll(ListenerController.getInstance().getPressed());
-        if (player.getGamePad() != null) {
-            allPressed.addAll(ListenerController.getInstance().getGamePadPressed(player.getGamePad()));
-        }
+        List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
         for (int i = 0; i < allPressed.size(); i++) {
             String key = allPressed.get(i);
             StaticTile tile = arenaModel.getArenaTile(player.getCharacter().getGridPosition());

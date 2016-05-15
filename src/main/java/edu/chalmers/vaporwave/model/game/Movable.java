@@ -106,6 +106,14 @@ public abstract class Movable {
         this.lastMove = null;
     }
 
+    public void updateInvincibleTimer() {
+        if (invincibleTimer > 0) {
+            invincibleTimer--;
+        } else {
+            flinchInvincible = false;
+        }
+    }
+
     private void stopAtTile(int newGridPositionX, int newGridPositionY) {
 
         stop();
@@ -134,7 +142,11 @@ public abstract class Movable {
         boolean closeToPosition = (compareX <= this.getSpeed() / 2) && (compareY <= this.getSpeed() / 2)
                 && (moving || (closestTilePositionX != getPreviousGridPositionX() || closestTilePositionY != getPreviousGridPositionY()));
 
+
+//        boolean movingFlow = ();
+
         if(closeToPosition) {
+            System.out.println("Stopping at "+closestTilePositionX+":"+closestTilePositionY);
             stopAtTile(closestTilePositionX, closestTilePositionY);
         }
     }
@@ -408,14 +420,6 @@ public abstract class Movable {
             }
         }
         return false;
-    }
-
-    public void updateInvincibleTimer() {
-        if (invincibleTimer > 0) {
-            invincibleTimer--;
-        } else {
-            flinchInvincible = false;
-        }
     }
 
 }

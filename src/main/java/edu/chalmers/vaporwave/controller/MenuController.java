@@ -84,11 +84,7 @@ public class MenuController {
     }
 
     private void localPlayerInput(Player player) {
-        List<String> allPressed = new ArrayList<>();
-        allPressed.addAll(ListenerController.getInstance().getPressed());
-        if (player.getGamePad() != null) {
-            allPressed.addAll(ListenerController.getInstance().getGamePadPressed(player.getGamePad()));
-        }
+        List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
         String[] directionControls = player.getDirectionControls();
 
         if (!allPressed.isEmpty()) {
@@ -103,11 +99,7 @@ public class MenuController {
             }
         }
 
-        List<String> allReleased = new ArrayList<>();
-        allReleased.addAll(ListenerController.getInstance().getReleased());
-        if (this.localPlayer.getGamePad() != null) {
-            allReleased.addAll(ListenerController.getInstance().getGamePadReleased(this.localPlayer.getGamePad()));
-        }
+        List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
 
         if (!allReleased.isEmpty()) {
             String key = allReleased.get(0);
@@ -154,11 +146,7 @@ public class MenuController {
     }
 
     private void remotePlayerInput(Player player) {
-        List<String> allPressed = new ArrayList<>();
-        allPressed.addAll(ListenerController.getInstance().getPressed());
-        if (player.getGamePad() != null) {
-            allPressed.addAll(ListenerController.getInstance().getGamePadPressed(player.getGamePad()));
-        }
+        List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
         String[] directionControls = player.getDirectionControls();
 
         if (!allPressed.isEmpty()) {
@@ -176,12 +164,7 @@ public class MenuController {
             }
         }
 
-
-        List<String> allReleased = new ArrayList<>();
-        allReleased.addAll(ListenerController.getInstance().getReleased());
-        if (player.getGamePad() != null) {
-            allReleased.addAll(ListenerController.getInstance().getGamePadReleased(player.getGamePad()));
-        }
+        List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
 
         if (!allReleased.isEmpty()) {
             String key = allReleased.get(0);
