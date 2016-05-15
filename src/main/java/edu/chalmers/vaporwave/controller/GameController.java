@@ -521,7 +521,8 @@ public class GameController {
         if (movable instanceof GameCharacter) {
 
             //TODO
-            movable.spawn(new Point(6, 5));
+//            movable.spawn(new Point(6, 5));
+            movable.spawn(null);
             updateStats();
 
         } else if (movable instanceof Enemy) {

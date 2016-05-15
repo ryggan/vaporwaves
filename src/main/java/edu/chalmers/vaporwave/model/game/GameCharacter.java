@@ -6,6 +6,7 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.event.PlaceMineEvent;
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MovableState;
 import edu.chalmers.vaporwave.util.Utils;
 
@@ -14,6 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameCharacter extends Movable {
+
+    private int startBombRange;
+    private int startMaxBombCount;
+    private double startHealth;
+    private int startDamage;
+    private double startSpeed;
+    private Point startPosition;
 
     private int bombRange;
     private int maxBombCount;
@@ -28,15 +36,36 @@ public class GameCharacter extends Movable {
     }
 
     public GameCharacter(String name, Point spawnPosition, int playerId) {
-        super(name, Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 1.5);
+        super(name, Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0);
 
-        this.bombRange = 2;
-        this.maxBombCount = 10;
-        this.currentBombCount = this.maxBombCount;
-        this.setDamage(30);
+        this.startPosition = (Point)spawnPosition.clone();
+        this.startHealth = Constants.DEFAULT_START_HEALTH;
+        this.startSpeed = 1.5;
+        this.startBombRange = 2;
+        this.startMaxBombCount = 10;
+        this.startDamage = 30;
         this.playerId = playerId;
 
+//        setHealth(this.startHealth);
+//        setSpeed(this.startSpeed);
+//        this.bombRange = this.startBombRange;
+//        this.maxBombCount = this.startMaxBombCount;
+//        this.currentBombCount = this.maxBombCount;
+//        this.setDamage(this.startDamage);
+
+//        resetStats();
+        spawn(null);
+
         this.powerUpPickedUp = new ArrayList<>();
+    }
+
+    private void resetStats() {
+        setHealth(this.startHealth);
+        setSpeed(this.startSpeed);
+        this.bombRange = this.startBombRange;
+        this.maxBombCount = this.startMaxBombCount;
+        this.currentBombCount = this.maxBombCount;
+        this.setDamage(this.startDamage);
     }
 
     public void placeBomb() {
@@ -60,11 +89,6 @@ public class GameCharacter extends Movable {
                     ), getDamage())
             );
         }
-    }
-
-    public void flinch() {
-        super.flinch();
-        Container.playSound(SoundID.CHARACTER_FLINCH);
     }
 
     public void setBombRange(int bombRange) {
@@ -99,6 +123,26 @@ public class GameCharacter extends Movable {
         return powerUpPickedUp;
     }
 
+    public int getPlayerId() {
+        return this.playerId;
+    }
+
+    @Override
+    public void flinch() {
+        super.flinch();
+        Container.playSound(SoundID.CHARACTER_FLINCH);
+    }
+
+    @Override
+    public void spawn(Point spawningPosition) {
+        resetStats();
+        if (spawningPosition == null) {
+            super.spawn(this.startPosition);
+        } else {
+            super.spawn(spawningPosition);
+        }
+    }
+
     @Override
     public boolean equals(Object o){
         if(o instanceof GameCharacter) {
@@ -116,9 +160,5 @@ public class GameCharacter extends Movable {
                 (bombRange * 5) +
                 (currentBombCount * 7) +
                 (maxBombCount * 11);
-    }
-
-    public int getPlayerId() {
-        return this.playerId;
     }
 }
