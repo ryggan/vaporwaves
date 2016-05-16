@@ -14,7 +14,8 @@ public class CharacterSelect extends AbstractMenu {
     public CharacterSelect(NewGameEvent newGameEvent) {
         super(new int[]{0, 3, 0}, newGameEvent, 1);
 
-        selectedCharacters = new int[]{-1, -1, -1, -1};
+        // Set selected characters to -1 for all players
+        selectedCharacters = new int[] {-1, -1, -1, -1};
     }
 
 
@@ -29,8 +30,6 @@ public class CharacterSelect extends AbstractMenu {
 
     @Override
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
-
-
         if (this.getSelectedSuper() == 1 && playerID == 0 && this.selectedCharacters[getSelectedSub()[1]] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[getSelectedSub()[1]] = 0;

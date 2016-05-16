@@ -87,15 +87,13 @@ public class CharacterSelectView extends AbstractMenuView {
             }
         }
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
+        if (superSelected == 1) {
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
+        }
 
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).render(getBackgroundGC(), 0);
-
-//        for (int i = 0; i < selectedCharacter.length; i++) {
-//            System.out.println("selectedCharacter["+i+"] = " + selectedCharacter[i]);
-//        }
 
         for (int i = 0; i < selectedCharacter.length; i++) {
             if (selectedCharacter[i] >= 0) {

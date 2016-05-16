@@ -82,6 +82,11 @@ public class GameController {
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
+        this.localPlayer.getCharacter().setSpawnPosition(new Point(0,0));
+        this.remotePlayer.getCharacter().setSpawnPosition(new Point(20,0));
+        this.localPlayer.getCharacter().spawn(new Point(0,0));
+        this.remotePlayer.getCharacter().spawn(new Point(20,0));
+
         // Starting new game
         this.arenaModel = newGame(arenaMap);
         this.arenaView = new ArenaView(root);
@@ -161,6 +166,7 @@ public class GameController {
             } else {
 
                 // todo: Change this to some other kind of event
+                // gameover
 //                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
             }
             TimerModel.getInstance().updateTimer(this.timeLimit);

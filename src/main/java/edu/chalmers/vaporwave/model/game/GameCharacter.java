@@ -30,14 +30,10 @@ public class GameCharacter extends Movable {
 
     private List<Double> powerUpPickedUp;
 
+
     public GameCharacter(String name, int playerId) {
-        this(name, new Point(0,0), playerId);
-    }
+        super(name, 0, 0, 0);
 
-    public GameCharacter(String name, Point spawnPosition, int playerId) {
-        super(name, Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0);
-
-        this.startPosition = (Point)spawnPosition.clone();
 
         CharacterID characterID = CharacterID.valueOf(name);
         this.startHealth = Container.getCharacterHealth(characterID);
@@ -50,9 +46,16 @@ public class GameCharacter extends Movable {
 
         this.playerId = playerId;
 
-        spawn(null);
+//        spawn(null);
 
         this.powerUpPickedUp = new ArrayList<>();
+    }
+
+    public void setSpawnPosition(Point spawnPosition) {
+        setCanvasPosition(Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y));
+
+        // Set startPosition, do a clone of spawn position to avoid exploiting internal representation of Point
+        this.startPosition = (Point)spawnPosition.clone();
     }
 
     private void resetStats() {
