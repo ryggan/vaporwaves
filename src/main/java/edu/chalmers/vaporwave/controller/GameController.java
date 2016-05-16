@@ -82,10 +82,13 @@ public class GameController {
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
-        this.localPlayer.getCharacter().setSpawnPosition(new Point(0,0));
-        this.remotePlayer.getCharacter().setSpawnPosition(new Point(20,0));
-        this.localPlayer.getCharacter().spawn(new Point(0,0));
-        this.remotePlayer.getCharacter().spawn(new Point(20,0));
+        System.out.println(arenaMap);
+
+        this.localPlayer.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(MapObject.PLAYER1));
+        this.remotePlayer.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(MapObject.PLAYER2));
+        this.localPlayer.getCharacter().spawn(new Point(arenaMap.getSpawnPosition(MapObject.PLAYER1)));
+        this.remotePlayer.getCharacter().spawn(arenaMap.getSpawnPosition(MapObject.PLAYER2));
+
 
         // Starting new game
         this.arenaModel = newGame(arenaMap);
