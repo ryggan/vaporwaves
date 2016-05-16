@@ -1,8 +1,10 @@
 package edu.chalmers.vaporwave.controller;
 
+import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.GamePadDisconnectedEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
@@ -28,6 +30,8 @@ public class MenuController {
     private List<Player> players;
 
     public MenuController(Group root) {
+
+        GameEventBus.getInstance().register(this);
 
         this.newGameEvent = new NewGameEvent();
         this.players = new ArrayList<>();
@@ -211,6 +215,17 @@ public class MenuController {
     private boolean isNewGameEventReady() {
         return this.newGameEvent.getLocalPlayer().getCharacter() != null &&
                 this.newGameEvent.getRemotePlayer().getCharacter() != null;
+    }
+
+    @Subscribe
+    public void gamePadDisconnected(GamePadDisconnectedEvent disconnectedEvent) {
+        Controller gamePad = disconnectedEvent.getGamePad();
+        for (Player player : this.players) {
+            if (player.getGamePad() == gamePad) {
+                System.out.println("GamePad '"+gamePad.getName()+"' removed from player "+player.getName());
+                player.setGamePad(null);
+            }
+        }
     }
 
 }
