@@ -1,10 +1,8 @@
 package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.model.menu.MenuButtonState;
-import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.awt.*;
 
@@ -13,32 +11,38 @@ public class MenuButtonView {
     private Image spriteSheet;
     private int width;
     private int height;
-    private int firstFrameX;
-    private Point position;
+    private Point gridPositionInSheet;
+    private Point positionOnCanvas;
 
-    public MenuButtonView(Image spriteSheet, int width, int height, int firstFrameX, Point position) {
+    public MenuButtonView(Image spriteSheet, int width, int height, Point gridPositionInSheet) {
+        this(spriteSheet, width, height, gridPositionInSheet, new Point(0, 0));
+    }
+
+    public MenuButtonView(Image spriteSheet, int width, int height, Point gridPositionInSheet, Point positionOnCanvas) {
         this.spriteSheet = spriteSheet;
         this.width = width;
         this.height = height;
-        this.firstFrameX = firstFrameX;
-        this.position = position;
+        this.gridPositionInSheet = gridPositionInSheet;
+        this.positionOnCanvas = positionOnCanvas;
     }
 
     public void render(GraphicsContext menuGC, MenuButtonState menuButtonState) {
-        int firstFrameY = 0;
+        int frameY = 0;
         switch (menuButtonState) {
-            case UNSELECTED:
-                firstFrameY = 0;
-                break;
             case SELECTED:
-                firstFrameY = 1;
+                frameY = 1;
                 break;
             case PRESSED:
-                firstFrameY = 2;
+                frameY = 2;
                 break;
         }
 
-        menuGC.drawImage(spriteSheet, firstFrameX * width, firstFrameY * height, width, height, position.x, position.y, width, height);
+        menuGC.drawImage(spriteSheet, gridPositionInSheet.x * width, (3 * gridPositionInSheet.y + frameY) * height,
+                width, height, positionOnCanvas.x, positionOnCanvas.y, width, height);
+    }
+
+    public void setPositionOnCanvas(Point positionOnCanvas) {
+        this.positionOnCanvas = positionOnCanvas;
     }
 
 }

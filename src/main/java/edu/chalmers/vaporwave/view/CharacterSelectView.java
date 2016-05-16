@@ -58,9 +58,9 @@ public class CharacterSelectView extends AbstractMenuView {
         this.characterSelectorPositionList.add(characterSelectorPositions2);
 
         menuButtonViewList = new ArrayList<>();
-        menuButtonViewList.add(new MenuButtonView(new Image("images/menu/spritesheet_menu_draft.png"), 365, 67, 2, new Point(40, 20)));
+        menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(40, 20)));
         menuButtonViewList.add(null);
-        menuButtonViewList.add(new MenuButtonView(new Image("images/menu/spritesheet_menu_draft.png"), 365, 67, 3, new Point(740, 580)));
+        menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME, new Point(740, 580)));
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setScale(1);
@@ -73,18 +73,14 @@ public class CharacterSelectView extends AbstractMenuView {
     }
 
     @Override
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player) {
+    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
         for (int i = 0; i < menuButtonViewList.size(); i++) {
             if (menuButtonViewList.get(i) != null) {
-                if (superSelected == i) {
-                    menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.SELECTED);
-                } else {
-                    menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.UNSELECTED);
-                }
+                updateButton(menuButtonViewList.get(i), superSelected == i, pressedDown);
             }
         }
 

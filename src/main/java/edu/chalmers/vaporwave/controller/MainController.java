@@ -43,9 +43,6 @@ public class MainController {
 
         initLoader(root);
 
-//        initApplication();
-//        initTimer();
-
     }
 
     // Creates loader and it's view, and then set's up the loading loop
@@ -90,8 +87,6 @@ public class MainController {
 
         GameEventBus.getInstance().register(this);
 
-        //GameServer gameServer = new GameServer();
-
         this.inGame = false;
 
         if (inGame) {
@@ -105,8 +100,6 @@ public class MainController {
 
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
-
-//        jinputTest();
 
         ListenerController.getInstance().clearPressed();
         ListenerController.getInstance().clearReleased();
@@ -137,10 +130,6 @@ public class MainController {
                 } else {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 }
-
-//                if (ListenerController.getInstance().getInput().contains("U")) {
-//                    ListenerController.getInstance().updateGamePads();
-//                }
 
                 ListenerController.getInstance().updateGamePadInputs();
                 ListenerController.getInstance().clearPressed();

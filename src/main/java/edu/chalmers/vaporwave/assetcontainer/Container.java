@@ -2,8 +2,10 @@ package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.SoundPlayer;
+import edu.chalmers.vaporwave.view.MenuButtonView;
 import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.io.File;
 
 /**
@@ -16,6 +18,7 @@ public class Container {
     private static SoundContainer soundContainer;
     private static CharacterContainer characterContainer;
     private static SpriteContainer spriteContainer;
+    private static MenuButtonContainer menuButtonContainer;
 
     public static void initialize() {
         double time = System.currentTimeMillis();
@@ -33,6 +36,9 @@ public class Container {
         time = System.currentTimeMillis();
         spriteContainer = new SpriteContainer();
         System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
+        time = System.currentTimeMillis();
+        menuButtonContainer = new MenuButtonContainer();
+        System.out.println("Menu buttons done, timed: "+(System.currentTimeMillis() - time)+" millis");
     }
 
     public static Image getImage(ImageID imageID) {
@@ -79,13 +85,21 @@ public class Container {
         return spriteContainer.getSprite(spriteID);
     }
 
+    public static MenuButtonView getButton(MenuButtonID menuButtonID) {
+        return menuButtonContainer.getButton(menuButtonID);
+    }
+
+    public static MenuButtonView getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
+        return menuButtonContainer.getButton(menuButtonID, positionOnCanvas);
+    }
+
     public static double getTasksDone() {
         return FileContainer.getTasksDone() + ImageContainer.getTasksDone() + SoundContainer.getTasksDone()
-                + CharacterContainer.getTasksDone() + SpriteContainer.getTasksDone();
+                + CharacterContainer.getTasksDone() + SpriteContainer.getTasksDone() + MenuButtonContainer.getTasksDone();
     }
 
     public static double getTotalTasks() {
         return FileContainer.getTotalTasks() + ImageContainer.getTotalTasks() + SoundContainer.getTotalTasks()
-                + CharacterContainer.getTotalTasks() + SpriteContainer.getTotalTasks();
+                + CharacterContainer.getTotalTasks() + SpriteContainer.getTotalTasks() + MenuButtonContainer.getTotalTasks();
     }
 }

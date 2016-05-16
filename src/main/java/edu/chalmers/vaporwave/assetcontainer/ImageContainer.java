@@ -10,7 +10,7 @@ class ImageContainer {
     private Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 1 + 2 + 3 + 5 + 6 + 13 + 3;
+    private static final double totalTasks = 2 + 3 + 5 + 6 + 13 + 3;
     
     ImageContainer() {
 
@@ -20,12 +20,10 @@ class ImageContainer {
 
         // >>> MENU STUFF: <<<
 
-        // Backgrounds (1):
+        // Backgrounds (2):
         addImage(ImageID.MENU_BACKGROUND_1, new Image("images/menu/menu-background-2.bmp"));
 
-        // Start menu (2):
-        addImage(ImageID.BUTTON_SINGLEPLAYER, new Image("images/menu/spritesheet_singleplayer.png"));
-        addImage(ImageID.BUTTON_EXIT, new Image("images/menu/spritesheet_exit.png"));
+        addImage(ImageID.MENU_BUTTON_SPRITESHEET, new Image("images/menu/spritesheet_menubuttons-308x198.png"));
 
         // Character select (3):
         addImage(ImageID.MENU_CHARACTER, new Image("images/menu/spritesheet-character-select-442x378.png"));
