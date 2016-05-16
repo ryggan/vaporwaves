@@ -452,7 +452,7 @@ public class ArenaView {
                 while (iterator.hasNext()) {
                     double timeStamp = iterator.next().getSecond();
                     if (timeSinceStart - timeStamp > ((AnimatedSprite)characterSparkleSprite).getTotalTime()) {
-                        iterator.remove();
+//                        iterator.remove();
                     } else {
                         characterSparkleSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
                                 movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);

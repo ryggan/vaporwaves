@@ -44,13 +44,14 @@ public class GameController {
     private double timeSinceStartOffset;
     private double pausedTime;
 
-    private boolean gameIsPaused = false;
+    private boolean gameIsPaused;
 
     //seconds
     private double timeLimit;
 
     // settings for one specific game:
     private boolean destroyablePowerUps;
+    private boolean respawnPowerups;
 
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
@@ -69,13 +70,16 @@ public class GameController {
         this.localPlayer = newGameEvent.getLocalPlayer();
         this.remotePlayer = newGameEvent.getRemotePlayer();
 
+        // todo: Should come from newGameEvent instead:
         this.destroyablePowerUps = true;
+        this.respawnPowerups = true;
 
         // Initiates view
 
         timeSinceStart = 0.0;
         timeSinceStartOffset = 0.0;
         pausedTime = 0.0;
+        gameIsPaused = false;
 
         timeLimit = 10;
 
@@ -524,10 +528,36 @@ public class GameController {
         }
     }
 
+    public void respawnPowerups(List<PowerUpType> powerups) {
+        for (PowerUpType powerUpType : powerups) {
+
+            StatPowerUp powerUp = new StatPowerUp(powerUpType);
+            powerUp.setTimeStamp(this.timeSinceStart);
+
+            Random generator = new Random();
+            int gridPositionX, gridPositionY;
+            do {
+                gridPositionX = generator.nextInt(Constants.DEFAULT_GRID_WIDTH);
+                gridPositionY = generator.nextInt(Constants.DEFAULT_GRID_HEIGHT);
+            } while (this.arenaModel.getArenaTile(new Point(gridPositionX, gridPositionY)) != null);
+
+            this.arenaModel.setTile(powerUp, gridPositionX, gridPositionY);
+        }
+    }
+
     @Subscribe
     public void movableDeath(DeathEvent deathEvent) {
         Movable movable = deathEvent.getMovable();
         if (movable instanceof GameCharacter) {
+
+            // Respawning powerups:
+            if (this.respawnPowerups) {
+                List<PowerUpType> powerups = new ArrayList<>();
+                for (Pair<PowerUpType, Double> pair : ((GameCharacter) movable).getPowerUpPickedUp()) {
+                    powerups.add(pair.getFirst());
+                }
+                respawnPowerups(powerups);
+            }
 
             // null => gameCharacter uses it's inherent startPosition
             movable.spawn(null);

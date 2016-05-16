@@ -44,7 +44,7 @@ public class GameCharacter extends Movable {
 
 //        spawn(null);
 
-        this.powerUpPickedUp = new ArrayList<>();
+//        this.powerUpPickedUp = new ArrayList<>();
     }
 
     public void setSpawnPosition(Point spawnPosition) {
@@ -61,6 +61,8 @@ public class GameCharacter extends Movable {
         this.maxBombCount = this.startMaxBombCount;
         this.currentBombCount = this.maxBombCount;
         this.setDamage(this.startDamage);
+
+        this.powerUpPickedUp = new ArrayList<>();
     }
 
     public void placeBomb() {
