@@ -24,16 +24,10 @@ public class ResultsMenuView extends AbstractMenuView {
     }
 
     @Override
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player) {
+    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
-
         for (int i = 0; i < menuButtonViewList.size(); i++) {
-
-            if (superSelected == i) {
-                menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.SELECTED);
-            } else {
-                menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.UNSELECTED);
-            }
+            updateButton(menuButtonViewList.get(i), superSelected == i, pressedDown);
         }
         setActive();
 
