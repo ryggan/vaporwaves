@@ -6,9 +6,7 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.PlaceBombEvent;
 import edu.chalmers.vaporwave.event.PlaceMineEvent;
-import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.MovableState;
-import edu.chalmers.vaporwave.util.Utils;
+import edu.chalmers.vaporwave.util.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -28,7 +26,7 @@ public class GameCharacter extends Movable {
     private int currentBombCount;
     private int playerId;
 
-    private List<Double> powerUpPickedUp;
+    private List<Pair<PowerUpType, Double>> powerUpPickedUp;
 
 
     public GameCharacter(String name, int playerId) {
@@ -42,13 +40,11 @@ public class GameCharacter extends Movable {
         this.startMaxBombCount = Container.getCharacterBombCount(characterID);
         this.startDamage = Container.getCharacterDamage(characterID);
 
-        System.out.println("GameCharacter "+name+", bomb count: "+this.startMaxBombCount);
-
         this.playerId = playerId;
 
 //        spawn(null);
 
-        this.powerUpPickedUp = new ArrayList<>();
+//        this.powerUpPickedUp = new ArrayList<>();
     }
 
     public void setSpawnPosition(Point spawnPosition) {
@@ -65,6 +61,8 @@ public class GameCharacter extends Movable {
         this.maxBombCount = this.startMaxBombCount;
         this.currentBombCount = this.maxBombCount;
         this.setDamage(this.startDamage);
+
+        this.powerUpPickedUp = new ArrayList<>();
     }
 
     public void placeBomb() {
@@ -114,11 +112,11 @@ public class GameCharacter extends Movable {
         return this.maxBombCount;
     }
 
-    public void pickedUpPowerUp(double timeStamp) {
-        powerUpPickedUp.add(timeStamp);
+    public void pickedUpPowerUp(PowerUpType powerUpType, double timeStamp) {
+        this.powerUpPickedUp.add(new Pair<>(powerUpType, timeStamp));
     }
 
-    public List<Double> getPowerUpPickedUp() {
+    public List<Pair<PowerUpType, Double>> getPowerUpPickedUp() {
         return powerUpPickedUp;
     }
 
