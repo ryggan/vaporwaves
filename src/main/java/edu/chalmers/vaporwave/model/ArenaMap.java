@@ -27,4 +27,15 @@ public class ArenaMap {
     public Dimension getMapSize() {
         return this.mapSize;
     }
+
+    public String toString() {
+        String mapAsString = "";
+        for (int i = 0; i < this.mapObjects.length; i++) {
+            for (int j = 0; j < this.mapObjects[0].length; j++) {
+                mapAsString += mapObjects[i][j].toString().substring(0,1) + "  ";
+            }
+            mapAsString += "\n";
+        }
+        return mapAsString;
+    }
 }
