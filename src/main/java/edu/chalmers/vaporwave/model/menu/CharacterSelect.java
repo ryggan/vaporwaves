@@ -39,7 +39,7 @@ public class CharacterSelect extends AbstractMenu {
         } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, 4)] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), 1, 4)] = playerID;
-            newGameEvent.getRemotePlayer().setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, 4)], 0));
+            newGameEvent.getPlayers().get(playerID).setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, 4)], 0));
         }
     }
 

@@ -56,7 +56,7 @@ public class GameController {
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
     }
-
+    
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
         Container.playSound(SoundID.GAME_MUSIC);
@@ -68,7 +68,7 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.SPEED);
 
         this.localPlayer = newGameEvent.getLocalPlayer();
-        this.remotePlayer = newGameEvent.getRemotePlayer();
+        this.remotePlayer = newGameEvent.getPlayers().get(0);
 
         // todo: Should come from newGameEvent instead:
         this.destroyablePowerUps = true;

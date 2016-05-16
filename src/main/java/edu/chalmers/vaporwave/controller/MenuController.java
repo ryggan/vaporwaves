@@ -27,27 +27,25 @@ public class MenuController {
 
     private Player localPlayer;
     private Player remotePlayer;
-    private List<Player> players;
 
     public MenuController(Group root) {
 
         GameEventBus.getInstance().register(this);
 
         this.newGameEvent = new NewGameEvent();
-        this.players = new ArrayList<>();
 
         this.localPlayer = new Player(0, "PlayerOne");
         this.newGameEvent.setLocalPlayer(this.localPlayer);
         this.localPlayer.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
         this.localPlayer.setBombControl("SPACE");
         this.localPlayer.setMineControl("M");
-        this.players.add(this.localPlayer);
+        this.newGameEvent.addPlayer(this.localPlayer);
 
         this.remotePlayer = new Player(1, "PlayerTwo");
         remotePlayer.setDirectionControls(new String[] {"A", "W", "D", "S"});
         remotePlayer.setBombControl("SHIFT");
         remotePlayer.setMineControl("CAPS");
-        newGameEvent.setRemotePlayer(this.remotePlayer);
+        this.newGameEvent.addPlayer(remotePlayer);
 
 //        remotePlayer = new Player(3, "PlayerThree");
 //        this.remotePlayer.setDirectionControls(new String[] {"F", "T", "H", "G"});
@@ -55,7 +53,7 @@ public class MenuController {
 //        this.remotePlayer.setMineControl("Y");
 //        this.newGameEvent.setRemotePlayer(this.remotePlayer);
 
-        updatePlayerGamePads(this.players);
+        updatePlayerGamePads(newGameEvent.getPlayers());
 
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
@@ -91,7 +89,10 @@ public class MenuController {
 
         localPlayerInput(this.localPlayer);
 
-        remotePlayerInput(this.remotePlayer);
+
+        for (Player player : newGameEvent.getPlayers()) {
+            remotePlayerInput(player);
+        }
 
     }
 
@@ -195,7 +196,7 @@ public class MenuController {
                     );
                 }
 
-                updateViews(remotePlayer);
+                updateViews(player);
             }
         }
     }
@@ -212,20 +213,20 @@ public class MenuController {
 
     public void setActiveMenu(MenuState activeMenu){
         if (activeMenu == MenuState.START_MENU) {
-            updatePlayerGamePads(this.players);
+            updatePlayerGamePads(this.newGameEvent.getPlayers());
         }
         this.activeMenu = activeMenu;
     }
 
     private boolean isNewGameEventReady() {
         return this.newGameEvent.getLocalPlayer().getCharacter() != null &&
-                this.newGameEvent.getRemotePlayer().getCharacter() != null;
+                this.newGameEvent.getPlayers().get(0).getCharacter() != null;
     }
 
     @Subscribe
     public void gamePadDisconnected(GamePadDisconnectedEvent disconnectedEvent) {
         Controller gamePad = disconnectedEvent.getGamePad();
-        for (Player player : this.players) {
+        for (Player player : this.newGameEvent.getPlayers()) {
             if (player.getGamePad() == gamePad) {
                 System.out.println("GamePad '"+gamePad.getName()+"' removed from player "+player.getName());
                 player.setGamePad(null);

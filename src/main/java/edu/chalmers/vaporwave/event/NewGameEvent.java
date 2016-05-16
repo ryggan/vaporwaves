@@ -4,20 +4,22 @@ import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.PowerUpType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class NewGameEvent {
     private ArenaMap arenaMap;
     private Player localPlayer;
     private Player remotePlayer;
+    private List<Player> players;
     private Set<PowerUpType> enabledPowerUps;
     private int timeLimit;
 
     public NewGameEvent() {
         this.enabledPowerUps = new HashSet<>();
-
-
+        this.players = new ArrayList<>();
     }
 
     public void setArenaMap(ArenaMap arenaMap) {
@@ -54,6 +56,13 @@ public class NewGameEvent {
         return this.remotePlayer;
     }
 
+    public void addPlayer(Player player) {
+        this.players.add(player);
+    }
+
+    public List<Player> getPlayers() {
+        return this.players;
+    }
 
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
