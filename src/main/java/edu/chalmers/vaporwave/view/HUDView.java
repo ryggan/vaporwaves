@@ -90,11 +90,11 @@ public class HUDView {
 
     public void updateHealthBar(int health) {
 
-        if((int) (health *3 )==0){
+        if (health * 3 == 0) {
             setZeroHealthBar();
 
         } else {
-            newImage = new WritableImage(reader, 0, 0, (int) (health * 3), 17);
+            newImage = new WritableImage(reader, 0, 0, health * 3, 17);
             ImageView healthBarFilledNew = new ImageView(newImage);
             healthBarFilledNew.setLayoutX(184);
             healthBarFilledNew.setLayoutY(38);
