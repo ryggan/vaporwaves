@@ -1,7 +1,7 @@
 
 package edu.chalmers.vaporwave;
 
-import com.esotericsoftware.kryonet.Server;
+
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.Constants;
