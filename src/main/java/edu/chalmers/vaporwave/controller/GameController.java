@@ -224,23 +224,24 @@ public class GameController {
                 movable.updatePosition();
 
                 // If moving and not invincible, check for things that will deal damage
-                if (!movable.isInvincible()
-                        && (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK)) {
+                if (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK) {
 
                     // The enemy-check for characters only:
                     if (movable instanceof GameCharacter) {
 
                         GameCharacter gameCharacter = (GameCharacter) movable;
 
-                        for (Movable otherMovable : arenaModel.getArenaMovables()) {
-                            if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
-                                    && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
-                                movable.dealDamage(otherMovable.getDamage());
-                                updateStats();
-                                if(movable.getHealth() <= 0) {
-                                    playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                        if (!movable.isInvincible()) {
+                            for (Movable otherMovable : arenaModel.getArenaMovables()) {
+                                if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
+                                        && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
+                                    movable.dealDamage(otherMovable.getDamage());
+                                    updateStats();
+                                    if (movable.getHealth() <= 0) {
+                                        playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
 
@@ -260,26 +261,28 @@ public class GameController {
                     }
 
                     // The blast-check:
-                    StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
-                    Blast blast = null;
-                    if (currentTile instanceof Blast) {
-                        blast = (Blast) currentTile;
-                    } else if (currentTile instanceof DoubleTile) {
-                        blast = ((DoubleTile) currentTile).getBlast();
-                    }
+                    if (!movable.isInvincible()) {
+                        StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
+                        Blast blast = null;
+                        if (currentTile instanceof Blast) {
+                            blast = (Blast) currentTile;
+                        } else if (currentTile instanceof DoubleTile) {
+                            blast = ((DoubleTile) currentTile).getBlast();
+                        }
 
-                    // If blast was found, and the blast still is dangerous, deal damage
-                    if (blast != null && blast.isDangerous(this.timeSinceStart)) {
-                        movable.dealDamage(blast.getDamage());
-                        updateStats();
-                        if(movable.getHealth() <= 0) {
-                            if(movable instanceof GameCharacter) {
-                                if(blast.getPlayerId() != ((GameCharacter) movable).getPlayerId()) {
-                                    playerList.get(blast.getPlayerId()).incrementKills();
+                        // If blast was found, and the blast still is dangerous, deal damage
+                        if (blast != null && blast.isDangerous(this.timeSinceStart)) {
+                            movable.dealDamage(blast.getDamage());
+                            updateStats();
+                            if (movable.getHealth() <= 0) {
+                                if (movable instanceof GameCharacter) {
+                                    if (blast.getPlayerId() != ((GameCharacter) movable).getPlayerId()) {
+                                        playerList.get(blast.getPlayerId()).incrementKills();
+                                    }
+                                    playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                                } else if (movable instanceof Enemy) {
+                                    playerList.get(blast.getPlayerId()).incrementCreeps();
                                 }
-                                playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
-                            } else if(movable instanceof Enemy) {
-                                playerList.get(blast.getPlayerId()).incrementCreeps();
                             }
                         }
                     }
