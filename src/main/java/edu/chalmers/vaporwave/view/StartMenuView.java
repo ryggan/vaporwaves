@@ -5,6 +5,7 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.assetcontainer.MenuButtonID;
 import edu.chalmers.vaporwave.model.menu.MenuButtonState;
 import javafx.scene.Group;
 
@@ -20,8 +21,8 @@ public class StartMenuView extends AbstractMenuView {
         super(root);
 
         menuButtonViewList = new ArrayList<>();
-        menuButtonViewList.add(new MenuButtonView(Container.getImage(ImageID.BUTTON_SINGLEPLAYER), 308, 66, 0, new Point(640, 200)));
-        menuButtonViewList.add(new MenuButtonView(Container.getImage(ImageID.BUTTON_EXIT), 308, 66, 0, new Point(640, 280)));
+        menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_NEW_GAME, new Point(640, 200)));
+        menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_EXIT_GAME, new Point(640, 280)));
 
     }
 
