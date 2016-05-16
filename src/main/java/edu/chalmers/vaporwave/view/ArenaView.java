@@ -447,10 +447,10 @@ public class ArenaView {
 
             // This last thing puts sparkles around character for every recently picked up powerup
             if (movable instanceof GameCharacter) {
-                List<Double> list = ((GameCharacter) movable).getPowerUpPickedUp();
-                ListIterator<Double> iterator = list.listIterator();
+                List<Pair<PowerUpType, Double>> list = ((GameCharacter) movable).getPowerUpPickedUp();
+                ListIterator<Pair<PowerUpType, Double>> iterator = list.listIterator();
                 while (iterator.hasNext()) {
-                    double timeStamp = iterator.next();
+                    double timeStamp = iterator.next().getSecond();
                     if (timeSinceStart - timeStamp > ((AnimatedSprite)characterSparkleSprite).getTotalTime()) {
                         iterator.remove();
                     } else {

@@ -258,7 +258,7 @@ public class GameController {
                             // If so, pick it up
                             if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
                                 powerUp.pickUp(this.timeSinceStart);
-                                gameCharacter.pickedUpPowerUp(this.timeSinceStart);
+//                                gameCharacter.pickedUpPowerUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
                                 updateStats();
                                 playerList.get(((GameCharacter) movable).getPlayerId()).incrementPowerUpScore();
@@ -501,7 +501,7 @@ public class GameController {
      * @param powerUpType
      */
     public void playerWalksOnPowerUp(PowerUpType powerUpType, GameCharacter gameCharacter) {
-
+        gameCharacter.pickedUpPowerUp(powerUpType, this.timeSinceStart);
 
         switch (powerUpType) {
             case HEALTH:
