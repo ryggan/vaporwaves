@@ -29,4 +29,6 @@ public class Constants {
     public static final double DEFAULT_START_HEALTH = 50.0;
 
     public static final int FRAMES_HELD_KEYS_UPDATE = 40;
+
+    public static final int MAX_NUMBER_OF_PLAYERS = 4;
 }
