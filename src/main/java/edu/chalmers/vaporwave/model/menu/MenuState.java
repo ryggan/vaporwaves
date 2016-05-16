@@ -4,6 +4,7 @@ public enum MenuState {
     LOADING,
     START_MENU,
     OPTIONS,
+    ROOSTER,
     CHARACTER_SELECT,
     MAP_SELECT,
     GAME_CONFIG,

@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public abstract class AbstractMenu {
         this.remoteSelected = new int[4];
     }
 
-    public void changeSelected(Direction direction, int playerID) {
+    public void changeSelected(Direction direction, Player player) {
         switch (direction) {
             case UP:
                 menuMoveUp();
@@ -35,10 +36,10 @@ public abstract class AbstractMenu {
                 menuMoveDown();
                 break;
             case LEFT:
-                menuMoveLeft(playerID);
+                menuMoveLeft(player.getPlayerId());
                 break;
             case RIGHT:
-                menuMoveRight(playerID);
+                menuMoveRight(player.getPlayerId());
                 break;
             default:
         }
@@ -73,7 +74,7 @@ public abstract class AbstractMenu {
             }
         } else {
             remoteSelected[playerID] += 1;
-            System.out.println("Remote selected: "+remoteSelected[playerID]);
+            System.out.println("Remote selected: " + remoteSelected[playerID]);
         }
     }
 

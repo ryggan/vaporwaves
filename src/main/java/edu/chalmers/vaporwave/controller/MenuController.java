@@ -36,19 +36,24 @@ public class MenuController {
         this.newGameEvent = new NewGameEvent();
         this.players = new ArrayList<>();
 
-        this.localPlayer = new Player(1, "PlayerOne");
+        this.localPlayer = new Player(0, "PlayerOne");
         this.newGameEvent.setLocalPlayer(this.localPlayer);
         this.localPlayer.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
         this.localPlayer.setBombControl("SPACE");
         this.localPlayer.setMineControl("M");
         this.players.add(this.localPlayer);
 
-        this.remotePlayer = new Player(2, "PlayerTwo");
-        this.newGameEvent.setRemotePlayer(this.remotePlayer);
-        this.remotePlayer.setDirectionControls(new String[] {"A", "W", "D", "S"});
-        this.remotePlayer.setBombControl("SHIFT");
-        this.remotePlayer.setMineControl("CAPS");
-        this.players.add(this.remotePlayer);
+        this.remotePlayer = new Player(1, "PlayerTwo");
+        remotePlayer.setDirectionControls(new String[] {"A", "W", "D", "S"});
+        remotePlayer.setBombControl("SHIFT");
+        remotePlayer.setMineControl("CAPS");
+        newGameEvent.setRemotePlayer(this.remotePlayer);
+
+//        remotePlayer = new Player(3, "PlayerThree");
+//        this.remotePlayer.setDirectionControls(new String[] {"F", "T", "H", "G"});
+//        this.remotePlayer.setBombControl("R");
+//        this.remotePlayer.setMineControl("Y");
+//        this.newGameEvent.setRemotePlayer(this.remotePlayer);
 
         updatePlayerGamePads(this.players);
 
@@ -67,7 +72,7 @@ public class MenuController {
                 this.menuMap.get(activeMenu).getSelectedSuper(),
                 this.menuMap.get(activeMenu).getSelectedSub(),
                 null,
-                -1
+                localPlayer
         );
     }
 
@@ -90,9 +95,9 @@ public class MenuController {
 
     }
 
-    private void changeSelected(Direction direction, int playerID) {
-        menuMap.get(activeMenu).changeSelected(direction, playerID);
-        updateViews(playerID);
+    private void changeSelected(Direction direction, Player player) {
+        menuMap.get(activeMenu).changeSelected(direction, player);
+        updateViews(player);
     }
 
     private void localPlayerInput(Player player) {
@@ -105,7 +110,7 @@ public class MenuController {
                 if (key.equals(directionControls[i])
                         || key.equals("LS_UP") || key.equals("LS_LEFT")|| key.equals("LS_DOWN")|| key.equals("LS_RIGHT")
                         || key.equals("DPAD_UP") || key.equals("DPAD_LEFT")|| key.equals("DPAD_DOWN")|| key.equals("DPAD_RIGHT")) {
-                    changeSelected(Utils.getDirectionFromString(key), 0);
+                    changeSelected(Utils.getDirectionFromString(key), player);
                     break;
                 }
             }
@@ -123,7 +128,7 @@ public class MenuController {
                     switch (menuMap.get(activeMenu).getMenuAction()) {
                         case EXIT_PROGRAM:
                             GameEventBus.getInstance().post(new ExitGameEvent());
-                            updateViews(0);
+                            updateViews(localPlayer);
                             break;
                         case START_GAME:
                             if (isNewGameEventReady()) {
@@ -143,11 +148,11 @@ public class MenuController {
                                 );
                             }
 
-                            updateViews(0);
+                            updateViews(localPlayer);
                             break;
                         default:
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
-                            updateViews(0);
+                            updateViews(localPlayer);
                             break;
                     }
 
@@ -170,7 +175,7 @@ public class MenuController {
                         || Utils.getDirectionFromString(directionControls[i]) == Direction.RIGHT))
                         || key.equals("LS_LEFT") || key.equals("LS_RIGHT") || key.equals("DPAD_LEFT") || key.equals("DPAD_RIGHT")) {
 
-                    changeSelected(Utils.getDirectionFromString(key), player.getPlayerId() - 1);
+                    changeSelected(Utils.getDirectionFromString(key), player);
                     break;
                 }
             }
@@ -190,17 +195,17 @@ public class MenuController {
                     );
                 }
 
-                updateViews(1);
+                updateViews(remotePlayer);
             }
         }
     }
 
-    public void updateViews(int playerID) {
+    public void updateViews(Player player) {
         this.menuViewMap.get(activeMenu).updateView(
                 this.menuMap.get(activeMenu).getSelectedSuper(),
                 this.menuMap.get(activeMenu).getSelectedSub(),
                 this.menuMap.get(activeMenu).getRemoteSelected(),
-                playerID
+                player
         );
     }
 
@@ -227,5 +232,4 @@ public class MenuController {
             }
         }
     }
-
 }

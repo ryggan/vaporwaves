@@ -3,6 +3,8 @@ package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
+import edu.chalmers.vaporwave.controller.ListenerController;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.MenuButtonState;
 import javafx.scene.Group;
 
@@ -23,13 +25,15 @@ public class StartMenuView extends AbstractMenuView {
 
     }
 
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, int playerActionPerformed) {
+    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player) {
         clearView();
 
         for (int i = 0; i < menuButtonViewList.size(); i++) {
 
             if (superSelected == i) {
                 menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.SELECTED);
+//            } else if (superSelected == i && ListenerController.getInstance().getAllPressed().contains("ENTER")) {
+//                menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.PRESSED);
             } else {
                 menuButtonViewList.get(i).render(getBackgroundGC(), MenuButtonState.UNSELECTED);
             }

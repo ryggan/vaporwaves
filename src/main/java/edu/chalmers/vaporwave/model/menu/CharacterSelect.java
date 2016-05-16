@@ -2,8 +2,10 @@ package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 
 public class CharacterSelect extends AbstractMenu {
@@ -41,39 +43,39 @@ public class CharacterSelect extends AbstractMenu {
         }
     }
 
-    public void changeSelected(Direction direction, int playerID) {
+    public void changeSelected(Direction direction, Player player) {
         switch (direction) {
             case LEFT:
-                menuMoveLeft(playerID);
-                if (playerID == 0 && getSelectedSuper() == 1) {
+                menuMoveLeft(player.getPlayerId());
+                if (player.getPlayerId() == 0 && getSelectedSuper() == 1) {
                     while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
-                        menuMoveLeft(playerID);
+                        menuMoveLeft(player.getPlayerId());
                     }
                 } else {
-                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), playerID, 4)] != -1 &&
-                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), playerID, 4)] != playerID) {
-                        menuMoveLeft(playerID);
+                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1 &&
+                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerId()) {
+                        menuMoveLeft(player.getPlayerId());
                     }
                 }
 
                 break;
             case RIGHT:
 
-                menuMoveRight(playerID);
-                if (playerID == 0 && getSelectedSuper() == 1) {
+                menuMoveRight(player.getPlayerId());
+                if (player.getPlayerId() == 0 && getSelectedSuper() == 1) {
                     while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
-                        menuMoveRight(playerID);
+                        menuMoveRight(player.getPlayerId());
                     }
                 } else {
-                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), playerID, 4)] != -1 &&
-                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), playerID, 4)] != playerID) {
-                        menuMoveRight(playerID);
+                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), 4)] != -1 &&
+                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), 4)] != player.getPlayerId()) {
+                        menuMoveRight(player.getPlayerId());
                     }
                 }
 
                 break;
             default:
-                super.changeSelected(direction, playerID);
+                super.changeSelected(direction, player);
                 break;
         }
     }

@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -24,7 +25,7 @@ public abstract class AbstractMenuView {
         backgroundImage = Container.getImage(ImageID.MENU_BACKGROUND_1);
     }
 
-    public abstract void updateView(int superSelected, int[] subSelected, int[] remoteSelected, int playerActionPerformed);
+    public abstract void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player);
 
     public GraphicsContext getBackgroundGC() {
         return this.backgroundGC;

@@ -171,6 +171,6 @@ public class MainController {
         this.root.getChildren().clear();
         this.root.getChildren().add(menuRoot);
         this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
-        this.menuController.updateViews(-1);
+        this.menuController.updateViews(null);
     }
 }
