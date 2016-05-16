@@ -83,7 +83,7 @@ public class GameController {
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
         // Starting new game
-        this.arenaModel = newGame(arenaMap, timeLimit);
+        this.arenaModel = newGame(arenaMap);
         this.arenaView = new ArenaView(root);
         this.pauseMenuController = new PauseMenuController(root);
 
@@ -163,7 +163,7 @@ public class GameController {
                 // todo: Change this to some other kind of event
 //                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
             }
-            TimerModel.getInstance().updateTimer(timeLimit);
+            TimerModel.getInstance().updateTimer(this.timeLimit);
         }
 
         List<String> pressed = ListenerController.getInstance().getPressed();
@@ -287,8 +287,6 @@ public class GameController {
             }
         }
 
-
-
         // Removes enemies
         if (deadEnemies.size() > 0) {
             for (Enemy enemy : deadEnemies) {
@@ -306,7 +304,7 @@ public class GameController {
 
         this.healthBarModel.updateHealth((int)this.localPlayer.getCharacter().getHealth());
 
-        arenaView.updateHealth((int)this.healthBarModel.getHealth());
+        arenaView.updateHealth(this.healthBarModel.getHealth());
 
         // Calls view to update graphics
         if(!gameIsPaused) {
@@ -483,8 +481,7 @@ public class GameController {
 
 
 
-    public ArenaModel newGame(ArenaMap arenaMap, double timeLimit) {
-        TimerModel.getInstance().updateTimer(timeLimit);
+    public ArenaModel newGame(ArenaMap arenaMap) {
         // Here goes all code for setting up the environment for a new game
         return new ArenaModel(arenaMap);
     }

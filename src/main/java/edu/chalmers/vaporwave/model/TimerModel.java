@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.model;
 
 import java.util.concurrent.TimeUnit;
 
-
 public class TimerModel {
 
     private String time;
