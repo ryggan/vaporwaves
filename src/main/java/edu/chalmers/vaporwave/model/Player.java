@@ -94,6 +94,14 @@ public class Player {
         this.playerId = i;
     }
 
+    public String getName() {
+        return this.playerName;
+    }
+
+    public void setName(String name) {
+        this.playerName = name;
+    }
+
     public String[] getPlayerInfo() {
         this.score = getScore();
         playerInfo[0] = playerName;

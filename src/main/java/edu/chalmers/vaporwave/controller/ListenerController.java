@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.controller;
 
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.GamePadDisconnectedEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.event.EventHandler;
@@ -212,6 +214,7 @@ public class ListenerController {
                 this.gamePadInputs.remove(controller);
                 this.gamePadPressed.remove(controller);
                 this.gamePadReleased.remove(controller);
+                GameEventBus.getInstance().post(new GamePadDisconnectedEvent(controller));
                 iterator.remove();
             }
         }
