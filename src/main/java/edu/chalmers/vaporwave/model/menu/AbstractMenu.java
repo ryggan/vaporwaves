@@ -6,8 +6,6 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
 
-import java.util.ArrayList;
-
 public abstract class AbstractMenu {
 
     private int[] menuItems;
@@ -37,10 +35,10 @@ public abstract class AbstractMenu {
                 menuMoveDown();
                 break;
             case LEFT:
-                menuMoveLeft(player.getPlayerId());
+                menuMoveLeft(player.getPlayerID());
                 break;
             case RIGHT:
-                menuMoveRight(player.getPlayerId());
+                menuMoveRight(player.getPlayerID());
                 break;
             default:
         }

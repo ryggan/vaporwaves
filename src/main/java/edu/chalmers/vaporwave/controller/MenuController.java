@@ -7,14 +7,13 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GamePadDisconnectedEvent;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.*;
+import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.Utils;
 import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
 import net.java.games.input.Controller;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -84,8 +83,8 @@ public class MenuController {
 
 
         for (Player player : players) {
-            if (gamePads.size() > player.getPlayerId()) {
-                player.setGamePad(gamePads.get(player.getPlayerId()));
+            if (gamePads.size() > player.getPlayerID()) {
+                player.setGamePad(gamePads.get(player.getPlayerID()));
             }
         }
 
@@ -102,7 +101,7 @@ public class MenuController {
 
 
         for (Player player : newGameEvent.getPlayers()) {
-            if (player.getPlayerId() != 0) {
+            if (player.getPlayerID() != 0) {
                 remotePlayerInput(player);
             }
         }
@@ -138,7 +137,7 @@ public class MenuController {
 
         List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
 
-        if (!allReleased.isEmpty() && player.getPlayerId() == 0) {
+        if (!allReleased.isEmpty() && player.getPlayerID() == 0) {
             String key = allReleased.get(0);
 
             switch (key) {
@@ -203,7 +202,7 @@ public class MenuController {
             String key = allReleased.get(0);
 
             if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
-                menuMap.get(activeMenu).performMenuAction(newGameEvent, player.getPlayerId());
+                menuMap.get(activeMenu).performMenuAction(newGameEvent, player.getPlayerID());
 
                 if (menuMap.get(activeMenu) instanceof CharacterSelect && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                     ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
@@ -244,7 +243,9 @@ public class MenuController {
         Controller gamePad = disconnectedEvent.getGamePad();
         for (Player player : this.newGameEvent.getPlayers()) {
             if (player.getGamePad() == gamePad) {
-                System.out.println("GamePad '"+gamePad.getName()+"' removed from player "+player.getName());
+                if (Debug.PRINT_LOG) {
+                    System.out.println("GamePad '" + gamePad.getName() + "' removed from player " + player.getName());
+                }
                 player.setGamePad(null);
             }
         }

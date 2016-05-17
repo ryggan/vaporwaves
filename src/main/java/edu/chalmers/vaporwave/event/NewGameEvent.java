@@ -4,9 +4,7 @@ import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.PowerUpType;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class NewGameEvent {
@@ -57,7 +55,7 @@ public class NewGameEvent {
 
     public Player getPrimaryPlayer() {
         for (Player player : players) {
-            if (player.getPlayerId() == 0) {
+            if (player.getPlayerID() == 0) {
                 return player;
             }
         }

@@ -78,7 +78,7 @@ public class GameController {
         this.players = new HashSet<>();
 
         for (Player player : newGameEvent.getPlayers()) {
-            if (player.getPlayerId() == 0) {
+            if (player.getPlayerID() == 0) {
                 this.localPlayer = player;
             } else {
                 this.remotePlayer = player;

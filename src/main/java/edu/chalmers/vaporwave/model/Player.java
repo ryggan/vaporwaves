@@ -5,7 +5,7 @@ import edu.chalmers.vaporwave.util.ArrayCloner;
 import net.java.games.input.Controller;
 
 public class Player {
-    private int playerId;
+    private int playerID;
     private String playerName;
     private GameCharacter gameCharacter;
     private int score;
@@ -20,8 +20,8 @@ public class Player {
     private String mineControl;
     private Controller gamePad;
 
-    public Player(int playerId, String playerName) {
-        this.playerId = playerId;
+    public Player(int playerID, String playerName) {
+        this.playerID = playerID;
         this.playerName = playerName;
         this.score = 0;
         this.deaths = 0;
@@ -87,12 +87,12 @@ public class Player {
         this.gameCharacter = null;
     }
 
-    public int getPlayerId() {
-        return this.playerId;
+    public int getPlayerID() {
+        return this.playerID;
     }
 
-    public void setPlayerId(int i) {
-        this.playerId = i;
+    public void setPlayerID(int i) {
+        this.playerID = i;
     }
 
     public String getName() {
@@ -155,7 +155,7 @@ public class Player {
             return false;
         }
         Player other = (Player)otherObject;
-        return this.playerId == other.playerId &&
+        return this.playerID == other.playerID &&
                 this.playerName.equals(other.playerName) &&
                 this.score == other.score &&
                 this.kills == other.kills &&
@@ -165,7 +165,7 @@ public class Player {
 
     @Override
     public int hashCode() {
-        return this.playerId * 3 +
+        return this.playerID * 3 +
                 this.playerName.hashCode() * 5 +
                 this.score * 11 +
                 this.kills * 13 +

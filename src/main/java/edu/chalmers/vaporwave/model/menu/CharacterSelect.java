@@ -1,12 +1,12 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
-import com.sun.tools.internal.jxc.ap.Const;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.Utils;
 
 public class CharacterSelect extends AbstractMenu {
@@ -33,13 +33,16 @@ public class CharacterSelect extends AbstractMenu {
 
     @Override
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
-        System.out.println("performMenuAction in CharacterSelect. Player ID : " + playerID);
+        if (Debug.PRINT_LOG) {
+            System.out.println("performMenuAction in CharacterSelect. Player ID : " + playerID);
+        }
+
         if (this.getSelectedSuper() == 1 && playerID == 0 && this.selectedCharacters[getSelectedSub()[1]] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[getSelectedSub()[1]] = 0;
             newGameEvent.getLocalPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
         } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
-            unselectCharacterForPlayer(playerID);
+//            unselectCharacterForPlayer(playerID);
             this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), 1, Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
 
             for (Player player : newGameEvent.getPlayers()) {
@@ -51,30 +54,30 @@ public class CharacterSelect extends AbstractMenu {
     public void changeSelected(Direction direction, Player player) {
         switch (direction) {
             case LEFT:
-                menuMoveLeft(player.getPlayerId());
-                if (player.getPlayerId() == 0 && getSelectedSuper() == 1) {
+                menuMoveLeft(player.getPlayerID());
+                if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
                     while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
-                        menuMoveLeft(player.getPlayerId());
+                        menuMoveLeft(player.getPlayerID());
                     }
                 } else {
-                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1 &&
-                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerId()) {
-                        menuMoveLeft(player.getPlayerId());
+                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1 &&
+                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerID()) {
+                        menuMoveLeft(player.getPlayerID());
                     }
                 }
 
                 break;
             case RIGHT:
 
-                menuMoveRight(player.getPlayerId());
-                if (player.getPlayerId() == 0 && getSelectedSuper() == 1) {
+                menuMoveRight(player.getPlayerID());
+                if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
                     while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
-                        menuMoveRight(player.getPlayerId());
+                        menuMoveRight(player.getPlayerID());
                     }
                 } else {
-                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), 4)] != -1 &&
-                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerId(), 4)] != player.getPlayerId()) {
-                        menuMoveRight(player.getPlayerId());
+                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), 4)] != -1 &&
+                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), 4)] != player.getPlayerID()) {
+                        menuMoveRight(player.getPlayerID());
                     }
                 }
 
