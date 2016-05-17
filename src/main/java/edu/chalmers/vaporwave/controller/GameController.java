@@ -34,6 +34,8 @@ public class GameController {
     private Player localPlayer;
     private Player remotePlayer;
 
+    private Set<Player> players;
+
     private Set<Enemy> enemies;
     private Set<Enemy> deadEnemies;
     private List<PowerUpType> enabledPowerUpList;
@@ -56,7 +58,7 @@ public class GameController {
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
     }
-    
+
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
         Container.playSound(SoundID.GAME_MUSIC);
@@ -67,8 +69,12 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
-        this.localPlayer = newGameEvent.getLocalPlayer();
-        this.remotePlayer = newGameEvent.getPlayers().get(0);
+        this.localPlayer = newGameEvent.getPlayers().get(0);
+        this.remotePlayer = newGameEvent.getPlayers().get(1);
+//
+//        for (Player player : newGameEvent.getPlayers()) {
+//            this.players.add(player);
+//        }
 
         // todo: Should come from newGameEvent instead:
         this.destroyablePowerUps = true;

@@ -25,9 +25,6 @@ public class MenuController {
     private Map<MenuState, AbstractMenuView> menuViewMap;
     private MenuState activeMenu;
 
-    private Player localPlayer;
-    private Player remotePlayer;
-
     private boolean pressedDown;
 
     public MenuController(Group root) {
@@ -36,18 +33,19 @@ public class MenuController {
 
         this.newGameEvent = new NewGameEvent();
 
-        this.localPlayer = new Player(0, "PlayerOne");
-        this.newGameEvent.setLocalPlayer(this.localPlayer);
-        this.localPlayer.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
-        this.localPlayer.setBombControl("SPACE");
-        this.localPlayer.setMineControl("M");
-        this.newGameEvent.addPlayer(this.localPlayer);
+        Player player;
+        player = new Player(0, "PlayerOne");
+        this.newGameEvent.setLocalPlayer(player);
+        player.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
+        player.setBombControl("SPACE");
+        player.setMineControl("M");
+        this.newGameEvent.addPlayer(player);
 
-        this.remotePlayer = new Player(1, "PlayerTwo");
-        remotePlayer.setDirectionControls(new String[] {"A", "W", "D", "S"});
-        remotePlayer.setBombControl("SHIFT");
-        remotePlayer.setMineControl("CAPS");
-        this.newGameEvent.addPlayer(remotePlayer);
+        player = new Player(1, "PlayerTwo");
+        player.setDirectionControls(new String[] {"A", "W", "D", "S"});
+        player.setBombControl("SHIFT");
+        player.setMineControl("CAPS");
+        this.newGameEvent.addPlayer(player);
 
 //        remotePlayer = new Player(3, "PlayerThree");
 //        this.remotePlayer.setDirectionControls(new String[] {"F", "T", "H", "G"});
@@ -74,7 +72,8 @@ public class MenuController {
                 this.menuMap.get(activeMenu).getSelectedSuper(),
                 this.menuMap.get(activeMenu).getSelectedSub(),
                 null,
-                localPlayer, false
+                newGameEvent.getPlayers().get(0),
+                false
         );
     }
 
@@ -91,11 +90,13 @@ public class MenuController {
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        localPlayerInput(this.localPlayer);
+        localPlayerInput(this.newGameEvent.getPlayers().get(0));
 
 
         for (Player player : newGameEvent.getPlayers()) {
-            remotePlayerInput(player);
+            if (player.getPlayerId() != 0) {
+                remotePlayerInput(player);
+            }
         }
 
     }
@@ -123,13 +124,13 @@ public class MenuController {
                 }
             }
             if (allPressed.contains("ENTER") || allPressed.contains("SPACE") || allPressed.contains("BTN_A")) {
-                updateViews(localPlayer);
+                updateViews(this.newGameEvent.getPlayers().get(0));
             }
         }
 
         List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
 
-        if (!allReleased.isEmpty()) {
+        if (!allReleased.isEmpty() && player.getPlayerId() == 0) {
             String key = allReleased.get(0);
 
             switch (key) {
@@ -143,10 +144,6 @@ public class MenuController {
 
                         case START_GAME:
                             if (isNewGameEventReady()) {
-//                                for (Map.Entry<MenuState, AbstractMenuView> menu : this.menuViewMap.entrySet()) {
-//                                    menu.getValue().clearView();
-//                                    updateViews(-1);
-//                                }
                                 GameEventBus.getInstance().post(newGameEvent);
                             }
                             break;
@@ -165,7 +162,7 @@ public class MenuController {
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
                             break;
                     }
-                    updateViews(localPlayer);
+                    updateViews(this.newGameEvent.getPlayers().get(0));
 
                     break;
                 default:
