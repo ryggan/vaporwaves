@@ -115,7 +115,6 @@ public class CharacterSelectView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).render(getBackgroundGC(), 0);
 
         for (int i = 0; i < selectedCharacter.length; i++) {
-            System.out.println(selectedCharacter[i]);
             if (selectedCharacter[i] >= 0) {
                 Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setPosition(CHARACTERS_POSITION);
                 Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setScale(1);

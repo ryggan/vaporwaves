@@ -14,7 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class Scoreboard {
     private Sprite scoreboardBackground;
@@ -37,9 +39,13 @@ public class Scoreboard {
             //Math.floor((Constants.WINDOW_HEIGHT - (Constants.DEFAULT_TILE_HEIGHT * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE) / 2));
 
     //For testing purposes
-    public Scoreboard(Group root, List<Player> playerList) {
+    public Scoreboard(Group root, Set<Player> players) {
         //this.root = root;
-        this.playerList = playerList;
+        this.playerList = new ArrayList<>();
+        for (Player player : players) {
+            this.playerList.add(player.getPlayerID(), player);
+        }
+
         playerLabels = new Label[playerList.size()][5];
 
         //fix filepath after creating image

@@ -62,6 +62,15 @@ public class NewGameEvent {
         return null;
     }
 
+    public Player getPlayerWithID(int id) {
+        for (Player player : players) {
+            if (player.getPlayerID() == id) {
+                return player;
+            }
+        }
+        return null;
+    }
+
     public void setTimeLimit(int timeLimit) {
         this.timeLimit = timeLimit;
     }

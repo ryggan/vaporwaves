@@ -32,7 +32,6 @@ public class GameCharacter extends Movable {
     public GameCharacter(String name, int playerId) {
         super(name, 0, 0, 0);
 
-
         CharacterID characterID = CharacterID.valueOf(name);
         this.startHealth = Container.getCharacterHealth(characterID);
         this.startSpeed = Container.getCharacterSpeed(characterID);
@@ -141,14 +140,18 @@ public class GameCharacter extends Movable {
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o instanceof GameCharacter) {
-            GameCharacter other = (GameCharacter) o;
-            return this.bombRange == other.bombRange &&
-                    this.currentBombCount == other.currentBombCount &&
-                    this.maxBombCount == other.maxBombCount;
+    public boolean equals(Object otherObject){
+        if (this == otherObject) {
+            return true;
         }
-        return false;
+        if (otherObject == null) {
+            return false;
+        }
+        if (otherObject.getClass() != this.getClass()) {
+            return false;
+        }
+        GameCharacter other = (GameCharacter)otherObject;
+        return this.getName().equals(other.getName());
     }
 
     @Override

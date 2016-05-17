@@ -31,4 +31,7 @@ public class Constants {
     public static final int FRAMES_HELD_KEYS_UPDATE = 40;
 
     public static final int MAX_NUMBER_OF_PLAYERS = 4;
+
+    // Sets how often the enemy will check for new direction from its AI-system.
+    public static final int ENEMY_UPDATE_RATE = 15;
 }

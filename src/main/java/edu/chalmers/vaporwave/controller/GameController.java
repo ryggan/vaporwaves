@@ -22,7 +22,6 @@ import java.util.List;
 
 public class GameController {
     private Boolean scoreboardIsShowing = false;
-    private List<Player> playerList;
     private Scoreboard scoreboard;
     private PauseMenuController pauseMenuController;
 
@@ -32,8 +31,6 @@ public class GameController {
     private HealthBarModel healthBarModel;
 
     private Player localPlayer;
-    private Player remotePlayer;
-
     private Set<Player> players;
 
     private Set<Enemy> enemies;
@@ -69,23 +66,6 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
-//
-//        this.localPlayer = newGameEvent.getPlayers().get(0);
-//        this.remotePlayer = newGameEvent.getPlayers().get(1);
-
-//        System.out.println("Number of players: " + newGameEvent.getPlayers().size());
-
-        this.players = new HashSet<>();
-
-        for (Player player : newGameEvent.getPlayers()) {
-            if (player.getPlayerID() == 0) {
-                this.localPlayer = player;
-            } else {
-                this.remotePlayer = player;
-            }
-            this.players.add(player);
-        }
-
         // todo: Should come from newGameEvent instead:
         this.destroyablePowerUps = true;
         this.respawnPowerups = true;
@@ -102,16 +82,16 @@ public class GameController {
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
-//        this.players = newGameEvent.getPlayers();
-//        for (Player player : newGameEvent.getPlayers()) {
-//            player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-//            player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-//        }
 
-        this.localPlayer.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(MapObject.PLAYER1));
-        this.remotePlayer.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(MapObject.PLAYER2));
-        this.localPlayer.getCharacter().spawn(new Point(arenaMap.getSpawnPosition(MapObject.PLAYER1)));
-        this.remotePlayer.getCharacter().spawn(arenaMap.getSpawnPosition(MapObject.PLAYER2));
+        this.players = newGameEvent.getPlayers();
+
+        for (Player player : newGameEvent.getPlayers()) {
+            player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
+            player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
+            if (player.getPlayerID() == 0) {
+                this.localPlayer = player;
+            }
+        }
 
 
         // Starting new game
@@ -131,8 +111,9 @@ public class GameController {
         );
 
         try {
-            arenaModel.addMovable(localPlayer.getCharacter());
-            arenaModel.addMovable(remotePlayer.getCharacter());
+            for (Player player : this.players) {
+                arenaModel.addMovable(player.getCharacter());
+            }
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
         }
@@ -173,10 +154,7 @@ public class GameController {
 
         // // TODO: 11/05/16 fix this to some other class, probably arenaView
 
-        playerList = new ArrayList<>();
-        playerList.add(localPlayer);
-        playerList.add(remotePlayer);
-        this.scoreboard = new Scoreboard(root, playerList);
+        this.scoreboard = new Scoreboard(root, players);
 
     }
 
@@ -206,7 +184,7 @@ public class GameController {
 
             TimerModel.getInstance().setPaused(false);
 
-            if (this.updatedEnemyDirection == 15) {
+            if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
                 for (Enemy enemy : enemies) {
                     enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(),
                             this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
@@ -220,7 +198,7 @@ public class GameController {
 
         // All player-specific input and pressed etc.
         if (!gameIsPaused) {
-            for (Player player : this.playerList) {
+            for (Player player : this.players) {
                 playerInputAction(player);
             }
         }
@@ -243,7 +221,7 @@ public class GameController {
                     break;
                 case "P":
                     if(gameIsPaused) {
-                        unpauseGame();
+                        unPauseGame();
                     } else {
                         pauseGame();
                     }
@@ -272,7 +250,7 @@ public class GameController {
                                     movable.dealDamage(otherMovable.getDamage());
                                     updateStats();
                                     if (movable.getHealth() <= 0) {
-                                        playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                                        getPlayerForGameCharacter(gameCharacter).incrementDeaths();
                                     }
                                     break;
                                 }
@@ -289,7 +267,7 @@ public class GameController {
 //                                gameCharacter.pickedUpPowerUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
                                 updateStats();
-                                playerList.get(((GameCharacter) movable).getPlayerId()).incrementPowerUpScore();
+                                getPlayerForGameCharacter((GameCharacter)movable).incrementPowerUpScore();
                             }
                         }
                     }
@@ -311,11 +289,11 @@ public class GameController {
                             if (movable.getHealth() <= 0) {
                                 if (movable instanceof GameCharacter) {
                                     if (blast.getPlayerId() != ((GameCharacter) movable).getPlayerId()) {
-                                        playerList.get(blast.getPlayerId()).incrementKills();
+                                        getPlayerForID(blast.getPlayerId()).incrementKills();
                                     }
-                                    playerList.get(((GameCharacter) movable).getPlayerId()).incrementDeaths();
+                                    getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
                                 } else if (movable instanceof Enemy) {
-                                    playerList.get(blast.getPlayerId()).incrementCreeps();
+                                    getPlayerForID(blast.getPlayerId()).incrementCreeps();
                                 }
                             }
                         }
@@ -368,7 +346,6 @@ public class GameController {
                     || key.equals(player.getDirectionControls()[2]) || key.equals(player.getDirectionControls()[3])
                     || key.equals("LS_UP") || key.equals("LS_LEFT")|| key.equals("LS_DOWN")|| key.equals("LS_RIGHT")
                     || key.equals("DPAD_UP") || key.equals("DPAD_LEFT")|| key.equals("DPAD_DOWN")|| key.equals("DPAD_RIGHT")) {
-
                 player.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
             }
         }
@@ -534,7 +511,7 @@ public class GameController {
         switch (powerUpType) {
             case HEALTH:
                 if (gameCharacter.getHealth() <= 90) {
-                    gameCharacter.setHealth(this.localPlayer.getCharacter().getHealth() + 10);
+//                    gameCharacter.setHealth(this.localPlayer.getCharacter().getHealth() + 10);
                 } else if (gameCharacter.getHealth() < 100) {
                     gameCharacter.setHealth(100);
                 }
@@ -620,11 +597,29 @@ public class GameController {
 //        System.out.println("Paused time: "+this.pausedTime);
     }
 
-    private void unpauseGame() {
+    private void unPauseGame() {
         this.pauseMenuController.getPauseMenuView().hide();
         gameIsPaused = false;
         this.timeSinceStartOffset += (System.nanoTime() - this.pausedTime) / 1000000000.0;
 
 //        System.out.println("Time since start: "+this.timeSinceStart+", time since start offset: "+this.timeSinceStartOffset);
+    }
+
+    private Player getPlayerForGameCharacter(GameCharacter gameCharacter) {
+        for (Player player : this.players) {
+            if (player.getCharacter().equals(gameCharacter)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    private Player getPlayerForID(int id) {
+        for (Player player : this.players) {
+            if (player.getPlayerID() == id) {
+                return player;
+            }
+        }
+        return null;
     }
 }
