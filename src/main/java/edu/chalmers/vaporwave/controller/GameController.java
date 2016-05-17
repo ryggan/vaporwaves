@@ -102,7 +102,11 @@ public class GameController {
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
-        System.out.println(arenaMap);
+//        this.players = newGameEvent.getPlayers();
+//        for (Player player : newGameEvent.getPlayers()) {
+//            player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
+//            player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
+//        }
 
         this.localPlayer.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(MapObject.PLAYER1));
         this.remotePlayer.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(MapObject.PLAYER2));
@@ -138,8 +142,9 @@ public class GameController {
 
         //Felix code
         Set<GameCharacter> gameCharacters = new HashSet<>();
-        gameCharacters.add(localPlayer.getCharacter());
-        gameCharacters.add(remotePlayer.getCharacter());
+        for (Player player : players) {
+            gameCharacters.add(player.getCharacter());
+        }
 
         Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 0.4, new FelixTestAI(gameCharacters));
         enemies.add(felixBot);

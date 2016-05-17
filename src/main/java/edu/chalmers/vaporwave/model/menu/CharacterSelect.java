@@ -42,8 +42,8 @@ public class CharacterSelect extends AbstractMenu {
             this.selectedCharacters[getSelectedSub()[1]] = 0;
             newGameEvent.getLocalPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
         } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
-//            unselectCharacterForPlayer(playerID);
-            this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), 1, Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
+            unselectCharacterForPlayer(playerID);
+            this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
 
             for (Player player : newGameEvent.getPlayers()) {
                 player.setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)], playerID));
