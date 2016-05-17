@@ -141,4 +141,37 @@ public class Player {
     public String getMineControl() {
         return this.mineControl;
     }
+
+    @Override
+    public boolean equals(Object otherObject) {
+        if (this == otherObject) {
+            return true;
+        }
+        if (otherObject == null) {
+            return false;
+        }
+        if (otherObject.getClass() != this.getClass()) {
+            return false;
+        }
+        Player other = (Player)otherObject;
+        return this.playerId == other.playerId &&
+                this.playerName.equals(other.playerName) &&
+                this.gameCharacter.equals(other.gameCharacter) &&
+                this.score == other.score &&
+                this.kills == other.kills &&
+                this.creeps == other.creeps &&
+                this.powerUpScore == other.powerUpScore;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.playerId * 3 +
+                this.playerName.hashCode() * 5 +
+                this.gameCharacter.hashCode() * 7 +
+                this.score * 11 +
+                this.kills * 13 +
+                this.creeps * 17 +
+                this.powerUpScore * 19;
+    }
+
 }
