@@ -100,6 +100,7 @@ public class GameController {
         this.pauseMenuController = new PauseMenuController(root);
 
         arenaView.initArena(arenaModel.getArenaTiles());
+        arenaView.initHUD(this.players);
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
         this.arenaView.updateStats(

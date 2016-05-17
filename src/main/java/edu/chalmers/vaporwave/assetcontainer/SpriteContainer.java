@@ -11,7 +11,7 @@ class SpriteContainer {
     private Map<SpriteID, Sprite> spriteContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 17 + 8 + 5 + 5 + 9 + 3 + 16;
+    private static final double totalTasks = 17 + 8 + 5 + 1 + 5 + 9 + 3 + 16;
 
     SpriteContainer() {
 
@@ -87,6 +87,9 @@ class SpriteContainer {
         Image frameSouthSheet = Container.getImage(ImageID.GAME_FRAME_SOUTH_1);
         addSprite(SpriteID.GAME_FRAME_SOUTH_1,
                 new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1}));
+
+        // HUD (1)
+        addSprite(SpriteID.HUD_BOX, new Sprite(Container.getImage(ImageID.HUD_BOX), 1.0));
 
         // Bombs (5)
 

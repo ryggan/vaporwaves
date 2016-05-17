@@ -173,4 +173,9 @@ public class Player {
                 this.powerUpScore * 19;
     }
 
+    public String toString() {
+        return "Player [ Name: "+playerName+", ID: "+playerID+", Score: "+score+", Kills: "+kills+", Deaths: "+deaths
+                +", GamePad: "+gamePad+" ]";
+    }
+
 }

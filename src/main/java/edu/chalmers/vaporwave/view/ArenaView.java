@@ -5,6 +5,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.util.*;
 import javafx.scene.Group;
@@ -15,10 +16,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
 
 public class ArenaView {
 
@@ -84,7 +83,7 @@ public class ArenaView {
 
         root.getChildren().add(backgroundPattern);
 
-        this.hudView = new HUDView(root);
+//        this.hudView = new HUDView(root);
         this.timerView = new TimerView(root);
 
         GameEventBus.getInstance().register(this);
@@ -216,6 +215,10 @@ public class ArenaView {
 //        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern"+randomNum+".png"));
 //        backgroundPattern.setImage(new Image("images/backgroundPatterns/pattern1.png"));
         backgroundPattern.setImage(Container.getImage(ImageID.BACKGROUND_PATTERN_1));
+    }
+
+    public void initHUD(Set<Player> players) {
+        this.hudView = new HUDView(root, players);
     }
 
     public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
