@@ -22,7 +22,8 @@ class SpriteContainer {
         // Menu images and controls (17)
         Image menuCharacter = Container.getImage(ImageID.MENU_CHARACTER);
         addSprite(SpriteID.MENU_CHARACTER_ALL,
-                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {0, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {0, 0}, new double[] {1, 1}, 1.0));
+//                new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {0, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_MEI_1,
                 new AnimatedSprite(menuCharacter, new Dimension(442, 378), 1, 1, new int[] {1, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ALYSSA_1,

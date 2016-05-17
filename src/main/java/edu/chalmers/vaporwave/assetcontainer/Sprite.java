@@ -11,14 +11,21 @@ public class Sprite {
 
     private Image image;
     private Image originalImage;
-    private double positionX;
-    private double positionY;
+
+    private int sourceGridX;
+    private int sourceGridY;
+    private double sourceCanvasX;
+    private double sourceCanvasY;
     private double width;
     private double height;
-    private double scale;
-    private boolean stayOnPixel;
+
+    private double positionX;
+    private double positionY;
     private double offsetX;
     private double offsetY;
+
+    private double scale;
+    private boolean stayOnPixel;
 
     /**
      * Constructors, one simple which leaves the Sprite object without Image, and the other two with an Image
@@ -31,22 +38,58 @@ public class Sprite {
         this.stayOnPixel = true;
     }
 
-    public Sprite(Image image, double scale) {
+    public Sprite(Image spriteSheet, Dimension dimension, int[] sourceGridPosition, double[] offset, double scale) {
         this();
-        setImage(image);
+
+        setImage(spriteSheet);
         setScale(scale);
+        setSourceGridXY(sourceGridPosition[0], sourceGridPosition[1]);
+        setSourceCanvasXY(0, 0);
+        setDimension(dimension.getWidth(), dimension.getHeight());
+        setOffsetXY(offset[0], offset[1]);
+    }
+
+    public Sprite(Image spriteSheet, Dimension dimension, double[] sourceCanvasPosition, double[] offset, double scale) {
+        this();
+
+        setImage(spriteSheet);
+        setScale(scale);
+        setSourceGridXY(0, 0);
+        setSourceCanvasXY(sourceCanvasPosition[0], sourceCanvasPosition[1]);
+        setDimension(dimension.getWidth(), dimension.getHeight());
+        setOffsetXY(offset[0], offset[1]);
+    }
+
+    public Sprite(Image spriteSheet, Dimension spriteDimension, int[] startPosition, double[] offset) {
+        this(spriteSheet, spriteDimension, startPosition, offset, Constants.GAME_SCALE);
+    }
+
+    public Sprite(Image image, double scale) {
+        this(image, new Dimension((int)image.getWidth(), (int)image.getHeight()), new int[] {0, 0}, new double[] {0, 0}, scale);
     }
 
     public Sprite(Image image) {
         this(image, Constants.GAME_SCALE);
     }
 
-    public Sprite(Sprite sprite) {
-        this();
-        this.scale = sprite.getScale();
-        this.stayOnPixel = sprite.getStayOnPixel();
-        setImage(sprite.getImage());
-        setImage(sprite.getImage());
+//    public Sprite(Sprite sprite) {
+//        this();
+//        this.scale = sprite.getScale();
+//        this.stayOnPixel = sprite.getStayOnPixel();
+//        setImage(sprite.getImage());
+//    }
+
+    // Besides setting the scale, also updates the Image, via Utils, to the new resized scale (when necessary).
+    public void setScale(double scale) {
+        boolean differentScale = (scale != this.scale);
+        this.scale = scale;
+        if (differentScale) {
+            setImage(this.originalImage);
+        }
+    }
+
+    public double getScale() {
+        return this.scale;
     }
 
     public void setImage(Image image) {
@@ -57,48 +100,45 @@ public class Sprite {
             } else {
                 this.image = Utils.resize(this.originalImage, this.scale);
             }
-            this.width = image.getWidth();
-            this.height = image.getHeight();
         }
     }
 
     public void setImage(String fileName) {
-        Image i = new Image(fileName);
-        this.setImage(i);
+        Image image = new Image(fileName);
+        this.setImage(image);
     }
 
-    /**
-     * Draws the sprites image on canvas at the right position.
-     * @param gc
-     * @param time (unused, but necessary for overridden method)
-     */
+    public Image getImage() {
+        return this.image;
+    }
+
+    // Draws the sprites image on canvas at the right position.
     public void render(GraphicsContext gc, double time) {
-        double posx = (positionX - offsetX) * scale;
-        double posy = (positionY - offsetY) * scale;
+
+        double width = this.width * this.scale;
+        double height = this.height * this.scale;
+        double sourcex = this.sourceCanvasX + this.sourceGridX * width;
+        double sourcey = this.sourceCanvasY + this.sourceGridY * height;
+
+        double targetx = (this.positionX - this.offsetX) * this.scale;
+        double targety = (this.positionY - this.offsetY) * this.scale;
         if (stayOnPixel) {
-            posx = Math.round(posx * scale) / scale;
-            posy = Math.round(posy * scale) / scale;
+            targetx = Math.round(targetx * scale) / scale;
+            targety = Math.round(targety * scale) / scale;
         }
-        gc.drawImage(this.image, posx, posy);
-    }
 
-    /**
-     * Besides setting the scale, also updates the Image, via Utils, to the new resized scale.
-     * @param scale
-     */
-    public void setScale(double scale) {
-        boolean differentScale = (scale != this.scale);
-        this.scale = scale;
-        if (differentScale) {
-            setImage(this.originalImage);
-        }
-    }
-
-    public String toString() {
-        return "Sprite - Position: [" + positionX + "," + positionY + "]" + "Width:[" + width +"," + height + "]";
+        gc.drawImage(this.image, sourcex, sourcey, width, height, targetx, targety, width, height);
     }
 
     // GETTERS AND SETTERS:
+
+    public void setStayOnPixel(boolean stayOnPixel) {
+        this.stayOnPixel = stayOnPixel;
+    }
+
+    public boolean getStayOnPixel() {
+        return stayOnPixel;
+    }
 
     public void setPosition(double positionX, double positionY) {
         this.positionX = positionX;
@@ -108,22 +148,16 @@ public class Sprite {
         this.setPosition(point.getX(), point.getY());
     }
 
+    public void setDimension(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public void setWidth(double width) {
         this.width = width;
     }
     public void setHeight(double height) {
         this.height = height;
-    }
-
-    public void setStayOnPixel(boolean stayOnPixel) {
-        this.stayOnPixel = stayOnPixel;
-    }
-
-    public double getPositionX() {
-        return this.positionX;
-    }
-    public double getPositionY() {
-        return this.positionY;
     }
 
     public double getWidth() {
@@ -133,26 +167,15 @@ public class Sprite {
         return this.height;
     }
 
-    public double getScale() {
-        return this.scale;
+    public double getPositionX() {
+        return this.positionX;
+    }
+    public double getPositionY() {
+        return this.positionY;
     }
 
-    public boolean getStayOnPixel() {
-        return stayOnPixel;
-    }
-
-    public Image getImage() {
-        return this.image;
-    }
-
-    public void setOffset(double offsetX, double offsetY) {
+    public void setOffsetXY(double offsetX, double offsetY) {
         this.offsetX = offsetX;
-        this.offsetY = offsetY;
-    }
-    public void setOffsetX(double offsetX) {
-        this.offsetX = offsetX;
-    }
-    public void setOffsetY(double offsetY) {
         this.offsetY = offsetY;
     }
 
@@ -161,6 +184,35 @@ public class Sprite {
     }
     public double getOffsetY() {
         return this.offsetY;
+    }
+
+    public void setSourceGridXY(int sourceGridX, int sourceGridY) {
+        this.sourceGridX = sourceGridX;
+        this.sourceGridY = sourceGridY;
+    }
+
+    public int getSourceGridX() {
+        return this.sourceGridX;
+    }
+    public int getSourceGridY() {
+        return this.sourceGridY;
+    }
+
+    public void setSourceCanvasXY(double sourceCanvasX, double sourceCanvasY) {
+        this.sourceCanvasX = sourceCanvasX;
+        this.sourceCanvasY = sourceCanvasY;
+    }
+
+    public double getSourceCanvasX() {
+        return this.sourceCanvasX;
+    }
+    public double getSourceCanvasY() {
+        return this.sourceCanvasY;
+    }
+
+    // Standard methods
+    public String toString() {
+        return "Sprite - Position: [" + positionX + "," + positionY + "]" + "Width:[" + width +"," + height + "]";
     }
 
     @Override

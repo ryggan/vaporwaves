@@ -24,7 +24,7 @@ public class AnimatedSprite extends Sprite {
     private int length;
     private Image originalSpriteSheet;
     private Image spriteSheet;
-    private Dimension sheetDimension;
+//    private Dimension sheetDimension;
     private double duration;
     private double timeOffset;
     private boolean startFromBeginning;
@@ -59,7 +59,7 @@ public class AnimatedSprite extends Sprite {
 
         // Setting up variables
 
-        this.frames = new ArrayList<int[]>();
+        this.frames = new ArrayList<>();
 
         this.originalSpriteSheet = spriteSheet;
         this.spriteSheet = spriteSheet;
@@ -78,10 +78,10 @@ public class AnimatedSprite extends Sprite {
         setWidth(spriteDimension.getWidth());
         setHeight(spriteDimension.getHeight());
 
-        this.sheetDimension = new Dimension((int)Math.floor(spriteSheet.getWidth() / spriteDimension.getWidth()),
+        Dimension sheetDimension = new Dimension((int)Math.floor(spriteSheet.getWidth() / spriteDimension.getWidth()),
                 (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));
 
-        setOffset(offset[0], offset[1]);
+        setOffsetXY(offset[0], offset[1]);
         setScale(scale);
 
         // Initiating frames-list, by calculating every coordinate in the spritesheet

@@ -96,7 +96,7 @@ public class HUDView {
     }
 
     public void updateStats(Player player) {
-        
+
     }
 
     public void updateStats(double health, double speed, int range, int bombCount) {
