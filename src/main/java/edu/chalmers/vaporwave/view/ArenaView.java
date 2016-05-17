@@ -83,7 +83,6 @@ public class ArenaView {
 
         root.getChildren().add(backgroundPattern);
 
-//        this.hudView = new HUDView(root);
         this.timerView = new TimerView(root);
 
         GameEventBus.getInstance().register(this);
@@ -221,22 +220,9 @@ public class ArenaView {
         this.hudView = new HUDView(root, players);
     }
 
-    public void updateStats(Player player) {
-        this.hudView.updateStats(player);
-    }
-
     public void updateStats(Set<Player> players) {
         this.hudView.updateStats(players);
     }
-
-//    public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
-//        hudView.updateStats(health, speed, bombRange, bombCount);
-//    }
-//
-//    public void updateHealth(int health){
-//        hudView.updateHealthBar(health);
-//       // System.out.println(health);
-//    }
 
     // todo - UPDATE VIEW SECTION
 

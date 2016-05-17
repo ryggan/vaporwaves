@@ -89,8 +89,6 @@ class SpriteContainer {
                 new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1}));
 
         // HUD (4)
-//        addSprite(SpriteID.HUD_BOX, new Sprite(Container.getImage(ImageID.HUD_BOX), 1.0));
-
         Image hudSheet = Container.getImage(ImageID.HUD_BOX_SHEET);
 
         addSprite(SpriteID.HUD_BOX,

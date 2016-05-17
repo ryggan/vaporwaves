@@ -35,16 +35,6 @@ class ImageContainer {
         // HUD stuff (2):
         addImage(ImageID.HUD_BOX_SHEET, new Image("images/hud/spritesheet-hudbox-136x180.png"));
 
-//        addImage(ImageID.HUD_BOX, new Image("images/hud/hud_box.png"));
-//        addImage(ImageID.HUD_HEALTHBAR_FILLED, new Image("images/hud/hud_healthbar_filled.png"));
-//        addImage(ImageID.HUD_STATUSBAR_FILLED, new Image("images/hud/hud_statusbar_filled.png"));
-//        addImage(ImageID.HUD_STATUSBAR_PLUS, new Image("images/hud/hud_statusbar_plus.png"));
-
-//        addImage(ImageID.HUD_HEALTHBAR_EMPTY, new Image("images/hud/healthbarempty.png"));
-//        addImage(ImageID.HUD_HEALTHBAR_FILLED, new Image("images/hud/healthbarfilled.png"));
-//        addImage(ImageID.HUD_SCOREBAR_EMPTY, new Image("images/hud/barempty.png"));
-//        addImage(ImageID.HUD_SCOREBAR_FILLED, new Image("images/hud/scorebarfilled.png"));
-
         addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground.png"));
 
         // Background stuff (6):

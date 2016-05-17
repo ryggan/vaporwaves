@@ -29,8 +29,6 @@ public class GameController {
     private ArenaView arenaView;
     private ArenaModel arenaModel;
 
-//    private HealthBarModel healthBarModel;
-
     private Player localPlayer;
     private Set<Player> players;
 
@@ -104,14 +102,6 @@ public class GameController {
         arenaView.initHUD(this.players);
         arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
-//        this.arenaView.updateStats(
-//                this.localPlayer.getCharacter().getHealth(),
-//                this.localPlayer.getCharacter().getSpeed(),
-//                this.localPlayer.getCharacter().getBombRange(),
-//                this.localPlayer.getCharacter().getCurrentBombCount(),
-//                timeSinceStart
-//        );
-
         try {
             for (Player player : this.players) {
                 arenaModel.addMovable(player.getCharacter());
@@ -152,7 +142,6 @@ public class GameController {
                 System.out.println("Tile out of bounds!");
             }
         }
-//        this.healthBarModel = new HealthBarModel((int)this.localPlayer.getCharacter().getHealth());
 
         // // TODO: 11/05/16 fix this to some other class, probably arenaView
 
@@ -250,7 +239,6 @@ public class GameController {
                                 if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
                                         && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
                                     movable.dealDamage(otherMovable.getDamage());
-//                                    updateStats();
                                     if (movable.getHealth() <= 0) {
                                         getPlayerForGameCharacter(gameCharacter).incrementDeaths();
                                     }
@@ -266,9 +254,7 @@ public class GameController {
                             // If so, pick it up
                             if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
                                 powerUp.pickUp(this.timeSinceStart);
-//                                gameCharacter.pickedUpPowerUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
-//                                updateStats();
                                 getPlayerForGameCharacter((GameCharacter)movable).incrementPowerUpScore();
                             }
                         }
@@ -287,7 +273,6 @@ public class GameController {
                         // If blast was found, and the blast still is dangerous, deal damage
                         if (blast != null && blast.isDangerous(this.timeSinceStart)) {
                             movable.dealDamage(blast.getDamage());
-//                            updateStats();
                             if (movable.getHealth() <= 0) {
                                 if (movable instanceof GameCharacter) {
                                     if (blast.getPlayerId() != ((GameCharacter) movable).getPlayerId()) {
@@ -319,10 +304,6 @@ public class GameController {
             this.arenaModel.sortMovables();
         }
 
-//        this.healthBarModel.updateHealth((int)this.localPlayer.getCharacter().getHealth());
-
-//        arenaView.updateHealth(this.healthBarModel.getHealth());
-//        this.arenaView.updateStats(this.players);
         updateStats();
 
         // Calls view to update graphics
@@ -374,7 +355,6 @@ public class GameController {
         arenaModel.setDoubleTile(new Bomb(character, placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY,
                 this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
         placeBombEvent.getCharacter().setCurrentBombCount(character.getCurrentBombCount() - 1);
-//        updateStats();
     }
 
     @Subscribe
@@ -382,7 +362,6 @@ public class GameController {
         GameCharacter character = placeMineEvent.getCharacter();
         arenaModel.setTile(new Mine(character, placeMineEvent.getRange(), placeMineEvent.getDamage()), placeMineEvent.getGridPosition());
         character.setCurrentBombCount(character.getCurrentBombCount() - 1);
-//        updateStats();
     }
 
     // This method is called via the eventbus, when a gamecharacter calls placeBomb()
@@ -488,13 +467,6 @@ public class GameController {
 
     //TODO
     private void updateStats() {
-//        this.arenaView.updateStats(
-//                this.localPlayer.getCharacter().getHealth(),
-//                this.localPlayer.getCharacter().getSpeed(),
-//                this.localPlayer.getCharacter().getBombRange(),
-//                this.localPlayer.getCharacter().getCurrentBombCount(),
-//                timeSinceStart
-//        );
         this.arenaView.updateStats(this.players);
     }
 
@@ -515,11 +487,6 @@ public class GameController {
 
         switch (powerUpType) {
             case HEALTH:
-//                if (gameCharacter.getHealth() <= 90) {
-//                    gameCharacter.setHealth(this.localPlayer.getCharacter().getHealth() + 10);
-//                } else if (gameCharacter.getHealth() < 100) {
-//                    gameCharacter.setHealth(100);
-//                }
                 gameCharacter.setHealth(Math.min(this.localPlayer.getCharacter().getHealth() + 10, 100));
                 break;
             case BOMB_COUNT:
@@ -568,7 +535,6 @@ public class GameController {
 
             // null => gameCharacter uses it's inherent startPosition
             movable.spawn(null);
-//            updateStats();
 
         } else if (movable instanceof Enemy) {
             if (!deadEnemies.contains((Enemy)movable)) {
