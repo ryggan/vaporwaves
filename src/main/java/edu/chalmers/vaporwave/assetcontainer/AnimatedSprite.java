@@ -48,7 +48,7 @@ public class AnimatedSprite extends Sprite {
      * @param duration
      * @param startPosition
      */
-    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
+    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset, double scale) {
 
         // Checking arguments, throwing exception if something is wrong
 
@@ -82,7 +82,7 @@ public class AnimatedSprite extends Sprite {
                 (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));
 
         setOffset(offset[0], offset[1]);
-        setScale(Constants.GAME_SCALE);
+        setScale(scale);
 
         // Initiating frames-list, by calculating every coordinate in the spritesheet
 
@@ -106,6 +106,9 @@ public class AnimatedSprite extends Sprite {
         }
 
     }
+    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
+        this(spriteSheet, spriteDimension, length, duration, startPosition, offset, Constants.GAME_SCALE);
+    }
     public AnimatedSprite(String fileName, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
         this(new Image(fileName), spriteDimension, length, duration, startPosition, offset);
     }
@@ -128,8 +131,11 @@ public class AnimatedSprite extends Sprite {
      */
     @Override
     public void setScale(double scale) {
+        boolean differentScale = (scale != getScale());
         super.setScale(scale);
-        setSpriteSheet(this.originalSpriteSheet);
+        if (differentScale) {
+            setSpriteSheet(this.originalSpriteSheet);
+        }
     }
 
     /**
@@ -201,7 +207,13 @@ public class AnimatedSprite extends Sprite {
 
     public void setSpriteSheet(Image spriteSheet) {
         this.originalSpriteSheet = spriteSheet;
-        this.spriteSheet = Utils.resize(this.originalSpriteSheet, getScale());
+        if (spriteSheet != null) {
+            if (getScale() == 1.0) {
+                this.spriteSheet = this.originalSpriteSheet;
+            } else {
+                this.spriteSheet = Utils.resize(this.originalSpriteSheet, getScale());
+            }
+        }
     }
 
     public int getLength() {

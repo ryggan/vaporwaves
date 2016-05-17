@@ -27,18 +27,18 @@ public class Sprite {
     public Sprite() {
         this.positionX = 0;
         this.positionY = 0;
-        this.scale = Constants.GAME_SCALE;
+        this.scale = 1;
         this.stayOnPixel = true;
     }
 
-    public Sprite(Image image) {
+    public Sprite(Image image, double scale) {
         this();
         setImage(image);
+        setScale(scale);
     }
 
-    public Sprite(String fileName) {
-        this();
-        setImage(fileName);
+    public Sprite(Image image) {
+        this(image, Constants.GAME_SCALE);
     }
 
     public Sprite(Sprite sprite) {
@@ -52,7 +52,11 @@ public class Sprite {
     public void setImage(Image image) {
         this.originalImage = image;
         if (image != null) {
-            this.image = Utils.resize(this.originalImage, this.scale);
+            if (this.scale == 1.0) {
+                this.image = this.originalImage;
+            } else {
+                this.image = Utils.resize(this.originalImage, this.scale);
+            }
             this.width = image.getWidth();
             this.height = image.getHeight();
         }
@@ -83,8 +87,11 @@ public class Sprite {
      * @param scale
      */
     public void setScale(double scale) {
+        boolean differentScale = (scale != this.scale);
         this.scale = scale;
-        setImage(this.originalImage);
+        if (differentScale) {
+            setImage(this.originalImage);
+        }
     }
 
     public String toString() {
