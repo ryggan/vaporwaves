@@ -12,14 +12,13 @@ import java.util.Set;
 public class NewGameEvent {
     private ArenaMap arenaMap;
     private Player localPlayer;
-    private Player remotePlayer;
-    private List<Player> players;
+    private Set<Player> players;
     private Set<PowerUpType> enabledPowerUps;
     private int timeLimit;
 
     public NewGameEvent() {
         this.enabledPowerUps = new HashSet<>();
-        this.players = new ArrayList<>();
+        this.players = new HashSet<>();
     }
 
     public void setArenaMap(ArenaMap arenaMap) {
@@ -48,20 +47,21 @@ public class NewGameEvent {
         return this.localPlayer;
     }
 
-    public void setRemotePlayer(Player localPlayer) {
-        this.remotePlayer = localPlayer;
-    }
-
-    public Player getRemotePlayer() {
-        return this.remotePlayer;
-    }
-
     public void addPlayer(Player player) {
         this.players.add(player);
     }
 
-    public List<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return this.players;
+    }
+
+    public Player getPrimaryPlayer() {
+        for (Player player : players) {
+            if (player.getPlayerId() == 0) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public void setTimeLimit(int timeLimit) {

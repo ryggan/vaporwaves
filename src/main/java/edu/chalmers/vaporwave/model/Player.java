@@ -36,6 +36,7 @@ public class Player {
         System.out.println("Powerupscore after update is " + powerUpScore);
     }
 
+    // todo: this as a counter instead?
     public int getScore() {
         this.score = this.powerUpScore*50 + this.kills*1000 + this.creeps*100 - this.deaths*200;
         if(this.score >= 0) {
@@ -156,7 +157,6 @@ public class Player {
         Player other = (Player)otherObject;
         return this.playerId == other.playerId &&
                 this.playerName.equals(other.playerName) &&
-                this.gameCharacter.equals(other.gameCharacter) &&
                 this.score == other.score &&
                 this.kills == other.kills &&
                 this.creeps == other.creeps &&
@@ -167,7 +167,6 @@ public class Player {
     public int hashCode() {
         return this.playerId * 3 +
                 this.playerName.hashCode() * 5 +
-                this.gameCharacter.hashCode() * 7 +
                 this.score * 11 +
                 this.kills * 13 +
                 this.creeps * 17 +

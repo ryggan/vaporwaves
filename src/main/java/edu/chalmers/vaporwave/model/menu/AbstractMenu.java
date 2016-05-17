@@ -4,6 +4,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.Constants;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public abstract class AbstractMenu {
         this.currentSelected = currentSelected;
         this.menuItems = ArrayCloner.intArrayCloner(menuItems);
         this.newGameEvent = newGameEvent;
-        this.remoteSelected = new int[4];
+        this.remoteSelected = new int[Constants.MAX_NUMBER_OF_PLAYERS];
     }
 
     public void changeSelected(Direction direction, Player player) {

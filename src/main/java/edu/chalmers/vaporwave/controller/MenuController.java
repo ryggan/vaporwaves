@@ -47,11 +47,11 @@ public class MenuController {
         player.setMineControl("CAPS");
         this.newGameEvent.addPlayer(player);
 
-//        remotePlayer = new Player(3, "PlayerThree");
-//        this.remotePlayer.setDirectionControls(new String[] {"F", "T", "H", "G"});
-//        this.remotePlayer.setBombControl("R");
-//        this.remotePlayer.setMineControl("Y");
-//        this.newGameEvent.setRemotePlayer(this.remotePlayer);
+        player = new Player(2, "PlayerThree");
+        player.setDirectionControls(new String[] {"F", "T", "H", "G"});
+        player.setBombControl("R");
+        player.setMineControl("Y");
+        this.newGameEvent.addPlayer(player);
 
         updatePlayerGamePads(newGameEvent.getPlayers());
 
@@ -72,25 +72,33 @@ public class MenuController {
                 this.menuMap.get(activeMenu).getSelectedSuper(),
                 this.menuMap.get(activeMenu).getSelectedSub(),
                 null,
-                newGameEvent.getPlayers().get(0),
+                newGameEvent.getPrimaryPlayer(),
                 false
         );
     }
 
-    public void updatePlayerGamePads(List<Player> players) {
+    public void updatePlayerGamePads(Set<Player> players) {
         ListenerController.getInstance().updateGamePads();
 
         List<Controller> gamePads = ListenerController.getInstance().getGamePads();
-        for (int i = 0; i < players.size(); i++) {
-            if (gamePads.size() > i) {
-                players.get(i).setGamePad(gamePads.get(i));
+
+
+        for (Player player : players) {
+            if (gamePads.size() > player.getPlayerId()) {
+                player.setGamePad(gamePads.get(player.getPlayerId()));
             }
         }
+
+//        for (int i = 0; i < players.size(); i++) {
+//            if (gamePads.size() > i) {
+//                players.get(i).setGamePad(gamePads.get(i));
+//            }
+//        }
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        localPlayerInput(this.newGameEvent.getPlayers().get(0));
+        localPlayerInput(this.newGameEvent.getPrimaryPlayer());
 
 
         for (Player player : newGameEvent.getPlayers()) {
@@ -124,7 +132,7 @@ public class MenuController {
                 }
             }
             if (allPressed.contains("ENTER") || allPressed.contains("SPACE") || allPressed.contains("BTN_A")) {
-                updateViews(this.newGameEvent.getPlayers().get(0));
+                updateViews(this.newGameEvent.getPrimaryPlayer());
             }
         }
 
@@ -162,7 +170,7 @@ public class MenuController {
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
                             break;
                     }
-                    updateViews(this.newGameEvent.getPlayers().get(0));
+                    updateViews(this.newGameEvent.getPrimaryPlayer());
 
                     break;
                 default:
@@ -195,7 +203,7 @@ public class MenuController {
             String key = allReleased.get(0);
 
             if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
-                menuMap.get(activeMenu).performMenuAction(newGameEvent, 1);
+                menuMap.get(activeMenu).performMenuAction(newGameEvent, player.getPlayerId());
 
                 if (menuMap.get(activeMenu) instanceof CharacterSelect && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                     ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
@@ -213,7 +221,8 @@ public class MenuController {
                 this.menuMap.get(activeMenu).getSelectedSuper(),
                 this.menuMap.get(activeMenu).getSelectedSub(),
                 this.menuMap.get(activeMenu).getRemoteSelected(),
-                player, this.pressedDown
+                player,
+                this.pressedDown
         );
     }
 
@@ -227,7 +236,7 @@ public class MenuController {
 
     private boolean isNewGameEventReady() {
         return this.newGameEvent.getLocalPlayer().getCharacter() != null &&
-                this.newGameEvent.getPlayers().get(0).getCharacter() != null;
+                this.newGameEvent.getPrimaryPlayer().getCharacter() != null;
     }
 
     @Subscribe

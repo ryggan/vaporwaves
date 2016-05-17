@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
+import com.sun.tools.internal.jxc.ap.Const;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
@@ -32,14 +33,18 @@ public class CharacterSelect extends AbstractMenu {
 
     @Override
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
+        System.out.println("performMenuAction in CharacterSelect. Player ID : " + playerID);
         if (this.getSelectedSuper() == 1 && playerID == 0 && this.selectedCharacters[getSelectedSub()[1]] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[getSelectedSub()[1]] = 0;
             newGameEvent.getLocalPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
-        } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, 4)] == -1) {
+        } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
             unselectCharacterForPlayer(playerID);
-            this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), 1, 4)] = playerID;
-            newGameEvent.getPlayers().get(playerID).setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, 4)], 0));
+            this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), 1, Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
+
+            for (Player player : newGameEvent.getPlayers()) {
+                player.setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)], playerID));
+            }
         }
     }
 

@@ -69,12 +69,22 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
-        this.localPlayer = newGameEvent.getPlayers().get(0);
-        this.remotePlayer = newGameEvent.getPlayers().get(1);
 //
-//        for (Player player : newGameEvent.getPlayers()) {
-//            this.players.add(player);
-//        }
+//        this.localPlayer = newGameEvent.getPlayers().get(0);
+//        this.remotePlayer = newGameEvent.getPlayers().get(1);
+
+//        System.out.println("Number of players: " + newGameEvent.getPlayers().size());
+
+        this.players = new HashSet<>();
+
+        for (Player player : newGameEvent.getPlayers()) {
+            if (player.getPlayerId() == 0) {
+                this.localPlayer = player;
+            } else {
+                this.remotePlayer = player;
+            }
+            this.players.add(player);
+        }
 
         // todo: Should come from newGameEvent instead:
         this.destroyablePowerUps = true;

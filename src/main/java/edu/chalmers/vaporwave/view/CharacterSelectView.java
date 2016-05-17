@@ -31,15 +31,23 @@ public class CharacterSelectView extends AbstractMenuView {
 
         this.selectedCharacter = new int[]{-1, -1, -1, -1};
 
-        this.selectedCharacterSprite = new SpriteID[4][2];
+        this.selectedCharacterSprite = new SpriteID[4][4];
         this.selectedCharacterSprite[0][0] = SpriteID.MENU_CHARACTER_MEI_1;
         this.selectedCharacterSprite[0][1] = SpriteID.MENU_CHARACTER_MEI_2;
+        this.selectedCharacterSprite[0][2] = SpriteID.MENU_CHARACTER_MEI_3;
+        this.selectedCharacterSprite[0][3] = SpriteID.MENU_CHARACTER_MEI_4;
         this.selectedCharacterSprite[1][0] = SpriteID.MENU_CHARACTER_ALYSSA_1;
         this.selectedCharacterSprite[1][1] = SpriteID.MENU_CHARACTER_ALYSSA_2;
+        this.selectedCharacterSprite[1][2] = SpriteID.MENU_CHARACTER_ALYSSA_3;
+        this.selectedCharacterSprite[1][3] = SpriteID.MENU_CHARACTER_ALYSSA_4;
         this.selectedCharacterSprite[2][0] = SpriteID.MENU_CHARACTER_ZYPHER_1;
         this.selectedCharacterSprite[2][1] = SpriteID.MENU_CHARACTER_ZYPHER_2;
+        this.selectedCharacterSprite[2][2] = SpriteID.MENU_CHARACTER_ZYPHER_3;
+        this.selectedCharacterSprite[2][3] = SpriteID.MENU_CHARACTER_ZYPHER_4;
         this.selectedCharacterSprite[3][0] = SpriteID.MENU_CHARACTER_CHARLOTTE_1;
         this.selectedCharacterSprite[3][1] = SpriteID.MENU_CHARACTER_CHARLOTTE_2;
+        this.selectedCharacterSprite[3][2] = SpriteID.MENU_CHARACTER_CHARLOTTE_3;
+        this.selectedCharacterSprite[3][3] = SpriteID.MENU_CHARACTER_CHARLOTTE_4;
 
         this.characterSelectorPositionList = new ArrayList<>();
         Map<Integer, Point> characterSelectorPositions1 = new HashMap<>();
@@ -54,8 +62,15 @@ public class CharacterSelectView extends AbstractMenuView {
         characterSelectorPositions2.put(2, new Point(830, 145));
         characterSelectorPositions2.put(3, new Point(950, 185));
 
+        Map<Integer, Point> characterSelectorPositions3 = new HashMap<>();
+        characterSelectorPositions3.put(0, new Point(610, 180));
+        characterSelectorPositions3.put(1, new Point(700, 135));
+        characterSelectorPositions3.put(2, new Point(860, 145));
+        characterSelectorPositions3.put(3, new Point(980, 185));
+
         this.characterSelectorPositionList.add(characterSelectorPositions1);
         this.characterSelectorPositionList.add(characterSelectorPositions2);
+        this.characterSelectorPositionList.add(characterSelectorPositions3);
 
         menuButtonViewList = new ArrayList<>();
         menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(40, 20)));
@@ -70,11 +85,15 @@ public class CharacterSelectView extends AbstractMenuView {
 
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(new Point(580,160));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setScale(1);
+
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(new Point(610,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setScale(1);
     }
 
     @Override
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
+
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
@@ -92,7 +111,11 @@ public class CharacterSelectView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).render(getBackgroundGC(), 0);
 
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(this.characterSelectorPositionList.get(2).get(Utils.calculateRemoteSelected(remoteSelected, 2, 4)));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).render(getBackgroundGC(), 0);
+
         for (int i = 0; i < selectedCharacter.length; i++) {
+            System.out.println(selectedCharacter[i]);
             if (selectedCharacter[i] >= 0) {
                 Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setPosition(CHARACTERS_POSITION);
                 Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setScale(1);
