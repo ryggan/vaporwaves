@@ -182,6 +182,19 @@ public class Utils {
             selected += modulus;
         }
         return selected % modulus;
+    }
 
+    public static MapObject getMapObjectPlayerFromID(int id) {
+        switch (id) {
+            case 0:
+                return MapObject.PLAYER1;
+            case 1:
+                return MapObject.PLAYER2;
+            case 2:
+                return MapObject.PLAYER3;
+            case 3:
+                return MapObject.PLAYER4;
+
+        }
     }
 }
