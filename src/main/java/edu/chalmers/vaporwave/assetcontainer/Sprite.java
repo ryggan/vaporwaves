@@ -23,6 +23,8 @@ public class Sprite {
     private double positionY;
     private double offsetX;
     private double offsetY;
+    private double offsetWidth;
+    private double offsetHeight;
 
     private double scale;
     private boolean stayOnPixel;
@@ -36,6 +38,7 @@ public class Sprite {
         this.positionY = 0;
         this.scale = 1;
         this.stayOnPixel = true;
+        setOffsetDimension(0, 0);
     }
 
     public Sprite(Image spriteSheet, Dimension dimension, int[] sourceGridPosition, double[] offset, double scale) {
@@ -114,8 +117,8 @@ public class Sprite {
     // Draws the sprites image on canvas at the right position.
     public void render(GraphicsContext gc, double time) {
 
-        double width = this.width * this.scale;
-        double height = this.height * this.scale;
+        double width = (this.width - this.offsetWidth) * this.scale;
+        double height = (this.height - this.offsetHeight) * this.scale;
         double sourcex = this.sourceCanvasX + this.sourceGridX * width;
         double sourcey = this.sourceCanvasY + this.sourceGridY * height;
 
@@ -183,6 +186,18 @@ public class Sprite {
     }
     public double getOffsetY() {
         return this.offsetY;
+    }
+
+    public void setOffsetDimension(double offsetWidth, double offsetHeight) {
+        this.offsetWidth = offsetWidth;
+        this.offsetHeight = offsetHeight;
+    }
+
+    public double getOffsetWidth() {
+        return this.offsetWidth;
+    }
+    public double getOffsetHeight() {
+        return this.offsetHeight;
     }
 
     public void setSourceGridXY(int sourceGridX, int sourceGridY) {

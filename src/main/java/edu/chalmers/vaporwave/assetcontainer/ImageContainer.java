@@ -10,7 +10,7 @@ class ImageContainer {
     private Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 3 + 5 + 6 + 13 + 3;
+    private static final double totalTasks = 2 + 3 + 2 + 6 + 13 + 3;
     
     ImageContainer() {
 
@@ -32,11 +32,13 @@ class ImageContainer {
 
         // >>> GAME STUFF: <<<
 
-        // HUD stuff (5):
-        addImage(ImageID.HUD_BOX, new Image("images/hud/hud_box.png"));
-        addImage(ImageID.HUD_HEALTHBAR_FILLED, new Image("images/hud/hud_healthbar_filled.png"));
-        addImage(ImageID.HUD_STATUSBAR_FILLED, new Image("images/hud/hud_statusbar_filled.png"));
-        addImage(ImageID.HUD_STATUSBAR_PLUS, new Image("images/hud/hud_statusbar_plus.png"));
+        // HUD stuff (2):
+        addImage(ImageID.HUD_BOX_SHEET, new Image("images/hud/spritesheet-hudbox-136x180.png"));
+
+//        addImage(ImageID.HUD_BOX, new Image("images/hud/hud_box.png"));
+//        addImage(ImageID.HUD_HEALTHBAR_FILLED, new Image("images/hud/hud_healthbar_filled.png"));
+//        addImage(ImageID.HUD_STATUSBAR_FILLED, new Image("images/hud/hud_statusbar_filled.png"));
+//        addImage(ImageID.HUD_STATUSBAR_PLUS, new Image("images/hud/hud_statusbar_plus.png"));
 
 //        addImage(ImageID.HUD_HEALTHBAR_EMPTY, new Image("images/hud/healthbarempty.png"));
 //        addImage(ImageID.HUD_HEALTHBAR_FILLED, new Image("images/hud/healthbarfilled.png"));

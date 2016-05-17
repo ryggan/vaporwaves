@@ -221,14 +221,22 @@ public class ArenaView {
         this.hudView = new HUDView(root, players);
     }
 
-    public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
-        hudView.updateStats(health, speed, bombRange, bombCount);
+    public void updateStats(Player player) {
+        this.hudView.updateStats(player);
     }
 
-    public void updateHealth(int health){
-        hudView.updateHealthBar(health);
-       // System.out.println(health);
+    public void updateStats(Set<Player> players) {
+        this.hudView.updateStats(players);
     }
+
+//    public void updateStats(double health, double speed, int bombRange, int bombCount, double timeSinceStart){
+//        hudView.updateStats(health, speed, bombRange, bombCount);
+//    }
+//
+//    public void updateHealth(int health){
+//        hudView.updateHealthBar(health);
+//       // System.out.println(health);
+//    }
 
     // todo - UPDATE VIEW SECTION
 
