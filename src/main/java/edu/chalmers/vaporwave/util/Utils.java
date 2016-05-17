@@ -196,5 +196,6 @@ public class Utils {
                 return MapObject.PLAYER4;
 
         }
+        return null;
     }
 }
