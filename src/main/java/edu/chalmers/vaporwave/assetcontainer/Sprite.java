@@ -111,7 +111,6 @@ public class Sprite {
     public Image getImage() {
         return this.image;
     }
-
     // Draws the sprites image on canvas at the right position.
     public void render(GraphicsContext gc, double time) {
 

@@ -22,9 +22,6 @@ public class AnimatedSprite extends Sprite {
 
     private ArrayList<int[]> frames;
     private int length;
-    private Image originalSpriteSheet;
-    private Image spriteSheet;
-//    private Dimension sheetDimension;
     private double duration;
     private double timeOffset;
     private boolean startFromBeginning;
@@ -48,7 +45,10 @@ public class AnimatedSprite extends Sprite {
      * @param duration
      * @param startPosition
      */
-    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset, double scale) {
+    public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition,
+                          double[] offset, double scale) {
+
+        super(spriteSheet, spriteDimension, startPosition, offset, scale);
 
         // Checking arguments, throwing exception if something is wrong
 
@@ -61,8 +61,6 @@ public class AnimatedSprite extends Sprite {
 
         this.frames = new ArrayList<>();
 
-        this.originalSpriteSheet = spriteSheet;
-        this.spriteSheet = spriteSheet;
         this.length = length;
         this.duration = duration;
 
@@ -74,15 +72,8 @@ public class AnimatedSprite extends Sprite {
         this.startTime = 0;
         this.playedYet = false;
 
-
-        setWidth(spriteDimension.getWidth());
-        setHeight(spriteDimension.getHeight());
-
         Dimension sheetDimension = new Dimension((int)Math.floor(spriteSheet.getWidth() / spriteDimension.getWidth()),
                 (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));
-
-        setOffsetXY(offset[0], offset[1]);
-        setScale(scale);
 
         // Initiating frames-list, by calculating every coordinate in the spritesheet
 
@@ -113,37 +104,14 @@ public class AnimatedSprite extends Sprite {
         this(new Image(fileName), spriteDimension, length, duration, startPosition, offset);
     }
 
-    /**
-     * Sets the coordinates in the spritesheet for a specific frame in the frames list.
-     * @param frameNum
-     * @param posx
-     * @param posy
-     */
+    // Sets the coordinates in the spritesheet for a specific frame in the frames list.
     public void setFramePos(int frameNum, int posx, int posy) {
         int[] frame = {posx, posy};
         frames.set(frameNum, frame);
     }
 
-    /**
-     * Besides setting the scale, also updates the Image, via Utils, to the new resized scale.
-     * A slightly changed setScale() overridden, since the setImage() function is unused in AnimatedSprite.
-     * @param scale
-     */
-    @Override
-    public void setScale(double scale) {
-        boolean differentScale = (scale != getScale());
-        super.setScale(scale);
-        if (differentScale) {
-            setSpriteSheet(this.originalSpriteSheet);
-        }
-    }
-
-    /**
-     * This method is supposed to be used instead of the render(GraphicsContext gc) in the superclass, because
-     * this one includes the calculation of which image is supposed to be shown, from the frames list.
-     * @param gc
-     * @param time
-     */
+    // This method is supposed to be used instead of the render(GraphicsContext gc) in the superclass, because
+    // this one includes the calculation of which image is supposed to be shown, from the frames list.
     @Override
     public void render(GraphicsContext gc, double time) {
 
@@ -187,7 +155,7 @@ public class AnimatedSprite extends Sprite {
         }
 
         if (lingerOnLastFrame || !animationFinished) {
-            gc.drawImage(spriteSheet, sourcex, sourcey, width, height, targetx, targety, width, height);
+            gc.drawImage(getImage(), sourcex, sourcey, width, height, targetx, targety, width, height);
         }
     }
 
@@ -204,17 +172,6 @@ public class AnimatedSprite extends Sprite {
     }
 
     // GETTERS AND SETTERS:
-
-    public void setSpriteSheet(Image spriteSheet) {
-        this.originalSpriteSheet = spriteSheet;
-        if (spriteSheet != null) {
-            if (getScale() == 1.0) {
-                this.spriteSheet = this.originalSpriteSheet;
-            } else {
-                this.spriteSheet = Utils.resize(this.originalSpriteSheet, getScale());
-            }
-        }
-    }
 
     public int getLength() {
         return length;
@@ -258,7 +215,6 @@ public class AnimatedSprite extends Sprite {
         int hash = 17 + super.hashCode();
         hash += this.length * 31;
         hash += this.duration * 73;
-        hash += this.originalSpriteSheet.hashCode() * 57;
         return hash;
     }
 
@@ -266,8 +222,7 @@ public class AnimatedSprite extends Sprite {
     public boolean equals(Object o){
         if (super.equals(o) && o instanceof AnimatedSprite) {
             AnimatedSprite sprite = (AnimatedSprite) o;
-            return (this.length == sprite.length && this.duration == sprite.duration
-                    && this.originalSpriteSheet == sprite.originalSpriteSheet);
+            return (this.length == sprite.length && this.duration == sprite.duration);
         }
         return false;
     }
