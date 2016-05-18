@@ -57,20 +57,27 @@ public class CharacterSelectView extends AbstractMenuView {
         characterSelectorPositions1.put(3, new Point(920, 190));
 
         Map<Integer, Point> characterSelectorPositions2 = new HashMap<>();
-        characterSelectorPositions2.put(0, new Point(580, 180));
-        characterSelectorPositions2.put(1, new Point(670, 135));
-        characterSelectorPositions2.put(2, new Point(830, 145));
-        characterSelectorPositions2.put(3, new Point(950, 185));
+        characterSelectorPositions2.put(0, new Point(570, 180));
+        characterSelectorPositions2.put(1, new Point(660, 135));
+        characterSelectorPositions2.put(2, new Point(820, 145));
+        characterSelectorPositions2.put(3, new Point(940, 185));
 
         Map<Integer, Point> characterSelectorPositions3 = new HashMap<>();
-        characterSelectorPositions3.put(0, new Point(610, 180));
-        characterSelectorPositions3.put(1, new Point(700, 135));
-        characterSelectorPositions3.put(2, new Point(860, 145));
-        characterSelectorPositions3.put(3, new Point(980, 185));
+        characterSelectorPositions3.put(0, new Point(590, 180));
+        characterSelectorPositions3.put(1, new Point(680, 135));
+        characterSelectorPositions3.put(2, new Point(840, 145));
+        characterSelectorPositions3.put(3, new Point(960, 185));
+
+        Map<Integer, Point> characterSelectorPositions4 = new HashMap<>();
+        characterSelectorPositions4.put(0, new Point(610, 180));
+        characterSelectorPositions4.put(1, new Point(700, 135));
+        characterSelectorPositions4.put(2, new Point(860, 145));
+        characterSelectorPositions4.put(3, new Point(980, 185));
 
         this.characterSelectorPositionList.add(characterSelectorPositions1);
         this.characterSelectorPositionList.add(characterSelectorPositions2);
         this.characterSelectorPositionList.add(characterSelectorPositions3);
+        this.characterSelectorPositionList.add(characterSelectorPositions4);
 
         menuButtonViewList = new ArrayList<>();
         menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(40, 20)));
@@ -83,11 +90,14 @@ public class CharacterSelectView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(new Point(550,160));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setScale(1);
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(new Point(580,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(new Point(570,160));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setScale(1);
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(new Point(610,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(new Point(590,160));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setScale(1);
+
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setPosition(new Point(610,160));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setScale(1);
     }
 
     @Override
@@ -113,6 +123,9 @@ public class CharacterSelectView extends AbstractMenuView {
 
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(this.characterSelectorPositionList.get(2).get(Utils.calculateRemoteSelected(remoteSelected, 2, 4)));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).render(getBackgroundGC(), 0);
+
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setPosition(this.characterSelectorPositionList.get(3).get(Utils.calculateRemoteSelected(remoteSelected, 3, 4)));
+        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).render(getBackgroundGC(), 0);
 
         for (int i = 0; i < selectedCharacter.length; i++) {
             if (selectedCharacter[i] >= 0) {

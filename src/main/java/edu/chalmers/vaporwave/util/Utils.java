@@ -100,24 +100,28 @@ public class Utils {
             case "LEFT":
             case "A":
             case "F":
+            case "J":
             case "LS_LEFT":
             case "DPAD_LEFT":
                 return Direction.LEFT;
             case "UP":
             case "W":
             case "T":
+            case "I":
             case "LS_UP":
             case "DPAD_UP":
                 return Direction.UP;
             case "RIGHT":
             case "D":
             case "H":
+            case "L":
             case "LS_RIGHT":
             case "DPAD_RIGHT":
                 return Direction.RIGHT;
             case "DOWN":
             case "S":
             case "G":
+            case "K":
             case "LS_DOWN":
             case "DPAD_DOWN":
                 return Direction.DOWN;

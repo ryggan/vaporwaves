@@ -52,6 +52,12 @@ public class MenuController {
         player.setMineControl("Y");
         this.newGameEvent.addPlayer(player);
 
+        player = new Player(3, "PlayerFour");
+        player.setDirectionControls(new String[] {"J", "I", "L", "K"});
+        player.setBombControl("U");
+        player.setMineControl("O");
+        this.newGameEvent.addPlayer(player);
+
         updatePlayerGamePads(newGameEvent.getPlayers());
 
         this.activeMenu = MenuState.START_MENU;
