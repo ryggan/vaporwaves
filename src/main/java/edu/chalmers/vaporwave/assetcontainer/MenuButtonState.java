@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.model.menu;
+package edu.chalmers.vaporwave.assetcontainer;
 
 public enum MenuButtonState {
     UNSELECTED, SELECTED, PRESSED

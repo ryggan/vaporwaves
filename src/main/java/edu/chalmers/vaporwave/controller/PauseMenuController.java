@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.controller;
 
-import edu.chalmers.vaporwave.view.MenuButtonView;
 import edu.chalmers.vaporwave.view.PauseMenuView;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
@@ -13,8 +12,8 @@ import java.util.List;
  */
 public class PauseMenuController {
 
-    //private List<MenuButtonView> pauseMenuButtons;
-   // private List<MenuButtonView> optionsMenuButtons;
+    //private List<MenuButtonSprite> pauseMenuButtons;
+   // private List<MenuButtonSprite> optionsMenuButtons;
 
     //chaning name to pauseMenuView
     private PauseMenuView pauseMenuView;
