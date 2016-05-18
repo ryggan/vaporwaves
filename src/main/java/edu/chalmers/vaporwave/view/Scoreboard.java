@@ -23,7 +23,6 @@ public class Scoreboard {
     private Canvas scoreboard;
     private GraphicsContext scoreboardGC;
     private List<Player> playerList;
-    //private Group root;
     private AnchorPane scoreboardPane;
     private GridPane gridPane;
     private Label[][] playerLabels;
@@ -54,10 +53,10 @@ public class Scoreboard {
                 Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
         scoreboardGC = scoreboard.getGraphicsContext2D();
         scoreboard.setLayoutX(xoffset);
-        scoreboard.setLayoutY(yoffset);
+        scoreboard.setLayoutY(yoffset-10);
 
         scoreboardBackground.setPosition(0, 0);
-        scoreboardBackground.setScale(Constants.GAME_SCALE);
+        scoreboardBackground.setScale(1);
         scoreboardBackground.render(scoreboardGC, -1);
 
         scoreboardPane = new AnchorPane();
@@ -91,12 +90,12 @@ public class Scoreboard {
     //should have "ArrayList<Player> players" as argument, made dummy list in method for testing purposes
     public void addPlayersToScoreboard(/*ArrayList<Player> players*/) {
         gridPane = new GridPane();
-        gridPane.setPrefSize(512,448);
-        gridPane.setHgap(GAP + 20);
-        gridPane.setVgap(GAP + 30);
-        gridPane.setLayoutX(xoffset);
-        gridPane.setLayoutY(yoffset);
-        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setPrefSize(672,480);
+        gridPane.setHgap(120);
+        gridPane.setVgap(40);
+        gridPane.setLayoutX(104);
+        gridPane.setLayoutY(176);
+        ///gridPane.setPadding(new Insets(50, 50, 50, 50));
 
         gridPane.setAlignment(Pos.TOP_CENTER);
         //tilePane.setAlignment();
@@ -106,28 +105,11 @@ public class Scoreboard {
 
     private void createElements() {
         gridPane.getChildren().clear();
-        Group labels = new Group();
-        Label name = new Label("Player:", labels);
-        name.setStyle("-fx-text-fill: white; -fx-font-size: 16;");
-        Label kills = new Label("Kills:", labels);
-        kills.setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
-        Label deaths = new Label("Deaths:", labels);
-        deaths.setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
-        Label creeps = new Label("Creeps:", labels);
-        creeps.setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
-        Label score = new Label("Score:", labels);
-        score.setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
-        gridPane.add(name, 0, 0);
-        gridPane.add(kills, 1, 0);
-        gridPane.add(deaths, 2 , 0);
-        gridPane.add(creeps, 3, 0);
-        gridPane.add(score, 4, 0);
-
 
         for(int i = 0; i < playerList.size(); i++) {
             for(int j = 0; j < 5; j++) {
                 playerLabels[i][j] = new Label(playerList.get(i).getPlayerInfo()[j] + "");
-                playerLabels[i][j].setStyle("-fx-text-fill: white;  -fx-font-size: 16;");
+                playerLabels[i][j].setStyle("-fx-font-family: 'Lucida Console'; -fx-text-fill: black;  -fx-font-size: 16;");
                 gridPane.add(playerLabels[i][j], j, i+1);
             }
         }

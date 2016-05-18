@@ -10,3 +10,17 @@
     -fx-font-family: 'Bauhaus 93';
     -fx-text-fill: #999999;
 }
+
+.healthPercentage {
+    -fx-font-size: 16;
+    -fx-font-family: 'Bauhaus Std';
+    -fx-font-family: 'Bauhaus 93';
+    -fx-text-fill: #999999;
+}
+
+.scoreBoard {
+    -fx-font-size: 24;
+    -fx-font-family: 'Lucida Console';
+    -fx-text-fill: #967888;
+}
+
