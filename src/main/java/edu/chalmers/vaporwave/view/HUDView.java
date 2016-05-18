@@ -7,12 +7,12 @@ import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.Constants;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.*;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
-import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 
 import java.awt.*;
@@ -37,6 +37,7 @@ public class HUDView {
     private Map<Integer, Integer> playerIDs;
 
     private Label[] playerNames;
+    private Label[] playerScores;
 
     private double[] currentHealth;
     private int healthChange;
@@ -51,6 +52,7 @@ public class HUDView {
 
         this.hudBoxPositions = new Point[] { new Point(20, 122), new Point(926, 122), new Point(20, 422), new Point(926, 422) };
         this.playerNames = new Label[4];
+        this.playerScores = new Label[4];
         this.playerIDs = new HashMap<>();
 
         this.hudBox = Container.getSprite(SpriteID.HUD_BOX);
@@ -72,13 +74,26 @@ public class HUDView {
             this.playerNames[index].setFont(Container.getFont(FileID.FONT_BAUHAUS_18));
             this.playerNames[index].setTextFill(Color.WHITE);
             this.playerNames[index].setLayoutX(this.hudBoxPositions[index].x + 6);
-            this.playerNames[index].setLayoutY(this.hudBoxPositions[index].y + 2);
+            this.playerNames[index].setLayoutY(this.hudBoxPositions[index].y + 3);
             String name = player.getName().toUpperCase(Locale.ENGLISH);
             if (name.length() > 12) {
                 name = name.substring(0, 11) + "..";
             }
             this.playerNames[index].setText(name);
             this.root.getChildren().add(this.playerNames[index]);
+
+            this.playerScores[index] = new Label();
+            this.playerScores[index].setFont(Container.getFont(FileID.FONT_BAUHAUS_14));
+            this.playerScores[index].setTextFill(Color.valueOf("fd2881"));
+            this.playerScores[index].setLayoutX(this.hudBoxPositions[index].x + 8);
+            this.playerScores[index].setLayoutY(this.hudBoxPositions[index].y + 26);
+            this.playerScores[index].setMinWidth(Control.USE_COMPUTED_SIZE);
+            this.playerScores[index].setMaxWidth(118);
+            this.playerScores[index].setMinWidth(this.playerScores[index].getMaxWidth());
+            this.playerScores[index].setAlignment(Pos.CENTER_RIGHT);
+            this.playerScores[index].setText("0");
+
+            this.root.getChildren().add(this.playerScores[index]);
 
             updateStats(player);
 
@@ -102,6 +117,8 @@ public class HUDView {
 
         this.hudBox.setPosition(boxPosition.x, boxPosition.y);
         this.hudBox.render(this.hudGC, 0);
+
+        this.playerScores[index].setText(""+player.getScore());
 
         double newHealth = character.getHealth();
         if (this.currentHealth[index] < newHealth - this.healthChange) {
