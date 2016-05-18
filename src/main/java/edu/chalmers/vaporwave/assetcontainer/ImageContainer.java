@@ -10,7 +10,7 @@ class ImageContainer {
     private Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 3 + 3 + 6 + 13 + 3;
+    private static final double totalTasks = 2 + 3 + 4 + 6 + 13 + 3;
     
     ImageContainer() {
 
@@ -32,9 +32,10 @@ class ImageContainer {
 
         // >>> GAME STUFF: <<<
 
-        // HUD stuff (3):
+        // HUD stuff (4):
         addImage(ImageID.HUD_BOX_SHEET, new Image("images/hud/spritesheet-hudbox-136x180.png"));
         addImage(ImageID.HUD_TIMER_MESSAGE, new Image("images/hud/timer_message.png"));
+        addImage(ImageID.HUD_GAMEOVER_MESSAGE, new Image("images/hud/gameover_message.png"));
         addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground.png"));
 
         // Background stuff (6):

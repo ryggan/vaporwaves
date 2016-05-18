@@ -14,6 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -30,8 +31,10 @@ public class HUDView {
     private Canvas hudCanvas;
     private GraphicsContext hudGC;
 
-    Sprite timerWindow;
-    Label timer;
+    private Sprite timerWindow;
+    private Label timer;
+    private Sprite gameOverWindow;
+    private Label gameOverMessage;
 
     private Sprite hudBox;
     private Sprite healthbar;
@@ -54,6 +57,27 @@ public class HUDView {
         this.root.getChildren().add(hudCanvas);
         this.hudGC = this.hudCanvas.getGraphicsContext2D();
 
+        // GAME OVER WINDOW
+
+        this.gameOverWindow = Container.getSprite(SpriteID.HUD_GAMEOVER_MESSAGE);
+        this.gameOverWindow.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.gameOverWindow.getWidth() / 2.0),
+                Math.round(Constants.WINDOW_HEIGHT / 2.0 - this.gameOverWindow.getHeight() / 2.0));
+
+        this.gameOverMessage = new Label();
+        this.gameOverMessage.setFont(Container.getFont(FileID.FONT_BAUHAUS_30));
+        this.gameOverMessage.setLayoutX(this.gameOverWindow.getPositionX() + 52);
+        this.gameOverMessage.setLayoutY(this.gameOverWindow.getPositionY() + 28);
+        this.gameOverMessage.setMaxWidth(180);
+        this.gameOverMessage.setMinWidth(this.gameOverMessage.getMaxWidth());
+        this.gameOverMessage.setMaxHeight(100);
+        this.gameOverMessage.setMinHeight(this.gameOverMessage.getMaxHeight());
+        this.gameOverMessage.setAlignment(Pos.TOP_CENTER);
+        this.gameOverMessage.setTextAlignment(TextAlignment.CENTER);
+        this.gameOverMessage.setWrapText(true);
+        this.gameOverMessage.setVisible(false);
+
+        root.getChildren().add(this.gameOverMessage);
+
         // TIMER
         this.timerWindow = Container.getSprite(SpriteID.HUD_TIMER_MESSAGE);
         this.timerWindow.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.timerWindow.getWidth() / 2.0), 10);
@@ -61,10 +85,10 @@ public class HUDView {
 
         this.timer = new Label();
         this.timer.setFont(Container.getFont(FileID.FONT_BAUHAUS_30));
-        this.timer.setLayoutX(this.timerWindow.getPositionX() + 47);
+        this.timer.setLayoutX(this.timerWindow.getPositionX() + 12);
         this.timer.setLayoutY(this.timerWindow.getPositionY() + 25);
 
-        root.getChildren().add(timer);
+        root.getChildren().add(this.timer);
 
         // HUD BOXES
         this.hudBoxPositions = new Point[] { new Point(20, 122), new Point(926, 122), new Point(20, 422), new Point(926, 422) };
@@ -105,7 +129,6 @@ public class HUDView {
             this.playerScores[index].setTextFill(Color.valueOf("fd2881"));
             this.playerScores[index].setLayoutX(this.hudBoxPositions[index].x + 8);
             this.playerScores[index].setLayoutY(this.hudBoxPositions[index].y + 26);
-            this.playerScores[index].setMinWidth(Control.USE_COMPUTED_SIZE);
             this.playerScores[index].setMaxWidth(118);
             this.playerScores[index].setMinWidth(this.playerScores[index].getMaxWidth());
             this.playerScores[index].setAlignment(Pos.CENTER_RIGHT);
@@ -183,7 +206,6 @@ public class HUDView {
         }
     }
 
-
     public void updateTimer(double time){
         String millis="" + (int)((time*1000)%100);
         String seconds="" + (int)time%60;
@@ -200,5 +222,11 @@ public class HUDView {
         }
 
         timer.setText(minutes+":"+seconds + ":"+millis);
+    }
+
+    public void showGameOverMessage(String message) {
+        this.gameOverWindow.render(this.hudGC, 0);
+        this.gameOverMessage.setVisible(true);
+        this.gameOverMessage.setText(message);
     }
 }

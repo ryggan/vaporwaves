@@ -134,6 +134,14 @@ public class ArenaModel {
         }
     }
 
+    public void clearTiles() {
+        for (int j = 0; j < this.arenaTiles.length; j++) {
+            for (int k = 0; k < this.arenaTiles[0].length; k++) {
+                this.arenaTiles[j][k] = null;
+            }
+        }
+    }
+
     public void addMovable(Movable movable) {
         arenaMovables.add(movable);
     }

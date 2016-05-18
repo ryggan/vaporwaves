@@ -21,6 +21,11 @@ import java.util.*;
 import java.util.List;
 
 public class GameController {
+
+    private enum GameState {
+        PRE_GAME, GAME_RUNS, GAME_PAUSED, GAME_OVER
+    }
+
     private Boolean scoreboardIsShowing = false;
     private Scoreboard scoreboard;
     private PauseMenuController pauseMenuController;
@@ -40,9 +45,9 @@ public class GameController {
     private double timeSinceStart;
     private double timeSinceStartOffset;
     private double pausedTime;
+    private double gameEndTimer;
 
-    private boolean gameIsPaused;
-    private boolean gameHasStarted;
+    private GameState gameState;
 
     //seconds
     private double timer;
@@ -71,11 +76,11 @@ public class GameController {
 
         // Initiates view
 
-        timeSinceStart = 0.0;
-        timeSinceStartOffset = 0.0;
-        pausedTime = 0.0;
-        gameIsPaused = false;
-        gameHasStarted = false;
+        this.timeSinceStart = 0.0;
+        this.timeSinceStartOffset = 0.0;
+        this.pausedTime = 0.0;
+        this.gameEndTimer = 4;
+        this.gameState = GameState.PRE_GAME;
 
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
@@ -97,13 +102,13 @@ public class GameController {
         this.arenaView = new ArenaView(root);
         this.pauseMenuController = new PauseMenuController(root);
 
-        arenaView.initArena(arenaModel.getArenaTiles());
-        arenaView.initHUD(this.players);
-        arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
+        this.arenaView.initArena(arenaModel.getArenaTiles());
+        this.arenaView.initHUD(this.players);
+        this.arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
 
         try {
             for (Player player : this.players) {
-                arenaModel.addMovable(player.getCharacter());
+                this.arenaModel.addMovable(player.getCharacter());
             }
         } catch(ArrayIndexOutOfBoundsException e) {
             System.out.println("Tile out of bounds!");
@@ -152,39 +157,30 @@ public class GameController {
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
-        if (!gameIsPaused) {
+        if (this.gameState != GameState.GAME_PAUSED) {
             this.timeSinceStart = timeSinceStart - this.timeSinceStartOffset;
 
-            if (gameHasStarted) {
+            if (this.gameState == GameState.GAME_RUNS) {
                 if (timer - timeSinceLastCall > 0) {
                     timer -= timeSinceLastCall;
                 } else {
                     timer = 0;
-
-                    // todo: Change this to some other kind of event
-                    // gameover
-                    //                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+                    this.arenaView.updateTimer(this.timer);
+                    gameOverStart("TIME IS UP!");
+                }
+            } else if (this.gameState == GameState.GAME_OVER) {
+                if (this.gameEndTimer- timeSinceLastCall > 0) {
+                    this.gameEndTimer -= timeSinceLastCall;
+                } else {
+                    this.gameEndTimer = 0;
+                    gameOverDone();
                 }
             }
         }
 
-//        if(!TimerModel.getInstance().isPaused()) {
-//            if (timeLimit - timeSinceLastCall > 0) {
-//                timeLimit = timeLimit - timeSinceLastCall;
-//            } else {
-//
-//                // gameover
-////                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
-//            }
-//            TimerModel.getInstance().updateTimer(this.timeLimit);
-//        }
-
         List<String> pressed = ListenerController.getInstance().getPressed();
 
-        if(!gameIsPaused) {
-
-//            TimerModel.getInstance().setPaused(false);
-
+        if(this.gameState == GameState.GAME_RUNS) {
             if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
                 for (Enemy enemy : enemies) {
                     enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(),
@@ -193,12 +189,10 @@ public class GameController {
                 updatedEnemyDirection = 0;
             }
             updatedEnemyDirection += 1;
-        } else {
-//            TimerModel.getInstance().setPaused(true);
         }
 
         // All player-specific input and pressed etc.
-        if (!gameIsPaused) {
+        if (this.gameState == GameState.GAME_RUNS) {
             for (Player player : this.players) {
                 playerInputAction(player);
             }
@@ -208,22 +202,25 @@ public class GameController {
             String key = pressed.get(i);
             switch (key) {
                 case "ESCAPE":
-                    Container.stopSound(SoundID.GAME_MUSIC);
-                    this.arenaModel.getArenaMovables().clear();
-                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
-                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
-                            this.arenaModel.getArenaTiles()[j][k] = null;
-                        }
+//                    Container.stopSound(SoundID.GAME_MUSIC);
+//                    this.arenaModel.getArenaMovables().clear();
+//                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
+//                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
+//                            this.arenaModel.getArenaTiles()[j][k] = null;
+//                        }
+//                    }
+//                    this.enemies.clear();
+//                    this.deadEnemies.clear();
+//
+//                    GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.START_MENU));
+                    if (this.gameState == GameState.GAME_RUNS || this.gameState == GameState.GAME_PAUSED) {
+                        exitGame(MenuState.START_MENU);
                     }
-                    this.enemies.clear();
-                    this.deadEnemies.clear();
-
-                    GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.START_MENU));
                     break;
                 case "P":
-                    if(gameIsPaused) {
+                    if (this.gameState == GameState.GAME_PAUSED) {
                         unPauseGame();
-                    } else {
+                    } else if (this.gameState == GameState.GAME_RUNS) {
                         pauseGame();
                     }
                     break;
@@ -231,7 +228,7 @@ public class GameController {
         }
 
         // Updating positions (if not paused)
-        if(!gameIsPaused) {
+        if(this.gameState == GameState.GAME_RUNS || this.gameState == GameState.PRE_GAME) {
 
             for (Movable movable : arenaModel.getArenaMovables()) {
                 movable.updatePosition();
@@ -309,7 +306,7 @@ public class GameController {
         }
 
         // Model updating, before letting view have at it
-        if(!gameIsPaused) {
+        if(this.gameState == GameState.GAME_RUNS) {
             this.arenaModel.updateBombs(this.timeSinceStart);
             this.arenaModel.sortMovables();
         }
@@ -317,7 +314,7 @@ public class GameController {
         updateStats();
 
         // Calls view to update graphics
-        if(!gameIsPaused) {
+        if(this.gameState == GameState.GAME_RUNS || this.gameState == GameState.PRE_GAME) {
             arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.timeSinceStart, timeSinceLastCall);
             arenaView.updateTimer(this.timer);
         }
@@ -363,7 +360,7 @@ public class GameController {
     @Subscribe
     public void bombPlaced(PlaceBombEvent placeBombEvent) {
         GameCharacter character = placeBombEvent.getCharacter();
-        arenaModel.setDoubleTile(new Bomb(character, placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY,
+        this.arenaModel.setDoubleTile(new Bomb(character, placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY,
                 this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
         placeBombEvent.getCharacter().setCurrentBombCount(character.getCurrentBombCount() - 1);
     }
@@ -371,7 +368,7 @@ public class GameController {
     @Subscribe
     public void minePlaced(PlaceMineEvent placeMineEvent) {
         GameCharacter character = placeMineEvent.getCharacter();
-        arenaModel.setTile(new Mine(character, placeMineEvent.getRange(), placeMineEvent.getDamage()), placeMineEvent.getGridPosition());
+        this.arenaModel.setTile(new Mine(character, placeMineEvent.getRange(), placeMineEvent.getDamage()), placeMineEvent.getGridPosition());
         character.setCurrentBombCount(character.getCurrentBombCount() - 1);
     }
 
@@ -560,7 +557,7 @@ public class GameController {
         if (movable instanceof GameCharacter) {
 
             movable.idle();
-            this.gameHasStarted = true;
+            this.gameState = GameState.GAME_RUNS;
 
         }
 //        else if (movable instanceof Enemy) {
@@ -568,13 +565,17 @@ public class GameController {
 //        }
     }
 
-    public boolean isGamePaused() {
-        return gameIsPaused;
+//    public boolean isGamePaused() {
+//        return gameIsPaused;
+//    }
+
+    public GameState getGameState() {
+        return this.gameState;
     }
 
     private void pauseGame() {
         this.pauseMenuController.getPauseMenuView().show();
-        gameIsPaused = true;
+        this.gameState = GameState.GAME_PAUSED;
         this.pausedTime = System.nanoTime();
 
 //        System.out.println("Paused time: "+this.pausedTime);
@@ -582,7 +583,7 @@ public class GameController {
 
     private void unPauseGame() {
         this.pauseMenuController.getPauseMenuView().hide();
-        gameIsPaused = false;
+        this.gameState = GameState.GAME_RUNS;
         this.timeSinceStartOffset += (System.nanoTime() - this.pausedTime) / 1000000000.0;
 
 //        System.out.println("Time since start: "+this.timeSinceStart+", time since start offset: "+this.timeSinceStartOffset);
@@ -604,5 +605,29 @@ public class GameController {
             }
         }
         return null;
+    }
+
+    private void gameOverStart(String message) {
+        this.gameState = GameState.GAME_OVER;
+        this.arenaView.showGameOverMessage(message);
+    }
+
+    private void gameOverDone() {
+        exitGame(MenuState.RESULTS_MENU);
+    }
+
+    private void exitGame(MenuState destinationMenu) {
+        Container.stopSound(SoundID.GAME_MUSIC);
+        this.arenaModel.getArenaMovables().clear();
+        this.arenaModel.clearTiles();
+//        for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
+//            for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
+//                this.arenaModel.getArenaTiles()[j][k] = null;
+//            }
+//        }
+        this.enemies.clear();
+        this.deadEnemies.clear();
+
+        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
     }
 }

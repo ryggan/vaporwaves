@@ -221,6 +221,10 @@ public class ArenaView {
         this.hudView.updateTimer(timer);
     }
 
+    public void showGameOverMessage(String message) {
+        this.hudView.showGameOverMessage(message);
+    }
+
     // todo - UPDATE VIEW SECTION
 
     public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {

@@ -40,10 +40,6 @@ public class GameCharacter extends Movable {
         this.startDamage = Container.getCharacterDamage(characterID);
 
         this.playerId = playerId;
-
-//        spawn(null);
-
-//        this.powerUpPickedUp = new ArrayList<>();
     }
 
     public void setSpawnPosition(Point spawnPosition) {
