@@ -172,7 +172,6 @@ public class GameController {
                 if (this.gameEndTimer- timeSinceLastCall > 0) {
                     this.gameEndTimer -= timeSinceLastCall;
                 } else {
-                    this.gameEndTimer = 0;
                     gameOverDone();
                 }
             }
