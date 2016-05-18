@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
+import com.sun.tools.internal.jxc.ap.Const;
 import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
@@ -55,6 +56,7 @@ public class CharacterSelect extends AbstractMenu {
 
     public void changeSelected(Direction direction, Player player) {
         switch (direction) {
+            // todo: Break out into helper method
             case LEFT:
                 menuMoveLeft(player.getPlayerID());
                 if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
@@ -77,8 +79,8 @@ public class CharacterSelect extends AbstractMenu {
                         menuMoveRight(player.getPlayerID());
                     }
                 } else {
-                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), 4)] != -1 &&
-                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), 4)] != player.getPlayerID()) {
+                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1 &&
+                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerID()) {
                         menuMoveRight(player.getPlayerID());
                     }
                 }

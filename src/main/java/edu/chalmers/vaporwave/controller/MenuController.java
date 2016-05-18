@@ -240,8 +240,12 @@ public class MenuController {
     }
 
     private boolean isNewGameEventReady() {
-        return this.newGameEvent.getLocalPlayer().getCharacter() != null &&
-                this.newGameEvent.getPrimaryPlayer().getCharacter() != null;
+        for (Player player : this.newGameEvent.getPlayers()) {
+            if (player.getCharacter() == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Subscribe

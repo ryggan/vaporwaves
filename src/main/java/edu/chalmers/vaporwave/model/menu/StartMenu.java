@@ -14,7 +14,6 @@ public class StartMenu extends AbstractMenu {
             return MenuState.EXIT_PROGRAM;
         }
         return MenuState.NO_ACTION;
-
     }
 
     @Override

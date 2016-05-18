@@ -89,7 +89,6 @@ public abstract class AbstractMenu {
             }
         } else {
             remoteSelected[playerID] -= 1;
-            System.out.println("Remote selected: "+remoteSelected[playerID]);
         }
     }
 

@@ -41,7 +41,7 @@ public class Scoreboard {
     public Scoreboard(Group root, Set<Player> players) {
         //this.root = root;
         this.playerList = new ArrayList<>(players.size());
-        
+
         for (int i = 0; i < players.size(); i++) {
             this.playerList.add(null);
         }
