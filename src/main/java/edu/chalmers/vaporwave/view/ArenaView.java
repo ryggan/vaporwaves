@@ -37,7 +37,6 @@ public class ArenaView {
 
     private HUDView hudView;
     //private Scoreboard scoreboard;
-//    private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;
     private Map<Compass, Sprite> arenaFrameSprites;
@@ -82,8 +81,6 @@ public class ArenaView {
         this.backgroundPattern = new ImageView();
 
         root.getChildren().add(backgroundPattern);
-
-//        this.timerView = new TimerView(root);
 
         GameEventBus.getInstance().register(this);
 
@@ -171,10 +168,6 @@ public class ArenaView {
 
     public void initArena(StaticTile[][] arenaTiles) {
 
-
-
-       // TimerModel.getInstance().updateTimer(timeSinceArenaInit);
-
         // Rendering gamebackground image to gamebackground canvas
 
         arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
@@ -224,6 +217,10 @@ public class ArenaView {
         this.hudView.updateStats(players);
     }
 
+    public void updateTimer(double timer) {
+        this.hudView.updateTimer(timer);
+    }
+
     // todo - UPDATE VIEW SECTION
 
     public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
@@ -260,8 +257,7 @@ public class ArenaView {
         }
 
 //         Update timer
-//        this.timerView.updateTimer();
-        this.hudView.updateTimer();
+        this.hudView.updateTimer(timeSinceStart);
 
     }
 

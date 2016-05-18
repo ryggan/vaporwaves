@@ -9,7 +9,6 @@ import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.TimerModel;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.*;
@@ -43,9 +42,10 @@ public class GameController {
     private double pausedTime;
 
     private boolean gameIsPaused;
+    private boolean gameHasStarted;
 
     //seconds
-    private double timeLimit;
+    private double timer;
 
     // settings for one specific game:
     private boolean destroyablePowerUps;
@@ -68,6 +68,7 @@ public class GameController {
         // todo: Should come from newGameEvent instead:
         this.destroyablePowerUps = true;
         this.respawnPowerups = true;
+        timer = 10;
 
         // Initiates view
 
@@ -75,8 +76,7 @@ public class GameController {
         timeSinceStartOffset = 0.0;
         pausedTime = 0.0;
         gameIsPaused = false;
-
-        timeLimit = 10;
+        gameHasStarted = false;
 
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
@@ -155,25 +155,36 @@ public class GameController {
 
         if (!gameIsPaused) {
             this.timeSinceStart = timeSinceStart - this.timeSinceStartOffset;
-        }
 
-        if(!TimerModel.getInstance().isPaused()) {
-            if (timeLimit - timeSinceLastCall > 0) {
-                timeLimit = timeLimit - timeSinceLastCall;
-            } else {
+            if (gameHasStarted) {
+                if (timer - timeSinceLastCall > 0) {
+                    timer -= timeSinceLastCall;
+                } else {
+                    timer = 0;
 
-                // todo: Change this to some other kind of event
-                // gameover
-//                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+                    // todo: Change this to some other kind of event
+                    // gameover
+                    //                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+                }
             }
-            TimerModel.getInstance().updateTimer(this.timeLimit);
         }
+
+//        if(!TimerModel.getInstance().isPaused()) {
+//            if (timeLimit - timeSinceLastCall > 0) {
+//                timeLimit = timeLimit - timeSinceLastCall;
+//            } else {
+//
+//                // gameover
+////                GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.RESULTS_MENU));
+//            }
+//            TimerModel.getInstance().updateTimer(this.timeLimit);
+//        }
 
         List<String> pressed = ListenerController.getInstance().getPressed();
 
         if(!gameIsPaused) {
 
-            TimerModel.getInstance().setPaused(false);
+//            TimerModel.getInstance().setPaused(false);
 
             if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
                 for (Enemy enemy : enemies) {
@@ -184,7 +195,7 @@ public class GameController {
             }
             updatedEnemyDirection += 1;
         } else {
-            TimerModel.getInstance().setPaused(true);
+//            TimerModel.getInstance().setPaused(true);
         }
 
         // All player-specific input and pressed etc.
@@ -309,6 +320,7 @@ public class GameController {
         // Calls view to update graphics
         if(!gameIsPaused) {
             arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.timeSinceStart, timeSinceLastCall);
+            arenaView.updateTimer(this.timer);
         }
 
 
@@ -549,7 +561,7 @@ public class GameController {
         if (movable instanceof GameCharacter) {
 
             movable.idle();
-
+            this.gameHasStarted = true;
 
         }
 //        else if (movable instanceof Enemy) {

@@ -5,7 +5,6 @@ import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.TimerModel;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.geometry.Pos;
@@ -21,6 +20,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class HUDView {
 
@@ -30,7 +30,7 @@ public class HUDView {
     private Canvas hudCanvas;
     private GraphicsContext hudGC;
 
-    Sprite timerMessage;
+    Sprite timerWindow;
     Label timer;
 
     private Sprite hudBox;
@@ -55,14 +55,14 @@ public class HUDView {
         this.hudGC = this.hudCanvas.getGraphicsContext2D();
 
         // TIMER
-        this.timerMessage = Container.getSprite(SpriteID.HUD_TIMER_MESSAGE);
-        this.timerMessage.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.timerMessage.getWidth() / 2.0), 10);
-        this.timerMessage.render(this.hudGC, 0);
+        this.timerWindow = Container.getSprite(SpriteID.HUD_TIMER_MESSAGE);
+        this.timerWindow.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.timerWindow.getWidth() / 2.0), 10);
+        this.timerWindow.render(this.hudGC, 0);
 
         this.timer = new Label();
         this.timer.setFont(Container.getFont(FileID.FONT_BAUHAUS_30));
-        this.timer.setLayoutX(this.timerMessage.getPositionX() + 47);
-        this.timer.setLayoutY(this.timerMessage.getPositionY() + 25);
+        this.timer.setLayoutX(this.timerWindow.getPositionX() + 47);
+        this.timer.setLayoutY(this.timerWindow.getPositionY() + 25);
 
         root.getChildren().add(timer);
 
@@ -133,8 +133,6 @@ public class HUDView {
         Point boxPosition = this.hudBoxPositions[index];
         GameCharacter character = player.getCharacter();
 
-//        this.timerMessage.render(this.hudGC, 0);
-
         this.hudBox.setPosition(boxPosition.x, boxPosition.y);
         this.hudBox.render(this.hudGC, 0);
 
@@ -186,7 +184,21 @@ public class HUDView {
     }
 
 
-    public void updateTimer(){
-        timer.setText(TimerModel.getInstance().getTime());
+    public void updateTimer(double time){
+        String millis="" + (int)((time*1000)%100);
+        String seconds="" + (int)time%60;
+        String minutes="" + (int) TimeUnit.SECONDS.toMinutes((long)time);
+
+        if((int)(time*1000%100)<10){
+            millis="0"+ millis;
+        }
+        if(((int)time%60)<10){
+            seconds="0"+ seconds;
+        }
+        if(((int)TimeUnit.SECONDS.toMinutes((long)time))<10){
+            minutes="0"+ minutes;
+        }
+
+        timer.setText(minutes+":"+seconds + ":"+millis);
     }
 }
