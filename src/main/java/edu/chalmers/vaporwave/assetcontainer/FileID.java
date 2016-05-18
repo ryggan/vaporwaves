@@ -1,5 +1,10 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
 public enum FileID {
-    XML_CHARACTER_ENEMY, VAPORMAP_DEFAULT
+
+    // Misc files
+    XML_CHARACTER_ENEMY, VAPORMAP_DEFAULT,
+
+    // Fonts
+    FONT_BAUHAUS_18
 }

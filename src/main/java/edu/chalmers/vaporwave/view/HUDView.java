@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
@@ -9,8 +10,15 @@ import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public class HUDView {
@@ -26,10 +34,12 @@ public class HUDView {
     private Sprite statusbar;
     private Sprite plus;
 
+    private Map<Integer, Integer> playerIDs;
+
+    private Label[] playerNames;
+
     private double[] currentHealth;
     private int healthChange;
-
-//    private Font bauhaus10;
 
     public HUDView(Group root, Set<Player> players) {
 
@@ -40,6 +50,8 @@ public class HUDView {
         this.hudGC = this.hudCanvas.getGraphicsContext2D();
 
         this.hudBoxPositions = new Point[] { new Point(20, 122), new Point(926, 122), new Point(20, 422), new Point(926, 422) };
+        this.playerNames = new Label[4];
+        this.playerIDs = new HashMap<>();
 
         this.hudBox = Container.getSprite(SpriteID.HUD_BOX);
         this.healthbar = Container.getSprite(SpriteID.HUD_HEALTHBAR_FILLED);
@@ -49,8 +61,23 @@ public class HUDView {
         this.currentHealth = new double[] {0, 0, 0, 0};
         this.healthChange = 2;
 
+        int index = 0;
         for (Player player : players) {
+
+            int id = player.getPlayerID();
+
+            this.playerIDs.put(id, index);
+
+            this.playerNames[index] = new Label();
+            this.playerNames[index].setFont(Container.getFont(FileID.FONT_BAUHAUS_18));
+            this.playerNames[index].setTextFill(Color.WHITE);
+            this.playerNames[index].setLayoutX(this.hudBoxPositions[index].x + 6);
+            this.playerNames[index].setLayoutY(this.hudBoxPositions[index].y + 2);
+            this.root.getChildren().add(this.playerNames[index]);
+
             updateStats(player);
+
+            index++;
         }
 
     }
@@ -63,24 +90,27 @@ public class HUDView {
 
     public void updateStats(Player player) {
 
-        int id = player.getPlayerID();
-        Point boxPosition = this.hudBoxPositions[id];
+        int index = this.playerIDs.get(player.getPlayerID());
+
+        Point boxPosition = this.hudBoxPositions[index];
         GameCharacter character = player.getCharacter();
 
         this.hudBox.setPosition(boxPosition.x, boxPosition.y);
         this.hudBox.render(this.hudGC, 0);
 
+        this.playerNames[index].setText(player.getName().toUpperCase(Locale.ENGLISH));
+
         double newHealth = character.getHealth();
-        if (this.currentHealth[id] < newHealth - this.healthChange) {
-            this.currentHealth[id] += this.healthChange;
-        } else if (this.currentHealth[id] > newHealth + this.healthChange) {
-            this.currentHealth[id] -= this.healthChange;
+        if (this.currentHealth[index] < newHealth - this.healthChange) {
+            this.currentHealth[index] += this.healthChange;
+        } else if (this.currentHealth[index] > newHealth + this.healthChange) {
+            this.currentHealth[index] -= this.healthChange;
         } else {
-            this.currentHealth[id] = newHealth;
+            this.currentHealth[index] = newHealth;
         }
 
         this.healthbar.setPosition(boxPosition.x + 6, boxPosition.y + 50);
-        this.healthbar.setOffsetDimension((this.healthbar.getWidth() - (this.currentHealth[id] / 100.0) * this.healthbar.getWidth()), 0);
+        this.healthbar.setOffsetDimension((this.healthbar.getWidth() - (this.currentHealth[index] / 100.0) * this.healthbar.getWidth()), 0);
         this.healthbar.render(this.hudGC, 0);
 
         this.statusbar.setPosition(boxPosition.x + 40, boxPosition.y + 79);

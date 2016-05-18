@@ -4,6 +4,8 @@ import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.view.MenuButtonView;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
+
 
 import java.awt.*;
 import java.io.File;
@@ -47,6 +49,10 @@ public class Container {
 
     public static File getFile(FileID fileID) {
         return fileContainer.getFile(fileID);
+    }
+
+    public static Font getFont(FileID fileID) {
+        return fileContainer.getFont(fileID);
     }
 
     public static SoundPlayer getSound(SoundID soundID) {
