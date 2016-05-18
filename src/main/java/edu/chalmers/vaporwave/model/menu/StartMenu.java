@@ -9,7 +9,7 @@ public class StartMenu extends AbstractMenu {
 
     public MenuState getMenuAction() {
         if (this.getSelectedSuper() == 0) {
-            return MenuState.CHARACTER_SELECT;
+            return MenuState.ROOSTER;
         } else if (this.getSelectedSuper() == 1) {
             return MenuState.EXIT_PROGRAM;
         }

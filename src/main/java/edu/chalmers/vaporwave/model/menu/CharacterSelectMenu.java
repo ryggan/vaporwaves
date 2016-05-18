@@ -25,7 +25,7 @@ public class CharacterSelectMenu extends AbstractMenu {
 
     public MenuState getMenuAction() {
         if (getSelectedSuper() == 0) {
-            return MenuState.START_MENU;
+            return MenuState.ROOSTER;
         } else if (getSelectedSuper() == 2) {
             return MenuState.START_GAME;
         }

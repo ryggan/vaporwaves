@@ -32,23 +32,4 @@ public class StartMenuView extends AbstractMenuView {
         }
         setActive();
     }
-
-
-
-    public void setPressed(int superSelected){
-        for (int i = 0; i < menuButtonSpriteList.size(); i++) {
-
-            if (superSelected == i) {
-                menuButtonSpriteList.get(i).render(getBackgroundGC(), MenuButtonState.PRESSED);
-            } else {
-                menuButtonSpriteList.get(i).render(getBackgroundGC(), MenuButtonState.UNSELECTED);
-            }
-        }
-        setActive();
-    }
-
-
-
-
-
 }
