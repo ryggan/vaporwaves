@@ -21,7 +21,7 @@ public enum ImageID {
 
     // HUD
 //    HUD_BOX, HUD_HEALTHBAR_FILLED, HUD_STATUSBAR_FILLED, HUD_STATUSBAR_PLUS,
-    HUD_BOX_SHEET,
+    HUD_BOX_SHEET, HUD_TIMER_MESSAGE,
     SCOREBOARD_BACK,
 
     // gamebackground stuff

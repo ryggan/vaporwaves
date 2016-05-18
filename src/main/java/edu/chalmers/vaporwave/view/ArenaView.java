@@ -37,7 +37,7 @@ public class ArenaView {
 
     private HUDView hudView;
     //private Scoreboard scoreboard;
-    private TimerView timerView;
+//    private TimerView timerView;
 
     private Sprite arenaBackgroundSprite;
     private Map<Compass, Sprite> arenaFrameSprites;
@@ -83,7 +83,7 @@ public class ArenaView {
 
         root.getChildren().add(backgroundPattern);
 
-        this.timerView = new TimerView(root);
+//        this.timerView = new TimerView(root);
 
         GameEventBus.getInstance().register(this);
 
@@ -259,8 +259,9 @@ public class ArenaView {
             renderMovable(movable, timeSinceStart);
         }
 
-        // Update timer
-        this.timerView.updateTimer();
+//         Update timer
+//        this.timerView.updateTimer();
+        this.hudView.updateTimer();
 
     }
 

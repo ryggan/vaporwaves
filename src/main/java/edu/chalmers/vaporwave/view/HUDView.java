@@ -5,6 +5,7 @@ import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.TimerModel;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.geometry.Pos;
@@ -29,6 +30,9 @@ public class HUDView {
     private Canvas hudCanvas;
     private GraphicsContext hudGC;
 
+    Sprite timerMessage;
+    Label timer;
+
     private Sprite hudBox;
     private Sprite healthbar;
     private Sprite statusbar;
@@ -50,6 +54,19 @@ public class HUDView {
         this.root.getChildren().add(hudCanvas);
         this.hudGC = this.hudCanvas.getGraphicsContext2D();
 
+        // TIMER
+        this.timerMessage = Container.getSprite(SpriteID.HUD_TIMER_MESSAGE);
+        this.timerMessage.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.timerMessage.getWidth() / 2.0), 10);
+        this.timerMessage.render(this.hudGC, 0);
+
+        this.timer = new Label();
+        this.timer.setFont(Container.getFont(FileID.FONT_BAUHAUS_30));
+        this.timer.setLayoutX(this.timerMessage.getPositionX() + 47);
+        this.timer.setLayoutY(this.timerMessage.getPositionY() + 25);
+
+        root.getChildren().add(timer);
+
+        // HUD BOXES
         this.hudBoxPositions = new Point[] { new Point(20, 122), new Point(926, 122), new Point(20, 422), new Point(926, 422) };
         this.playerNames = new Label[4];
         this.playerScores = new Label[4];
@@ -63,6 +80,7 @@ public class HUDView {
         this.currentHealth = new double[] {0, 0, 0, 0};
         this.healthChange = 2;
 
+        // Setting up individual elements for every active player
         int index = 0;
         for (Player player : players) {
 
@@ -115,6 +133,8 @@ public class HUDView {
         Point boxPosition = this.hudBoxPositions[index];
         GameCharacter character = player.getCharacter();
 
+//        this.timerMessage.render(this.hudGC, 0);
+
         this.hudBox.setPosition(boxPosition.x, boxPosition.y);
         this.hudBox.render(this.hudGC, 0);
 
@@ -163,5 +183,10 @@ public class HUDView {
             this.plus.setPosition(boxPosition.x + 120, boxPosition.y + 151);
             this.plus.render(this.hudGC, 0);
         }
+    }
+
+
+    public void updateTimer(){
+        timer.setText(TimerModel.getInstance().getTime());
     }
 }

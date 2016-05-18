@@ -16,7 +16,7 @@ class FileContainer {
     private Map<FileID, Font> fontContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 2;
+    private static final double totalTasks = 2 + 3;
 
     FileContainer() {
 
@@ -29,14 +29,17 @@ class FileContainer {
         addFile(FileID.XML_CHARACTER_ENEMY, new File(Constants.GAME_CHARACTER_XML_FILE));
         addFile(FileID.VAPORMAP_DEFAULT, new File(Constants.DEFAULT_MAP_FILE));
 
-        // Fonts (2)
+        // Fonts (3)
         try {
 
-            Font font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 18);
+            Font font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 14);
+            addFont(FileID.FONT_BAUHAUS_14, font);
+
+            font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 18);
             addFont(FileID.FONT_BAUHAUS_18, font);
 
-            font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 14);
-            addFont(FileID.FONT_BAUHAUS_14, font);
+            font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 30);
+            addFont(FileID.FONT_BAUHAUS_30, font);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
