@@ -65,10 +65,9 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
-        // todo: Should come from newGameEvent instead:
-        this.destroyablePowerUps = true;
-        this.respawnPowerups = true;
-        timer = 10;
+        this.destroyablePowerUps = newGameEvent.getDestroyablePowerups();
+        this.respawnPowerups = newGameEvent.getRespawnPowerups();
+        this.timer = newGameEvent.getTimeLimit();
 
         // Initiates view
 

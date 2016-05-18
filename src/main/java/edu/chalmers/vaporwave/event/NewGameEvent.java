@@ -12,11 +12,18 @@ public class NewGameEvent {
     private Player localPlayer;
     private Set<Player> players;
     private Set<PowerUpType> enabledPowerUps;
+
     private int timeLimit;
+    private boolean destroyablePowerups;
+    private boolean respawnPowerups;
 
     public NewGameEvent() {
         this.enabledPowerUps = new HashSet<>();
         this.players = new HashSet<>();
+
+        this.timeLimit = 10;
+        this.destroyablePowerups = true;
+        this.respawnPowerups = true;
     }
 
     public void setArenaMap(ArenaMap arenaMap) {
@@ -77,6 +84,22 @@ public class NewGameEvent {
 
     public int getTimeLimit() {
         return this.timeLimit;
+    }
+
+    public void setDestroyablePowerups(boolean destroyablePowerups) {
+        this.destroyablePowerups = destroyablePowerups;
+    }
+
+    public boolean getDestroyablePowerups() {
+        return this.destroyablePowerups;
+    }
+
+    public void setRespawnPowerups(boolean respawnPowerups) {
+        this.respawnPowerups = respawnPowerups;
+    }
+
+    public boolean getRespawnPowerups() {
+        return this.respawnPowerups;
     }
 
     @Override
