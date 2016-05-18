@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.view.MenuButtonView;
-import javafx.scene.image.*;
 import javafx.scene.image.Image;
 
 import java.awt.*;
@@ -10,7 +8,7 @@ import java.util.Map;
 
 class MenuButtonContainer {
 
-    private Map<MenuButtonID, MenuButtonView> menuButtonContainer;
+    private Map<MenuButtonID, MenuButtonSprite> menuButtonContainer;
 
     private static double tasksDone;
     private static final double totalTasks = 4 + 1 + 2;
@@ -26,31 +24,31 @@ class MenuButtonContainer {
         int buttonHeight = 66;
 
         // Start menu (4)
-        addButton(MenuButtonID.BUTTON_NEW_GAME, new MenuButtonView(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 0)));
-        addButton(MenuButtonID.BUTTON_EXIT_GAME, new MenuButtonView(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 1)));
-        addButton(MenuButtonID.BUTTON_OPTIONS, new MenuButtonView(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 2)));
-        addButton(MenuButtonID.BUTTON_HIGHSCORE, new MenuButtonView(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 3)));
+        addButton(MenuButtonID.BUTTON_NEW_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 0)));
+        addButton(MenuButtonID.BUTTON_EXIT_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 1)));
+        addButton(MenuButtonID.BUTTON_OPTIONS, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 2)));
+        addButton(MenuButtonID.BUTTON_HIGHSCORE, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 3)));
 
         // Character select (1)
-        addButton(MenuButtonID.BUTTON_START_GAME, new MenuButtonView(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 0)));
+        addButton(MenuButtonID.BUTTON_START_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 0)));
 
         // Misc (2)
-        addButton(MenuButtonID.BUTTON_BACK, new MenuButtonView(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 2)));
-        addButton(MenuButtonID.BUTTON_NEXT, new MenuButtonView(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 1)));
+        addButton(MenuButtonID.BUTTON_BACK, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 2)));
+        addButton(MenuButtonID.BUTTON_NEXT, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 1)));
 
     }
 
-    private void addButton(MenuButtonID menuButtonID, MenuButtonView menuButton) {
+    private void addButton(MenuButtonID menuButtonID, MenuButtonSprite menuButton) {
         this.menuButtonContainer.put(menuButtonID, menuButton);
         tasksDone++;
     }
 
-    MenuButtonView getButton(MenuButtonID menuButtonID) {
+    MenuButtonSprite getButton(MenuButtonID menuButtonID) {
         return this.menuButtonContainer.get(menuButtonID);
     }
 
-    MenuButtonView getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
-        MenuButtonView theButton = getButton(menuButtonID);
+    MenuButtonSprite getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
+        MenuButtonSprite theButton = getButton(menuButtonID);
         theButton.setPositionOnCanvas(positionOnCanvas);
         return theButton;
     }

@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.SoundPlayer;
-import edu.chalmers.vaporwave.view.MenuButtonView;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 
@@ -91,11 +90,11 @@ public class Container {
         return spriteContainer.getSprite(spriteID);
     }
 
-    public static MenuButtonView getButton(MenuButtonID menuButtonID) {
+    public static MenuButtonSprite getButton(MenuButtonID menuButtonID) {
         return menuButtonContainer.getButton(menuButtonID);
     }
 
-    public static MenuButtonView getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
+    public static MenuButtonSprite getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
         return menuButtonContainer.getButton(menuButtonID, positionOnCanvas);
     }
 

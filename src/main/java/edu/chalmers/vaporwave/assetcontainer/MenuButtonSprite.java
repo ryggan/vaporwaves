@@ -1,12 +1,11 @@
-package edu.chalmers.vaporwave.view;
+package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.model.menu.MenuButtonState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.*;
 
-public class MenuButtonView {
+public class MenuButtonSprite {
 
     private Image spriteSheet;
     private int width;
@@ -14,11 +13,11 @@ public class MenuButtonView {
     private Point gridPositionInSheet;
     private Point positionOnCanvas;
 
-    public MenuButtonView(Image spriteSheet, int width, int height, Point gridPositionInSheet) {
+    public MenuButtonSprite(Image spriteSheet, int width, int height, Point gridPositionInSheet) {
         this(spriteSheet, width, height, gridPositionInSheet, new Point(0, 0));
     }
 
-    public MenuButtonView(Image spriteSheet, int width, int height, Point gridPositionInSheet, Point positionOnCanvas) {
+    public MenuButtonSprite(Image spriteSheet, int width, int height, Point gridPositionInSheet, Point positionOnCanvas) {
         this.spriteSheet = spriteSheet;
         this.width = width;
         this.height = height;

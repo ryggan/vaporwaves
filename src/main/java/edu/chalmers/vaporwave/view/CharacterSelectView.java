@@ -3,13 +3,9 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.menu.MenuButtonState;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.util.ArrayCloner;
-import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,7 +15,7 @@ import java.util.Map;
 
 public class CharacterSelectView extends AbstractMenuView {
 
-    private List<MenuButtonView> menuButtonViewList;
+    private List<MenuButtonSprite> menuButtonSpriteList;
     private List<Map<Integer, Point>> characterSelectorPositionList;
     private int[] selectedCharacter;
 
@@ -79,10 +75,10 @@ public class CharacterSelectView extends AbstractMenuView {
         this.characterSelectorPositionList.add(characterSelectorPositions3);
         this.characterSelectorPositionList.add(characterSelectorPositions4);
 
-        menuButtonViewList = new ArrayList<>();
-        menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(40, 20)));
-        menuButtonViewList.add(null);
-        menuButtonViewList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME, new Point(740, 580)));
+        menuButtonSpriteList = new ArrayList<>();
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(40, 20)));
+        menuButtonSpriteList.add(null);
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME, new Point(740, 580)));
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setScale(1);
@@ -107,9 +103,9 @@ public class CharacterSelectView extends AbstractMenuView {
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
-        for (int i = 0; i < menuButtonViewList.size(); i++) {
-            if (menuButtonViewList.get(i) != null) {
-                updateButton(menuButtonViewList.get(i), superSelected == i, pressedDown);
+        for (int i = 0; i < menuButtonSpriteList.size(); i++) {
+            if (menuButtonSpriteList.get(i) != null) {
+                updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
             }
         }
 
