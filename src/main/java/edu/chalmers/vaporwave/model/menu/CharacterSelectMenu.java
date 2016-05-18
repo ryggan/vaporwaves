@@ -10,12 +10,12 @@ import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.Utils;
 
-public class CharacterSelect extends AbstractMenu {
+public class CharacterSelectMenu extends AbstractMenu {
 
     private int[] selectedCharacters;
     private static final String[] characterNames = { "MEI", "ALYSSA", "ZYPHER", "CHARLOTTE" };
 
-    public CharacterSelect(NewGameEvent newGameEvent) {
+    public CharacterSelectMenu(NewGameEvent newGameEvent) {
         super(new int[]{0, 3, 0}, newGameEvent, 1);
 
         // Set selected characters to -1 for all players
@@ -35,7 +35,7 @@ public class CharacterSelect extends AbstractMenu {
     @Override
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
         if (Debug.PRINT_LOG) {
-            System.out.println("performMenuAction in CharacterSelect. Player ID : " + playerID);
+            System.out.println("performMenuAction in CharacterSelectMenu. Player ID : " + playerID);
         }
 
         if (this.getSelectedSuper() == 1 && playerID == 0 && this.selectedCharacters[getSelectedSub()[1]] == -1) {
@@ -72,7 +72,6 @@ public class CharacterSelect extends AbstractMenu {
 
                 break;
             case RIGHT:
-
                 menuMoveRight(player.getPlayerID());
                 if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
                     while (this.selectedCharacters[getSelectedSub()[1]] > 0) {

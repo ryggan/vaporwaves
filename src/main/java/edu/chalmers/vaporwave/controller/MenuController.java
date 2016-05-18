@@ -63,7 +63,7 @@ public class MenuController {
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
         this.menuMap.put(MenuState.START_MENU, new StartMenu(this.newGameEvent));
-        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelect(this.newGameEvent));
+        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu(this.newGameEvent));
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
 
         this.menuViewMap = new HashMap<>();
@@ -164,9 +164,9 @@ public class MenuController {
                         case NO_ACTION:
                             menuMap.get(activeMenu).performMenuAction(newGameEvent, 0);
 
-                            if (menuMap.get(activeMenu) instanceof CharacterSelect && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+                            if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
-                                        ((CharacterSelect)menuMap.get(activeMenu)).getSelectedCharacters()
+                                        ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters()
                                 );
                             }
                             break;
@@ -210,9 +210,9 @@ public class MenuController {
             if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
                 menuMap.get(activeMenu).performMenuAction(newGameEvent, player.getPlayerID());
 
-                if (menuMap.get(activeMenu) instanceof CharacterSelect && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+                if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                     ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
-                            ((CharacterSelect)menuMap.get(activeMenu)).getSelectedCharacters()
+                            ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters()
                     );
                 }
 
