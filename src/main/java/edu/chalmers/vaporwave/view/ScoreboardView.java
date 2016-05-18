@@ -5,7 +5,6 @@ import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class Scoreboard {
+public class ScoreboardView {
     private Sprite scoreboardBackground;
     private Canvas scoreboard;
     private GraphicsContext scoreboardGC;
@@ -26,6 +25,7 @@ public class Scoreboard {
     private AnchorPane scoreboardPane;
     private GridPane gridPane;
     private Label[][] playerLabels;
+    private boolean isShowing;
 
     private static final double ELEMENT_SIZE = 100;
 //    private static final double GAP = ELEMENT_SIZE / 10;
@@ -38,7 +38,7 @@ public class Scoreboard {
             //Math.floor((Constants.WINDOW_HEIGHT - (Constants.DEFAULT_TILE_HEIGHT * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE) / 2));
 
     //For testing purposes
-    public Scoreboard(Group root, Set<Player> players) {
+    public ScoreboardView(Group root, Set<Player> players) {
         //this.root = root;
         this.playerList = new ArrayList<>(players.size());
 
@@ -73,7 +73,7 @@ public class Scoreboard {
         root.getChildren().add(scoreboardPane);
         scoreboardPane.setVisible(false);
 
-
+        this.isShowing = false;
 
         root.getChildren().add(scoreboard);
         scoreboard.setVisible(false);
@@ -86,11 +86,13 @@ public class Scoreboard {
         scoreboard.setVisible(true);
         scoreboardPane.setVisible(true);
         scoreboardPane.toFront();
+        isShowing = true;
     }
 
     public void hideScoreboard() {
         scoreboard.setVisible(false);
         scoreboardPane.setVisible(false);
+        isShowing = false;
     }
 
     //should have "ArrayList<Player> players" as argument, made dummy list in method for testing purposes
@@ -144,4 +146,8 @@ public class Scoreboard {
           //  tilePane.getChildren().add(new Label(str));
        // return rectangle;
     //}
+
+    public boolean isShowing() {
+        return this.isShowing;
+    }
 }

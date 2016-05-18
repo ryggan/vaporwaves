@@ -13,7 +13,6 @@ import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
-import edu.chalmers.vaporwave.view.Scoreboard;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -26,8 +25,6 @@ public class GameController {
         PRE_GAME, GAME_RUNS, GAME_PAUSED, GAME_OVER
     }
 
-    private Boolean scoreboardIsShowing = false;
-    private Scoreboard scoreboard;
     private PauseMenuController pauseMenuController;
 
     private ArenaView arenaView;
@@ -103,8 +100,9 @@ public class GameController {
         this.pauseMenuController = new PauseMenuController(root);
 
         this.arenaView.initArena(arenaModel.getArenaTiles());
-        this.arenaView.initHUD(this.players);
-        this.arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), 0, 0);
+        this.arenaView.initHUDandScoreboard(this.players);
+        this.arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.players, 0, 0);
+        this.arenaView.updateTimer(0); // todo: ?
 
         try {
             for (Player player : this.players) {
@@ -147,12 +145,7 @@ public class GameController {
             }
         }
 
-        // // TODO: 11/05/16 fix this to some other class, probably arenaView
-
-        this.scoreboard = new Scoreboard(root, players);
-
     }
-
 
     // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
@@ -201,17 +194,6 @@ public class GameController {
             String key = pressed.get(i);
             switch (key) {
                 case "ESCAPE":
-//                    Container.stopSound(SoundID.GAME_MUSIC);
-//                    this.arenaModel.getArenaMovables().clear();
-//                    for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
-//                        for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
-//                            this.arenaModel.getArenaTiles()[j][k] = null;
-//                        }
-//                    }
-//                    this.enemies.clear();
-//                    this.deadEnemies.clear();
-//
-//                    GameEventBus.getInstance().post(new GoToMenuEvent(MenuState.START_MENU));
                     if (this.gameState == GameState.GAME_RUNS || this.gameState == GameState.GAME_PAUSED) {
                         exitGame(MenuState.START_MENU);
                     }
@@ -310,24 +292,16 @@ public class GameController {
             this.arenaModel.sortMovables();
         }
 
-        updateStats();
-
         // Calls view to update graphics
         if(this.gameState == GameState.GAME_RUNS || this.gameState == GameState.PRE_GAME) {
-            arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.timeSinceStart, timeSinceLastCall);
+            arenaView.updateView(this.arenaModel.getArenaMovables(), this.arenaModel.getArenaTiles(), this.players,
+                    this.timeSinceStart, timeSinceLastCall);
             arenaView.updateTimer(this.timer);
         }
 
 
-        if (ListenerController.getInstance().getInput().contains("TAB")) {
-            if(!scoreboardIsShowing) {
-                scoreboard.showScoreboard();
-                scoreboardIsShowing = true;
-            }
-        } else {
-            scoreboard.hideScoreboard();
-            scoreboardIsShowing = false;
-        }
+        this.arenaView.showScoreboard(this.gameState == GameState.GAME_RUNS
+                && ListenerController.getInstance().getInput().contains("TAB"));
     }
 
     private void playerInputAction(Player player) {
@@ -473,9 +447,9 @@ public class GameController {
     }
 
     //TODO
-    private void updateStats() {
-        this.arenaView.updateStats(this.players);
-    }
+//    private void updateStats() {
+//        this.arenaView.updateStats(this.players);
+//    }
 
 
 

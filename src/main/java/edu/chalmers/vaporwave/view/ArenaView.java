@@ -36,7 +36,7 @@ public class ArenaView {
     private ImageView backgroundPattern;
 
     private HUDView hudView;
-    //private Scoreboard scoreboard;
+    private ScoreboardView scoreboardView;
 
     private Sprite arenaBackgroundSprite;
     private Map<Compass, Sprite> arenaFrameSprites;
@@ -198,8 +198,6 @@ public class ArenaView {
 
         // Creating sub-elements
         createRandomBackgroundPattern();
-        //make players a proper arraylist of the current players
-        //scoreboard.addPlayersToScoreboard(players);
     }
 
     private void createRandomBackgroundPattern() {
@@ -209,12 +207,9 @@ public class ArenaView {
         backgroundPattern.setImage(Container.getImage(ImageID.BACKGROUND_PATTERN_1));
     }
 
-    public void initHUD(Set<Player> players) {
+    public void initHUDandScoreboard(Set<Player> players) {
         this.hudView = new HUDView(root, players);
-    }
-
-    public void updateStats(Set<Player> players) {
-        this.hudView.updateStats(players);
+        this.scoreboardView = new ScoreboardView(root, players);
     }
 
     public void updateTimer(double timer) {
@@ -225,9 +220,20 @@ public class ArenaView {
         this.hudView.showGameOverMessage(message);
     }
 
+    public void showScoreboard(boolean showScoreboard) {
+        if (showScoreboard) {
+            if(!this.scoreboardView.isShowing()) {
+                this.scoreboardView.showScoreboard();
+            }
+        } else {
+            scoreboardView.hideScoreboard();
+        }
+    }
+
     // todo - UPDATE VIEW SECTION
 
-    public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, double timeSinceStart, double timeSinceLastCall) {
+    public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, Set<Player> players,
+                           double timeSinceStart, double timeSinceLastCall) {
 
         // Rendering:
 
@@ -261,6 +267,7 @@ public class ArenaView {
         }
 
 //         Update timer
+        this.hudView.updateStats(players);
         this.hudView.updateTimer(timeSinceStart);
 
     }
@@ -405,10 +412,6 @@ public class ArenaView {
             } else if (movable.getDirection() == Direction.UP) {
                 spriteIndex = 3;
             }
-//            int spriteIndex = 0;
-//            if (state != MovableState.SPAWN && state != MovableState.DEATH) {
-//                spriteIndex = Utils.getIntegerFromDirection(movable.getDirection());
-//            }
 
             AnimatedSprite actualSprite = (AnimatedSprite) currentSprite[spriteIndex];
             actualSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
@@ -447,13 +450,14 @@ public class ArenaView {
             if (movable instanceof GameCharacter) {
                 List<Pair<PowerUpType, Double>> list = ((GameCharacter) movable).getPowerUpPickedUp();
                 ListIterator<Pair<PowerUpType, Double>> iterator = list.listIterator();
+
                 while (iterator.hasNext()) {
                     double timeStamp = iterator.next().getSecond();
-                    if (timeSinceStart - timeStamp > ((AnimatedSprite)characterSparkleSprite).getTotalTime()) {
-//                        iterator.remove();
-                    } else {
+                    if (timeSinceStart - timeStamp <= ((AnimatedSprite)characterSparkleSprite).getTotalTime()) {
+
                         characterSparkleSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
                                 movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+
                         characterSparkleSprite.render(tileGC, timeSinceStart - timeStamp);
                     }
                 }
