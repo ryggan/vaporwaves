@@ -142,9 +142,4 @@ public class CharacterSelectView extends AbstractMenuView {
     public void setSelectedCharacters(int[] selectedCharacter) {
         this.selectedCharacter = ArrayCloner.intArrayCloner(selectedCharacter);
     }
-
-    // todo: what is dis
-    public void updateView(int superSelected, int[] subSelected, boolean isPressed) {
-
-    }
 }
