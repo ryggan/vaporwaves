@@ -73,6 +73,11 @@ public class HUDView {
             this.playerNames[index].setTextFill(Color.WHITE);
             this.playerNames[index].setLayoutX(this.hudBoxPositions[index].x + 6);
             this.playerNames[index].setLayoutY(this.hudBoxPositions[index].y + 2);
+            String name = player.getName().toUpperCase(Locale.ENGLISH);
+            if (name.length() > 12) {
+                name = name.substring(0, 11) + "..";
+            }
+            this.playerNames[index].setText(name);
             this.root.getChildren().add(this.playerNames[index]);
 
             updateStats(player);
@@ -97,8 +102,6 @@ public class HUDView {
 
         this.hudBox.setPosition(boxPosition.x, boxPosition.y);
         this.hudBox.render(this.hudGC, 0);
-
-        this.playerNames[index].setText(player.getName().toUpperCase(Locale.ENGLISH));
 
         double newHealth = character.getHealth();
         if (this.currentHealth[index] < newHealth - this.healthChange) {

@@ -33,7 +33,7 @@ public class MenuController {
         this.newGameEvent = new NewGameEvent();
 
         Player player;
-        player = new Player(0, "PlayerOne");
+        player = new Player(0, "PlayerSuperLongName");
         this.newGameEvent.setLocalPlayer(player);
         player.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
         player.setBombControl("SPACE");
