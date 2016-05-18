@@ -80,6 +80,9 @@ public class ListenerController {
     public void updateGamePads() {
 
         this.gamePads.clear();
+        this.gamePadInputs.clear();
+        this.gamePadPressed.clear();
+        this.gamePadReleased.clear();
 
         Controller[] controllers = createDefaultEnvironment().getControllers();
 
