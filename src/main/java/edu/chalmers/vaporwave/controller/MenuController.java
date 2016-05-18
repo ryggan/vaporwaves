@@ -170,11 +170,21 @@ public class MenuController {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
                                         ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters()
                                 );
+                            } else if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
+                                ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
+                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers()
+                                );
                             }
                             break;
 
                         default:
                             this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
+                            if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
+                               ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
+                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers()
+                                );
+                            }
+
                             break;
                     }
                     updateViews(this.newGameEvent.getPrimaryPlayer());

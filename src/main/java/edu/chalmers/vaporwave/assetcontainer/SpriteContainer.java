@@ -11,7 +11,7 @@ class SpriteContainer {
     private Map<SpriteID, Sprite> spriteContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 17 + 8 + 5 + 6 + 5 + 9 + 3 + 16;
+    private static final double totalTasks = 29 + 8 + 5 + 6 + 5 + 9 + 3 + 16;
 
     SpriteContainer() {
 
@@ -19,7 +19,7 @@ class SpriteContainer {
 
         this.spriteContainer = new HashMap<>();
 
-        // Menu images and controls (17)
+        // Menu images and controls (29)
         Image menuCharacter = Container.getImage(ImageID.MENU_CHARACTER);
         addSprite(SpriteID.MENU_CHARACTER_ALL,
                 new Sprite(menuCharacter, new Dimension(442, 378), new int[] {0, 0}, new double[] {1, 1}, 1.0));
@@ -75,6 +75,32 @@ class SpriteContainer {
                 new Sprite(menuCheckbox, new Dimension(111, 118), new int[] {2, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHECKBOX_SELECTED_ON,
                 new Sprite(menuCheckbox, new Dimension(111, 118), new int[] {3, 0}, new double[] {1, 1}, 1.0));
+
+        Image menuRoosterSelect = Container.getImage(ImageID.MENU_ROOSTER_SELECT);
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_OPEN_OFF,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {0, 0}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P1_OFF,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {1, 0}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P2_OFF,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {2, 0}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P3_OFF,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {3, 0}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P4_OFF,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {4, 0}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_CPU_OFF,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {5, 0}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_OPEN_ON,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {0, 1}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P1_ON,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {1, 1}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P2_ON,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {2, 1}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P3_ON,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {3, 1}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_P4_ON,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {4, 1}, new double[] {1, 1}, 1.0));
+        addSprite(SpriteID.MENU_ROOSTER_SELECT_CPU_ON,
+                new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {5, 1}, new double[] {1, 1}, 1.0));
 
         // Game background and frame (5)
 

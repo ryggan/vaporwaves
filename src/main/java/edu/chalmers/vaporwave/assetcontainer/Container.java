@@ -9,9 +9,6 @@ import javafx.scene.text.Font;
 import java.awt.*;
 import java.io.File;
 
-/**
- * Created by bob on 2016-05-13.
- */
 public class Container {
 
     private static FileContainer fileContainer;

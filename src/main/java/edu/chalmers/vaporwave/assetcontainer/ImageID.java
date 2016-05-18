@@ -17,6 +17,8 @@ public enum ImageID {
     MENU_CHARACTER_SELECTOR,
     MENU_CHECKBOX,
 
+    MENU_ROOSTER_SELECT,
+
     // todo: GAME STUFF
 
     // HUD

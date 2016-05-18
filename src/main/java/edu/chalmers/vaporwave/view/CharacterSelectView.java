@@ -100,7 +100,6 @@ public class CharacterSelectView extends AbstractMenuView {
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
-
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {

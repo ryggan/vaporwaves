@@ -10,7 +10,7 @@ class ImageContainer {
     private Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 3 + 4 + 6 + 13 + 3;
+    private static final double totalTasks = 2 + 4 + 4 + 6 + 13 + 3;
     
     ImageContainer() {
 
@@ -25,10 +25,11 @@ class ImageContainer {
 
         addImage(ImageID.MENU_BUTTON_SPRITESHEET, new Image("images/menu/spritesheet_menubuttons-308x198.png"));
 
-        // Character select (3):
+        // Character select (4):
         addImage(ImageID.MENU_CHARACTER, new Image("images/menu/spritesheet-character-select-442x378.png"));
         addImage(ImageID.MENU_CHARACTER_SELECTOR, new Image("images/menu/spritesheet-character-selector-22x33.png"));
         addImage(ImageID.MENU_CHECKBOX, new Image("images/menu/spritesheet-menu-checkbox-111x118.png"));
+        addImage(ImageID.MENU_ROOSTER_SELECT, new Image("images/menu/spritesheet-rooster-select-133x94.png"));
 
         // >>> GAME STUFF: <<<
 
