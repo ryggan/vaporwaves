@@ -95,6 +95,21 @@ public class Utils {
         return newPosition;
     }
 
+    public static Direction getOppositeDirection(Direction direction) {
+        switch (direction) {
+            case UP:
+                return Direction.DOWN;
+            case DOWN:
+                return Direction.UP;
+            case LEFT:
+                return Direction.RIGHT;
+            case RIGHT:
+                return Direction.LEFT;
+            default:
+                return null;
+        }
+    }
+
     public static Direction getDirectionFromString(String string) {
         switch(string) {
             case "LEFT":
@@ -126,8 +141,8 @@ public class Utils {
             case "DPAD_DOWN":
                 return Direction.DOWN;
             default:
+                return null;
         }
-        return null;
     }
 
     public static Direction getDirectionFromInteger(int integer) {
@@ -141,8 +156,8 @@ public class Utils {
             case 3:
                 return Direction.DOWN;
             default:
+                return null;
         }
-        return null;
     }
 
     public static int getIntegerFromDirection(Direction direction) {
@@ -156,8 +171,8 @@ public class Utils {
             case DOWN:
                 return 3;
             default:
+                return -1;
         }
-        return -1;
     }
 
     public static Direction[] getDirectionsAsArray() {
