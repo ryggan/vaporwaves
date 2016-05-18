@@ -150,9 +150,11 @@ public abstract class Movable {
             for(Direction direction : this.lastMove) {
                 if (Utils.isOrtogonalDirections(this.direction, direction)) {
                     if (allowMove(direction)) {
+                        System.out.println("Found new direction: "+direction+" (the same)");
                         foundNewDirection = direction;
                         break;
                     } else if (!allowMove(direction) && allowMove(this.direction)) {
+                        System.out.println("Found new direction: "+this.direction+" (the same)");
                         foundNewDirection = this.direction;
                         break;
                     }
@@ -163,7 +165,8 @@ public abstract class Movable {
 
             } else {
                 for (Direction direction : this.lastMove) {
-                    if (allowMove(direction)) {
+                    if (allowMove(direction) && !oppositeDirection(direction)) {
+                        System.out.println("When all else fails... "+direction+" (old dir: "+this.direction+")");
                         move(direction, this.latestArenaTiles);
                         break;
                     }
@@ -280,8 +283,14 @@ public abstract class Movable {
     }
 
     private boolean allowMove(int gridDirectionX, int gridDirectionY) {
-        int nextGridPositionX = Math.min(Math.max(getPreviousGridPositionX() + gridDirectionX, 0), Constants.DEFAULT_GRID_WIDTH-1);
-        int nextGridPositionY = Math.min(Math.max(getPreviousGridPositionY() + gridDirectionY, 0), Constants.DEFAULT_GRID_HEIGHT-1);
+        int nextGridPositionX = getPreviousGridPositionX() + gridDirectionX;
+        int nextGridPositionY = getPreviousGridPositionY() + gridDirectionY;
+
+        if (nextGridPositionX < 0 || nextGridPositionX > Constants.DEFAULT_GRID_WIDTH-1
+                || nextGridPositionY < 0 || nextGridPositionY > Constants.DEFAULT_GRID_HEIGHT-1) {
+            return false;
+        }
+
         StaticTile nextTile = this.latestArenaTiles[nextGridPositionX][nextGridPositionY];
 
         return (nextTile == null) || !(nextTile instanceof Wall) && !(nextTile instanceof Bomb);
