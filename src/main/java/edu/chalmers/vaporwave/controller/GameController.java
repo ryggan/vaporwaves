@@ -487,7 +487,7 @@ public class GameController {
 
         switch (powerUpType) {
             case HEALTH:
-                gameCharacter.setHealth(Math.min(this.localPlayer.getCharacter().getHealth() + 10, 100));
+                gameCharacter.setHealth(Math.min(gameCharacter.getHealth() + 10, 100));
                 break;
             case BOMB_COUNT:
                 gameCharacter.setMaxBombCount(gameCharacter.getMaxBombCount() + 1);
