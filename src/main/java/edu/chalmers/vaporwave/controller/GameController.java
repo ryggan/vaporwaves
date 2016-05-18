@@ -346,7 +346,7 @@ public class GameController {
         for (int i = 0; i < allPressed.size(); i++) {
             String key = allPressed.get(i);
             StaticTile tile = arenaModel.getArenaTile(player.getCharacter().getGridPosition());
-            if (tile == null || (tile instanceof PowerUp)) {
+            if (tile == null || (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP)) {
                 if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
                     player.getCharacter().placeBomb();
                 } else if (key.equals(player.getMineControl()) || key.equals("BTN_B")) {
@@ -619,11 +619,6 @@ public class GameController {
         Container.stopSound(SoundID.GAME_MUSIC);
         this.arenaModel.getArenaMovables().clear();
         this.arenaModel.clearTiles();
-//        for (int j = 0; j < this.arenaModel.getArenaTiles().length; j++) {
-//            for (int k = 0; k < this.arenaModel.getArenaTiles()[0].length; k++) {
-//                this.arenaModel.getArenaTiles()[j][k] = null;
-//            }
-//        }
         this.enemies.clear();
         this.deadEnemies.clear();
 
