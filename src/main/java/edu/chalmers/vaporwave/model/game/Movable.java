@@ -150,11 +150,9 @@ public abstract class Movable {
             for(Direction direction : this.lastMove) {
                 if (Utils.isOrtogonalDirections(this.direction, direction)) {
                     if (allowMove(direction)) {
-                        System.out.println("Found new direction: "+direction+" (the same)");
                         foundNewDirection = direction;
                         break;
                     } else if (!allowMove(direction) && allowMove(this.direction)) {
-                        System.out.println("Found new direction: "+this.direction+" (the same)");
                         foundNewDirection = this.direction;
                         break;
                     }
@@ -163,10 +161,10 @@ public abstract class Movable {
             if (foundNewDirection != null) {
                 move(foundNewDirection, this.latestArenaTiles);
 
+                // If no flow needs to be kept, keep on moving in recently pressed direction
             } else {
                 for (Direction direction : this.lastMove) {
                     if (allowMove(direction) && !oppositeDirection(direction)) {
-                        System.out.println("When all else fails... "+direction+" (old dir: "+this.direction+")");
                         move(direction, this.latestArenaTiles);
                         break;
                     }
@@ -222,27 +220,29 @@ public abstract class Movable {
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
-        this.lastMove.add(direction);
-        this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
-        if (direction != null && this.comingState != MovableState.SPAWN &&
-                (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
-            switch (direction) {
-                case UP:
-                    moveUp();
-                    break;
-                case LEFT:
-                    moveLeft();
-                    break;
-                case DOWN:
-                    moveDown();
-                    break;
-                case RIGHT:
-                    moveRight();
-                    break;
-                default:
-            }
-            if (getVelocityY() != 0 || getVelocityX() != 0) {
-                setState(MovableState.WALK);
+        if (!this.lastMove.contains(Utils.getOppositeDirection(direction))) {
+            this.lastMove.add(direction);
+            this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
+            if (direction != null && this.comingState != MovableState.SPAWN &&
+                    (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
+                switch (direction) {
+                    case UP:
+                        moveUp();
+                        break;
+                    case LEFT:
+                        moveLeft();
+                        break;
+                    case DOWN:
+                        moveDown();
+                        break;
+                    case RIGHT:
+                        moveRight();
+                        break;
+                    default:
+                }
+                if (getVelocityY() != 0 || getVelocityX() != 0) {
+                    setState(MovableState.WALK);
+                }
             }
         }
     }
@@ -283,17 +283,39 @@ public abstract class Movable {
     }
 
     private boolean allowMove(int gridDirectionX, int gridDirectionY) {
-        int nextGridPositionX = getPreviousGridPositionX() + gridDirectionX;
-        int nextGridPositionY = getPreviousGridPositionY() + gridDirectionY;
 
+        // Calculates nearest gridposition
+        int nextGridPositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
+        int nextGridPositionY = Utils.canvasToGridPositionX(getCanvasPositionY());
+
+        // If no move in horizontal direction, get previous x position as next
+        if (gridDirectionX == 0) {
+            nextGridPositionX = getPreviousGridPositionX();
+
+        // Only add grid-direction paramater if calculated gridposition above isn't in front of you
+        } else if ((Utils.gridToCanvasPositionX(nextGridPositionX) < getCanvasPositionX() && gridDirectionX > 0)
+                || (Utils.gridToCanvasPositionX(nextGridPositionX) > getCanvasPositionX() && gridDirectionX < 0)
+                || Utils.gridToCanvasPositionX(nextGridPositionX) == getCanvasPositionX()) {
+            nextGridPositionX += gridDirectionX;
+        }
+        // Same same with Y as with X
+        if (gridDirectionY == 0) {
+            nextGridPositionY = getPreviousGridPositionY();
+        } else if ((Utils.gridToCanvasPositionY(nextGridPositionY) < getCanvasPositionY() && gridDirectionY > 0)
+                || (Utils.gridToCanvasPositionY(nextGridPositionY) > getCanvasPositionY() && gridDirectionY < 0)
+                || Utils.gridToCanvasPositionY(nextGridPositionY) == getCanvasPositionY()) {
+            nextGridPositionY += gridDirectionY;
+        }
+
+        // When correct next gridposition has been calculated, return false if outside screen
         if (nextGridPositionX < 0 || nextGridPositionX > Constants.DEFAULT_GRID_WIDTH-1
                 || nextGridPositionY < 0 || nextGridPositionY > Constants.DEFAULT_GRID_HEIGHT-1) {
             return false;
         }
 
+        // At last, check if gridposition in arena is walkable, and return true if so
         StaticTile nextTile = this.latestArenaTiles[nextGridPositionX][nextGridPositionY];
-
-        return (nextTile == null) || !(nextTile instanceof Wall) && !(nextTile instanceof Bomb);
+        return (nextTile == null) || (!(nextTile instanceof Wall) && !(nextTile instanceof Bomb));
     }
 
     private boolean allowMove(double gridDirectionX, double gridDirectionY) {
