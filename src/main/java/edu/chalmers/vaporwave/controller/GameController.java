@@ -126,16 +126,16 @@ public class GameController {
         //
 
         Random random = new Random();
-/*        for (int k = 0; k < 10; k++) {
+        for (int k = 0; k < 5; k++) {
             boolean free;
             Point spawnPosition = new Point(0,0);
             do {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getGridWidth()), random.nextInt(this.arenaModel.getGridHeight()));
                 free = (arenaModel.getArenaTile(spawnPosition) == null);
             } while (!free);
-            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.2, new SemiStupidAI(gameCharacters));
+            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.6, new FelixTestAI(gameCharacters));
             enemies.add(enemy);
-        }*/
+        }
 
         for(Enemy enemy : enemies) {
             try {
@@ -174,10 +174,10 @@ public class GameController {
 
         if(this.gameState == GameState.GAME_RUNS) {
             if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
-                for (Enemy enemy : enemies) {
-                    enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(),
-                            this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
-                }
+                    for (Enemy enemy : enemies) {
+                        enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(), localPlayer.getCharacter().getGridPosition(),
+                                this.arenaModel.getArenaTiles(), enemy.getPreviousGridPosition()), arenaModel.getArenaTiles());
+                    }
                 updatedEnemyDirection = 0;
             }
             updatedEnemyDirection += 1;
