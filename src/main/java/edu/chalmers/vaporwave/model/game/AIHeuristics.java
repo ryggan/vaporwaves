@@ -1,13 +1,8 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.model.game.PowerUp;
-import edu.chalmers.vaporwave.model.game.StaticTile;
-import edu.chalmers.vaporwave.model.game.Wall;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Set;
 
 public class AIHeuristics {

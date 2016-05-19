@@ -125,8 +125,9 @@ public class GameController {
         enemies.add(felixBot);
         //
 
+/*
         Random random = new Random();
-/*        for (int k = 0; k < 10; k++) {
+        for (int k = 0; k < 10; k++) {
             boolean free;
             Point spawnPosition = new Point(0,0);
             do {
@@ -205,6 +206,8 @@ public class GameController {
                         pauseGame();
                     }
                     break;
+                default:
+                    break;
             }
         }
 
@@ -263,12 +266,12 @@ public class GameController {
                             movable.dealDamage(blast.getDamage());
                             if (movable.getHealth() <= 0) {
                                 if (movable instanceof GameCharacter) {
-                                    if (blast.getPlayerId() != ((GameCharacter) movable).getPlayerId()) {
-                                        getPlayerForID(blast.getPlayerId()).incrementKills();
+                                    if (blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
+                                        getPlayerForID(blast.getPlayerID()).incrementKills();
                                     }
                                     getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
                                 } else if (movable instanceof Enemy) {
-                                    getPlayerForID(blast.getPlayerId()).incrementCreeps();
+                                    getPlayerForID(blast.getPlayerID()).incrementCreeps();
                                 }
                             }
                         }

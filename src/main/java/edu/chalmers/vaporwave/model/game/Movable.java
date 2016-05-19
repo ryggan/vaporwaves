@@ -220,10 +220,10 @@ public abstract class Movable {
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
-        if (!this.lastMove.contains(Utils.getOppositeDirection(direction))) {
+        if (direction != null &&  !this.lastMove.contains(Utils.getOppositeDirection(direction))) {
             this.lastMove.add(direction);
             this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
-            if (direction != null && this.comingState != MovableState.SPAWN &&
+            if (this.comingState != MovableState.SPAWN &&
                     (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
                 switch (direction) {
                     case UP:
