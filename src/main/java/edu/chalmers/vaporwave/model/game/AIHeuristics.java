@@ -66,7 +66,7 @@ public class AIHeuristics {
         heuristicMatrix[x][y] = value;
     }
 
-    public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters, Point enemyPosition) {
+    public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters, Point enemyPreviousPosition) {
         for(int i = 0; i < arenaTiles.length; i++) {
             for(int j = 0; j < arenaTiles[0].length; j++) {
                     heuristicMatrix[i][j] = 10;
@@ -76,13 +76,15 @@ public class AIHeuristics {
         //set up a meeting point in center
         //recursive(new Point(11,8), 80);
 
+        recursive(new Point(11,8), 50);
+
         for (GameCharacter gameCharacter : gameCharacters) {
-            recursive(gameCharacter.getGridPosition(), 100);
+            recursive(gameCharacter.getGridPosition(), 1000);
             //decideHeuristicValue(heuristicMatrix, gameCharacter.getGridPosition(), 100);
         }
 
         for(int i = 0; i < arenaTiles.length; i++) {
-            for (int j = 0; j < arenaTiles[j].length; j++) {
+            for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof Wall) {
                     heuristicMatrix[i][j] = 0;
                 }
@@ -90,7 +92,7 @@ public class AIHeuristics {
         }
 
 
-        heuristicMatrix[enemyPosition.x][enemyPosition.y] = 1;
+        heuristicMatrix[enemyPreviousPosition.x][enemyPreviousPosition.y] = -1;
 
 /*        System.out.println("Current boardstate");
         System.out.println("length " + heuristicMatrix.length);
@@ -140,59 +142,66 @@ public class AIHeuristics {
         int x = playerPosition.x;
         int y = playerPosition.y;
         heuristicMatrix[x][y] = startValue;
-        recursiveLeft(x-1, y, 90);
-        recursiveRight(x+1, y, 90);
-        recursiveDown(x, y-1, 90);
-        recursiveUp(x, y+1, 90);
+        recursiveLeft(x-1, y, startValue - 10);
+        recursiveRight(x+1, y, startValue - 10);
+        recursiveDown(x, y-1, startValue - 10);
+        recursiveUp(x, y+1, startValue - 10);
 
-        recursiveSW(x-1, y-1, 80);
-        recursiveSE(x+1, y-1, 80);
-        recursiveNE(x+1, y+1, 80);
-        recursiveNW(x-1, y+1, 80);
+/*        recursiveSW(x-1, y-1, startValue - 30);
+        recursiveSE(x+1, y-1, startValue - 30);
+        recursiveNE(x+1, y+1, startValue - 30);
+        recursiveNW(x-1, y+1, startValue - 30);*/
 
     }
 
     public static void recursiveLeft(int x, int y, int tileValue) {
-        if(x > 0 && tileValue > 0) {
+        if(x > 0 && tileValue > 10) {
             heuristicMatrix[x][y] = tileValue;
             recursiveLeft(x - 1, y, tileValue - 10);
-            int z = x-1;
-            recursiveNW(z-1, y+1, tileValue-10);
-            recursiveSW(z-1, y-1, tileValue-10);
+/*            int z = x-1;
+            recursiveNW(z-1, y+1, tileValue-15);
+            recursiveSW(z-1, y-1, tileValue-15);*/
         }
     }
 
     public static void recursiveUp(int x, int y, int tileValue) {
-        if(y < 14 && tileValue > 0) {
+        if(y < 14 && tileValue > 10) {
             heuristicMatrix[x][y] = tileValue;
             recursiveUp(x, y + 1, tileValue - 10);
-            int z = y +1;
-            recursiveNE(x+1, z+1, tileValue-10);
-            recursiveNW(x-1, z+1, tileValue-10);
+
+            recursiveLeft(x-1,y, tileValue-10);
+            recursiveRight(x+1,y,tileValue-10);
+/*            int z = y +1;
+            recursiveNE(x+1, z+1, tileValue-15);
+            recursiveNW(x-1, z+1, tileValue-15);*/
         }
     }
 
     public static void recursiveRight(int x, int y, int tileValue) {
-        if(x < 20 && tileValue > 0) {
+        if(x < 20 && tileValue > 10) {
             heuristicMatrix[x][y] = tileValue;
             recursiveRight(x + 1, y, tileValue - 10);
-            int z = x + 1;
-            recursiveNE(z+1, y+1, tileValue-10);
-            recursiveSE(z+1, y-1, tileValue-10);
+/*            int z = x + 1;
+            recursiveNE(z+1, y+1, tileValue-15);
+            recursiveSE(z+1, y-1, tileValue-15);*/
         }
     }
 
     public static void recursiveDown(int x, int y, int tileValue) {
-        if(y > 0 && tileValue > 0) {
+        if(y > 0 && tileValue > 10) {
             heuristicMatrix[x][y] = tileValue;
+            recursiveLeft(x-1,y, tileValue-10);
+            recursiveRight(x+1,y,tileValue-10);
             recursiveDown(x, y-1, tileValue - 10);
-            int z = y-1;
-            recursiveSW(x-1,z-1, tileValue-10);
-            recursiveSE(x+1,z-1, tileValue-10);
+
+
+/*            int z = y-1;
+            recursiveSW(x-1,z-1, tileValue-15);
+            recursiveSE(x+1,z-1, tileValue-15);*/
         }
     }
 
-    public static void recursiveNW(int x, int y, int tileValue) {
+/*    public static void recursiveNW(int x, int y, int tileValue) {
         if(x > 0 && y < 14 && tileValue > 10) {
             heuristicMatrix[x][y] = tileValue;
             recursiveNW(x - 1, y + 1, tileValue - 10);
@@ -218,5 +227,5 @@ public class AIHeuristics {
             heuristicMatrix[x][y] = tileValue;
             recursiveNW(x - 1, y - 1, tileValue - 10);
         }
-    }
+    }*/
 }

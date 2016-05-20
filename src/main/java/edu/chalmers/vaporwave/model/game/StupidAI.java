@@ -17,7 +17,7 @@ public class StupidAI implements AI {
     }
 
     @Override
-    public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles) {
+    public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles, Point enemyPreviousPosition) {
 
         Random random = new Random();
         int nextRandom = random.nextInt(10);

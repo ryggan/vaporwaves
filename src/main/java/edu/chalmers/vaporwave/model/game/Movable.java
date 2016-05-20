@@ -377,6 +377,10 @@ public abstract class Movable {
         return new Point(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()));
     }
 
+    public Point getPreviousGridPosition() {
+        return new Point(this.previousGridPositionX, this.previousGridPositionY);
+    }
+
     public int getPreviousGridPositionX() {
         return this.previousGridPositionX;
     }

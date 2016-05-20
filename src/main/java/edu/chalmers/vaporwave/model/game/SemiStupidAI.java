@@ -42,7 +42,7 @@ public class SemiStupidAI implements AI {
     }
 
     @Override
-    public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles) {
+    public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles, Point enemyPreviousPosition) {
 
         //for testing
         i++;
