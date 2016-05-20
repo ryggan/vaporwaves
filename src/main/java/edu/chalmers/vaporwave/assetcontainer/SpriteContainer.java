@@ -8,16 +8,15 @@ import java.util.Map;
 
 class SpriteContainer {
 
-    private Map<SpriteID, Sprite> spriteContainer;
+    private static Map<SpriteID, Sprite> spriteContainer;
 
     private static double tasksDone;
     private static final double totalTasks = 29 + 8 + 5 + 6 + 5 + 9 + 3 + 16;
 
-    SpriteContainer() {
-
+    public static void initSpriteContainer() {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
-        this.spriteContainer = new HashMap<>();
+        spriteContainer = new HashMap<>();
 
         // Menu images and controls (29)
         Image menuCharacter = Container.getImage(ImageID.MENU_CHARACTER);
@@ -216,16 +215,15 @@ class SpriteContainer {
                 new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 6}, new double[] {1, 1}));
         addSprite(SpriteID.POWERUP_SPEED_DESTROY,
                 new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 7}, new double[] {1, 1}));
-
     }
 
-    private void addSprite(SpriteID spriteID, Sprite sprite) {
-        this.spriteContainer.put(spriteID, sprite);
+    private static void addSprite(SpriteID spriteID, Sprite sprite) {
+        spriteContainer.put(spriteID, sprite);
         tasksDone++;
     }
 
-    Sprite getSprite(SpriteID spriteID) {
-        return this.spriteContainer.get(spriteID);
+    static Sprite getSprite(SpriteID spriteID) {
+        return spriteContainer.get(spriteID);
     }
 
     static double getTasksDone() {

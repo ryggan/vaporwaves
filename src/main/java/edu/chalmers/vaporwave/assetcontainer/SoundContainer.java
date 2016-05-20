@@ -20,11 +20,7 @@ class SoundContainer {
     private static double tasksDone;
     private static final double totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
-    SoundContainer() {
-        initSoundContainer();
-    }
-
-    private static void initSoundContainer() {
+    public static void initSoundContainer() {
         soundVolume = 1.0;
         musicVolume = 0.5;
 
@@ -49,11 +45,11 @@ class SoundContainer {
 //        setUpSoundArray(soundPlayer, 4, "girl_moan4.mp3");
 //        this.soundContainer.put(SoundID.CHARACTER_FLINCH, soundPlayer);
 
-        setUpBackgroundSound(soundPlayer);
+        setUpBackgroundSound();
     }
 
-    private static void setUpBackgroundSound(SoundPlayer[] soundPlayer) {
-        soundPlayer = new SoundPlayer[1];
+    private static void setUpBackgroundSound() {
+        SoundPlayer[] soundPlayer = new SoundPlayer[1];
         soundPlayer[0] = new SoundPlayer("bg3.mp3", 0.5);
         soundPlayer[0].loopSound(true);
         soundContainer.put(SoundID.GAME_MUSIC, soundPlayer);

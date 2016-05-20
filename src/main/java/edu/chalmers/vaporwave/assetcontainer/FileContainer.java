@@ -11,19 +11,18 @@ import java.util.Map;
 
 class FileContainer {
 
-    private Map<FileID, File> fileContainer;
+    private static Map<FileID, File> fileContainer;
 
-    private Map<FileID, Font> fontContainer;
+    private static Map<FileID, Font> fontContainer;
 
     private static double tasksDone;
     private static final double totalTasks = 2 + 3;
 
-    FileContainer() {
-
+    public static void initFileContainer() {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
-        this.fileContainer = new HashMap<>();
-        this.fontContainer = new HashMap<>();
+        fileContainer = new HashMap<>();
+        fontContainer = new HashMap<>();
 
         // Misc files (2)
         addFile(FileID.XML_CHARACTER_ENEMY, new File(Constants.GAME_CHARACTER_XML_FILE));
@@ -46,25 +45,25 @@ class FileContainer {
         }
     }
 
-    private void addFile(FileID fileID, File file) {
-        this.fileContainer.put(fileID, file);
+    private static void addFile(FileID fileID, File file) {
+        fileContainer.put(fileID, file);
         tasksDone++;
     }
 
-    private void addFont(FileID fileID, Font font) {
+    private static void addFont(FileID fileID, Font font) {
         if (!fileID.toString().substring(0, 4).equals("FONT")) {
             throw new IllegalArgumentException();
         }
-        this.fontContainer.put(fileID, font);
+        fontContainer.put(fileID, font);
         tasksDone++;
     }
 
-    File getFile(FileID fileID) {
-        return this.fileContainer.get(fileID);
+    static File getFile(FileID fileID) {
+        return fileContainer.get(fileID);
     }
 
-    Font getFont(FileID fileID) {
-        return this.fontContainer.get(fileID);
+    static Font getFont(FileID fileID) {
+        return fontContainer.get(fileID);
     }
 
     static double getTasksDone() {

@@ -7,16 +7,15 @@ import java.util.Map;
 
 class ImageContainer {
 
-    private Map<ImageID, Image> imageContainer;
+    private static Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
     private static final double totalTasks = 2 + 4 + 4 + 6 + 13 + 3;
     
-    ImageContainer() {
-
+    public static void initImageContainer() {
         // TODO: OBS!!! IF ADDING IMAGES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
-        this.imageContainer = new HashMap<>();
+        imageContainer = new HashMap<>();
 
         // >>> MENU STUFF: <<<
 
@@ -71,16 +70,15 @@ class ImageContainer {
         addImage(ImageID.BOMBS_EXPLOSIONS, new Image("images/spritesheet-bombs_and_explosions-18x18_v2.png"));
         addImage(ImageID.WALLS, new Image("images/spritesheet-walls_both-18x18.png"));
         addImage(ImageID.POWERUPS, new Image("images/spritesheet-powerups-18x18.png"));
-
     }
 
-    private void addImage(ImageID imageID, Image image) {
-        this.imageContainer.put(imageID, image);
+    private static void addImage(ImageID imageID, Image image) {
+        imageContainer.put(imageID, image);
         tasksDone ++;
     }
 
-    Image getImage(ImageID imageID) {
-        return this.imageContainer.get(imageID);
+    static Image getImage(ImageID imageID) {
+        return imageContainer.get(imageID);
     }
 
     static double getTasksDone() {

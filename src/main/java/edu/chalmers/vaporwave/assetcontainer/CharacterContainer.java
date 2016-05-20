@@ -12,14 +12,13 @@ class CharacterContainer {
 
     private static final MovableState[] CHARACTER_CHARACTER_STATE = { MovableState.WALK, MovableState.IDLE, MovableState.FLINCH, MovableState.DEATH, MovableState.SPAWN };
 
-    private Map<CharacterID, CharacterSprite> spriteContainer;
-    private Map<CharacterID, CharacterProperties> propertiesContainer;
+    private static Map<CharacterID, CharacterSprite> spriteContainer;
+    private static Map<CharacterID, CharacterProperties> propertiesContainer;
 
     private static double tasksDone;
     private static final double totalTasks = 14 * 5;
 
-    CharacterContainer() {
-
+    public static void initCharacterContainer() {
         spriteContainer = new HashMap<>();
         propertiesContainer = new HashMap<>();
 
@@ -33,17 +32,17 @@ class CharacterContainer {
         initCharacterSprites(CharacterID.PCCHAN);
     }
 
-    CharacterSprite getCharacterSprite(CharacterID characterID) {
-        return this.spriteContainer.get(characterID);
+    static CharacterSprite getCharacterSprite(CharacterID characterID) {
+        return spriteContainer.get(characterID);
     }
 
-    private void initCharacterSprites(CharacterID characterID) {
+    private static void initCharacterSprites(CharacterID characterID) {
         CharacterSprite characterSprite = new CharacterSprite(characterID.toString());
-        this.spriteContainer.put(characterID, characterSprite);
+        spriteContainer.put(characterID, characterSprite);
 
         XMLReader reader = new XMLReader(Container.getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
-        this.propertiesContainer.put(characterID, characterProperties);
+        propertiesContainer.put(characterID, characterProperties);
 
         for (MovableState characterState : CHARACTER_CHARACTER_STATE) {
             CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
@@ -126,11 +125,10 @@ class CharacterContainer {
                 default:
             }
         }
-
     }
 
-    double getCharacterStat(CharacterID characterID, CharacterStat characterStat) {
-        return this.propertiesContainer.get(characterID).getCharacterStat(characterStat);
+    static double getCharacterStat(CharacterID characterID, CharacterStat characterStat) {
+        return propertiesContainer.get(characterID).getCharacterStat(characterStat);
     }
 
     static double getTasksDone() {

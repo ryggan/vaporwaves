@@ -11,88 +11,81 @@ import java.io.File;
 
 public class Container {
 
-    private static FileContainer fileContainer;
-    private static ImageContainer imageContainer;
-    private static SoundContainer soundContainer;
-    private static CharacterContainer characterContainer;
-    private static SpriteContainer spriteContainer;
-    private static MenuButtonContainer menuButtonContainer;
-
     public static void initialize() {
         double time = System.currentTimeMillis();
-        imageContainer = new ImageContainer();
+        ImageContainer.initImageContainer();
         System.out.println("Image loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
         time = System.currentTimeMillis();
-        fileContainer = new FileContainer();
+        FileContainer.initFileContainer();
         System.out.println("File loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
         time = System.currentTimeMillis();
-        soundContainer = new SoundContainer();
+        SoundContainer.initSoundContainer();
         System.out.println("Sound loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
         time = System.currentTimeMillis();
-        characterContainer = new CharacterContainer();
+        CharacterContainer.initCharacterContainer();
         System.out.println("Characters done, timed: "+(System.currentTimeMillis() - time)+" millis");
         time = System.currentTimeMillis();
-        spriteContainer = new SpriteContainer();
+        SpriteContainer.initSpriteContainer();
         System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
         time = System.currentTimeMillis();
-        menuButtonContainer = new MenuButtonContainer();
+        MenuButtonContainer.initMenuButtonContainer();
         System.out.println("Menu buttons done, timed: "+(System.currentTimeMillis() - time)+" millis");
     }
 
     public static Image getImage(ImageID imageID) {
-        return imageContainer.getImage(imageID);
+        return ImageContainer.getImage(imageID);
     }
 
     public static File getFile(FileID fileID) {
-        return fileContainer.getFile(fileID);
+        return FileContainer.getFile(fileID);
     }
 
     public static Font getFont(FileID fileID) {
-        return fileContainer.getFont(fileID);
+        return FileContainer.getFont(fileID);
     }
 
     public static SoundPlayer getSound(SoundID soundID) {
-        return soundContainer.getSound(soundID);
+        return SoundContainer.getSound(soundID);
     }
 
     public static void playSound(SoundID soundID) {
-        soundContainer.playSound(soundID);
+        SoundContainer.playSound(soundID);
     }
 
     public static void stopSound(SoundID soundID) {
-        soundContainer.stopSound(soundID);
+        SoundContainer.stopSound(soundID);
     }
 
     public static CharacterSprite getCharacterSprite(CharacterID characterID) {
-        return characterContainer.getCharacterSprite(characterID);
+        return CharacterContainer.getCharacterSprite(characterID);
     }
 
     public static double getCharacterHealth(CharacterID characterID) {
-        return characterContainer.getCharacterStat(characterID, CharacterStat.HEALTH);
+        return CharacterContainer.getCharacterStat(characterID, CharacterStat.HEALTH);
     }
     public static double getCharacterSpeed(CharacterID characterID) {
-        return characterContainer.getCharacterStat(characterID, CharacterStat.SPEED);
+        return CharacterContainer.getCharacterStat(characterID, CharacterStat.SPEED);
     }
     public static int getCharacterBombRange(CharacterID characterID) {
-        return (int)characterContainer.getCharacterStat(characterID, CharacterStat.BOMB_RANGE);
+        return (int)CharacterContainer.getCharacterStat(characterID, CharacterStat.BOMB_RANGE);
     }
     public static int getCharacterBombCount(CharacterID characterID) {
-        return (int)characterContainer.getCharacterStat(characterID, CharacterStat.BOMB_COUNT);
+        return (int)CharacterContainer.getCharacterStat(characterID, CharacterStat.BOMB_COUNT);
     }
     public static double getCharacterDamage(CharacterID characterID) {
-        return characterContainer.getCharacterStat(characterID, CharacterStat.DAMAGE);
+        return CharacterContainer.getCharacterStat(characterID, CharacterStat.DAMAGE);
     }
 
     public static Sprite getSprite(SpriteID spriteID) {
-        return spriteContainer.getSprite(spriteID);
+        return SpriteContainer.getSprite(spriteID);
     }
 
     public static MenuButtonSprite getButton(MenuButtonID menuButtonID) {
-        return menuButtonContainer.getButton(menuButtonID);
+        return MenuButtonContainer.getButton(menuButtonID);
     }
 
     public static MenuButtonSprite getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
-        return menuButtonContainer.getButton(menuButtonID, positionOnCanvas);
+        return MenuButtonContainer.getButton(menuButtonID, positionOnCanvas);
     }
 
     public static double getTasksDone() {

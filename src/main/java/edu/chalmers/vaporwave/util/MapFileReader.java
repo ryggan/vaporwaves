@@ -10,7 +10,8 @@ public class MapFileReader {
 //        public MapFileReader(String filename) {
         try {
 //            reader = new BufferedReader(new FileReader(filename));
-            reader = new BufferedReader(new FileReader(file));
+            InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "UTF8");
+            reader = new BufferedReader(inputStreamReader);
             String widthString = reader.readLine();
             int width;
             if (widthString != null) {
@@ -25,7 +26,8 @@ public class MapFileReader {
             }
             int height = (numbers.getLineNumber() + 2);
             this.mapObjects = new MapObject[width][height];
-            reader = new BufferedReader(new FileReader(file));
+            
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
             String line;
             int i = 0;
             while((line = reader.readLine()) != null) {

@@ -293,17 +293,17 @@ public abstract class Movable {
             nextGridPositionX = getPreviousGridPositionX();
 
         // Only add grid-direction paramater if calculated gridposition above isn't in front of you
-        } else if ((Utils.gridToCanvasPositionX(nextGridPositionX) < getCanvasPositionX() && gridDirectionX > 0)
-                || (Utils.gridToCanvasPositionX(nextGridPositionX) > getCanvasPositionX() && gridDirectionX < 0)
-                || Utils.gridToCanvasPositionX(nextGridPositionX) == getCanvasPositionX()) {
+        } else if (((int)Utils.gridToCanvasPositionX(nextGridPositionX) < (int)getCanvasPositionX() && gridDirectionX > 0)
+                || ((int)Utils.gridToCanvasPositionX(nextGridPositionX) > (int)getCanvasPositionX() && gridDirectionX < 0)
+                || (int)Utils.gridToCanvasPositionX(nextGridPositionX) == (int)getCanvasPositionX()) {
             nextGridPositionX += gridDirectionX;
         }
         // Same same with Y as with X
         if (gridDirectionY == 0) {
             nextGridPositionY = getPreviousGridPositionY();
-        } else if ((Utils.gridToCanvasPositionY(nextGridPositionY) < getCanvasPositionY() && gridDirectionY > 0)
-                || (Utils.gridToCanvasPositionY(nextGridPositionY) > getCanvasPositionY() && gridDirectionY < 0)
-                || Utils.gridToCanvasPositionY(nextGridPositionY) == getCanvasPositionY()) {
+        } else if (((int)Utils.gridToCanvasPositionY(nextGridPositionY) < (int)getCanvasPositionY() && gridDirectionY > 0)
+                || ((int)Utils.gridToCanvasPositionY(nextGridPositionY) > (int)getCanvasPositionY() && gridDirectionY < 0)
+                || (int)Utils.gridToCanvasPositionY(nextGridPositionY) == (int)getCanvasPositionY()) {
             nextGridPositionY += gridDirectionY;
         }
 
@@ -478,7 +478,7 @@ public abstract class Movable {
     public boolean equals(Object o){
         if(o instanceof Movable){
             Movable other = (Movable) o;
-            if (this.name.equals(other.name) && this.speed == other.speed && this.damage == other.damage) {
+            if (this.name.equals(other.name)) {
                 return super.equals(o);
             }
         }

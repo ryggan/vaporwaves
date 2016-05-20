@@ -8,16 +8,15 @@ import java.util.Map;
 
 class MenuButtonContainer {
 
-    private Map<MenuButtonID, MenuButtonSprite> menuButtonContainer;
+    private static Map<MenuButtonID, MenuButtonSprite> menuButtonContainer;
 
     private static double tasksDone;
     private static final double totalTasks = 4 + 1 + 2;
 
-    MenuButtonContainer() {
-
+    public static void initMenuButtonContainer() {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
-        this.menuButtonContainer = new HashMap<>();
+        menuButtonContainer = new HashMap<>();
 
         Image menuButtonSpritesheet = Container.getImage(ImageID.MENU_BUTTON_SPRITESHEET);
         int buttonWidth = 308;
@@ -35,19 +34,18 @@ class MenuButtonContainer {
         // Misc (2)
         addButton(MenuButtonID.BUTTON_BACK, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 2)));
         addButton(MenuButtonID.BUTTON_NEXT, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 1)));
-
     }
-
-    private void addButton(MenuButtonID menuButtonID, MenuButtonSprite menuButton) {
-        this.menuButtonContainer.put(menuButtonID, menuButton);
+    
+    private static void addButton(MenuButtonID menuButtonID, MenuButtonSprite menuButton) {
+        menuButtonContainer.put(menuButtonID, menuButton);
         tasksDone++;
     }
 
-    MenuButtonSprite getButton(MenuButtonID menuButtonID) {
-        return this.menuButtonContainer.get(menuButtonID);
+    static MenuButtonSprite getButton(MenuButtonID menuButtonID) {
+        return menuButtonContainer.get(menuButtonID);
     }
 
-    MenuButtonSprite getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
+    static MenuButtonSprite getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
         MenuButtonSprite theButton = getButton(menuButtonID);
         theButton.setPositionOnCanvas(positionOnCanvas);
         return theButton;

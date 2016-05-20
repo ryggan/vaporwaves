@@ -22,7 +22,7 @@ public class FelixTestAI implements AI {
         this.gameCharacterSet = gameCharacterSet;
     }
 
-    class NextDirection {
+    static class NextDirection {
 
         public NextDirection(Direction dir, int value) {
             this.direction = dir;
@@ -78,6 +78,8 @@ public class FelixTestAI implements AI {
                 if(enemyPosition.x > 0) {
                     heuristicMatrix[enemyPosition.x - 1][enemyPosition.y] = 1;
                 }
+                break;
+            default:
                 break;
         }
 
