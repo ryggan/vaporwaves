@@ -1,7 +1,6 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;

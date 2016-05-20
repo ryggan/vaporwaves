@@ -2,9 +2,8 @@ package edu.chalmers.vaporwave.model;
 
 import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.event.RemoveTileEvent;
+import edu.chalmers.vaporwave.model.game.RemoveTileEvent;
 import edu.chalmers.vaporwave.model.game.*;
-import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.MapObject;
 import edu.chalmers.vaporwave.util.PowerUpType;
 

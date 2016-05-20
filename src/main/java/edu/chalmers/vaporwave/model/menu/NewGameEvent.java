@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.event;
+package edu.chalmers.vaporwave.model.menu;
 
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.Player;

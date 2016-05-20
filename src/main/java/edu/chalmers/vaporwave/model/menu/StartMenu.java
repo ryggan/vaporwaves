@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave.model.menu;
 
-import edu.chalmers.vaporwave.event.NewGameEvent;
-
 public class StartMenu extends AbstractMenu {
     public StartMenu(NewGameEvent newGameEvent) {
         super(new int[]{0, 0}, newGameEvent, 0);

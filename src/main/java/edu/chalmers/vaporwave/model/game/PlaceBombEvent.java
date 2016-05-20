@@ -1,4 +1,4 @@
-package edu.chalmers.vaporwave.event;
+package edu.chalmers.vaporwave.model.game;
 
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 

@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.assetcontainer;
 import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.model.game.AnimatedTile;
+import edu.chalmers.vaporwave.model.game.Movable;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.canvas.GraphicsContext;
@@ -135,6 +136,7 @@ public class AnimatedSprite extends Sprite {
                 this.animationFinishedEvent = new AnimationFinishedEvent();
             }
             GameEventBus.getInstance().post(this.animationFinishedEvent);
+
         }
 
         int index = (int)((timeToCheck % (length * duration)) / duration);

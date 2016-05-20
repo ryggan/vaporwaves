@@ -11,6 +11,7 @@ import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.model.menu.MenuState;
+import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;

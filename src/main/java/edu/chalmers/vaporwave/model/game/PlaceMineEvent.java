@@ -1,6 +1,4 @@
-package edu.chalmers.vaporwave.event;
-
-import edu.chalmers.vaporwave.model.game.GameCharacter;
+package edu.chalmers.vaporwave.model.game;
 
 import java.awt.*;
 

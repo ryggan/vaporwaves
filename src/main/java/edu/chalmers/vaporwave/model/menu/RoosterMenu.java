@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.model.menu;
 
-import edu.chalmers.vaporwave.event.NewGameEvent;
 import edu.chalmers.vaporwave.util.Constants;
 
 public class RoosterMenu extends AbstractMenu {

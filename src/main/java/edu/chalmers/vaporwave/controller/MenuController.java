@@ -5,7 +5,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GamePadDisconnectedEvent;
-import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.util.Debug;

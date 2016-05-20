@@ -5,18 +5,12 @@ import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
-import edu.chalmers.vaporwave.event.NewGameEvent;
+import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
-import edu.chalmers.vaporwave.model.menu.MenuState;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.view.LoadingScreenView;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
-import net.java.games.input.Component;
-import net.java.games.input.Controller;
-import net.java.games.input.ControllerEnvironment;
-
-import java.util.List;
 
 public class MainController {
 

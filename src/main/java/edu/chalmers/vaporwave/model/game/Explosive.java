@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.model.game;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
-import edu.chalmers.vaporwave.event.BlastEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 
 import java.awt.*;

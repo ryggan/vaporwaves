@@ -1,7 +1,4 @@
-package edu.chalmers.vaporwave.event;
-
-import edu.chalmers.vaporwave.model.game.Blast;
-import edu.chalmers.vaporwave.model.game.Explosive;
+package edu.chalmers.vaporwave.model.game;
 
 public class BlastEvent {
 
