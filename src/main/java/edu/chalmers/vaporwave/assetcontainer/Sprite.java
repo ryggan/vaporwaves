@@ -84,7 +84,7 @@ public class Sprite {
 
     // Besides setting the scale, also updates the Image, via Utils, to the new resized scale (when necessary).
     public void setScale(double scale) {
-        boolean differentScale = (scale != this.scale);
+        boolean differentScale = ((int)scale != (int)this.scale);
         this.scale = scale;
         if (differentScale) {
             setImage(this.originalImage);

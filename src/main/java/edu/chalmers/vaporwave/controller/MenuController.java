@@ -40,12 +40,12 @@ public class MenuController {
         player.setMineControl("M");
         this.newGameEvent.addPlayer(player);
 
-       /* player = new Player(1, "PlayerTwo");
+        player = new Player(1, "PlayerTwo");
         player.setDirectionControls(new String[] {"A", "W", "D", "S"});
         player.setBombControl("SHIFT");
         player.setMineControl("CAPS");
         this.newGameEvent.addPlayer(player);
-
+/*
         player = new Player(2, "PlayerThree");
         player.setDirectionControls(new String[] {"F", "T", "H", "G"});
         player.setBombControl("R");

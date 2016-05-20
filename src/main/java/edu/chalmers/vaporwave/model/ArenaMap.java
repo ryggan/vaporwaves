@@ -28,6 +28,8 @@ public class ArenaMap {
                     case PLAYER4:
                         this.playersPositions.put(mapObjects[j][i], new Point(j, i));
                         break;
+                    default:
+                        break;
                 }
             }
         }
@@ -50,13 +52,13 @@ public class ArenaMap {
     }
 
     public String toString() {
-        String mapAsString = "";
+        StringBuffer mapAsString = new StringBuffer();
         for (int i = 0; i < this.mapObjects[0].length; i++) {
             for (int j = 0; j < this.mapObjects.length; j++) {
-                mapAsString += mapObjects[j][i].toString().substring(0,1) + "  ";
+                mapAsString.append(mapObjects[j][i].toString().substring(0,1) + "  ");
             }
-            mapAsString += "\n";
+            mapAsString.append("\n");
         }
-        return mapAsString;
+        return mapAsString.toString();
     }
 }

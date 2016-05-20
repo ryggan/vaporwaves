@@ -1,11 +1,7 @@
 package edu.chalmers.vaporwave.model.game;
 
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.event.BlastEvent;
-import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.util.BlastState;
-
-import java.awt.*;
 
 public class Blast extends StaticTile implements AnimatedTile {
 
@@ -22,7 +18,7 @@ public class Blast extends StaticTile implements AnimatedTile {
         this.state = state;
         this.timeStamp = timeStamp;
         this.dangerousTime = 0.6;
-        this.playerId = explosive.getOwner().getPlayerId();
+        this.playerId = explosive.getOwner().getPlayerID();
     }
 
     public boolean isDangerous(double timeSinceStart) {
@@ -46,7 +42,7 @@ public class Blast extends StaticTile implements AnimatedTile {
         return this.damage;
     }
 
-    public int getPlayerId() {
+    public int getPlayerID() {
         return this.playerId;
     }
 

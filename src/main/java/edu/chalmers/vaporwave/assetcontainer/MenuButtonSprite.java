@@ -34,6 +34,8 @@ public class MenuButtonSprite {
             case PRESSED:
                 frameY = 2;
                 break;
+            default:
+                break;
         }
 
         menuGC.drawImage(spriteSheet, gridPositionInSheet.x * width, (3 * gridPositionInSheet.y + frameY) * height,

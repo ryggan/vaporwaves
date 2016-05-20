@@ -3,7 +3,6 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -26,6 +25,8 @@ public class RoosterMenuView extends AbstractMenuView {
         this.roosterSelectPosition.add(new Point(350, 300));
         this.roosterSelectPosition.add(new Point(580, 300));
         this.roosterSelectPosition.add(new Point(830, 300));
+
+        this.selectedPlayers = new int[0];
 
         List roosterSelectorsOff = new ArrayList<>();
         roosterSelectorsOff.add(SpriteID.MENU_ROOSTER_SELECT_OPEN_OFF);
@@ -78,6 +79,6 @@ public class RoosterMenuView extends AbstractMenuView {
     }
 
     public void setSelectedPlayers(int[] selectedPlayers) {
-        this.selectedPlayers = selectedPlayers;
+        this.selectedPlayers = selectedPlayers.clone();
     }
 }

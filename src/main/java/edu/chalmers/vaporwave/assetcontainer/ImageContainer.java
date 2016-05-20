@@ -22,7 +22,6 @@ class ImageContainer {
 
         // Backgrounds (2):
         addImage(ImageID.MENU_BACKGROUND_1, new Image("images/menu/menu-background-2.bmp"));
-
         addImage(ImageID.MENU_BUTTON_SPRITESHEET, new Image("images/menu/spritesheet_menubuttons-308x198.png"));
 
         // Character select (4):
@@ -77,7 +76,7 @@ class ImageContainer {
 
     private void addImage(ImageID imageID, Image image) {
         this.imageContainer.put(imageID, image);
-        tasksDone++;
+        tasksDone ++;
     }
 
     Image getImage(ImageID imageID) {

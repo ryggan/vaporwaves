@@ -115,7 +115,7 @@ public class GameCharacter extends Movable {
         return powerUpPickedUp;
     }
 
-    public int getPlayerId() {
+    public int getPlayerID() {
         return this.playerId;
     }
 

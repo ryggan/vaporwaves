@@ -19,7 +19,10 @@ public class MapFileReader {
                 throw new IOException();
             }
             LineNumberReader numbers = new LineNumberReader(reader);
-            numbers.skip(Integer.MAX_VALUE);
+            long skippedLines = numbers.skip(Integer.MAX_VALUE);
+            if (Debug.PRINT_LOG) {
+                System.out.println("Skipped lines in MapFileReader: " + skippedLines);
+            }
             int height = (numbers.getLineNumber() + 2);
             this.mapObjects = new MapObject[width][height];
             reader = new BufferedReader(new FileReader(file));

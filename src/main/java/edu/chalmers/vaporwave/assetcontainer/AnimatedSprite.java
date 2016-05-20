@@ -51,8 +51,8 @@ public class AnimatedSprite extends Sprite {
         super(spriteSheet, spriteDimension, startPosition, offset, scale);
 
         // Checking arguments, throwing exception if something is wrong
-
-        if (spriteSheet == null || spriteDimension == null || spriteDimension.getWidth() < 1 || spriteDimension.getHeight() < 1
+        // Removed spriteDimension == null, since it will always be set in super constructor /Andreas
+        if (spriteSheet == null || spriteDimension.getWidth() < 1 || spriteDimension.getHeight() < 1
                 || length <= 0 || duration <= 0.0 || startPosition[0] < 0 || startPosition[1] < 0) {
             throw new IllegalArgumentException();
         }

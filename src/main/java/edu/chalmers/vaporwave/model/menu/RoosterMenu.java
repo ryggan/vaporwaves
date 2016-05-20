@@ -44,6 +44,10 @@ public class RoosterMenu extends AbstractMenu {
     }
 
     public int[] getSelectedPlayers() {
-        return this.selectedPlayers;
+        int[] returnValue = new int[this.selectedPlayers.length];
+        for (int i = 0; i < this.selectedPlayers.length; i++) {
+            returnValue[i] = this.selectedPlayers[i];
+        }
+        return returnValue;
     }
 }
