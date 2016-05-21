@@ -45,7 +45,8 @@ public class MenuController {
         player.setBombControl("SHIFT");
         player.setMineControl("CAPS");
         this.newGameEvent.addPlayer(player);
-/*
+
+        /*
         player = new Player(2, "PlayerThree");
         player.setDirectionControls(new String[] {"F", "T", "H", "G"});
         player.setBombControl("R");
@@ -56,7 +57,8 @@ public class MenuController {
         player.setDirectionControls(new String[] {"J", "I", "L", "K"});
         player.setBombControl("U");
         player.setMineControl("O");
-        this.newGameEvent.addPlayer(player);*/
+        this.newGameEvent.addPlayer(player);
+        */
 
         updatePlayerGamePads(newGameEvent.getPlayers());
 

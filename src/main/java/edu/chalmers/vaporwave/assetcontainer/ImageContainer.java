@@ -35,7 +35,8 @@ class ImageContainer {
         addImage(ImageID.HUD_BOX_SHEET, new Image("images/hud/spritesheet-hudbox-136x180.png"));
         addImage(ImageID.HUD_TIMER_MESSAGE, new Image("images/hud/timer_message.png"));
         addImage(ImageID.HUD_GAMEOVER_MESSAGE, new Image("images/hud/gameover_message.png"));
-        addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground.png"));
+//        addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground.png"));
+        addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground2.png"));
 
         // Background stuff (6):
         addImage(ImageID.BACKGROUND_PATTERN_1, new Image("images/backgroundPatterns/pattern1.png"));

@@ -1,18 +1,20 @@
 package edu.chalmers.vaporwave.view;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,131 +25,110 @@ public class ScoreboardView {
     private Canvas scoreboardCanvas;
     private GraphicsContext scoreboardGC;
     private List<Player> playerList;
-    private AnchorPane scoreboardPane;
     private GridPane gridPane;
     private Label[][] playerLabels;
-    private boolean isShowing;
 
-    private static final double ELEMENT_SIZE = 100;
-//    private static final double GAP = ELEMENT_SIZE / 10;
-
-    private static double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE)  + 2*Constants.DEFAULT_TILE_WIDTH;
-
-            //Math.floor((Constants.WINDOW_WIDTH - (Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE) / 2));
-    private static double yoffset = 8 * Constants.DEFAULT_TILE_HEIGHT;
-
-            //Math.floor((Constants.WINDOW_HEIGHT - (Constants.DEFAULT_TILE_HEIGHT * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE) / 2));
-
-    //For testing purposes
     public ScoreboardView(Group root, Set<Player> players) {
-        //this.root = root;
+
+        int xoffset = (int)(Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2))
+                        - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE)  + 2*Constants.DEFAULT_TILE_WIDTH);
+        int yoffset = 8 * Constants.DEFAULT_TILE_HEIGHT - 6;
+        int gridPaneYOffset = 81;
+
         this.playerList = new ArrayList<>(players.size());
         this.playerLabels = new Label[players.size()][5];
 
+        for (int i = 0; i < players.size(); i++) {
+            this.playerList.add(null);
+        }
+
         for (Player player : players) {
-            this.playerList.add(player.getPlayerID(), player);
+            this.playerList.set(player.getPlayerID(), player);
             System.out.println("Player id: "+player.getPlayerID());
         }
 
-
-        //fix filepath after creating image
-        scoreboardCanvas = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
-                Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
-        scoreboardGC = scoreboardCanvas.getGraphicsContext2D();
-
         scoreboardBackground = Container.getSprite(SpriteID.SCOREBOARD_BACKGROUND);
-        scoreboardCanvas.setLayoutX(xoffset);
-        scoreboardCanvas.setLayoutY(yoffset-10);
 
-        scoreboardBackground.setPosition(0, 0);
-        scoreboardBackground.render(scoreboardGC, -1);
-
-        scoreboardPane = new AnchorPane();
-        scoreboardPane.setPrefSize(512, 448);
-
-        //Get proper values for middle of screen
-        scoreboardPane.setLayoutX(0);
-        scoreboardPane.setLayoutY(0);
-        root.getChildren().add(scoreboardPane);
-        scoreboardPane.setVisible(false);
-
-        this.isShowing = false;
-
+        scoreboardCanvas = new Canvas(scoreboardBackground.getWidth(), scoreboardBackground.getHeight());
         root.getChildren().add(scoreboardCanvas);
+        scoreboardCanvas.setLayoutX(xoffset);
+        scoreboardCanvas.setLayoutY(yoffset);
         scoreboardCanvas.setVisible(false);
 
-        addPlayersToScoreboard();
+        scoreboardGC = scoreboardCanvas.getGraphicsContext2D();
+        scoreboardBackground.render(scoreboardGC, -1);
 
+        gridPane = new GridPane();
+        root.getChildren().add(gridPane);
+
+        gridPane.setPrefSize(scoreboardCanvas.getWidth(), scoreboardBackground.getHeight() - gridPaneYOffset);
+        gridPane.setLayoutX(xoffset);
+        gridPane.setLayoutY(yoffset + gridPaneYOffset);
+        gridPane.setHgap(0);
+        gridPane.setVgap(58);
+
+        gridPane.setAlignment(Pos.TOP_LEFT);
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHgrow(Priority.NEVER);
+        col1.setHalignment(HPos.RIGHT);
+        col1.setPrefWidth(145);
+        gridPane.getColumnConstraints().add(col1);
+
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHgrow(Priority.NEVER);
+        col2.setHalignment(HPos.CENTER);
+        col2.setPrefWidth(115);
+        gridPane.getColumnConstraints().add(col2);
+
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setHgrow(Priority.NEVER);
+        col3.setHalignment(HPos.CENTER);
+        col3.setPrefWidth(130);
+        gridPane.getColumnConstraints().add(col3);
+
+        ColumnConstraints col4 = new ColumnConstraints();
+        col4.setHgrow(Priority.NEVER);
+        col4.setHalignment(HPos.CENTER);
+        col4.setPrefWidth(130);
+        gridPane.getColumnConstraints().add(col4);
+
+        ColumnConstraints col5 = new ColumnConstraints();
+        col5.setHgrow(Priority.NEVER);
+        col5.setHalignment(HPos.RIGHT);
+        col5.setPrefWidth(130);
+        gridPane.getColumnConstraints().add(col5);
+
+        for(int i = 0; i < playerList.size(); i++) {
+            for(int j = 0; j < playerList.get(i).getPlayerInfo().length; j++) {
+                playerLabels[i][j] = new Label(playerList.get(i).getPlayerInfo()[j] + "");
+                playerLabels[i][j].setStyle("-fx-font-family: 'Lucida Console'; -fx-text-fill: black;  -fx-font-size: 16;");
+                GridPane.setMargin(playerLabels[i][j], new Insets(0, 10, 0, 10));
+                gridPane.add(playerLabels[i][j], j, i+1);
+            }
+        }
+    }
+
+    public void updateScoreboard() {
+        for(int i = 0; i < playerList.size(); i++) {
+            for(int j = 1; j < playerList.get(i).getPlayerInfo().length; j++) {
+                playerLabels[i][j].setText(playerList.get(i).getPlayerInfo()[j] + "");
+            }
+        }
     }
 
     public void showScoreboard() {
         updateScoreboard();
         scoreboardCanvas.setVisible(true);
-        scoreboardPane.setVisible(true);
-        scoreboardPane.toFront();
-        isShowing = true;
+        gridPane.setVisible(true);
     }
 
     public void hideScoreboard() {
         scoreboardCanvas.setVisible(false);
-        scoreboardPane.setVisible(false);
-        isShowing = false;
+        gridPane.setVisible(false);
     }
-
-    //should have "ArrayList<Player> players" as argument, made dummy list in method for testing purposes
-    public void addPlayersToScoreboard(/*ArrayList<Player> players*/) {
-        gridPane = new GridPane();
-//        gridPane.setPrefSize(672,480);
-        gridPane.setPrefSize(scoreboardCanvas.getWidth(), scoreboardBackground.getHeight());
-//        gridPane.setHgap(120);
-//        gridPane.setVgap(40);
-        gridPane.setLayoutX(104);
-        gridPane.setLayoutY(176);
-        ///gridPane.setPadding(new Insets(50, 50, 50, 50));
-
-        gridPane.setAlignment(Pos.TOP_CENTER);
-        //tilePane.setAlignment();
-        scoreboardPane.getChildren().add(gridPane);
-        createElements();
-    }
-
-    private void createElements() {
-        gridPane.getChildren().clear();
-
-        for(int i = 0; i < playerList.size(); i++) {
-            for(int j = 0; j < 5; j++) {
-                playerLabels[i][j] = new Label(playerList.get(i).getPlayerInfo()[j] + "");
-                playerLabels[i][j].setStyle("-fx-font-family: 'Lucida Console'; -fx-text-fill: black;  -fx-font-size: 16;");
-                gridPane.add(playerLabels[i][j], j, i+1);
-            }
-        }
-
- /*       for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 1; j++) {
-                Label label = new Label(str[i]);
-                label.setStyle("-fx-text-fill: white; -fx-font-size: 16;");
-                tilePane.getChildren().add(label);
-            }
-        }*/
-    }
-
-
-    public void updateScoreboard() {
-        for(int i = 0; i < playerList.size(); i++) {
-            for(int j = 0; j < 5; j++) {
-                playerLabels[i][j].setText(playerList.get(i).getPlayerInfo()[j] + "");
-            }
-        }
-    }
-    //private void createElement(String str) {
-        //Rectangle rectangle = new Rectangle(ELEMENT_SIZE-20, ELEMENT_SIZE/3);
-        //rectangle.setStroke(Color.ORANGE);
-       // rectangle.setFill(Color.STEELBLUE);
-          //  tilePane.getChildren().add(new Label(str));
-       // return rectangle;
-    //}
 
     public boolean isShowing() {
-        return this.isShowing;
+        return gridPane.isVisible();
     }
 }

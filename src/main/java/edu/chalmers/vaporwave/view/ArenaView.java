@@ -270,6 +270,10 @@ public class ArenaView {
         this.hudView.updateStats(players);
         this.hudView.updateTimer(timeSinceStart);
 
+        if (this.scoreboardView.isShowing()) {
+            this.scoreboardView.updateScoreboard();
+        }
+
     }
 
     // Method that just moves through the alternatives of rendering, for static tiles
