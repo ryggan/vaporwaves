@@ -45,6 +45,10 @@ public class GameController {
     private double pausedTime;
     private double gameEndTimer;
 
+    private GameType gameType;
+    private int killLimit;
+    private int scoreLimit;
+
     private GameState gameState;
 
     //seconds
@@ -68,11 +72,12 @@ public class GameController {
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
+        this.gameType = newGameEvent.getGameType();
+        this.timer = newGameEvent.getTimeLimit();
+        this.killLimit = newGameEvent.getKillLimit();
+        this.scoreLimit = newGameEvent.getScoreLimit();
         this.destroyablePowerUps = newGameEvent.getDestroyablePowerups();
         this.respawnPowerups = newGameEvent.getRespawnPowerups();
-        this.timer = newGameEvent.getTimeLimit();
-
-        // Initiates view
 
         this.timeSinceStart = 0.0;
         this.timeSinceStartOffset = 0.0;
@@ -82,7 +87,6 @@ public class GameController {
 
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
-
 
         this.players = newGameEvent.getPlayers();
 
@@ -244,7 +248,6 @@ public class GameController {
                             if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
                                 powerUp.pickUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
-                                getPlayerForGameCharacter((GameCharacter)movable).incrementPowerUpScore();
                             }
                         }
                     }
@@ -300,9 +303,14 @@ public class GameController {
             arenaView.updateTimer(this.timer);
         }
 
-
         this.arenaView.showScoreboard(this.gameState == GameState.GAME_RUNS
                 && ListenerController.getInstance().getInput().contains("TAB"));
+
+        for (Player player : this.players) {
+            if (this.gameType == GameType.SCORE_LIMIT && player.getScore() >= this.scoreLimit) {
+                gameOverStart("SCORE ACCUMULATED!");
+            }
+        }
     }
 
     private void playerInputAction(Player player) {
@@ -466,6 +474,7 @@ public class GameController {
      */
     public void playerWalksOnPowerUp(PowerUpType powerUpType, GameCharacter gameCharacter) {
         gameCharacter.pickedUpPowerUp(powerUpType, this.timeSinceStart);
+        getPlayerForGameCharacter(gameCharacter).incrementPowerUpScore();
 
         switch (powerUpType) {
             case HEALTH:
@@ -515,10 +524,23 @@ public class GameController {
                 respawnPowerups(powerups);
             }
 
+            for (Player player : this.players) {
+                if (this.gameType == GameType.CHARACTER_KILLS && player.getKills() >= this.killLimit) {
+                    gameOverStart("PLAYERS KILLED!");
+                }
+            }
+
             // null => gameCharacter uses it's inherent startPosition
             movable.spawn(null);
 
         } else if (movable instanceof Enemy) {
+
+            for (Player player : this.players) {
+                if (this.gameType == GameType.ENEMY_KILLS && player.getCreeps() >= this.killLimit) {
+                    gameOverStart("ENEMIES KILLED!");
+                }
+            }
+
             if (!deadEnemies.contains((Enemy)movable)) {
                 deadEnemies.add((Enemy)movable);
             }
@@ -539,10 +561,6 @@ public class GameController {
 //        }
     }
 
-//    public boolean isGamePaused() {
-//        return gameIsPaused;
-//    }
-
     public GameState getGameState() {
         return this.gameState;
     }
@@ -551,16 +569,12 @@ public class GameController {
         this.pauseMenuController.getPauseMenuView().show();
         this.gameState = GameState.GAME_PAUSED;
         this.pausedTime = System.nanoTime();
-
-//        System.out.println("Paused time: "+this.pausedTime);
     }
 
     private void unPauseGame() {
         this.pauseMenuController.getPauseMenuView().hide();
         this.gameState = GameState.GAME_RUNS;
         this.timeSinceStartOffset += (System.nanoTime() - this.pausedTime) / 1000000000.0;
-
-//        System.out.println("Time since start: "+this.timeSinceStart+", time since start offset: "+this.timeSinceStartOffset);
     }
 
     private Player getPlayerForGameCharacter(GameCharacter gameCharacter) {
@@ -597,6 +611,11 @@ public class GameController {
         this.enemies.clear();
         this.deadEnemies.clear();
 
+        for (Player player : this.players) {
+            player.resetPlayerGameStats();
+        }
+
         GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
+//        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu));
     }
 }

@@ -217,6 +217,7 @@ public class ArenaView {
     }
 
     public void showGameOverMessage(String message) {
+        this.scoreboardView.hideScoreboard();
         this.hudView.showGameOverMessage(message);
     }
 

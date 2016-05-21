@@ -2,9 +2,7 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.event.ExitGameEvent;
-import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.event.GamePadDisconnectedEvent;
+import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.*;
@@ -274,4 +272,10 @@ public class MenuController {
             }
         }
     }
+
+//    @Subscribe
+//    public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
+//
+//        GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
+//    }
 }

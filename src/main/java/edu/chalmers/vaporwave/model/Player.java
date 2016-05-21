@@ -23,12 +23,9 @@ public class Player {
     public Player(int playerID, String playerName) {
         this.playerID = playerID;
         this.playerName = playerName;
-        this.score = 0;
-        this.deaths = 0;
-        this.creeps = 0;
-        this.kills = 0;
-        this.powerUpScore = 0;
         this.playerInfo = new String[5];
+
+        resetPlayerGameStats();
     }
 
     public void incrementPowerUpScore() {
@@ -176,6 +173,14 @@ public class Player {
     public String toString() {
         return "Player [ Name: "+playerName+", ID: "+playerID+", Score: "+score+", Kills: "+kills+", Deaths: "+deaths
                 +", GamePad: "+gamePad+" ]";
+    }
+
+    public void resetPlayerGameStats() {
+        this.kills = 0;
+        this.creeps = 0;
+        this.powerUpScore = 0;
+        this.score = 0;
+        this.deaths = 0;
     }
 
 }

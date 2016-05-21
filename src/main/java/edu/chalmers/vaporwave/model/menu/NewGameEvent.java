@@ -2,20 +2,26 @@ package edu.chalmers.vaporwave.model.menu;
 
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.util.GameType;
 import edu.chalmers.vaporwave.util.PowerUpType;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class NewGameEvent {
+
     private ArenaMap arenaMap;
     private Player localPlayer;
     private Set<Player> players;
     private Set<PowerUpType> enabledPowerUps;
 
+    private GameType gameType;
+
     private int timeLimit;
     private boolean destroyablePowerups;
     private boolean respawnPowerups;
+    private int killLimit;
+    private int scoreLimit;
 
     public NewGameEvent() {
         this.enabledPowerUps = new HashSet<>();
@@ -24,6 +30,9 @@ public class NewGameEvent {
         this.timeLimit = 120;
         this.destroyablePowerups = true;
         this.respawnPowerups = true;
+        this.gameType = GameType.SURVIVAL;
+        this.killLimit = 10;
+        this.scoreLimit = 5000;
     }
 
     public void setArenaMap(ArenaMap arenaMap) {
@@ -100,6 +109,30 @@ public class NewGameEvent {
 
     public boolean getRespawnPowerups() {
         return this.respawnPowerups;
+    }
+
+    public void setGameType (GameType gameType) {
+        this.gameType = gameType;
+    }
+
+    public GameType getGameType() {
+        return this.gameType;
+    }
+
+    public void setKillLimit(int killLimit) {
+        this.killLimit = killLimit;
+    }
+
+    public int getKillLimit() {
+        return this.killLimit;
+    }
+
+    public void setScoreLimit(int scoreLimit) {
+        this.scoreLimit = scoreLimit;
+    }
+
+    public int getScoreLimit() {
+        return this.scoreLimit;
     }
 
     @Override
