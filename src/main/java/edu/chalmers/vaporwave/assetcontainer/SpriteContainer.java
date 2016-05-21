@@ -11,7 +11,7 @@ class SpriteContainer {
     private static Map<SpriteID, Sprite> spriteContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 29 + 8 + 5 + 6 + 5 + 9 + 3 + 16;
+    private static final double totalTasks = 29 + 8 + 5 + 7 + 5 + 9 + 3 + 16;
 
     public static void initSpriteContainer() {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
@@ -113,7 +113,7 @@ class SpriteContainer {
         addSprite(SpriteID.GAME_FRAME_SOUTH_1,
                 new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1}));
 
-        // HUD (6)
+        // HUD (7)
         Image hudSheet = Container.getImage(ImageID.HUD_BOX_SHEET);
 
         addSprite(SpriteID.HUD_BOX,
@@ -127,6 +127,8 @@ class SpriteContainer {
 
         addSprite(SpriteID.HUD_TIMER_MESSAGE, new Sprite(Container.getImage(ImageID.HUD_TIMER_MESSAGE), 1.0));
         addSprite(SpriteID.HUD_GAMEOVER_MESSAGE, new Sprite(Container.getImage(ImageID.HUD_GAMEOVER_MESSAGE), 1.0));
+
+        addSprite(SpriteID.SCOREBOARD_BACKGROUND, new Sprite(Container.getImage(ImageID.SCOREBOARD_BACK), 1.0));
 
         // Bombs (5)
 

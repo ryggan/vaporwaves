@@ -28,7 +28,7 @@ public class Player {
         this.creeps = 0;
         this.kills = 0;
         this.powerUpScore = 0;
-        playerInfo = new String[5];
+        this.playerInfo = new String[5];
     }
 
     public void incrementPowerUpScore() {

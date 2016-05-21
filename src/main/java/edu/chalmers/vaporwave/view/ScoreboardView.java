@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
+import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.geometry.Pos;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 public class ScoreboardView {
     private Sprite scoreboardBackground;
-    private Canvas scoreboard;
+    private Canvas scoreboardCanvas;
     private GraphicsContext scoreboardGC;
     private List<Player> playerList;
     private AnchorPane scoreboardPane;
@@ -41,32 +42,29 @@ public class ScoreboardView {
     public ScoreboardView(Group root, Set<Player> players) {
         //this.root = root;
         this.playerList = new ArrayList<>(players.size());
-
-        for (int i = 0; i < players.size(); i++) {
-            this.playerList.add(null);
-        }
+        this.playerLabels = new Label[players.size()][5];
 
         for (Player player : players) {
-            this.playerList.remove(player.getPlayerID());
             this.playerList.add(player.getPlayerID(), player);
+            System.out.println("Player id: "+player.getPlayerID());
         }
 
-        playerLabels = new Label[playerList.size()][5];
 
         //fix filepath after creating image
-        scoreboardBackground = new Sprite(Container.getImage(ImageID.SCOREBOARD_BACK));
-        scoreboard = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
+        scoreboardCanvas = new Canvas(Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_WIDTH * Constants.GAME_SCALE,
                 Constants.DEFAULT_TILE_WIDTH * Constants.DEFAULT_GRID_HEIGHT * Constants.GAME_SCALE);
-        scoreboardGC = scoreboard.getGraphicsContext2D();
-        scoreboard.setLayoutX(xoffset);
-        scoreboard.setLayoutY(yoffset-10);
+        scoreboardGC = scoreboardCanvas.getGraphicsContext2D();
+
+        scoreboardBackground = Container.getSprite(SpriteID.SCOREBOARD_BACKGROUND);
+        scoreboardCanvas.setLayoutX(xoffset);
+        scoreboardCanvas.setLayoutY(yoffset-10);
 
         scoreboardBackground.setPosition(0, 0);
-        scoreboardBackground.setScale(1);
         scoreboardBackground.render(scoreboardGC, -1);
 
         scoreboardPane = new AnchorPane();
         scoreboardPane.setPrefSize(512, 448);
+
         //Get proper values for middle of screen
         scoreboardPane.setLayoutX(0);
         scoreboardPane.setLayoutY(0);
@@ -75,22 +73,23 @@ public class ScoreboardView {
 
         this.isShowing = false;
 
-        root.getChildren().add(scoreboard);
-        scoreboard.setVisible(false);
+        root.getChildren().add(scoreboardCanvas);
+        scoreboardCanvas.setVisible(false);
+
         addPlayersToScoreboard();
 
     }
 
     public void showScoreboard() {
         updateScoreboard();
-        scoreboard.setVisible(true);
+        scoreboardCanvas.setVisible(true);
         scoreboardPane.setVisible(true);
         scoreboardPane.toFront();
         isShowing = true;
     }
 
     public void hideScoreboard() {
-        scoreboard.setVisible(false);
+        scoreboardCanvas.setVisible(false);
         scoreboardPane.setVisible(false);
         isShowing = false;
     }
@@ -98,9 +97,10 @@ public class ScoreboardView {
     //should have "ArrayList<Player> players" as argument, made dummy list in method for testing purposes
     public void addPlayersToScoreboard(/*ArrayList<Player> players*/) {
         gridPane = new GridPane();
-        gridPane.setPrefSize(672,480);
-        gridPane.setHgap(120);
-        gridPane.setVgap(40);
+//        gridPane.setPrefSize(672,480);
+        gridPane.setPrefSize(scoreboardCanvas.getWidth(), scoreboardBackground.getHeight());
+//        gridPane.setHgap(120);
+//        gridPane.setVgap(40);
         gridPane.setLayoutX(104);
         gridPane.setLayoutY(176);
         ///gridPane.setPadding(new Insets(50, 50, 50, 50));
