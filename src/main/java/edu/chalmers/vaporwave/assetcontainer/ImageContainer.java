@@ -10,7 +10,7 @@ class ImageContainer {
     private static Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 4 + 4 + 6 + 13 + 3;
+    private static final double totalTasks = 2 + 4 + 5 + 6 + 13 + 3;
     
     public static void initImageContainer() {
         // TODO: OBS!!! IF ADDING IMAGES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
@@ -31,7 +31,8 @@ class ImageContainer {
 
         // >>> GAME STUFF: <<<
 
-        // HUD stuff (4):
+        // HUD stuff (5):
+        addImage(ImageID.MENU_PAUSE, new Image("images/hud/pause_message.png"));
         addImage(ImageID.HUD_BOX_SHEET, new Image("images/hud/spritesheet-hudbox-136x180.png"));
         addImage(ImageID.HUD_TIMER_MESSAGE, new Image("images/hud/timer_message.png"));
         addImage(ImageID.HUD_GAMEOVER_MESSAGE, new Image("images/hud/gameover_message.png"));

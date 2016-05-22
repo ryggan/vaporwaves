@@ -19,6 +19,8 @@ public enum ImageID {
 
     MENU_ROOSTER_SELECT,
 
+    MENU_PAUSE,
+
     // todo: GAME STUFF
 
     // HUD
