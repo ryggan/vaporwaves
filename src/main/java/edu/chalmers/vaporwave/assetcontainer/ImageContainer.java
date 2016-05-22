@@ -58,9 +58,9 @@ class ImageContainer {
         addImage(ImageID.CHARACTER_CHARLOTTE_DEATH, new Image("images/characters/spritesheet-charlotte-death-48x48.png"));
         addImage(ImageID.CHARACTER_CHARLOTTE_SPAWN, new Image("images/characters/spritesheet-charlotte-respawn-48x128.png"));
 
-        addImage(ImageID.CHARACTER_ZYPHER_WALKIDLEFLINCH, new Image("images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png"));
-        addImage(ImageID.CHARACTER_ZYPHER_DEATH, new Image("images/characters/spritesheet-alyssa-death-56x56.png"));
-        addImage(ImageID.CHARACTER_ZYPHER_SPAWN, new Image("images/characters/spritesheet-alyssa-respawn-48x128.png"));
+        addImage(ImageID.CHARACTER_ZYPHER_WALKIDLEFLINCH, new Image("images/characters/spritesheet-zypher-walkidleflinch-48x48.png"));
+        addImage(ImageID.CHARACTER_ZYPHER_DEATH, new Image("images/characters/spritesheet-zypher-death-48x48.png"));
+        addImage(ImageID.CHARACTER_ZYPHER_SPAWN, new Image("images/characters/spritesheet-zypher-respawn-48x128.png"));
 
         addImage(ImageID.CHARACTER_MEI_WALKIDLEFLINCHDEATH, new Image("images/characters/spritesheet-mei-walkidleflinchdeath-48x48.png"));
         addImage(ImageID.CHARACTER_MEI_SPAWN, new Image("images/characters/spritesheet-mei-respawn-48x128.png"));

@@ -181,7 +181,7 @@
         <damage>25.0</damage>
 
         <walk>
-            <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
+            <spritesheet>CHARACTER_ZYPHER_WALKIDLEFLINCH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
@@ -194,7 +194,7 @@
         </walk>
 
         <idle>
-            <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
+            <spritesheet>CHARACTER_ZYPHER_WALKIDLEFLINCH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
@@ -207,7 +207,7 @@
         </idle>
 
         <flinch>
-            <spritesheet>CHARACTER_ALYSSA_WALKIDLEFLINCH</spritesheet>
+            <spritesheet>CHARACTER_ZYPHER_WALKIDLEFLINCH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-alyssa-walkidleflinch2-48x48.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>48</dimensionY>
@@ -220,20 +220,20 @@
         </flinch>
 
         <death>
-            <spritesheet>CHARACTER_ALYSSA_DEATH</spritesheet>
+            <spritesheet>CHARACTER_ZYPHER_DEATH</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-alyssa-death-56x56.png</spritesheet>-->
-            <dimensionX>56</dimensionX>
-            <dimensionY>56</dimensionY>
-            <frames>28</frames>
+            <dimensionX>48</dimensionX>
+            <dimensionY>48</dimensionY>
+            <frames>17</frames>
             <duration>0.1</duration>
             <firstFrameX>0</firstFrameX>
             <firstFrameY>0</firstFrameY>
-            <offsetX>20</offsetX>
-            <offsetY>40</offsetY>
+            <offsetX>16</offsetX>
+            <offsetY>27</offsetY>
         </death>
 
         <spawn>
-            <spritesheet>CHARACTER_ALYSSA_SPAWN</spritesheet>
+            <spritesheet>CHARACTER_ZYPHER_SPAWN</spritesheet>
             <!--<spritesheet>images/characters/spritesheet-alyssa-respawn-48x128.png</spritesheet>-->
             <dimensionX>48</dimensionX>
             <dimensionY>128</dimensionY>
