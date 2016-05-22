@@ -262,7 +262,7 @@ public class GameController {
                         if (currentTile instanceof Blast) {
                             blast = (Blast) currentTile;
                         } else if (currentTile instanceof DoubleTile) {
-                            blast = ((DoubleTile) currentTile).getBlast();
+                            blast = (Blast)((DoubleTile) currentTile).getTile(Blast.class);
                         }
 
                         // If blast was found, and the blast still is dangerous, deal damage
