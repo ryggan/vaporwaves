@@ -29,8 +29,10 @@ public class ArenaView {
     private static final double yoffset = 0;
 
     private Canvas backgroundCanvas;
+    private Canvas frameCanvas;
     private Canvas tileCanvas;
     private GraphicsContext backgroundGC;
+    private GraphicsContext frameGC;
     private GraphicsContext tileGC;
 
     private ImageView backgroundPattern;
@@ -86,17 +88,26 @@ public class ArenaView {
 
         // Setting up area to draw graphics
 
-        backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE), ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
+        backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE),
+                ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
         root.getChildren().add(backgroundCanvas);
-        tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
+
+        frameCanvas = new Canvas(backgroundCanvas.getWidth(), backgroundCanvas.getHeight());
+        root.getChildren().add(frameCanvas);
+
+        tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE),
+                (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
         root.getChildren().add(tileCanvas);
 
-        tileCanvas.setLayoutX(xoffset);
-        tileCanvas.setLayoutY(yoffset);
         backgroundCanvas.setLayoutX(xoffset - Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
         backgroundCanvas.setLayoutY(yoffset);
+        frameCanvas.setLayoutX(backgroundCanvas.getLayoutX());
+        frameCanvas.setLayoutY(backgroundCanvas.getLayoutY());
+        tileCanvas.setLayoutX(xoffset);
+        tileCanvas.setLayoutY(yoffset);
 
         tileGC = tileCanvas.getGraphicsContext2D();
+        frameGC = frameCanvas.getGraphicsContext2D();
         backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
         // Character sprites
@@ -174,16 +185,16 @@ public class ArenaView {
         arenaBackgroundSprite.render(backgroundGC, -1);
 
         arenaFrameSprites.get(Compass.NORTH).setPosition(0, -Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.NORTH).render(backgroundGC, -1);
+        arenaFrameSprites.get(Compass.NORTH).render(frameGC, -1);
 
         arenaFrameSprites.get(Compass.WEST).setPosition(0, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.WEST).render(backgroundGC, -1);
+        arenaFrameSprites.get(Compass.WEST).render(frameGC, -1);
 
         arenaFrameSprites.get(Compass.EAST).setPosition(Constants.DEFAULT_TILE_WIDTH * (2 + Constants.DEFAULT_GRID_WIDTH), Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.EAST).render(backgroundGC, -1);
+        arenaFrameSprites.get(Compass.EAST).render(frameGC, -1);
 
         arenaFrameSprites.get(Compass.SOUTH).setPosition(0, (Constants.DEFAULT_GRID_HEIGHT + 1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
-        arenaFrameSprites.get(Compass.SOUTH).render(backgroundGC, 0);
+        arenaFrameSprites.get(Compass.SOUTH).render(frameGC, 0);
 
         // Rendering indestructible walls on gamebackground canvas
         for (int i = 0; i < arenaTiles.length; i++) {
@@ -236,11 +247,15 @@ public class ArenaView {
     public void updateView(List<Movable> arenaMovables, StaticTile[][] arenaTiles, Set<Player> players,
                            double timeSinceStart, double timeSinceLastCall) {
 
+        frameGC.clearRect(0, 0, frameCanvas.getWidth(), frameCanvas.getHeight());
+        tileGC.clearRect(0, 0, tileCanvas.getWidth(), tileCanvas.getHeight());
+
         // Rendering:
 
-        arenaFrameSprites.get(Compass.SOUTH).render(backgroundGC, timeSinceStart);
-
-        tileGC.clearRect(0, 0, Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE), Constants.GAME_HEIGHT + ((Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE) + 1);
+        arenaFrameSprites.get(Compass.NORTH).render(frameGC, timeSinceStart);
+        arenaFrameSprites.get(Compass.WEST).render(frameGC, timeSinceStart);
+        arenaFrameSprites.get(Compass.EAST).render(frameGC, timeSinceStart);
+        arenaFrameSprites.get(Compass.SOUTH).render(frameGC, timeSinceStart);
 
         // Method for printing current fps count.
         // Updates every 10 frame
