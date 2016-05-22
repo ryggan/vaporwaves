@@ -26,13 +26,13 @@ public class DoubleTile extends StaticTile {
         this.upperTile = upperTile;
     }
 
-    // Special recursive method to check if there is a blast in a tree of DoubleTiles
-    public boolean containBlast() {
-        if (lowerTile instanceof Blast || upperTile instanceof Blast) {
+    // Recursive method to check if there is a tile of give class in a tree of DoubleTiles
+    public boolean contains(Class type) {
+        if (type.isInstance(lowerTile) || type.isInstance(upperTile)) {
             return true;
-        } else if (lowerTile instanceof DoubleTile && ((DoubleTile)lowerTile).containBlast()) {
+        } else if (lowerTile instanceof DoubleTile && ((DoubleTile)lowerTile).contains(type)) {
             return true;
-        } else if (upperTile instanceof DoubleTile && ((DoubleTile)upperTile).containBlast()) {
+        } else if (upperTile instanceof DoubleTile && ((DoubleTile)upperTile).contains(type)) {
             return true;
         }
         return false;

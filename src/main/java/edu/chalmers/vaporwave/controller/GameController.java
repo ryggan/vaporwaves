@@ -424,7 +424,7 @@ public class GameController {
                         // or 3: if it's the pickup-animation for powerups
                         if ( (currentTile instanceof Blast && ( ((Blast)currentTile).getState() == BlastState.END
                                 || Utils.isOrtogonalDirections(((Blast)currentTile).getDirection(), direction) ) )
-                                || (currentTile instanceof DoubleTile && ((DoubleTile)currentTile).containBlast())
+                                || (currentTile instanceof DoubleTile && ((DoubleTile)currentTile).contains(Blast.class))
                         /* 3 */ || (currentTile instanceof PowerUp && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.PICKUP ) ) {
 
                             StaticTile doubleTile = new DoubleTile(currentTile,

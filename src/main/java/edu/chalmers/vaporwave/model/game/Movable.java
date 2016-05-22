@@ -315,7 +315,8 @@ public abstract class Movable {
 
         // At last, check if gridposition in arena is walkable, and return true if so
         StaticTile nextTile = this.latestArenaTiles[nextGridPositionX][nextGridPositionY];
-        return (nextTile == null) || (!(nextTile instanceof Wall) && !(nextTile instanceof Bomb));
+        return !(nextTile instanceof Wall) && !(nextTile instanceof Bomb) && (!(nextTile instanceof DoubleTile)
+                || (!((DoubleTile) nextTile).contains(Wall.class)) && !((DoubleTile) nextTile).contains(Bomb.class));
     }
 
     private boolean allowMove(double gridDirectionX, double gridDirectionY) {
