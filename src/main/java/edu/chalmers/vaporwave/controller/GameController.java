@@ -58,13 +58,16 @@ public class GameController {
     private boolean destroyablePowerUps;
     private boolean respawnPowerups;
 
+    private SoundPlayer gameMusic;
+
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
     }
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
-        Container.playSound(SoundID.GAME_MUSIC);
+        this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
+        this.gameMusic.playSound();
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -605,7 +608,7 @@ public class GameController {
     }
 
     private void exitGame(MenuState destinationMenu) {
-        Container.stopSound(SoundID.GAME_MUSIC);
+        this.gameMusic.stopSound();
         this.arenaModel.getArenaMovables().clear();
         this.arenaModel.clearTiles();
         this.enemies.clear();
