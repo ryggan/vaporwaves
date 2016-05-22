@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.util;
 
+import javafx.scene.paint.Color;
+
 public class Constants {
 
     public static final int WINDOW_WIDTH = 1080;
@@ -36,4 +38,7 @@ public class Constants {
 
     // Sets how often the enemy will check for new direction from its AI-system.
     public static final int ENEMY_UPDATE_RATE = 15;
+
+    public static final String COLORNO_VAPEPINK = "#fd2881";
 }
+

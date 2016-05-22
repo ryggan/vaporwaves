@@ -44,6 +44,10 @@ public class Container {
         return FileContainer.getFont(fileID);
     }
 
+    public static javafx.scene.paint.Color getColor(FileID fileID) {
+        return FileContainer.getColor(fileID);
+    }
+
     public static SoundPlayer getSound(SoundID soundID) {
         return SoundContainer.getSound(soundID);
     }
