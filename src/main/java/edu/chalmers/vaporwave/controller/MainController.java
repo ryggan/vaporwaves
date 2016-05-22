@@ -125,6 +125,8 @@ public class MainController {
                     menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
                 }
 
+                // Listener cleanup and updating
+
                 ListenerController.getInstance().updateGamePadInputs();
                 ListenerController.getInstance().clearPressed();
                 ListenerController.getInstance().clearReleased();

@@ -44,7 +44,6 @@ public class ScoreboardView {
 
         for (Player player : players) {
             this.playerList.set(player.getPlayerID(), player);
-            System.out.println("Player id: "+player.getPlayerID());
         }
 
         scoreboardBackground = Container.getSprite(SpriteID.SCOREBOARD_BACKGROUND);

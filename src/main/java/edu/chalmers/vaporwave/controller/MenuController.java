@@ -95,12 +95,6 @@ public class MenuController {
                 player.setGamePad(gamePads.get(player.getPlayerID()));
             }
         }
-
-//        for (int i = 0; i < players.size(); i++) {
-//            if (gamePads.size() > i) {
-//                players.get(i).setGamePad(gamePads.get(i));
-//            }
-//        }
     }
 
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
@@ -245,7 +239,7 @@ public class MenuController {
 
 
     public void setActiveMenu(MenuState activeMenu){
-        if (activeMenu == MenuState.START_MENU) {
+        if (activeMenu == MenuState.ROOSTER) {
             updatePlayerGamePads(this.newGameEvent.getPlayers());
         }
         this.activeMenu = activeMenu;

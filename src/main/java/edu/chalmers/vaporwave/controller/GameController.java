@@ -62,6 +62,8 @@ public class GameController {
 
     public GameController(Group root) {
         GameEventBus.getInstance().register(this);
+
+        this.arenaView = new ArenaView(root);
     }
 
     public void initGame(Group root, NewGameEvent newGameEvent) {
@@ -104,7 +106,7 @@ public class GameController {
 
         // Starting new game
         this.arenaModel = newGame(arenaMap);
-        this.arenaView = new ArenaView(root);
+//        this.arenaView = new ArenaView(root);
         this.pauseMenuController = new PauseMenuController(root);
 
         this.arenaView.initArena(arenaModel.getArenaTiles());
@@ -250,7 +252,8 @@ public class GameController {
                             StatPowerUp powerUp = (StatPowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
 
                             // If so, pick it up
-                            if (powerUp.getPowerUpType() != null && powerUp.getState() == PowerUp.PowerUpState.IDLE) {
+                            if (powerUp.getPowerUpType() != null && (powerUp.getState() == PowerUp.PowerUpState.IDLE
+                                                                || powerUp.getState() == PowerUp.PowerUpState.SPAWN)) {
                                 powerUp.pickUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
                             }
@@ -447,12 +450,7 @@ public class GameController {
         }
     }
 
-    /**
-     * Check if a specific position is within the bounds of the ArenaModel.
-     *
-     * @param position The position to check
-     * @return true if position is within bounds, otherwise false.
-     */
+    // Check if a specific position is within the bounds of the ArenaModel.
     private boolean isValidPosition(Point position) {
         return position.x >= 0 &&
                 position.y >= 0 &&
@@ -460,23 +458,13 @@ public class GameController {
                 position.y < this.arenaModel.getArenaTiles()[0].length;
     }
 
-    //TODO
-//    private void updateStats() {
-//        this.arenaView.updateStats(this.players);
-//    }
-
-
-
     public ArenaModel newGame(ArenaMap arenaMap) {
         // Here goes all code for setting up the environment for a new game
         return new ArenaModel(arenaMap);
     }
 
-    /**
-     * Call on this method when player walks on PowerUpTile.
-     * Will set the appropriate stat value on the character that walks on it.
-     * @param powerUpType
-     */
+    // Call on this method when player walks on PowerUpTile.
+    // Will set the appropriate stat value on the character that walks on it.
     public void playerWalksOnPowerUp(PowerUpType powerUpType, GameCharacter gameCharacter) {
         gameCharacter.pickedUpPowerUp(powerUpType, this.timeSinceStart);
         getPlayerForGameCharacter(gameCharacter).incrementPowerUpScore();
