@@ -151,6 +151,8 @@ public class GameController {
             }
         }
 
+        this.arenaModel.sortMovables();
+
     }
 
     // This one is called every time the game-timer is updated
@@ -527,14 +529,14 @@ public class GameController {
                 respawnPowerups(powerups);
             }
 
+            // null => gameCharacter uses it's inherent startPosition
+            movable.spawn(null);
+
             for (Player player : this.players) {
                 if (this.gameType == GameType.CHARACTER_KILLS && player.getKills() >= this.killLimit) {
                     gameOverStart("PLAYERS KILLED!");
                 }
             }
-
-            // null => gameCharacter uses it's inherent startPosition
-            movable.spawn(null);
 
         } else if (movable instanceof Enemy) {
 

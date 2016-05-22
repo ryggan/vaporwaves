@@ -51,7 +51,6 @@ public abstract class Movable {
 
         this.velocityX = 0;
         this.velocityY = 0;
-        this.moving = false;
 
         this.speed = speed;
         this.name = name;
@@ -59,13 +58,28 @@ public abstract class Movable {
         this.health = Constants.DEFAULT_START_HEALTH;
 
         this.flinchDelay = 20;
-        this.flinchInvincible = false;
         this.invincibleDelay = 60;
 
-        this.direction = Direction.DOWN;
-        this.movableState= MovableState.IDLE;
-        this.previousState = this.movableState;
         this.lastMove = new ArrayList<>();
+
+        reset(MovableState.IDLE);
+    }
+
+    public void reset() {
+        reset(MovableState.IDLE);
+    }
+
+    public void reset(MovableState state) {
+        this.movableState = state;
+        this.previousState = this.movableState;
+        this.lastMove.clear();
+        this.direction = Direction.DOWN;
+        this.moving = false;
+
+        this.health = Constants.DEFAULT_START_HEALTH;
+        this.flinchTimer = 0;
+        this.invincibleTimer = 0;
+        this.flinchInvincible = false;
     }
 
     public void updatePosition() {
