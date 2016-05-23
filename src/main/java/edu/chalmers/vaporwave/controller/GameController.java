@@ -199,7 +199,10 @@ public class GameController {
                 if (player.getClass().equals(Player.class)) {
                     playerInputAction(player);
                 } else {
-                    player.getCharacter().move(((CPUPlayer)player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), new Point(0,0), arenaModel.getArenaTiles(), player.getCharacter().getGridPosition()), arenaModel.getArenaTiles());
+                    player.getCharacter().move(((CPUPlayer)player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
+                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb()) {
+                        player.getCharacter().placeBomb();
+                    }
                 }
             }
         }

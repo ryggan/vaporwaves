@@ -22,12 +22,12 @@ public class GameCharacter extends Movable {
     private int bombRange;
     private int maxBombCount;
     private int currentBombCount;
-    private int playerId;
+    private int playerID;
 
     private List<Pair<PowerUpType, Double>> powerUpPickedUp;
 
 
-    public GameCharacter(String name, int playerId) {
+    public GameCharacter(String name, int playerID) {
         super(name, 0, 0, 0);
 
         CharacterID characterID = CharacterID.valueOf(name);
@@ -37,7 +37,7 @@ public class GameCharacter extends Movable {
         this.startMaxBombCount = Container.getCharacterBombCount(characterID);
         this.startDamage = Container.getCharacterDamage(characterID);
 
-        this.playerId = playerId;
+        this.playerID = playerID;
     }
 
     public void setSpawnPosition(Point spawnPosition) {
@@ -114,8 +114,12 @@ public class GameCharacter extends Movable {
         return powerUpPickedUp;
     }
 
+    public void setPlayerID(int ID) {
+        this.playerID = ID;
+    }
+
     public int getPlayerID() {
-        return this.playerId;
+        return this.playerID;
     }
 
     @Override
