@@ -58,7 +58,12 @@ public class NewGameEvent {
     }
 
     public Player getLocalPlayer() {
-        return this.localPlayer;
+        for (Player player : this.getPlayers()) {
+            if (player.getPlayerID() == 0) {
+                return player;
+            }
+        }
+        return null;
     }
 
     public void addPlayer(Player player) {

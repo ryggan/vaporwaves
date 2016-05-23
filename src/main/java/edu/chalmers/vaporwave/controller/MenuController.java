@@ -31,30 +31,15 @@ public class MenuController {
         this.newGameEvent = new NewGameEvent();
 
         Player player;
-        player = new Player(0, "PlayerSuperLongName");
+        player = new Player(0, "P1");
         this.newGameEvent.setLocalPlayer(player);
-        player.setDirectionControls(new String[] {"LEFT", "UP", "RIGHT", "DOWN"});
-        player.setBombControl("SPACE");
-        player.setMineControl("M");
+        player.setDirectionControls(new String[] {Utils.getPlayerControls().get(0)[0],
+                Utils.getPlayerControls().get(0)[1],
+                Utils.getPlayerControls().get(0)[2],
+                Utils.getPlayerControls().get(0)[3]});
+        player.setBombControl(Utils.getPlayerControls().get(0)[4]);
+        player.setMineControl(Utils.getPlayerControls().get(0)[5]);
         this.newGameEvent.addPlayer(player);
-//
-//        player = new Player(1, "PlayerTwo");
-//        player.setDirectionControls(new String[] {"A", "W", "D", "S"});
-//        player.setBombControl("SHIFT");
-//        player.setMineControl("CAPS");
-//        this.newGameEvent.addPlayer(player);
-//
-//        player = new Player(2, "PlayerThree");
-//        player.setDirectionControls(new String[] {"F", "T", "H", "G"});
-//        player.setBombControl("R");
-//        player.setMineControl("Y");
-//        this.newGameEvent.addPlayer(player);
-//
-//        player = new Player(3, "PlayerFour");
-//        player.setDirectionControls(new String[] {"J", "I", "L", "K"});
-//        player.setBombControl("U");
-//        player.setMineControl("O");
-//        this.newGameEvent.addPlayer(player);
 
         updatePlayerGamePads(newGameEvent.getPlayers());
 
@@ -69,7 +54,7 @@ public class MenuController {
         this.menuViewMap = new HashMap<>();
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
-        this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root, this.newGameEvent.getPlayers()));
+        this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
         this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root,newGameEvent.getPlayers()));
 
         this.pressedDown = false;
@@ -155,7 +140,6 @@ public class MenuController {
                                 GameEventBus.getInstance().post(newGameEvent);
                             }
                             break;
-
                         case NO_ACTION:
                             menuMap.get(activeMenu).performMenuAction(newGameEvent, 0);
 
@@ -167,6 +151,7 @@ public class MenuController {
                                 ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
                                         ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers()
                                 );
+
                             }
                             break;
 
@@ -176,6 +161,8 @@ public class MenuController {
                                ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
                                         ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers()
                                 );
+                            } else if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+                                ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
                             }
 
                             break;
@@ -234,11 +221,7 @@ public class MenuController {
                     player,
                     this.pressedDown
             );
-
     }
-
-
-
 
     public void setActiveMenu(MenuState activeMenu){
         if (activeMenu == MenuState.ROOSTER) {

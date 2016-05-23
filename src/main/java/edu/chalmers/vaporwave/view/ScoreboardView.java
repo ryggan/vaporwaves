@@ -40,7 +40,7 @@ public class ScoreboardView {
         int yoffset = 8 * Constants.DEFAULT_TILE_HEIGHT - 6;
         int gridPaneYOffset = 81;
 
-        this.playerList = new ArrayList<>(players.size());
+        this.playerList = new ArrayList<>();
         this.playerLabels = new Label[players.size()][5];
 
         for (int i = 0; i < players.size(); i++) {

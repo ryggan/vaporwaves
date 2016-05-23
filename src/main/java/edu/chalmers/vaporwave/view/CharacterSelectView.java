@@ -16,6 +16,7 @@ public class CharacterSelectView extends AbstractMenuView {
 
     private List<MenuButtonSprite> menuButtonSpriteList;
     private List<Map<Integer, Point>> characterSelectorPositionList;
+    private Set<Player> playerSet;
     private int[] selectedCharacter;
 
     private static final Point CHARACTERS_POSITION = new Point(550, 160);
@@ -23,12 +24,14 @@ public class CharacterSelectView extends AbstractMenuView {
 
     private SpriteID[] playerOneSprite;
 
-    public CharacterSelectView(Group root, Set<Player> playersSet) {
+    public CharacterSelectView(Group root) {
         super(root);
 
-        this.selectedCharacter = new int[playersSet.size()];
-        for (int i = 0; i < this.selectedCharacter.length; i++) {
+        this.playerSet = new HashSet<>();
 
+        this.selectedCharacter = new int[Constants.MAX_NUMBER_OF_PLAYERS];
+        for (int i = 0; i < this.selectedCharacter.length; i++) {
+            this.selectedCharacter[i] = -1;
         }
 
         this.playerOneSprite = new SpriteID[4];
@@ -91,19 +94,8 @@ public class CharacterSelectView extends AbstractMenuView {
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME, new Point(740, 580)));
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
-        Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setScale(1);
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(new Point(550,160));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setScale(1);
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(new Point(570,160));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setScale(1);
-
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(new Point(590,160));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setScale(1);
-
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setPosition(new Point(610,160));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setScale(1);
     }
 
     @Override
@@ -126,30 +118,47 @@ public class CharacterSelectView extends AbstractMenuView {
             Container.getSprite(playerOneSprite[subSelected[1]]).render(getBackgroundGC(), 0);
         }
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).render(getBackgroundGC(), 0);
+        if (playerSetContainsPlayerWithID(1)) {
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).render(getBackgroundGC(), 0);
+        }
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(this.characterSelectorPositionList.get(2).get(Utils.calculateRemoteSelected(remoteSelected, 2, 4)));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).render(getBackgroundGC(), 0);
+        if (playerSetContainsPlayerWithID(2)) {
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).setPosition(this.characterSelectorPositionList.get(2).get(Utils.calculateRemoteSelected(remoteSelected, 2, 4)));
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_3).render(getBackgroundGC(), 0);
+        }
 
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setPosition(this.characterSelectorPositionList.get(3).get(Utils.calculateRemoteSelected(remoteSelected, 3, 4)));
-        Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).render(getBackgroundGC(), 0);
+        if (playerSetContainsPlayerWithID(3)) {
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setPosition(this.characterSelectorPositionList.get(3).get(Utils.calculateRemoteSelected(remoteSelected, 3, 4)));
+            Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).render(getBackgroundGC(), 0);
+        }
 
-
-
-        for (int i = 0; i < selectedCharacter.length; i++) {
-            if (selectedCharacter[i] >= 0) {
-                Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setPosition(CHARACTERS_POSITION);
-                Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setScale(1);
-                Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).render(getBackgroundGC(), 0);
+        for (int i = 0; i < this.selectedCharacter.length; i++) {
+            if (this.selectedCharacter[i] >= 0) {
+                Container.getSprite(this.selectedCharacterSprite[i][this.selectedCharacter[i]]).setPosition(CHARACTERS_POSITION);
+                Container.getSprite(this.selectedCharacterSprite[i][this.selectedCharacter[i]]).render(getBackgroundGC(), 0);
             }
 
         }
 
-        setActive();
+        super.setActive();
     }
 
     public void setSelectedCharacters(int[] selectedCharacter) {
         this.selectedCharacter = ArrayCloner.intArrayCloner(selectedCharacter);
+    }
+
+    public void setPlayers(Set<Player> playerSet) {
+        System.out.println("Setting players");
+        this.playerSet = playerSet;
+    }
+
+    public boolean playerSetContainsPlayerWithID(int id) {
+        for (Player player : this.playerSet) {
+            if(player.getPlayerID() == id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

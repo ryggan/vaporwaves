@@ -54,16 +54,18 @@ public class RoosterMenu extends AbstractMenu {
                 this.selectedPlayers[subSelect] = 0;
             }
 
-            updatePlayers(subSelect, newGameEvent);
+            updatePlayers(newGameEvent);
 
         }
     }
 
-    private void updatePlayers(int subSelect, NewGameEvent newGameEvent) {
+    private void updatePlayers(NewGameEvent newGameEvent) {
         newGameEvent.getPlayers().clear();
         newGameEvent.addPlayer(this.allPlayers.get(0));
-        for (int i = 0; i < this.selectedPlayers.length; i++) {
-            newGameEvent.addPlayer(this.allPlayers.get(this.selectedPlayers[subSelect] - 1));
+        for (int i = 1; i < this.selectedPlayers.length; i++) {
+            if (selectedPlayers[i] > 0 && selectedPlayers[i] < 5) {
+                newGameEvent.addPlayer(this.allPlayers.get(selectedPlayers[i] - 1));
+            }
         }
     }
 
