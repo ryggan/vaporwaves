@@ -80,7 +80,7 @@ public class AIHeuristics {
         recursive(new Point(11,8), 50);
 
         for (GameCharacter gameCharacter : gameCharacters) {
-            recursive(gameCharacter.getGridPosition(), 1000);
+            recursive(gameCharacter.getGridPosition(), 200);
             //decideHeuristicValue(heuristicMatrix, gameCharacter.getGridPosition(), 100);
         }
 
