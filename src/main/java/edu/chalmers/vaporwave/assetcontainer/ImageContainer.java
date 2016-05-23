@@ -10,7 +10,7 @@ class ImageContainer {
     private static Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 4 + 3 + 4 + 5 + 6 + 13 + 3;
+    private static final double totalTasks = 4 + 5 + 5 + 5 + 6 + 13 + 3;
     
     public static void initImageContainer() {
         // TODO: OBS!!! IF ADDING IMAGES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
@@ -25,14 +25,17 @@ class ImageContainer {
         addImage(ImageID.MENU_RESULTS_ALYSSA,new Image("images/menu/menu-alyssa-result.png"));
         addImage(ImageID.MENU_RESULTS_MEI,new Image("images/menu/menu-mei-result.png"));
 
-        // Backgrounds (3):
+        // Backgrounds (5):
         addImage(ImageID.MENU_BACKGROUND_RESULT, new Image("images/menu/menu-background-result.png"));
         addImage(ImageID.MENU_BACKGROUND_1, new Image("images/menu/menu-background-2.bmp"));
         addImage(ImageID.MENU_BUTTON_SPRITESHEET, new Image("images/menu/spritesheet_menubuttons-308x198.png"));
+        addImage(ImageID.MENU_SMALL_BUTTON_SPRITESHEET, new Image("images/menu/spritesheet-menubuttons-92x22.png"));
+        addImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT, new Image("images/menu/menu-background-characterselect.png"));
 
-        // Character select (4):
-        addImage(ImageID.MENU_CHARACTER, new Image("images/menu/spritesheet-character-select-442x378.png"));
-        addImage(ImageID.MENU_CHARACTER_SELECTOR, new Image("images/menu/spritesheet-character-selector-22x33.png"));
+        // Character select (5):
+        addImage(ImageID.MENU_CHARACTERSELECT_HELP, new Image("images/menu/menu-characterselect-help.png"));
+        addImage(ImageID.MENU_CHARACTER, new Image("images/menu/spritesheet-character-select-443x626.png"));
+        addImage(ImageID.MENU_CHARACTER_SELECTOR, new Image("images/menu/spritesheet-character-selector-24x27.png"));
         addImage(ImageID.MENU_CHECKBOX, new Image("images/menu/spritesheet-menu-checkbox-111x118.png"));
         addImage(ImageID.MENU_ROOSTER_SELECT, new Image("images/menu/spritesheet-rooster-select-133x94.png"));
 

@@ -11,7 +11,7 @@ class MenuButtonContainer {
     private static Map<MenuButtonID, MenuButtonSprite> menuButtonContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 4 + 1 + 2;
+    private static final double totalTasks = 4 + 2 + 2;
 
     public static void initMenuButtonContainer() {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
@@ -19,8 +19,11 @@ class MenuButtonContainer {
         menuButtonContainer = new HashMap<>();
 
         Image menuButtonSpritesheet = Container.getImage(ImageID.MENU_BUTTON_SPRITESHEET);
+        Image smallMenuButtonSpritesheet = Container.getImage(ImageID.MENU_SMALL_BUTTON_SPRITESHEET);
         int buttonWidth = 308;
         int buttonHeight = 66;
+        int smallButtonWidth = 92;
+        int smallButtonHeight = 22;
 
         // Start menu (4)
         addButton(MenuButtonID.BUTTON_NEW_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 0)));
@@ -28,8 +31,10 @@ class MenuButtonContainer {
         addButton(MenuButtonID.BUTTON_OPTIONS, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 2)));
         addButton(MenuButtonID.BUTTON_HIGHSCORE, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 3)));
 
-        // Character select (1)
+        // Character select (2)
         addButton(MenuButtonID.BUTTON_START_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 0)));
+
+        addButton(MenuButtonID.BUTTON_SMALL_BACK, new MenuButtonSprite(smallMenuButtonSpritesheet, smallButtonWidth, smallButtonHeight, new Point(0, 0)));
 
         // Misc (2)
         addButton(MenuButtonID.BUTTON_BACK, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 2)));
