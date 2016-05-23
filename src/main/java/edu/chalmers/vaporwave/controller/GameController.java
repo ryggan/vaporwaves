@@ -31,7 +31,6 @@ public class GameController {
 
     private ArenaView arenaView;
     private ArenaModel arenaModel;
-
     private Player localPlayer;
     private Set<Player> players;
 

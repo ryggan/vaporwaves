@@ -1,16 +1,25 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
+import edu.chalmers.vaporwave.util.SoundPlayer;
 
 public class LoadingScreen {
 
     private double percentLoaded;
 
     public LoadingScreen() {
+
+        //SoundPlayer startup = new SoundPlayer("menu-startup.mp3");
+        //startup.playSound();
         this.percentLoaded = 0.0;
     }
 
     public void updateLoader() {
+
+
+
+
 
         percentLoaded = Container.getTasksDone() / Container.getTotalTasks();
 

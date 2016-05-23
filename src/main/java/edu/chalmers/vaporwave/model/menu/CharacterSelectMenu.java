@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ArrayCloner;
@@ -12,17 +14,20 @@ public class CharacterSelectMenu extends AbstractMenu {
 
     private int[] selectedCharacters;
     private static final String[] characterNames = { "MEI", "ALYSSA", "ZYPHER", "CHARLOTTE" };
+    SoundID[] soundIDs = {SoundID.MENU_MEI, SoundID.MENU_ALYSSA,SoundID.MENU_ZYPHER,SoundID.MENU_CHARLOTTE};
 
     public CharacterSelectMenu() {
         super(new int[]{0, 3, 0}, 1);
 
         // Set selected characters to -1 for all players
         selectedCharacters = new int[] {-1, -1, -1, -1};
+
     }
 
 
     public MenuState getMenuAction() {
         if (getSelectedSuper() == 0) {
+            Container.playSound(SoundID.MENU_BACKWARD_CLICK);
             return MenuState.ROOSTER;
         } else if (getSelectedSuper() == 2) {
             return MenuState.START_GAME;
@@ -40,13 +45,16 @@ public class CharacterSelectMenu extends AbstractMenu {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[getSelectedSub()[1]] = 0;
             newGameEvent.getLocalPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
+            Container.playSound(soundIDs[this.getSelectedSub()[1]]);
         } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
+
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
 
             for (Player player : newGameEvent.getPlayers()) {
                 if (player.getPlayerID() == playerID) {
                     player.setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)], playerID));
+                    Container.playSound(soundIDs[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)]);
                 }
             }
         }

@@ -16,9 +16,14 @@ class SoundContainer {
     private static final int NR_OF_EXPLOSION = 20;
     private static final int NR_OF_POWERUP = 10;
     private static final int NR_OF_BACKGROUND = 1;
+    private static final int NR_OF_FORWARD_CLICK = 4;
+    private static final int NR_OF_BACKWARD_CLICK = 1;
+    private static final int NR_OF_STARTUP = 1;
+    private static final int NR_OF_EXIT = 1;
 
     private static double tasksDone;
-    private static final double totalTasks = NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
+    private static final double totalTasks =  1+ 4 + NR_OF_BACKWARD_CLICK+NR_OF_STARTUP+ NR_OF_EXIT+NR_OF_FORWARD_CLICK +
+            NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
     public static void initSoundContainer() {
         soundVolume = 1.0;
@@ -40,6 +45,41 @@ class SoundContainer {
         soundPlayer = new SoundPlayer[NR_OF_POWERUP];
         setUpSoundArray(soundPlayer, NR_OF_POWERUP, "powerup1.mp3", 0.8);
         soundContainer.put(SoundID.POWERUP, soundPlayer);
+
+        soundPlayer = new SoundPlayer[NR_OF_FORWARD_CLICK];
+        setUpSoundArray(soundPlayer, NR_OF_FORWARD_CLICK, "menu-forward-click.mp3");
+        soundContainer.put(SoundID.MENU_FORWARD_CLICK, soundPlayer);
+
+        soundPlayer = new SoundPlayer[NR_OF_BACKWARD_CLICK];
+        setUpSoundArray(soundPlayer, NR_OF_BACKWARD_CLICK, "menu-backward-click.mp3");
+        soundContainer.put(SoundID.MENU_BACKWARD_CLICK, soundPlayer);
+
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-startup.mp3");
+        soundContainer.put(SoundID.MENU_STARTUP, soundPlayer);
+
+        // background music (1)
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1 ,"menu-bgm-1.mp3", 0.8);
+        soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
+
+
+        //speech files(4)
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-exit.mp3");
+        soundContainer.put(SoundID.MENU_EXIT, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-alyssa.mp3");
+        soundContainer.put(SoundID.MENU_ALYSSA, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-mei.mp3");
+        soundContainer.put(SoundID.MENU_MEI, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-charlotte.mp3");
+        soundContainer.put(SoundID.MENU_CHARLOTTE, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-zypher.mp3");
+        soundContainer.put(SoundID.MENU_ZYPHER, soundPlayer);
 
 //        soundPlayer = new SoundPlayer[4];
 //        setUpSoundArray(soundPlayer, 4, "girl_moan4.mp3");

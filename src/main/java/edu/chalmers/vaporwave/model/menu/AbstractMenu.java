@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
@@ -92,7 +94,9 @@ public abstract class AbstractMenu {
 
 
     public int getSelectedSuper() {
+
         return this.currentSelected;
+
     }
 
     public int[] getSelectedSub() {
