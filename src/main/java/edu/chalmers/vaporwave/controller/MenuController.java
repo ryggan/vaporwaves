@@ -218,6 +218,7 @@ public class MenuController {
 
         List<GameCharacter> availableCharacters = new ArrayList<>();
         availableCharacters.addAll(allCharacters);
+        Collections.shuffle(availableCharacters);
 
         return availableCharacters;
     }
