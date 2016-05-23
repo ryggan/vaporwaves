@@ -13,8 +13,8 @@ public class CharacterSelectMenu extends AbstractMenu {
     private int[] selectedCharacters;
     private static final String[] characterNames = { "MEI", "ALYSSA", "ZYPHER", "CHARLOTTE" };
 
-    public CharacterSelectMenu(NewGameEvent newGameEvent) {
-        super(new int[]{0, 3, 0}, newGameEvent, 1);
+    public CharacterSelectMenu() {
+        super(new int[]{0, 3, 0}, 1);
 
         // Set selected characters to -1 for all players
         selectedCharacters = new int[] {-1, -1, -1, -1};

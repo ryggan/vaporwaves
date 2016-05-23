@@ -26,7 +26,7 @@ public class MapFileReader {
             }
             int height = (numbers.getLineNumber() + 2);
             this.mapObjects = new MapObject[width][height];
-            
+
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
             String line;
             int i = 0;

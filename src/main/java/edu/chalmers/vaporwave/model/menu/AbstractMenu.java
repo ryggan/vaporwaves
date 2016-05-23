@@ -14,14 +14,13 @@ public abstract class AbstractMenu {
     private NewGameEvent newGameEvent;
 
     public AbstractMenu(int[] menuItems) {
-        this(menuItems, null, 0);
+        this(menuItems, 0);
     }
 
-    public AbstractMenu(int[] menuItems, NewGameEvent newGameEvent, int currentSelected) {
+    public AbstractMenu(int[] menuItems, int currentSelected) {
         this.selectedItems = new int[menuItems.length];
         this.currentSelected = currentSelected;
         this.menuItems = ArrayCloner.intArrayCloner(menuItems);
-        this.newGameEvent = newGameEvent;
         this.remoteSelected = new int[Constants.MAX_NUMBER_OF_PLAYERS];
     }
 
@@ -105,10 +104,6 @@ public abstract class AbstractMenu {
     }
 
     public abstract MenuState getMenuAction();
-
-    public NewGameEvent getNewGameEvent() {
-        return this.newGameEvent;
-    }
 
     public int[] getMenuItems() {
         return ArrayCloner.intArrayCloner(this.menuItems);

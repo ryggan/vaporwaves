@@ -1,6 +1,4 @@
-
 package edu.chalmers.vaporwave;
-
 
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
@@ -23,7 +21,6 @@ import java.io.IOException;
 public class Main extends Application {
 
 	public static void main(String[] args) {
-
 		launch(args);
 	}
 

@@ -9,10 +9,8 @@ import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class CharacterSelectView extends AbstractMenuView {
 
@@ -25,12 +23,13 @@ public class CharacterSelectView extends AbstractMenuView {
 
     private SpriteID[] playerOneSprite;
 
-    private int playerOneSelected;
-
-    public CharacterSelectView(Group root) {
+    public CharacterSelectView(Group root, Set<Player> playersSet) {
         super(root);
 
-        this.selectedCharacter = new int[]{-1, -1, -1, -1};
+        this.selectedCharacter = new int[playersSet.size()];
+        for (int i = 0; i < this.selectedCharacter.length; i++) {
+
+        }
 
         this.playerOneSprite = new SpriteID[4];
         this.playerOneSprite[0]=SpriteID.MENU_RESULTS_MEI;

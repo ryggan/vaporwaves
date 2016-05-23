@@ -221,4 +221,13 @@ public class Utils {
         }
         return null;
     }
+
+    public static List<String[]> getPlayerControls() {
+        List playerControls = new ArrayList<>();
+        playerControls.add(new String[]{"LEFT", "UP", "RIGHT", "DOWN", "SPACE", "M"});
+        playerControls.add(new String[]{"A", "W", "D", "S", "SHIFT", "CAPS"});
+        playerControls.add(new String[]{"F", "T", "H", "G", "R", "Y"});
+        playerControls.add(new String[]{"J", "I", "L", "K", "U", "O"});
+        return playerControls;
+    }
 }

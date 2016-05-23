@@ -1,8 +1,8 @@
 package edu.chalmers.vaporwave.model.menu;
 
 public class StartMenu extends AbstractMenu {
-    public StartMenu(NewGameEvent newGameEvent) {
-        super(new int[]{0, 0}, newGameEvent, 0);
+    public StartMenu() {
+        super(new int[]{0, 0}, 0);
     }
 
     public MenuState getMenuAction() {

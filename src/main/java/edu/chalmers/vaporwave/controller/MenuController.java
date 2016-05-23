@@ -37,41 +37,39 @@ public class MenuController {
         player.setBombControl("SPACE");
         player.setMineControl("M");
         this.newGameEvent.addPlayer(player);
-
-        player = new Player(1, "PlayerTwo");
-        player.setDirectionControls(new String[] {"A", "W", "D", "S"});
-        player.setBombControl("SHIFT");
-        player.setMineControl("CAPS");
-        this.newGameEvent.addPlayer(player);
-
-        /*
-        player = new Player(2, "PlayerThree");
-        player.setDirectionControls(new String[] {"F", "T", "H", "G"});
-        player.setBombControl("R");
-        player.setMineControl("Y");
-        this.newGameEvent.addPlayer(player);
-
-        player = new Player(3, "PlayerFour");
-        player.setDirectionControls(new String[] {"J", "I", "L", "K"});
-        player.setBombControl("U");
-        player.setMineControl("O");
-        this.newGameEvent.addPlayer(player);
-        */
+//
+//        player = new Player(1, "PlayerTwo");
+//        player.setDirectionControls(new String[] {"A", "W", "D", "S"});
+//        player.setBombControl("SHIFT");
+//        player.setMineControl("CAPS");
+//        this.newGameEvent.addPlayer(player);
+//
+//        player = new Player(2, "PlayerThree");
+//        player.setDirectionControls(new String[] {"F", "T", "H", "G"});
+//        player.setBombControl("R");
+//        player.setMineControl("Y");
+//        this.newGameEvent.addPlayer(player);
+//
+//        player = new Player(3, "PlayerFour");
+//        player.setDirectionControls(new String[] {"J", "I", "L", "K"});
+//        player.setBombControl("U");
+//        player.setMineControl("O");
+//        this.newGameEvent.addPlayer(player);
 
         updatePlayerGamePads(newGameEvent.getPlayers());
 
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
-        this.menuMap.put(MenuState.START_MENU, new StartMenu(this.newGameEvent));
-        this.menuMap.put(MenuState.ROOSTER, new RoosterMenu(this.newGameEvent));
-        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu(this.newGameEvent));
+        this.menuMap.put(MenuState.START_MENU, new StartMenu());
+        this.menuMap.put(MenuState.ROOSTER, new RoosterMenu());
+        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu());
         //this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
 
         this.menuViewMap = new HashMap<>();
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
-        this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
+        this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root, this.newGameEvent.getPlayers()));
         this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root,newGameEvent.getPlayers()));
 
         this.pressedDown = false;
