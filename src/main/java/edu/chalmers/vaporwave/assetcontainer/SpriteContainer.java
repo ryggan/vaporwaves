@@ -27,49 +27,49 @@ class SpriteContainer {
         addSprite(SpriteID.MENU_RESULTS_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_RESULTS_ALYSSA)));
 
         addSprite(SpriteID.MENU_CHARACTER_ALL,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {0, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {0, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_MEI_1,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {1, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {1, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ALYSSA_1,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {2, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {2, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ZYPHER_1,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {3, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {3, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_1,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {4, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {4, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_MEI_2,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {1, 1}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {1, 1}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ALYSSA_2,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {2, 1}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {2, 1}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ZYPHER_2,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {3, 1}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {3, 1}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_2,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {4, 1}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {4, 1}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_MEI_3,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {1, 2}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {1, 2}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ALYSSA_3,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {2, 2}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {2, 2}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ZYPHER_3,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {3, 2}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {3, 2}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_3,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {4, 2}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {4, 2}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_MEI_4,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {1, 3}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {1, 3}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ALYSSA_4,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {2, 3}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {2, 3}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_ZYPHER_4,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {3, 3}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {3, 3}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_CHARLOTTE_4,
-                new Sprite(menuCharacter, new Dimension(442, 378), new int[] {4, 3}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacter, new Dimension(626,443), new int[] {4, 3}, new double[] {1, 1}, 1.0));
 
         Image menuCharacterSelector = Container.getImage(ImageID.MENU_CHARACTER_SELECTOR);
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_1,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {0, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {0, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_2,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {1, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {1, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_3,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {2, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {2, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_4,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {3, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {3, 0}, new double[] {1, 1}, 1.0));
 
         Image menuCheckbox = Container.getImage(ImageID.MENU_CHECKBOX);
         addSprite(SpriteID.MENU_CHECKBOX_UNSELECTED_OFF,

@@ -1,25 +1,25 @@
 package edu.chalmers.vaporwave.model.game;
 
 import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.util.Constants;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Set;
 import java.util.List;
-/**
- * Created by FEngelbrektsson on 13/05/16.
- */
-public class FelixTestAI implements AI {
+
+public class SemiSmartAI implements AI {
     private int[][] heuristicMatrix;
     private Set<GameCharacter> gameCharacterSet;
-    Random r = new Random();
+    private Random random = new Random();
     private List<NextDirection> directionList;
     private Direction previousDirection = Direction.UP;
+    private Point enemyPosition;
 
-    public FelixTestAI(Set<GameCharacter> gameCharacterSet) {
+    public SemiSmartAI(Set<GameCharacter> gameCharacterSet) {
         this.gameCharacterSet = gameCharacterSet;
+        directionList = new ArrayList<>();
     }
 
     static class NextDirection {
@@ -32,29 +32,30 @@ public class FelixTestAI implements AI {
         public int value;
     }
 
-    public void removeWeak(List<NextDirection> directionList) {
+    public void removeLeastGoodAlternative(List<NextDirection> directionList) {
         for(int i = 0; i < directionList.size() - 1; i++) {
             if(directionList.get(i).value < directionList.get(i+1).value) {
                 directionList.remove(i);
-                removeWeak(directionList);
+                removeLeastGoodAlternative(directionList);
             } else if(directionList.get(i).value > directionList.get(i+1).value) {
                 directionList.remove(i+1);
-                removeWeak(directionList);
+                removeLeastGoodAlternative(directionList);
             } else if(directionList.get(i).value == directionList.get(i+1).value) {
-                boolean temp = r.nextBoolean();
+                boolean temp = random.nextBoolean();
                 if(temp) {
                     directionList.remove(i);
                 } else {
                     directionList.remove(i+1);
                 }
-                removeWeak(directionList);
+                removeLeastGoodAlternative(directionList); // todo: ask christer about naming conventions
             }
         }
     }
 
     public Direction getNextMove(Point enemyPosition, Point playerPosition, StaticTile[][] arenaTiles, Point enemyPreviousPosition) {
 
-        directionList = new ArrayList<>();
+        directionList.clear();
+        this.enemyPosition = enemyPosition;
 
         heuristicMatrix = AIHeuristics.getAIHeuristics(arenaTiles, gameCharacterSet, enemyPreviousPosition);
 
@@ -92,43 +93,16 @@ public class FelixTestAI implements AI {
         directionList.add(rightDirection);
         directionList.add(downDirection);
 
-        removeWeak(directionList);
+        removeLeastGoodAlternative(directionList);
 
-        //System.out.println("final champion was " + directionList.get(0).value + " at direction " + directionList.get(0).direction);
-        //System.out.println(directionList.get(0).direction + " is the current direction because " + directionList.get(0).value + " is the value");
         previousDirection = directionList.get(0).direction;
         return directionList.get(0).direction;
-/*        int largest = 0;
-        int winner = 2;
-        for (int i = 0; i < checkedValues.length; i++) {
-            if(checkedValues[i] > largest) {
-               largest = checkedValues[i];
-                winner = i;
-            } else if(largest > 0 && checkedValues[i] == largest) {
-                System.out.println("we are tied at " + largest);
-                return takeARandomStep();
-            }
-        }
 
-
-        if(winner == 0) {
-            nextDirection = Direction.UP;
-        } else if(winner == 1) {
-            nextDirection = Direction.RIGHT;
-        } else if(winner == 2) {
-            nextDirection = Direction.DOWN;
-        } else if(winner == 3) {
-            nextDirection = Direction.LEFT;
-        }*/
-
-/*        System.out.println("bot is currently at position " + enemyPosition.x + "," + enemyPosition.y);
-        System.out.println(nextDirection + " because " + checkedValues[winner] + " is the highest value");*/
-/*        return nextDirection;*/
     }
 
 
     public Direction takeARandomStep() {
-        int temp = r.nextInt(4);
+        int temp = random.nextInt(4);
         if(temp == 0) {
             return Direction.UP;
         } else if(temp == 1) {
@@ -150,7 +124,7 @@ public class FelixTestAI implements AI {
     }
 
     public int checkValueDown(Point enemyPosition) {
-        if(enemyPosition.y < 14) {
+        if(enemyPosition.y < Constants.DEFAULT_GRID_HEIGHT - 1) {
             return heuristicMatrix[enemyPosition.x][enemyPosition.y + 1];
         } else {
             return -1;
@@ -166,12 +140,18 @@ public class FelixTestAI implements AI {
     }
 
     public int checkValueRight(Point enemyPosition) {
-        if(enemyPosition.x < 20) {
+        if(enemyPosition.x < Constants.DEFAULT_GRID_WIDTH - 1) {
             return heuristicMatrix[enemyPosition.x + 1][enemyPosition.y];
         } else {
             return -1;
         }
     }
 
+    public int checkValueCurrent(Point enemyPosition) {
+        return heuristicMatrix[enemyPosition.x][enemyPosition.y];
+    }
 
+    public Point getCurrentPosition() {
+        return this.enemyPosition;
+    }
 }
