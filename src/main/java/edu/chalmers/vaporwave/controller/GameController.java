@@ -106,9 +106,13 @@ public class GameController {
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             this.localPlayer = newGameEvent.getLocalPlayer();
             if (player.getClass().equals(CPUPlayer.class)) {
-                gameCharacters.remove(player.getCharacter());
-                ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(gameCharacters));
-                gameCharacters.add(player.getCharacter());
+                Set<GameCharacter> gameCharacterClone = new HashSet<>();
+                for (GameCharacter gameCharacter : gameCharacters) {
+                    if (!player.getCharacter().equals(gameCharacter)) {
+                        gameCharacterClone.add(gameCharacter);
+                    }
+                }
+                ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(gameCharacterClone));
             }
         }
 
