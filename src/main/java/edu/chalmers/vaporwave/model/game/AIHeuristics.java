@@ -77,7 +77,7 @@ public class AIHeuristics {
         //set up a meeting point in center
         //recursive(new Point(11,8), 80);
 
-        recursive(new Point(11,8), 100);
+        recursive(new Point(11,8), 200);
 
         for(int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
