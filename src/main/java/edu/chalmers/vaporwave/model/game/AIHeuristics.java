@@ -93,13 +93,13 @@ public class AIHeuristics {
         }
 
         for (Enemy enemy : enemies) {
-            recursive(enemy.getGridPosition(), 3, 1);
+            recursive(enemy.getGridPosition(), 9, 5);
         }
 
         for(int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof Explosive) {
-                    recursive(new Point(i,j), 100, 10);
+                    recursive(new Point(i,j), 3, 1);
                 }
             }
         }
