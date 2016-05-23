@@ -186,7 +186,7 @@ public class GameController {
             if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
                     for (Enemy enemy : enemies) {
                         enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(),
-                                this.arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
+                                this.arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
                     }
                 updatedEnemyDirection = 0;
             }

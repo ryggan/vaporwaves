@@ -67,7 +67,7 @@ public class AIHeuristics {
         heuristicMatrix[x][y] = value;
     }
 
-    public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters) {
+    public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters, Set<Enemy> enemies) {
         for(int i = 0; i < arenaTiles.length; i++) {
             for(int j = 0; j < arenaTiles[0].length; j++) {
                     heuristicMatrix[i][j] = 10;
@@ -90,6 +90,10 @@ public class AIHeuristics {
         for (GameCharacter gameCharacter : gameCharacters) {
             recursive(gameCharacter.getGridPosition(), 200);
             //decideHeuristicValue(heuristicMatrix, gameCharacter.getGridPosition(), 100);
+        }
+
+        for (Enemy enemy : enemies) {
+            recursive(enemy.getGridPosition(), 10);
         }
 
         for(int i = 0; i < arenaTiles.length; i++) {

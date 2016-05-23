@@ -52,12 +52,12 @@ public class SemiSmartAI implements AI {
         }
     }
 
-    public Direction getNextMove(Point enemyPosition, StaticTile[][] arenaTiles) {
+    public Direction getNextMove(Point enemyPosition, StaticTile[][] arenaTiles, Set<Enemy> enemies) {
 
         directionList.clear();
         this.enemyPosition = enemyPosition;
 
-        heuristicMatrix = AIHeuristics.getAIHeuristics(arenaTiles, gameCharacterSet);
+        heuristicMatrix = AIHeuristics.getAIHeuristics(arenaTiles, gameCharacterSet, enemies);
 
         switch(previousDirection) {
             case UP:

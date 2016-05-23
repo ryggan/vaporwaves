@@ -5,6 +5,7 @@ import edu.chalmers.vaporwave.util.Utils;
 
 import java.awt.*;
 import java.util.Random;
+import java.util.Set;
 
 public class StupidAI implements AI {
     private Direction previousDirection;
@@ -17,7 +18,7 @@ public class StupidAI implements AI {
     }
 
     @Override
-    public Direction getNextMove(Point enemyPosition, StaticTile[][] arenaTiles) {
+    public Direction getNextMove(Point enemyPosition, StaticTile[][] arenaTiles, Set<Enemy> enemies) {
 
         Random random = new Random();
         int nextRandom = random.nextInt(10);

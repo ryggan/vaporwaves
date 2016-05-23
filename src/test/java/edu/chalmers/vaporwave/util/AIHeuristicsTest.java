@@ -1,9 +1,6 @@
 package edu.chalmers.vaporwave.util;
 
-import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.model.game.IndestructibleWall;
-import edu.chalmers.vaporwave.model.game.StaticTile;
-import edu.chalmers.vaporwave.model.game.AIHeuristics;
+import edu.chalmers.vaporwave.model.game.*;
 import org.junit.Test;
 
 import java.awt.*;
@@ -22,6 +19,7 @@ public class AIHeuristicsTest {
         StaticTile[][] sTiles = new StaticTile[Constants.GAME_WIDTH][Constants.GAME_HEIGHT];
         Set<GameCharacter> charSet = new HashSet<>();
         charSet.add(new GameCharacter("Pirre", 0));
+        Set<Enemy> enemies = new HashSet<>();
 
         for(int i = 0; i < sTiles.length; i++) {
             for(int j = 0; j < sTiles[0].length; j++) {
@@ -30,9 +28,9 @@ public class AIHeuristicsTest {
         }
 
         AIHeuristics aih = new AIHeuristics();
-        assertTrue(aih.getAIHeuristics(sTiles, charSet)[0][1] == 0);
-        assertTrue(aih.getAIHeuristics(sTiles, charSet)[1][0] == 0);
-        assertTrue(aih.getAIHeuristics(sTiles, charSet)[1][1] == 0);
-        assertTrue(aih.getAIHeuristics(sTiles, charSet)[0][0] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet, enemies)[0][1] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet, enemies)[1][0] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet, enemies)[1][1] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet, enemies)[0][0] == 0);
     }
 }
