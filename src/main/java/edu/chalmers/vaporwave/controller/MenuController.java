@@ -5,6 +5,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
+import edu.chalmers.vaporwave.model.game.SemiSmartCPUAI;
 import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.*;
@@ -143,9 +144,16 @@ public class MenuController {
                                     id++;
                                 }
 
-                                CPUPlayer cpu1 = new CPUPlayer(id, "C1");
-                                cpu1.setCharacter(new GameCharacter("ALYSSA", id));
-                                cpu1.getCharacter().setSpawnPosition(new Point(0, 0));
+                                Set<GameCharacter> gameCharacters = new HashSet<>();
+                                for (Player p : this.newGameEvent.getPlayers()) {
+                                    gameCharacters.add(p.getCharacter());
+                                }
+
+                                CPUPlayer cpu1 = new CPUPlayer(id, "CPU " + id, new SemiSmartCPUAI(gameCharacters));
+                                GameCharacter cpuCharacter = getAvailableGameCharacters().get(0);
+                                cpuCharacter.setPlayerID(id);
+                                cpu1.setCharacter(cpuCharacter);
+
                                 this.newGameEvent.addPlayer(cpu1);
 
                                 GameEventBus.getInstance().post(this.newGameEvent);
@@ -193,6 +201,26 @@ public class MenuController {
             }
         }
         return true;
+    }
+
+    private List<GameCharacter> getAvailableGameCharacters() {
+        Set<GameCharacter> allCharacters = new HashSet<>();
+        allCharacters.add(new GameCharacter("ALYSSA", -1));
+        allCharacters.add(new GameCharacter("MEI", -1));
+        allCharacters.add(new GameCharacter("CHARLOTTE", -1));
+        allCharacters.add(new GameCharacter("ZYPHER", -1));
+
+        for (Player player : this.newGameEvent.getPlayers()) {
+            if (allCharacters.contains(player.getCharacter())) {
+                allCharacters.remove(player.getCharacter());
+            }
+        }
+
+        List<GameCharacter> availableCharacters = new ArrayList<>();
+        availableCharacters.addAll(allCharacters);
+        Collections.shuffle(availableCharacters);
+
+        return availableCharacters;
     }
 
     private void remotePlayerInput(Player player) {

@@ -199,7 +199,10 @@ public class GameController {
                 if (player.getClass().equals(Player.class)) {
                     playerInputAction(player);
                 } else {
-                    System.out.println("Moving cpu");
+                    player.getCharacter().move(((CPUPlayer)player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles()), arenaModel.getArenaTiles());
+                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb()) {
+                        player.getCharacter().placeBomb();
+                    }
                 }
             }
         }
