@@ -1,12 +1,15 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.game.CPUPlayer;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 
 import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class RoosterMenu extends AbstractMenu {
 
@@ -65,13 +68,29 @@ public class RoosterMenu extends AbstractMenu {
         for (int i = 1; i < this.selectedPlayers.length; i++) {
             if (selectedPlayers[i] > 0 && selectedPlayers[i] < 5) {
                 newGameEvent.addPlayer(this.allPlayers.get(selectedPlayers[i] - 1));
+            } if(selectedPlayers[i] == 5) {
+                int id = 1;
+                while (!playerIDAvailable(newGameEvent.getPlayers(), id)) {
+                    id++;
+                }
+
+                newGameEvent.addPlayer(new CPUPlayer(id, "CPU " + id));
             }
         }
     }
 
+    private boolean playerIDAvailable(Set<Player> playerSet, int ID) {
+        for (Player player : playerSet) {
+            if (player.getPlayerID() == ID) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private boolean playerIsChosen(int current, int player) {
         for (int i = 0; i < this.selectedPlayers.length; i++) {
-            if (current != i && this.selectedPlayers[i] == player) {
+            if (current != i && this.selectedPlayers[i] == player && player != 5) {
                 return true;
             }
         }
