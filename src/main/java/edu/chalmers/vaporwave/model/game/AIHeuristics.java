@@ -67,7 +67,7 @@ public class AIHeuristics {
         heuristicMatrix[x][y] = value;
     }
 
-    public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters, Point enemyPreviousPosition) {
+    public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters) {
         for(int i = 0; i < arenaTiles.length; i++) {
             for(int j = 0; j < arenaTiles[0].length; j++) {
                     heuristicMatrix[i][j] = 10;
@@ -93,7 +93,7 @@ public class AIHeuristics {
         }
 
 
-        heuristicMatrix[enemyPreviousPosition.x][enemyPreviousPosition.y] = -1;
+       // heuristicMatrix[enemyPreviousPosition.x][enemyPreviousPosition.y] = -1;
 
 /*        System.out.println("Current boardstate");
         System.out.println("length " + heuristicMatrix.length);

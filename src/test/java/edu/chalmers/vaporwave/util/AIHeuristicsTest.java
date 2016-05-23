@@ -30,9 +30,9 @@ public class AIHeuristicsTest {
         }
 
         AIHeuristics aih = new AIHeuristics();
-        assertTrue(aih.getAIHeuristics(sTiles, charSet, new Point(1,1))[0][1] == 0);
-        assertTrue(aih.getAIHeuristics(sTiles, charSet, new Point(1,1))[1][0] == 0);
-        assertTrue(aih.getAIHeuristics(sTiles, charSet, new Point(1,1))[1][1] == 0);
-        assertTrue(aih.getAIHeuristics(sTiles, charSet, new Point(1,1))[0][0] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet)[0][1] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet)[1][0] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet)[1][1] == 0);
+        assertTrue(aih.getAIHeuristics(sTiles, charSet)[0][0] == 0);
     }
 }
