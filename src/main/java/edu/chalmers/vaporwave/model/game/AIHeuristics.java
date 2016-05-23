@@ -77,7 +77,15 @@ public class AIHeuristics {
         //set up a meeting point in center
         //recursive(new Point(11,8), 80);
 
-        recursive(new Point(11,8), 50);
+        recursive(new Point(11,8), 100);
+
+        for(int i = 0; i < arenaTiles.length; i++) {
+            for (int j = 0; j < arenaTiles[0].length; j++) {
+                if (arenaTiles[i][j] instanceof PowerUp) {
+                    recursive(new Point(i,j), 100);
+                }
+            }
+        }
 
         for (GameCharacter gameCharacter : gameCharacters) {
             recursive(gameCharacter.getGridPosition(), 200);
