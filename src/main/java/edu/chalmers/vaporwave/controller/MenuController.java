@@ -148,11 +148,8 @@ public class MenuController {
 
                         case START_GAME:
                             for (Player p : this.newGameEvent.getPlayers()) {
-
-                                menuMusic.stopSound();
                                 if(p.getClass().equals(CPUPlayer.class)){
                                    // menuMusic.loopSound(false);
-                                    menuMusic.stopSound();
                                     p.setCharacter(getAvailableGameCharacters().get(0));
                                 }
 
