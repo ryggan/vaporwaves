@@ -26,16 +26,21 @@ public class CharacterSelectView extends AbstractMenuView {
 
     private SpriteID[] playerOneSprite;
 
+
+
     public CharacterSelectView(Group root) {
         super(root);
         //this.setBackgroundImage(new javafx.scene.image.Image("images/charselectbuttons.png"));
 
         this.playerSet = new HashSet<>();
+        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT));
 
         this.selectedCharacter = new int[Constants.MAX_NUMBER_OF_PLAYERS];
         for (int i = 0; i < this.selectedCharacter.length; i++) {
             this.selectedCharacter[i] = -1;
         }
+
+
 
         this.playerOneSprite = new SpriteID[4];
         this.playerOneSprite[0]=SpriteID.MENU_RESULTS_MEI;
@@ -92,9 +97,10 @@ public class CharacterSelectView extends AbstractMenuView {
         this.characterSelectorPositionList.add(characterSelectorPositions4);
 
         menuButtonSpriteList = new ArrayList<>();
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(40, 20)));
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(4, 4)));
         menuButtonSpriteList.add(null);
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME, new Point(740, 580)));
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME, new Point(1080-320,
+                Constants.WINDOW_HEIGHT-72-4)));
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
 
@@ -104,6 +110,11 @@ public class CharacterSelectView extends AbstractMenuView {
     @Override
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
+
+        Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).setPosition(Constants.WINDOW_WIDTH-
+                Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).getWidth()-4, 4);
+        Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).setScale(1);
+        Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).render(getBackgroundGC(), 0);
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 

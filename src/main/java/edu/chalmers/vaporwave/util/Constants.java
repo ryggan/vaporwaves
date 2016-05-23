@@ -16,6 +16,9 @@ public class Constants {
     public static final int DEFAULT_TILE_WIDTH = 16;
     public static final int DEFAULT_TILE_HEIGHT = 16;
 
+    public static final int BUTTON_WIDTH = 92;
+    public static final int BUTTON_HEIGHT = 22;
+
     public static final double GAME_SCALE = 2.0;
 
     public static final String GAME_CHARACTER_XML_FILE = "src/main/resources/configuration/gameCharacters.xml";
