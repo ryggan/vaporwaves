@@ -87,6 +87,7 @@ public class CharacterSelectMenu extends AbstractMenu {
                 super.changeSelected(direction, player);
                 break;
         }
+
     }
 
     private void unselectCharacterForPlayer(int playerID) {

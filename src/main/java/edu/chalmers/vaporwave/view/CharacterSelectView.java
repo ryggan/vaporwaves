@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
 
@@ -22,10 +23,20 @@ public class CharacterSelectView extends AbstractMenuView {
     private static final Point CHARACTERS_POSITION = new Point(550, 160);
     private SpriteID[][] selectedCharacterSprite;
 
+    private SpriteID[] playerOneSprite;
+
+    private int playerOneSelected;
+
     public CharacterSelectView(Group root) {
         super(root);
 
         this.selectedCharacter = new int[]{-1, -1, -1, -1};
+
+        this.playerOneSprite = new SpriteID[4];
+        this.playerOneSprite[0]=SpriteID.MENU_RESULTS_MEI;
+        this.playerOneSprite[1]=SpriteID.MENU_RESULTS_ALYSSA;
+        this.playerOneSprite[2]=SpriteID.MENU_RESULTS_ZYPHER;
+        this.playerOneSprite[3]=SpriteID.MENU_RESULTS_CHARLOTTE;
 
         this.selectedCharacterSprite = new SpriteID[4][4];
         this.selectedCharacterSprite[0][0] = SpriteID.MENU_CHARACTER_MEI_1;
@@ -111,6 +122,9 @@ public class CharacterSelectView extends AbstractMenuView {
         if (superSelected == 1) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
+            Container.getSprite(playerOneSprite[subSelected[1]]).setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
+            Container.getSprite(playerOneSprite[subSelected[1]]).setScale(1);
+            Container.getSprite(playerOneSprite[subSelected[1]]).render(getBackgroundGC(), 0);
         }
 
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));
@@ -122,14 +136,16 @@ public class CharacterSelectView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).setPosition(this.characterSelectorPositionList.get(3).get(Utils.calculateRemoteSelected(remoteSelected, 3, 4)));
         Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_4).render(getBackgroundGC(), 0);
 
+
+
         for (int i = 0; i < selectedCharacter.length; i++) {
             if (selectedCharacter[i] >= 0) {
                 Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setPosition(CHARACTERS_POSITION);
                 Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).setScale(1);
                 Container.getSprite(selectedCharacterSprite[i][selectedCharacter[i]]).render(getBackgroundGC(), 0);
             }
-        }
 
+        }
 
         setActive();
     }
