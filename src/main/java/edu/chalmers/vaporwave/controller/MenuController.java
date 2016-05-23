@@ -3,6 +3,8 @@ package edu.chalmers.vaporwave.controller;
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.model.game.CPUPlayer;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.*;
@@ -12,6 +14,7 @@ import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
 import net.java.games.input.Controller;
 
+import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -85,13 +88,11 @@ public class MenuController {
 
         localPlayerInput(this.newGameEvent.getPrimaryPlayer());
 
-
         for (Player player : newGameEvent.getPlayers()) {
             if (player.getPlayerID() != 0) {
                 remotePlayerInput(player);
             }
         }
-
     }
 
     private void changeSelected(Direction direction, Player player) {
@@ -137,7 +138,17 @@ public class MenuController {
 
                         case START_GAME:
                             if (isNewGameEventReady()) {
-                                GameEventBus.getInstance().post(newGameEvent);
+                                int id = 1;
+                                while (!playerIDAvailable(id)) {
+                                    id++;
+                                }
+
+                                CPUPlayer cpu1 = new CPUPlayer(id, "C1");
+                                cpu1.setCharacter(new GameCharacter("ALYSSA", id));
+                                cpu1.getCharacter().setSpawnPosition(new Point(0, 0));
+                                this.newGameEvent.addPlayer(cpu1);
+
+                                GameEventBus.getInstance().post(this.newGameEvent);
                             }
                             break;
                         case NO_ACTION:
@@ -173,6 +184,15 @@ public class MenuController {
                 default:
             }
         }
+    }
+
+    private boolean playerIDAvailable(int ID) {
+        for (Player player : this.newGameEvent.getPlayers()) {
+            if (player.getPlayerID() == ID) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void remotePlayerInput(Player player) {

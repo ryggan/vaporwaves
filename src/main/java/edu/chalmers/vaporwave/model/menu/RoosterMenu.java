@@ -14,7 +14,7 @@ public class RoosterMenu extends AbstractMenu {
     private List<Player> allPlayers;
 
     public RoosterMenu() {
-        super(new int[]{0, 3, 0}, 0);
+        super(new int[]{0, 3, 0}, 1);
         this.selectedPlayers = new int[Constants.MAX_NUMBER_OF_PLAYERS];
         this.selectedPlayers[0] = 1;
 

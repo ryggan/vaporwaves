@@ -24,6 +24,7 @@ public class Player {
         this.playerID = playerID;
         this.playerName = playerName;
         this.playerInfo = new String[5];
+        this.directionControls = new String[0];
 
         resetPlayerGameStats();
     }

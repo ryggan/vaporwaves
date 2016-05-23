@@ -196,7 +196,11 @@ public class GameController {
         // All player-specific input and pressed etc.
         if (this.gameState == GameState.GAME_RUNS) {
             for (Player player : this.players) {
-                playerInputAction(player);
+                if (player.getClass().equals(Player.class)) {
+                    playerInputAction(player);
+                } else {
+                    System.out.println("Moving cpu");
+                }
             }
         }
 
