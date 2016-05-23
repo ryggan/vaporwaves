@@ -16,10 +16,19 @@ public class SemiSmartAI implements AI {
     private List<NextDirection> directionList;
     private Direction previousDirection = Direction.UP;
     private Point enemyPosition;
+    private NextDirection upDirection;
+    private NextDirection rightDirection;
+    private NextDirection leftDirection;
+    private NextDirection downDirection;
 
     public SemiSmartAI(Set<GameCharacter> gameCharacterSet) {
         this.gameCharacterSet = gameCharacterSet;
         directionList = new ArrayList<>();
+
+        upDirection = new NextDirection(Direction.UP, 0);
+        leftDirection = new NextDirection(Direction.LEFT, 0);
+        rightDirection = new NextDirection(Direction.RIGHT, 0);
+        downDirection = new NextDirection(Direction.DOWN, 0);
     }
 
     static class NextDirection {
@@ -84,16 +93,26 @@ public class SemiSmartAI implements AI {
                 break;
         }
 
-        NextDirection upDirection = new NextDirection(Direction.UP, checkValueUp(enemyPosition));
-        NextDirection leftDirection = new NextDirection(Direction.LEFT, checkValueLeft(enemyPosition));
-        NextDirection rightDirection = new NextDirection(Direction.RIGHT, checkValueRight(enemyPosition));
-        NextDirection downDirection = new NextDirection(Direction.DOWN, checkValueDown(enemyPosition));
+        upDirection.direction = Direction.UP;
+        upDirection.value = checkValueUp(enemyPosition);
+        leftDirection.direction = Direction.LEFT;
+        leftDirection.value = checkValueLeft(enemyPosition);
+        rightDirection.direction = Direction.RIGHT;
+        rightDirection.value = checkValueRight(enemyPosition);
+        downDirection.direction = Direction.DOWN;
+        downDirection.value = checkValueDown(enemyPosition);
+
         directionList.add(upDirection);
         directionList.add(leftDirection);
         directionList.add(rightDirection);
         directionList.add(downDirection);
 
         removeLeastGoodAlternative(directionList);
+
+        int temp = random.nextInt(6);
+        if(temp == 0) {
+            return takeARandomStep();
+        }
 
         previousDirection = directionList.get(0).direction;
         return directionList.get(0).direction;
