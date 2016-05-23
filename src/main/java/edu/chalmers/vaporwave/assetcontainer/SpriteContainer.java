@@ -63,13 +63,13 @@ class SpriteContainer {
 
         Image menuCharacterSelector = Container.getImage(ImageID.MENU_CHARACTER_SELECTOR);
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_1,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {0, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {0, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_2,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {1, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {1, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_3,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {2, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {2, 0}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_CHARACTER_SELECTOR_4,
-                new Sprite(menuCharacterSelector, new Dimension(22, 33), new int[] {3, 0}, new double[] {1, 1}, 1.0));
+                new Sprite(menuCharacterSelector, new Dimension(24, 27), new int[] {3, 0}, new double[] {1, 1}, 1.0));
 
         Image menuCheckbox = Container.getImage(ImageID.MENU_CHECKBOX);
         addSprite(SpriteID.MENU_CHECKBOX_UNSELECTED_OFF,

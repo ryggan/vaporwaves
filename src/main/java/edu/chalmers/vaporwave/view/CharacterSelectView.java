@@ -7,8 +7,10 @@ import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
+import javafx.scene.image.*;
 
 import java.awt.*;
+import java.awt.Image;
 import java.util.*;
 import java.util.List;
 
@@ -19,13 +21,14 @@ public class CharacterSelectView extends AbstractMenuView {
     private Set<Player> playerSet;
     private int[] selectedCharacter;
 
-    private static final Point CHARACTERS_POSITION = new Point(550, 160);
+    private static final Point CHARACTERS_POSITION = new Point(405, 95);
     private SpriteID[][] selectedCharacterSprite;
 
     private SpriteID[] playerOneSprite;
 
     public CharacterSelectView(Group root) {
         super(root);
+        //this.setBackgroundImage(new javafx.scene.image.Image("images/charselectbuttons.png"));
 
         this.playerSet = new HashSet<>();
 
@@ -60,28 +63,28 @@ public class CharacterSelectView extends AbstractMenuView {
 
         this.characterSelectorPositionList = new ArrayList<>();
         Map<Integer, Point> characterSelectorPositions1 = new HashMap<>();
-        characterSelectorPositions1.put(0, new Point(550, 180));
-        characterSelectorPositions1.put(1, new Point(640, 140));
-        characterSelectorPositions1.put(2, new Point(800, 140));
-        characterSelectorPositions1.put(3, new Point(920, 190));
+        characterSelectorPositions1.put(0, new Point(427, 129));
+        characterSelectorPositions1.put(1, new Point(427+626/4, 65));
+        characterSelectorPositions1.put(2, new Point(427+2*(626/4), 111));
+        characterSelectorPositions1.put(3, new Point(427+3*(626/4), 170));
 
         Map<Integer, Point> characterSelectorPositions2 = new HashMap<>();
-        characterSelectorPositions2.put(0, new Point(570, 180));
-        characterSelectorPositions2.put(1, new Point(660, 135));
-        characterSelectorPositions2.put(2, new Point(820, 145));
-        characterSelectorPositions2.put(3, new Point(940, 185));
+        characterSelectorPositions2.put(0, new Point(427+24+6, 129));
+        characterSelectorPositions2.put(1, new Point(427+(626/4)+24+6, 65));
+        characterSelectorPositions2.put(2, new Point(427+2*(626/4)+24+6, 111));
+        characterSelectorPositions2.put(3, new Point(427+3*(626/4)+24+6, 170));
 
         Map<Integer, Point> characterSelectorPositions3 = new HashMap<>();
-        characterSelectorPositions3.put(0, new Point(590, 180));
-        characterSelectorPositions3.put(1, new Point(680, 135));
-        characterSelectorPositions3.put(2, new Point(840, 145));
-        characterSelectorPositions3.put(3, new Point(960, 185));
+        characterSelectorPositions3.put(0, new Point(427+2*(24+6), 129));
+        characterSelectorPositions3.put(1, new Point(427+(626/4)+2*(24+6), 65));
+        characterSelectorPositions3.put(2, new Point(427+2*(626/4)+2*(24+6), 111));
+        characterSelectorPositions3.put(3, new Point(427+3*(626/4)+2*(24+6), 170));
 
         Map<Integer, Point> characterSelectorPositions4 = new HashMap<>();
-        characterSelectorPositions4.put(0, new Point(610, 180));
-        characterSelectorPositions4.put(1, new Point(700, 135));
-        characterSelectorPositions4.put(2, new Point(860, 145));
-        characterSelectorPositions4.put(3, new Point(980, 185));
+        characterSelectorPositions4.put(0, new Point(427+3*(24+6), 129));
+        characterSelectorPositions4.put(1, new Point(427+(626/4)+3*(24+6), 65));
+        characterSelectorPositions4.put(2, new Point(427+2*(626/4)+3*(24+6), 111));
+        characterSelectorPositions4.put(3, new Point(427+3*(626/4)+3*(24+6), 170));
 
         this.characterSelectorPositionList.add(characterSelectorPositions1);
         this.characterSelectorPositionList.add(characterSelectorPositions2);
