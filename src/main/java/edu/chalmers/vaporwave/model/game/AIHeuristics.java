@@ -93,7 +93,7 @@ public class AIHeuristics {
         }
 
         for (Enemy enemy : enemies) {
-            recursive(enemy.getGridPosition(), 1, -1, false, 2);
+            recursive(enemy.getGridPosition(), 1, -1, false, 4);
         }
 
         for(int i = 0; i < arenaTiles.length; i++) {
