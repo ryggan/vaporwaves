@@ -131,7 +131,7 @@ public class GameController {
             gameCharacters.add(player.getCharacter());
         }
 
-        Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 0.4, new FelixTestAI(gameCharacters));
+        Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 0.4, new SemiSmartAI(gameCharacters));
         enemies.add(felixBot);
         Random random = new Random();
         for (int k = 0; k < 5; k++) {
@@ -141,7 +141,7 @@ public class GameController {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getGridWidth()), random.nextInt(this.arenaModel.getGridHeight()));
                 free = (arenaModel.getArenaTile(spawnPosition) == null);
             } while (!free);
-            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.6, new FelixTestAI(gameCharacters));
+            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.6, new SemiSmartAI(gameCharacters));
             enemies.add(enemy);
         }
 
