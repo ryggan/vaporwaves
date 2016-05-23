@@ -138,24 +138,12 @@ public class MenuController {
                             break;
 
                         case START_GAME:
+                            for (Player p : this.newGameEvent.getPlayers()) {
+                                if (p.getClass().equals(CPUPlayer.class))
+                                    p.setCharacter(getAvailableGameCharacters().get(0));
+                            }
+
                             if (isNewGameEventReady()) {
-                                int id = 1;
-                                while (!playerIDAvailable(id)) {
-                                    id++;
-                                }
-
-                                Set<GameCharacter> gameCharacters = new HashSet<>();
-                                for (Player p : this.newGameEvent.getPlayers()) {
-                                    gameCharacters.add(p.getCharacter());
-                                }
-
-                                CPUPlayer cpu1 = new CPUPlayer(id, "CPU " + id, new SemiSmartCPUAI(gameCharacters));
-                                GameCharacter cpuCharacter = getAvailableGameCharacters().get(0);
-                                cpuCharacter.setPlayerID(id);
-                                cpu1.setCharacter(cpuCharacter);
-
-                                this.newGameEvent.addPlayer(cpu1);
-
                                 GameEventBus.getInstance().post(this.newGameEvent);
                             }
                             break;
@@ -194,14 +182,7 @@ public class MenuController {
         }
     }
 
-    private boolean playerIDAvailable(int ID) {
-        for (Player player : this.newGameEvent.getPlayers()) {
-            if (player.getPlayerID() == ID) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     private List<GameCharacter> getAvailableGameCharacters() {
         Set<GameCharacter> allCharacters = new HashSet<>();

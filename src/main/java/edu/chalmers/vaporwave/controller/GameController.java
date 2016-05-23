@@ -15,6 +15,7 @@ import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
+import sun.plugin2.gluegen.runtime.CPU;
 
 import java.awt.*;
 import java.util.*;
@@ -95,11 +96,23 @@ public class GameController {
 
         this.players = newGameEvent.getPlayers();
 
+        Set<GameCharacter> gameCharacters = new HashSet<>();
+        for (Player player : newGameEvent.getPlayers()) {
+            gameCharacters.add(player.getCharacter());
+        }
+
         for (Player player : newGameEvent.getPlayers()) {
             player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            if (player.getPlayerID() == 0) {
-                this.localPlayer = player;
+            this.localPlayer = newGameEvent.getLocalPlayer();
+            if (player.getClass().equals(CPUPlayer.class)) {
+                Set<GameCharacter> gameCharacterClone = new HashSet<>();
+                for (GameCharacter gameCharacter : gameCharacters) {
+                    if (!player.getCharacter().equals(gameCharacter)) {
+                        gameCharacterClone.add(gameCharacter);
+                    }
+                }
+                ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(gameCharacterClone));
             }
         }
 
@@ -125,11 +138,6 @@ public class GameController {
         this.enemies = new HashSet<>();
         this.deadEnemies = new HashSet<>();
 
-        //Felix code
-        Set<GameCharacter> gameCharacters = new HashSet<>();
-        for (Player player : players) {
-            gameCharacters.add(player.getCharacter());
-        }
 
         Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 0.4, new SemiSmartAI(gameCharacters));
         enemies.add(felixBot);
@@ -286,7 +294,7 @@ public class GameController {
                                         getPlayerForID(blast.getPlayerID()).incrementKills();
                                     }
                                     getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
-                                } else if (movable instanceof Enemy) {
+                                } else if (movable instanceof Enemy && getPlayerForID(blast.getPlayerID()) != null) {
                                     getPlayerForID(blast.getPlayerID()).incrementCreeps();
                                 }
                             }
