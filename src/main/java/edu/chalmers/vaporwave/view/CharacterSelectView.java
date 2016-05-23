@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
@@ -152,13 +153,12 @@ public class CharacterSelectView extends AbstractMenuView {
     }
 
     public void setPlayers(Set<Player> playerSet) {
-        System.out.println("Setting players");
         this.playerSet = playerSet;
     }
 
     public boolean playerSetContainsPlayerWithID(int id) {
         for (Player player : this.playerSet) {
-            if(player.getPlayerID() == id) {
+            if(player.getPlayerID() == id && !player.getClass().equals(CPUPlayer.class)) {
                 return true;
             }
         }
