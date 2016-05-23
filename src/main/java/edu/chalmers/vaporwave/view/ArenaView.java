@@ -219,7 +219,14 @@ public class ArenaView {
     }
 
     public void initHUDandScoreboard(Set<Player> players) {
+        if (this.hudView != null) {
+            this.hudView.clearHUD();
+        }
         this.hudView = new HUDView(root, players);
+
+        if (this.scoreboardView != null) {
+            this.scoreboardView.clearScoreboard();
+        }
         this.scoreboardView = new ScoreboardView(root, players);
     }
 

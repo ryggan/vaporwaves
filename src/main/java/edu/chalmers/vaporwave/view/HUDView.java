@@ -231,4 +231,17 @@ public class HUDView {
         this.gameOverMessage.setVisible(true);
         this.gameOverMessage.setText(message);
     }
+
+    public void clearHUD() {
+        this.hudGC.clearRect(0, 0, this.hudCanvas.getWidth(), this.hudCanvas.getHeight());
+        this.root.getChildren().remove(this.hudCanvas);
+        this.root.getChildren().remove(this.gameOverMessage);
+        this.root.getChildren().remove(this.timer);
+        for (Label playerName : this.playerNames) {
+            this.root.getChildren().remove(playerName);
+        }
+        for (Label playerScore : this.playerScores) {
+            this.root.getChildren().remove(playerScore);
+        }
+    }
 }

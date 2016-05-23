@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Set;
 
 public class ScoreboardView {
+
+    private Group root;
+
     private Sprite scoreboardBackground;
     private Canvas scoreboardCanvas;
     private GraphicsContext scoreboardGC;
@@ -29,6 +32,8 @@ public class ScoreboardView {
     private Label[][] playerLabels;
 
     public ScoreboardView(Group root, Set<Player> players) {
+
+        this.root = root;
 
         int xoffset = (int)(Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2))
                         - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE)  + 2*Constants.DEFAULT_TILE_WIDTH);
@@ -129,5 +134,16 @@ public class ScoreboardView {
 
     public boolean isShowing() {
         return gridPane.isVisible();
+    }
+
+    public void clearScoreboard() {
+        this.scoreboardGC.clearRect(0, 0, this.scoreboardCanvas.getWidth(), this.scoreboardCanvas.getHeight());
+        this.root.getChildren().remove(this.scoreboardCanvas);
+        for (int i = 0; i < this.playerLabels.length; i++) {
+            for (int j = 0; j < this.playerLabels[0].length; j++) {
+                this.gridPane.getChildren().remove(this.playerLabels[i][j]);
+            }
+        }
+        this.root.getChildren().remove(gridPane);
     }
 }
