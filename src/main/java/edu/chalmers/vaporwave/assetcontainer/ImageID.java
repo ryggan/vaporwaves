@@ -4,14 +4,19 @@ public enum ImageID {
 
     // todo: MENU STUFF
 
-    // backrounds
+    // backgrounds
     MENU_BACKGROUND_1,
+    MENU_BACKGROUND_RESULT,
 
     // buttons
     BUTTON_SINGLEPLAYER, BUTTON_EXIT,
 
     // misc
     MENU_BUTTON_SPRITESHEET,
+    MENU_RESULTS_ZYPHER,
+    MENU_RESULTS_CHARLOTTE,
+    MENU_RESULTS_MEI,
+    MENU_RESULTS_ALYSSA,
 
     MENU_CHARACTER,
     MENU_CHARACTER_SELECTOR,

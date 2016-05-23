@@ -65,13 +65,14 @@ public class MenuController {
         this.menuMap.put(MenuState.START_MENU, new StartMenu(this.newGameEvent));
         this.menuMap.put(MenuState.ROOSTER, new RoosterMenu(this.newGameEvent));
         this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu(this.newGameEvent));
-        this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
+        //this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
+        this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
 
         this.menuViewMap = new HashMap<>();
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
-        this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root));
+        this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root,newGameEvent.getPlayers()));
 
         this.pressedDown = false;
 
@@ -228,14 +229,17 @@ public class MenuController {
     }
 
     public void updateViews(Player player) {
-        this.menuViewMap.get(activeMenu).updateView(
-                this.menuMap.get(activeMenu).getSelectedSuper(),
-                this.menuMap.get(activeMenu).getSelectedSub(),
-                this.menuMap.get(activeMenu).getRemoteSelected(),
-                player,
-                this.pressedDown
-        );
+            this.menuViewMap.get(activeMenu).updateView(
+                    this.menuMap.get(activeMenu).getSelectedSuper(),
+                    this.menuMap.get(activeMenu).getSelectedSub(),
+                    this.menuMap.get(activeMenu).getRemoteSelected(),
+                    player,
+                    this.pressedDown
+            );
+
     }
+
+
 
 
     public void setActiveMenu(MenuState activeMenu){

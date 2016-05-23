@@ -10,7 +10,7 @@ class ImageContainer {
     private static Map<ImageID, Image> imageContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 4 + 5 + 6 + 13 + 3;
+    private static final double totalTasks = 4 + 3 + 4 + 5 + 6 + 13 + 3;
     
     public static void initImageContainer() {
         // TODO: OBS!!! IF ADDING IMAGES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
@@ -19,7 +19,14 @@ class ImageContainer {
 
         // >>> MENU STUFF: <<<
 
-        // Backgrounds (2):
+        // Results menu (4):
+        addImage(ImageID.MENU_RESULTS_ZYPHER,new Image("images/menu/menu-zypher-result.png"));
+        addImage(ImageID.MENU_RESULTS_CHARLOTTE,new Image("images/menu/menu-charlotte-result.png"));
+        addImage(ImageID.MENU_RESULTS_ALYSSA,new Image("images/menu/menu-alyssa-result.png"));
+        addImage(ImageID.MENU_RESULTS_MEI,new Image("images/menu/menu-mei-result.png"));
+
+        // Backgrounds (3):
+        addImage(ImageID.MENU_BACKGROUND_RESULT, new Image("images/menu/menu-background-result.png"));
         addImage(ImageID.MENU_BACKGROUND_1, new Image("images/menu/menu-background-2.bmp"));
         addImage(ImageID.MENU_BUTTON_SPRITESHEET, new Image("images/menu/spritesheet_menubuttons-308x198.png"));
 

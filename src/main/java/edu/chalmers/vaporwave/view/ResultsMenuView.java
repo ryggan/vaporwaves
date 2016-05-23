@@ -1,32 +1,62 @@
 package edu.chalmers.vaporwave.view;
 
+import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
-import edu.chalmers.vaporwave.assetcontainer.MenuButtonSprite;
+import edu.chalmers.vaporwave.controller.GameController;
+import edu.chalmers.vaporwave.controller.MenuController;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.assetcontainer.MenuButtonID;
-import edu.chalmers.vaporwave.assetcontainer.MenuButtonState;
+import edu.chalmers.vaporwave.model.menu.ResultsMenu;
+import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class ResultsMenuView extends AbstractMenuView {
 
     private java.util.List<MenuButtonSprite> menuButtonSpriteList;
 
-    public ResultsMenuView(Group root){
+    private Sprite winnerSprite;
+    private Set<Player> players;
+
+    public ResultsMenuView(Group root, Set<Player> players){
         super(root);
-        setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_1));
+        this.players=players;
+
+        setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
+
 
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT, new Point(640, 280)));
 //        menuButtonSpriteList.add(new MenuButtonSprite(Container.getImage(ImageID.BUTTON_EXIT), 308, 66, new Point(0, 0), new Point(640, 280)));
     }
 
-    @Override
+
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
+
+        switch (getWinner().toUpperCase()) {
+            case "ZYPHER":
+                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
+                break;
+            case "ALYSSA":
+                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+                break;
+            case "MEI":
+                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_MEI);
+                break;
+            case "CHARLOTTE":
+                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
+                break;
+            default :
+                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+        }
+
+        this.winnerSprite.setScale(1);
+        this.winnerSprite.setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
+
+        this.winnerSprite.render(this.getBackgroundGC(), 0);
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {
             updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
         }
@@ -45,6 +75,24 @@ public class ResultsMenuView extends AbstractMenuView {
         }
         setActive();
     }
+
+    //how is the question //where
+    public String getWinner(){
+
+        String winner = "";
+        Player first=this.players.iterator().next();
+        for (Player player : this.players) {
+            if(player.getScore()>first.getScore()){
+                winner=player.getCharacter().getName();
+            } else if(player.getScore()==first.getScore()){
+                winner="TIE";
+            }
+            System.out.println(player.getCharacter().getName()+" "+player.getScore());
+        }
+        System.out.println(winner);
+        return winner;
+    }
+
 
 
     //characters killed

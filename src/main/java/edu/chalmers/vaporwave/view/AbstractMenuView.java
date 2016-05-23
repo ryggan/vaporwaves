@@ -29,6 +29,7 @@ public abstract class AbstractMenuView {
 
     public abstract void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown);
 
+
     public GraphicsContext getBackgroundGC() {
         return this.backgroundGC;
     }
