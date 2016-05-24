@@ -143,7 +143,10 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueDown(Point enemyPosition) {
-        if(enemyPosition.y < Constants.DEFAULT_GRID_HEIGHT - 1) {
+        if (enemyPosition.x >= 0 &&
+                enemyPosition.y >= 0 &&
+                enemyPosition.x < heuristicMatrix.length &&
+                enemyPosition.y < heuristicMatrix[0].length - 1) {
             return heuristicMatrix[enemyPosition.x][enemyPosition.y + 1];
         } else {
             return -1;
