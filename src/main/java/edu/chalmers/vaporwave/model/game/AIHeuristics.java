@@ -46,6 +46,8 @@ public class AIHeuristics {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof Explosive) {
                     recursive(new Point(i,j), 0, -2, false, 10);
+                } else if(arenaTiles[i][j] instanceof DestructibleWall) {
+                    recursive(new Point(i, j), 0, -13, false, 14);
                 }
             }
         }

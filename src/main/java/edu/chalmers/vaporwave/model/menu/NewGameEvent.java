@@ -28,7 +28,7 @@ public class NewGameEvent {
         this.players = new HashSet<>();
 
 
-        this.timeLimit = 30;
+        this.timeLimit = 180;
 
         this.destroyablePowerups = true;
         this.respawnPowerups = true;
