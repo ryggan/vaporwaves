@@ -9,6 +9,7 @@ import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
+import javafx.scene.paint.*;
 import javafx.scene.text.Font;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
@@ -43,23 +44,10 @@ public class CharacterSelectView extends AbstractMenuView {
 
         this.playerSet = new HashSet<>();
 
-        this.getBackgroundGC().setFont(new Font("Lucida Console", 18));
+        this.getBackgroundGC().setFont(Container.getFont(FileID.FONT_BAUHAUS_18));
+        this.getBackgroundGC().setFill(javafx.scene.paint.Paint.valueOf("#FFFFFF"));
 
         //this.setBackgroundImage(new javafx.scene.image.Image("images/charselectbuttons.png"));
-
-        Label mei = new Label();
-        mei.setText("" + Container.getCharacterSpeed(CharacterID.MEI) + Container.getCharacterHealth(CharacterID.MEI)
-            +  Container.getCharacterBombRange(CharacterID.MEI) +  Container.getCharacterBombCount(CharacterID.MEI));
-        Label alyssa = new Label();
-        alyssa.setText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + Container.getCharacterHealth(CharacterID.ALYSSA)
-                +  Container.getCharacterBombRange(CharacterID.ALYSSA) +  Container.getCharacterBombCount(CharacterID.ALYSSA));
-        Label zypher = new Label();
-        zypher.setText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + Container.getCharacterHealth(CharacterID.ZYPHER)
-                +  Container.getCharacterBombRange(CharacterID.ZYPHER) +  Container.getCharacterBombCount(CharacterID.ZYPHER));
-        Label charlotte = new Label();
-        charlotte.setText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + Container.getCharacterHealth(CharacterID.CHARLOTTE)
-                +  Container.getCharacterBombRange(CharacterID.CHARLOTTE) +  Container.getCharacterBombCount(CharacterID.CHARLOTTE));
-
 
         this.playerSet = new HashSet<>();
 
@@ -191,8 +179,20 @@ public class CharacterSelectView extends AbstractMenuView {
         // todo: Character stats!
         this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.MEI) + " - " + Container.getCharacterHealth(CharacterID.MEI) + " - " +
                 Container.getCharacterBombRange(CharacterID.MEI) + " - " + Container.getCharacterBombCount(CharacterID.MEI),
-                this.characterSelectorPositionList.get(0).get(0).x,
-                this.characterSelectorPositionList.get(0).get(0).y);
+                this.characterSelectorPositionList.get(0).get(0).x-5,
+                this.characterSelectorPositionList.get(0).get(0).y+390);
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + " - " + Container.getCharacterHealth(CharacterID.ALYSSA) + " - " +
+                        Container.getCharacterBombRange(CharacterID.ALYSSA) + " - " + Container.getCharacterBombCount(CharacterID.ALYSSA),
+                this.characterSelectorPositionList.get(0).get(1).x-5,
+                this.characterSelectorPositionList.get(0).get(1).y-5+390);
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + " - " + Container.getCharacterHealth(CharacterID.ZYPHER) + " - " +
+                        Container.getCharacterBombRange(CharacterID.ZYPHER) + " - " + Container.getCharacterBombCount(CharacterID.ZYPHER),
+                this.characterSelectorPositionList.get(0).get(2).x-5,
+                this.characterSelectorPositionList.get(0).get(2).y+390);
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + " - " + Container.getCharacterHealth(CharacterID.CHARLOTTE) + " - " +
+                        Container.getCharacterBombRange(CharacterID.CHARLOTTE) + " - " + Container.getCharacterBombCount(CharacterID.CHARLOTTE),
+                this.characterSelectorPositionList.get(0).get(3).x-5,
+                this.characterSelectorPositionList.get(0).get(3).y+390);
 
         super.setActive();
     }
