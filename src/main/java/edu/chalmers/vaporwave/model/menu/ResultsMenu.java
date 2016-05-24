@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.model.menu;
 
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.Player;
 
 import java.util.HashMap;
@@ -23,11 +25,10 @@ public class ResultsMenu extends AbstractMenu {
     @Override
     public MenuState getMenuAction(){
             if (this.getSelectedSuper() == 0) {
+                Container.playSound(SoundID.MENU_FORWARD_CLICK);
                 return MenuState.START_MENU;
             }
-
             return MenuState.NO_ACTION;
-
     }
 
     @Override

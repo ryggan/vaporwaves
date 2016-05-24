@@ -1,11 +1,9 @@
 package edu.chalmers.vaporwave.view;
 
 
+import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
-import edu.chalmers.vaporwave.assetcontainer.MenuButtonSprite;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.assetcontainer.MenuButtonID;
-import edu.chalmers.vaporwave.assetcontainer.MenuButtonState;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -18,6 +16,7 @@ public class StartMenuView extends AbstractMenuView {
 
     public StartMenuView(Group root) {
         super(root);
+        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_START));
 
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEW_GAME, new Point(640, 200)));

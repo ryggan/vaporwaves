@@ -1,5 +1,7 @@
 package edu.chalmers.vaporwave.model.menu;
 
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
@@ -38,8 +40,10 @@ public class RoosterMenu extends AbstractMenu {
 
     public MenuState getMenuAction() {
         if (getSelectedSuper() == 0) {
+            Container.playSound(SoundID.MENU_BACKWARD_CLICK);
             return MenuState.START_MENU;
         } else if (getSelectedSuper() == 2) {
+            Container.playSound(SoundID.MENU_FORWARD_CLICK);
             return MenuState.CHARACTER_SELECT;
         }
         return MenuState.NO_ACTION;
@@ -49,6 +53,7 @@ public class RoosterMenu extends AbstractMenu {
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
         int subSelect = this.getSelectedSub()[1];
         if (subSelect > 0) {
+            Container.playSound(SoundID.MENU_FORWARD_CLICK);
             do {
                 this.selectedPlayers[subSelect] += 1;
             } while (playerIsChosen(subSelect, this.selectedPlayers[subSelect]));

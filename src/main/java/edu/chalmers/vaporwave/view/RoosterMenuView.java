@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -18,6 +19,9 @@ public class RoosterMenuView extends AbstractMenuView {
 
     public RoosterMenuView(Group root) {
         super(root);
+
+        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_ROOSTER));
+
         this.menuButtonSpriteList = new ArrayList<>();
 
         this.roosterSelectPosition = new ArrayList<>();
@@ -53,11 +57,16 @@ public class RoosterMenuView extends AbstractMenuView {
     @Override
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
+        Container.getSprite(SpriteID.MENU_ROOSTER_HELP).setPosition(Constants.WINDOW_WIDTH-
+                Container.getSprite(SpriteID.MENU_ROOSTER_HELP).getWidth()-4, 4);
+        Container.getSprite(SpriteID.MENU_ROOSTER_HELP).setScale(1);
+        Container.getSprite(SpriteID.MENU_ROOSTER_HELP).render(getBackgroundGC(), 0);
 
         if (this.menuButtonSpriteList.size() == 0) {
-            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(40, 20)));
+            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(4, 4)));
             this.menuButtonSpriteList.add(null);
-            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT, new Point(740, 580)));
+            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT, new Point(1080-320,
+                    Constants.WINDOW_HEIGHT-72-4)));
         }
 
         for (int i = 0; i < this.selectedPlayers.length; i++) {

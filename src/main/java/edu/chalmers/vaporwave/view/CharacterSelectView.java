@@ -4,11 +4,17 @@ import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.CPUPlayer;
+import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
+import javafx.scene.canvas.*;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.image.*;
+import javafx.scene.layout.AnchorPane;
+
 
 import java.awt.*;
 import java.awt.Image;
@@ -27,14 +33,50 @@ public class CharacterSelectView extends AbstractMenuView {
 
     private SpriteID[] playerOneSprite;
 
+    private int lastSelected;
+
+    private Label[] characterStats=new Label[4];
+    private Canvas characterSelectCanvas;
+    AnchorPane pane;
+
 
 
     public CharacterSelectView(Group root) {
         super(root);
+        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT));
         //this.setBackgroundImage(new javafx.scene.image.Image("images/charselectbuttons.png"));
+        characterSelectCanvas = new javafx.scene.canvas.Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+        pane = new AnchorPane();
+        Label mei = new Label();
+        mei.setText(Constants.MEI_STATS);
+        Label alyssa = new Label();
+        mei.setText(Constants.ALYSSA_STATS);
+        Label zypher = new Label();
+        mei.setText(Constants.ZYPHER_STATS);
+        Label charlotte = new Label();
+        mei.setText(Constants.CHARLOTTE_STATS);
+
+        characterStats[0]=mei;
+        characterStats[1]=alyssa;
+        characterStats[2]=zypher;
+        characterStats[3]=charlotte;
+
+        for(Label label:characterStats){
+            label.setStyle("-fx-font-family: 'Lucida Console'; -fx-text-fill: black;  -fx-font-size: 72;");
+            pane.getChildren().add(label);
+        }
+        pane.setVisible(true);
+        pane.setPrefSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+        pane.toFront();
+
+        root.getChildren().add(characterSelectCanvas);
+        root.getChildren().add(pane);
+
+
+
 
         this.playerSet = new HashSet<>();
-        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT));
+
 
         this.selectedCharacter = new int[Constants.MAX_NUMBER_OF_PLAYERS];
         for (int i = 0; i < this.selectedCharacter.length; i++) {
@@ -112,11 +154,13 @@ public class CharacterSelectView extends AbstractMenuView {
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
+       pane.setVisible(true);
+
+
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).setPosition(Constants.WINDOW_WIDTH-
                 Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).getWidth()-4, 4);
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).setScale(1);
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).render(getBackgroundGC(), 0);
-
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {
@@ -125,13 +169,20 @@ public class CharacterSelectView extends AbstractMenuView {
             }
         }
 
+
+
         if (superSelected == 1) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
             Container.getSprite(playerOneSprite[subSelected[1]]).setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
             Container.getSprite(playerOneSprite[subSelected[1]]).setScale(1);
             Container.getSprite(playerOneSprite[subSelected[1]]).render(getBackgroundGC(), 0);
+            lastSelected=subSelected[1];
         }
+
+        Container.getSprite(playerOneSprite[lastSelected]).setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
+        Container.getSprite(playerOneSprite[lastSelected]).setScale(1);
+        Container.getSprite(playerOneSprite[lastSelected]).render(getBackgroundGC(), 0);
 
         if (playerSetContainsPlayerWithID(1)) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(this.characterSelectorPositionList.get(1).get(Utils.calculateRemoteSelected(remoteSelected, 1, 4)));

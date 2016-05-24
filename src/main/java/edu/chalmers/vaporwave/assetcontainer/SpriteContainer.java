@@ -11,14 +11,14 @@ class SpriteContainer {
     private static Map<SpriteID, Sprite> spriteContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 34 + 8 + 5 + 8 + 5 + 9 + 3 + 16;
+    private static final double totalTasks = 36 + 8 + 5 + 8 + 5 + 9 + 3 + 16;
 
     public static void initSpriteContainer() {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         spriteContainer = new HashMap<>();
 
-        // Menu images and controls (34)
+        // Menu images and controls (36)
         Image menuCharacter = Container.getImage(ImageID.MENU_CHARACTER);
 
             //Results Menu
@@ -111,6 +111,12 @@ class SpriteContainer {
                 new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {4, 1}, new double[] {1, 1}, 1.0));
         addSprite(SpriteID.MENU_ROOSTER_SELECT_CPU_ON,
                 new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {5, 1}, new double[] {1, 1}, 1.0));
+
+        //Roostermenu
+        addSprite(SpriteID.MENU_ROOSTER_HELP, new Sprite(Container.getImage(ImageID.MENU_ROOSTER_HELP)));
+
+        //Startmenu
+        addSprite(SpriteID.MENU_STARTMENU_HELP, new Sprite(Container.getImage(ImageID.MENU_STARTMENU_HELP)));
 
         // Game background and frame (5)
 

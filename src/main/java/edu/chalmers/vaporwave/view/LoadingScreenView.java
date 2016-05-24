@@ -1,6 +1,8 @@
 package edu.chalmers.vaporwave.view;
 
 
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -27,7 +29,7 @@ public class LoadingScreenView  {
         this.backgroundCanvas = new Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         this.backgroundGC = backgroundCanvas.getGraphicsContext2D();
 
-        this.backgroundImage = new Image("images/menu/menu-background.jpg");
+        this.backgroundImage = new Image("images/menu/menu-background-loading.png");
         this.loadingBarEmpty = new Image("images/hud/healthbarempty.png");
         this.loadingBarFilled = new Image("images/hud/healthbarfilled.png");
 

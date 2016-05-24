@@ -2,6 +2,8 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
+import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
@@ -10,6 +12,7 @@ import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.util.Debug;
+import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.util.Utils;
 import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
@@ -26,6 +29,8 @@ public class MenuController {
     private Map<MenuState, AbstractMenuView> menuViewMap;
     private MenuState activeMenu;
 
+    private SoundPlayer menuMusic;
+
     private boolean pressedDown;
 
     public MenuController(Group root) {
@@ -33,6 +38,10 @@ public class MenuController {
         GameEventBus.getInstance().register(this);
 
         this.newGameEvent = new NewGameEvent();
+
+        this.menuMusic = Container.getSound(SoundID.MENU_BGM_1);
+        menuMusic.playSound();
+       menuMusic.loopSound(true);
 
         Player player;
         player = new Player(0, "P1");
@@ -139,12 +148,18 @@ public class MenuController {
 
                         case START_GAME:
                             for (Player p : this.newGameEvent.getPlayers()) {
-                                if (p.getClass().equals(CPUPlayer.class))
+                                if(p.getClass().equals(CPUPlayer.class)){
+                                   // menuMusic.loopSound(false);
                                     p.setCharacter(getAvailableGameCharacters().get(0));
+                                }
+
                             }
 
                             if (isNewGameEventReady()) {
                                 GameEventBus.getInstance().post(this.newGameEvent);
+                                menuMusic.stopSound();
+                            }else{
+                                Container.playSound(SoundID.EXPLOSION);
                             }
                             break;
                         case NO_ACTION:

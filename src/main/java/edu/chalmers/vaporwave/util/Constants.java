@@ -43,5 +43,10 @@ public class Constants {
     public static final int ENEMY_UPDATE_RATE = 15;
 
     public static final String COLORNO_VAPEPINK = "#fd2881";
+
+    public static final String MEI_STATS = "1.7 - 40 - 1 - 1";
+    public static final String ALYSSA_STATS = "1.5 - 50 - 1 - 1";
+    public static final String CHARLOTTE_STATS = "1.3 - 50 - 1 - 2";
+    public static final String ZYPHER_STATS = "1.3 - 50 - 2 - 1";
 }
 
