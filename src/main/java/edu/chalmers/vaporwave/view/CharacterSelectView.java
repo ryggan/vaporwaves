@@ -41,7 +41,6 @@ public class CharacterSelectView extends AbstractMenuView {
         super(root);
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT));
 
-
         this.playerSet = new HashSet<>();
 
         this.getBackgroundGC().setFont(Container.getFont(FileID.FONT_BAUHAUS_18));
