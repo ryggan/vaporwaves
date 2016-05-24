@@ -105,7 +105,7 @@ public class GameController {
         for (Player player : newGameEvent.getPlayers()) {
             player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            this.localPlayer = newGameEvent.getLocalPlayer();
+            this.localPlayer = newGameEvent.getPrimaryPlayer();
             if (player.getClass().equals(CPUPlayer.class)) {
                 Set<GameCharacter> gameCharacterClone = new HashSet<>();
                 for (GameCharacter gameCharacter : gameCharacters) {

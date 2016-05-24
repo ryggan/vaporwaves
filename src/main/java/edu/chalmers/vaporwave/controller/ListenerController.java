@@ -96,8 +96,6 @@ public class ListenerController {
                     this.gamePadPressed.put(controllers[i], pressedList);
                     List<String> releasedList = new ArrayList<>();
                     this.gamePadReleased.put(controllers[i], releasedList);
-                } else {
-                    System.out.println("Discarded controller: "+controllers[i].getType());
                 }
             }
         }
