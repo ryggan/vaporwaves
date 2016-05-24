@@ -7,7 +7,6 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.*;
 import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.model.game.SemiSmartCPUAI;
 import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.*;
@@ -41,7 +40,7 @@ public class MenuController {
 
         this.menuMusic = Container.getSound(SoundID.MENU_BGM_1);
         menuMusic.playSound();
-       menuMusic.loopSound(true);
+        menuMusic.loopSound(true);
 
         Player player;
         player = new Player(0, "P1");
@@ -51,7 +50,6 @@ public class MenuController {
                 Utils.getPlayerControls().get(0)[2],
                 Utils.getPlayerControls().get(0)[3]});
         player.setBombControl(Utils.getPlayerControls().get(0)[4]);
-        player.setMineControl(Utils.getPlayerControls().get(0)[5]);
         this.newGameEvent.addPlayer(player);
 
         updatePlayerGamePads(newGameEvent.getPlayers());

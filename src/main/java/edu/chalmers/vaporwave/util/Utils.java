@@ -224,10 +224,10 @@ public class Utils {
 
     public static List<String[]> getPlayerControls() {
         List playerControls = new ArrayList<>();
-        playerControls.add(new String[]{"LEFT", "UP", "RIGHT", "DOWN", "SPACE", "M"});
-        playerControls.add(new String[]{"A", "W", "D", "S", "SHIFT", "CAPS"});
-        playerControls.add(new String[]{"F", "T", "H", "G", "R", "Y"});
-        playerControls.add(new String[]{"J", "I", "L", "K", "U", "O"});
+        playerControls.add(new String[]{"LEFT", "UP", "RIGHT", "DOWN", "SPACE"});
+        playerControls.add(new String[]{"A", "W", "D", "S", "SHIFT"});
+        playerControls.add(new String[]{"F", "T", "H", "G", "R"});
+        playerControls.add(new String[]{"J", "I", "L", "K", "U"});
         return playerControls;
     }
 }

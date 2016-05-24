@@ -73,15 +73,6 @@ public class GameCharacter extends Movable {
         }
     }
 
-    public void placeMine() {
-        if(this.currentBombCount > 0) {
-            GameEventBus.getInstance().post(
-                    new PlaceMineEvent(this, Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()),
-                    bombRange,
-                    getDamage()));
-        }
-    }
-
     public void setBombRange(int bombRange) {
         this.bombRange = bombRange;
     }

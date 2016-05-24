@@ -33,7 +33,6 @@ public class RoosterMenu extends AbstractMenu {
                     Utils.getPlayerControls().get(i)[2],
                     Utils.getPlayerControls().get(i)[3]});
             player.setBombControl(Utils.getPlayerControls().get(i)[4]);
-            player.setMineControl(Utils.getPlayerControls().get(i)[5]);
             this.allPlayers.add(player);
         }
     }

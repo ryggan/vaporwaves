@@ -354,8 +354,6 @@ public class GameController {
             if (tile == null || (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP)) {
                 if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
                     player.getCharacter().placeBomb();
-                } else if (key.equals(player.getMineControl()) || key.equals("BTN_B")) {
-                    player.getCharacter().placeMine();
                 }
             }
         }
@@ -367,13 +365,6 @@ public class GameController {
         this.arenaModel.setDoubleTile(new Bomb(character, placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY,
                 this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
         placeBombEvent.getCharacter().setCurrentBombCount(character.getCurrentBombCount() - 1);
-    }
-
-    @Subscribe
-    public void minePlaced(PlaceMineEvent placeMineEvent) {
-        GameCharacter character = placeMineEvent.getCharacter();
-        this.arenaModel.setTile(new Mine(character, placeMineEvent.getRange(), placeMineEvent.getDamage()), placeMineEvent.getGridPosition());
-        character.setCurrentBombCount(character.getCurrentBombCount() - 1);
     }
 
     // This method is called via the eventbus, when a gamecharacter calls placeBomb()
