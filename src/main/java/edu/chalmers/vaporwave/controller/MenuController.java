@@ -27,6 +27,7 @@ public class MenuController {
     private Map<MenuState, AbstractMenu> menuMap;
     private Map<MenuState, AbstractMenuView> menuViewMap;
     private MenuState activeMenu;
+    private ResultsMenuView resultsMenuView;
 
     private SoundPlayer menuMusic;
 
@@ -54,19 +55,21 @@ public class MenuController {
 
         updatePlayerGamePads(newGameEvent.getPlayers());
 
+
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
         this.menuMap.put(MenuState.START_MENU, new StartMenu());
         this.menuMap.put(MenuState.ROOSTER, new RoosterMenu());
         this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu());
-        //this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent));
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
+
+        resultsMenuView=new ResultsMenuView(root, newGameEvent.getPlayers());
 
         this.menuViewMap = new HashMap<>();
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
-        this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root,newGameEvent.getPlayers()));
+        this.menuViewMap.put(MenuState.RESULTS_MENU, resultsMenuView);
 
         this.pressedDown = false;
 
@@ -143,16 +146,13 @@ public class MenuController {
                         case EXIT_PROGRAM:
                             GameEventBus.getInstance().post(new ExitGameEvent());
                             break;
-
                         case START_GAME:
                             for (Player p : this.newGameEvent.getPlayers()) {
                                 if(p.getClass().equals(CPUPlayer.class)){
                                    // menuMusic.loopSound(false);
                                     p.setCharacter(getAvailableGameCharacters().get(0));
                                 }
-
                             }
-
                             if (isNewGameEventReady()) {
                                 GameEventBus.getInstance().post(this.newGameEvent);
                                 menuMusic.stopSound();
@@ -294,9 +294,10 @@ public class MenuController {
         }
     }
 
-//    @Subscribe
-//    public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
-//
-//        GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
-//    }
+    @Subscribe
+    public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
+
+        resultsMenuView.setPlayers(exitToMenuEvent.getPlayers());
+        GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
+    }
 }

@@ -91,7 +91,7 @@ public class GameController {
         this.gameState = GameState.PRE_GAME;
 
         ArenaMap arenaMap = new ArenaMap("default",
-                (new MapFileReader(Container.getFile(FileID.VAPORMAP_DEFAULT))).getMapObjects());
+                (new MapFileReader(Container.getFile(FileID.VAPORMAP_BOBS1))).getMapObjects());
 
         this.players = newGameEvent.getPlayers();
 
@@ -146,7 +146,7 @@ public class GameController {
             Point spawnPosition = new Point(0,0);
             do {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getGridWidth()), random.nextInt(this.arenaModel.getGridHeight()));
-                free = (arenaModel.getArenaTile(spawnPosition) == null);
+                free = (arenaModel.getArenaTile(spawnPosition) == null && !isNearCharacter(spawnPosition));
             } while (!free);
             Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.6, new SemiSmartAI(gameCharacters));
             enemies.add(enemy);
@@ -162,6 +162,18 @@ public class GameController {
 
         this.arenaModel.sortMovables();
 
+    }
+
+    private boolean isNearCharacter(Point position) {
+        int radius = 4;
+        for (Player player : this.players) {
+            Point characterPosition = player.getCharacter().getGridPosition();
+            if (Math.abs(characterPosition.getX() - position.getX()) < radius
+                    && Math.abs(characterPosition.getY() - position.getY()) < radius) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // This one is called every time the game-timer is updated
@@ -609,11 +621,12 @@ public class GameController {
         this.enemies.clear();
         this.deadEnemies.clear();
 
+        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
+        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, players));
+
+
         for (Player player : this.players) {
             player.resetPlayerGameStats();
         }
-
-        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
-//        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu));
     }
 }

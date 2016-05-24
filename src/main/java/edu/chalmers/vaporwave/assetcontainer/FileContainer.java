@@ -19,7 +19,7 @@ class FileContainer {
     private static Map<FileID, Color> colorContainer;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 3 + 1;
+    private static final double totalTasks = 1 + 2 + 3 + 1;
 
     public static void initFileContainer() {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
@@ -28,9 +28,12 @@ class FileContainer {
         fontContainer = new HashMap<>();
         colorContainer = new HashMap<>();
 
-        // Misc files (2)
+        // Misc files (1)
         addFile(FileID.XML_CHARACTER_ENEMY, new File(Constants.GAME_CHARACTER_XML_FILE));
+
+        // Map files (2)
         addFile(FileID.VAPORMAP_DEFAULT, new File(Constants.DEFAULT_MAP_FILE));
+        addFile(FileID.VAPORMAP_BOBS1, new File("src/main/resources/maps/bobsmap.vapormap"));
 
         // Fonts (3)
         try {
@@ -44,14 +47,13 @@ class FileContainer {
             font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 30);
             addFont(FileID.FONT_BAUHAUS_30, font);
 
-            Color color = Color.web(Constants.COLORNO_VAPEPINK);
-            addColor(FileID.COLOR_VAPEPINK, color);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        // Fonts (3)
+        // Colors (1)
+        Color color = Color.web(Constants.COLORNO_VAPEPINK);
+        addColor(FileID.COLOR_VAPEPINK, color);
     }
 
     private static void addFile(FileID fileID, File file) {
