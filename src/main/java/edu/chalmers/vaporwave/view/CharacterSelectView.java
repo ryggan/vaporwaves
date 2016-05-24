@@ -9,11 +9,13 @@ import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
+import javafx.scene.text.Font;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.FontSmoothingType;
 
 
 import java.awt.*;
@@ -36,8 +38,6 @@ public class CharacterSelectView extends AbstractMenuView {
     private int lastSelected;
 
     private Label[] characterStats=new Label[4];
-    private Canvas characterSelectCanvas;
-    AnchorPane pane;
 
 
 
@@ -45,43 +45,37 @@ public class CharacterSelectView extends AbstractMenuView {
         super(root);
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT));
         //this.setBackgroundImage(new javafx.scene.image.Image("images/charselectbuttons.png"));
-        characterSelectCanvas = new javafx.scene.canvas.Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-        pane = new AnchorPane();
 
-        Label mei = new Label();
-        mei.setText("" + Container.getCharacterSpeed(CharacterID.MEI) + Container.getCharacterHealth(CharacterID.MEI)
-            +  Container.getCharacterBombRange(CharacterID.MEI) +  Container.getCharacterBombCount(CharacterID.MEI));
-        Label alyssa = new Label();
-        alyssa.setText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + Container.getCharacterHealth(CharacterID.ALYSSA)
-                +  Container.getCharacterBombRange(CharacterID.ALYSSA) +  Container.getCharacterBombCount(CharacterID.ALYSSA));
-        Label zypher = new Label();
-        zypher.setText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + Container.getCharacterHealth(CharacterID.ZYPHER)
-                +  Container.getCharacterBombRange(CharacterID.ZYPHER) +  Container.getCharacterBombCount(CharacterID.ZYPHER));
-        Label charlotte = new Label();
-        charlotte.setText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + Container.getCharacterHealth(CharacterID.CHARLOTTE)
-                +  Container.getCharacterBombRange(CharacterID.CHARLOTTE) +  Container.getCharacterBombCount(CharacterID.CHARLOTTE));
+//        Label mei = new Label();
+//        mei.setText("" + Container.getCharacterSpeed(CharacterID.MEI) + Container.getCharacterHealth(CharacterID.MEI)
+//            +  Container.getCharacterBombRange(CharacterID.MEI) +  Container.getCharacterBombCount(CharacterID.MEI));
+//        Label alyssa = new Label();
+//        alyssa.setText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + Container.getCharacterHealth(CharacterID.ALYSSA)
+//                +  Container.getCharacterBombRange(CharacterID.ALYSSA) +  Container.getCharacterBombCount(CharacterID.ALYSSA));
+//        Label zypher = new Label();
+//        zypher.setText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + Container.getCharacterHealth(CharacterID.ZYPHER)
+//                +  Container.getCharacterBombRange(CharacterID.ZYPHER) +  Container.getCharacterBombCount(CharacterID.ZYPHER));
+//        Label charlotte = new Label();
+//        charlotte.setText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + Container.getCharacterHealth(CharacterID.CHARLOTTE)
+//                +  Container.getCharacterBombRange(CharacterID.CHARLOTTE) +  Container.getCharacterBombCount(CharacterID.CHARLOTTE));
 
-        characterStats[0]=mei;
-        characterStats[1]=alyssa;
-        characterStats[2]=zypher;
-        characterStats[3]=charlotte;
+//        characterStats[0] = mei;
+//        characterStats[1] = alyssa;
+//        characterStats[2] = zypher;
+//        characterStats[3] = charlotte;
 
-        for(Label label:characterStats){
-            label.setStyle("-fx-font-family: 'Lucida Console'; -fx-text-fill: black;  -fx-font-size: 72;");
-            pane.getChildren().add(label);
-        }
-        pane.setVisible(true);
-        pane.setPrefSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
-        pane.toFront();
-
-        root.getChildren().add(characterSelectCanvas);
-        root.getChildren().add(pane);
-
-
-
+//        for(Label label : characterStats){
+//            label.setStyle("-fx-font-family: 'Lucida Console'; -fx-text-fill: black; -fx-font-size: 72;");
+//            statsPane.getChildren().add(label);
+//        }
+//        statsPane.setStyle("-fx-background-color: #f0ff0f");
+//        statsPane.setVisible(true);
+//        statsPane.setPrefSize(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
+//        statsPane.toFront();
 
         this.playerSet = new HashSet<>();
 
+        this.getBackgroundGC().setFont(new Font("Lucida Console", 18));
 
         this.selectedCharacter = new int[Constants.MAX_NUMBER_OF_PLAYERS];
         for (int i = 0; i < this.selectedCharacter.length; i++) {
@@ -159,8 +153,6 @@ public class CharacterSelectView extends AbstractMenuView {
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
-       pane.setVisible(true);
-
 
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).setPosition(Constants.WINDOW_WIDTH-
                 Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).getWidth()-4, 4);
@@ -211,6 +203,11 @@ public class CharacterSelectView extends AbstractMenuView {
             }
 
         }
+        
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.MEI) + " - " + Container.getCharacterHealth(CharacterID.MEI) + " - " +
+                Container.getCharacterBombRange(CharacterID.MEI) + " - " + Container.getCharacterBombCount(CharacterID.MEI),
+                this.characterSelectorPositionList.get(0).get(0).x,
+                this.characterSelectorPositionList.get(0).get(0).y);
 
         super.setActive();
     }

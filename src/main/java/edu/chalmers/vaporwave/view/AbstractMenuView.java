@@ -57,4 +57,8 @@ public abstract class AbstractMenuView {
             button.render(getBackgroundGC(), MenuButtonState.UNSELECTED);
         }
     }
+
+    Group getRoot() {
+        return this.root;
+    }
 }
