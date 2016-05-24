@@ -44,7 +44,6 @@ public class MainController {
         this.loader = new LoadingScreen();
         this.loaderView = new LoadingScreenView(root);
         this.loadingDone = false;
-
         // Loading loop
         new AnimationTimer() {
             public void handle(long currentNanoTime) {

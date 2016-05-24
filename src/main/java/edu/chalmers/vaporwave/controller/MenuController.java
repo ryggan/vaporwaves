@@ -15,6 +15,7 @@ import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.util.Utils;
 import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
+import javafx.scene.media.MediaPlayer;
 import net.java.games.input.Controller;
 
 import java.awt.*;
@@ -145,7 +146,15 @@ public class MenuController {
                 case "BTN_A":
                     switch (menuMap.get(activeMenu).getMenuAction()) {
                         case EXIT_PROGRAM:
-                            GameEventBus.getInstance().post(new ExitGameEvent());
+                            menuMusic.stopSound();
+                            Container.getSound(SoundID.MENU_EXIT).getSound().play();
+                            Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new Runnable() {
+                                @Override
+                                public void run() {
+                                    GameEventBus.getInstance().post(new ExitGameEvent());
+                                }
+                            });
+
                             break;
                         case START_GAME:
                             for (Player p : this.newGameEvent.getPlayers()) {
