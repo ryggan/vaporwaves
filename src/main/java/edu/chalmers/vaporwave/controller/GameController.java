@@ -5,7 +5,10 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
-import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.event.DeathEvent;
+import edu.chalmers.vaporwave.event.ExitToMenuEvent;
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.SpawnEvent;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.Player;
@@ -15,7 +18,6 @@ import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
-import sun.plugin2.gluegen.runtime.CPU;
 
 import java.awt.*;
 import java.util.*;
@@ -621,9 +623,8 @@ public class GameController {
         this.enemies.clear();
         this.deadEnemies.clear();
 
-        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
-        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, players, this.gameType));
-
+//        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
+        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
 
         for (Player player : this.players) {
             player.resetPlayerGameStats();

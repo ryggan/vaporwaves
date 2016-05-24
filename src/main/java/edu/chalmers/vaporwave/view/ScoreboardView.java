@@ -32,12 +32,18 @@ public class ScoreboardView {
     private Label[][] playerLabels;
 
     public ScoreboardView(Group root, Set<Player> players) {
+        this(root, players, 0, 0);
+    }
+
+    public ScoreboardView(Group root, Set<Player> players, int x, int y) {
+
+        System.out.println("ScoreboardView constructor, players set: "+players);
 
         this.root = root;
 
-        int xoffset = (int)(Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2))
+        int xoffset = x + (int)(Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2))
                         - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE)  + 2*Constants.DEFAULT_TILE_WIDTH);
-        int yoffset = 8 * Constants.DEFAULT_TILE_HEIGHT - 6;
+        int yoffset = y + 8 * Constants.DEFAULT_TILE_HEIGHT - 6;
         int gridPaneYOffset = 81;
 
         this.playerList = new ArrayList<>();
