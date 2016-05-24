@@ -88,7 +88,7 @@ public class ListenerController {
 
         if (controllers != null) {
             for (int i = 0; i < controllers.length; i++) {
-                if (controllers[i].getType() == Controller.Type.GAMEPAD) {
+                if (controllers[i].getType() == Controller.Type.GAMEPAD || controllers[i].getType() == Controller.Type.STICK) {
                     this.gamePads.add(controllers[i]);
                     List<String> inputList = new ArrayList<>();
                     this.gamePadInputs.put(controllers[i], inputList);
@@ -96,6 +96,8 @@ public class ListenerController {
                     this.gamePadPressed.put(controllers[i], pressedList);
                     List<String> releasedList = new ArrayList<>();
                     this.gamePadReleased.put(controllers[i], releasedList);
+                } else {
+                    System.out.println("Discarded controller: "+controllers[i].getType());
                 }
             }
         }
