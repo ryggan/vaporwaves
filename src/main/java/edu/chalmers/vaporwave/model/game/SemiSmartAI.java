@@ -135,7 +135,10 @@ public class SemiSmartAI implements AI {
 
 
     public int checkValueUp(Point enemyPosition) {
-        if(enemyPosition.y > 0) {
+        if (enemyPosition.x > 0 &&
+                enemyPosition.y > 0 &&
+                enemyPosition.x < heuristicMatrix.length &&
+                enemyPosition.y < heuristicMatrix[0].length) {
             return heuristicMatrix[enemyPosition.x][enemyPosition.y - 1];
         } else {
             return -1;
@@ -154,7 +157,10 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueLeft(Point enemyPosition) {
-        if(enemyPosition.x > 0) {
+        if (enemyPosition.x > 0 &&
+                enemyPosition.y >= 0 &&
+                enemyPosition.x < heuristicMatrix.length &&
+                enemyPosition.y < heuristicMatrix[0].length) {
             return heuristicMatrix[enemyPosition.x - 1][enemyPosition.y];
         } else {
             return -1;
@@ -162,7 +168,10 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueRight(Point enemyPosition) {
-        if(enemyPosition.x < Constants.DEFAULT_GRID_WIDTH - 1) {
+        if (enemyPosition.x > 0 &&
+                enemyPosition.y >= 0 &&
+                enemyPosition.x < heuristicMatrix.length - 1 &&
+                enemyPosition.y < heuristicMatrix[0].length) {
             return heuristicMatrix[enemyPosition.x + 1][enemyPosition.y];
         } else {
             return -1;
