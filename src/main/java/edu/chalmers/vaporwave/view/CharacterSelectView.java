@@ -47,14 +47,19 @@ public class CharacterSelectView extends AbstractMenuView {
         //this.setBackgroundImage(new javafx.scene.image.Image("images/charselectbuttons.png"));
         characterSelectCanvas = new javafx.scene.canvas.Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         pane = new AnchorPane();
+
         Label mei = new Label();
-        mei.setText(Constants.MEI_STATS);
+        mei.setText("" + Container.getCharacterSpeed(CharacterID.MEI) + Container.getCharacterHealth(CharacterID.MEI)
+            +  Container.getCharacterBombRange(CharacterID.MEI) +  Container.getCharacterBombCount(CharacterID.MEI));
         Label alyssa = new Label();
-        mei.setText(Constants.ALYSSA_STATS);
+        alyssa.setText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + Container.getCharacterHealth(CharacterID.ALYSSA)
+                +  Container.getCharacterBombRange(CharacterID.ALYSSA) +  Container.getCharacterBombCount(CharacterID.ALYSSA));
         Label zypher = new Label();
-        mei.setText(Constants.ZYPHER_STATS);
+        zypher.setText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + Container.getCharacterHealth(CharacterID.ZYPHER)
+                +  Container.getCharacterBombRange(CharacterID.ZYPHER) +  Container.getCharacterBombCount(CharacterID.ZYPHER));
         Label charlotte = new Label();
-        mei.setText(Constants.CHARLOTTE_STATS);
+        charlotte.setText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + Container.getCharacterHealth(CharacterID.CHARLOTTE)
+                +  Container.getCharacterBombRange(CharacterID.CHARLOTTE) +  Container.getCharacterBombCount(CharacterID.CHARLOTTE));
 
         characterStats[0]=mei;
         characterStats[1]=alyssa;
