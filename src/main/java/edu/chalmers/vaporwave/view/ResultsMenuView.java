@@ -24,13 +24,17 @@ public class ResultsMenuView extends AbstractMenuView {
     private Sprite winnerSprite;
     private Set<Player> players;
     private GameType gameType;
+    private Group root;
+
+    private ScoreboardView scoreboardView;
 
     public ResultsMenuView(Group root, Set<Player> players) {
         super(root);
+        this.root=root;
+        setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
         this.players = players;
         this.gameType = ENEMY_KILLS;
-
-        setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
+        initScoreboard();
 
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT, new Point(640, 280)));
@@ -39,6 +43,9 @@ public class ResultsMenuView extends AbstractMenuView {
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
+
+        this.scoreboardView.showScoreboard();
+        this.scoreboardView.updateScoreboard();
 
         if (getWinner() != null) {
             switch (getWinner().getCharacter().getName().toUpperCase()) {
@@ -88,14 +95,14 @@ public class ResultsMenuView extends AbstractMenuView {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
-        System.out.println(""+this.gameType);
+        System.out.println("" + this.gameType);
     }
 
     //how is the question //where
     public Player getWinner() {
 
         Player winner = this.players.iterator().next();
-        System.out.println(""+this.gameType);
+        System.out.println("" + this.gameType);
         switch (this.gameType) {
             case SURVIVAL:
                 for (Player player : this.players) {
@@ -118,20 +125,10 @@ public class ResultsMenuView extends AbstractMenuView {
         }
 
         return winner;
-
-
-        //characters killed
-        //score
-        //deathcount
-        //enemies killed
-        //picture of character (sad/glad)
-        //results title
-        //highscore screen after?
-        //if new highscore
-        //winner name
-        //victory/defeat
-        //rank (noob, ok, pro, hacker)
-        //powerups picked up
-        //
     }
+
+    public void initScoreboard() {
+        this.scoreboardView = new ScoreboardView(this.root, this.players);
+    }
+
 }
