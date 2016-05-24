@@ -34,29 +34,31 @@ public class ResultsMenuView extends AbstractMenuView {
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
-        switch (getWinner().getCharacter().getName().toUpperCase()) {
-            case "ZYPHER":
-                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
-                break;
-            case "ALYSSA":
-                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
-                break;
-            case "MEI":
-                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_MEI);
-                break;
-            case "CHARLOTTE":
-                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
-                break;
-            default :
-                winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
-        }
+        if(getWinner()!=null) {
+            switch (getWinner().getCharacter().getName().toUpperCase()) {
+                case "ZYPHER":
+                    winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
+                    break;
+                case "ALYSSA":
+                    winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+                    break;
+                case "MEI":
+                    winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_MEI);
+                    break;
+                case "CHARLOTTE":
+                    winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
+                    break;
+                default:
+                    winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+            }
 
-        this.winnerSprite.setScale(1);
-        this.winnerSprite.setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
+            this.winnerSprite.setScale(1);
+            this.winnerSprite.setPosition(Constants.WINDOW_WIDTH / 28, Constants.WINDOW_HEIGHT / 9);
 
-        this.winnerSprite.render(this.getBackgroundGC(), 0);
-        for (int i = 0; i < menuButtonSpriteList.size(); i++) {
-            updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
+            this.winnerSprite.render(this.getBackgroundGC(), 0);
+            for (int i = 0; i < menuButtonSpriteList.size(); i++) {
+                updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
+            }
         }
         setActive();
 
@@ -90,7 +92,6 @@ public class ResultsMenuView extends AbstractMenuView {
             }
             System.out.println(player.getCharacter().getName()+" "+player.getScore());
         }
-        System.out.println(winner);
         return winner;
     }
 
