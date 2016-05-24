@@ -74,7 +74,7 @@ public class SemiSmartAI implements AI {
                     heuristicMatrix[enemyPosition.x][enemyPosition.y + 1] = 1;
                 }
                 break;
-            case DOWN:
+            case DOWN: // todo: fix this! /Andreas
                 if(enemyPosition.y > 0) {
                     heuristicMatrix[enemyPosition.x][enemyPosition.y - 1] = 1;
                 }

@@ -27,7 +27,7 @@ public class NewGameEvent {
         this.enabledPowerUps = new HashSet<>();
         this.players = new HashSet<>();
 
-        this.timeLimit = 5;
+        this.timeLimit = 50;
         this.destroyablePowerups = true;
         this.respawnPowerups = true;
         this.gameType = GameType.SURVIVAL;

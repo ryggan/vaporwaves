@@ -95,11 +95,13 @@ public class AIHeuristics {
     public static void recursive(Point playerPosition, int startValue, int difference, boolean isGreater, int stopNr) {
         int x = playerPosition.x;
         int y = playerPosition.y;
-        heuristicMatrix[x][y] = startValue;
-        recursiveLeft(x-1, y, startValue - difference, difference, isGreater, stopNr);
-        recursiveRight(x+1, y, startValue - difference, difference, isGreater, stopNr);
-        recursiveDown(x, y-1, startValue - difference, difference, isGreater, stopNr);
-        recursiveUp(x, y+1, startValue - difference, difference, isGreater, stopNr);
+        if (x >= 0 && y >= 0 && x < heuristicMatrix.length && y < heuristicMatrix[0].length) {
+            heuristicMatrix[x][y] = startValue;
+            recursiveLeft(x - 1, y, startValue - difference, difference, isGreater, stopNr);
+            recursiveRight(x + 1, y, startValue - difference, difference, isGreater, stopNr);
+            recursiveDown(x, y - 1, startValue - difference, difference, isGreater, stopNr);
+            recursiveUp(x, y + 1, startValue - difference, difference, isGreater, stopNr);
+        }
     }
 
     public static void recursiveLeft(int x, int y, int tileValue, int difference, boolean isGreater, int stopNr) {
