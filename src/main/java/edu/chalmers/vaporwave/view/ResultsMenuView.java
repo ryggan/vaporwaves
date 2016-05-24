@@ -26,17 +26,15 @@ public class ResultsMenuView extends AbstractMenuView {
 
         setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
 
-
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT, new Point(640, 280)));
-//        menuButtonSpriteList.add(new MenuButtonSprite(Container.getImage(ImageID.BUTTON_EXIT), 308, 66, new Point(0, 0), new Point(640, 280)));
     }
 
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
-        switch (getWinner().toUpperCase()) {
+        switch (getWinner().getCharacter().getName().toUpperCase()) {
             case "ZYPHER":
                 winnerSprite=Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
                 break;
@@ -76,24 +74,25 @@ public class ResultsMenuView extends AbstractMenuView {
         setActive();
     }
 
-    //how is the question //where
-    public String getWinner(){
+    public void setPlayers(Set<Player> players){
+        this.players=players;
+    }
 
-        String winner = "";
-        Player first=this.players.iterator().next();
+    //how is the question //where
+    public Player getWinner(){
+
+        Player winner=this.players.iterator().next();
         for (Player player : this.players) {
-            if(player.getScore()>first.getScore()){
-                winner=player.getCharacter().getName();
-            } else if(player.getScore()==first.getScore()){
-                winner="TIE";
+            if(player.getScore()>player.getScore()){
+                winner=player;
+            } else if(player.getCharacter().getName()!=winner.getCharacter().getName()&&player.getScore()==winner.getScore()){
+                winner=null;
             }
             System.out.println(player.getCharacter().getName()+" "+player.getScore());
         }
         System.out.println(winner);
         return winner;
     }
-
-
 
     //characters killed
     //score

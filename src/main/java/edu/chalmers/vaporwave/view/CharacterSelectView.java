@@ -40,9 +40,28 @@ public class CharacterSelectView extends AbstractMenuView {
         super(root);
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT));
 
+
         this.playerSet = new HashSet<>();
 
         this.getBackgroundGC().setFont(new Font("Lucida Console", 18));
+
+        //this.setBackgroundImage(new javafx.scene.image.Image("images/charselectbuttons.png"));
+
+        Label mei = new Label();
+        mei.setText("" + Container.getCharacterSpeed(CharacterID.MEI) + Container.getCharacterHealth(CharacterID.MEI)
+            +  Container.getCharacterBombRange(CharacterID.MEI) +  Container.getCharacterBombCount(CharacterID.MEI));
+        Label alyssa = new Label();
+        alyssa.setText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + Container.getCharacterHealth(CharacterID.ALYSSA)
+                +  Container.getCharacterBombRange(CharacterID.ALYSSA) +  Container.getCharacterBombCount(CharacterID.ALYSSA));
+        Label zypher = new Label();
+        zypher.setText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + Container.getCharacterHealth(CharacterID.ZYPHER)
+                +  Container.getCharacterBombRange(CharacterID.ZYPHER) +  Container.getCharacterBombCount(CharacterID.ZYPHER));
+        Label charlotte = new Label();
+        charlotte.setText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + Container.getCharacterHealth(CharacterID.CHARLOTTE)
+                +  Container.getCharacterBombRange(CharacterID.CHARLOTTE) +  Container.getCharacterBombCount(CharacterID.CHARLOTTE));
+
+
+        this.playerSet = new HashSet<>();
 
         this.selectedCharacter = new int[Constants.MAX_NUMBER_OF_PLAYERS];
         for (int i = 0; i < this.selectedCharacter.length; i++) {

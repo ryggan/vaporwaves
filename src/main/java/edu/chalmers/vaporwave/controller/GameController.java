@@ -618,11 +618,12 @@ public class GameController {
         this.enemies.clear();
         this.deadEnemies.clear();
 
+        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
+        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, players));
+
+
         for (Player player : this.players) {
             player.resetPlayerGameStats();
         }
-
-        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
-//        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu));
     }
 }
