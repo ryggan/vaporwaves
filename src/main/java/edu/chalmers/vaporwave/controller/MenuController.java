@@ -298,6 +298,8 @@ public class MenuController {
     public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
 
         resultsMenuView.setPlayers(exitToMenuEvent.getPlayers());
+        resultsMenuView.setGameType(exitToMenuEvent.getGameType());
+
         GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
     }
 }

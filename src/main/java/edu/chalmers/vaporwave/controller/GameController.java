@@ -622,7 +622,7 @@ public class GameController {
         this.deadEnemies.clear();
 
         GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
-        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, players));
+        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, players, this.gameType));
 
 
         for (Player player : this.players) {

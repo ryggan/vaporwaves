@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.MenuState;
+import edu.chalmers.vaporwave.util.GameType;
 
 import java.util.Set;
 
@@ -9,14 +10,13 @@ public class ExitToMenuEvent {
 
     private MenuState destinationMenu;
     private Set<Player> players;
+    private GameType gameType;
 
-    public ExitToMenuEvent(MenuState destinationMenu) {
-        this.destinationMenu = destinationMenu;
-    }
 
-    public ExitToMenuEvent(MenuState destinationMenu, Set<Player> players) {
+    public ExitToMenuEvent(MenuState destinationMenu, Set<Player> players, GameType gameType) {
         this.destinationMenu = destinationMenu;
         this.players=players;
+        this.gameType=gameType;
     }
 
     public MenuState getDestinationMenu() {
@@ -25,6 +25,10 @@ public class ExitToMenuEvent {
 
     public Set<Player> getPlayers() {
         return this.players;
+    }
+
+    public GameType getGameType() {
+        return this.gameType;
     }
 
 }
