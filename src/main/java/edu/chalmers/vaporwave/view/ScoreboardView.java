@@ -37,8 +37,6 @@ public class ScoreboardView {
 
     public ScoreboardView(Group root, Set<Player> players, int x, int y) {
 
-        System.out.println("ScoreboardView constructor, players set: "+players);
-
         this.root = root;
 
         int xoffset = x + (int)(Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2))

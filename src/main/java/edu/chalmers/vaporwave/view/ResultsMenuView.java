@@ -96,7 +96,7 @@ public class ResultsMenuView extends AbstractMenuView {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
-        System.out.println("Set game type: " + this.gameType);
+//        System.out.println("Set game type: " + this.gameType);
     }
 
     //how is the question //where
@@ -104,7 +104,7 @@ public class ResultsMenuView extends AbstractMenuView {
 
         if(players!=null) {
             Player winner = this.players.iterator().next();
-            System.out.println("Get winner, gametype: " + this.gameType);
+//            System.out.println("Get winner, gametype: " + this.gameType);
             switch (this.gameType) {
                 case SURVIVAL:
                     for (Player player : this.players) {
@@ -113,7 +113,7 @@ public class ResultsMenuView extends AbstractMenuView {
                         } else if (player.getCharacter().getName() != winner.getCharacter().getName() && player.getScore() == winner.getScore()) {
                             winner = null;
                         }
-                        System.out.println("Character "+player.getCharacter().getName() + " score " + player.getScore());
+//                        System.out.println("Character "+player.getCharacter().getName() + " score " + player.getScore());
                     }
                     break;
                 case SCORE_LIMIT:
