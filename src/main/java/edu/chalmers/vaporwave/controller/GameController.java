@@ -108,7 +108,7 @@ public class GameController {
             if (player.getClass().equals(CPUPlayer.class)) {
                 Set<GameCharacter> gameCharacterClone = new HashSet<>();
                 for (GameCharacter gameCharacter : gameCharacters) {
-                    if (!player.getCharacter().equals(gameCharacter)) {
+                    if (!player.getCharacter().equals(gameCharacter) && !player.getClass().equals(CPUPlayer.class)) {
                         gameCharacterClone.add(gameCharacter);
                     }
                 }

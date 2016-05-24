@@ -8,59 +8,6 @@ import java.util.Set;
 public class AIHeuristics {
     private static int[][] heuristicMatrix = new int[21][15];
 
-// Not in use atm
-//    private static void decideHeuristicValue(int[][] heuristicMatrix, Point position, int previousValue) {
-//        int x = position.x;
-//        int y = position.y;
-//
-//        if(x > 0 && y > 0 && x < 20 && y < 14) {
-//            heuristicMatrix[x][y] = previousValue;
-//            previousValue = 90;
-//            heuristicMatrix[x - 1][y] = previousValue;
-//            heuristicMatrix[x + 1][y] = previousValue;
-//            heuristicMatrix[x][y - 1] = previousValue;
-//            heuristicMatrix[x][y + 1] = previousValue;
-//        }
-//
-//        if(x > 1 && y > 1 && x < 19 && y < 13) {
-//            previousValue = 80;
-//            heuristicMatrix[x - 2][y] = previousValue;
-//            heuristicMatrix[x - 1][y + 1] = previousValue;
-//            heuristicMatrix[x - 1][y - 1] = previousValue;
-//
-//            heuristicMatrix[x + 2][y] = previousValue;
-//            heuristicMatrix[x + 1][y + 1] = previousValue;
-//            heuristicMatrix[x + 1][y - 1] = previousValue;
-//
-//            heuristicMatrix[x][y + 2] = previousValue;
-//            heuristicMatrix[x - 1][y + 1] = previousValue;
-//            heuristicMatrix[x + 1][y + 1] = previousValue;
-//
-//            heuristicMatrix[x][y - 2] = previousValue;
-//            heuristicMatrix[x - 1][y - 1] = previousValue;
-//            heuristicMatrix[x + 1][y - 1] = previousValue;
-//        }
-//
-//        if(x > 2 && y > 2 && x < 18 && y < 12) {
-//            previousValue = 70;
-//            heuristicMatrix[x - 3][y] = previousValue;
-//            heuristicMatrix[x - 2][y + 1] = previousValue;
-//            heuristicMatrix[x - 2][y - 1] = previousValue;
-//
-//            heuristicMatrix[x + 3][y] = previousValue;
-//            heuristicMatrix[x + 2][y + 1] = previousValue;
-//            heuristicMatrix[x + 2][y - 1] = previousValue;
-//
-//            heuristicMatrix[x][y + 3] = previousValue;
-//            heuristicMatrix[x - 1][y + 2] = previousValue;
-//            heuristicMatrix[x + 1][y + 2] = previousValue;
-//
-//            heuristicMatrix[x][y - 3] = previousValue;
-//            heuristicMatrix[x - 1][y - 2] = previousValue;
-//            heuristicMatrix[x + 1][y - 2] = previousValue;
-//        }
-//    }
-
     public static void setHeuristicValue(Point point, int value) {
         int x = point.x;
         int y = point.y;
@@ -73,9 +20,6 @@ public class AIHeuristics {
                     heuristicMatrix[i][j] = 10;
             }
         }
-
-        //set up a meeting point in center
-        //recursive(new Point(11,8), 80);
 
         recursive(new Point(11,8), 200, 10);
 
@@ -112,18 +56,6 @@ public class AIHeuristics {
             }
         }
 
-
-       // heuristicMatrix[enemyPreviousPosition.x][enemyPreviousPosition.y] = -1;
-
-/*        System.out.println("Current boardstate");
-        System.out.println("length " + heuristicMatrix.length);
-        System.out.println("[] " + heuristicMatrix[0].length);
-        for (int i = 0; i < heuristicMatrix[0].length ; i++) {
-            for (int j = 0; j < heuristicMatrix.length ; j++) {
-                System.out.print(heuristicMatrix[j][i] + " ");
-            }
-            System.out.println();
-        }*/
         return ArrayCloner.intMatrixCloner(heuristicMatrix);
     }
 
