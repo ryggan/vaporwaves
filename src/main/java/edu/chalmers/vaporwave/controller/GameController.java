@@ -302,6 +302,7 @@ public class GameController {
                             if (movable.getHealth() <= 0) {
                                 if (movable instanceof GameCharacter) {
                                     if (blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
+                                        System.out.println(blast.getPlayerID());
                                         getPlayerForID(blast.getPlayerID()).incrementKills();
                                     }
                                     getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
