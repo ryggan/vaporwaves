@@ -31,7 +31,8 @@ public class ResultsMenuView extends AbstractMenuView {
         setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
         this.gameType = ENEMY_KILLS;
         menuButtonSpriteList = new ArrayList<>();
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT, new Point(640, 280)));
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 100)));
     }
 
 
