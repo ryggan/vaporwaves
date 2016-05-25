@@ -30,13 +30,14 @@ public class AIHeuristics {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof PowerUp) {
                     recursive(new Point(i,j), 100, 10, true, 10);
+                } else if(arenaTiles[i][j] instanceof DestructibleWall) {
+                    recursive(new Point(i,j), 0, -11, false, 12);
                 }
             }
         }
 
         for (GameCharacter gameCharacter : gameCharacters) {
             recursive(gameCharacter.getGridPosition(), 200, 10, true, 10);
-            //decideHeuristicValue(heuristicMatrix, gameCharacter.getGridPosition(), 100);
         }
 
         for (Enemy enemy : enemies) {
@@ -47,16 +48,10 @@ public class AIHeuristics {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if (arenaTiles[i][j] instanceof Explosive) {
                     recursive(new Point(i,j), 0, -2, false, 10);
-                } else if(arenaTiles[i][j] instanceof DestructibleWall) {
-                    recursive(new Point(i, j), 0, -13, false, 14);
-                }
-            }
-        }
-
-        for(int i = 0; i < arenaTiles.length; i++) {
-            for (int j = 0; j < arenaTiles[0].length; j++) {
-                if (arenaTiles[i][j] instanceof Wall) {
+                } else if(arenaTiles[i][j] instanceof Wall) {
                     heuristicMatrix[i][j] = 0;
+                } else if(arenaTiles[i][j] instanceof Blast) {
+                    heuristicMatrix[i][j] = -1;
                 }
             }
         }
@@ -84,16 +79,6 @@ public class AIHeuristics {
         }
         return ArrayCloner.intArrayCloner(heuristicValues);
     }
-
-
-
-/*    public void setRecursiveHeuristicMatrix(ArrayList<Movable> gameCharacters) {
-        for(Movable movable : gameCharacters) {
-            if(movable instanceof GameCharacter) {
-                recursive(movable.getGridPosition(), 100);
-            }
-        }
-    }*/
 
     public static void recursive(Point playerPosition, int startValue, int difference, boolean isGreater, int stopNr) {
         int x = playerPosition.x;
@@ -171,6 +156,10 @@ public class AIHeuristics {
                 recursiveDown(x, y - 1, tileValue - difference, difference, isGreater, stopNr);
             }
         }
+    }
+
+    public static int[][] getSimpleHeuristics() {
+        return ArrayCloner.intMatrixCloner(heuristicMatrix);
     }
 
     public String toString() {

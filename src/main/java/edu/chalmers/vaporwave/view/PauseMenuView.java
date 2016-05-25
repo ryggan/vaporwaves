@@ -4,7 +4,12 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.game.AIHeuristics;
+import edu.chalmers.vaporwave.model.game.Blast;
+import edu.chalmers.vaporwave.model.game.Explosive;
+import edu.chalmers.vaporwave.model.game.Wall;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -14,7 +19,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +32,10 @@ public class PauseMenuView {
 
     private Sprite pauseMenuSprite;
     private Group root;
+    private Label[][] heuristicLabels;
+    private GridPane heuristicPane;
+    private static final double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
+    private static final double yoffset = 0;
 
     // private Sprite pauseMenuBackground;
     //private ArrayList<Label> labels;
@@ -38,6 +49,7 @@ public class PauseMenuView {
     public PauseMenuView(Group root, List<Label> labels) {
         this.root = root;
 
+        heuristicLabels = new Label[21][15];
         this.pauseMenuSprite = Container.getSprite(SpriteID.MENU_PAUSE);
         this.pauseMenuSprite.setScale(1);
 
@@ -47,6 +59,14 @@ public class PauseMenuView {
         pauseCanvas.setLayoutY(Math.round(Constants.GAME_HEIGHT/2.0 + (Constants.WINDOW_HEIGHT-Constants.GAME_HEIGHT)/2
                 - this.pauseMenuSprite.getHeight() / 2.0));
         pauseCanvas.setVisible(false);
+
+        heuristicPane = new GridPane();
+        heuristicPane.setLayoutX(xoffset);
+        heuristicPane.setLayoutY(yoffset);
+        heuristicPane.setPrefSize(21*Constants.DEFAULT_TILE_WIDTH, 15*Constants.DEFAULT_TILE_HEIGHT);
+        heuristicPane.setPadding(new Insets(Constants.DEFAULT_TILE_HEIGHT/2, Constants.DEFAULT_TILE_WIDTH/2, Constants.DEFAULT_TILE_HEIGHT/2, Constants.DEFAULT_TILE_WIDTH/2));
+        heuristicPane.setVisible(false);
+        this.root.getChildren().add(heuristicPane);
 
 
 
@@ -99,15 +119,35 @@ public class PauseMenuView {
         //gridPane.toFront();
     }
 
-    public void show() {
-        pauseCanvas.setVisible(true);
-       // pauseMenuPane.setVisible(true);
-      //  pauseMenuPane.toFront();
+    public void showHeuristicValues() {
+        if(heuristicLabels[0][0] == null) {
+            for (int i = 0; i < AIHeuristics.getSimpleHeuristics().length; i++) {
+                for (int j = 0; j < AIHeuristics.getSimpleHeuristics()[0].length; j++) {
+                    heuristicLabels[i][j] = new Label("" + AIHeuristics.getSimpleHeuristics()[i][j]);
+                    this.heuristicPane.add(heuristicLabels[i][j], i, j);
+                    heuristicLabels[i][j].setLayoutX(Utils.gridToCanvasPositionX(i));
+                    heuristicLabels[i][j].setLayoutY(Utils.gridToCanvasPositionX(j));
+                    heuristicLabels[i][j].setPrefWidth(Constants.DEFAULT_TILE_WIDTH);
+                    heuristicLabels[i][j].setPrefHeight(Constants.DEFAULT_TILE_HEIGHT);
+                }
+            }
+        } else {
+            for (int i = 0; i < AIHeuristics.getSimpleHeuristics().length; i++) {
+                for (int j = 0; j < AIHeuristics.getSimpleHeuristics()[0].length; j++) {
+                    heuristicLabels[i][j].setText("" + AIHeuristics.getSimpleHeuristics()[i][j]);
+                }
+            }
+        }
+        heuristicPane.setVisible(true);
+    }
 
+    public void show() {
+        showHeuristicValues();
+        pauseCanvas.setVisible(true);
     }
 
     public void hide() {
+        heuristicPane.setVisible(false);
         pauseCanvas.setVisible(false);
-       // pauseMenuPane.setVisible(false);
     }
 }

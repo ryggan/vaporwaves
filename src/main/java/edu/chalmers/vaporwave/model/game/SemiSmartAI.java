@@ -56,7 +56,7 @@ public class SemiSmartAI implements AI {
                 } else {
                     directionList.remove(i+1);
                 }
-                removeLeastGoodAlternative(directionList); // todo: ask christer about naming conventions
+                removeLeastGoodAlternative(directionList);
             }
         }
     }
@@ -70,7 +70,7 @@ public class SemiSmartAI implements AI {
 
         switch(previousDirection) {
             case UP:
-                if(enemyPosition.y < Constants.GAME_HEIGHT - 1) {
+                if(enemyPosition.y < 14 && enemyPosition.x < 20) {
                     heuristicMatrix[enemyPosition.x][enemyPosition.y + 1] = 1;
                 }
                 break;
@@ -85,7 +85,7 @@ public class SemiSmartAI implements AI {
                 }
                 break;
             case RIGHT:
-                if(enemyPosition.x > 0) {
+                if(enemyPosition.x > 0 && enemyPosition.y > -1 && enemyPosition.x < 21 && enemyPosition.y < 15) {
                     heuristicMatrix[enemyPosition.x - 1][enemyPosition.y] = 1;
                 }
                 break;
@@ -179,7 +179,10 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueCurrent(Point enemyPosition) {
-        return heuristicMatrix[enemyPosition.x][enemyPosition.y];
+        if(enemyPosition.x <= 20 && enemyPosition.y <= 14) {
+            return heuristicMatrix[enemyPosition.x][enemyPosition.y];
+        }
+        return 0;
     }
 
     public Point getCurrentPosition() {
