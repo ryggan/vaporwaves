@@ -1,8 +1,6 @@
 package edu.chalmers.vaporwave.model.menu;
 
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.assetcontainer.Container;
-import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ArrayCloner;
 import edu.chalmers.vaporwave.util.Constants;
@@ -112,14 +110,6 @@ public abstract class AbstractMenu {
     public int[] getMenuItems() {
         return ArrayCloner.intArrayCloner(this.menuItems);
     }
-
-//    public int[] intArrayCloner(int[] intArray) {
-//        int[] temporary = new int[intArray.length];
-//        for(int i = 0; i < intArray.length; i++) {
-//            temporary[i] = intArray[i];
-//        }
-//        return temporary;
-//    }
 
     public abstract void performMenuAction(NewGameEvent newGameEvent, int playerID);
 }

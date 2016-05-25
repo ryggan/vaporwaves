@@ -15,8 +15,8 @@ public class ExitToMenuEvent {
 
     public ExitToMenuEvent(MenuState destinationMenu, Set<Player> players, GameType gameType) {
         this.destinationMenu = destinationMenu;
-        this.players=players;
-        this.gameType=gameType;
+        this.players = players;
+        this.gameType = gameType;
     }
 
     public MenuState getDestinationMenu() {

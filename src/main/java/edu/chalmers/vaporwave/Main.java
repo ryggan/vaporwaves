@@ -28,19 +28,15 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 
         // Setting up hierarchy
-
         final Group root = new Group();
         final Scene scene = new Scene(root);
         primaryStage.setScene(scene);
 
-
-
         // Design additions
-
         primaryStage.setResizable(false);
         primaryStage.setMinHeight(Constants.WINDOW_HEIGHT);
         primaryStage.setMinWidth(Constants.WINDOW_WIDTH);
-		primaryStage.setTitle("VaporWave");
+		primaryStage.setTitle("Sunset Ninjas");
 
 		// This makes the application shut down properly when hitting cmd-q
 		// Solution found here: http://mail.openjdk.java.net/pipermail/openjfx-dev/2013-July/008598.html
@@ -48,16 +44,13 @@ public class Main extends Application {
 		primaryStage.setOnCloseRequest(new CloseWindowEventHandler());
 
 //		System.out.println(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf");
-
 //		Font.loadFont(Main.class.getResource(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf").toExternalForm(), 10);
 
         primaryStage.show();
 
         // Initiating controllers
-
 		ListenerController.getInstance().initiateListener(scene);
 		new MainController(root);
-//		new ListenerController(scene, mc);
 	}
 
 	private static class CloseWindowEventHandler implements EventHandler<WindowEvent> {

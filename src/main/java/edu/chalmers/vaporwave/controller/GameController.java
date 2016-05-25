@@ -5,7 +5,10 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
-import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.event.DeathEvent;
+import edu.chalmers.vaporwave.event.ExitToMenuEvent;
+import edu.chalmers.vaporwave.event.GameEventBus;
+import edu.chalmers.vaporwave.event.SpawnEvent;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
 import edu.chalmers.vaporwave.model.Player;
@@ -15,13 +18,12 @@ import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
-import sun.plugin2.gluegen.runtime.CPU;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class GameController {
+public class GameController implements ContentController {
 
     private enum GameState {
         PRE_GAME, GAME_RUNS, GAME_PAUSED, GAME_OVER
@@ -103,7 +105,7 @@ public class GameController {
         for (Player player : newGameEvent.getPlayers()) {
             player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            this.localPlayer = newGameEvent.getLocalPlayer();
+            this.localPlayer = newGameEvent.getPrimaryPlayer();
             if (player.getClass().equals(CPUPlayer.class)) {
                 Set<GameCharacter> gameCharacterClone = new HashSet<>();
                 for (GameCharacter gameCharacter : gameCharacters) {
@@ -176,7 +178,6 @@ public class GameController {
         return false;
     }
 
-    // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         if (this.gameState != GameState.GAME_PAUSED) {
@@ -622,9 +623,8 @@ public class GameController {
         this.enemies.clear();
         this.deadEnemies.clear();
 
-        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
-        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, players, this.gameType));
-
+//        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
+        GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
 
         for (Player player : this.players) {
             player.resetPlayerGameStats();

@@ -11,7 +11,6 @@ import java.util.Set;
 public class NewGameEvent {
 
     private ArenaMap arenaMap;
-    private Player localPlayer;
     private Set<Player> players;
     private Set<PowerUpType> enabledPowerUps;
 
@@ -27,8 +26,7 @@ public class NewGameEvent {
         this.enabledPowerUps = new HashSet<>();
         this.players = new HashSet<>();
 
-
-        this.timeLimit = 180;
+        this.timeLimit = 5;
 
         this.destroyablePowerups = true;
         this.respawnPowerups = true;
@@ -53,19 +51,6 @@ public class NewGameEvent {
         if(enabledPowerUps.contains(powerUpState)) {
             enabledPowerUps.remove(powerUpState);
         }
-    }
-
-    public void setLocalPlayer(Player localPlayer) {
-        this.localPlayer = localPlayer;
-    }
-
-    public Player getLocalPlayer() {
-        for (Player player : this.getPlayers()) {
-            if (player.getPlayerID() == 0) {
-                return player;
-            }
-        }
-        return null;
     }
 
     public void addPlayer(Player player) {

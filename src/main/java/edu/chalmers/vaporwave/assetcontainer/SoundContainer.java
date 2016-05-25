@@ -47,11 +47,11 @@ class SoundContainer {
         soundContainer.put(SoundID.POWERUP, soundPlayer);
 
         soundPlayer = new SoundPlayer[NR_OF_FORWARD_CLICK];
-        setUpSoundArray(soundPlayer, NR_OF_FORWARD_CLICK, "menu-forward-click.mp3");
+        setUpSoundArray(soundPlayer, NR_OF_FORWARD_CLICK, "menu-forward-click.mp3", 0.4);
         soundContainer.put(SoundID.MENU_FORWARD_CLICK, soundPlayer);
 
         soundPlayer = new SoundPlayer[NR_OF_BACKWARD_CLICK];
-        setUpSoundArray(soundPlayer, NR_OF_BACKWARD_CLICK, "menu-backward-click.mp3");
+        setUpSoundArray(soundPlayer, NR_OF_BACKWARD_CLICK, "menu-backward-click.mp3", 0.4);
         soundContainer.put(SoundID.MENU_BACKWARD_CLICK, soundPlayer);
 
         soundPlayer = new SoundPlayer[1];
