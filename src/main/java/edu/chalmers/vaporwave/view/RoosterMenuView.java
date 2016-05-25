@@ -65,8 +65,8 @@ public class RoosterMenuView extends AbstractMenuView {
         if (this.menuButtonSpriteList.size() == 0) {
             this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(4, 4)));
             this.menuButtonSpriteList.add(null);
-            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT, new Point(1080-320,
-                    Constants.WINDOW_HEIGHT-72-4)));
+            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                    new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 100)));
         }
 
         for (int i = 0; i < this.selectedPlayers.length; i++) {
