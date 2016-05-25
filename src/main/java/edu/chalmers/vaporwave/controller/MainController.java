@@ -16,6 +16,7 @@ public class MainController {
 
     private MenuController menuController;
     private GameController gameController;
+    private ContentController contentController;
     private Group root;
     private Group menuRoot;
     private Group gameRoot;
@@ -47,6 +48,8 @@ public class MainController {
 
         // Loading loop
         new AnimationTimer() {
+
+            @Override
             public void handle(long currentNanoTime) {
                 // Updates loading percentage and then updates view
                 loader.updateLoader();
@@ -81,12 +84,6 @@ public class MainController {
 
         GameEventBus.getInstance().register(this);
 
-        this.inGame = false;
-
-        if (inGame) {
-            newGame(new NewGameEvent());
-        }
-
         this.menuRoot = new Group();
         this.gameRoot = new Group();
 
@@ -94,6 +91,7 @@ public class MainController {
 
         this.menuController = new MenuController(menuRoot);
         this.gameController = new GameController(gameRoot);
+        this.contentController = menuController;
 
         ListenerController.getInstance().clearPressed();
         ListenerController.getInstance().clearReleased();
@@ -109,21 +107,15 @@ public class MainController {
         // Game loop
         new AnimationTimer() {
 
+            @Override
             public void handle(long currentNanoTime) {
                 // Time management
-
                 double timeSinceLastCall = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
                 lastNanoTime.value = currentNanoTime;
 
                 double timeSinceStart = (currentNanoTime - startNanoTime) / 1000000000.0;
 
-                // Controller calls
-
-                if (inGame) {
-                    gameController.timerUpdate(timeSinceStart, timeSinceLastCall);
-                } else {
-                    menuController.timerUpdate(timeSinceStart, timeSinceLastCall);
-                }
+                contentController.timerUpdate(timeSinceStart, timeSinceLastCall);
 
                 // Listener cleanup and updating
 
@@ -141,7 +133,7 @@ public class MainController {
         this.root.getChildren().clear();
         this.root.getChildren().add(gameRoot);
         this.gameController.initGame(gameRoot, newGameEvent);
-        this.inGame = true;
+        this.contentController = gameController;
     }
 
     @Subscribe
@@ -151,10 +143,10 @@ public class MainController {
 
     @Subscribe
     public void goToMenu(GoToMenuEvent goToMenuEvent) {
-        this.inGame = false;
         this.root.getChildren().clear();
         this.root.getChildren().add(menuRoot);
         this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
         this.menuController.updateViews(null);
+        this.contentController = menuController;
     }
 }

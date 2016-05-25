@@ -21,7 +21,7 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class GameController {
+public class GameController implements ContentController {
 
     private enum GameState {
         PRE_GAME, GAME_RUNS, GAME_PAUSED, GAME_OVER
@@ -176,7 +176,6 @@ public class GameController {
         return false;
     }
 
-    // This one is called every time the game-timer is updated
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
 
         if (this.gameState != GameState.GAME_PAUSED) {

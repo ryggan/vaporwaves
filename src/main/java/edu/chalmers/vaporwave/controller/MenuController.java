@@ -17,11 +17,10 @@ import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
 import net.java.games.input.Controller;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class MenuController {
+public class MenuController implements ContentController {
 
     private NewGameEvent newGameEvent;
     private Map<MenuState, AbstractMenu> menuMap;
