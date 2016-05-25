@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave.util;
 
-import edu.chalmers.vaporwave.model.game.StaticTile;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ public class ClonerUtility {
         }
         return temporary;
     }
-
 
     public static List<Object> listCloner(List<Object> objectList) {
         List<Object> temporary = new ArrayList<>();

@@ -1,8 +1,5 @@
 package edu.chalmers.vaporwave.util;
 
-/**
- * Created by bob on 2016-05-16.
- */
 public class Pair<F,S> {
 
     private F first;
