@@ -1,7 +1,7 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.GameType;
@@ -9,6 +9,7 @@ import javafx.scene.Group;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import static edu.chalmers.vaporwave.util.GameType.ENEMY_KILLS;
@@ -36,14 +37,14 @@ public class ResultsMenuView extends AbstractMenuView {
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
+        setActive();
 
         if(players != null) {
             initScoreboard();
-            this.scoreboardView.showScoreboard();
 
-
-            if (getWinner() != null) {
-                switch (getWinner().getCharacter().getName().toUpperCase()) {
+            Player winner = getWinner();
+            if (winner != null) {
+                switch (winner.getCharacter().getName().toUpperCase()) {
                     case "ZYPHER":
                         winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
                         break;
@@ -71,7 +72,6 @@ public class ResultsMenuView extends AbstractMenuView {
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {
             updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
         }
-        setActive();
 
     }
 
@@ -88,12 +88,15 @@ public class ResultsMenuView extends AbstractMenuView {
     }
 
     public void setPlayers(Set<Player> players) {
-        this.players = players;
+        this.players = new HashSet<>();
+        for (Player player : players) {
+            this.players.add(player);
+        }
     }
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
-        System.out.println("" + this.gameType);
+//        System.out.println("Set game type: " + this.gameType);
     }
 
     //how is the question //where
@@ -101,7 +104,7 @@ public class ResultsMenuView extends AbstractMenuView {
 
         if(players!=null) {
             Player winner = this.players.iterator().next();
-            System.out.println("" + this.gameType);
+//            System.out.println("Get winner, gametype: " + this.gameType);
             switch (this.gameType) {
                 case SURVIVAL:
                     for (Player player : this.players) {
@@ -110,7 +113,7 @@ public class ResultsMenuView extends AbstractMenuView {
                         } else if (player.getCharacter().getName() != winner.getCharacter().getName() && player.getScore() == winner.getScore()) {
                             winner = null;
                         }
-                        System.out.println(player.getCharacter().getName() + " " + player.getScore());
+//                        System.out.println("Character "+player.getCharacter().getName() + " score " + player.getScore());
                     }
                     break;
                 case SCORE_LIMIT:
@@ -128,13 +131,8 @@ public class ResultsMenuView extends AbstractMenuView {
     }
 
     public void initScoreboard() {
-        if(this.scoreboardView == null) {
-            this.scoreboardView = new ScoreboardView(root, players);
-        } else  {
-            this.scoreboardView.clearScoreboard();
-        }
-
-        System.out.println("Scoreboard initiated");
+        this.scoreboardView = new ScoreboardView(this.root, this.players, 200, 0);
+        this.scoreboardView.showScoreboard();
     }
 
 }

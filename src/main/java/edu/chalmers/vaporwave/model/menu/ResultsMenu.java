@@ -4,7 +4,6 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.Player;
 
-import java.util.HashMap;
 import java.util.Set;
 
 public class ResultsMenu extends AbstractMenu {

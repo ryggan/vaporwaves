@@ -44,7 +44,7 @@ public class CharacterSelectMenu extends AbstractMenu {
         if (this.getSelectedSuper() == 1 && playerID == 0 && this.selectedCharacters[getSelectedSub()[1]] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[getSelectedSub()[1]] = 0;
-            newGameEvent.getLocalPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
+            newGameEvent.getPrimaryPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
             Container.playSound(soundIDs[this.getSelectedSub()[1]]);
         } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
 

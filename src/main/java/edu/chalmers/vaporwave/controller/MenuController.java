@@ -2,13 +2,12 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.model.menu.NewGameEvent;
-import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.SoundPlayer;
@@ -18,7 +17,6 @@ import javafx.scene.Group;
 import net.java.games.input.Controller;
 
 import java.util.*;
-import java.util.List;
 
 public class MenuController implements ContentController {
 
@@ -44,7 +42,7 @@ public class MenuController implements ContentController {
 
         Player player;
         player = new Player(0, "P1");
-        this.newGameEvent.setLocalPlayer(player);
+        this.newGameEvent.addPlayer(player);
         player.setDirectionControls(new String[] {Utils.getPlayerControls().get(0)[0],
                 Utils.getPlayerControls().get(0)[1],
                 Utils.getPlayerControls().get(0)[2],
@@ -58,12 +56,11 @@ public class MenuController implements ContentController {
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
         this.menuMap.put(MenuState.START_MENU, new StartMenu());
-        this.menuMap.put(MenuState.ROOSTER, new RoosterMenu());
+        this.menuMap.put(MenuState.ROOSTER, new RoosterMenu(player));
         this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu());
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
-        
-        resultsMenuView=new ResultsMenuView(root);
 
+        this.resultsMenuView = new ResultsMenuView(root);
 
         this.menuViewMap = new HashMap<>();
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
@@ -86,7 +83,6 @@ public class MenuController implements ContentController {
         ListenerController.getInstance().updateGamePads();
 
         List<Controller> gamePads = ListenerController.getInstance().getGamePads();
-
 
         for (Player player : players) {
             if (gamePads.size() > player.getPlayerID()) {
@@ -144,7 +140,15 @@ public class MenuController implements ContentController {
                 case "BTN_A":
                     switch (menuMap.get(activeMenu).getMenuAction()) {
                         case EXIT_PROGRAM:
-                            GameEventBus.getInstance().post(new ExitGameEvent());
+                            menuMusic.stopSound();
+                            Container.getSound(SoundID.MENU_EXIT).getSound().play();
+                            Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new Runnable() {
+                                @Override
+                                public void run() {
+                                    GameEventBus.getInstance().post(new ExitGameEvent());
+                                }
+                            });
+
                             break;
                         case START_GAME:
                             for (Player p : this.newGameEvent.getPlayers()) {
@@ -162,7 +166,6 @@ public class MenuController implements ContentController {
                             break;
                         case NO_ACTION:
                             menuMap.get(activeMenu).performMenuAction(newGameEvent, 0);
-
                             if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
                                         ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters()
@@ -184,7 +187,6 @@ public class MenuController implements ContentController {
                             } else if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
                             }
-
                             break;
                     }
                     updateViews(this.newGameEvent.getPrimaryPlayer());

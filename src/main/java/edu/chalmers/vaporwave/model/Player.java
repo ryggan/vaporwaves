@@ -26,12 +26,14 @@ public class Player {
         this.playerInfo = new String[5];
         this.directionControls = new String[0];
 
+//        System.out.println("New player, id: "+playerID+", name: "+playerName);
+
         resetPlayerGameStats();
     }
 
     public void incrementPowerUpScore() {
         powerUpScore++;
-        System.out.println("Powerupscore after update is " + powerUpScore);
+//        System.out.println("Powerupscore after update is " + powerUpScore);
     }
 
     // todo: this as a counter instead?
@@ -113,6 +115,7 @@ public class Player {
 
     public void setGamePad(Controller gamePad) {
         this.gamePad = gamePad;
+//        System.out.println("Player "+getPlayerID()+", Gamepad set: "+gamePad);
     }
 
     public Controller getGamePad() {

@@ -18,6 +18,9 @@ public class SoundPlayer {
         this.sound.setOnEndOfMedia(new EndOfMediaRunnable(this.sound));
     }
 
+    public MediaPlayer getSound(){
+        return sound;
+    }
     private static class EndOfMediaRunnable implements Runnable {
         private MediaPlayer sound;
 

@@ -96,8 +96,6 @@ public class ListenerController {
                     this.gamePadPressed.put(controllers[i], pressedList);
                     List<String> releasedList = new ArrayList<>();
                     this.gamePadReleased.put(controllers[i], releasedList);
-                } else {
-                    System.out.println("Discarded controller: "+controllers[i].getType());
                 }
             }
         }
@@ -258,8 +256,11 @@ public class ListenerController {
                     } else if (button[0].equals("14")) {
                         gamePadOnOffButton(button[1], "DPAD_RIGHT", input, pressed, released);
 
-                    } else if (button[0].equals("0")) {
+                        // Different inputs depending on controller type
+                    } else if ((gamePad.getType() == Controller.Type.GAMEPAD && button[0].equals("0"))
+                            || (gamePad.getType() == Controller.Type.STICK && button[0].equals("2"))) {
                         gamePadOnOffButton(button[1], "BTN_A", input, pressed, released);
+                        // Same input, irregardless (don't ask)
                     } else if (button[0].equals("1")) {
                         gamePadOnOffButton(button[1], "BTN_B", input, pressed, released);
                     }
