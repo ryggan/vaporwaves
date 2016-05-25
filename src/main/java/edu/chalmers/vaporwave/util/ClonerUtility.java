@@ -5,7 +5,7 @@ import edu.chalmers.vaporwave.model.game.StaticTile;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayCloner {
+public class ClonerUtility {
 
     public static String[] stringArrayCloner(String[] stringArray) {
         String[] temporary = new String[stringArray.length];

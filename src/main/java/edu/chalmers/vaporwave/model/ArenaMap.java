@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave.model;
 
-import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.MapObject;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ public class ArenaMap {
 
     public ArenaMap(String name, MapObject[][] mapObjects) {
         this.name = name;
-        this.mapObjects = ArrayCloner.mapObjectMatrixCloner(mapObjects);
+        this.mapObjects = ClonerUtility.mapObjectMatrixCloner(mapObjects);
         this.mapSize = new Dimension(mapObjects.length, mapObjects[0].length);
         this.playersPositions = new HashMap<>();
 
@@ -44,7 +44,7 @@ public class ArenaMap {
     }
 
     public MapObject[][] getMapObjects() {
-        return ArrayCloner.mapObjectMatrixCloner(this.mapObjects);
+        return ClonerUtility.mapObjectMatrixCloner(this.mapObjects);
     }
 
     public Dimension getMapSize() {

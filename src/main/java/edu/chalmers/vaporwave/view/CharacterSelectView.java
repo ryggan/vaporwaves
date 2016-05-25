@@ -4,19 +4,10 @@ import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.CPUPlayer;
-import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.Group;
-import javafx.scene.paint.*;
-import javafx.scene.text.Font;
-import javafx.scene.canvas.*;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Label;
-import javafx.scene.image.*;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.FontSmoothingType;
 
 
 import java.awt.*;
@@ -197,7 +188,7 @@ public class CharacterSelectView extends AbstractMenuView {
     }
 
     public void setSelectedCharacters(int[] selectedCharacter) {
-        this.selectedCharacter = ArrayCloner.intArrayCloner(selectedCharacter);
+        this.selectedCharacter = ClonerUtility.intArrayCloner(selectedCharacter);
     }
 
     public void setPlayers(Set<Player> playerSet) {

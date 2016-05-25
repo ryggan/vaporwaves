@@ -1,9 +1,7 @@
 package edu.chalmers.vaporwave.util;
 
-import com.sun.org.apache.xerces.internal.dom.AttributeMap;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;

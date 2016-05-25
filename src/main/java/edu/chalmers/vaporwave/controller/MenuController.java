@@ -153,7 +153,6 @@ public class MenuController implements ContentController {
                         case START_GAME:
                             for (Player p : this.newGameEvent.getPlayers()) {
                                 if(p.getClass().equals(CPUPlayer.class)){
-                                   // menuMusic.loopSound(false);
                                     p.setCharacter(getAvailableGameCharacters().get(0));
                                 }
                             }

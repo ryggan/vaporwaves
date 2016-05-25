@@ -1,7 +1,7 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.ClonerUtility;
 import net.java.games.input.Controller;
 
 public class Player {
@@ -110,7 +110,7 @@ public class Player {
         playerInfo[2] = deaths + "";
         playerInfo[3] = creeps + "";
         playerInfo[4] = score + "";
-        return ArrayCloner.stringArrayCloner(this.playerInfo);
+        return ClonerUtility.stringArrayCloner(this.playerInfo);
     }
 
     public void setGamePad(Controller gamePad) {
@@ -123,11 +123,11 @@ public class Player {
     }
 
     public void setDirectionControls(String[] directionControls) {
-        this.directionControls = ArrayCloner.stringArrayCloner(directionControls);
+        this.directionControls = ClonerUtility.stringArrayCloner(directionControls);
     }
 
     public String[] getDirectionControls() {
-        return ArrayCloner.stringArrayCloner(this.directionControls);
+        return ClonerUtility.stringArrayCloner(this.directionControls);
     }
 
     public void setBombControl(String bombControl) {

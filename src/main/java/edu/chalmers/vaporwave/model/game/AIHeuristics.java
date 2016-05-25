@@ -1,7 +1,6 @@
 package edu.chalmers.vaporwave.model.game;
 
-import com.sun.tools.internal.jxc.ap.Const;
-import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
 
 import java.awt.*;
@@ -56,7 +55,7 @@ public class AIHeuristics {
             }
         }
 
-        return ArrayCloner.intMatrixCloner(heuristicMatrix);
+        return ClonerUtility.intMatrixCloner(heuristicMatrix);
     }
 
     //For testing purposes
@@ -77,7 +76,7 @@ public class AIHeuristics {
         if(y > 0) {
             heuristicValues[0] = heuristicMatrix[x][y - 1];
         }
-        return ArrayCloner.intArrayCloner(heuristicValues);
+        return ClonerUtility.intArrayCloner(heuristicValues);
     }
 
     public static void recursive(Point playerPosition, int startValue, int difference, boolean isGreater, int stopNr) {
@@ -159,7 +158,7 @@ public class AIHeuristics {
     }
 
     public static int[][] getSimpleHeuristics() {
-        return ArrayCloner.intMatrixCloner(heuristicMatrix);
+        return ClonerUtility.intMatrixCloner(heuristicMatrix);
     }
 
     public String toString() {

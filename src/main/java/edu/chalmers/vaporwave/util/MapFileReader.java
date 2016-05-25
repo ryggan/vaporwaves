@@ -66,6 +66,6 @@ public class MapFileReader {
     }
 
     public MapObject[][] getMapObjects() {
-        return ArrayCloner.mapObjectMatrixCloner(this.mapObjects);
+        return ClonerUtility.mapObjectMatrixCloner(this.mapObjects);
     }
 }

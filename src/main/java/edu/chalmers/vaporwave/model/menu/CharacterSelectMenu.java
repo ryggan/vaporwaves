@@ -5,7 +5,7 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
-import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.Utils;
@@ -107,6 +107,6 @@ public class CharacterSelectMenu extends AbstractMenu {
     }
 
     public int[] getSelectedCharacters() {
-        return ArrayCloner.intArrayCloner(this.selectedCharacters);
+        return ClonerUtility.intArrayCloner(this.selectedCharacters);
     }
 }

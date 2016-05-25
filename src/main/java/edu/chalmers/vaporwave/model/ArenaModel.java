@@ -41,8 +41,8 @@ public class ArenaModel {
     }
 
     public StaticTile[][] getArenaTiles() {
-//        return (ArrayCloner.staticTileMatrixCloner(this.arenaTiles));
-//        return ((StaticTile[][]) ArrayCloner.objectMatrixCloner(this.arenaTiles));
+//        return (ClonerUtility.staticTileMatrixCloner(this.arenaTiles));
+//        return ((StaticTile[][]) ClonerUtility.objectMatrixCloner(this.arenaTiles));
         StaticTile[][] newArenaTiles = new StaticTile[this.arenaTiles.length][this.arenaTiles[0].length];
         for(int i = 0; i < this.arenaTiles.length; i++) {
             for (int j = 0; j < this.arenaTiles[0].length; j++) {

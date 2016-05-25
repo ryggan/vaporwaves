@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.ClonerUtility;
 import javafx.scene.image.Image;
 
 public class CharacterSpriteProperties {
@@ -49,11 +49,11 @@ public class CharacterSpriteProperties {
     }
 
     public int[] getFirstFrame() {
-        return ArrayCloner.intArrayCloner(this.firstFrame);
+        return ClonerUtility.intArrayCloner(this.firstFrame);
     }
 
     public double[] getOffset() {
-        return ArrayCloner.doubleArrayCloner(this.offset);
+        return ClonerUtility.doubleArrayCloner(this.offset);
     }
 
     public String toString() {
