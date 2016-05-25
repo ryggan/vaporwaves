@@ -54,7 +54,7 @@ public class ScoreboardView {
         scoreboardBackground = Container.getSprite(SpriteID.SCOREBOARD_BACKGROUND);
 
         scoreboardCanvas = new Canvas(scoreboardBackground.getWidth(), scoreboardBackground.getHeight());
-        root.getChildren().add(scoreboardCanvas);
+
         scoreboardCanvas.setLayoutX(xoffset);
         scoreboardCanvas.setLayoutY(yoffset);
         scoreboardCanvas.setVisible(false);
@@ -123,8 +123,10 @@ public class ScoreboardView {
 
     public void showScoreboard() {
         updateScoreboard();
-        scoreboardCanvas.setVisible(true);
-        gridPane.setVisible(true);
+        this.scoreboardCanvas.setVisible(true);
+        this.gridPane.setVisible(true);
+
+        root.getChildren().add(scoreboardCanvas);
     }
 
     public void hideScoreboard() {

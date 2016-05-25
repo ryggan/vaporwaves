@@ -1,12 +1,14 @@
 package edu.chalmers.vaporwave.model.game;
 
+import com.sun.tools.internal.jxc.ap.Const;
 import edu.chalmers.vaporwave.util.ArrayCloner;
+import edu.chalmers.vaporwave.util.Constants;
 
 import java.awt.*;
 import java.util.Set;
 
 public class AIHeuristics {
-    private static int[][] heuristicMatrix = new int[21][15];
+    private static int[][] heuristicMatrix = new int[Constants.GAME_WIDTH][Constants.GAME_HEIGHT];
 
     public static void setHeuristicValue(Point point, int value) {
         int x = point.x;
@@ -22,8 +24,7 @@ public class AIHeuristics {
         }
 
         //set up a meeting point in center
-        //recursive(new Point(11,8), 80);
-        recursive(new Point(11,8), 200, 10, true, 10);
+        recursive(new Point((Constants.GAME_WIDTH/2 - 1),(Constants.GAME_HEIGHT/2 - 1)), 200, 10, true, 10);
 
         for(int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
@@ -170,6 +171,17 @@ public class AIHeuristics {
                 recursiveDown(x, y - 1, tileValue - difference, difference, isGreater, stopNr);
             }
         }
+    }
+
+    public String toString() {
+        String returnString = "";
+        for (int i = 0; i < heuristicMatrix.length; i++) {
+            for (int j = 0; j < heuristicMatrix[0].length; j++) {
+                returnString += heuristicMatrix[i][j] + "\t";
+            }
+            returnString += "\n";
+        }
+        return returnString;
     }
 
 }

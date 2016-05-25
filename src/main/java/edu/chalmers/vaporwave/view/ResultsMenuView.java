@@ -26,7 +26,7 @@ public class ResultsMenuView extends AbstractMenuView {
 
     public ResultsMenuView(Group root) {
         super(root);
-        this.root=root;
+        this.root = root;
         setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
         this.gameType = ENEMY_KILLS;
         menuButtonSpriteList = new ArrayList<>();
@@ -37,9 +37,10 @@ public class ResultsMenuView extends AbstractMenuView {
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
-        if(players!=null) {
+        if(players != null) {
             initScoreboard();
             this.scoreboardView.showScoreboard();
+
 
             if (getWinner() != null) {
                 switch (getWinner().getCharacter().getName().toUpperCase()) {
@@ -128,11 +129,10 @@ public class ResultsMenuView extends AbstractMenuView {
 
     public void initScoreboard() {
         if(this.scoreboardView == null) {
-            this.scoreboardView=new ScoreboardView(root,players);
+            this.scoreboardView = new ScoreboardView(root, players);
         } else  {
             this.scoreboardView.clearScoreboard();
         }
-        this.scoreboardView.showScoreboard();
 
         System.out.println("Scoreboard initiated");
     }
