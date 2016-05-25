@@ -101,7 +101,7 @@ public class ResultsMenuView extends AbstractMenuView {
 
     //how is the question //where
     public Player getWinner() {
-
+// todo: Getting null pointer exception, row 111 and 113. winner gets set to null, in the next iteration we try to access its attribute
         if(players!=null) {
             Player winner = this.players.iterator().next();
 //            System.out.println("Get winner, gametype: " + this.gameType);
