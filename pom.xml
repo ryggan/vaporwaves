@@ -44,16 +44,6 @@
             <artifactId>guava</artifactId>
             <version>10.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.esotericsoftware</groupId>
-            <artifactId>kryo</artifactId>
-            <version>3.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>kryonet</groupId>
-            <artifactId>kryonet</artifactId>
-            <version>2.21</version>
-        </dependency>
         <!-- http://mvnrepository.com/artifact/net.java.jinput/jinput -->
         <dependency>
             <groupId>net.java.jinput</groupId>
