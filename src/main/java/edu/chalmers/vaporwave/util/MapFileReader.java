@@ -1,15 +1,15 @@
 package edu.chalmers.vaporwave.util;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapFileReader {
     private MapObject[][] mapObjects;
     private BufferedReader reader;
 
     public MapFileReader(File file) {
-//        public MapFileReader(String filename) {
         try {
-//            reader = new BufferedReader(new FileReader(filename));
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "UTF8");
             reader = new BufferedReader(inputStreamReader);
             String widthString = reader.readLine();
@@ -27,6 +27,15 @@ public class MapFileReader {
             int height = (numbers.getLineNumber() + 2);
             this.mapObjects = new MapObject[width][height];
 
+            Map<Character, MapObject> mapCharacterToMapObject = new HashMap<>();
+            mapCharacterToMapObject.put('1', MapObject.PLAYER1);
+            mapCharacterToMapObject.put('2', MapObject.PLAYER2);
+            mapCharacterToMapObject.put('3', MapObject.PLAYER3);
+            mapCharacterToMapObject.put('4', MapObject.PLAYER4);
+            mapCharacterToMapObject.put('E', MapObject.ENEMY);
+            mapCharacterToMapObject.put('X', MapObject.INDESTRUCTIBLE_WALL);
+            mapCharacterToMapObject.put('D', MapObject.DESTRUCTIBLE_WALL);
+
             reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"));
             String line;
             int i = 0;
@@ -35,32 +44,19 @@ public class MapFileReader {
                 for (int j = 0; j < width; j++) {
                     switch (line.charAt(j)) {
                         case '1':
-                            mapObjects[j][i] = MapObject.PLAYER1;
-                            break;
                         case '2':
-                            mapObjects[j][i] = MapObject.PLAYER2;
-                            break;
                         case '3':
-                            mapObjects[j][i] = MapObject.PLAYER3;
-                            break;
                         case '4':
-                            mapObjects[j][i] = MapObject.PLAYER4;
-                            break;
                         case 'E':
-                            mapObjects[j][i] = MapObject.ENEMY;
-                            break;
                         case 'X':
-                            mapObjects[j][i] = MapObject.INDESTRUCTIBLE_WALL;
-                            break;
                         case 'D':
-                            mapObjects[j][i] = MapObject.DESTRUCTIBLE_WALL;
+                            mapObjects[j][i] = mapCharacterToMapObject.get(line.charAt(j));
                             break;
                         default:
                             mapObjects[j][i] = MapObject.EMPTY;
                     }
                 }
                 i++;
-
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
