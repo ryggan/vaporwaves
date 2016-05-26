@@ -6,7 +6,6 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.GameType;
 import javafx.scene.Group;
-
 import java.awt.*;
 import java.util.*;
 
