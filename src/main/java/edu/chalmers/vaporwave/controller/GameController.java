@@ -73,7 +73,6 @@ public class GameController implements ContentController {
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
         this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
-        this.gameMusic.playSound();
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -575,15 +574,16 @@ public class GameController implements ContentController {
     public void movableSpawn(SpawnEvent spawnEvent) {
         Movable movable = spawnEvent.getMovable();
         if (movable instanceof GameCharacter) {
-
             movable.idle();
-            if (this.gameState == GameState.PRE_GAME) {
+
+            if(this.gameState==GameState.PRE_GAME) {
+                Container.playSound(SoundID.START_GAME);
+                this.gameMusic.playSound();
                 this.gameState = GameState.GAME_RUNS;
             }
 
         }
 //        else if (movable instanceof Enemy) {
-//
 //        }
     }
 
