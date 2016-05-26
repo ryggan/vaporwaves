@@ -73,4 +73,8 @@ public abstract class PowerUp extends StaticTile implements AnimatedTile {
         return this.timeStamp;
     }
 
+    public String toString() {
+        return super.toString() + ": Powerup [ state:"+this.powerUpState+" ]";
+    }
+
 }

@@ -27,4 +27,8 @@ public class StatPowerUp extends PowerUp {
     public StatPowerUp(PowerUpType powerUpType) {
         setPowerUpType(powerUpType);
     }
+
+    public String toString() {
+        return super.toString() + ": StatPowerUp";
+    }
 }

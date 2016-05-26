@@ -5,8 +5,8 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.util.Debug;
@@ -218,6 +218,8 @@ public class MenuController implements ContentController {
         availableCharacters.addAll(allCharacters);
         Collections.shuffle(availableCharacters);
 
+//        System.out.println("Available characters: "+availableCharacters);
+
         return availableCharacters;
     }
 
@@ -260,7 +262,7 @@ public class MenuController implements ContentController {
     }
 
     public void updateViews(Player player) {
-            this.menuViewMap.get(activeMenu).updateView(
+      this.menuViewMap.get(activeMenu).updateView(
                     this.menuMap.get(activeMenu).getSelectedSuper(),
                     this.menuMap.get(activeMenu).getSelectedSub(),
                     this.menuMap.get(activeMenu).getRemoteSelected(),
@@ -270,6 +272,11 @@ public class MenuController implements ContentController {
     }
 
     public void setActiveMenu(MenuState activeMenu){
+        if(!this.menuMusic.isPlaying()){
+            this.menuMusic.playSound();
+            this.menuMusic.loopSound(true);
+        }
+
         if (activeMenu == MenuState.ROOSTER) {
             updatePlayerGamePads(this.newGameEvent.getPlayers());
         }

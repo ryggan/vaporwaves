@@ -18,22 +18,24 @@ public class AIHeuristics {
     public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters, Set<Enemy> enemies) {
         for(int i = 0; i < arenaTiles.length; i++) {
             for(int j = 0; j < arenaTiles[0].length; j++) {
-                    heuristicMatrix[i][j] = 10;
+                    heuristicMatrix[i][j] = 12;
+            }
+        }
+
+
+        for(int i = 0; i < arenaTiles.length; i++) {
+            for (int j = 0; j < arenaTiles[0].length; j++) {
+                if(arenaTiles[i][j] instanceof DestructibleWall) {
+                    recursive(new Point(i,j), 0, -11, false, 12);
+                }
+                else if (arenaTiles[i][j] instanceof PowerUp) {
+                    recursive(new Point(i,j), 100, 10, true, 10);
+                }
             }
         }
 
         //set up a meeting point in center
         recursive(new Point((Constants.GAME_WIDTH/2 - 1),(Constants.GAME_HEIGHT/2 - 1)), 200, 10, true, 10);
-
-        for(int i = 0; i < arenaTiles.length; i++) {
-            for (int j = 0; j < arenaTiles[0].length; j++) {
-                if (arenaTiles[i][j] instanceof PowerUp) {
-                    recursive(new Point(i,j), 100, 10, true, 10);
-                } else if(arenaTiles[i][j] instanceof DestructibleWall) {
-                    recursive(new Point(i,j), 0, -11, false, 12);
-                }
-            }
-        }
 
         for (GameCharacter gameCharacter : gameCharacters) {
             recursive(gameCharacter.getGridPosition(), 200, 10, true, 10);
