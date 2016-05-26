@@ -52,6 +52,8 @@ public class GameController implements ContentController {
 
     private GameState gameState;
 
+    private Set<GameCharacter> gameCharacters;
+
     //seconds
     private double timer;
 
@@ -96,7 +98,7 @@ public class GameController implements ContentController {
 
         this.players = newGameEvent.getPlayers();
 
-        Set<GameCharacter> gameCharacters = new HashSet<>();
+        gameCharacters = new HashSet<>();
         for (Player player : newGameEvent.getPlayers()) {
             gameCharacters.add(player.getCharacter());
         }
@@ -105,13 +107,15 @@ public class GameController implements ContentController {
             player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             if (player.getClass().equals(CPUPlayer.class)) {
-                Set<GameCharacter> gameCharacterClone = new HashSet<>();
-                for (GameCharacter gameCharacter : gameCharacters) {
-                    if (!player.getCharacter().equals(gameCharacter) && !player.getClass().equals(CPUPlayer.class)) {
-                        gameCharacterClone.add(gameCharacter);
-                    }
-                }
-                ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(gameCharacterClone));
+//                Set<GameCharacter> gameCharacterClone = new HashSet<>();
+//                for (GameCharacter gameCharacter : gameCharacters) {
+//                    if (!player.getCharacter().equals(gameCharacter) && !player.getClass().equals(CPUPlayer.class)) {
+//                        gameCharacterClone.add(gameCharacter);
+//                    }
+//                }
+                Set<GameCharacter> temporaryCharacterSet = cloneGameCharacterSet(gameCharacters);
+                temporaryCharacterSet.remove(player.getCharacter());
+                ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(temporaryCharacterSet));
             }
         }
 
@@ -207,8 +211,10 @@ public class GameController implements ContentController {
         if(this.gameState == GameState.GAME_RUNS) {
             if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
                     for (Enemy enemy : enemies) {
-                        enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(),
+                        if(enemy.getState() == MovableState.IDLE) {
+                            enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(),
                                 this.arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
+                        }
                     }
                 updatedEnemyDirection = 0;
             }
@@ -221,9 +227,11 @@ public class GameController implements ContentController {
                 if (player.getClass().equals(Player.class)) {
                     playerInputAction(player);
                 } else {
-                    player.getCharacter().move(((CPUPlayer)player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
                     if (((CPUPlayer)player).getPlayerAI().shouldPutBomb()) {
                         player.getCharacter().placeBomb();
+                    }
+                    if(player.getCharacter().getState() == MovableState.IDLE) {
+                        player.getCharacter().move(((CPUPlayer) player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
                     }
                 }
             }
@@ -305,7 +313,6 @@ public class GameController implements ContentController {
                             if (movable.getHealth() <= 0) {
                                 if (movable instanceof GameCharacter) {
                                     if (blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
-                                        System.out.println(blast.getPlayerID());
                                         getPlayerForID(blast.getPlayerID()).incrementKills();
                                     }
                                     getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
@@ -631,5 +638,13 @@ public class GameController implements ContentController {
         for (Player player : this.players) {
             player.resetPlayerGameStats();
         }
+    }
+
+    public Set<GameCharacter> cloneGameCharacterSet(Set<GameCharacter> gameChars) {
+        Set<GameCharacter> clonedGameCharacterSet = new HashSet<>();
+        for(GameCharacter gameCharacter : gameChars) {
+            clonedGameCharacterSet.add(gameCharacter);
+        }
+        return clonedGameCharacterSet;
     }
 }

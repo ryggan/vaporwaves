@@ -70,23 +70,23 @@ public class SemiSmartAI implements AI {
 
         switch(previousDirection) {
             case UP:
-                if(enemyPosition.y < 14 && enemyPosition.x < 20) {
-                    heuristicMatrix[enemyPosition.x][enemyPosition.y + 1] = 1;
+                if(enemyPosition.y < 14 && enemyPosition.x < 21) {
+                    heuristicMatrix[enemyPosition.x][enemyPosition.y + 1] = -1;
                 }
                 break;
             case DOWN:
                 if(enemyPosition.y > 0) {
-                    heuristicMatrix[enemyPosition.x][enemyPosition.y - 1] = 1;
+                    heuristicMatrix[enemyPosition.x][enemyPosition.y - 1] = -1;
                 }
                 break;
             case LEFT:
                 if(enemyPosition.x < Constants.GAME_WIDTH - 1) {
-                    heuristicMatrix[enemyPosition.x + 1][enemyPosition.y] = 1;
+                    heuristicMatrix[enemyPosition.x + 1][enemyPosition.y] = -1;
                 }
                 break;
             case RIGHT:
                 if(enemyPosition.x > 0 && enemyPosition.y > -1 && enemyPosition.x < 21 && enemyPosition.y < 15) {
-                    heuristicMatrix[enemyPosition.x - 1][enemyPosition.y] = 1;
+                    heuristicMatrix[enemyPosition.x - 1][enemyPosition.y] = -1;
                 }
                 break;
             default:
@@ -135,10 +135,7 @@ public class SemiSmartAI implements AI {
 
 
     public int checkValueUp(Point enemyPosition) {
-        if (enemyPosition.x > 0 &&
-                enemyPosition.y > 0 &&
-                enemyPosition.x < heuristicMatrix.length &&
-                enemyPosition.y < heuristicMatrix[0].length) {
+        if (enemyPosition.y > 0) {
             return heuristicMatrix[enemyPosition.x][enemyPosition.y - 1];
         } else {
             return -1;
@@ -146,10 +143,7 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueDown(Point enemyPosition) {
-        if (enemyPosition.x >= 0 &&
-                enemyPosition.y >= 0 &&
-                enemyPosition.x < heuristicMatrix.length &&
-                enemyPosition.y < heuristicMatrix[0].length - 1) {
+        if (enemyPosition.y < 14) {
             return heuristicMatrix[enemyPosition.x][enemyPosition.y + 1];
         } else {
             return -1;
@@ -157,10 +151,7 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueLeft(Point enemyPosition) {
-        if (enemyPosition.x > 0 &&
-                enemyPosition.y >= 0 &&
-                enemyPosition.x < heuristicMatrix.length &&
-                enemyPosition.y < heuristicMatrix[0].length) {
+        if (enemyPosition.x > 0) {
             return heuristicMatrix[enemyPosition.x - 1][enemyPosition.y];
         } else {
             return -1;
@@ -168,10 +159,7 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueRight(Point enemyPosition) {
-        if (enemyPosition.x > 0 &&
-                enemyPosition.y >= 0 &&
-                enemyPosition.x < heuristicMatrix.length - 1 &&
-                enemyPosition.y < heuristicMatrix[0].length) {
+        if (enemyPosition.x < 20) {
             return heuristicMatrix[enemyPosition.x + 1][enemyPosition.y];
         } else {
             return -1;
@@ -179,10 +167,9 @@ public class SemiSmartAI implements AI {
     }
 
     public int checkValueCurrent(Point enemyPosition) {
-        if(enemyPosition.x <= 20 && enemyPosition.y <= 14) {
+        if(enemyPosition != null) {
             return heuristicMatrix[enemyPosition.x][enemyPosition.y];
-        }
-        return 0;
+        } return 0;
     }
 
     public Point getCurrentPosition() {
