@@ -380,7 +380,9 @@ public class GameController implements ContentController {
         GameCharacter character = placeBombEvent.getCharacter();
         this.arenaModel.setDoubleTile(new Bomb(character, placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY,
                 this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
-        placeBombEvent.getCharacter().setCurrentBombCount(character.getCurrentBombCount() - 1);
+        
+//        System.out.println("Bomb placed at: "+placeBombEvent.getGridPosition()+" by "+character+", time: "+timeSinceStart
+//                        +", occupied by: "+this.arenaModel.getArenaTile(placeBombEvent.getGridPosition()));
     }
 
     // This method is called via the eventbus, when a gamecharacter calls placeBomb()

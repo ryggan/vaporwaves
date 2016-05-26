@@ -62,4 +62,8 @@ public abstract class Explosive extends StaticTile {
     public Point getPosition() {
         return this.position;
     }
+
+    public String toString() {
+        return super.toString() + ": Explosive [ damage:"+damage+", delay:"+delay+"]";
+    }
 }

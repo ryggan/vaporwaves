@@ -54,4 +54,8 @@ public class DoubleTile extends StaticTile {
         }
         return null;
     }
+
+    public String toString() {
+        return super.toString() + ": DoubleTile [ upper: "+upperTile.toString()+", lower: "+lowerTile.toString()+" ]";
+    }
 }
