@@ -32,8 +32,8 @@ public class ResultsMenuView extends AbstractMenuView {
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
                 new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 100)));
-        isTie=false;
-        rand = 0 + (int)(Math.random() * 4);
+        isTie = false;
+        rand = (new Random()).nextInt(4);
     }
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
@@ -46,7 +46,7 @@ public class ResultsMenuView extends AbstractMenuView {
                 Player winner = getWinner();
                 if (!isTie) {
                     this.winnerSprite = getSprite(winner);
-                }else {
+                } else {
                     this.winnerSprite = getRandomSprite();
                 }
 
@@ -78,15 +78,13 @@ public class ResultsMenuView extends AbstractMenuView {
             case "ZYPHER":
                 winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
                 break;
-            case "ALYSSA":
-                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
-                break;
             case "MEI":
                 winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_MEI);
                 break;
             case "CHARLOTTE":
                 winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
                 break;
+            case "ALYSSA":
             default:
                 winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
         }

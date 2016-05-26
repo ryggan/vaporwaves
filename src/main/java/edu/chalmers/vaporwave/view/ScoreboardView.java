@@ -39,9 +39,9 @@ public class ScoreboardView {
 
         this.root = root;
 
-        int xoffset = x + (int)(Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2))
-                        - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE)  + 2*Constants.DEFAULT_TILE_WIDTH);
-        int yoffset = y + 8 * Constants.DEFAULT_TILE_HEIGHT - 6;
+        int xoffset = x + (int)((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)
+                        - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE)  + (2 * Constants.DEFAULT_TILE_WIDTH));
+        int yoffset = y + (8 * Constants.DEFAULT_TILE_HEIGHT) - 6;
         int gridPaneYOffset = 81;
 
         this.playerList = new ArrayList<>();
