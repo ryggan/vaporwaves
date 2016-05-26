@@ -8,10 +8,7 @@ import edu.chalmers.vaporwave.util.GameType;
 import javafx.scene.Group;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import static edu.chalmers.vaporwave.util.GameType.ENEMY_KILLS;
 
@@ -24,6 +21,7 @@ public class ResultsMenuView extends AbstractMenuView {
     private GameType gameType;
     private Group root;
 
+    private boolean hasSetWinner;
     private ScoreboardView scoreboardView;
 
     public ResultsMenuView(Group root) {
@@ -34,6 +32,7 @@ public class ResultsMenuView extends AbstractMenuView {
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
                 new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 100)));
+        hasSetWinner=false;
     }
 
 
@@ -44,31 +43,20 @@ public class ResultsMenuView extends AbstractMenuView {
         if(players != null) {
             initScoreboard();
 
-            Player winner = getWinner();
-            if (winner != null) {
-                switch (winner.getCharacter().getName().toUpperCase(Locale.ENGLISH)) {
-                    case "ZYPHER":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
-                        break;
-                    case "ALYSSA":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
-                        break;
-                    case "MEI":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_MEI);
-                        break;
-                    case "CHARLOTTE":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
-                        break;
-                    default:
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+            if (!hasSetWinner) {
+                Player winner = getWinner();
+                if (winner != null) {
+                    this.winnerSprite = getSprite(winner);
+                } else {
+                    this.winnerSprite = getRandomSprite();
                 }
-
-                this.winnerSprite.setScale(1);
-                this.winnerSprite.setPosition(Constants.WINDOW_WIDTH / 28, Constants.WINDOW_HEIGHT / 9);
-
-                this.winnerSprite.render(this.getBackgroundGC(), 0);
             }
+            this.winnerSprite.setScale(1);
+            this.winnerSprite.setPosition(Constants.WINDOW_WIDTH / 28, Constants.WINDOW_HEIGHT / 9);
+            this.winnerSprite.render(this.getBackgroundGC(), 0);
         }
+
+
 
 
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {
@@ -88,6 +76,36 @@ public class ResultsMenuView extends AbstractMenuView {
         }
         setActive();
     }
+
+    public Sprite getSprite(Player p) {
+        switch (p.getCharacter().getName().toUpperCase(Locale.ENGLISH)) {
+            case "ZYPHER":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
+                break;
+            case "ALYSSA":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+                break;
+            case "MEI":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_MEI);
+                break;
+            case "CHARLOTTE":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
+                break;
+            default:
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+        }
+        hasSetWinner=true;
+        return winnerSprite;
+    }
+
+    public Sprite getRandomSprite(){
+        SpriteID[] winnerSpriteArray={SpriteID.MENU_RESULTS_MEI, SpriteID.MENU_RESULTS_ALYSSA, SpriteID.MENU_RESULTS_ZYPHER, SpriteID.MENU_RESULTS_CHARLOTTE};
+        int rand = 0 + (int)(Math.random() * 3);
+        winnerSprite = Container.getSprite(winnerSpriteArray[rand]);
+        hasSetWinner=true;
+        return winnerSprite;
+    }
+
 
     public void setPlayers(Set<Player> players) {
         this.players = new HashSet<>();
@@ -114,6 +132,7 @@ public class ResultsMenuView extends AbstractMenuView {
                             winner = player;
                         } else if (!player.getCharacter().getName().equals(winner.getCharacter().getName()) && player.getScore() == winner.getScore()) {
                             winner = null;
+                            break;
                         }
 //                        System.out.println("Character "+player.getCharacter().getName() + " score " + player.getScore());
                     }
