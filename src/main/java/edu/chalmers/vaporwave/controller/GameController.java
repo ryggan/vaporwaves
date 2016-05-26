@@ -228,7 +228,7 @@ public class GameController implements ContentController {
                     playerInputAction(player);
                 } else {
                     if (((CPUPlayer)player).getPlayerAI().shouldPutBomb()) {
-                        player.getCharacter().placeBomb();
+                        checkAndPlaceBomb(player);
                     }
                     if(player.getCharacter().getState() == MovableState.IDLE) {
                         player.getCharacter().move(((CPUPlayer) player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
@@ -373,12 +373,16 @@ public class GameController implements ContentController {
         List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
         for (int i = 0; i < allPressed.size(); i++) {
             String key = allPressed.get(i);
-            StaticTile tile = arenaModel.getArenaTile(player.getCharacter().getGridPosition());
-            if (tile == null || (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP)) {
-                if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
-                    player.getCharacter().placeBomb();
-                }
+            if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
+                checkAndPlaceBomb(player);
             }
+        }
+    }
+
+    private void checkAndPlaceBomb(Player player) {
+        StaticTile tile = arenaModel.getArenaTile(player.getCharacter().getGridPosition());
+        if (tile == null || (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP)) {
+            player.getCharacter().placeBomb();
         }
     }
 
@@ -387,9 +391,6 @@ public class GameController implements ContentController {
         GameCharacter character = placeBombEvent.getCharacter();
         this.arenaModel.setDoubleTile(new Bomb(character, placeBombEvent.getRange(), Constants.DEFAULT_BOMB_DELAY,
                 this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
-        
-//        System.out.println("Bomb placed at: "+placeBombEvent.getGridPosition()+" by "+character+", time: "+timeSinceStart
-//                        +", occupied by: "+this.arenaModel.getArenaTile(placeBombEvent.getGridPosition()));
     }
 
     // This method is called via the eventbus, when a gamecharacter calls placeBomb()
@@ -634,7 +635,6 @@ public class GameController implements ContentController {
         this.enemies.clear();
         this.deadEnemies.clear();
 
-//        GameEventBus.getInstance().post(new GoToMenuEvent(destinationMenu));
         GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
 
         for (Player player : this.players) {
