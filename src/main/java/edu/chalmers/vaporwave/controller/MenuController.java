@@ -30,7 +30,7 @@ public class MenuController implements ContentController {
 
     private boolean pressedDown;
 
-    public MenuController(Group root) {
+    public MenuController(Group root) throws Exception {
 
         GameEventBus.getInstance().register(this);
 
@@ -91,7 +91,7 @@ public class MenuController implements ContentController {
         }
     }
 
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) throws Exception {
 
         localPlayerInput(this.newGameEvent.getPrimaryPlayer());
 

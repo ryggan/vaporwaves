@@ -1,8 +1,6 @@
 package edu.chalmers.vaporwave.view;
 
 
-import edu.chalmers.vaporwave.assetcontainer.Container;
-import edu.chalmers.vaporwave.assetcontainer.ImageID;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -24,7 +22,7 @@ public class LoadingScreenView  {
     private double offsetX = 44;
     private double offsetY = 48;
 
-    public LoadingScreenView(Group root) {
+    public LoadingScreenView(Group root) throws Exception {
         this.root = root;
         this.backgroundCanvas = new Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         this.backgroundGC = backgroundCanvas.getGraphicsContext2D();

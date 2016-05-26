@@ -1,12 +1,12 @@
 package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
-import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
-import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
+import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.util.ErrorMessageFX;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.view.LoadingScreenView;
@@ -33,7 +33,7 @@ public class MainController {
      *
      * @param root
      */
-    public MainController(Group root) {
+    public MainController(Group root) throws Exception {
 
         this.root = root;
 
@@ -42,7 +42,7 @@ public class MainController {
     }
 
     // Creates loader and it's view, and then set's up the loading loop
-    public void initLoader(Group root) {
+    public void initLoader(Group root) throws Exception {
         this.loader = new LoadingScreen();
         this.loaderView = new LoadingScreenView(root);
         this.loadingDone = false;
@@ -60,7 +60,7 @@ public class MainController {
                 if (loader.getPercentLoaded() == 1 && !loadingDone) {
                     loadingDone = true;
 
-                // Initiates the rest of the game and starts game-timer, and finally ends the loading loop
+                    // Initiates the rest of the game and starts game-timer, and finally ends the loading loop
                 } else if (loadingDone) {
                     initApplication();
                     initTimer();
@@ -86,20 +86,26 @@ public class MainController {
     }
 
     public void initApplication() {
+        try {
 
-        GameEventBus.getInstance().register(this);
+            GameEventBus.getInstance().register(this);
 
-        this.menuRoot = new Group();
-        this.gameRoot = new Group();
+            this.menuRoot = new Group();
+            this.gameRoot = new Group();
 
-        this.root.getChildren().add(menuRoot);
+            this.root.getChildren().add(menuRoot);
 
-        this.menuController = new MenuController(menuRoot);
-        this.gameController = new GameController(gameRoot);
-        this.contentController = menuController;
+            this.menuController = new MenuController(menuRoot);
+            this.gameController = new GameController(gameRoot);
+            this.contentController = menuController;
 
-        ListenerController.getInstance().clearPressed();
-        ListenerController.getInstance().clearReleased();
+            ListenerController.getInstance().clearPressed();
+            ListenerController.getInstance().clearReleased();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            ErrorMessageFX.show();
+        }
     }
 
     public void initTimer() {
@@ -114,20 +120,25 @@ public class MainController {
 
             @Override
             public void handle(long currentNanoTime) {
-                // Time management
-                double timeSinceLastCall = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
-                lastNanoTime.value = currentNanoTime;
+                try {
+                    // Time management
+                    double timeSinceLastCall = (currentNanoTime - lastNanoTime.value) / 1000000000.0;
+                    lastNanoTime.value = currentNanoTime;
 
-                double timeSinceStart = (currentNanoTime - startNanoTime) / 1000000000.0;
+                    double timeSinceStart = (currentNanoTime - startNanoTime) / 1000000000.0;
 
-                contentController.timerUpdate(timeSinceStart, timeSinceLastCall);
+                    contentController.timerUpdate(timeSinceStart, timeSinceLastCall);
 
-                // Listener cleanup and updating
+                    // Listener cleanup and updating
 
-                ListenerController.getInstance().updateGamePadInputs();
-                ListenerController.getInstance().clearPressed();
-                ListenerController.getInstance().clearReleased();
+                    ListenerController.getInstance().updateGamePadInputs();
+                    ListenerController.getInstance().clearPressed();
+                    ListenerController.getInstance().clearReleased();
 
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ErrorMessageFX.show();
+                }
             }
 
         }.start();

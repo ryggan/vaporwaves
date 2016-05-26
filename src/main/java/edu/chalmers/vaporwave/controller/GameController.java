@@ -64,7 +64,7 @@ public class GameController implements ContentController {
 
     private SoundPlayer gameMusic;
 
-    public GameController(Group root) {
+    public GameController(Group root) throws Exception {
         GameEventBus.getInstance().register(this);
 
         this.arenaView = new ArenaView(root);
@@ -183,7 +183,7 @@ public class GameController implements ContentController {
         return false;
     }
 
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) throws Exception {
 
         if (this.gameState != GameState.GAME_PAUSED) {
             this.timeSinceStart = timeSinceStart - this.timeSinceStartOffset;
