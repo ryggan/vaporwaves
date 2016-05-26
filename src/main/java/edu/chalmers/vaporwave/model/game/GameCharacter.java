@@ -151,4 +151,8 @@ public class GameCharacter extends Movable {
                 (currentBombCount * 7) +
                 (maxBombCount * 11);
     }
+
+    public void setPlayerId(int id) {
+        this.playerID = id;
+    }
 }

@@ -67,6 +67,7 @@ public class ScoreboardView {
         scoreboardBackground.render(scoreboardGC, -1);
 
         gridPane = new GridPane();
+        root.getChildren().add(scoreboardCanvas);
         root.getChildren().add(gridPane);
 
         gridPane.setPrefSize(scoreboardCanvas.getWidth(), scoreboardBackground.getHeight() - gridPaneYOffset);
@@ -129,8 +130,8 @@ public class ScoreboardView {
         updateScoreboard();
         this.scoreboardCanvas.setVisible(true);
         this.gridPane.setVisible(true);
+        this.gridPane.toFront();
 
-        root.getChildren().add(scoreboardCanvas);
     }
 
     public void hideScoreboard() {

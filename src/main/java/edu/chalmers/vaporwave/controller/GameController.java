@@ -160,6 +160,10 @@ public class GameController implements ContentController {
             }
         }
 
+        for(Player player : players) {
+            player.getCharacter().setPlayerID(player.getPlayerID());
+        }
+
         this.arenaModel.sortMovables();
 
     }
