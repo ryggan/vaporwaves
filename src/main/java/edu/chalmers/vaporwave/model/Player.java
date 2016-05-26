@@ -133,15 +133,9 @@ public class Player {
     public void setBombControl(String bombControl) {
         this.bombControl = bombControl;
     }
-    public void setMineControl(String mineControl) {
-        this.mineControl = mineControl;
-    }
 
     public String getBombControl() {
         return this.bombControl;
-    }
-    public String getMineControl() {
-        return this.mineControl;
     }
 
     @Override

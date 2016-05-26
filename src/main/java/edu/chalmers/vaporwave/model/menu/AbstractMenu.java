@@ -11,7 +11,6 @@ public abstract class AbstractMenu {
     private int[] selectedItems;
     private int currentSelected;
     private int[] remoteSelected;
-    private NewGameEvent newGameEvent;
 
     public AbstractMenu(int[] menuItems) {
         this(menuItems, 0);

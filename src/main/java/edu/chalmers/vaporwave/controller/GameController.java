@@ -33,7 +33,6 @@ public class GameController implements ContentController {
 
     private ArenaView arenaView;
     private ArenaModel arenaModel;
-    private Player localPlayer;
     private Set<Player> players;
 
     private Set<Enemy> enemies;
@@ -105,7 +104,6 @@ public class GameController implements ContentController {
         for (Player player : newGameEvent.getPlayers()) {
             player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            this.localPlayer = newGameEvent.getPrimaryPlayer();
             if (player.getClass().equals(CPUPlayer.class)) {
                 Set<GameCharacter> gameCharacterClone = new HashSet<>();
                 for (GameCharacter gameCharacter : gameCharacters) {

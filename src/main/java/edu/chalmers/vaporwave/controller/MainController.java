@@ -25,8 +25,6 @@ public class MainController {
     private LoadingScreenView loaderView;
     private boolean loadingDone;
 
-    private boolean inGame;
-
     /**
      * Constructor, that sets up the ongoing main loop.
      *

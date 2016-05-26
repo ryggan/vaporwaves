@@ -10,6 +10,7 @@ import javafx.scene.Group;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import static edu.chalmers.vaporwave.util.GameType.ENEMY_KILLS;
@@ -45,7 +46,7 @@ public class ResultsMenuView extends AbstractMenuView {
 
             Player winner = getWinner();
             if (winner != null) {
-                switch (winner.getCharacter().getName().toUpperCase()) {
+                switch (winner.getCharacter().getName().toUpperCase(Locale.ENGLISH)) {
                     case "ZYPHER":
                         winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
                         break;
@@ -111,7 +112,7 @@ public class ResultsMenuView extends AbstractMenuView {
                     for (Player player : this.players) {
                         if (player.getScore() > player.getScore()) {
                             winner = player;
-                        } else if (player.getCharacter().getName() != winner.getCharacter().getName() && player.getScore() == winner.getScore()) {
+                        } else if (!player.getCharacter().getName().equals(winner.getCharacter().getName()) && player.getScore() == winner.getScore()) {
                             winner = null;
                         }
 //                        System.out.println("Character "+player.getCharacter().getName() + " score " + player.getScore());

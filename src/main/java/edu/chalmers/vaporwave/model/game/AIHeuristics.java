@@ -162,14 +162,14 @@ public class AIHeuristics {
     }
 
     public String toString() {
-        String returnString = "";
+        StringBuilder returnString = new StringBuilder();
         for (int i = 0; i < heuristicMatrix.length; i++) {
             for (int j = 0; j < heuristicMatrix[0].length; j++) {
-                returnString += heuristicMatrix[i][j] + "\t";
+                returnString.append(heuristicMatrix[i][j] + "\t");
             }
-            returnString += "\n";
+            returnString.append("\n");
         }
-        return returnString;
+        return returnString.toString();
     }
 
 }

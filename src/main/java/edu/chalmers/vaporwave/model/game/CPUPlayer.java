@@ -33,4 +33,12 @@ public class CPUPlayer extends Player {
         return this.playerAI;
     }
 
+    public boolean equals(Object otherObject) {
+        return super.equals(otherObject);
+    }
+
+    public int hashCode() {
+        return super.hashCode();
+    }
+
 }
