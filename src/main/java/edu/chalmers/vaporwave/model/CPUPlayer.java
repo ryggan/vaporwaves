@@ -1,6 +1,7 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.game.EmptyAI;
 import edu.chalmers.vaporwave.model.game.Enemy;
 import edu.chalmers.vaporwave.model.game.PlayerAI;
 import edu.chalmers.vaporwave.model.game.StaticTile;
