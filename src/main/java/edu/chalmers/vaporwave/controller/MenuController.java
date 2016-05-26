@@ -259,7 +259,7 @@ public class MenuController implements ContentController {
     }
 
     public void updateViews(Player player) {
-            this.menuViewMap.get(activeMenu).updateView(
+      this.menuViewMap.get(activeMenu).updateView(
                     this.menuMap.get(activeMenu).getSelectedSuper(),
                     this.menuMap.get(activeMenu).getSelectedSub(),
                     this.menuMap.get(activeMenu).getRemoteSelected(),
@@ -269,6 +269,11 @@ public class MenuController implements ContentController {
     }
 
     public void setActiveMenu(MenuState activeMenu){
+        if(!this.menuMusic.isPlaying()){
+            this.menuMusic.playSound();
+            this.menuMusic.loopSound(true);
+        }
+
         if (activeMenu == MenuState.ROOSTER) {
             updatePlayerGamePads(this.newGameEvent.getPlayers());
         }
