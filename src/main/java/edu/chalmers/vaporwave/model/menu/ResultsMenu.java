@@ -9,6 +9,8 @@ import java.util.Set;
 
 public class ResultsMenu extends AbstractMenu {
 
+    private Set<Player> players;
+
     public ResultsMenu(NewGameEvent newGameEvent) {
         super( new int[]{1, 0});
     }
