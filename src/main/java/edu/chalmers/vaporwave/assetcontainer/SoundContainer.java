@@ -22,7 +22,7 @@ class SoundContainer {
     private static final int NR_OF_EXIT = 1;
 
     private static double tasksDone;
-    private static final double totalTasks =  1 + 6 + NR_OF_BACKWARD_CLICK+NR_OF_STARTUP+ NR_OF_EXIT+NR_OF_FORWARD_CLICK +
+    private static final double totalTasks =  8 + NR_OF_BACKWARD_CLICK+NR_OF_STARTUP+ NR_OF_EXIT+NR_OF_FORWARD_CLICK +
             NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
     public static void initSoundContainer() {
@@ -64,7 +64,7 @@ class SoundContainer {
         soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
 
 
-        //speech files(7)
+        //speech files(8)
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-exit.wav");
         soundContainer.put(SoundID.MENU_EXIT, soundPlayer);
@@ -86,6 +86,9 @@ class SoundContainer {
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-selectcharacter.wav");
         soundContainer.put(SoundID.SELECT_CHARACTER, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-timeup.wav");
+        soundContainer.put(SoundID.TIME_UP, soundPlayer);
 
 //        soundPlayer = new SoundPlayer[4];
 //        setUpSoundArray(soundPlayer, 4, "girl_moan4.mp3");

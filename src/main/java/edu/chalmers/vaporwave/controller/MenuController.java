@@ -185,9 +185,7 @@ public class MenuController implements ContentController {
 
                             } else if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
-
-                                // todo: Här Lina!!
-
+                                Container.playSound(SoundID.SELECT_CHARACTER);
                             }
                             break;
                     }
@@ -198,8 +196,6 @@ public class MenuController implements ContentController {
             }
         }
     }
-
-
 
     private List<GameCharacter> getAvailableGameCharacters() {
         Set<GameCharacter> allCharacters = new HashSet<>();

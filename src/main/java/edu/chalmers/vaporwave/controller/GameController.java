@@ -623,6 +623,9 @@ public class GameController implements ContentController {
 
     private void gameOverStart(String message) {
         this.gameState = GameState.GAME_OVER;
+        Container.playSound(SoundID.TIME_UP
+
+        );
         this.arenaView.showGameOverMessage(message);
     }
 
