@@ -123,7 +123,6 @@ public class GameController implements ContentController {
 
         // Starting new game
         this.arenaModel = newGame(arenaMap);
-//        this.arenaView = new ArenaView(root);
         this.pauseMenuController = new PauseMenuController(root);
 
         this.arenaView.initArena(arenaModel.getArenaTiles());
@@ -211,12 +210,12 @@ public class GameController implements ContentController {
 
         if(this.gameState == GameState.GAME_RUNS) {
             if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
-                    for (Enemy enemy : enemies) {
-                        if(enemy.getState() == MovableState.IDLE) {
-                            enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(),
+                for (Enemy enemy : enemies) {
+                    if(enemy.getState() == MovableState.IDLE) {
+                        enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(),
                                 this.arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
-                        }
                     }
+                }
                 updatedEnemyDirection = 0;
             }
             updatedEnemyDirection += 1;
@@ -291,7 +290,7 @@ public class GameController implements ContentController {
 
                             // If so, pick it up
                             if (powerUp.getPowerUpType() != null && (powerUp.getState() == PowerUp.PowerUpState.IDLE
-                                                                || powerUp.getState() == PowerUp.PowerUpState.SPAWN)) {
+                                    || powerUp.getState() == PowerUp.PowerUpState.SPAWN)) {
                                 powerUp.pickUp(this.timeSinceStart);
                                 playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
                             }
@@ -447,12 +446,12 @@ public class GameController implements ContentController {
                                 this.arenaModel.setTile(doubleTile, position);
                             }
 
-                        // If a powerup, and destroyable powerups has been enabled in settings, simply destroy it
+                            // If a powerup, and destroyable powerups has been enabled in settings, simply destroy it
                         } else if (destroyablePowerUps && currentTile instanceof PowerUp
-                                        && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.IDLE) {
-                                ((PowerUp) currentTile).destroy(this.timeSinceStart);
+                                && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.IDLE) {
+                            ((PowerUp) currentTile).destroy(this.timeSinceStart);
 
-                        // If another explosive, detonate it with a tiny delay (makes for cool effects)
+                            // If another explosive, detonate it with a tiny delay (makes for cool effects)
                         } else if (currentTile instanceof Explosive) {
                             ((Explosive)currentTile).setDelay(0.03, this.timeSinceStart);
                         }
@@ -468,12 +467,12 @@ public class GameController implements ContentController {
                                     new Blast(explosive, state, direction, this.timeSinceStart));
                             this.arenaModel.setTile(doubleTile, position);
 
-                        // If no special multiple stacking, then the way is definitely shut, and blast ends here.
+                            // If no special multiple stacking, then the way is definitely shut, and blast ends here.
                         } else {
                             blastDirections.put(direction, false);
                         }
 
-                    // If nothing is in the way, simply but a blast there
+                        // If nothing is in the way, simply but a blast there
                     } else {
                         this.arenaModel.setTile(new Blast(explosive, state, direction, this.timeSinceStart), position);
                     }
@@ -578,7 +577,9 @@ public class GameController implements ContentController {
         if (movable instanceof GameCharacter) {
 
             movable.idle();
-            this.gameState = GameState.GAME_RUNS;
+            if (this.gameState == GameState.PRE_GAME) {
+                this.gameState = GameState.GAME_RUNS;
+            }
 
         }
 //        else if (movable instanceof Enemy) {
@@ -638,9 +639,9 @@ public class GameController implements ContentController {
 
         GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
 
-        for (Player player : this.players) {
-            player.resetPlayerGameStats();
-        }
+//        for (Player player : this.players) {
+//            player.resetPlayerGameStats();
+//        }
     }
 
     public Set<GameCharacter> cloneGameCharacterSet(Set<GameCharacter> gameChars) {

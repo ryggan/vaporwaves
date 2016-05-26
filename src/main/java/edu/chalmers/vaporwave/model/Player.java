@@ -17,7 +17,6 @@ public class Player {
 
     private String[] directionControls;
     private String bombControl;
-//    private String mineControl;
     private Controller gamePad;
 
     public Player(int playerID, String playerName) {
@@ -88,8 +87,8 @@ public class Player {
         return this.playerID;
     }
 
-    public void setPlayerID(int i) {
-        this.playerID = i;
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
     }
 
     public String getName() {
