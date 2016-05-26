@@ -18,6 +18,7 @@ import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.util.*;
 import edu.chalmers.vaporwave.view.ArenaView;
 import javafx.scene.Group;
+import sun.plugin2.gluegen.runtime.CPU;
 
 import java.awt.*;
 import java.util.*;
@@ -104,7 +105,7 @@ public class GameController implements ContentController {
         for (Player player : newGameEvent.getPlayers()) {
             player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            if (player.getClass().equals(CPUPlayer.class)) {
+            if (player instanceof CPUPlayer) {
                 Set<GameCharacter> gameCharacterClone = new HashSet<>();
                 for (GameCharacter gameCharacter : gameCharacters) {
                     if (!player.getCharacter().equals(gameCharacter) && !player.getClass().equals(CPUPlayer.class)) {
@@ -218,13 +219,14 @@ public class GameController implements ContentController {
         // All player-specific input and pressed etc.
         if (this.gameState == GameState.GAME_RUNS) {
             for (Player player : this.players) {
-                if (player.getClass().equals(Player.class)) {
-                    playerInputAction(player);
-                } else {
-                    player.getCharacter().move(((CPUPlayer)player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
-                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb()) {
+                if (player instanceof CPUPlayer) {
+                    player.getCharacter().move(((CPUPlayer) player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies),
+                            arenaModel.getArenaTiles());
+                    if (((CPUPlayer) player).getPlayerAI().shouldPutBomb()) {
                         player.getCharacter().placeBomb();
                     }
+                } else {
+                    playerInputAction(player);
                 }
             }
         }

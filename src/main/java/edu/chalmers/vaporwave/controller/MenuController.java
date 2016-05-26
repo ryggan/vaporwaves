@@ -142,6 +142,7 @@ public class MenuController implements ContentController {
                         case EXIT_PROGRAM:
                             menuMusic.stopSound();
                             Container.getSound(SoundID.MENU_EXIT).getSound().play();
+
                             Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new Runnable() {
                                 @Override
                                 public void run() {
@@ -173,7 +174,6 @@ public class MenuController implements ContentController {
                                 ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
                                         ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers()
                                 );
-
                             }
                             break;
 
@@ -185,6 +185,9 @@ public class MenuController implements ContentController {
                                 );
                             } else if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
+
+                                // todo: Här Lina!!
+
                             }
                             break;
                     }
