@@ -11,7 +11,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
@@ -202,10 +201,10 @@ public class HUDView {
         this.statusbar.setOffsetDimension((9 - speed) * 10, 0);
         this.statusbar.render(this.hudGC, 0);
 
-        if (character.getSpeed() > gain * (6 + 9 + 1)) {
-            this.plus.setPosition(boxPosition.x + 120, boxPosition.y + 151);
-            this.plus.render(this.hudGC, 0);
-        }
+//        if (character.getSpeed() > gain * (6 + 9 + 1)) {
+//            this.plus.setPosition(boxPosition.x + 120, boxPosition.y + 151);
+//            this.plus.render(this.hudGC, 0);
+//        }
     }
 
     public void updateTimer(double time){

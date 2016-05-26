@@ -75,9 +75,9 @@ public class GameController implements ContentController {
         this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
-        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
-        enabledPowerUpList.add(PowerUpType.RANGE);
-        enabledPowerUpList.add(PowerUpType.HEALTH);
+//        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
+//        enabledPowerUpList.add(PowerUpType.RANGE);
+//        enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
         this.gameType = newGameEvent.getGameType();
@@ -508,7 +508,10 @@ public class GameController implements ContentController {
                 gameCharacter.setCurrentBombCount(gameCharacter.getCurrentBombCount() + 1);
                 break;
             case SPEED:
-                gameCharacter.setSpeed(gameCharacter.getSpeed() + 0.2);
+                double gain = Constants.DEFAULT_POWERUP_SPEED_GAIN;
+                if (gameCharacter.getSpeed() < gain * 15) {
+                    gameCharacter.setSpeed(Math.round((gameCharacter.getSpeed() + gain) * 100.0) / 100.0);
+                }
                 break;
             case RANGE:
                 gameCharacter.setBombRange(gameCharacter.getBombRange() + 1);
