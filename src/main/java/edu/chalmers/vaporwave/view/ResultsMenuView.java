@@ -6,12 +6,8 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.GameType;
 import javafx.scene.Group;
-
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 import static edu.chalmers.vaporwave.util.GameType.ENEMY_KILLS;
 
@@ -24,7 +20,9 @@ public class ResultsMenuView extends AbstractMenuView {
     private GameType gameType;
     private Group root;
 
+    private boolean isTie;
     private ScoreboardView scoreboardView;
+    int rand;
 
     public ResultsMenuView(Group root) {
         super(root);
@@ -34,8 +32,9 @@ public class ResultsMenuView extends AbstractMenuView {
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
                 new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 100)));
+        isTie=false;
+        rand = 0 + (int)(Math.random() * 4);
     }
-
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
@@ -44,32 +43,17 @@ public class ResultsMenuView extends AbstractMenuView {
         if(players != null) {
             initScoreboard();
 
-            Player winner = getWinner();
-            if (winner != null) {
-                switch (winner.getCharacter().getName().toUpperCase(Locale.ENGLISH)) {
-                    case "ZYPHER":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
-                        break;
-                    case "ALYSSA":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
-                        break;
-                    case "MEI":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_MEI);
-                        break;
-                    case "CHARLOTTE":
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
-                        break;
-                    default:
-                        winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+                Player winner = getWinner();
+                if (!isTie) {
+                    this.winnerSprite = getSprite(winner);
+                }else {
+                    this.winnerSprite = getRandomSprite();
                 }
 
-                this.winnerSprite.setScale(1);
-                this.winnerSprite.setPosition(Constants.WINDOW_WIDTH / 28, Constants.WINDOW_HEIGHT / 9);
-
-                this.winnerSprite.render(this.getBackgroundGC(), 0);
-            }
+            this.winnerSprite.setScale(1);
+            this.winnerSprite.setPosition(Constants.WINDOW_WIDTH / 28, Constants.WINDOW_HEIGHT / 9);
+            this.winnerSprite.render(this.getBackgroundGC(), 0);
         }
-
 
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {
             updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
@@ -89,6 +73,33 @@ public class ResultsMenuView extends AbstractMenuView {
         setActive();
     }
 
+    public Sprite getSprite(Player p) {
+        switch (p.getCharacter().getName().toUpperCase(Locale.ENGLISH)) {
+            case "ZYPHER":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ZYPHER);
+                break;
+            case "ALYSSA":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+                break;
+            case "MEI":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_MEI);
+                break;
+            case "CHARLOTTE":
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_CHARLOTTE);
+                break;
+            default:
+                winnerSprite = Container.getSprite(SpriteID.MENU_RESULTS_ALYSSA);
+        }
+        return winnerSprite;
+    }
+
+    public Sprite getRandomSprite(){
+        SpriteID[] winnerSpriteArray={SpriteID.MENU_RESULTS_MEI, SpriteID.MENU_RESULTS_ALYSSA, SpriteID.MENU_RESULTS_ZYPHER, SpriteID.MENU_RESULTS_CHARLOTTE};
+        winnerSprite = Container.getSprite(winnerSpriteArray[this.rand]);
+        return winnerSprite;
+    }
+
+
     public void setPlayers(Set<Player> players) {
         this.players = new HashSet<>();
         for (Player player : players) {
@@ -104,18 +115,17 @@ public class ResultsMenuView extends AbstractMenuView {
     //how is the question //where
     public Player getWinner() {
 // todo: Getting null pointer exception, row 111 and 113. winner gets set to null, in the next iteration we try to access its attribute
-        if(players!=null) {
             Player winner = this.players.iterator().next();
 //            System.out.println("Get winner, gametype: " + this.gameType);
             switch (this.gameType) {
                 case SURVIVAL:
                     for (Player player : this.players) {
-                        if (player.getScore() > player.getScore()) {
+                        if (player.getScore() > winner.getScore()) {
                             winner = player;
+                            isTie=false;
                         } else if (!player.getCharacter().getName().equals(winner.getCharacter().getName()) && player.getScore() == winner.getScore()) {
-                            winner = null;
+                            isTie=true;
                         }
-//                        System.out.println("Character "+player.getCharacter().getName() + " score " + player.getScore());
                     }
                     break;
                 case SCORE_LIMIT:
@@ -125,15 +135,12 @@ public class ResultsMenuView extends AbstractMenuView {
                 case ENEMY_KILLS:
                     break;
                 default:
-                    winner = null;
             }
             return winner;
-        }
-        return null;
     }
 
     public void initScoreboard() {
-        this.scoreboardView = new ScoreboardView(this.root, this.players, 200, 0);
+        this.scoreboardView = new ScoreboardView(this.root, this.players, 200, 40);
         this.scoreboardView.showScoreboard();
     }
 

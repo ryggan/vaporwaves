@@ -8,4 +8,8 @@ public class Bomb extends Explosive {
         super(owner, range, delay, timeStamp, damage);
     }
 
+    public String toString() {
+        return super.toString() + ": Bomb ";
+    }
+
 }

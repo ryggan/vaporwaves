@@ -21,4 +21,8 @@ public class DestructibleWall extends Wall implements AnimatedTile {
     public double getTimeStamp() {
         return this.timeStamp;
     }
+
+    public String toString() {
+        return super.toString() + ": DestructibleWall [ destroyed: "+destroyed+", time: "+timeStamp+" ]";
+    }
 }
