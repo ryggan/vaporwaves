@@ -18,7 +18,7 @@ class CharacterContainer {
     private static double tasksDone;
     private static final double totalTasks = 14 * 5;
 
-    public static void initCharacterContainer() {
+    public static void initCharacterContainer() throws Exception {
         spriteContainer = new HashMap<>();
         propertiesContainer = new HashMap<>();
 
@@ -36,7 +36,7 @@ class CharacterContainer {
         return spriteContainer.get(characterID);
     }
 
-    private static void initCharacterSprites(CharacterID characterID) {
+    private static void initCharacterSprites(CharacterID characterID) throws Exception {
         CharacterSprite characterSprite = new CharacterSprite(characterID.toString());
         spriteContainer.put(characterID, characterSprite);
 

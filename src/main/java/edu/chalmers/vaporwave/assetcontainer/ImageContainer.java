@@ -12,7 +12,7 @@ class ImageContainer {
     private static double tasksDone;
     private static final double totalTasks = 4 + 8 + 5 + 1 + 1 + 5 + 6 + 13 + 3;
     
-    public static void initImageContainer() {
+    public static void initImageContainer() throws Exception {
         // TODO: OBS!!! IF ADDING IMAGES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         imageContainer = new HashMap<>();
@@ -20,10 +20,10 @@ class ImageContainer {
         // >>> MENU STUFF: <<<
 
         // Results menu (4):
-        addImage(ImageID.MENU_RESULTS_ZYPHER,new Image("images/menu/menu-zypher-result.png"));
-        addImage(ImageID.MENU_RESULTS_CHARLOTTE,new Image("images/menu/menu-charlotte-result.png"));
-        addImage(ImageID.MENU_RESULTS_ALYSSA,new Image("images/menu/menu-alyssa-result.png"));
-        addImage(ImageID.MENU_RESULTS_MEI,new Image("images/menu/menu-mei-result.png"));
+        addImage(ImageID.MENU_RESULTS_ZYPHER, new Image("images/menu/menu-zypher-result.png"));
+        addImage(ImageID.MENU_RESULTS_CHARLOTTE, new Image("images/menu/menu-charlotte-result.png"));
+        addImage(ImageID.MENU_RESULTS_ALYSSA, new Image("images/menu/menu-alyssa-result.png"));
+        addImage(ImageID.MENU_RESULTS_MEI, new Image("images/menu/menu-mei-result.png"));
 
         // Backgrounds (8):
         addImage(ImageID.MENU_BACKGROUND_RESULT, new Image("images/menu/menu-background-result.png"));
@@ -55,7 +55,7 @@ class ImageContainer {
         addImage(ImageID.HUD_BOX_SHEET, new Image("images/hud/spritesheet-hudbox-136x180.png"));
         addImage(ImageID.HUD_TIMER_MESSAGE, new Image("images/hud/timer_message.png"));
         addImage(ImageID.HUD_GAMEOVER_MESSAGE, new Image("images/hud/gameover_message.png"));
-//        addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground.png"));
+        //        addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground.png"));
         addImage(ImageID.SCOREBOARD_BACK, new Image("images/hud/scoreboardBackground2.png"));
 
         // Background stuff (6):

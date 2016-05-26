@@ -7,6 +7,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
+import edu.chalmers.vaporwave.util.ErrorMessageFX;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.view.LoadingScreenView;
 import javafx.animation.AnimationTimer;
@@ -24,6 +25,8 @@ public class MainController {
     private LoadingScreen loader;
     private LoadingScreenView loaderView;
     private boolean loadingDone;
+
+    private static boolean loadingError;
 
     /**
      * Constructor, that sets up the ongoing main loop.
@@ -43,6 +46,7 @@ public class MainController {
         this.loader = new LoadingScreen();
         this.loaderView = new LoadingScreenView(root);
         this.loadingDone = false;
+        loadingError = false;
         // Loading loop
         new AnimationTimer() {
 
@@ -61,6 +65,10 @@ public class MainController {
                     initApplication();
                     initTimer();
                     this.stop();
+                }
+
+                if (loadingError && !ErrorMessageFX.isShown()) {
+                    ErrorMessageFX.show();
                 }
             }
         }.start();
@@ -145,5 +153,9 @@ public class MainController {
         this.menuController.setActiveMenu(goToMenuEvent.getActiveMenu());
         this.menuController.updateViews(null);
         this.contentController = menuController;
+    }
+
+    public static void showError() {
+        loadingError = true;
     }
 }

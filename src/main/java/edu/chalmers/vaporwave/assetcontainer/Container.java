@@ -1,5 +1,6 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.SoundPlayer;
 import javafx.scene.image.Image;
@@ -12,24 +13,30 @@ import java.io.File;
 public class Container {
 
     public static void initialize() {
-        double time = System.currentTimeMillis();
-        ImageContainer.initImageContainer();
-        System.out.println("Image loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-        time = System.currentTimeMillis();
-        FileContainer.initFileContainer();
-        System.out.println("File loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-        time = System.currentTimeMillis();
-        SoundContainer.initSoundContainer();
-        System.out.println("Sound loading done, timed: "+(System.currentTimeMillis() - time)+" millis");
-        time = System.currentTimeMillis();
-        CharacterContainer.initCharacterContainer();
-        System.out.println("Characters done, timed: "+(System.currentTimeMillis() - time)+" millis");
-        time = System.currentTimeMillis();
-        SpriteContainer.initSpriteContainer();
-        System.out.println("Sprites done, timed: "+(System.currentTimeMillis() - time)+" millis");
-        time = System.currentTimeMillis();
-        MenuButtonContainer.initMenuButtonContainer();
-        System.out.println("Menu buttons done, timed: "+(System.currentTimeMillis() - time)+" millis");
+        try {
+            double time = System.currentTimeMillis();
+            ImageContainer.initImageContainer();
+            System.out.println("Image loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
+            time = System.currentTimeMillis();
+            FileContainer.initFileContainer();
+            System.out.println("File loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
+            time = System.currentTimeMillis();
+            SoundContainer.initSoundContainer();
+            System.out.println("Sound loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
+            time = System.currentTimeMillis();
+            CharacterContainer.initCharacterContainer();
+            System.out.println("Characters done, timed: " + (System.currentTimeMillis() - time) + " millis");
+            time = System.currentTimeMillis();
+            SpriteContainer.initSpriteContainer();
+            System.out.println("Sprites done, timed: " + (System.currentTimeMillis() - time) + " millis");
+            time = System.currentTimeMillis();
+            MenuButtonContainer.initMenuButtonContainer();
+            System.out.println("Menu buttons done, timed: " + (System.currentTimeMillis() - time) + " millis");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            MainController.showError();
+        }
     }
 
     public static Image getImage(ImageID imageID) {

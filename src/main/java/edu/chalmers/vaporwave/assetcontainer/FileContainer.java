@@ -21,7 +21,7 @@ class FileContainer {
     private static double tasksDone;
     private static final double totalTasks = 1 + 2 + 3 + 1;
 
-    public static void initFileContainer() {
+    public static void initFileContainer() throws Exception {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         fileContainer = new HashMap<>();

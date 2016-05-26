@@ -13,7 +13,7 @@ class SpriteContainer {
     private static double tasksDone;
     private static final double totalTasks = 36 + 8 + 5 + 8 + 5 + 9 + 3 + 16;
 
-    public static void initSpriteContainer() {
+    public static void initSpriteContainer() throws Exception {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         spriteContainer = new HashMap<>();

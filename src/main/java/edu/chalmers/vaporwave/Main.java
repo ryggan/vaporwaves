@@ -3,20 +3,15 @@ package edu.chalmers.vaporwave;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.MovableState;
+import edu.chalmers.vaporwave.util.ErrorMessageFX;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
 
 public class Main extends Application {
 
@@ -43,14 +38,19 @@ public class Main extends Application {
 		// Slightly modified
 		primaryStage.setOnCloseRequest(new CloseWindowEventHandler());
 
-//		System.out.println(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf");
-//		Font.loadFont(Main.class.getResource(System.getProperty("user.dir") + "/src/main/resources/fonts/BauhausStd-Bold.otf").toExternalForm(), 10);
-
         primaryStage.show();
 
+		ErrorMessageFX.init(root);
+
         // Initiating controllers
-		ListenerController.getInstance().initiateListener(scene);
-		new MainController(root);
+		try {
+			ListenerController.getInstance().initiateListener(scene);
+			new MainController(root);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			ErrorMessageFX.show();
+		}
 	}
 
 	private static class CloseWindowEventHandler implements EventHandler<WindowEvent> {
