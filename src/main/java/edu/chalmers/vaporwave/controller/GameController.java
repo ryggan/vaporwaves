@@ -228,7 +228,7 @@ public class GameController implements ContentController {
                 if (player.getClass().equals(Player.class)) {
                     playerInputAction(player);
                 } else {
-                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb()) {
+                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb() && player.getCharacter().getState() == MovableState.IDLE) {
                         checkAndPlaceBomb(player);
                     }
                     if(player.getCharacter().getState() == MovableState.IDLE) {

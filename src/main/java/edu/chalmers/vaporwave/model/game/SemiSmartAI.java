@@ -71,22 +71,22 @@ public class SemiSmartAI implements AI {
         switch(previousDirection) {
             case UP:
                 if(enemyPosition.y < 14 && enemyPosition.x < 21) {
-                    heuristicMatrix[enemyPosition.x][enemyPosition.y + 1] = -1;
+                    heuristicMatrix[enemyPosition.x][enemyPosition.y + 1] = 1;
                 }
                 break;
             case DOWN:
                 if(enemyPosition.y > 0) {
-                    heuristicMatrix[enemyPosition.x][enemyPosition.y - 1] = -1;
+                    heuristicMatrix[enemyPosition.x][enemyPosition.y - 1] = 1;
                 }
                 break;
             case LEFT:
                 if(enemyPosition.x < Constants.GAME_WIDTH - 1) {
-                    heuristicMatrix[enemyPosition.x + 1][enemyPosition.y] = -1;
+                    heuristicMatrix[enemyPosition.x + 1][enemyPosition.y] = 1;
                 }
                 break;
             case RIGHT:
                 if(enemyPosition.x > 0 && enemyPosition.y > -1 && enemyPosition.x < 21 && enemyPosition.y < 15) {
-                    heuristicMatrix[enemyPosition.x - 1][enemyPosition.y] = -1;
+                    heuristicMatrix[enemyPosition.x - 1][enemyPosition.y] = 1;
                 }
                 break;
             default:
