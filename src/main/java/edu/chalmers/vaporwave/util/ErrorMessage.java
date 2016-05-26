@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ErrorMessageFX {
+public class ErrorMessage {
     private static Group root;
     private static ImageView imageView;
 
@@ -29,8 +29,10 @@ public class ErrorMessageFX {
         shown = false;
     }
 
-    public static void show() {
+    public static void show(Exception e) {
         if (!shown) {
+            e.printStackTrace();
+
             root.getChildren().add(imageView);
             timer.schedule(new TimerTask() {
                 @Override

@@ -7,10 +7,11 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
 import edu.chalmers.vaporwave.model.menu.NewGameEvent;
-import edu.chalmers.vaporwave.util.ErrorMessageFX;
+import edu.chalmers.vaporwave.util.ErrorMessage;
 import edu.chalmers.vaporwave.util.LongValue;
 import edu.chalmers.vaporwave.view.LoadingScreenView;
 import javafx.animation.AnimationTimer;
+import javafx.fxml.LoadException;
 import javafx.scene.Group;
 
 public class MainController {
@@ -67,8 +68,8 @@ public class MainController {
                     this.stop();
                 }
 
-                if (loadingError && !ErrorMessageFX.isShown()) {
-                    ErrorMessageFX.show();
+                if (loadingError && !ErrorMessage.isShown()) {
+                    ErrorMessage.show(new LoadException());
                 }
             }
         }.start();
@@ -103,8 +104,7 @@ public class MainController {
             ListenerController.getInstance().clearReleased();
 
         } catch (Exception e) {
-            e.printStackTrace();
-            ErrorMessageFX.show();
+            ErrorMessage.show(e);
         }
     }
 
@@ -136,8 +136,7 @@ public class MainController {
                     ListenerController.getInstance().clearReleased();
 
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    ErrorMessageFX.show();
+                    ErrorMessage.show(e);
                 }
             }
 

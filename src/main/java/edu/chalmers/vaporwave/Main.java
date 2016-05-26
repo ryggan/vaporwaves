@@ -3,7 +3,7 @@ package edu.chalmers.vaporwave;
 import edu.chalmers.vaporwave.controller.ListenerController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.ErrorMessageFX;
+import edu.chalmers.vaporwave.util.ErrorMessage;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -40,7 +40,7 @@ public class Main extends Application {
 
         primaryStage.show();
 
-		ErrorMessageFX.init(root);
+		ErrorMessage.init(root);
 
         // Initiating controllers
 		try {
@@ -48,8 +48,7 @@ public class Main extends Application {
 			new MainController(root);
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			ErrorMessageFX.show();
+			ErrorMessage.show(e);
 		}
 	}
 
