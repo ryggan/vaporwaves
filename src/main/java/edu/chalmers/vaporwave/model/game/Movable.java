@@ -234,7 +234,7 @@ public abstract class Movable {
     }
 
     public void move(Direction direction, StaticTile[][] arenaTiles) {
-        if (direction != null &&  !this.lastMove.contains(Utils.getOppositeDirection(direction))) {
+        if (direction != null && !this.lastMove.contains(Utils.getOppositeDirection(direction))) {
             this.lastMove.add(direction);
             this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
             if (this.comingState != MovableState.SPAWN &&
@@ -275,24 +275,36 @@ public abstract class Movable {
         if (allowMove(0, -1) && getCanvasPositionY() > 0) {
             setDirection(Direction.UP);
             setVelocity(0, -this.getSpeed());
+
+        } else if (getState() == MovableState.IDLE) {
+            setDirection(Direction.UP);
         }
     }
     public void moveDown() {
         if (allowMove(0, 1) && getCanvasPositionY() < Utils.gridToCanvasPositionX(Constants.DEFAULT_GRID_HEIGHT-1)) {
             setDirection(Direction.DOWN);
             setVelocity(0, this.getSpeed());
+
+        } else if (getState() == MovableState.IDLE) {
+            setDirection(Direction.DOWN);
         }
     }
     public void moveLeft() {
         if (allowMove(-1, 0) && getCanvasPositionX() > 0) {
             setDirection(Direction.LEFT);
             setVelocity(-this.getSpeed(), 0);
+
+        } else if (getState() == MovableState.IDLE) {
+            setDirection(Direction.LEFT);
         }
     }
     public void moveRight() {
         if (allowMove(1, 0) && getCanvasPositionX() < Utils.gridToCanvasPositionY(Constants.DEFAULT_GRID_WIDTH-1)) {
             setDirection(Direction.RIGHT);
             setVelocity(this.getSpeed(), 0);
+
+        } else if (getState() == MovableState.IDLE) {
+            setDirection(Direction.RIGHT);
         }
     }
 
