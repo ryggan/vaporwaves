@@ -123,7 +123,6 @@ public class GameController implements ContentController {
 
         // Starting new game
         this.arenaModel = newGame(arenaMap);
-//        this.arenaView = new ArenaView(root);
         this.pauseMenuController = new PauseMenuController(root);
 
         this.arenaView.initArena(arenaModel.getArenaTiles());
@@ -578,7 +577,9 @@ public class GameController implements ContentController {
         if (movable instanceof GameCharacter) {
 
             movable.idle();
-            this.gameState = GameState.GAME_RUNS;
+            if (this.gameState == GameState.PRE_GAME) {
+                this.gameState = GameState.GAME_RUNS;
+            }
 
         }
 //        else if (movable instanceof Enemy) {
@@ -638,9 +639,9 @@ public class GameController implements ContentController {
 
         GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
 
-        for (Player player : this.players) {
-            player.resetPlayerGameStats();
-        }
+//        for (Player player : this.players) {
+//            player.resetPlayerGameStats();
+//        }
     }
 
     public Set<GameCharacter> cloneGameCharacterSet(Set<GameCharacter> gameChars) {
