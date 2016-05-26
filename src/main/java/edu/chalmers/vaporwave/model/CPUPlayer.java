@@ -1,7 +1,10 @@
-package edu.chalmers.vaporwave.model.game;
+package edu.chalmers.vaporwave.model;
 
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.game.Enemy;
+import edu.chalmers.vaporwave.model.game.PlayerAI;
+import edu.chalmers.vaporwave.model.game.StaticTile;
 
 import java.awt.*;
 import java.util.Set;

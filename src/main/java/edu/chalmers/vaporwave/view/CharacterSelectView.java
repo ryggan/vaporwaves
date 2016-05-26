@@ -3,7 +3,7 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.game.CPUPlayer;
+import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;

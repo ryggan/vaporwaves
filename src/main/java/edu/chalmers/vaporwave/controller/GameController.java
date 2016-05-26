@@ -11,6 +11,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.SpawnEvent;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaModel;
+import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.*;
 import edu.chalmers.vaporwave.model.menu.MenuState;

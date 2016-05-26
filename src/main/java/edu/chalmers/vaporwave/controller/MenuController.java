@@ -5,8 +5,8 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.event.*;
+import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.game.CPUPlayer;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.util.Debug;
@@ -214,6 +214,8 @@ public class MenuController implements ContentController {
         List<GameCharacter> availableCharacters = new ArrayList<>();
         availableCharacters.addAll(allCharacters);
         Collections.shuffle(availableCharacters);
+
+//        System.out.println("Available characters: "+availableCharacters);
 
         return availableCharacters;
     }
