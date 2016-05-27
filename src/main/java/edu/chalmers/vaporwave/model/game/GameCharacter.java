@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.model.game;
 
-import com.google.common.eventbus.EventBus;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.GameEventBus;
