@@ -36,11 +36,14 @@ public class MenuController implements ContentController {
         GameEventBus.getInstance().register(this);
 
         this.newGameEvent = new NewGameEvent();
+        this.pressedDown = false;
 
+        // Menu background music
         this.menuMusic = Container.getSound(SoundID.MENU_BGM_1);
         menuMusic.playSound();
         menuMusic.loopSound(true);
 
+        // Setting up primary player, that will be navigate menus
         Player player;
         player = new Player(0, "P1");
         this.newGameEvent.addPlayer(player);
@@ -53,6 +56,7 @@ public class MenuController implements ContentController {
 
         updatePlayerGamePads(newGameEvent.getPlayers(), true);
 
+        // Setting up menu models
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
         this.menuMap.put(MenuState.START_MENU, new StartMenu());
@@ -60,6 +64,7 @@ public class MenuController implements ContentController {
         this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu());
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
 
+        // Setting up menu views
         this.resultsMenuView = new ResultsMenuView(root);
 
         this.menuViewMap = new HashMap<>();
@@ -68,15 +73,8 @@ public class MenuController implements ContentController {
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
         this.menuViewMap.put(MenuState.RESULTS_MENU, resultsMenuView);
 
-        this.pressedDown = false;
-
-        this.menuViewMap.get(activeMenu).updateView(
-                this.menuMap.get(activeMenu).getSelectedSuper(),
-                this.menuMap.get(activeMenu).getSelectedSub(),
-                null,
-                newGameEvent.getPrimaryPlayer(),
-                false
-        );
+        // Initiating start screen view
+        updateViews(null);
     }
 
     public void updatePlayerGamePads(Set<Player> players, boolean updateListener) {
@@ -96,10 +94,13 @@ public class MenuController implements ContentController {
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) throws Exception {
 
         localPlayerInput(this.newGameEvent.getPrimaryPlayer());
+        localPlayerPressed(this.newGameEvent.getPrimaryPlayer());
+        localPlayerReleased(this.newGameEvent.getPrimaryPlayer());
 
         for (Player player : newGameEvent.getPlayers()) {
             if (player.getPlayerID() != 0) {
-                remotePlayerInput(player);
+                remotePlayerPressed(player);
+                remotePlayerReleased(player);
             }
         }
     }
@@ -112,7 +113,9 @@ public class MenuController implements ContentController {
     private void localPlayerInput(Player player) {
         List<String> allInput = ListenerController.getInstance().getAllInput(player);
         this.pressedDown = (allInput.contains("ENTER") || allInput.contains("SPACE") || allInput.contains("BTN_A"));
+    }
 
+    private void localPlayerPressed(Player player) {
         List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
         String[] directionControls = player.getDirectionControls();
 
@@ -130,49 +133,34 @@ public class MenuController implements ContentController {
                 updateViews(this.newGameEvent.getPrimaryPlayer());
             }
         }
+    }
 
+    private void localPlayerReleased(Player player) {
         List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
 
         if (!allReleased.isEmpty() && player.getPlayerID() == 0) {
             String key = allReleased.get(0);
+            AbstractMenu menu = menuMap.get(activeMenu);
 
             switch (key) {
                 case "ENTER":
                 case "SPACE":
                 case "BTN_A":
-                    AbstractMenu menu = menuMap.get(activeMenu);
                     switch (menu.getMenuAction()) {
                         case EXIT_PROGRAM:
-                            menuMusic.stopSound();
-                            Container.getSound(SoundID.MENU_EXIT).getSound().play();
-
-                            Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
-
+                            menuActionExitProgram();
                             break;
 
                         case START_GAME:
-                            for (Player p : this.newGameEvent.getPlayers()) {
-                                if(p.getClass().equals(CPUPlayer.class)){
-                                    p.setCharacter(getAvailableGameCharacters().get(0));
-                                }
-                            }
-                            if (isNewGameEventReady()) {
-                                GameEventBus.getInstance().post(this.newGameEvent);
-                                menuMusic.stopSound();
-                            }else{
-                                Container.playSound(SoundID.EXPLOSION);
-                            }
+                            menuActionStartGame();
                             break;
 
                         case NO_ACTION:
-                            menu.performMenuAction(newGameEvent, 0);
+                            menuActionNoAction(menu);
                             break;
 
                         default:
-                            this.setActiveMenu(menu.getMenuAction());
-                            if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
-                                Container.playSound(SoundID.SELECT_CHARACTER);
-                            }
+                            menuActionDefault(menu);
                             break;
                     }
                     updateViews(this.newGameEvent.getPrimaryPlayer());
@@ -180,6 +168,37 @@ public class MenuController implements ContentController {
                     break;
                 default:
             }
+        }
+    }
+
+    private void menuActionExitProgram() {
+        menuMusic.stopSound();
+        Container.getSound(SoundID.MENU_EXIT).getSound().play();
+        Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
+    }
+
+    private void menuActionStartGame() {
+        for (Player p : this.newGameEvent.getPlayers()) {
+            if(p.getClass().equals(CPUPlayer.class)){
+                p.setCharacter(getAvailableGameCharacters().get(0));
+            }
+        }
+        if (isNewGameEventReady()) {
+            GameEventBus.getInstance().post(this.newGameEvent);
+            menuMusic.stopSound();
+        }else{
+            Container.playSound(SoundID.EXPLOSION);
+        }
+    }
+
+    private void menuActionNoAction(AbstractMenu menu) {
+        menu.performMenuAction(newGameEvent, 0);
+    }
+
+    private void menuActionDefault(AbstractMenu menu) {
+        this.setActiveMenu(menu.getMenuAction());
+        if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+            Container.playSound(SoundID.SELECT_CHARACTER);
         }
     }
 
@@ -203,7 +222,7 @@ public class MenuController implements ContentController {
         return availableCharacters;
     }
 
-    private void remotePlayerInput(Player player) {
+    private void remotePlayerPressed(Player player) {
         List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
         String[] directionControls = player.getDirectionControls();
 
@@ -221,7 +240,9 @@ public class MenuController implements ContentController {
                 }
             }
         }
+    }
 
+    private void remotePlayerReleased(Player player) {
         List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
 
         if (!allReleased.isEmpty()) {
