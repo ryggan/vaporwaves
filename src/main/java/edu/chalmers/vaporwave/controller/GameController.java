@@ -107,13 +107,7 @@ public class GameController implements ContentController {
         for (Player player : newGameEvent.getPlayers()) {
             player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
             player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            if (player.getClass().equals(CPUPlayer.class)) {
-//                Set<GameCharacter> gameCharacterClone = new HashSet<>();
-//                for (GameCharacter gameCharacter : gameCharacters) {
-//                    if (!player.getCharacter().equals(gameCharacter) && !player.getClass().equals(CPUPlayer.class)) {
-//                        gameCharacterClone.add(gameCharacter);
-//                    }
-//                }
+            if (player instanceof  CPUPlayer) {
                 Set<GameCharacter> temporaryCharacterSet = cloneGameCharacterSet(gameCharacters);
                 temporaryCharacterSet.remove(player.getCharacter());
                 ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(temporaryCharacterSet));

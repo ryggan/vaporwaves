@@ -17,6 +17,7 @@ import javafx.scene.Group;
 import net.java.games.input.Controller;
 
 import java.util.*;
+import java.util.concurrent.RunnableFuture;
 
 public class MenuController implements ContentController {
 
@@ -142,6 +143,7 @@ public class MenuController implements ContentController {
                         case EXIT_PROGRAM:
                             menuMusic.stopSound();
                             Container.getSound(SoundID.MENU_EXIT).getSound().play();
+
 
                             Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new Runnable() {
                                 @Override
@@ -312,5 +314,12 @@ public class MenuController implements ContentController {
         resultsMenuView.setGameType(exitToMenuEvent.getGameType());
 
         GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
+    }
+
+    private static class endGameThread implements Runnable {
+        @Override
+        public void run() {
+            GameEventBus.getInstance().post(new ExitGameEvent());
+        }
     }
 }
