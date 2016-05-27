@@ -1,6 +1,10 @@
 package edu.chalmers.vaporwave.model.game;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +12,10 @@ public class EnemyTest {
 
     @Test
     public void testGetAI() throws Exception {
-        Enemy enemy = new Enemy("bitchTit", 0, 0, 0, new StupidAI());
-        assertTrue(enemy.getAI() instanceof StupidAI);
+        Set<GameCharacter> gameCharacters = new HashSet<>();
+        GameCharacter gameChar = new GameCharacter("ALYSSA", 1);
+        gameCharacters.add(gameChar);
+        Enemy enemy = new Enemy("SuperEnemy", 0, 0, 0, new SemiSmartAI(gameCharacters));
+        assertTrue(enemy.getAI() instanceof SemiSmartAI);
     }
 }
