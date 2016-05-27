@@ -179,10 +179,10 @@ public class ArenaModel {
     }
 
 
-    public StatPowerUp spawnStatPowerUp(java.util.List<PowerUpType> enabledPowerUpList) {
+    public PowerUp spawnPowerUp(java.util.List<PowerUpType> enabledPowerUpList) {
         Random randomGenerator = new Random();
         if(randomGenerator.nextInt(4) < 2) {
-            return new StatPowerUp(enabledPowerUpList);
+            return new PowerUp(enabledPowerUpList);
         }
         return null;
     }

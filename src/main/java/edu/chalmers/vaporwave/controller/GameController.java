@@ -75,10 +75,10 @@ public class GameController implements ContentController {
         this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
-//        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
-//        enabledPowerUpList.add(PowerUpType.RANGE);
-//        enabledPowerUpList.add(PowerUpType.HEALTH);
-//        enabledPowerUpList.add(PowerUpType.SPEED);
+        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
+        enabledPowerUpList.add(PowerUpType.RANGE);
+        enabledPowerUpList.add(PowerUpType.HEALTH);
+        enabledPowerUpList.add(PowerUpType.SPEED);
         enabledPowerUpList.add(PowerUpType.FISH);
 
         this.gameType = newGameEvent.getGameType();
@@ -280,8 +280,8 @@ public class GameController implements ContentController {
                         }
 
                         // Walking over powerup?
-                        if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof StatPowerUp) {
-                            StatPowerUp powerUp = (StatPowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
+                        if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof PowerUp) {
+                            PowerUp powerUp = (PowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
 
                             // If so, pick it up
                             if (powerUp.getPowerUpType() != null && (powerUp.getState() == PowerUp.PowerUpState.IDLE
@@ -444,7 +444,7 @@ public class GameController implements ContentController {
                         // If a destructible wall is in the way, crack it and maybe also add an powerup
                         if (currentTile instanceof DestructibleWall) {
                             ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
-                            StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(this.enabledPowerUpList);
+                            PowerUp statPowerUp = this.arenaModel.spawnPowerUp(this.enabledPowerUpList);
                             if (statPowerUp != null) {
                                 statPowerUp.setTimeStamp(this.timeSinceStart);
                                 StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
@@ -531,7 +531,7 @@ public class GameController implements ContentController {
     public void respawnPowerups(List<PowerUpType> powerups) {
         for (PowerUpType powerUpType : powerups) {
 
-            StatPowerUp powerUp = new StatPowerUp(powerUpType);
+            PowerUp powerUp = new PowerUp(powerUpType);
             powerUp.setTimeStamp(this.timeSinceStart);
 
             Random generator = new Random();

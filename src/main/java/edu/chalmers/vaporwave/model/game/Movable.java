@@ -380,10 +380,6 @@ public abstract class Movable {
         this.direction = direction;
     }
 
-    public boolean getMoving() {
-        return this.moving;
-    }
-
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
@@ -402,10 +398,6 @@ public abstract class Movable {
 
     public Point getGridPosition() {
         return new Point(Utils.canvasToGridPosition(this.getCanvasPositionX(), this.getCanvasPositionY()));
-    }
-
-    public Point getPreviousGridPosition() {
-        return new Point(this.previousGridPositionX, this.previousGridPositionY);
     }
 
     public int getPreviousGridPositionX() {
@@ -457,10 +449,6 @@ public abstract class Movable {
         return this.health;
     }
 
-    public void setFlinchDelay(int delay) {
-        this.flinchDelay = delay;
-    }
-
     public boolean isInvincible() {
         return this.flinchInvincible;
     }
@@ -475,7 +463,6 @@ public abstract class Movable {
     }
 
     public boolean hasChangedState() {
-//        System.out.println("has changed? "+(movableState != previousState)+" cur state: "+movableState+", prev state: "+previousState);
         return (this.movableState != this.previousState);
     }
 
@@ -498,7 +485,6 @@ public abstract class Movable {
                 (flinchTimer * 37) +
                 (flinchDelay * 41) +
                 (name.hashCode() + 43);
-
     }
 
     @Override

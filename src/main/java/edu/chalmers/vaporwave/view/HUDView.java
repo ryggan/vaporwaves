@@ -57,7 +57,6 @@ public class HUDView {
         this.hudGC = this.hudCanvas.getGraphicsContext2D();
 
         // GAME OVER WINDOW
-
         this.gameOverWindow = Container.getSprite(SpriteID.HUD_GAMEOVER_MESSAGE);
         this.gameOverWindow.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.gameOverWindow.getWidth() / 2.0),
                 Math.round(Constants.WINDOW_HEIGHT / 2.0 - this.gameOverWindow.getHeight() / 2.0));

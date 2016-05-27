@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.view;
 
-
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.Player;
@@ -17,8 +16,6 @@ import java.util.List;
 public class StartMenuView extends AbstractMenuView {
 
     private List<MenuButtonSprite> menuButtonSpriteList;
-    private Canvas canvas;
-    private GraphicsContext gc;
 
     public StartMenuView(Group root) {
         super(root);
@@ -27,7 +24,6 @@ public class StartMenuView extends AbstractMenuView {
         menuButtonSpriteList = new ArrayList<>();
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEW_GAME, new Point(640, 200)));
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_EXIT_GAME, new Point(640, 280)));
-
     }
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
@@ -35,9 +31,6 @@ public class StartMenuView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_TITLE).setScale(1);
         Container.getSprite(SpriteID.MENU_TITLE).setPosition(70,70);
         Container.getSprite(SpriteID.MENU_TITLE).render(getBackgroundGC(),0);
-        //Container.getSprite(SpriteID.MENU_ALLCHARACTERS).setScale(1);
-        //Container.getSprite(SpriteID.MENU_ALLCHARACTERS).setPosition(0,70);
-        //Container.getSprite(SpriteID.MENU_ALLCHARACTERS).render(getBackgroundGC(),0);
 
 
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {

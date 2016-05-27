@@ -5,9 +5,6 @@ import sun.security.krb5.internal.crypto.Des;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by FEngelbrektsson on 27/05/16.
- */
 public class DestructibleWallTest {
 
     private DestructibleWall dWall = new DestructibleWall();
