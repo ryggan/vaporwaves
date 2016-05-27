@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
@@ -219,15 +220,6 @@ public class GameController implements ContentController {
             updateMovablePositions();
         }
 
-        // Removes enemies // todo: remove this?
-        if (this.deadEnemies.size() > 0) {
-            for (Enemy enemy : this.deadEnemies) {
-                this.enemies.remove(enemy);
-                this.arenaModel.removeMovable(enemy);
-            }
-            this.deadEnemies.clear();
-        }
-
         // Model updating, before letting view have at it
         if(this.gameState == GameState.GAME_RUNS) {
             this.arenaModel.updateBombs(this.timeSinceStart);
@@ -251,6 +243,9 @@ public class GameController implements ContentController {
                 gameOverStart("SCORE ACCUMULATED!");
             }
         }
+
+        // Removes dead enemies from game
+        clearDeadEnemies();
     }
 
     private void updateTimeAndState(double timeSinceStart, double timeSinceLastCall) {
@@ -433,6 +428,16 @@ public class GameController implements ContentController {
         }
     }
 
+    private void clearDeadEnemies() {
+        if (this.deadEnemies.size() > 0) {
+            for (Enemy enemy : this.deadEnemies) {
+                this.enemies.remove(enemy);
+                this.arenaModel.getArenaMovables().remove((Movable) enemy);
+            }
+            this.deadEnemies.clear();
+        }
+    }
+
     private void checkAndPlaceBomb(Player player) {
         StaticTile tile = this.arenaModel.getArenaTile(player.getCharacter().getGridPosition());
         if (tile == null || (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP)) {
@@ -447,7 +452,8 @@ public class GameController implements ContentController {
                 this.timeSinceStart, placeBombEvent.getDamage()), placeBombEvent.getGridPosition());
     }
 
-    // This method is called via the eventbus, when a gamecharacter calls placeBomb()
+    // This method is called via the eventbus, when a placed bomb's timer reaches zero,
+    // and deals with creating blast tiles of correct type everywhere the blast should reach
     @Subscribe
     public void bombDetonated(BlastEvent blastEvent) {
 
@@ -490,41 +496,11 @@ public class GameController implements ContentController {
                     StaticTile currentTile = this.arenaModel.getArenaTile(position);
                     if (currentTile != null) {
 
-                        // If a destructible wall is in the way, crack it and maybe also add an powerup
-                        if (currentTile instanceof DestructibleWall) {
-                            ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
-                            PowerUp statPowerUp = this.arenaModel.spawnPowerUp(this.enabledPowerUpList);
-                            if (statPowerUp != null) {
-                                statPowerUp.setTimeStamp(this.timeSinceStart);
-                                StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
-                                this.arenaModel.setTile(doubleTile, position);
-                            }
+                        // Checking for stuff to destory
+                        bombDetonatedDestroy(position, currentTile);
 
-                            // If a powerup, and destroyable powerups has been enabled in settings, simply destroy it
-                        } else if (this.destroyablePowerUps && currentTile instanceof PowerUp
-                                && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.IDLE) {
-                            ((PowerUp) currentTile).destroy(this.timeSinceStart);
-
-                            // If another explosive, detonate it with a tiny delay (makes for cool effects)
-                        } else if (currentTile instanceof Explosive) {
-                            ((Explosive)currentTile).setDelay(0.03, this.timeSinceStart);
-                        }
-
-                        // Multiple stacking if, 1; a blast end is in the way, 2; if blasts are ortogonal to each other,
-                        // or 3: if it's the pickup-animation for powerups
-                        if ( (currentTile instanceof Blast && ( ((Blast)currentTile).getState() == BlastState.END
-                                || Utils.isOrtogonalDirections(((Blast)currentTile).getDirection(), direction) ) )
-                                || (currentTile instanceof DoubleTile && ((DoubleTile)currentTile).contains(Blast.class))
-                        /* 3 */ || (currentTile instanceof PowerUp && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.PICKUP ) ) {
-
-                            StaticTile doubleTile = new DoubleTile(currentTile,
-                                    new Blast(explosive, state, direction, this.timeSinceStart));
-                            this.arenaModel.setTile(doubleTile, position);
-
-                            // If no special multiple stacking, then the way is definitely shut, and blast ends here.
-                        } else {
-                            blastDirections.put(direction, false);
-                        }
+                        // Checking if blast should stack on other blasts, or stop
+                        bombDetonatedStackingStop(position, currentTile, direction, explosive, state, blastDirections);
 
                         // If nothing is in the way, simply but a blast there
                     } else {
@@ -532,6 +508,50 @@ public class GameController implements ContentController {
                     }
                 }
             }
+        }
+    }
+
+    private void bombDetonatedDestroy(Point position, StaticTile currentTile) {
+        // If a destructible wall is in the way, crack it and maybe also add an powerup
+        if (currentTile instanceof DestructibleWall) {
+            bombDetonatedDestroyWall(position, currentTile);
+
+            // If a powerup, and destroyable powerups has been enabled in settings, simply destroy it
+        } else if (this.destroyablePowerUps && currentTile instanceof PowerUp
+                && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.IDLE) {
+            ((PowerUp) currentTile).destroy(this.timeSinceStart);
+
+            // If another explosive, detonate it with a tiny delay (makes for cool effects)
+        } else if (currentTile instanceof Explosive) {
+            ((Explosive)currentTile).setDelay(0.03, this.timeSinceStart);
+        }
+    }
+
+    private void bombDetonatedStackingStop(Point position, StaticTile currentTile, Direction direction,
+                                           Explosive explosive, BlastState state, Map<Direction, Boolean> blastDirections) {
+        // Multiple stacking if, 1; a blast end is in the way, 2; if blasts are ortogonal to each other,
+        // or 3: if it's the pickup-animation for powerups
+        if ( (currentTile instanceof Blast && ( ((Blast)currentTile).getState() == BlastState.END
+                || Utils.isOrtogonalDirections(((Blast)currentTile).getDirection(), direction) ) )
+                || (currentTile instanceof DoubleTile && ((DoubleTile)currentTile).contains(Blast.class))
+                        /* 3 */ || (currentTile instanceof PowerUp && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.PICKUP ) ) {
+
+            StaticTile doubleTile = new DoubleTile(currentTile, new Blast(explosive, state, direction, this.timeSinceStart));
+            this.arenaModel.setTile(doubleTile, position);
+
+        // If no special multiple stacking, then the way is definitely shut, and blast ends here.
+        } else {
+            blastDirections.put(direction, false);
+        }
+    }
+
+    private void bombDetonatedDestroyWall(Point position, StaticTile currentTile) {
+        ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
+        StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(this.enabledPowerUpList);
+        if (statPowerUp != null) {
+            statPowerUp.setTimeStamp(this.timeSinceStart);
+            StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
+            this.arenaModel.setTile(doubleTile, position);
         }
     }
 
@@ -625,8 +645,9 @@ public class GameController implements ContentController {
                 }
             }
 
-            if (!this.deadEnemies.contains((Enemy)movable)) {
-                this.deadEnemies.add((Enemy)movable);
+            Enemy enemy = (Enemy) movable;
+            if (!this.deadEnemies.contains(enemy)) {
+                this.deadEnemies.add(enemy);
             }
         }
     }
@@ -699,7 +720,6 @@ public class GameController implements ContentController {
         this.arenaModel.getArenaMovables().clear();
         this.arenaModel.clearTiles();
         this.enemies.clear();
-        this.deadEnemies.clear();
 
         GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
     }

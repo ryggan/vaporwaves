@@ -473,18 +473,8 @@ public abstract class Movable {
 
     @Override
     public int hashCode(){
-        return ((int) canvasPositionX * 5) +
-                ((int) canvasPositionY * 7) +
-                ((int) velocityX * 11) +
-                ((int) velocityY * 13) +
-                ((int) speed * 17) +
-                ((int)damage * 19) +
-                (previousGridPositionX * 23) +
-                (previousGridPositionY * 29) +
-                ((int) health * 31) +
-                (flinchTimer * 37) +
-                (flinchDelay * 41) +
-                (name.hashCode() + 43);
+        return (name.hashCode() + 43);
+
     }
 
     @Override
