@@ -116,11 +116,18 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.MENU_ROOSTER_SELECT_CPU_ON,
                 new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {5, 1}, new double[] {1, 1}, 1.0));
 
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_ALYSSA)));
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_MEI, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_MEI)));
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_CHARLOTTE)));
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_ZYPHER)));
+
         //Roostermenu
         prepareSpriteLoad(SpriteID.MENU_ROOSTER_HELP, new Sprite(Container.getImage(ImageID.MENU_ROOSTER_HELP)));
 
         //Startmenu
         prepareSpriteLoad(SpriteID.MENU_STARTMENU_HELP, new Sprite(Container.getImage(ImageID.MENU_STARTMENU_HELP)));
+        prepareSpriteLoad(SpriteID.MENU_ALLCHARACTERS, new Sprite(Container.getImage(ImageID.MENU_ALLCHARACTERS)));
+        prepareSpriteLoad(SpriteID.MENU_TITLE, new Sprite(Container.getImage(ImageID.MENU_TITLE)));
 
         // Game background and frame (5)
 

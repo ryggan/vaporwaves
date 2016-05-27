@@ -47,10 +47,10 @@ public class CharacterSelectView extends AbstractMenuView {
         }
 
         this.playerOneSprite = new SpriteID[4];
-        this.playerOneSprite[0]=SpriteID.MENU_RESULTS_MEI;
-        this.playerOneSprite[1]=SpriteID.MENU_RESULTS_ALYSSA;
-        this.playerOneSprite[2]=SpriteID.MENU_RESULTS_ZYPHER;
-        this.playerOneSprite[3]=SpriteID.MENU_RESULTS_CHARLOTTE;
+        this.playerOneSprite[0]=SpriteID.MENU_CHARACTERSELECT_MEI;
+        this.playerOneSprite[1]=SpriteID.MENU_CHARACTERSELECT_ALYSSA;
+        this.playerOneSprite[2]=SpriteID.MENU_CHARACTERSELECT_ZYPHER;
+        this.playerOneSprite[3]=SpriteID.MENU_CHARACTERSELECT_CHARLOTTE;
 
         this.selectedCharacterSprite = new SpriteID[4][4];
         this.selectedCharacterSprite[0][0] = SpriteID.MENU_CHARACTER_MEI_1;
@@ -127,11 +127,10 @@ public class CharacterSelectView extends AbstractMenuView {
             }
         }
 
-
-
         if (superSelected == 1) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
+            Container.getSprite(playerOneSprite[subSelected[1]]).setScale(1);
             Container.getSprite(playerOneSprite[subSelected[1]]).setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
             Container.getSprite(playerOneSprite[subSelected[1]]).render(getBackgroundGC(), 0);
             lastSelected=subSelected[1];

@@ -38,18 +38,24 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_BACKGROUND_LOADING, "images/menu/menu-background-loading.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_START, "images/menu/menu-background-startmenu.png");
 
-        // Character select (5):
+        // Character select (9):
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_HELP, "images/menu/menu-characterselect-help.png");
         prepareImageLoad(ImageID.MENU_CHARACTER, "images/menu/spritesheet-character-select-443x626.png");
         prepareImageLoad(ImageID.MENU_CHARACTER_SELECTOR, "images/menu/spritesheet-character-selector-24x27.png");
         prepareImageLoad(ImageID.MENU_CHECKBOX, "images/menu/spritesheet-menu-checkbox-111x118.png");
         prepareImageLoad(ImageID.MENU_ROOSTER_SELECT, "images/menu/spritesheet-rooster-select-133x94.png");
+        prepareImageLoad(ImageID.MENU_CHARACTERSELECT_ZYPHER, "images/menu/menu-zypher-characterselect.png");
+        prepareImageLoad(ImageID.MENU_CHARACTERSELECT_CHARLOTTE, "images/menu/menu-charlotte-characterselect.png");
+        prepareImageLoad(ImageID.MENU_CHARACTERSELECT_ALYSSA, "images/menu/menu-alyssa-characterselect.png");
+        prepareImageLoad(ImageID.MENU_CHARACTERSELECT_MEI, "images/menu/menu-mei-characterselect.png");
 
         //Rooster (1):
         prepareImageLoad(ImageID.MENU_ROOSTER_HELP, "images/menu/menu-rooster-help.png");
 
-        //Start (1):
+        //Start (3):
         prepareImageLoad(ImageID.MENU_STARTMENU_HELP, "images/menu/menu-startmenu-help.png");
+        prepareImageLoad(ImageID.MENU_TITLE, "images/menu/sunsetninjas.png");
+        prepareImageLoad(ImageID.MENU_ALLCHARACTERS, "images/menu/sunsetninjas2.png");
 
         // >>> GAME STUFF: <<<
 

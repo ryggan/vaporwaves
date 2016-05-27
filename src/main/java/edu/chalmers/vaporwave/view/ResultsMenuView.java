@@ -51,7 +51,7 @@ public class ResultsMenuView extends AbstractMenuView {
                 }
 
             this.winnerSprite.setScale(1);
-            this.winnerSprite.setPosition(Constants.WINDOW_WIDTH / 28, Constants.WINDOW_HEIGHT / 9);
+            this.winnerSprite.setPosition(0, Constants.WINDOW_HEIGHT / 20);
             this.winnerSprite.render(this.getBackgroundGC(), 0);
         }
 
@@ -138,7 +138,7 @@ public class ResultsMenuView extends AbstractMenuView {
     }
 
     public void initScoreboard() {
-        this.scoreboardView = new ScoreboardView(this.root, this.players, 200, 0);
+        this.scoreboardView = new ScoreboardView(this.root, this.players, 190, -40);
         this.scoreboardView.showScoreboard();
     }
 
