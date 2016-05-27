@@ -13,7 +13,7 @@ public class UtilsTest {
 
     @Test
     public void testResize() throws Exception {
-//        Image testImage = new Image()
+//
 
     }
 
@@ -24,7 +24,6 @@ public class UtilsTest {
 
     @Test
     public void testCanvasToGridPositionY() throws Exception {
-
     }
 
     @Test
@@ -34,12 +33,14 @@ public class UtilsTest {
 
     @Test
     public void testGridToCanvasPositionX() throws Exception {
-
+        int gridPosition = 5;
+        assertTrue(Utils.gridToCanvasPositionX(gridPosition) == gridPosition * Constants.DEFAULT_TILE_WIDTH);
     }
 
     @Test
     public void testGridToCanvasPositionY() throws Exception {
-
+        int gridPosition = 5;
+        assertTrue(Utils.gridToCanvasPositionY(gridPosition) == gridPosition * Constants.DEFAULT_TILE_HEIGHT);
     }
 
     @Test

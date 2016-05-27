@@ -4,7 +4,6 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.util.PowerUpType;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 
-
 public abstract class PowerUp extends StaticTile implements AnimatedTile {
 
     private int spawnChance;

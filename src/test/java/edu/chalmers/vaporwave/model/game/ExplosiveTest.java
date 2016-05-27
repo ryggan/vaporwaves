@@ -12,5 +12,4 @@ public class ExplosiveTest {
         Explosive bomb = new Bomb(gameCharacter, 10, 0, 10, 30);
         assertTrue(gameCharacter.getGridPosition().equals(bomb.getPosition()));
     }
-
 }

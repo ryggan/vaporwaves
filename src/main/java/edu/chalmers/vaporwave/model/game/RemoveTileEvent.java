@@ -1,8 +1,5 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.model.game.Blast;
-import edu.chalmers.vaporwave.model.game.StaticTile;
-
 import java.awt.*;
 
 public class RemoveTileEvent {
