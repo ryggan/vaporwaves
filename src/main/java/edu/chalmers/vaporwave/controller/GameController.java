@@ -79,6 +79,7 @@ public class GameController implements ContentController {
         enabledPowerUpList.add(PowerUpType.RANGE);
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
+        enabledPowerUpList.add(PowerUpType.FISH);
 
         this.gameType = newGameEvent.getGameType();
         this.timer = newGameEvent.getTimeLimit();
@@ -520,6 +521,9 @@ public class GameController implements ContentController {
                 break;
             case RANGE:
                 gameCharacter.setBombRange(gameCharacter.getBombRange() + 1);
+                break;
+            case FISH:
+                System.out.println("WE GOTS A FISH SIR");
                 break;
         }
     }
