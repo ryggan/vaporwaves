@@ -7,9 +7,6 @@ import javafx.scene.control.Label;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by FEngelbrektsson on 10/05/16.
- */
 public class PauseMenuController {
 
     //private List<MenuButtonSprite> pauseMenuButtons;
