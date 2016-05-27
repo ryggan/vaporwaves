@@ -242,6 +242,9 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.POWERUP_SPEED_DESTROY,
                 new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 7}, new double[] {1, 1}));
 
+        // fish
+       // prepareSpriteLoad()
+
 
         addSprites();
 

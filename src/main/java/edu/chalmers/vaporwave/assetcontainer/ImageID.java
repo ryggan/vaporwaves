@@ -56,5 +56,8 @@ public enum ImageID {
     CHARACTER_MEI_WALKIDLEFLINCHDEATH, CHARACTER_MEI_SPAWN,
 
     // enemies
-    ENEMY_PCCHAN
+    ENEMY_PCCHAN,
+
+    //fish
+    FISH
 }
