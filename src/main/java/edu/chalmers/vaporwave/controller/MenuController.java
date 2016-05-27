@@ -31,7 +31,7 @@ public class MenuController implements ContentController {
 
     private boolean pressedDown;
 
-    public MenuController(Group root) {
+    public MenuController(Group root) throws Exception {
 
         GameEventBus.getInstance().register(this);
 
@@ -92,7 +92,7 @@ public class MenuController implements ContentController {
         }
     }
 
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) throws Exception {
 
         localPlayerInput(this.newGameEvent.getPrimaryPlayer());
 
@@ -139,7 +139,8 @@ public class MenuController implements ContentController {
                 case "ENTER":
                 case "SPACE":
                 case "BTN_A":
-                    switch (menuMap.get(activeMenu).getMenuAction()) {
+                    AbstractMenu menu = menuMap.get(activeMenu);
+                    switch (menu.getMenuAction()) {
                         case EXIT_PROGRAM:
                             menuMusic.stopSound();
                             Container.getSound(SoundID.MENU_EXIT).getSound().play();
@@ -167,29 +168,26 @@ public class MenuController implements ContentController {
                             }
                             break;
                         case NO_ACTION:
-                            menuMap.get(activeMenu).performMenuAction(newGameEvent, 0);
+                            menu.performMenuAction(newGameEvent, 0);
                             if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
-                                        ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters()
-                                );
+                                        ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters());
+
                             } else if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
                                 ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
-                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers()
-                                );
+                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers());
                             }
                             break;
 
                         default:
-                            this.setActiveMenu(menuMap.get(activeMenu).getMenuAction());
+                            this.setActiveMenu(menu.getMenuAction());
                             if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
                                ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
-                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers()
-                                );
+                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers());
+
                             } else if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
-
-                                // todo: Här Lina!!
-
+                                Container.playSound(SoundID.SELECT_CHARACTER);
                             }
                             break;
                     }
@@ -200,8 +198,6 @@ public class MenuController implements ContentController {
             }
         }
     }
-
-
 
     private List<GameCharacter> getAvailableGameCharacters() {
         Set<GameCharacter> allCharacters = new HashSet<>();

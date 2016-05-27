@@ -64,7 +64,7 @@ public class GameController implements ContentController {
 
     private SoundPlayer gameMusic;
 
-    public GameController(Group root) {
+    public GameController(Group root) throws Exception {
         GameEventBus.getInstance().register(this);
 
         this.arenaView = new ArenaView(root);
@@ -73,12 +73,11 @@ public class GameController implements ContentController {
     public void initGame(Group root, NewGameEvent newGameEvent) {
 
         this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
-        this.gameMusic.playSound();
 
         enabledPowerUpList = new ArrayList<>();
-        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
-        enabledPowerUpList.add(PowerUpType.RANGE);
-        enabledPowerUpList.add(PowerUpType.HEALTH);
+//        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
+//        enabledPowerUpList.add(PowerUpType.RANGE);
+//        enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
         this.gameType = newGameEvent.getGameType();
@@ -117,7 +116,6 @@ public class GameController implements ContentController {
 
         // Starting new game
         this.arenaModel = newGame(arenaMap);
-//        this.arenaView = new ArenaView(root);
         this.pauseMenuController = new PauseMenuController(root);
 
         this.arenaView.initArena(arenaModel.getArenaTiles());
@@ -179,7 +177,7 @@ public class GameController implements ContentController {
         return false;
     }
 
-    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) {
+    public void timerUpdate(double timeSinceStart, double timeSinceLastCall) throws Exception {
 
         if (this.gameState != GameState.GAME_PAUSED) {
             this.timeSinceStart = timeSinceStart - this.timeSinceStartOffset;
@@ -222,7 +220,7 @@ public class GameController implements ContentController {
                 if (player.getClass().equals(Player.class)) {
                     playerInputAction(player);
                 } else {
-                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb()) {
+                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb() && player.getCharacter().getState() == MovableState.IDLE) {
                         checkAndPlaceBomb(player);
                     }
                     if(player.getCharacter().getState() == MovableState.IDLE) {
@@ -504,7 +502,10 @@ public class GameController implements ContentController {
                 gameCharacter.setCurrentBombCount(gameCharacter.getCurrentBombCount() + 1);
                 break;
             case SPEED:
-                gameCharacter.setSpeed(gameCharacter.getSpeed() + 0.2);
+                double gain = Constants.DEFAULT_POWERUP_SPEED_GAIN;
+                if (gameCharacter.getSpeed() < gain * 15) {
+                    gameCharacter.setSpeed(Math.round((gameCharacter.getSpeed() + gain) * 100.0) / 100.0);
+                }
                 break;
             case RANGE:
                 gameCharacter.setBombRange(gameCharacter.getBombRange() + 1);
@@ -570,13 +571,16 @@ public class GameController implements ContentController {
     public void movableSpawn(SpawnEvent spawnEvent) {
         Movable movable = spawnEvent.getMovable();
         if (movable instanceof GameCharacter) {
-
             movable.idle();
-            this.gameState = GameState.GAME_RUNS;
+
+            if(this.gameState==GameState.PRE_GAME) {
+                Container.playSound(SoundID.START_GAME);
+                this.gameMusic.playSound();
+                this.gameState = GameState.GAME_RUNS;
+            }
 
         }
 //        else if (movable instanceof Enemy) {
-//
 //        }
     }
 
@@ -616,6 +620,9 @@ public class GameController implements ContentController {
 
     private void gameOverStart(String message) {
         this.gameState = GameState.GAME_OVER;
+        Container.playSound(SoundID.TIME_UP
+
+        );
         this.arenaView.showGameOverMessage(message);
     }
 
@@ -632,9 +639,9 @@ public class GameController implements ContentController {
 
         GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
 
-        for (Player player : this.players) {
-            player.resetPlayerGameStats();
-        }
+//        for (Player player : this.players) {
+//            player.resetPlayerGameStats();
+//        }
     }
 
     public Set<GameCharacter> cloneGameCharacterSet(Set<GameCharacter> gameChars) {

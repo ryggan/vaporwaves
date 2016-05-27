@@ -13,7 +13,7 @@ class MenuButtonContainer {
     private static double tasksDone;
     private static final double totalTasks = 4 + 2 + 2;
 
-    public static void initMenuButtonContainer() {
+    public static void initMenuButtonContainer() throws Exception {
         // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         menuButtonContainer = new HashMap<>();

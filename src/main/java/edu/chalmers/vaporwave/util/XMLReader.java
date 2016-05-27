@@ -21,8 +21,8 @@ public class XMLReader {
      *
      * @return A NodeList containing all characters if reading successful, otherwise null.
      */
-    public NodeList read() {
-        try {
+    public NodeList read() throws Exception {
+//        try {
             DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(this.file);
@@ -30,15 +30,15 @@ public class XMLReader {
 
             NodeList characterList = document.getElementsByTagName("gameCharacters");
             return characterList;
-        } catch(ParserConfigurationException e) {
-            System.out.println(e);
-        } catch(IOException e) {
-            System.out.println(e);
-        } catch(SAXException e) {
-            System.out.println(e);
-        }
+//        } catch(ParserConfigurationException e) {
+//            System.out.println(e);
+//        } catch(IOException e) {
+//            System.out.println(e);
+//        } catch(SAXException e) {
+//            System.out.println(e);
+//        }
 
-        return null;
+//        return null;
     }
 
 }

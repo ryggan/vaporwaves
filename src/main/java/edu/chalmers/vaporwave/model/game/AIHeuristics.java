@@ -35,10 +35,10 @@ public class AIHeuristics {
         }
 
         //set up a meeting point in center
-        recursive(new Point((Constants.GAME_WIDTH/2 - 1),(Constants.GAME_HEIGHT/2 - 1)), 200, 10, true, 10);
+        recursive(new Point((Constants.GAME_WIDTH/2 - 1),(Constants.GAME_HEIGHT/2 - 1)), 100, 10, true, 10);
 
         for (GameCharacter gameCharacter : gameCharacters) {
-            recursive(gameCharacter.getGridPosition(), 200, 10, true, 10);
+            recursive(gameCharacter.getGridPosition(), 200, 20, true, 10);
         }
 
         for (Enemy enemy : enemies) {
@@ -58,6 +58,10 @@ public class AIHeuristics {
         }
 
         return ClonerUtility.intMatrixCloner(heuristicMatrix);
+    }
+
+    public static int getCurrentPositionValue(Point currentPosition) {
+        return heuristicMatrix[currentPosition.x][currentPosition.y];
     }
 
     //For testing purposes

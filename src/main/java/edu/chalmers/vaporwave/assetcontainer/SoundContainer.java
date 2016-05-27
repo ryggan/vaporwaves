@@ -22,10 +22,10 @@ class SoundContainer {
     private static final int NR_OF_EXIT = 1;
 
     private static double tasksDone;
-    private static final double totalTasks =  1+ 4 + NR_OF_BACKWARD_CLICK+NR_OF_STARTUP+ NR_OF_EXIT+NR_OF_FORWARD_CLICK +
+    private static final double totalTasks =  8 + NR_OF_BACKWARD_CLICK+NR_OF_STARTUP+ NR_OF_EXIT+NR_OF_FORWARD_CLICK +
             NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP + NR_OF_BACKGROUND;
 
-    public static void initSoundContainer() {
+    public static void initSoundContainer() throws Exception {
         soundVolume = 1.0;
         musicVolume = 0.5;
 
@@ -60,13 +60,13 @@ class SoundContainer {
 
         // background music (1)
         soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1 ,"menu-bgm-1.mp3", 0.8);
+        setUpSoundArray(soundPlayer, 1, "menu-bgm-1.mp3", 0.8);
         soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
 
 
-        //speech files(4)
+        //speech files(8)
         soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-exit.mp3");
+        setUpSoundArray(soundPlayer, 1, "menu-exit.wav");
         soundContainer.put(SoundID.MENU_EXIT, soundPlayer);
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-alyssa.mp3");
@@ -80,15 +80,24 @@ class SoundContainer {
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-zypher.mp3");
         soundContainer.put(SoundID.MENU_ZYPHER, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "game-start.wav");
+        soundContainer.put(SoundID.START_GAME, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-selectcharacter.wav");
+        soundContainer.put(SoundID.SELECT_CHARACTER, soundPlayer);
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu-timeup.wav");
+        soundContainer.put(SoundID.TIME_UP, soundPlayer);
 
-//        soundPlayer = new SoundPlayer[4];
-//        setUpSoundArray(soundPlayer, 4, "girl_moan4.mp3");
-//        this.soundContainer.put(SoundID.CHARACTER_FLINCH, soundPlayer);
+        //        soundPlayer = new SoundPlayer[4];
+        //        setUpSoundArray(soundPlayer, 4, "girl_moan4.mp3");
+        //        this.soundContainer.put(SoundID.CHARACTER_FLINCH, soundPlayer);
 
         setUpBackgroundSound();
     }
 
-    private static void setUpBackgroundSound() {
+    private static void setUpBackgroundSound() throws Exception {
         SoundPlayer[] soundPlayer = new SoundPlayer[1];
         soundPlayer[0] = new SoundPlayer("bg3.mp3", 0.5);
         soundPlayer[0].loopSound(true);
@@ -96,7 +105,7 @@ class SoundContainer {
         tasksDone++;
     }
 
-    private static void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName, double volume) {
+    private static void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName, double volume) throws Exception {
         array[0] = new SoundPlayer(fileName, volume);
         tasksDone++;
         for (int i = 1; i < numberOfSounds; i++) {
@@ -105,7 +114,7 @@ class SoundContainer {
         }
     }
 
-    private static void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName) {
+    private static void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName) throws Exception {
         setUpSoundArray(array, numberOfSounds, fileName, 1.0);
     }
 
