@@ -12,23 +12,23 @@ import static org.junit.Assert.*;
 public class UtilsTest {
 
     @Test
-    public void testResize() throws Exception {
-//
-
-    }
-
-    @Test
     public void testCanvasToGridPositionX() throws Exception {
-
+        double canvasPosition = 100;
+        assertTrue(Utils.canvasToGridPositionY(canvasPosition) == 6);
     }
 
     @Test
     public void testCanvasToGridPositionY() throws Exception {
+        double canvasPosition = 200;
+        assertTrue(Utils.canvasToGridPositionY(canvasPosition) == 13);
     }
 
     @Test
     public void testCanvasToGridPosition() throws Exception {
-
+        double canvasPositionX = 100;
+        double canvasPositionY = 200;
+        Point resultingPoint = new Point(6, 13);
+        assertTrue(Utils.canvasToGridPosition(canvasPositionX, canvasPositionY).equals(resultingPoint));
     }
 
     @Test
