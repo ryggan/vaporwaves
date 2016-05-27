@@ -217,15 +217,16 @@ public class GameController implements ContentController {
         // All player-specific input and pressed etc.
         if (this.gameState == GameState.GAME_RUNS) {
             for (Player player : this.players) {
-                if (player.getClass().equals(Player.class)) {
-                    playerInputAction(player);
+                if (player instanceof CPUPlayer) {
+                    CPUPlayer cpuPlayer = (CPUPlayer) player;
+                    if (cpuPlayer.getPlayerAI().shouldPutBomb() && cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
+                        checkAndPlaceBomb(cpuPlayer);
+                    }
+                    if(cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
+                        cpuPlayer.getCharacter().move(cpuPlayer.getPlayerAI().getNextMove(cpuPlayer.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
+                    }
                 } else {
-                    if (((CPUPlayer)player).getPlayerAI().shouldPutBomb() && player.getCharacter().getState() == MovableState.IDLE) {
-                        checkAndPlaceBomb(player);
-                    }
-                    if(player.getCharacter().getState() == MovableState.IDLE) {
-                        player.getCharacter().move(((CPUPlayer) player).getPlayerAI().getNextMove(player.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
-                    }
+                    playerInputAction(player);
                 }
             }
         }

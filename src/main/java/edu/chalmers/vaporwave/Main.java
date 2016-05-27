@@ -16,8 +16,15 @@ import javax.annotation.Nonnull;
 public class Main extends Application {
 
 	public static void main(String[] args) {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {}
+		});
+
 		launch(args);
 	}
+
+
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -55,7 +62,7 @@ public class Main extends Application {
 	private static class CloseWindowEventHandler implements EventHandler<WindowEvent> {
 		@Override
 		public void handle(final @Nonnull WindowEvent event) {
-			System.exit(0);
+            Runtime.getRuntime().exit(0);
 		}
 	}
 }

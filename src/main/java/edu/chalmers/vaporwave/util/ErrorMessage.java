@@ -11,7 +11,7 @@ public class ErrorMessage {
     private static Group root;
     private static ImageView imageView;
 
-    private static int timeInSeconds;
+    private static long timeInSeconds;
     private static Timer timer;
 
     private static boolean shown;
@@ -37,8 +37,7 @@ public class ErrorMessage {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    System.exit(0);
-                    System.out.println("Error message, Timer out");
+                    Runtime.getRuntime().exit(1);
                 }
             }, timeInSeconds * 1000);
             shown = true;

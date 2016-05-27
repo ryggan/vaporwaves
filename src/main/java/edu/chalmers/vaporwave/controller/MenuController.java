@@ -150,13 +150,7 @@ public class MenuController implements ContentController {
                             menuMusic.stopSound();
                             Container.getSound(SoundID.MENU_EXIT).getSound().play();
 
-
-                            Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new Runnable() {
-                                @Override
-                                public void run() {
-                                    GameEventBus.getInstance().post(new ExitGameEvent());
-                                }
-                            });
+                            Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
 
                             break;
                         case START_GAME:
@@ -317,7 +311,7 @@ public class MenuController implements ContentController {
         GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
     }
 
-    private static class endGameThread implements Runnable {
+    private static class EndGameThread implements Runnable {
         @Override
         public void run() {
             GameEventBus.getInstance().post(new ExitGameEvent());
