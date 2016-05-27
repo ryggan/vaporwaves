@@ -12,21 +12,18 @@ import java.util.Map;
 
 class FileContainer {
 
-    private static Map<FileID, File> fileContainer;
+    private final static Map<FileID, File> fileContainer = new HashMap<>();
 
-    private static Map<FileID, Font> fontContainer;
+    private final static Map<FileID, Font> fontContainer = new HashMap<>();
 
-    private static Map<FileID, Color> colorContainer;
+    private final static Map<FileID, Color> colorContainer = new HashMap<>();
 
-    private static double tasksDone;
+    private static int tasksDone;
     private static final double totalTasks = 1 + 2 + 3 + 1;
+//    private static int totalTasks = 0;
+
 
     public static void initFileContainer() throws Exception {
-        // TODO: OBS!!! IF ADDING FILES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
-
-        fileContainer = new HashMap<>();
-        fontContainer = new HashMap<>();
-        colorContainer = new HashMap<>();
 
         // Misc files (1)
         addFile(FileID.XML_CHARACTER_ENEMY, new File(Constants.GAME_CHARACTER_XML_FILE));
@@ -36,20 +33,16 @@ class FileContainer {
         addFile(FileID.VAPORMAP_BOBS1, new File("src/main/resources/maps/bobsmap.vapormap"));
 
         // Fonts (3)
-        try {
+        Font font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 14);
+        addFont(FileID.FONT_BAUHAUS_14, font);
 
-            Font font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 14);
-            addFont(FileID.FONT_BAUHAUS_14, font);
+        font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 18);
+        addFont(FileID.FONT_BAUHAUS_18, font);
 
-            font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 18);
-            addFont(FileID.FONT_BAUHAUS_18, font);
+        font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 30);
+        addFont(FileID.FONT_BAUHAUS_30, font);
 
-            font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 30);
-            addFont(FileID.FONT_BAUHAUS_30, font);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
         // Colors (1)
         Color color = Color.web(Constants.COLORNO_VAPEPINK);
@@ -76,6 +69,8 @@ class FileContainer {
         colorContainer.put(fileID, color);
         tasksDone++;
     }
+
+//    private static prepareAssetAddition()
 
     static File getFile(FileID fileID) {
         return fileContainer.get(fileID);

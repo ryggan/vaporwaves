@@ -12,8 +12,8 @@ class ImageContainer {
 
     private static Map<ImageID, Image> imageContainer;
 
-    private static double tasksDone = 0;
-    private static double totalTasks = 0;
+    private static int tasksDone = 0;
+    private static int totalTasks = 0;
     private static Set<Pair<ImageID, String>> imageSet = new HashSet<>();
 
     public static void initImageContainer() throws Exception {
