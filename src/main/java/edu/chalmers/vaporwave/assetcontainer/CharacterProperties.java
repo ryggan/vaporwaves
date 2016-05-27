@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.MovableState;
-import edu.chalmers.vaporwave.assetcontainer.CharacterSpriteProperties;
 
 import java.util.Map;
 
@@ -15,7 +14,6 @@ public class CharacterProperties {
     public CharacterProperties(String name, Map<MovableState, CharacterSpriteProperties> spriteProperties,
                                Map<CharacterStat, Double> characterStats) {
         this.name = name;
-
         this.characterStats = characterStats;
         this.spriteProperties = spriteProperties;
     }

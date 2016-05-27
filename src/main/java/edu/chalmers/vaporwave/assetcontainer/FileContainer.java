@@ -20,7 +20,6 @@ class FileContainer {
 
     private static int tasksDone;
     private static final double totalTasks = 1 + 2 + 3 + 1;
-//    private static int totalTasks = 0;
 
 
     public static void initFileContainer() throws Exception {
@@ -69,8 +68,6 @@ class FileContainer {
         colorContainer.put(fileID, color);
         tasksDone++;
     }
-
-//    private static prepareAssetAddition()
 
     static File getFile(FileID fileID) {
         return fileContainer.get(fileID);

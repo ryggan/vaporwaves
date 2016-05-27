@@ -1,27 +1,25 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.util.BlastState;
 import org.junit.Test;
-
-import java.awt.*;
 
 import static org.junit.Assert.*;
 
 public class BlastTest {
-    GameCharacter alyssa = new GameCharacter("ALYSSA", 0);
-    Point position = alyssa.getGridPosition();
 
     @Test
     public void testGetPosition() throws Exception {
-        Explosive bombish = new Bomb(alyssa, 1, 1, 1, 30);
-        Blast bMan = new Blast(bombish, BlastState.CENTER, null, 0);
-//        assertTrue(bMan.getPosition().equals(pirre.getGridPosition()));
+        GameCharacter gameCharacter = new GameCharacter();
+        Explosive bomb = new Bomb(gameCharacter, 1, 1, 1, 30);
+        System.out.println("BombPosition: " + bomb.getPosition());
+        System.out.println("AlyssaPosition: " + gameCharacter.getGridPosition());
+        assertTrue(bomb.getPosition().equals(gameCharacter.getGridPosition()));
+
     }
 
     @Test
     public void testGetRange() throws Exception {
-        Explosive bombish = new Bomb(alyssa, 1, 1, 1, 30);
-        Blast bMan = new Blast(bombish, BlastState.CENTER, null, 0);
-//        assertTrue(bMan.getRange() == 1);
+        GameCharacter gameCharacter = new GameCharacter();
+        Explosive bomb = new Bomb(gameCharacter, 1, 1, 1, 30);
+        assertTrue(bomb.getRange() == 1);
     }
 }

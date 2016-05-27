@@ -91,10 +91,6 @@ public class Container {
         return SpriteContainer.getSprite(spriteID);
     }
 
-    public static MenuButtonSprite getButton(MenuButtonID menuButtonID) {
-        return MenuButtonContainer.getButton(menuButtonID);
-    }
-
     public static MenuButtonSprite getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {
         return MenuButtonContainer.getButton(menuButtonID, positionOnCanvas);
     }

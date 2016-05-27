@@ -10,7 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 public class StatPowerUpTest {
 
-    List<PowerUpType> pList = new ArrayList<PowerUpType>();
+    List<PowerUpType> pList = new ArrayList<>();
 
     @Test
     public void testPowerUps() {
@@ -21,7 +21,6 @@ public class StatPowerUpTest {
 
         StatPowerUp stat = new StatPowerUp(pList);
 
-        System.out.println("The state is: " + stat.getPowerUpType());
         assertTrue(stat.getPowerUpType().equals(PowerUpType.HEALTH) || stat.getPowerUpType().equals(PowerUpType.BOMB_COUNT)
         || stat.getPowerUpType().equals(PowerUpType.RANGE) || stat.getPowerUpType().equals(PowerUpType.SPEED));
 

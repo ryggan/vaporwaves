@@ -40,6 +40,10 @@ public class GameCharacter extends Movable {
         this.playerID = playerID;
     }
 
+    public GameCharacter() {
+        super ("ALYSSA", 0, 0, 0);
+    }
+
     public void setSpawnPosition(Point spawnPosition) {
         setCanvasPosition(Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y));
 
