@@ -1,7 +1,5 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.model.game.GameCharacter;
-
 import java.awt.*;
 
 public class PlaceBombEvent {

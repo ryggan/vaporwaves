@@ -9,18 +9,10 @@ public class LoadingScreen {
     private double percentLoaded;
 
     public LoadingScreen() {
-
-        //SoundPlayer startup = new SoundPlayer("menu-startup.mp3");
-        //startup.playSound();
         this.percentLoaded = 0.0;
     }
 
     public void updateLoader() {
-
-
-
-
-
         percentLoaded = Container.getTasksDone() / Container.getTotalTasks();
 
         try {
