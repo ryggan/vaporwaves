@@ -21,19 +21,17 @@ class SpriteContainer {
     public static void initSpriteContainer() throws Exception {
         spriteContainer = new HashMap<>();
 
-        // Menu images and controls (36)
+        // Menu images and controls
         Image menuCharacter = Container.getImage(ImageID.MENU_CHARACTER);
 
-            //Results Menu
-
+        //Results Menu
         prepareSpriteLoad(SpriteID.MENU_RESULTS_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_RESULTS_ZYPHER), 1.0));
         prepareSpriteLoad(SpriteID.MENU_RESULTS_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_RESULTS_CHARLOTTE), 1.0));
         prepareSpriteLoad(SpriteID.MENU_RESULTS_MEI, new Sprite(Container.getImage(ImageID.MENU_RESULTS_MEI), 1.0));
         prepareSpriteLoad(SpriteID.MENU_RESULTS_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_RESULTS_ALYSSA), 1.0));
 
-            //Character Select
+        //Character Select
         prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_HELP, new Sprite((Container.getImage(ImageID.MENU_CHARACTERSELECT_HELP)), 1.0));
-
 
         prepareSpriteLoad(SpriteID.MENU_CHARACTER_ALL,
                 new Sprite(menuCharacter, new Dimension(626,443), new int[] {0, 0}, new double[] {1, 1}, 1.0));
@@ -130,8 +128,6 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.MENU_TITLE, new Sprite(Container.getImage(ImageID.MENU_TITLE)));
 
         // Game background and frame (5)
-
-
         prepareSpriteLoad(SpriteID.GAME_BACKGROUND_1, new Sprite(Container.getImage(ImageID.GAME_BACKGROUND_1)));
 
         prepareSpriteLoad(SpriteID.GAME_FRAME_NORTH_1, new Sprite(Container.getImage(ImageID.GAME_FRAME_NORTH_1)));
@@ -143,7 +139,6 @@ class SpriteContainer {
                 new AnimatedSprite(frameSouthSheet, new Dimension(402, 54), 4, 0.1, new int[] {0, 0}, new double[] {1, 1}));
 
         // HUD (8)
-
         Image hudSheet = Container.getImage(ImageID.HUD_BOX_SHEET);
 
         prepareSpriteLoad(SpriteID.MENU_PAUSE, new Sprite(Container.getImage(ImageID.MENU_PAUSE)));
@@ -162,7 +157,6 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.SCOREBOARD_BACKGROUND, new Sprite(Container.getImage(ImageID.SCOREBOARD_BACK), 1.0));
 
         // Bombs (5)
-
         Image bombBlastSpriteSheet = Container.getImage(ImageID.BOMBS_EXPLOSIONS);
         prepareSpriteLoad(SpriteID.BOMB_ALYSSA,
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 0}, new double[] {1, 1}));
@@ -176,7 +170,6 @@ class SpriteContainer {
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 2, 0.4, new int[] {0, 4}, new double[] {1, 1}));
 
         // Blasts (9)
-
         prepareSpriteLoad(SpriteID.BLAST_CENTER,
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 4}, new double[] {1, 1}));
 
@@ -199,7 +192,6 @@ class SpriteContainer {
                 new AnimatedSprite(bombBlastSpriteSheet, new Dimension(18, 18), 7, 0.1, new int[] {2, 3}, new double[] {1, 1}));
 
         // Walls (3)
-
         Image wallSpriteSheet = Container.getImage(ImageID.WALLS);
 
         prepareSpriteLoad(SpriteID.WALL_DESTR_PARASOL,
@@ -210,7 +202,6 @@ class SpriteContainer {
                 new Sprite(wallSpriteSheet, new Dimension(18, 18), new int[] {4, 2}, new double[] {1, 1}));
 
         // Powerups (16)
-
         Image powerupSpritesheet = Container.getImage(ImageID.POWERUPS);
 
         prepareSpriteLoad(SpriteID.POWERUP_HEALTH,
@@ -252,8 +243,6 @@ class SpriteContainer {
         Image fishSpritesheet = Container.getImage(ImageID.FISH);
         prepareSpriteLoad(SpriteID.FISH,
                 new AnimatedSprite(fishSpritesheet, new Dimension(26, 16), 22, 0.1, new int[] {0, 0}, new double[] {1, 1}));
-
-
 
         addSprites();
 

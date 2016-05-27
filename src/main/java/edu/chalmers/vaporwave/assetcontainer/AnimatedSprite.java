@@ -50,19 +50,15 @@ public class AnimatedSprite extends Sprite {
         super(spriteSheet, spriteDimension, startPosition, offset, scale);
 
         // Checking arguments, throwing exception if something is wrong
-        // Removed spriteDimension == null, since it will always be set in super constructor /Andreas
         if (spriteSheet == null || spriteDimension.getWidth() < 1 || spriteDimension.getHeight() < 1
                 || length <= 0 || duration <= 0.0 || startPosition[0] < 0 || startPosition[1] < 0) {
             throw new IllegalArgumentException();
         }
 
         // Setting up variables
-
         this.frames = new ArrayList<>();
-
         this.length = length;
         this.duration = duration;
-
         this.timeOffset = 0;
         this.startFromBeginning = false;
         this.lingerOnLastFrame = false;
@@ -97,9 +93,6 @@ public class AnimatedSprite extends Sprite {
     }
     public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
         this(spriteSheet, spriteDimension, length, duration, startPosition, offset, Constants.GAME_SCALE);
-    }
-    public AnimatedSprite(String fileName, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
-        this(new Image(fileName), spriteDimension, length, duration, startPosition, offset);
     }
 
     // Sets the coordinates in the spritesheet for a specific frame in the frames list.
@@ -138,7 +131,7 @@ public class AnimatedSprite extends Sprite {
 
         int index = (int)((timeToCheck % (length * duration)) / duration);
         if (lingerOnLastFrame && animationFinished) {
-            index = length-1;
+            index = length - 1;
         }
 
         double width = getWidth() * getScale();
@@ -167,10 +160,8 @@ public class AnimatedSprite extends Sprite {
 
     @Override
     public String toString() {
-        return "Animated"+super.toString() + " Length: "+length;
+        return "Animated " + super.toString() + " Length: " + length;
     }
-
-    // GETTERS AND SETTERS:
 
     public int getLength() {
         return length;
@@ -193,10 +184,6 @@ public class AnimatedSprite extends Sprite {
         this.loops = loops;
     }
 
-    public boolean isAnimationFinished() {
-        return this.animationFinished;
-    }
-
     public void setAnimationFinishedEvent(AnimationFinishedEvent animationFinishedEvent) {
         this.animationFinishedEvent = animationFinishedEvent;
     }
@@ -211,9 +198,9 @@ public class AnimatedSprite extends Sprite {
 
     @Override
     public int hashCode(){
-        int hash = 17 + super.hashCode();
-        hash += this.length * 31;
-        hash += this.duration * 73;
+        int hash = super.hashCode() * 3;
+        hash += this.length * 5;
+        hash += this.duration * 7;
         return hash;
     }
 

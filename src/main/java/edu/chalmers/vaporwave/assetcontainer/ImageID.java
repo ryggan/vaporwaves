@@ -2,8 +2,6 @@ package edu.chalmers.vaporwave.assetcontainer;
 
 public enum ImageID {
 
-    // todo: MENU STUFF
-
     // backgrounds
     MENU_BACKGROUND_1,
     MENU_BACKGROUND_RESULT,
@@ -11,9 +9,6 @@ public enum ImageID {
     MENU_BACKGROUND_ROOSTER,
     MENU_BACKGROUND_START,
     MENU_BACKGROUND_LOADING,
-
-    // buttons
-    BUTTON_SINGLEPLAYER, BUTTON_EXIT,
 
     // misc
     MENU_BUTTON_SPRITESHEET,
@@ -41,10 +36,7 @@ public enum ImageID {
 
     MENU_PAUSE,
 
-    // todo: GAME STUFF
-
-    // HUD
-//    HUD_BOX, HUD_HEALTHBAR_FILLED, HUD_STATUSBAR_FILLED, HUD_STATUSBAR_PLUS,
+    // Hud
     HUD_BOX_SHEET, HUD_TIMER_MESSAGE, HUD_GAMEOVER_MESSAGE,
     SCOREBOARD_BACK,
 

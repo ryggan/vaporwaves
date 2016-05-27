@@ -23,7 +23,5 @@ public class StatPowerUpTest {
 
         assertTrue(stat.getPowerUpType().equals(PowerUpType.HEALTH) || stat.getPowerUpType().equals(PowerUpType.BOMB_COUNT)
         || stat.getPowerUpType().equals(PowerUpType.RANGE) || stat.getPowerUpType().equals(PowerUpType.SPEED));
-
     }
-
 }
