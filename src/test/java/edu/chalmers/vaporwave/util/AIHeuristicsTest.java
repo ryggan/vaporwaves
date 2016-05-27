@@ -15,7 +15,7 @@ public class AIHeuristicsTest {
     public void heuristicTest() {
         StaticTile[][] sTiles = new StaticTile[Constants.GAME_WIDTH][Constants.GAME_HEIGHT];
         Set<GameCharacter> charSet = new HashSet<>();
-        charSet.add(new GameCharacter("Pirre", 0));
+        charSet.add(new GameCharacter());
         Set<Enemy> enemies = new HashSet<>();
 
         for(int i = 0; i < sTiles.length; i++) {

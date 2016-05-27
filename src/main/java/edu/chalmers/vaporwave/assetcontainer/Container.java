@@ -12,6 +12,8 @@ import java.io.File;
 
 public class Container {
 
+    private static boolean isInitialized = false;
+
     public static void initialize() {
         try {
             double time = System.currentTimeMillis();
@@ -32,11 +34,16 @@ public class Container {
             time = System.currentTimeMillis();
             MenuButtonContainer.initMenuButtonContainer();
             System.out.println("Menu buttons done, timed: " + (System.currentTimeMillis() - time) + " millis");
+            isInitialized = true;
 
         } catch (Exception e) {
             e.printStackTrace();
             MainController.showError();
         }
+    }
+
+    public static boolean getIsInitialized() {
+        return isInitialized;
     }
 
     public static Image getImage(ImageID imageID) {
@@ -89,10 +96,6 @@ public class Container {
 
     public static Sprite getSprite(SpriteID spriteID) {
         return SpriteContainer.getSprite(spriteID);
-    }
-
-    public static MenuButtonSprite getButton(MenuButtonID menuButtonID) {
-        return MenuButtonContainer.getButton(menuButtonID);
     }
 
     public static MenuButtonSprite getButton(MenuButtonID menuButtonID, Point positionOnCanvas) {

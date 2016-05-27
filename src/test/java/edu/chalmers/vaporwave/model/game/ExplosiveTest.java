@@ -8,11 +8,9 @@ public class ExplosiveTest {
 
     @Test
     public void explosiveTest() {
-        GameCharacter gameChar = new GameCharacter("pirre", 0);
-        Explosive expls = new Bomb(gameChar, 10, 0, 10, 30);
-        System.out.println("gamechar: " + gameChar.getGridPosition());
-        System.out.println("expl: " + expls.getPosition());
-        assertTrue(gameChar.getGridPosition().equals(expls.getPosition()));
+        GameCharacter gameCharacter = new GameCharacter();
+        Explosive bomb = new Bomb(gameCharacter, 10, 0, 10, 30);
+        assertTrue(gameCharacter.getGridPosition().equals(bomb.getPosition()));
     }
 
 }

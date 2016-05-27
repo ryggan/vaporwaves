@@ -5,32 +5,35 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameCharacterTest {
-    private GameCharacter gC = new GameCharacter("Pirre", 0);
 
     @Test
     public void testPlaceBomb() throws Exception {
-        int i = gC.getCurrentBombCount();
-        gC.placeBomb();
-        assertTrue(gC.getCurrentBombCount() == i-1);
+        GameCharacter gameCharacter = new GameCharacter();
+        gameCharacter.setMaxBombCount(1);
+        gameCharacter.setCurrentBombCount(1);
+        gameCharacter.placeBomb();
+        assertTrue(gameCharacter.getCurrentBombCount() == 0);
     }
 
     @Test
     public void testGetHealth() throws Exception {
-        gC.setHealth(5);
-        assertTrue(gC.getHealth() == 5);
+        GameCharacter gameCharacter = new GameCharacter();
+        gameCharacter.setHealth(5);
+        assertTrue(gameCharacter.getHealth() == 5);
     }
-
 
     @Test
     public void testGetBombRange() throws Exception {
-        gC.setBombRange(2);
-        assertTrue(gC.getBombRange() == 2);
+        GameCharacter gameCharacter = new GameCharacter();
+        gameCharacter.setBombRange(2);
+        assertTrue(gameCharacter.getBombRange() == 2);
     }
 
 
     @Test
     public void testGetBombCount() throws Exception {
-        gC.setCurrentBombCount(5);
-        assertTrue(gC.getCurrentBombCount() == 5);
+        GameCharacter gameCharacter = new GameCharacter();
+        gameCharacter.setCurrentBombCount(5);
+        assertTrue(gameCharacter.getCurrentBombCount() == 5);
     }
 }

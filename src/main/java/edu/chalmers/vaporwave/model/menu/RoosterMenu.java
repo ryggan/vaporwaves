@@ -76,7 +76,10 @@ public class RoosterMenu extends AbstractMenu {
             if (selectedPlayers[i] > 0 && selectedPlayers[i] < 5) {
                 newGameEvent.addPlayer(this.allPlayers.get(selectedPlayers[i] - 1));
 
-            } else if(selectedPlayers[i] == 5) {
+            }
+        }
+        for (int i = 1; i < this.selectedPlayers.length; i++) {
+            if(selectedPlayers[i] == 5) {
                 int id = 1;
                 while (!playerIDAvailable(newGameEvent.getPlayers(), id)) {
                     id++;

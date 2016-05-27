@@ -10,7 +10,6 @@ public class RandomMapGeneratorTest {
     public void testRandomMapGenerator() {
         RandomMapGenerator rm = new RandomMapGenerator();
         MapObject[][] mp = rm.generateMap();
-        rm.printMap(mp);
         assertTrue(mp[0][0].equals(MapObject.EMPTY));
         }
     }
