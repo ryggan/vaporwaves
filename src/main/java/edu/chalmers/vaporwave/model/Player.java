@@ -4,7 +4,7 @@ import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ClonerUtility;
 import net.java.games.input.Controller;
 
-public class Player {
+public class Player implements Comparable<Player> {
     private int playerID;
     private String playerName;
     private GameCharacter gameCharacter;
@@ -177,4 +177,8 @@ public class Player {
         this.deaths = 0;
     }
 
+    @Override
+    public int compareTo(Player player) {
+        return getPlayerID() - player.getPlayerID();
+    }
 }

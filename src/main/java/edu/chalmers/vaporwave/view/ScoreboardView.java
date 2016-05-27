@@ -16,9 +16,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ScoreboardView {
 
@@ -47,16 +45,12 @@ public class ScoreboardView {
         this.playerList = new ArrayList<>();
         this.playerLabels = new Label[players.size()][5];
 
-        for (int i = 0; i < players.size(); i++) {
-            this.playerList.add(null);
-        }
-
         for (Player player : players) {
-            this.playerList.set(player.getPlayerID(), player);
+            this.playerList.add(player);
         }
+        Collections.sort(this.playerList);
 
         scoreboardBackground = Container.getSprite(SpriteID.SCOREBOARD_BACKGROUND);
-
         scoreboardCanvas = new Canvas(scoreboardBackground.getWidth(), scoreboardBackground.getHeight());
 
         scoreboardCanvas.setLayoutX(xoffset);
@@ -109,18 +103,18 @@ public class ScoreboardView {
         gridPane.getColumnConstraints().add(col5);
 
         for(int i = 0; i < playerList.size(); i++) {
-            for(int j = 0; j < playerList.get(i).getPlayerInfo().length; j++) {
+            for (int j = 0; j < playerList.get(i).getPlayerInfo().length; j++) {
                 playerLabels[i][j] = new Label(playerList.get(i).getPlayerInfo()[j] + "");
                 playerLabels[i][j].setStyle("-fx-font-family: 'Lucida Console'; -fx-text-fill: black;  -fx-font-size: 16;");
                 GridPane.setMargin(playerLabels[i][j], new Insets(0, 10, 0, 10));
-                gridPane.add(playerLabels[i][j], j, i+1);
+                gridPane.add(playerLabels[i][j], j, i + 1);
             }
         }
     }
 
     public void updateScoreboard() {
         for(int i = 0; i < playerList.size(); i++) {
-            for(int j = 1; j < playerList.get(i).getPlayerInfo().length; j++) {
+            for (int j = 1; j < playerList.get(i).getPlayerInfo().length; j++) {
                 playerLabels[i][j].setText(playerList.get(i).getPlayerInfo()[j] + "");
             }
         }
