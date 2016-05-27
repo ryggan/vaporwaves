@@ -77,7 +77,7 @@ public class GameController implements ContentController {
         enabledPowerUpList.add(PowerUpType.RANGE);
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
-        //enabledPowerUpList.add(PowerUpType.FISH);
+//        enabledPowerUpList.add(PowerUpType.FISH);
 
         // Getting settings/content from newGameEvent
         this.gameType = newGameEvent.getGameType();
@@ -547,7 +547,7 @@ public class GameController implements ContentController {
 
     private void bombDetonatedDestroyWall(Point position, StaticTile currentTile) {
         ((DestructibleWall)currentTile).destroy(this.timeSinceStart);
-        StatPowerUp statPowerUp = this.arenaModel.spawnStatPowerUp(this.enabledPowerUpList);
+        PowerUp statPowerUp = this.arenaModel.spawnPowerUp(this.enabledPowerUpList);
         if (statPowerUp != null) {
             statPowerUp.setTimeStamp(this.timeSinceStart);
             StaticTile doubleTile = new DoubleTile(statPowerUp, currentTile);
