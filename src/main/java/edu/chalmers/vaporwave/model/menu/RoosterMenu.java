@@ -2,8 +2,9 @@ package edu.chalmers.vaporwave.model.menu;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
-import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.model.CPUPlayer;
+import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
 
@@ -33,12 +34,6 @@ public class RoosterMenu extends AbstractMenu {
                     Utils.getPlayerControls().get(i)[2],
                     Utils.getPlayerControls().get(i)[3]});
             player.setBombControl(Utils.getPlayerControls().get(i)[4]);
-
-//            List<Controller> gamePads = ListenerController.getInstance().getGamePads();
-//            if (gamePads.size() > player.getPlayerID() && gamePads.get(player.getPlayerID()) != null) {
-//                player.setGamePad(gamePads.get(player.getPlayerID()));
-//                System.out.println("Added gamepad: "+gamePads.get(player.getPlayerID()));
-//            }
 
             this.allPlayers.add(player);
         }
@@ -75,9 +70,12 @@ public class RoosterMenu extends AbstractMenu {
     private void updatePlayers(NewGameEvent newGameEvent) {
         newGameEvent.getPlayers().clear();
         newGameEvent.addPlayer(this.allPlayers.get(0));
+
         for (int i = 1; i < this.selectedPlayers.length; i++) {
+
             if (selectedPlayers[i] > 0 && selectedPlayers[i] < 5) {
                 newGameEvent.addPlayer(this.allPlayers.get(selectedPlayers[i] - 1));
+
             } else if(selectedPlayers[i] == 5) {
                 int id = 1;
                 while (!playerIDAvailable(newGameEvent.getPlayers(), id)) {
@@ -87,6 +85,8 @@ public class RoosterMenu extends AbstractMenu {
                 newGameEvent.addPlayer(new CPUPlayer(id, "CPU " + id));
             }
         }
+
+        GameEventBus.getInstance().post(new UpdatePlayerGamePadsEvent(newGameEvent.getPlayers(), false));
     }
 
     private boolean playerIDAvailable(Set<Player> playerSet, int ID) {

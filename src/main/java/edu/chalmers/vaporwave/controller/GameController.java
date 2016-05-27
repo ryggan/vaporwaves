@@ -75,9 +75,9 @@ public class GameController implements ContentController {
         this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
-//        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
-//        enabledPowerUpList.add(PowerUpType.RANGE);
-//        enabledPowerUpList.add(PowerUpType.HEALTH);
+        enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
+        enabledPowerUpList.add(PowerUpType.RANGE);
+        enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
 
         this.gameType = newGameEvent.getGameType();

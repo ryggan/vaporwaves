@@ -50,8 +50,7 @@ public class MenuController implements ContentController {
         player.setBombControl(Utils.getPlayerControls().get(0)[4]);
         this.newGameEvent.addPlayer(player);
 
-        updatePlayerGamePads(newGameEvent.getPlayers());
-
+        updatePlayerGamePads(newGameEvent.getPlayers(), true);
 
         this.activeMenu = MenuState.START_MENU;
         this.menuMap = new HashMap<>();
@@ -78,9 +77,15 @@ public class MenuController implements ContentController {
                 false
         );
     }
+    @Subscribe
+    public void updatePlayerGamePads(UpdatePlayerGamePadsEvent event) {
+        updatePlayerGamePads(event.getPlayers(), event.isUpdateListener());
+    }
 
-    public void updatePlayerGamePads(Set<Player> players) {
-        ListenerController.getInstance().updateGamePads();
+    public void updatePlayerGamePads(Set<Player> players, boolean updateListener) {
+        if (updateListener) {
+            ListenerController.getInstance().updateGamePads();
+        }
 
         List<Controller> gamePads = ListenerController.getInstance().getGamePads();
 
@@ -274,7 +279,7 @@ public class MenuController implements ContentController {
         }
 
         if (activeMenu == MenuState.ROOSTER) {
-            updatePlayerGamePads(this.newGameEvent.getPlayers());
+            updatePlayerGamePads(this.newGameEvent.getPlayers(), true);
         }
         this.activeMenu = activeMenu;
     }
