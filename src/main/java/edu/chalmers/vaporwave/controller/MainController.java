@@ -140,10 +140,15 @@ public class MainController {
 
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
-        this.root.getChildren().clear();
-        this.root.getChildren().add(gameRoot);
-        this.gameController.initGame(gameRoot, newGameEvent);
-        this.contentController = gameController;
+        try {
+            this.root.getChildren().clear();
+            this.root.getChildren().add(gameRoot);
+            this.gameController.initGame(gameRoot, newGameEvent);
+            this.contentController = gameController;
+
+        } catch (Exception e) {
+            ErrorMessage.show(e);
+        }
     }
 
     @Subscribe

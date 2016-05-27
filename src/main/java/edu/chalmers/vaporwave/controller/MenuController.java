@@ -17,7 +17,6 @@ import javafx.scene.Group;
 import net.java.games.input.Controller;
 
 import java.util.*;
-import java.util.concurrent.RunnableFuture;
 
 public class MenuController implements ContentController {
 
@@ -40,8 +39,8 @@ public class MenuController implements ContentController {
 
         // Menu background music
         this.menuMusic = Container.getSound(SoundID.MENU_BGM_1);
-        menuMusic.playSound();
-        menuMusic.loopSound(true);
+        this.menuMusic.playSound();
+        this.menuMusic.loopSound(true);
 
         // Setting up primary player, that will be navigate menus
         Player player;
@@ -54,7 +53,7 @@ public class MenuController implements ContentController {
         player.setBombControl(Utils.getPlayerControls().get(0)[4]);
         this.newGameEvent.addPlayer(player);
 
-        updatePlayerGamePads(newGameEvent.getPlayers(), true);
+        updatePlayerGamePads(this.newGameEvent.getPlayers(), true);
 
         // Setting up menu models
         this.activeMenu = MenuState.START_MENU;
@@ -71,7 +70,7 @@ public class MenuController implements ContentController {
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
-        this.menuViewMap.put(MenuState.RESULTS_MENU, resultsMenuView);
+        this.menuViewMap.put(MenuState.RESULTS_MENU, this.resultsMenuView);
 
         // Initiating start screen view
         updateViews(null);
@@ -97,7 +96,7 @@ public class MenuController implements ContentController {
         localPlayerPressed(this.newGameEvent.getPrimaryPlayer());
         localPlayerReleased(this.newGameEvent.getPrimaryPlayer());
 
-        for (Player player : newGameEvent.getPlayers()) {
+        for (Player player : this.newGameEvent.getPlayers()) {
             if (player.getPlayerID() != 0) {
                 remotePlayerPressed(player);
                 remotePlayerReleased(player);
@@ -106,7 +105,7 @@ public class MenuController implements ContentController {
     }
 
     private void changeSelected(Direction direction, Player player) {
-        menuMap.get(activeMenu).changeSelected(direction, player);
+        this.menuMap.get(this.activeMenu).changeSelected(direction, player);
         updateViews(player);
     }
 
@@ -140,7 +139,7 @@ public class MenuController implements ContentController {
 
         if (!allReleased.isEmpty() && player.getPlayerID() == 0) {
             String key = allReleased.get(0);
-            AbstractMenu menu = menuMap.get(activeMenu);
+            AbstractMenu menu = this.menuMap.get(this.activeMenu);
 
             switch (key) {
                 case "ENTER":
@@ -172,7 +171,7 @@ public class MenuController implements ContentController {
     }
 
     private void menuActionExitProgram() {
-        menuMusic.stopSound();
+        this.menuMusic.stopSound();
         Container.getSound(SoundID.MENU_EXIT).getSound().play();
         Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
     }
@@ -185,19 +184,20 @@ public class MenuController implements ContentController {
         }
         if (isNewGameEventReady()) {
             GameEventBus.getInstance().post(this.newGameEvent);
-            menuMusic.stopSound();
+            this.menuMusic.stopSound();
         }else{
             Container.playSound(SoundID.EXPLOSION);
         }
     }
 
     private void menuActionNoAction(AbstractMenu menu) {
-        menu.performMenuAction(newGameEvent, 0);
+        menu.performMenuAction(this.newGameEvent, 0);
     }
 
     private void menuActionDefault(AbstractMenu menu) {
         this.setActiveMenu(menu.getMenuAction());
-        if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+        if (this.menuMap.get(this.activeMenu) instanceof CharacterSelectMenu
+                    && this.menuViewMap.get(this.activeMenu) instanceof CharacterSelectView) {
             Container.playSound(SoundID.SELECT_CHARACTER);
         }
     }
@@ -249,7 +249,7 @@ public class MenuController implements ContentController {
             String key = allReleased.get(0);
 
             if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
-                menuMap.get(activeMenu).performMenuAction(newGameEvent, player.getPlayerID());
+                this.menuMap.get(this.activeMenu).performMenuAction(this.newGameEvent, player.getPlayerID());
 
                 updateViews(player);
             }
@@ -258,21 +258,25 @@ public class MenuController implements ContentController {
 
     public void updateViews(Player player) {
 
-        if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
-            ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
-                    ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters());
+        if (this.menuMap.get(this.activeMenu) instanceof CharacterSelectMenu
+                    && this.menuViewMap.get(this.activeMenu) instanceof CharacterSelectView) {
 
-            ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
+            ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setSelectedCharacters(
+                        ((CharacterSelectMenu)this.menuMap.get(this.activeMenu)).getSelectedCharacters());
 
-        } else if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
-            ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
-                    ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers());
+            ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setPlayers(this.newGameEvent.getPlayers());
+
+        } else if (this.menuMap.get(this.activeMenu) instanceof RoosterMenu
+                    && this.menuViewMap.get(this.activeMenu) instanceof RoosterMenuView) {
+
+            ((RoosterMenuView) this.menuViewMap.get(this.activeMenu)).setSelectedPlayers(
+                        ((RoosterMenu)this.menuMap.get(this.activeMenu)).getSelectedPlayers());
         }
 
-        this.menuViewMap.get(activeMenu).updateView(
-                this.menuMap.get(activeMenu).getSelectedSuper(),
-                this.menuMap.get(activeMenu).getSelectedSub(),
-                this.menuMap.get(activeMenu).getRemoteSelected(),
+        this.menuViewMap.get(this.activeMenu).updateView(
+                this.menuMap.get(this.activeMenu).getSelectedSuper(),
+                this.menuMap.get(this.activeMenu).getSelectedSub(),
+                this.menuMap.get(this.activeMenu).getRemoteSelected(),
                 player,
                 this.pressedDown
                 );
@@ -289,7 +293,7 @@ public class MenuController implements ContentController {
         }
         this.activeMenu = activeMenu;
 
-        menuMap.get(activeMenu).initMenu(this.newGameEvent);
+        this.menuMap.get(activeMenu).initMenu(this.newGameEvent);
         updateViews(this.newGameEvent.getPrimaryPlayer());
     }
 
@@ -318,8 +322,8 @@ public class MenuController implements ContentController {
     @Subscribe
     public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
 
-        resultsMenuView.setPlayers(exitToMenuEvent.getPlayers());
-        resultsMenuView.setGameType(exitToMenuEvent.getGameType());
+        this.resultsMenuView.setPlayers(exitToMenuEvent.getPlayers());
+        this.resultsMenuView.setGameType(exitToMenuEvent.getGameType());
 
         GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
     }

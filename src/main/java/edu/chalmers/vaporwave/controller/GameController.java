@@ -53,9 +53,6 @@ public class GameController implements ContentController {
 
     private GameState gameState;
 
-    private Set<GameCharacter> gameCharacters;
-
-    //seconds
     private double timer;
 
     // settings for one specific game:
@@ -70,7 +67,7 @@ public class GameController implements ContentController {
         this.arenaView = new ArenaView(root);
     }
 
-    public void initGame(Group root, NewGameEvent newGameEvent) {
+    public void initGame(Group root, NewGameEvent newGameEvent) throws Exception {
 
         this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
 
@@ -79,50 +76,38 @@ public class GameController implements ContentController {
         enabledPowerUpList.add(PowerUpType.RANGE);
         enabledPowerUpList.add(PowerUpType.HEALTH);
         enabledPowerUpList.add(PowerUpType.SPEED);
-        enabledPowerUpList.add(PowerUpType.FISH);
+        //enabledPowerUpList.add(PowerUpType.FISH);
 
+        // Getting settings/content from newGameEvent
         this.gameType = newGameEvent.getGameType();
         this.timer = newGameEvent.getTimeLimit();
         this.killLimit = newGameEvent.getKillLimit();
         this.scoreLimit = newGameEvent.getScoreLimit();
         this.destroyablePowerUps = newGameEvent.getDestroyablePowerups();
         this.respawnPowerups = newGameEvent.getRespawnPowerups();
+        this.players = newGameEvent.getPlayers();
 
+        // Initiating variables
         this.timeSinceStart = 0.0;
         this.timeSinceStartOffset = 0.0;
         this.pausedTime = 0.0;
         this.gameEndTimer = 4;
         this.gameState = GameState.PRE_GAME;
 
+        this.enemies = new HashSet<>();
+        this.deadEnemies = new HashSet<>();
+
+        // Setting up map (could also be replaced with settings from newGameEvent)
         ArenaMap arenaMap = new ArenaMap("default",
                 (new MapFileReader(Container.getFile(FileID.VAPORMAP_BOBS1))).getMapObjects());
 
-        this.players = newGameEvent.getPlayers();
-
-        gameCharacters = new HashSet<>();
-        for (Player player : newGameEvent.getPlayers()) {
-            gameCharacters.add(player.getCharacter());
-        }
-
-        for (Player player : newGameEvent.getPlayers()) {
-            player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
-            if (player instanceof  CPUPlayer) {
-                Set<GameCharacter> temporaryCharacterSet = cloneGameCharacterSet(gameCharacters);
-                temporaryCharacterSet.remove(player.getCharacter());
-                ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(temporaryCharacterSet));
-            }
-        }
-
-
-        // Starting new game
+        // Setting up model objects and view objects
         this.arenaModel = newGame(arenaMap);
         this.pauseMenuController = new PauseMenuController(root);
 
-        this.arenaView.initArena(arenaModel.getArenaTiles());
+        this.arenaView.initArena(this.arenaModel.getArenaTiles());
         this.arenaView.initHUDandScoreboard(this.players);
-        this.arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.players, 0, 0);
-//        this.arenaView.updateTimer(0);
+        this.arenaView.updateView(this.arenaModel.getArenaMovables(), this.arenaModel.getArenaTiles(), this.players, 0, 0);
 
         try {
             for (Player player : this.players) {
@@ -132,38 +117,65 @@ public class GameController implements ContentController {
             System.out.println("Tile out of bounds!");
         }
 
-        this.enemies = new HashSet<>();
-        this.deadEnemies = new HashSet<>();
+        initGameCharacters(arenaMap);
 
+        initEnemies();
 
-        Enemy felixBot = new Enemy("FelixBot", Utils.gridToCanvasPositionX(5), Utils.gridToCanvasPositionY(5), 0.4, new SemiSmartAI(gameCharacters));
-        enemies.add(felixBot);
+        // This must be done after both Enemy and GameCharacter initialization,
+        // for correct depth positioning when rendering
+        this.arenaModel.sortMovables();
+    }
+
+    private void initGameCharacters(ArenaMap arenaMap) {
+        // Separate list for only GameCharacters
+        Set<GameCharacter> gameCharacters = new HashSet<>();
+        for (Player player : this.players) {
+            player.getCharacter().setPlayerID(player.getPlayerID());
+            gameCharacters.add(player.getCharacter());
+        }
+
+        // Setting spawnpositions
+        for (Player player : this.players) {
+            player.getCharacter().setSpawnPosition(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
+            player.getCharacter().spawn(arenaMap.getSpawnPosition(Utils.getMapObjectPlayerFromID(player.getPlayerID())));
+
+            // Also adding AI, if CPU
+            if (player instanceof CPUPlayer) {
+                Set<GameCharacter> temporaryCharacterSet = cloneGameCharacterSet(gameCharacters);
+                temporaryCharacterSet.remove(player.getCharacter());
+                ((CPUPlayer)player).setPlayerAI(new SemiSmartCPUAI(temporaryCharacterSet));
+            }
+        }
+    }
+
+    private void initEnemies() {
+        Set<GameCharacter> gameCharacters = new HashSet<>();
+        for (Player player : this.players) {
+            gameCharacters.add(player.getCharacter());
+        }
+
+        // Creating enemies
         Random random = new Random();
-        for (int k = 0; k < 5; k++) {
+        for (int k = 0; k < 6; k++) {
             boolean free;
             Point spawnPosition = new Point(0,0);
             do {
                 spawnPosition.setLocation(random.nextInt(this.arenaModel.getGridWidth()), random.nextInt(this.arenaModel.getGridHeight()));
-                free = (arenaModel.getArenaTile(spawnPosition) == null && !isNearCharacter(spawnPosition));
+                free = (this.arenaModel.getArenaTile(spawnPosition) == null && !isNearCharacter(spawnPosition));
             } while (!free);
-            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y), 0.6, new SemiSmartAI(gameCharacters));
-            enemies.add(enemy);
+            Enemy enemy = new Enemy("PCCHAN "+random.nextInt(), Utils.gridToCanvasPositionX(spawnPosition.x),
+                    Utils.gridToCanvasPositionY(spawnPosition.y), 0.6, new SemiSmartAI(gameCharacters));
+            this.enemies.add(enemy);
         }
 
-        for(Enemy enemy : enemies) {
+        // Adding enemies
+        for(Enemy enemy : this.enemies) {
             try {
-                arenaModel.addMovable(enemy);
+                this.arenaModel.addMovable(enemy);
             } catch(ArrayIndexOutOfBoundsException e) {
                 System.out.println("Tile out of bounds!");
             }
         }
-
-        for(Player player : players) {
-            player.getCharacter().setPlayerID(player.getPlayerID());
-        }
-
-        this.arenaModel.sortMovables();
-
     }
 
     private boolean isNearCharacter(Point position) {
@@ -181,56 +193,88 @@ public class GameController implements ContentController {
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) throws Exception {
 
         if (this.gameState != GameState.GAME_PAUSED) {
-            this.timeSinceStart = timeSinceStart - this.timeSinceStartOffset;
-
-            if (this.gameState == GameState.GAME_RUNS) {
-                if (timer - timeSinceLastCall > 0) {
-                    timer -= timeSinceLastCall;
-                } else {
-                    timer = 0;
-                    this.arenaView.updateTimer(this.timer);
-                    gameOverStart("TIME IS UP!");
-                }
-            } else if (this.gameState == GameState.GAME_OVER) {
-                if (this.gameEndTimer- timeSinceLastCall > 0) {
-                    this.gameEndTimer -= timeSinceLastCall;
-                } else {
-                    gameOverDone();
-                }
-            }
+            updateTimeAndState(timeSinceStart, timeSinceLastCall);
         }
 
-        List<String> pressed = ListenerController.getInstance().getPressed();
+        updateGeneralInputs();
 
-        if(this.gameState == GameState.GAME_RUNS) {
-            if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
-                for (Enemy enemy : enemies) {
-                    if(enemy.getState() == MovableState.IDLE) {
-                        enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(),
-                                this.arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
-                    }
-                }
-                updatedEnemyDirection = 0;
-            }
-            updatedEnemyDirection += 1;
-        }
-
-        // All player-specific input and pressed etc.
         if (this.gameState == GameState.GAME_RUNS) {
+
+            // Player/CPU player inpout and movement etc
             for (Player player : this.players) {
                 if (player instanceof CPUPlayer) {
-                    CPUPlayer cpuPlayer = (CPUPlayer) player;
-                    if (cpuPlayer.getPlayerAI().shouldPutBomb() && cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
-                        checkAndPlaceBomb(cpuPlayer);
-                    }
-                    if(cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
-                        cpuPlayer.getCharacter().move(cpuPlayer.getPlayerAI().getNextMove(cpuPlayer.getCharacter().getGridPosition(), arenaModel.getArenaTiles(), this.enemies), arenaModel.getArenaTiles());
-                    }
+                    updateCPUPlayerInputAction(player);
                 } else {
-                    playerInputAction(player);
+                    updatePlayerInputAction(player);
+                    updatePlayerPressedAction(player);
                 }
             }
+
+            // Enemy movement etc
+            updateEnemyMovement();
         }
+
+        // Updating positions (if not paused)
+        if(this.gameState == GameState.GAME_RUNS || this.gameState == GameState.PRE_GAME) {
+            updateMovablePositions();
+        }
+
+        // Removes enemies // todo: remove this?
+        if (this.deadEnemies.size() > 0) {
+            for (Enemy enemy : this.deadEnemies) {
+                this.enemies.remove(enemy);
+                this.arenaModel.removeMovable(enemy);
+            }
+            this.deadEnemies.clear();
+        }
+
+        // Model updating, before letting view have at it
+        if(this.gameState == GameState.GAME_RUNS) {
+            this.arenaModel.updateBombs(this.timeSinceStart);
+            this.arenaModel.sortMovables();
+        }
+
+        // Calls view to update graphics
+        if(this.gameState == GameState.GAME_RUNS || this.gameState == GameState.PRE_GAME) {
+            this.arenaView.updateView(this.arenaModel.getArenaMovables(), this.arenaModel.getArenaTiles(), this.players,
+                    this.timeSinceStart, timeSinceLastCall);
+            this.arenaView.updateTimer(this.timer);
+        }
+
+        // Show scoreboard when holding tab
+        this.arenaView.showScoreboard(this.gameState == GameState.GAME_RUNS
+                && ListenerController.getInstance().getInput().contains("TAB"));
+
+        // Check if end game!
+        for (Player player : this.players) {
+            if (this.gameType == GameType.SCORE_LIMIT && player.getScore() >= this.scoreLimit) {
+                gameOverStart("SCORE ACCUMULATED!");
+            }
+        }
+    }
+
+    private void updateTimeAndState(double timeSinceStart, double timeSinceLastCall) {
+        this.timeSinceStart = timeSinceStart - this.timeSinceStartOffset;
+
+        if (this.gameState == GameState.GAME_RUNS) {
+            if (this.timer - timeSinceLastCall > 0) {
+                this.timer -= timeSinceLastCall;
+            } else {
+                this.timer = 0;
+                this.arenaView.updateTimer(this.timer);
+                gameOverStart("TIME IS UP!");
+            }
+        } else if (this.gameState == GameState.GAME_OVER) {
+            if (this.gameEndTimer- timeSinceLastCall > 0) {
+                this.gameEndTimer -= timeSinceLastCall;
+            } else {
+                gameOverDone();
+            }
+        }
+    }
+
+    private void updateGeneralInputs() {
+        List<String> pressed = ListenerController.getInstance().getPressed();
 
         for (int i = 0; i < pressed.size(); i++) {
             String key = pressed.get(i);
@@ -251,119 +295,9 @@ public class GameController implements ContentController {
                     break;
             }
         }
-
-        // Updating positions (if not paused)
-        if(this.gameState == GameState.GAME_RUNS || this.gameState == GameState.PRE_GAME) {
-
-            for (Movable movable : arenaModel.getArenaMovables()) {
-                movable.updatePosition();
-
-                // If moving and not invincible, check for things that will deal damage
-                if (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK) {
-
-                    // The enemy-check for characters only:
-                    if (movable instanceof GameCharacter) {
-
-                        GameCharacter gameCharacter = (GameCharacter) movable;
-
-                        if (!movable.isInvincible()) {
-                            for (Movable otherMovable : arenaModel.getArenaMovables()) {
-                                if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
-                                        && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
-                                    movable.dealDamage(otherMovable.getDamage());
-                                    if (movable.getHealth() <= 0) {
-                                        getPlayerForGameCharacter(gameCharacter).incrementDeaths();
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-
-                        // Walking over powerup?
-                        if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof PowerUp) {
-                            PowerUp powerUp = (PowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
-
-                            // If so, pick it up
-                            if (powerUp.getPowerUpType() != null && (powerUp.getState() == PowerUp.PowerUpState.IDLE
-                                    || powerUp.getState() == PowerUp.PowerUpState.SPAWN)) {
-                                powerUp.pickUp(this.timeSinceStart);
-                                playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
-                            }
-                        }
-                    }
-
-                    // The blast-check:
-                    if (!movable.isInvincible()) {
-                        StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
-                        Blast blast = null;
-                        if (currentTile instanceof Blast) {
-                            blast = (Blast) currentTile;
-                        } else if (currentTile instanceof DoubleTile) {
-                            blast = (Blast)((DoubleTile) currentTile).getTile(Blast.class);
-                        }
-
-                        // If blast was found, and the blast still is dangerous, deal damage
-                        if (blast != null && blast.isDangerous(this.timeSinceStart)) {
-                            movable.dealDamage(blast.getDamage());
-
-                            // Kill movable and deal kill-points, when health reaches zero
-                            if (movable.getHealth() <= 0) {
-                                if (movable instanceof GameCharacter) {
-                                    if (blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
-                                        getPlayerForID(blast.getPlayerID()).incrementKills();
-                                    }
-                                    getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
-                                } else if (movable instanceof Enemy && getPlayerForID(blast.getPlayerID()) != null) {
-                                    getPlayerForID(blast.getPlayerID()).incrementCreeps();
-                                }
-
-                            // Deal damage-points, if movable didn't die
-                            } else {
-                                if (movable instanceof GameCharacter && blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
-                                    getPlayerForID(blast.getPlayerID()).damagedCharacterScore();
-                                } else if (movable instanceof Enemy) {
-                                    getPlayerForID(blast.getPlayerID()).damagedEnemyScore();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        // Removes enemies
-        if (deadEnemies.size() > 0) {
-            for (Enemy enemy : deadEnemies) {
-                this.enemies.remove(enemy);
-                this.arenaModel.removeMovable(enemy);
-            }
-            deadEnemies.clear();
-        }
-
-        // Model updating, before letting view have at it
-        if(this.gameState == GameState.GAME_RUNS) {
-            this.arenaModel.updateBombs(this.timeSinceStart);
-            this.arenaModel.sortMovables();
-        }
-
-        // Calls view to update graphics
-        if(this.gameState == GameState.GAME_RUNS || this.gameState == GameState.PRE_GAME) {
-            arenaView.updateView(this.arenaModel.getArenaMovables(), this.arenaModel.getArenaTiles(), this.players,
-                    this.timeSinceStart, timeSinceLastCall);
-            arenaView.updateTimer(this.timer);
-        }
-
-        this.arenaView.showScoreboard(this.gameState == GameState.GAME_RUNS
-                && ListenerController.getInstance().getInput().contains("TAB"));
-
-        for (Player player : this.players) {
-            if (this.gameType == GameType.SCORE_LIMIT && player.getScore() >= this.scoreLimit) {
-                gameOverStart("SCORE ACCUMULATED!");
-            }
-        }
     }
 
-    private void playerInputAction(Player player) {
+    private void updatePlayerInputAction(Player player) {
         List<String> allInput = ListenerController.getInstance().getAllInput(player);
         for (int i = 0; i < allInput.size(); i++) {
             String key = allInput.get(i);
@@ -371,10 +305,12 @@ public class GameController implements ContentController {
                     || key.equals(player.getDirectionControls()[2]) || key.equals(player.getDirectionControls()[3])
                     || key.equals("LS_UP") || key.equals("LS_LEFT")|| key.equals("LS_DOWN")|| key.equals("LS_RIGHT")
                     || key.equals("DPAD_UP") || key.equals("DPAD_LEFT")|| key.equals("DPAD_DOWN")|| key.equals("DPAD_RIGHT")) {
-                player.getCharacter().move(Utils.getDirectionFromString(key), arenaModel.getArenaTiles());
+                player.getCharacter().move(Utils.getDirectionFromString(key), this.arenaModel.getArenaTiles());
             }
         }
+    }
 
+    private void updatePlayerPressedAction(Player player) {
         List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
         for (int i = 0; i < allPressed.size(); i++) {
             String key = allPressed.get(i);
@@ -384,8 +320,121 @@ public class GameController implements ContentController {
         }
     }
 
+    private void updateCPUPlayerInputAction(Player player) {
+        CPUPlayer cpuPlayer = (CPUPlayer) player;
+        if (cpuPlayer.getPlayerAI().shouldPutBomb() && cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
+            checkAndPlaceBomb(cpuPlayer);
+        }
+        if(cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
+            cpuPlayer.getCharacter().move(cpuPlayer.getPlayerAI().getNextMove(cpuPlayer.getCharacter().getGridPosition(),
+                    this.arenaModel.getArenaTiles(), this.enemies), this.arenaModel.getArenaTiles());
+        }
+    }
+
+    private void updateEnemyMovement() {
+        if (this.updatedEnemyDirection == Constants.ENEMY_UPDATE_RATE) {
+            for (Enemy enemy : this.enemies) {
+                if(enemy.getState() == MovableState.IDLE) {
+                    enemy.move(enemy.getAI().getNextMove(enemy.getGridPosition(),
+                            this.arenaModel.getArenaTiles(), this.enemies), this.arenaModel.getArenaTiles());
+                }
+            }
+            this.updatedEnemyDirection = 0;
+        }
+        this.updatedEnemyDirection += 1;
+    }
+
+    private void updateMovablePositions() {
+        for (Movable movable : this.arenaModel.getArenaMovables()) {
+            movable.updatePosition();
+
+            // If moving, check for things that can be walked over
+            if (movable.getState() == MovableState.IDLE || movable.getState() == MovableState.WALK) {
+
+                // GameCharacter only
+                if (movable instanceof GameCharacter) {
+                    updateMovableEnemyCheck(movable);
+                    updateMovablePowerupCheck(movable);
+                }
+
+                // The blast-check:
+                if (!movable.isInvincible()) {
+                    updateMovableBlastCheck(movable);
+                }
+            }
+        }
+    }
+
+    private void updateMovableEnemyCheck(Movable movable) {
+        GameCharacter gameCharacter = (GameCharacter) movable;
+
+        if (!movable.isInvincible()) {
+            for (Movable otherMovable : this.arenaModel.getArenaMovables()) {
+                if (otherMovable instanceof Enemy && movable.intersects(otherMovable) && !otherMovable.isInvincible()
+                        && (otherMovable.getState() == MovableState.IDLE || otherMovable.getState() == MovableState.WALK)) {
+                    movable.dealDamage(otherMovable.getDamage());
+                    if (movable.getHealth() <= 0) {
+                        getPlayerForGameCharacter(gameCharacter).incrementDeaths();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private void updateMovablePowerupCheck(Movable movable) {
+        GameCharacter gameCharacter = (GameCharacter) movable;
+
+        if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof PowerUp) {
+            PowerUp powerUp = (PowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
+
+            // If so, pick it up
+            if (powerUp.getPowerUpType() != null && (powerUp.getState() == PowerUp.PowerUpState.IDLE
+                    || powerUp.getState() == PowerUp.PowerUpState.SPAWN)) {
+                powerUp.pickUp(this.timeSinceStart);
+                playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
+            }
+        }
+    }
+
+    private void updateMovableBlastCheck(Movable movable) {
+        // Check for blast
+        StaticTile currentTile = this.arenaModel.getArenaTile(movable.getGridPosition());
+        Blast blast = null;
+        if (currentTile instanceof Blast) {
+            blast = (Blast) currentTile;
+        } else if (currentTile instanceof DoubleTile) {
+            blast = (Blast)((DoubleTile) currentTile).getTile(Blast.class);
+        }
+
+        // If blast was found, and the blast still is dangerous, deal damage
+        if (blast != null && blast.isDangerous(this.timeSinceStart)) {
+            movable.dealDamage(blast.getDamage());
+
+            // Kill movable and deal kill-points, when health reaches zero
+            if (movable.getHealth() <= 0) {
+                if (movable instanceof GameCharacter) {
+                    if (blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
+                        getPlayerForID(blast.getPlayerID()).incrementKills();
+                    }
+                    getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
+                } else if (movable instanceof Enemy && getPlayerForID(blast.getPlayerID()) != null) {
+                    getPlayerForID(blast.getPlayerID()).incrementCreeps();
+                }
+
+            // Deal damage-points, if movable didn't die
+            } else {
+                if (movable instanceof GameCharacter && blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
+                    getPlayerForID(blast.getPlayerID()).damagedCharacterScore();
+                } else if (movable instanceof Enemy) {
+                    getPlayerForID(blast.getPlayerID()).damagedEnemyScore();
+                }
+            }
+        }
+    }
+
     private void checkAndPlaceBomb(Player player) {
-        StaticTile tile = arenaModel.getArenaTile(player.getCharacter().getGridPosition());
+        StaticTile tile = this.arenaModel.getArenaTile(player.getCharacter().getGridPosition());
         if (tile == null || (tile instanceof PowerUp && ((PowerUp) tile).getState() == PowerUp.PowerUpState.PICKUP)) {
             player.getCharacter().placeBomb();
         }
@@ -452,7 +501,7 @@ public class GameController implements ContentController {
                             }
 
                             // If a powerup, and destroyable powerups has been enabled in settings, simply destroy it
-                        } else if (destroyablePowerUps && currentTile instanceof PowerUp
+                        } else if (this.destroyablePowerUps && currentTile instanceof PowerUp
                                 && ((PowerUp) currentTile).getState() == PowerUp.PowerUpState.IDLE) {
                             ((PowerUp) currentTile).destroy(this.timeSinceStart);
 
@@ -576,8 +625,8 @@ public class GameController implements ContentController {
                 }
             }
 
-            if (!deadEnemies.contains((Enemy)movable)) {
-                deadEnemies.add((Enemy)movable);
+            if (!this.deadEnemies.contains((Enemy)movable)) {
+                this.deadEnemies.add((Enemy)movable);
             }
         }
     }
@@ -653,10 +702,6 @@ public class GameController implements ContentController {
         this.deadEnemies.clear();
 
         GameEventBus.getInstance().post(new ExitToMenuEvent(destinationMenu, this.players, this.gameType));
-
-//        for (Player player : this.players) {
-//            player.resetPlayerGameStats();
-//        }
     }
 
     public Set<GameCharacter> cloneGameCharacterSet(Set<GameCharacter> gameChars) {
