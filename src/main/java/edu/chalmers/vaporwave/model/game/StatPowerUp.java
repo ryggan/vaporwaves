@@ -10,14 +10,15 @@ public class StatPowerUp extends PowerUp {
     public StatPowerUp(List<PowerUpType> enabledPowerUpList) {
 
         if(enabledPowerUpList.size() > 0) {
-            int randomMaxValue = 0;
+            int maxValue = 0;
             for (int i = 0; i < enabledPowerUpList.size(); i++) {
-                randomMaxValue += PowerUpType.getSpawnChance(enabledPowerUpList.get(i));
+                maxValue += PowerUpType.getSpawnChance(enabledPowerUpList.get(i));
             }
 
-            Random r = new Random();
-            int randomValue = r.nextInt(randomMaxValue);
-            int j = 1;
+            System.out.println("maxValue: " + maxValue  );
+
+            Random random = new Random();
+            int randomValue = random.nextInt(maxValue);
             for (int i = 0; i < enabledPowerUpList.size(); i++) {
                 setPowerUpType(enabledPowerUpList.get(randomValue));
             }
