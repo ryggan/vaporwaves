@@ -5,23 +5,26 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GameCharacterTest {
-    private GameCharacter gameCharacter = new GameCharacter("ALYSSA", 0);
 
     @Test
     public void testPlaceBomb() throws Exception {
-        int i = gameCharacter.getCurrentBombCount();
+        GameCharacter gameCharacter = new GameCharacter();
+        gameCharacter.setMaxBombCount(1);
+        gameCharacter.setCurrentBombCount(1);
         gameCharacter.placeBomb();
-        assertTrue(gameCharacter.getCurrentBombCount() == i-1);
+        assertTrue(gameCharacter.getCurrentBombCount() == 0);
     }
 
     @Test
     public void testGetHealth() throws Exception {
+        GameCharacter gameCharacter = new GameCharacter();
         gameCharacter.setHealth(5);
         assertTrue(gameCharacter.getHealth() == 5);
     }
 
     @Test
     public void testGetBombRange() throws Exception {
+        GameCharacter gameCharacter = new GameCharacter();
         gameCharacter.setBombRange(2);
         assertTrue(gameCharacter.getBombRange() == 2);
     }
@@ -29,6 +32,7 @@ public class GameCharacterTest {
 
     @Test
     public void testGetBombCount() throws Exception {
+        GameCharacter gameCharacter = new GameCharacter();
         gameCharacter.setCurrentBombCount(5);
         assertTrue(gameCharacter.getCurrentBombCount() == 5);
     }

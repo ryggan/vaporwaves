@@ -8,7 +8,7 @@ public class ExplosiveTest {
 
     @Test
     public void explosiveTest() {
-        GameCharacter gameCharacter = new GameCharacter("ALYSSA", 0);
+        GameCharacter gameCharacter = new GameCharacter();
         Explosive bomb = new Bomb(gameCharacter, 10, 0, 10, 30);
         assertTrue(gameCharacter.getGridPosition().equals(bomb.getPosition()));
     }

@@ -66,12 +66,14 @@ public class GameCharacter extends Movable {
     public void placeBomb() {
         if (this.currentBombCount > 0 && (getState() == MovableState.IDLE || getState() == MovableState.WALK)) {
 
-            Container.playSound(SoundID.PLACE_BOMB);
+            if (Container.getIsInitialized()) {
+                Container.playSound(SoundID.PLACE_BOMB);
+            }
 
             GameEventBus.getInstance().post(new PlaceBombEvent(this, Utils.canvasToGridPosition(this.getCanvasPositionX(),
                     this.getCanvasPositionY()), bombRange, getDamage()));
 
-            setCurrentBombCount(getCurrentBombCount()-1);
+            setCurrentBombCount(getCurrentBombCount() - 1);
         }
     }
 
