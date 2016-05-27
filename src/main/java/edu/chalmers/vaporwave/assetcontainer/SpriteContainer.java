@@ -242,8 +242,10 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.POWERUP_SPEED_DESTROY,
                 new AnimatedSprite(powerupSpritesheet, new Dimension(18, 18), 9, 0.1, new int[] {9, 7}, new double[] {1, 1}));
 
-        // fish
-       // prepareSpriteLoad()
+        Image fishSpritesheet = Container.getImage(ImageID.FISH);
+        prepareSpriteLoad(SpriteID.FISH,
+                new AnimatedSprite(fishSpritesheet, new Dimension(26, 16), 22, 0.1, new int[] {0, 0}, new double[] {1, 1}));
+
 
 
         addSprites();

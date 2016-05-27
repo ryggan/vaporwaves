@@ -22,7 +22,6 @@ public class AIHeuristics {
             }
         }
 
-
         for(int i = 0; i < arenaTiles.length; i++) {
             for (int j = 0; j < arenaTiles[0].length; j++) {
                 if(arenaTiles[i][j] instanceof DestructibleWall) {

@@ -47,7 +47,6 @@ public class ArenaView {
     private Sprite characterSparkleSprite;
     private CharacterSprite enemySprite;
     private Sprite[] bombSprite = new Sprite[4];
-    private Sprite mineSprite;
 
     private Sprite destructibleWallSprite;
     private Sprite destructibleWallDestroyedSprite;
@@ -134,7 +133,6 @@ public class ArenaView {
         bombSprite[1] = Container.getSprite(SpriteID.BOMB_CHARLOTTE);
         bombSprite[2] = Container.getSprite(SpriteID.BOMB_ZYPHER);
         bombSprite[3] = Container.getSprite(SpriteID.BOMB_MEI);
-        mineSprite = Container.getSprite(SpriteID.MINE);
 
         // Walls
         destructibleWallSprite = Container.getSprite(SpriteID.WALL_DESTR_PARASOL);
@@ -146,21 +144,25 @@ public class ArenaView {
         powerUpSprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT));
         powerUpSprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE));
         powerUpSprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED));
+        powerUpSprites.put(PowerUpType.FISH, Container.getSprite(SpriteID.FISH));
 
         powerUpSpawnSprites.put(PowerUpType.HEALTH, Container.getSprite(SpriteID.POWERUP_HEALTH_SPAWN));
         powerUpSpawnSprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT_SPAWN));
         powerUpSpawnSprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE_SPAWN));
         powerUpSpawnSprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED_SPAWN));
+        powerUpSpawnSprites.put(PowerUpType.FISH, Container.getSprite(SpriteID.FISH));
 
         powerUpPickupSprites.put(PowerUpType.HEALTH, Container.getSprite(SpriteID.POWERUP_HEALTH_PICKUP));
         powerUpPickupSprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT_PICKUP));
         powerUpPickupSprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE_PICKUP));
         powerUpPickupSprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED_PICKUP));
+        powerUpPickupSprites.put(PowerUpType.FISH, Container.getSprite(SpriteID.FISH));
 
         powerUpDestroySprites.put(PowerUpType.HEALTH, Container.getSprite(SpriteID.POWERUP_HEALTH_DESTROY));
         powerUpDestroySprites.put(PowerUpType.BOMB_COUNT, Container.getSprite(SpriteID.POWERUP_BOMBCOUNT_DESTROY));
         powerUpDestroySprites.put(PowerUpType.RANGE, Container.getSprite(SpriteID.POWERUP_RANGE_DESTROY));
         powerUpDestroySprites.put(PowerUpType.SPEED, Container.getSprite(SpriteID.POWERUP_SPEED_DESTROY));
+        powerUpDestroySprites.put(PowerUpType.FISH, Container.getSprite(SpriteID.FISH));
 
         // Blasts
         blastSpriteCenter = Container.getSprite(SpriteID.BLAST_CENTER);
@@ -499,21 +501,16 @@ public class ArenaView {
             } else if (tile instanceof IndestructibleWall) {
                 return indestructibleWallSprite;
             }
-        } else if (tile instanceof Explosive) {
-            if (tile instanceof Bomb) {
-
-                String name = ((Bomb)tile).getOwner().getName();
-                if (name.equals("ALYSSA")) {
-                    return bombSprite[0];
-                } else if (name.equals("ZYPHER")) {
-                    return bombSprite[1];
-                } else if (name.equals("CHARLOTTE")) {
-                    return bombSprite[2];
-                } else if (name.equals("MEI")) {
-                    return bombSprite[3];
-                }
-            } else if (tile instanceof Mine) {
-                return mineSprite;
+        } else if (tile instanceof Bomb) {
+            String name = ((Bomb)tile).getOwner().getName();
+            if (name.equals("ALYSSA")) {
+                return bombSprite[0];
+            } else if (name.equals("ZYPHER")) {
+                return bombSprite[1];
+            } else if (name.equals("CHARLOTTE")) {
+                return bombSprite[2];
+            } else if (name.equals("MEI")) {
+                return bombSprite[3];
             }
         } else if (tile instanceof PowerUp) {
             if (((PowerUp) tile).getState() == PowerUp.PowerUpState.SPAWN) {

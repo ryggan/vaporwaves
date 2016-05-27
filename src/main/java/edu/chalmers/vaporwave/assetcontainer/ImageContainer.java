@@ -96,7 +96,7 @@ class ImageContainer {
         prepareImageLoad(ImageID.POWERUPS, "images/spritesheet-powerups-18x18.png");
 
         //Fish
-        prepareImageLoad(ImageID.FISH, "images/fish/orret.png");
+        prepareImageLoad(ImageID.FISH, "images/spritesheet-fish-26x16.png");
 
         addImages();
     }

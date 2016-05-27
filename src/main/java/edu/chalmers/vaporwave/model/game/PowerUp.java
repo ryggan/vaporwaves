@@ -6,21 +6,12 @@ import edu.chalmers.vaporwave.assetcontainer.SoundID;
 
 public abstract class PowerUp extends StaticTile implements AnimatedTile {
 
-    private int spawnChance;
-    private int statusEffect;
     private PowerUpType powerUpType;
     private PowerUpState powerUpState;
     private double timeStamp;
 
     public enum PowerUpState {
         SPAWN, IDLE, PICKUP, DESTROY
-    }
-
-    public PowerUp(int spawnChance, int statusEffect, PowerUpType powerUpType){
-        this();
-        this.spawnChance = spawnChance;
-        this.statusEffect = statusEffect;
-        this.powerUpType = powerUpType;
     }
 
     public PowerUp() {
@@ -38,14 +29,6 @@ public abstract class PowerUp extends StaticTile implements AnimatedTile {
     public void destroy(double timeStamp) {
         setState(PowerUpState.DESTROY);
         setTimeStamp(timeStamp);
-    }
-
-    public int getSpawnChance(){
-        return spawnChance;
-    }
-
-    public int getStatusEffect(){
-        return statusEffect;
     }
 
     public void setPowerUpType(PowerUpType powerUpType) {

@@ -413,7 +413,7 @@ public class GameController implements ContentController {
 
         Explosive explosive = blastEvent.getExplosive();
 
-        // The center is ALLWAYS a blast
+        // The center is ALWAYS a blast
         this.arenaModel.setTile(new Blast(explosive, BlastState.CENTER, null, this.timeSinceStart), explosive.getPosition());
 
         // Next, going through every tile within blast range

@@ -86,7 +86,6 @@ public class MainController {
 
     public void initApplication() {
         try {
-
             GameEventBus.getInstance().register(this);
 
             this.menuRoot = new Group();
@@ -126,8 +125,6 @@ public class MainController {
                     double timeSinceStart = (currentNanoTime - startNanoTime) / 1000000000.0;
 
                     contentController.timerUpdate(timeSinceStart, timeSinceLastCall);
-
-                    // Listener cleanup and updating
 
                     ListenerController.getInstance().updateGamePadInputs();
                     ListenerController.getInstance().clearPressed();
