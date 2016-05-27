@@ -12,34 +12,35 @@ import static org.junit.Assert.*;
 public class UtilsTest {
 
     @Test
-    public void testResize() throws Exception {
-//        Image testImage = new Image()
-
-    }
-
-    @Test
     public void testCanvasToGridPositionX() throws Exception {
-
+        double canvasPosition = 100;
+        assertTrue(Utils.canvasToGridPositionY(canvasPosition) == 6);
     }
 
     @Test
     public void testCanvasToGridPositionY() throws Exception {
-
+        double canvasPosition = 200;
+        assertTrue(Utils.canvasToGridPositionY(canvasPosition) == 13);
     }
 
     @Test
     public void testCanvasToGridPosition() throws Exception {
-
+        double canvasPositionX = 100;
+        double canvasPositionY = 200;
+        Point resultingPoint = new Point(6, 13);
+        assertTrue(Utils.canvasToGridPosition(canvasPositionX, canvasPositionY).equals(resultingPoint));
     }
 
     @Test
     public void testGridToCanvasPositionX() throws Exception {
-
+        int gridPosition = 5;
+        assertTrue(Utils.gridToCanvasPositionX(gridPosition) == gridPosition * Constants.DEFAULT_TILE_WIDTH);
     }
 
     @Test
     public void testGridToCanvasPositionY() throws Exception {
-
+        int gridPosition = 5;
+        assertTrue(Utils.gridToCanvasPositionY(gridPosition) == gridPosition * Constants.DEFAULT_TILE_HEIGHT);
     }
 
     @Test
