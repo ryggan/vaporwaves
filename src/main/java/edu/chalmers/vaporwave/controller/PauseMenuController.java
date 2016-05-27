@@ -9,6 +9,7 @@ import java.util.List;
 
 public class PauseMenuController {
 
+    // todo: Is this needed?
     //private List<MenuButtonSprite> pauseMenuButtons;
    // private List<MenuButtonSprite> optionsMenuButtons;
 
@@ -20,6 +21,7 @@ public class PauseMenuController {
 
     public PauseMenuController(Group root) {
         pauseMenuLabels = new ArrayList<>();
+        // todo: Is this needed?
         //pauseMenuLabels.add(new Label("Resume"));
         //should be options
         pauseMenuLabels.add(new Label("[Game is paused!]"));

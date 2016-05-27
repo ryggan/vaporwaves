@@ -8,9 +8,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by FEngelbrektsson on 26/04/16.
- */
 public class StatPowerUpTest {
 
     List<PowerUpType> pList = new ArrayList<PowerUpType>();

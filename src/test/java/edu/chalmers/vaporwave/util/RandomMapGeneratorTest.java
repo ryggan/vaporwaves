@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by FEngelbrektsson on 21/04/16.
- */
 public class RandomMapGeneratorTest {
 
     @Test

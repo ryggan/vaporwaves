@@ -1,9 +1,9 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
 public enum CharacterID {
-    // playable characters
+    // Playable characters
     ALYSSA, CHARLOTTE, ZYPHER, MEI,
 
-    // enemies
+    // Enemies
     PCCHAN
 }

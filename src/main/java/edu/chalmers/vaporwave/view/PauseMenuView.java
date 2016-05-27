@@ -33,6 +33,7 @@ public class PauseMenuView {
     private Sprite pauseMenuSprite;
     private Group root;
 
+    // todo: Is this needed?
     // private Sprite pauseMenuBackground;
     //private ArrayList<Label> labels;
     //private AnchorPane pauseMenuPane;
@@ -60,6 +61,7 @@ public class PauseMenuView {
         this.pauseGC = pauseCanvas.getGraphicsContext2D();
         pauseMenuSprite.render(pauseGC,-1);
 
+        // todo: Is this needed?
 /*        pauseMenuBackground.setPosition(0, 0);
         pauseMenuBackground.setScale(Constants.GAME_SCALE);
         pauseMenuBackground.render(pauseMenuGC, -1);*/

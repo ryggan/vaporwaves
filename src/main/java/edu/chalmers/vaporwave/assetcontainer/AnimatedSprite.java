@@ -16,8 +16,6 @@ import java.util.Objects;
 /**
  * An extended version of Sprite that functions in much the same way, with the only addition
  * that animated picture now is supported.
- *
- * Created by bob on 2016-04-15.
  */
 public class AnimatedSprite extends Sprite {
 
@@ -77,7 +75,6 @@ public class AnimatedSprite extends Sprite {
                 (int)Math.floor(spriteSheet.getHeight() / spriteDimension.getHeight()));
 
         // Initiating frames-list, by calculating every coordinate in the spritesheet
-
         int posx, posy;
 
         for (int i = 0; i < length; i++) {

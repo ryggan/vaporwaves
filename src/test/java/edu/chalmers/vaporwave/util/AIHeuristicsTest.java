@@ -9,9 +9,6 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by FEngelbrektsson on 26/04/16.
- */
 public class AIHeuristicsTest {
 
     @Test
