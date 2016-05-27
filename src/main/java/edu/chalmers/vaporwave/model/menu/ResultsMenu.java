@@ -42,4 +42,9 @@ public class ResultsMenu extends AbstractMenu {
 
     }
 
+    @Override
+    public void initMenu(NewGameEvent newGameEvent) {
+
+    }
+
 }

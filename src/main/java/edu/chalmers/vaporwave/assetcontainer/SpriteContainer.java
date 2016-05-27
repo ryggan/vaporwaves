@@ -23,13 +23,13 @@ class SpriteContainer {
 
             //Results Menu
 
-        addSprite(SpriteID.MENU_RESULTS_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_RESULTS_ZYPHER)));
-        addSprite(SpriteID.MENU_RESULTS_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_RESULTS_CHARLOTTE)));
-        addSprite(SpriteID.MENU_RESULTS_MEI, new Sprite(Container.getImage(ImageID.MENU_RESULTS_MEI)));
-        addSprite(SpriteID.MENU_RESULTS_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_RESULTS_ALYSSA)));
+        addSprite(SpriteID.MENU_RESULTS_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_RESULTS_ZYPHER), 1.0));
+        addSprite(SpriteID.MENU_RESULTS_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_RESULTS_CHARLOTTE), 1.0));
+        addSprite(SpriteID.MENU_RESULTS_MEI, new Sprite(Container.getImage(ImageID.MENU_RESULTS_MEI), 1.0));
+        addSprite(SpriteID.MENU_RESULTS_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_RESULTS_ALYSSA), 1.0));
 
             //Character Select
-        addSprite(SpriteID.MENU_CHARACTERSELECT_HELP, new Sprite((Container.getImage(ImageID.MENU_CHARACTERSELECT_HELP))));
+        addSprite(SpriteID.MENU_CHARACTERSELECT_HELP, new Sprite((Container.getImage(ImageID.MENU_CHARACTERSELECT_HELP)), 1.0));
 
         addSprite(SpriteID.MENU_CHARACTER_ALL,
                 new Sprite(menuCharacter, new Dimension(626,443), new int[] {0, 0}, new double[] {1, 1}, 1.0));

@@ -4,12 +4,12 @@ import edu.chalmers.vaporwave.model.Player;
 
 import java.util.Set;
 
-public class UpdatePlayerGamePadsEvent {
+public class RoosterPlayersUpdatedEvent {
 
     private Set<Player> players;
     private boolean updateListener;
 
-    public UpdatePlayerGamePadsEvent(Set<Player> players, boolean updateListener) {
+    public RoosterPlayersUpdatedEvent(Set<Player> players, boolean updateListener) {
         this.players = players;
         this.updateListener = updateListener;
     }

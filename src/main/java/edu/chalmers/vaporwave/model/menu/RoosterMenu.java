@@ -86,7 +86,7 @@ public class RoosterMenu extends AbstractMenu {
             }
         }
 
-        GameEventBus.getInstance().post(new UpdatePlayerGamePadsEvent(newGameEvent.getPlayers(), false));
+        GameEventBus.getInstance().post(new RoosterPlayersUpdatedEvent(newGameEvent.getPlayers(), false));
     }
 
     private boolean playerIDAvailable(Set<Player> playerSet, int ID) {
@@ -113,5 +113,10 @@ public class RoosterMenu extends AbstractMenu {
             returnValue[i] = this.selectedPlayers[i];
         }
         return returnValue;
+    }
+
+    @Override
+    public void initMenu(NewGameEvent newGameEvent) {
+
     }
 }
