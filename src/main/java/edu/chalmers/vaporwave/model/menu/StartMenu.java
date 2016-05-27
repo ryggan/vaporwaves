@@ -24,4 +24,9 @@ public class StartMenu extends AbstractMenu {
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
         System.out.println("Performing menu event in characterSelect");
     }
+
+    @Override
+    public void initMenu(NewGameEvent newGameEvent) {
+
+    }
 }

@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.model.menu;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
+import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ClonerUtility;
@@ -46,8 +47,8 @@ public class CharacterSelectMenu extends AbstractMenu {
             this.selectedCharacters[getSelectedSub()[1]] = 0;
             newGameEvent.getPrimaryPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
             Container.playSound(soundIDs[this.getSelectedSub()[1]]);
-        } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
 
+        } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
             unselectCharacterForPlayer(playerID);
             this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
 
@@ -55,6 +56,23 @@ public class CharacterSelectMenu extends AbstractMenu {
                 if (player.getPlayerID() == playerID) {
                     player.setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)], playerID));
                     Container.playSound(soundIDs[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)]);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void initMenu(NewGameEvent newGameEvent) {
+        for (int i = 0; i < this.selectedCharacters.length; i++) {
+            if (this.selectedCharacters[i] != -1) {
+                boolean playerStillHere = false;
+                for (Player player : newGameEvent.getPlayers()) {
+                    if (!(player instanceof CPUPlayer) && player.getPlayerID() == this.selectedCharacters[i]) {
+                        playerStillHere = true;
+                    }
+                }
+                if (!playerStillHere) {
+                    this.selectedCharacters[i] = -1;
                 }
             }
         }

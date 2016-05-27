@@ -15,8 +15,8 @@ class CharacterContainer {
     private static Map<CharacterID, CharacterSprite> spriteContainer;
     private static Map<CharacterID, CharacterProperties> propertiesContainer;
 
-    private static double tasksDone;
-    private static final double totalTasks = 14 * 5;
+    private static int tasksDone;
+    private static final int totalTasks = 14 * 5;
 
     public static void initCharacterContainer() throws Exception {
         spriteContainer = new HashMap<>();

@@ -78,10 +78,6 @@ public class MenuController implements ContentController {
                 false
         );
     }
-    @Subscribe
-    public void updatePlayerGamePads(UpdatePlayerGamePadsEvent event) {
-        updatePlayerGamePads(event.getPlayers(), event.isUpdateListener());
-    }
 
     public void updatePlayerGamePads(Set<Player> players, boolean updateListener) {
         if (updateListener) {
@@ -153,6 +149,7 @@ public class MenuController implements ContentController {
                             Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
 
                             break;
+
                         case START_GAME:
                             for (Player p : this.newGameEvent.getPlayers()) {
                                 if(p.getClass().equals(CPUPlayer.class)){
@@ -166,26 +163,14 @@ public class MenuController implements ContentController {
                                 Container.playSound(SoundID.EXPLOSION);
                             }
                             break;
+
                         case NO_ACTION:
                             menu.performMenuAction(newGameEvent, 0);
-                            if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
-                                ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
-                                        ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters());
-
-                            } else if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
-                                ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
-                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers());
-                            }
                             break;
 
                         default:
                             this.setActiveMenu(menu.getMenuAction());
-                            if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
-                               ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
-                                        ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers());
-
-                            } else if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
-                                ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
+                            if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
                                 Container.playSound(SoundID.SELECT_CHARACTER);
                             }
                             break;
@@ -214,8 +199,6 @@ public class MenuController implements ContentController {
         List<GameCharacter> availableCharacters = new ArrayList<>();
         availableCharacters.addAll(allCharacters);
         Collections.shuffle(availableCharacters);
-
-//        System.out.println("Available characters: "+availableCharacters);
 
         return availableCharacters;
     }
@@ -247,25 +230,31 @@ public class MenuController implements ContentController {
             if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
                 menuMap.get(activeMenu).performMenuAction(newGameEvent, player.getPlayerID());
 
-                if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
-                    ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
-                            ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters()
-                    );
-                }
-
                 updateViews(player);
             }
         }
     }
 
     public void updateViews(Player player) {
-      this.menuViewMap.get(activeMenu).updateView(
-                    this.menuMap.get(activeMenu).getSelectedSuper(),
-                    this.menuMap.get(activeMenu).getSelectedSub(),
-                    this.menuMap.get(activeMenu).getRemoteSelected(),
-                    player,
-                    this.pressedDown
-            );
+
+        if (menuMap.get(activeMenu) instanceof CharacterSelectMenu && menuViewMap.get(activeMenu) instanceof CharacterSelectView) {
+            ((CharacterSelectView) menuViewMap.get(activeMenu)).setSelectedCharacters(
+                    ((CharacterSelectMenu)menuMap.get(activeMenu)).getSelectedCharacters());
+
+            ((CharacterSelectView) menuViewMap.get(activeMenu)).setPlayers(this.newGameEvent.getPlayers());
+
+        } else if (menuMap.get(activeMenu) instanceof RoosterMenu && menuViewMap.get(activeMenu) instanceof RoosterMenuView) {
+            ((RoosterMenuView) menuViewMap.get(activeMenu)).setSelectedPlayers(
+                    ((RoosterMenu)menuMap.get(activeMenu)).getSelectedPlayers());
+        }
+
+        this.menuViewMap.get(activeMenu).updateView(
+                this.menuMap.get(activeMenu).getSelectedSuper(),
+                this.menuMap.get(activeMenu).getSelectedSub(),
+                this.menuMap.get(activeMenu).getRemoteSelected(),
+                player,
+                this.pressedDown
+                );
     }
 
     public void setActiveMenu(MenuState activeMenu){
@@ -278,6 +267,9 @@ public class MenuController implements ContentController {
             updatePlayerGamePads(this.newGameEvent.getPlayers(), true);
         }
         this.activeMenu = activeMenu;
+
+        menuMap.get(activeMenu).initMenu(this.newGameEvent);
+        updateViews(this.newGameEvent.getPrimaryPlayer());
     }
 
     private boolean isNewGameEventReady() {
@@ -309,6 +301,11 @@ public class MenuController implements ContentController {
         resultsMenuView.setGameType(exitToMenuEvent.getGameType());
 
         GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
+    }
+
+    @Subscribe
+    public void roosterPlayersUpdated(RoosterPlayersUpdatedEvent event) {
+        updatePlayerGamePads(this.newGameEvent.getPlayers(), event.isUpdateListener());
     }
 
     private static class EndGameThread implements Runnable {

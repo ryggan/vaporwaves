@@ -111,4 +111,6 @@ public abstract class AbstractMenu {
     }
 
     public abstract void performMenuAction(NewGameEvent newGameEvent, int playerID);
+
+    public abstract void initMenu(NewGameEvent newGameEvent);
 }

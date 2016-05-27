@@ -118,7 +118,6 @@ public class CharacterSelectView extends AbstractMenuView {
 
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).setPosition(Constants.WINDOW_WIDTH-
                 Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).getWidth()-4, 4);
-        Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).setScale(1);
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).render(getBackgroundGC(), 0);
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
@@ -134,13 +133,11 @@ public class CharacterSelectView extends AbstractMenuView {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
             Container.getSprite(playerOneSprite[subSelected[1]]).setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
-            Container.getSprite(playerOneSprite[subSelected[1]]).setScale(1);
             Container.getSprite(playerOneSprite[subSelected[1]]).render(getBackgroundGC(), 0);
             lastSelected=subSelected[1];
         }
 
         Container.getSprite(playerOneSprite[lastSelected]).setPosition(Constants.WINDOW_WIDTH/28,Constants.WINDOW_HEIGHT/9);
-        Container.getSprite(playerOneSprite[lastSelected]).setScale(1);
         Container.getSprite(playerOneSprite[lastSelected]).render(getBackgroundGC(), 0);
 
         if (playerSetContainsPlayerWithID(1)) {
