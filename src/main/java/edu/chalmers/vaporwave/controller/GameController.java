@@ -121,7 +121,7 @@ public class GameController implements ContentController {
         this.arenaView.initArena(arenaModel.getArenaTiles());
         this.arenaView.initHUDandScoreboard(this.players);
         this.arenaView.updateView(arenaModel.getArenaMovables(), arenaModel.getArenaTiles(), this.players, 0, 0);
-        this.arenaView.updateTimer(0); // todo: ?
+//        this.arenaView.updateTimer(0);
 
         try {
             for (Player player : this.players) {
@@ -304,6 +304,8 @@ public class GameController implements ContentController {
                         // If blast was found, and the blast still is dangerous, deal damage
                         if (blast != null && blast.isDangerous(this.timeSinceStart)) {
                             movable.dealDamage(blast.getDamage());
+
+                            // Kill movable and deal kill-points, when health reaches zero
                             if (movable.getHealth() <= 0) {
                                 if (movable instanceof GameCharacter) {
                                     if (blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
@@ -312,6 +314,14 @@ public class GameController implements ContentController {
                                     getPlayerForGameCharacter((GameCharacter)movable).incrementDeaths();
                                 } else if (movable instanceof Enemy && getPlayerForID(blast.getPlayerID()) != null) {
                                     getPlayerForID(blast.getPlayerID()).incrementCreeps();
+                                }
+
+                            // Deal damage-points, if movable didn't die
+                            } else {
+                                if (movable instanceof GameCharacter && blast.getPlayerID() != ((GameCharacter) movable).getPlayerID()) {
+                                    getPlayerForID(blast.getPlayerID()).damagedCharacterScore();
+                                } else if (movable instanceof Enemy) {
+                                    getPlayerForID(blast.getPlayerID()).damagedEnemyScore();
                                 }
                             }
                         }

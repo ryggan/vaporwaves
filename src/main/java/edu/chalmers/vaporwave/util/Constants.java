@@ -40,9 +40,11 @@ public class Constants {
 
     public static final String COLORNO_VAPEPINK = "#fd2881";
 
-    public static final String MEI_STATS = "1.7 - 40 - 1 - 1";
-    public static final String ALYSSA_STATS = "1.5 - 50 - 1 - 1";
-    public static final String CHARLOTTE_STATS = "1.3 - 50 - 1 - 2";
-    public static final String ZYPHER_STATS = "1.3 - 50 - 2 - 1";
+    public static final int SCORE_KILL_CHARACTER = 500;
+    public static final int SCORE_KILL_ENEMY = 100;
+    public static final int SCORE_POWERUP = 50;
+    public static final int SCORE_DAMAGE_CHARACTER = 20;
+    public static final int SCORE_DAMAGE_ENEMY = 10;
+    public static final int SCORE_DEATH_PENALTY = -200;
 }
 

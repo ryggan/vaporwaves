@@ -2,6 +2,7 @@ package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.ClonerUtility;
+import edu.chalmers.vaporwave.util.Constants;
 import net.java.games.input.Controller;
 
 public class Player implements Comparable<Player> {
@@ -28,23 +29,22 @@ public class Player implements Comparable<Player> {
         resetPlayerGameStats();
     }
 
-    public void incrementPowerUpScore() {
-        powerUpScore++;
+    public void changeScore(int addition) {
+        this.score = Math.max(this.score + addition, 0);
     }
 
-    // todo: this as a counter instead?
     public int getScore() {
-        this.score = this.powerUpScore*50 + this.kills*1000 + this.creeps*100 - this.deaths*200;
-        if(this.score >= 0) {
-            return this.score;
-        } else {
-            this.score = this.score + this.deaths*200 - this.powerUpScore*50 + this.kills*1000 + this.creeps*100;
-            return this.score;
-        }
+        return this.score;
     }
 
     public void incrementKills() {
         kills++;
+        changeScore(Constants.SCORE_KILL_CHARACTER);
+    }
+
+    public void incrementPowerUpScore() {
+        powerUpScore++;
+        changeScore(Constants.SCORE_POWERUP);
     }
 
     public int getKills() {
@@ -53,6 +53,7 @@ public class Player implements Comparable<Player> {
 
     public void incrementDeaths() {
         deaths++;
+        changeScore(Constants.SCORE_DEATH_PENALTY);
     }
 
     public int getDeaths() {
@@ -61,6 +62,15 @@ public class Player implements Comparable<Player> {
 
     public void incrementCreeps() {
         creeps++;
+        changeScore(Constants.SCORE_KILL_ENEMY);
+    }
+
+    public void damagedCharacterScore() {
+        changeScore(Constants.SCORE_DAMAGE_CHARACTER);
+    }
+
+    public void damagedEnemyScore() {
+        changeScore(Constants.SCORE_DAMAGE_ENEMY);
     }
 
     public int getCreeps() {
