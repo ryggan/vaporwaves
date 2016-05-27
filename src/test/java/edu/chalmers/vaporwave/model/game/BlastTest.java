@@ -10,8 +10,6 @@ public class BlastTest {
     public void testGetPosition() throws Exception {
         GameCharacter gameCharacter = new GameCharacter();
         Explosive bomb = new Bomb(gameCharacter, 1, 1, 1, 30);
-        System.out.println("BombPosition: " + bomb.getPosition());
-        System.out.println("AlyssaPosition: " + gameCharacter.getGridPosition());
         assertTrue(bomb.getPosition().equals(gameCharacter.getGridPosition()));
 
     }

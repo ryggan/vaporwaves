@@ -63,10 +63,6 @@ public class Utils {
         return (double)(gridPositionY * Constants.DEFAULT_TILE_HEIGHT);
     }
 
-    public static Point gridToCanvasPosition(Point gridPosition) {
-        return new Point();
-    }
-
     /**
      * Returns a Point with an offset in the specified direction
      *

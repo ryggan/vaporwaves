@@ -4,6 +4,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import javafx.scene.image.Image;
 import org.junit.Test;
 
+import java.awt.*;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -42,23 +43,51 @@ public class UtilsTest {
     }
 
     @Test
-    public void testGridToCanvasPosition() throws Exception {
-
-    }
-
-    @Test
     public void testGetRelativePoint() throws Exception {
-
+        Point initialTestPosition = new Point(5,5);
+        assertTrue(Utils.getRelativePoint(initialTestPosition, 3, Direction.LEFT).equals(new Point(2,5)));
+        assertTrue(Utils.getRelativePoint(initialTestPosition, 2, Direction.UP).equals(new Point(5,3)));
+        assertTrue(Utils.getRelativePoint(initialTestPosition, 5, Direction.DOWN).equals(new Point(5,10)));
+        assertTrue(Utils.getRelativePoint(initialTestPosition, 1, Direction.RIGHT).equals(new Point(6,5)));
+        assertTrue(Utils.getRelativePoint(initialTestPosition, -10, Direction.RIGHT).equals(new Point(-5,5)));
+        assertTrue(Utils.getRelativePoint(initialTestPosition, -1, Direction.RIGHT).equals(new Point(4,5)));
+        assertFalse(Utils.getRelativePoint(initialTestPosition, 2, Direction.RIGHT).equals(new Point(0,5)));
     }
 
     @Test
     public void testGetDirectionFromString() throws Exception {
-
+        assertTrue(Utils.getDirectionFromString("LEFT").equals(Direction.LEFT));
+        assertTrue(Utils.getDirectionFromString("A").equals(Direction.LEFT));
+        assertTrue(Utils.getDirectionFromString("F").equals(Direction.LEFT));
+        assertTrue(Utils.getDirectionFromString("J").equals(Direction.LEFT));
+        assertTrue(Utils.getDirectionFromString("LS_LEFT").equals(Direction.LEFT));
+        assertTrue(Utils.getDirectionFromString("DPAD_LEFT").equals(Direction.LEFT));
+        assertTrue(Utils.getDirectionFromString("UP").equals(Direction.UP));
+        assertTrue(Utils.getDirectionFromString("W").equals(Direction.UP));
+        assertTrue(Utils.getDirectionFromString("T").equals(Direction.UP));
+        assertTrue(Utils.getDirectionFromString("I").equals(Direction.UP));
+        assertTrue(Utils.getDirectionFromString("LS_UP").equals(Direction.UP));
+        assertTrue(Utils.getDirectionFromString("DPAD_UP").equals(Direction.UP));
+        assertTrue(Utils.getDirectionFromString("RIGHT").equals(Direction.RIGHT));
+        assertTrue(Utils.getDirectionFromString("D").equals(Direction.RIGHT));
+        assertTrue(Utils.getDirectionFromString("H").equals(Direction.RIGHT));
+        assertTrue(Utils.getDirectionFromString("L").equals(Direction.RIGHT));
+        assertTrue(Utils.getDirectionFromString("LS_RIGHT").equals(Direction.RIGHT));
+        assertTrue(Utils.getDirectionFromString("DPAD_RIGHT").equals(Direction.RIGHT));
+        assertTrue(Utils.getDirectionFromString("DOWN").equals(Direction.DOWN));
+        assertTrue(Utils.getDirectionFromString("S").equals(Direction.DOWN));
+        assertTrue(Utils.getDirectionFromString("G").equals(Direction.DOWN));
+        assertTrue(Utils.getDirectionFromString("K").equals(Direction.DOWN));
+        assertTrue(Utils.getDirectionFromString("LS_DOWN").equals(Direction.DOWN));
+        assertTrue(Utils.getDirectionFromString("DPAD_DOWN").equals(Direction.DOWN));
     }
 
     @Test
     public void testGetDirectionFromInteger() throws Exception {
-
+        assertTrue(Utils.getDirectionFromInteger(0).equals(Direction.LEFT));
+        assertTrue(Utils.getDirectionFromInteger(1).equals(Direction.UP));
+        assertTrue(Utils.getDirectionFromInteger(2).equals(Direction.RIGHT));
+        assertTrue(Utils.getDirectionFromInteger(3).equals(Direction.DOWN));
     }
 
     @Test
