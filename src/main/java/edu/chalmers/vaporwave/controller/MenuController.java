@@ -184,6 +184,8 @@ public class MenuController implements ContentController {
         if (isNewGameEventReady()) {
             GameEventBus.getInstance().post(this.newGameEvent);
             this.menuMusic.stopSound();
+            Container.playSound(SoundID.START_GAME);
+            Container.playSound(SoundID.MENU_SUCCESS);
         }else{
             Container.playSound(SoundID.EXPLOSION);
         }
@@ -284,7 +286,7 @@ public class MenuController implements ContentController {
     public void setActiveMenu(MenuState activeMenu){
         if(!this.menuMusic.isPlaying()){
             this.menuMusic.playSound();
-            this.menuMusic.loopSound(true);
+//            this.menuMusic.loopSound(true);
         }
 
         if (activeMenu == MenuState.ROOSTER) {

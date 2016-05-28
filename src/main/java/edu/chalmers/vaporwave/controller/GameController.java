@@ -71,6 +71,7 @@ public class GameController implements ContentController {
     public void initGame(Group root, NewGameEvent newGameEvent) throws Exception {
 
         this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
+        this.gameMusic.playSound();
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -92,7 +93,7 @@ public class GameController implements ContentController {
         this.timeSinceStart = 0.0;
         this.timeSinceStartOffset = 0.0;
         this.pausedTime = 0.0;
-        this.gameEndTimer = 4;
+        this.gameEndTimer = 3.0;
         this.gameState = GameState.PRE_GAME;
 
         this.enemies = new HashSet<>();
@@ -659,8 +660,8 @@ public class GameController implements ContentController {
             movable.idle();
 
             if(this.gameState==GameState.PRE_GAME) {
-                Container.playSound(SoundID.START_GAME);
-                this.gameMusic.playSound();
+//                Container.playSound(SoundID.START_GAME);
+//                this.gameMusic.playSound();
                 this.gameState = GameState.GAME_RUNS;
             }
 
@@ -705,9 +706,9 @@ public class GameController implements ContentController {
 
     private void gameOverStart(String message) {
         this.gameState = GameState.GAME_OVER;
-        Container.playSound(SoundID.TIME_UP
-
-        );
+        this.gameMusic.stopSound();
+        Container.playSound(SoundID.TIME_UP);
+        Container.getSound(SoundID.MENU_BGM_1).playSound();
         this.arenaView.showGameOverMessage(message);
     }
 

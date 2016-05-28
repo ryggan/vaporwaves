@@ -19,7 +19,7 @@ class SoundContainer {
     private static final int NR_OF_BACKWARD_CLICK = 4;
 
     private static double tasksDone;
-    private static final double totalTasks = 2 + 7 + 2 +
+    private static final double totalTasks = 3 + 7 + 2 +
             NR_OF_BACKWARD_CLICK + NR_OF_FORWARD_CLICK +
             NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP;
 
@@ -45,7 +45,7 @@ class SoundContainer {
         setUpSoundArray(soundPlayer, NR_OF_POWERUP, "powerup1.mp3", 0.8);
         soundContainer.put(SoundID.POWERUP, soundPlayer);
 
-        // Menu sounds (+2)
+        // Menu sounds (+3)
         soundPlayer = new SoundPlayer[NR_OF_FORWARD_CLICK];
         setUpSoundArray(soundPlayer, NR_OF_FORWARD_CLICK, "menu-forward-click.mp3", 0.4);
         soundContainer.put(SoundID.MENU_FORWARD_CLICK, soundPlayer);
@@ -61,6 +61,10 @@ class SoundContainer {
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-exit.mp3");
         soundContainer.put(SoundID.MENU_EXIT, soundPlayer);
+
+        soundPlayer = new SoundPlayer[1];
+        setUpSoundArray(soundPlayer, 1, "menu_success1.mp3", 0.4);
+        soundContainer.put(SoundID.MENU_SUCCESS, soundPlayer);
 
         // Speech files (7)
         soundPlayer = new SoundPlayer[1];
