@@ -97,20 +97,15 @@ class SoundContainer {
 
         // background music (2)
         soundPlayer = new SoundPlayer[1];
-        setUpBackgroundMusic(soundPlayer, "menu-bgm-1.mp3", 0.5);
+        setUpBackgroundMusic(soundPlayer, "menu-bgm-1.mp3", 1.0);
         soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
 
         soundPlayer = new SoundPlayer[1];
-        setUpBackgroundMusic(soundPlayer, "bg3.mp3", 0.5);
+        setUpBackgroundMusic(soundPlayer, "bg3.mp3", 1.0);
         soundContainer.put(SoundID.GAME_MUSIC, soundPlayer);
     }
 
-    private static void setUpBackgroundMusic(SoundPlayer[] soundPlayers, String fileName, double volume) throws Exception {
-        soundPlayers[0] = new SoundPlayer(fileName, volume);
-        soundPlayers[0].loopSound(true);
-        tasksDone++;
-    }
-
+    // First creates a sound, and if number of sounds is more than one, duplicates this sound that many times
     private static void setUpSoundArray(SoundPlayer[] soundPlayers, int numberOfSounds, String fileName, double volume) throws Exception {
         soundPlayers[0] = new SoundPlayer(fileName, volume);
         tasksDone++;
@@ -118,6 +113,13 @@ class SoundContainer {
             soundPlayers[i] = new SoundPlayer(soundPlayers[0]);
             tasksDone++;
         }
+    }
+
+    // Separate method for creating background music, since it allways should be one soundfile and allways loops
+    private static void setUpBackgroundMusic(SoundPlayer[] soundPlayers, String fileName, double volume) throws Exception {
+        soundPlayers[0] = new SoundPlayer(fileName, volume);
+        soundPlayers[0].loopSound(true);
+        tasksDone++;
     }
 
     private static void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName) throws Exception {
@@ -136,13 +138,14 @@ class SoundContainer {
         }
 
         for (int i = 0; i < soundPlayers.length; i++) {
-            if (!soundPlayers[i].isPlaying()) {
+            if (!soundPlayers[i].isPlaying() || soundID == SoundID.GAME_MUSIC || soundID == SoundID.MENU_BGM_1) {
                 return soundPlayers[i];
             }
         }
         return null;
     }
 
+    // Not only is it possible to get each sound via Container, but also to play sounds directly
     public static void playSound(SoundID soundID) {
         SoundPlayer player = getSound(soundID);
         if (player != null) {

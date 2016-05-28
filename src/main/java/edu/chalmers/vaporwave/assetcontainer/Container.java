@@ -19,6 +19,8 @@ public class Container {
 
     private static boolean isInitialized = false;
 
+    // This method creates every other container, each after the other.
+    // This takes a lot of time, which is why it is done in a loading sequence
     public static void initialize() {
         try {
             double time = System.currentTimeMillis();
@@ -47,6 +49,7 @@ public class Container {
         }
     }
 
+    // All methods below are delegated to sub-containers, which are package private.
     public static boolean getIsInitialized() {
         return isInitialized;
     }
@@ -107,6 +110,7 @@ public class Container {
         return MenuButtonContainer.getButton(menuButtonID, positionOnCanvas);
     }
 
+    // Used to check how the loading in Initialize is progressing
     public static double getTasksDone() {
         return FileContainer.getTasksDone() + ImageContainer.getTasksDone() + SoundContainer.getTasksDone()
                 + CharacterContainer.getTasksDone() + SpriteContainer.getTasksDone() + MenuButtonContainer.getTasksDone();

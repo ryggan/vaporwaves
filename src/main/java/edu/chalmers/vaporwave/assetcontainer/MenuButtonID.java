@@ -1,5 +1,8 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+/**
+ * An ID for every button sprite to create.
+ */
 public enum MenuButtonID {
 
     // Start menu

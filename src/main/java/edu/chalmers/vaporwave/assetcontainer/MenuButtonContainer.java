@@ -12,6 +12,7 @@ import java.util.Set;
 /**
  * This container contains MenuButtonSprites, which is almost the same thing as usual sprites,
  * with small exceptions.
+ * This one also calculates it's total amount of tasks dynamically.
  */
 class MenuButtonContainer {
 
@@ -21,6 +22,8 @@ class MenuButtonContainer {
     private static int totalTasks = 0;
     private static Set<Pair<MenuButtonID, MenuButtonSprite>> menuButtonSet = new HashSet<>();
 
+    // First all images is prepared in a set, partly to be able to count how many tasks to be done.
+    // Then the loading of the external files takes place, which is the part that takes time.
     public static void initMenuButtonContainer() throws Exception {
         menuButtonContainer = new HashMap<>();
 
@@ -49,6 +52,7 @@ class MenuButtonContainer {
         addButtons();
     }
 
+    // prepareButtonLoad calculates total tasks, and addButton counts up how many tasks are done
     private static void prepareButtonLoad(MenuButtonID menuButtonID, MenuButtonSprite menuButtonSprite) {
         menuButtonSet.add(new Pair<>(menuButtonID, menuButtonSprite));
         totalTasks += 1;

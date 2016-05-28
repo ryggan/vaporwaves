@@ -60,8 +60,6 @@ public class GameController implements ContentController {
     private boolean destroyablePowerUps;
     private boolean respawnPowerups;
 
-    private SoundPlayer gameMusic;
-
     public GameController(Group root) throws Exception {
         GameEventBus.getInstance().register(this);
 
@@ -70,8 +68,7 @@ public class GameController implements ContentController {
 
     public void initGame(Group root, NewGameEvent newGameEvent) throws Exception {
 
-        this.gameMusic = Container.getSound(SoundID.GAME_MUSIC);
-        this.gameMusic.playSound();
+        Container.playSound(SoundID.GAME_MUSIC);
 
         enabledPowerUpList = new ArrayList<>();
         enabledPowerUpList.add(PowerUpType.BOMB_COUNT);
@@ -661,7 +658,7 @@ public class GameController implements ContentController {
 
             if(this.gameState==GameState.PRE_GAME) {
 //                Container.playSound(SoundID.START_GAME);
-//                this.gameMusic.playSound();
+//                Container.playSound(SoundID.GAME_MUSIC);
                 this.gameState = GameState.GAME_RUNS;
             }
 
@@ -706,9 +703,9 @@ public class GameController implements ContentController {
 
     private void gameOverStart(String message) {
         this.gameState = GameState.GAME_OVER;
-        this.gameMusic.stopSound();
+        Container.stopSound(SoundID.GAME_MUSIC);
         Container.playSound(SoundID.TIME_UP);
-        Container.getSound(SoundID.MENU_BGM_1).playSound();
+        Container.playSound(SoundID.MENU_BGM_1);
         this.arenaView.showGameOverMessage(message);
     }
 
@@ -717,7 +714,7 @@ public class GameController implements ContentController {
     }
 
     private void exitGame(MenuState destinationMenu) {
-        this.gameMusic.stopSound();
+        Container.stopSound(SoundID.GAME_MUSIC);
         this.arenaModel.getArenaMovables().clear();
         this.arenaModel.clearTiles();
         this.enemies.clear();

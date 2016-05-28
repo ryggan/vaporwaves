@@ -11,6 +11,7 @@ import java.util.Set;
 
 /**
  * This container deals with all the sprites; both Sprite and AnimatedSprite.
+ * This one also calculates it's total amount of tasks dynamically.
  */
 class SpriteContainer {
 
@@ -21,6 +22,8 @@ class SpriteContainer {
 
     private static Set<Pair<SpriteID, Sprite>> spriteSet = new HashSet<>();
 
+    // First all images is prepared in a set, partly to be able to count how many tasks to be done.
+    // Then the loading of the external files takes place, which is the part that takes time.
     public static void initSpriteContainer() throws Exception {
         spriteContainer = new HashMap<>();
 
@@ -251,6 +254,7 @@ class SpriteContainer {
 
     }
 
+    // prepareSpriteLoad calculates total tasks, and addSprite counts up how many tasks are done
     private static void prepareSpriteLoad(SpriteID spriteID, Sprite sprite) {
         spriteSet.add(new Pair<>(spriteID, sprite));
         totalTasks += 1;

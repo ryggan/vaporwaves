@@ -10,7 +10,6 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.util.Debug;
-import edu.chalmers.vaporwave.util.SoundPlayer;
 import edu.chalmers.vaporwave.util.Utils;
 import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
@@ -24,9 +23,6 @@ public class MenuController implements ContentController {
     private Map<MenuState, AbstractMenu> menuMap;
     private Map<MenuState, AbstractMenuView> menuViewMap;
     private MenuState activeMenu;
-//    private ResultsMenuView resultsMenuView;
-
-    private SoundPlayer menuMusic;
 
     private boolean pressedDown;
 
@@ -38,8 +34,7 @@ public class MenuController implements ContentController {
         this.pressedDown = false;
 
         // Menu background music
-        this.menuMusic = Container.getSound(SoundID.MENU_BGM_1);
-        this.menuMusic.playSound();
+        Container.playSound(SoundID.MENU_BGM_1);
 
         // Setting up primary player, that will be navigate menus
         Player player;
@@ -63,8 +58,6 @@ public class MenuController implements ContentController {
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
 
         // Setting up menu views
-//        this.resultsMenuView = new ResultsMenuView(root);
-
         this.menuViewMap = new HashMap<>();
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
@@ -170,9 +163,9 @@ public class MenuController implements ContentController {
     }
 
     private void menuActionExitProgram() {
-        this.menuMusic.stopSound();
-        Container.getSound(SoundID.MENU_EXIT).getSound().play();
+        Container.stopSound(SoundID.MENU_BGM_1);
         Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
+        Container.playSound(SoundID.MENU_EXIT);
     }
 
     private void menuActionStartGame() {
@@ -183,7 +176,7 @@ public class MenuController implements ContentController {
         }
         if (isNewGameEventReady()) {
             GameEventBus.getInstance().post(this.newGameEvent);
-            this.menuMusic.stopSound();
+            Container.stopSound(SoundID.MENU_BGM_1);
             Container.playSound(SoundID.START_GAME);
             Container.playSound(SoundID.MENU_SUCCESS);
         }else{
@@ -284,10 +277,7 @@ public class MenuController implements ContentController {
     }
 
     public void setActiveMenu(MenuState activeMenu){
-        if(!this.menuMusic.isPlaying()){
-            this.menuMusic.playSound();
-//            this.menuMusic.loopSound(true);
-        }
+        Container.playSound(SoundID.MENU_BGM_1);
 
         if (activeMenu == MenuState.ROOSTER) {
             updatePlayerGamePads(this.newGameEvent.getPlayers(), true);

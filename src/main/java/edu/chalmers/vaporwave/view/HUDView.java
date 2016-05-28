@@ -63,7 +63,7 @@ public class HUDView {
 
         this.gameOverMessage = new Label();
         this.gameOverMessage.setFont(Container.getFont(FileID.FONT_BAUHAUS_30));
-        this.gameOverMessage.setTextFill(Container.getColor(FileID.COLOR_VAPEPINK));
+        this.gameOverMessage.setTextFill(Color.web(Constants.COLORNO_VAPEPINK));
         this.gameOverMessage.setLayoutX(this.gameOverWindow.getPositionX() + 52);
         this.gameOverMessage.setLayoutY(this.gameOverWindow.getPositionY() + 28);
         this.gameOverMessage.setMaxWidth(180);
@@ -84,7 +84,7 @@ public class HUDView {
 
         this.timer = new Label();
         this.timer.setFont(Container.getFont(FileID.FONT_BAUHAUS_30));
-        this.timer.setTextFill(Container.getColor(FileID.COLOR_VAPEPINK));
+        this.timer.setTextFill(Color.web(Constants.COLORNO_VAPEPINK));
         this.timer.setLayoutX(this.timerWindow.getPositionX() + 12);
         this.timer.setLayoutY(this.timerWindow.getPositionY() + 25);
 

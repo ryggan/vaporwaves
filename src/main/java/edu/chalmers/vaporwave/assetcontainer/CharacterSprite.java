@@ -3,7 +3,7 @@ package edu.chalmers.vaporwave.assetcontainer;
 /**
  * A class to keep track of all sprites for one character, because they are so many.
  */
-class CharacterSprite {
+public class CharacterSprite {
 
     private String name;
 

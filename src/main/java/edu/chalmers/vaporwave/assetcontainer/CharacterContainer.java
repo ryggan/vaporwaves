@@ -45,13 +45,16 @@ class CharacterContainer {
         CharacterSprite characterSprite = new CharacterSprite(characterID.toString());
         spriteContainer.put(characterID, characterSprite);
 
+        // Getting the saved data from xml-file
         XMLReader reader = new XMLReader(Container.getFile(FileID.XML_CHARACTER_ENEMY));
         CharacterProperties characterProperties = CharacterLoader.loadCharacter(reader.read(), characterSprite.getName());
         propertiesContainer.put(characterID, characterProperties);
 
+        // Creating sprites for every different character state
         for (MovableState characterState : CHARACTER_CHARACTER_STATE) {
             CharacterSpriteProperties characterSpriteProperties = characterProperties.getSpriteProperties(characterState);
 
+            // Spawn and death animations are only made facing one direction (towards the player)
             switch (characterState) {
                 case SPAWN:
                     characterSprite.setSpawnSprite(
@@ -64,6 +67,7 @@ class CharacterContainer {
                     );
                     tasksDone++;
                     break;
+
                 case DEATH:
                     characterSprite.setDeathSprite(
                             new AnimatedSprite(characterSpriteProperties.getSpritesheet(),
@@ -75,6 +79,8 @@ class CharacterContainer {
                     );
                     tasksDone++;
                     break;
+
+                // Walk, Idle and Flinch animations are all drawn in four different directions
                 case WALK:
                 case IDLE:
                 case FLINCH:

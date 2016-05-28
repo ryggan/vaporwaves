@@ -21,12 +21,19 @@ class CharacterLoader {
     public static CharacterProperties loadCharacter(NodeList nodeList, String name) {
         Map<MovableState, CharacterSpriteProperties> spritePropertiesMap = new HashMap<>();
         Map<CharacterStat, Double> characterStats = new HashMap<>();
+
+        // Loops through the nodelist that is created when using the XML-loader
         for (int i = 0; i < nodeList.getLength(); i++) {
             Element allCharacterNodes = (Element)nodeList.item(i);
+
             for (int j = 0; j < allCharacterNodes.getElementsByTagName("character").getLength(); j++) {
                 Element singleCharacterNodes = allCharacterNodes;
                 String currentName = singleCharacterNodes.getElementsByTagName("name").item(j).getTextContent();
+
+                // We are only looking for a specific character
                 if (currentName.equals(name)) {
+
+                    // Fetching sprite information for every character state and saving it
                     for (int k = 0; k < CHARACTER_CHARACTER_STATE.length; k++) {
 
                         Element currentSpriteNodes =(Element)singleCharacterNodes.getElementsByTagName(
@@ -50,6 +57,7 @@ class CharacterLoader {
                         spritePropertiesMap.put(CHARACTER_CHARACTER_STATE[k], property);
                     }
 
+                    // Also fetching all stats for character
                     Double health = Double.parseDouble(singleCharacterNodes.getElementsByTagName("health").item(j).getTextContent());
                     characterStats.put(CharacterStat.HEALTH, health);
                     Double speed = Double.parseDouble(singleCharacterNodes.getElementsByTagName("speed").item(j).getTextContent());
@@ -64,6 +72,7 @@ class CharacterLoader {
             }
         }
 
+        // bundling it up in one CharacterProperties object, for easy use
         return new CharacterProperties(name, spritePropertiesMap, characterStats);
 
     }

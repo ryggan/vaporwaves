@@ -1,5 +1,8 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+/**
+ * An ID for every image to load.
+ */
 public enum ImageID {
 
     // backgrounds

@@ -1,5 +1,8 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+/**
+ * An ID for every sprite to create.
+ */
 public enum SpriteID {
 
     // MENU

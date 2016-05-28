@@ -21,9 +21,9 @@ class FileContainer {
     private final static Map<FileID, Color> colorContainer = new HashMap<>();
 
     private static int tasksDone;
-    private static final double totalTasks = 1 + 2 + 3 + 1;
+    private static final double totalTasks = 1 + 2 + 3;
 
-
+    // Called from Container
     public static void initFileContainer() throws Exception {
 
         // Misc files (1)
@@ -42,14 +42,9 @@ class FileContainer {
 
         font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 30);
         addFont(FileID.FONT_BAUHAUS_30, font);
-
-
-
-        // Colors (1)
-        Color color = Color.web(Constants.COLORNO_VAPEPINK);
-        addColor(FileID.COLOR_VAPEPINK, color);
     }
 
+    // Every add-method is used to keep track of how many of the total tasks that has been accomplished
     private static void addFile(FileID fileID, File file) {
         fileContainer.put(fileID, file);
         tasksDone++;
@@ -60,14 +55,6 @@ class FileContainer {
             throw new IllegalArgumentException();
         }
         fontContainer.put(fileID, font);
-        tasksDone++;
-    }
-
-    private static void addColor(FileID fileID, Color color) {
-        if (!fileID.toString().substring(0, 5).equals("COLOR")) {
-            throw new IllegalArgumentException();
-        }
-        colorContainer.put(fileID, color);
         tasksDone++;
     }
 

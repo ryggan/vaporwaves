@@ -1,5 +1,8 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+/**
+ * An ID for every file to load.
+ */
 public enum FileID {
 
     // Misc files
@@ -10,7 +13,4 @@ public enum FileID {
 
     // Fonts
     FONT_BAUHAUS_14, FONT_BAUHAUS_18, FONT_BAUHAUS_30,
-
-    // COLOR
-    COLOR_VAPEPINK
 }

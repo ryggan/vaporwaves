@@ -29,6 +29,8 @@ public class MenuButtonSprite {
         this.positionOnCanvas = positionOnCanvas;
     }
 
+    // When rendering, which frame to show is first determined, and then a simpel drawImage is called
+    // with the sprite's specifics
     public void render(GraphicsContext menuGC, MenuButtonState menuButtonState) {
         int frameY = 0;
         switch (menuButtonState) {

@@ -34,6 +34,7 @@ public class Sprite {
     private double scale;
     private boolean stayOnPixel;
 
+    // Default constructor to set up standard variables
     public Sprite() {
         this.positionX = 0;
         this.positionY = 0;
@@ -42,39 +43,47 @@ public class Sprite {
         setOffsetDimension(0, 0);
     }
 
-    public Sprite(Image spriteSheet, Dimension dimension, int[] sourceGridPosition, double[] offset, double scale) {
+    // Constructor to ease of the coming two
+    public Sprite(Image spriteSheet, Dimension dimension, double[] offset, double scale) {
         this();
 
         setImage(spriteSheet);
         setScale(scale);
+        setDimension(dimension.getWidth(), dimension.getHeight());
+        setOffsetXY(offset[0], offset[1]);
+    }
+
+    // Constructor that is specific for startposition in spritesheet, calculated by a grid of sprite dimension
+    public Sprite(Image spriteSheet, Dimension dimension, int[] sourceGridPosition, double[] offset, double scale) {
+        this(spriteSheet, dimension, offset, scale);
+
         setSourceGridXY(sourceGridPosition[0], sourceGridPosition[1]);
         setSourceCanvasXY(0, 0);
-        setDimension(dimension.getWidth(), dimension.getHeight());
-        setOffsetXY(offset[0], offset[1]);
     }
 
+    // Constructar that is specific for startposition in spritesheet, just plain and simple x- and y-values
     public Sprite(Image spriteSheet, Dimension dimension, double[] sourceCanvasPosition, double[] offset, double scale) {
-        this();
+        this(spriteSheet, dimension, offset, scale);
 
-        setImage(spriteSheet);
-        setScale(scale);
         setSourceGridXY(0, 0);
         setSourceCanvasXY(sourceCanvasPosition[0], sourceCanvasPosition[1]);
-        setDimension(dimension.getWidth(), dimension.getHeight());
-        setOffsetXY(offset[0], offset[1]);
     }
 
+    // Constructor without scale, then uses default game scale
     public Sprite(Image spriteSheet, Dimension spriteDimension, int[] startPosition, double[] offset) {
         this(spriteSheet, spriteDimension, startPosition, offset, Constants.GAME_SCALE);
     }
 
+    // Simple constructor for sprites that does not use spritesheet
     public Sprite(Image image, double scale) {
         this(image, new Dimension((int)image.getWidth(), (int)image.getHeight()), new int[] {0, 0}, new double[] {0, 0}, scale);
     }
 
+    // Even simpler constrcutor that does not use spritesheet, and uses default game scale
     public Sprite(Image image) {
         this(image, Constants.GAME_SCALE);
     }
+
 
     // Besides setting the scale, also updates the Image, via Utils, to the new resized scale (when necessary).
     public void setScale(double scale) {
@@ -89,6 +98,7 @@ public class Sprite {
         return this.scale;
     }
 
+    // When setting a new image, it dynamically calculates if it should be resized
     public void setImage(Image image) {
         this.originalImage = image;
         if (image != null) {
@@ -108,6 +118,7 @@ public class Sprite {
     public Image getImage() {
         return this.image;
     }
+
     // Draws the sprites image on canvas at the right position.
     public void render(GraphicsContext gc, double time) {
 
@@ -211,12 +222,12 @@ public class Sprite {
         this.sourceCanvasY = sourceCanvasY;
     }
 
-    public double getSourceCanvasX() {
-        return this.sourceCanvasX;
-    }
-    public double getSourceCanvasY() {
-        return this.sourceCanvasY;
-    }
+//    public double getSourceCanvasX() {
+//        return this.sourceCanvasX;
+//    }
+//    public double getSourceCanvasY() {
+//        return this.sourceCanvasY;
+//    }
 
     // Standard methods
     public String toString() {

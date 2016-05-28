@@ -10,8 +10,7 @@ import java.util.Set;
 
 /**
  * This container deals with all the images.
- * A special solution, that did not find it's way into the other containers, is that this
- * one calculates it's total amount of tasks dynamically.
+ * This one also calculates it's total amount of tasks dynamically.
  */
 class ImageContainer {
 
@@ -21,6 +20,8 @@ class ImageContainer {
     private static int totalTasks = 0;
     private static Set<Pair<ImageID, String>> imageSet = new HashSet<>();
 
+    // First all images is prepared in a set, partly to be able to count how many tasks to be done.
+    // Then the loading of the external files takes place, which is the part that takes time.
     public static void initImageContainer() throws Exception {
 
         imageContainer = new HashMap<>();
@@ -69,7 +70,6 @@ class ImageContainer {
         prepareImageLoad(ImageID.HUD_BOX_SHEET, "images/hud/spritesheet-hudbox-136x180.png");
         prepareImageLoad(ImageID.HUD_TIMER_MESSAGE, "images/hud/timer_message.png");
         prepareImageLoad(ImageID.HUD_GAMEOVER_MESSAGE, "images/hud/gameover_message.png");
-        //        prepareImageLoad(ImageID.SCOREBOARD_BACK, "images/hud/scoreboardBackground.png");
         prepareImageLoad(ImageID.SCOREBOARD_BACK, "images/hud/scoreboardBackground2.png");
 
         // Background stuff (6):
@@ -112,6 +112,7 @@ class ImageContainer {
         addImages();
     }
 
+    // prepareImageLoad calculates total tasks, and addImage counts up how many tasks are done
     private static void prepareImageLoad(ImageID imageID, String imageString) {
         imageSet.add(new Pair<>(imageID, imageString));
         totalTasks += 1;
