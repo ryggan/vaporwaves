@@ -18,11 +18,13 @@ public class ResultsMenu extends AbstractMenu {
     public ResultsMenu(Set<Player> players) {
         super(new int[]{1, 0});
 
+        setPlayers(players);
+    }
+
+    public void setPlayers(Set<Player> players) {
         this.players = new HashSet<>();
         this.players.addAll(players);
     }
-
-    //exit
 
     @Override
     public MenuState getMenuAction() {

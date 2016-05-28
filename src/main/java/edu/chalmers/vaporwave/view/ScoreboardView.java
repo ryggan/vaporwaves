@@ -134,11 +134,14 @@ public class ScoreboardView {
     private void sortPlayerList() {
         if (this.sortByGameType) {
             if (this.gameType == GameType.SURVIVAL || this.gameType == GameType.SCORE_LIMIT) {
-                Collections.sort(this.playerList, PlayerComparator.decending(PlayerComparator.getComparator(PlayerComparator.SCORE_SORT)));
+                Collections.sort(this.playerList,
+                        PlayerComparator.decending(PlayerComparator.getComparator(PlayerComparator.SCORE_SORT)));
             } else if (this.gameType == GameType.CHARACTER_KILLS) {
-                Collections.sort(this.playerList, PlayerComparator.decending(PlayerComparator.getComparator(PlayerComparator.CHARACTER_KILL_SORT)));
+                Collections.sort(this.playerList,
+                        PlayerComparator.decending(PlayerComparator.getComparator(PlayerComparator.CHARACTER_KILL_SORT)));
             } else if (this.gameType == GameType.ENEMY_KILLS) {
-                Collections.sort(this.playerList, PlayerComparator.decending(PlayerComparator.getComparator(PlayerComparator.ENEMY_KILL_SORT)));
+                Collections.sort(this.playerList,
+                        PlayerComparator.decending(PlayerComparator.getComparator(PlayerComparator.ENEMY_KILL_SORT)));
             }
         } else {
             Collections.sort(this.playerList, PlayerComparator.getComparator(PlayerComparator.ID_SORT));

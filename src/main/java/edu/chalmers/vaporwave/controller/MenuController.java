@@ -24,7 +24,7 @@ public class MenuController implements ContentController {
     private Map<MenuState, AbstractMenu> menuMap;
     private Map<MenuState, AbstractMenuView> menuViewMap;
     private MenuState activeMenu;
-    private ResultsMenuView resultsMenuView;
+//    private ResultsMenuView resultsMenuView;
 
     private SoundPlayer menuMusic;
 
@@ -63,13 +63,13 @@ public class MenuController implements ContentController {
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
 
         // Setting up menu views
-        this.resultsMenuView = new ResultsMenuView(root);
+//        this.resultsMenuView = new ResultsMenuView(root);
 
         this.menuViewMap = new HashMap<>();
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
-        this.menuViewMap.put(MenuState.RESULTS_MENU, this.resultsMenuView);
+        this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root));
 
         // Initiating start screen view
         updateViews(null);
@@ -322,10 +322,10 @@ public class MenuController implements ContentController {
 
     @Subscribe
     public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
-//        Set<Player> players = exitToMenuEvent.getPlayers();
+        ((ResultsMenu) this.menuMap.get(MenuState.RESULTS_MENU)).setPlayers(exitToMenuEvent.getPlayers());
 
-        this.resultsMenuView.setPlayers(exitToMenuEvent.getPlayers());
-        this.resultsMenuView.setGameType(exitToMenuEvent.getGameType());
+        ((ResultsMenuView) this.menuViewMap.get(MenuState.RESULTS_MENU)).setPlayers(exitToMenuEvent.getPlayers());
+        ((ResultsMenuView) this.menuViewMap.get(MenuState.RESULTS_MENU)).setGameType(exitToMenuEvent.getGameType());
 
         GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
     }
