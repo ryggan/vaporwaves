@@ -2,20 +2,18 @@ package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.event.AnimationFinishedEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.model.game.AnimatedTile;
-import edu.chalmers.vaporwave.model.game.Movable;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.Utils;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * An extended version of Sprite that functions in much the same way, with the only addition
- * that animated picture now is supported.
+ * that animated picture now is supported, and several settings to come with it.
+ * The animation takes snapshots from the sprite image in a consecutive manner, starting on a
+ * specified position and then calculating the rest automatically.
  */
 public class AnimatedSprite extends Sprite {
 
@@ -32,18 +30,6 @@ public class AnimatedSprite extends Sprite {
     private boolean animationFinished;
     private AnimationFinishedEvent animationFinishedEvent;
 
-    /**
-     * Constructor that takes an Image object, and uses it as an spritesheed, with some help from the other
-     * arguments, to create an animated image.
-     * Below this are three versions, the first where startPos is omitted, in case the animation is supposed to be
-     * asynchronous, and the last two similar constructors but with the parameter Image sprSheet exchanged with
-     * a String fname paramater. The last two throws FileNotFoundExceptions.
-     * @param spriteSheet
-     * @param spriteDimension
-     * @param length
-     * @param duration
-     * @param startPosition
-     */
     public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition,
                           double[] offset, double scale) {
 
@@ -93,12 +79,6 @@ public class AnimatedSprite extends Sprite {
     }
     public AnimatedSprite(Image spriteSheet, Dimension spriteDimension, int length, double duration, int[] startPosition, double[] offset) {
         this(spriteSheet, spriteDimension, length, duration, startPosition, offset, Constants.GAME_SCALE);
-    }
-
-    // Sets the coordinates in the spritesheet for a specific frame in the frames list.
-    public void setFramePos(int frameNum, int posx, int posy) {
-        int[] frame = {posx, posy};
-        frames.set(frameNum, frame);
     }
 
     // This method is supposed to be used instead of the render(GraphicsContext gc) in the superclass, because

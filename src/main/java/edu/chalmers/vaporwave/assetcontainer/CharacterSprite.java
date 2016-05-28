@@ -1,6 +1,9 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-public class CharacterSprite {
+/**
+ * A class to keep track of all sprites for one character, because they are so many.
+ */
+class CharacterSprite {
 
     private String name;
 
@@ -67,55 +70,6 @@ public class CharacterSprite {
     public Sprite[] getSpawnSprites() {
         return spriteArrayCloner(spawnSprite);
     }
-
-    // Not sure if these are needed, maybe delete later:
-
-//    public Sprite getSpawnSprite() {
-//        return spawnSprite[0];
-//    }
-//
-//    public Sprite getIdleSprite(int index) {
-//        return idleSprite[index];
-//    }
-//
-//    public Sprite getWalkSprite(int index) {
-//        return walkSprite[index];
-//    }
-//
-//    public Sprite getFlinchSprite(int index) {
-//        return flinchSprite[index];
-//    }
-//
-//    public Sprite getDeathSprite() {
-//        return deathSprite[0];
-//    }
-
-//    public void setIdleSprites(Sprite[] sprites) {
-//        if (sprites.length != 4)
-//            throw new IllegalArgumentException();
-//
-//        for (int i = 0; i < 4; i++) {
-//            idleSprite[i] = sprites[i];
-//        }
-//    }
-//
-//    public void setWalkSprites(Sprite[] sprites) {
-//        if (sprites.length != 4)
-//            throw new IllegalArgumentException();
-//
-//        for (int i = 0; i < 4; i++) {
-//            walkSprite[i] = sprites[i];
-//        }
-//    }
-//
-//    public void setFlinchSprites(Sprite[] sprites) {
-//        if (sprites.length != 4)
-//            throw new IllegalArgumentException();
-//
-//        for (int i = 0; i < 4; i++) {
-//            flinchSprite[i] = sprites[i];
-//        }
-//    }
 
     public Sprite[] spriteArrayCloner(Sprite[] spriteArray) {
         Sprite[] temporary = new Sprite[spriteArray.length];

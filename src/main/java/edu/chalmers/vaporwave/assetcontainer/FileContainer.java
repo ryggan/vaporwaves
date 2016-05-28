@@ -6,10 +6,12 @@ import javafx.scene.text.Font;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This container deals with all miscellaneous files, such as XML or fonts.
+ */
 class FileContainer {
 
     private final static Map<FileID, File> fileContainer = new HashMap<>();

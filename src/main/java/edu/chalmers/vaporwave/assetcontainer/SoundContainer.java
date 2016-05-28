@@ -5,6 +5,12 @@ import edu.chalmers.vaporwave.util.SoundPlayer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This container deals with all the sounds.
+ * It is handled a bit different from the other containers, since there is needed a
+ * buffert of several identical sounds, when for example more than one bomb is placed almost
+ * at the same time, so that overlapping sounds can be played.
+ */
 class SoundContainer {
 
     private static Map<SoundID, SoundPlayer[]> soundContainer;

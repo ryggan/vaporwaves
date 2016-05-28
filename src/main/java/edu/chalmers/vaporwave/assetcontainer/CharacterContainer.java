@@ -8,6 +8,11 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A container class for all character properties, which are read from XML-file and structured
+ * in CharacterProperties, CharacterSprite and CharacterSpriteProperties classes.
+ * There so much to initialize that all this was put in the loader, together with all the other files.
+ */
 class CharacterContainer {
 
     private static final MovableState[] CHARACTER_CHARACTER_STATE = { MovableState.WALK, MovableState.IDLE, MovableState.FLINCH, MovableState.DEATH, MovableState.SPAWN };

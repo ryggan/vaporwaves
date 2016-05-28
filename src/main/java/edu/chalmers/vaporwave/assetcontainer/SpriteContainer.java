@@ -9,6 +9,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This container deals with all the sprites; both Sprite and AnimatedSprite.
+ */
 class SpriteContainer {
 
     private static Map<SpriteID, Sprite> spriteContainer;

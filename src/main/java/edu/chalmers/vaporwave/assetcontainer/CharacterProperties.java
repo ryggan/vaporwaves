@@ -5,7 +5,10 @@ import edu.chalmers.vaporwave.util.MovableState;
 
 import java.util.Map;
 
-public class CharacterProperties {
+/**
+ * A simple container for all character specific information, to be used in CharacterContainer.
+ */
+class CharacterProperties {
     private String name;
 
     private Map<CharacterStat, Double> characterStats;

@@ -6,10 +6,15 @@ import edu.chalmers.vaporwave.util.SoundPlayer;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 
-
 import java.awt.*;
 import java.io.File;
 
+/**
+ * As the name implies; a container for all assets used in the game.
+ * Mostly it's external files, such as images or sounds, but also larger data that only need to
+ * be initialized once, such as CharacterSprites etc.
+ * This is initialized in the beginning of the game, accompanied by a loading sequence.
+ */
 public class Container {
 
     private static boolean isInitialized = false;

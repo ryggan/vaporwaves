@@ -5,6 +5,10 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 
+/**
+ * Almost the same principle as usual sprites, but these doesn't need nearly as much
+ * data as Sprite, which is why they came to be a separate class.
+ */
 public class MenuButtonSprite {
 
     private Image spriteSheet;

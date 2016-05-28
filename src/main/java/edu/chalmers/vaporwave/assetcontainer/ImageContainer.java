@@ -8,6 +8,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This container deals with all the images.
+ * A special solution, that did not find it's way into the other containers, is that this
+ * one calculates it's total amount of tasks dynamically.
+ */
 class ImageContainer {
 
     private static Map<ImageID, Image> imageContainer;

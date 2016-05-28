@@ -3,7 +3,10 @@ package edu.chalmers.vaporwave.assetcontainer;
 import edu.chalmers.vaporwave.util.ClonerUtility;
 import javafx.scene.image.Image;
 
-public class CharacterSpriteProperties {
+/**
+ * Details for a single characters sprite, due to a bit special handling in CharacterContainer
+ */
+class CharacterSpriteProperties {
     private String state;
     private Image spritesheet;
     private int dimensionX;

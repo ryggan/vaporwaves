@@ -7,6 +7,11 @@ import javafx.scene.image.Image;
 
 import java.awt.*;
 
+/**
+ * This class holds an image and it's properties, and is mainly used for rendering game graphics
+ * on screen in a easy to use fashion.
+ * If needed, there are possibilities to use a spritesheet, i.e a bigger image to take a snapshot from.
+ */
 public class Sprite {
 
     private Image image;
@@ -29,10 +34,6 @@ public class Sprite {
     private double scale;
     private boolean stayOnPixel;
 
-    /**
-     * Constructors, one simple which leaves the Sprite object without Image, and the other two with an Image
-     * parameter respectively a file name String parameter.
-     */
     public Sprite() {
         this.positionX = 0;
         this.positionY = 0;
@@ -74,13 +75,6 @@ public class Sprite {
     public Sprite(Image image) {
         this(image, Constants.GAME_SCALE);
     }
-
-//    public Sprite(Sprite sprite) {
-//        this();
-//        this.scale = sprite.getScale();
-//        this.stayOnPixel = sprite.getStayOnPixel();
-//        setImage(sprite.getImage());
-//    }
 
     // Besides setting the scale, also updates the Image, via Utils, to the new resized scale (when necessary).
     public void setScale(double scale) {

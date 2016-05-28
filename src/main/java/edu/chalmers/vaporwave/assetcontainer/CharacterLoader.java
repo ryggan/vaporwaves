@@ -1,7 +1,6 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.util.CharacterStat;
-import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MovableState;
 import javafx.scene.image.Image;
 import org.w3c.dom.Element;
@@ -11,7 +10,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class CharacterLoader {
+/**
+ * A simple class for one static method; to sort nodes from XML-loader and create a
+ * CharacterProperties object
+ */
+class CharacterLoader {
 
     private static final MovableState[] CHARACTER_CHARACTER_STATE = { MovableState.WALK, MovableState.IDLE, MovableState.FLINCH, MovableState.DEATH, MovableState.SPAWN };
 

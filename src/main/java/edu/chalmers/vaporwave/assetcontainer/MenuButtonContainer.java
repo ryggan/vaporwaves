@@ -9,6 +9,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * This container contains MenuButtonSprites, which is almost the same thing as usual sprites,
+ * with small exceptions.
+ */
 class MenuButtonContainer {
 
     private static Map<MenuButtonID, MenuButtonSprite> menuButtonContainer;
