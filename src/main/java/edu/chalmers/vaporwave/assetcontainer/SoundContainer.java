@@ -15,22 +15,13 @@ class SoundContainer {
     private static final int NR_OF_PLACEBOMB = 10;
     private static final int NR_OF_EXPLOSION = 20;
     private static final int NR_OF_POWERUP = 10;
-    private static final int NR_OF_BACKGROUND = 1;
     private static final int NR_OF_FORWARD_CLICK = 4;
-    private static final int NR_OF_BACKWARD_CLICK = 1;
-    private static final int NR_OF_STARTUP = 1;
-    private static final int NR_OF_EXIT = 1;
+    private static final int NR_OF_BACKWARD_CLICK = 4;
 
     private static double tasksDone;
-    private static final double totalTasks = 8 +
-            NR_OF_BACKWARD_CLICK +
-            NR_OF_STARTUP +
-            NR_OF_EXIT +
-            NR_OF_FORWARD_CLICK +
-            NR_OF_PLACEBOMB +
-            NR_OF_EXPLOSION +
-            NR_OF_POWERUP +
-            NR_OF_BACKGROUND;
+    private static final double totalTasks = 2 + 7 + 2 +
+            NR_OF_BACKWARD_CLICK + NR_OF_FORWARD_CLICK +
+            NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP;
 
     public static void initSoundContainer() throws Exception {
         soundVolume = 1.0;
@@ -41,6 +32,7 @@ class SoundContainer {
         soundContainer = new HashMap<>();
         SoundPlayer[] soundPlayer;
 
+        // Game sounds (+0)
         soundPlayer = new SoundPlayer[NR_OF_PLACEBOMB];
         setUpSoundArray(soundPlayer, NR_OF_PLACEBOMB, "placebomb.mp3");
         soundContainer.put(SoundID.PLACE_BOMB, soundPlayer);
@@ -53,6 +45,7 @@ class SoundContainer {
         setUpSoundArray(soundPlayer, NR_OF_POWERUP, "powerup1.mp3", 0.8);
         soundContainer.put(SoundID.POWERUP, soundPlayer);
 
+        // Menu sounds (+2)
         soundPlayer = new SoundPlayer[NR_OF_FORWARD_CLICK];
         setUpSoundArray(soundPlayer, NR_OF_FORWARD_CLICK, "menu-forward-click.mp3", 0.4);
         soundContainer.put(SoundID.MENU_FORWARD_CLICK, soundPlayer);
@@ -65,15 +58,11 @@ class SoundContainer {
         setUpSoundArray(soundPlayer, 1, "menu-startup.mp3");
         soundContainer.put(SoundID.MENU_STARTUP, soundPlayer);
 
-        // background music (1)
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-bgm-1.mp3", 0.5);
-        soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
-
-        //speech files(8)
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-exit.mp3");
         soundContainer.put(SoundID.MENU_EXIT, soundPlayer);
+
+        // Speech files (7)
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-alyssa.mp3");
         soundContainer.put(SoundID.MENU_ALYSSA, soundPlayer);
@@ -96,26 +85,27 @@ class SoundContainer {
         setUpSoundArray(soundPlayer, 1, "menu-timeup.mp3");
         soundContainer.put(SoundID.TIME_UP, soundPlayer);
 
-        //        soundPlayer = new SoundPlayer[4];
-        //        setUpSoundArray(soundPlayer, 4, "girl_moan4.mp3");
-        //        this.soundContainer.put(SoundID.CHARACTER_FLINCH, soundPlayer);
+        // background music (2)
+        soundPlayer = new SoundPlayer[1];
+        setUpBackgroundMusic(soundPlayer, "menu-bgm-1.mp3", 0.5);
+        soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
 
-        setUpBackgroundSound();
+        soundPlayer = new SoundPlayer[1];
+        setUpBackgroundMusic(soundPlayer, "bg3.mp3", 0.5);
+        soundContainer.put(SoundID.GAME_MUSIC, soundPlayer);
     }
 
-    private static void setUpBackgroundSound() throws Exception {
-        SoundPlayer[] soundPlayer = new SoundPlayer[1];
-        soundPlayer[0] = new SoundPlayer("bg3.mp3", 0.5);
-        soundPlayer[0].loopSound(true);
-        soundContainer.put(SoundID.GAME_MUSIC, soundPlayer);
+    private static void setUpBackgroundMusic(SoundPlayer[] soundPlayers, String fileName, double volume) throws Exception {
+        soundPlayers[0] = new SoundPlayer(fileName, volume);
+        soundPlayers[0].loopSound(true);
         tasksDone++;
     }
 
-    private static void setUpSoundArray(SoundPlayer[] array, int numberOfSounds, String fileName, double volume) throws Exception {
-        array[0] = new SoundPlayer(fileName, volume);
+    private static void setUpSoundArray(SoundPlayer[] soundPlayers, int numberOfSounds, String fileName, double volume) throws Exception {
+        soundPlayers[0] = new SoundPlayer(fileName, volume);
         tasksDone++;
         for (int i = 1; i < numberOfSounds; i++) {
-            array[i] = new SoundPlayer(array[0]);
+            soundPlayers[i] = new SoundPlayer(soundPlayers[0]);
             tasksDone++;
         }
     }

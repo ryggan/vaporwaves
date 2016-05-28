@@ -40,7 +40,6 @@ public class MenuController implements ContentController {
         // Menu background music
         this.menuMusic = Container.getSound(SoundID.MENU_BGM_1);
         this.menuMusic.playSound();
-        this.menuMusic.loopSound(true);
 
         // Setting up primary player, that will be navigate menus
         Player player;
