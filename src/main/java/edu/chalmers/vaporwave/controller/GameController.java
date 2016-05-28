@@ -2,7 +2,6 @@ package edu.chalmers.vaporwave.controller;
 
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
@@ -25,6 +24,10 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+/**
+ * This controller keeps the whole game going, via updateTimer method, which is
+ * called from MainController, where the AnimationLoop is.
+ */
 public class GameController implements ContentController {
 
     private enum GameState {
@@ -233,7 +236,7 @@ public class GameController implements ContentController {
 
         // Show scoreboard when holding tab
         this.arenaView.showScoreboard(this.gameState == GameState.GAME_RUNS
-                && ListenerController.getInstance().getInput().contains("TAB"));
+                && InputController.getInstance().getInput().contains("TAB"));
 
         // Check if end game!
         for (Player player : this.players) {
@@ -267,7 +270,7 @@ public class GameController implements ContentController {
     }
 
     private void updateGeneralInputs() {
-        List<String> pressed = ListenerController.getInstance().getPressed();
+        List<String> pressed = InputController.getInstance().getPressed();
 
         for (int i = 0; i < pressed.size(); i++) {
             String key = pressed.get(i);
@@ -291,7 +294,7 @@ public class GameController implements ContentController {
     }
 
     private void updatePlayerInputAction(Player player) {
-        List<String> allInput = ListenerController.getInstance().getAllInput(player);
+        List<String> allInput = InputController.getInstance().getAllInput(player);
         for (int i = 0; i < allInput.size(); i++) {
             String key = allInput.get(i);
             if (key.equals(player.getDirectionControls()[0]) || key.equals(player.getDirectionControls()[1])
@@ -304,7 +307,7 @@ public class GameController implements ContentController {
     }
 
     private void updatePlayerPressedAction(Player player) {
-        List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
+        List<String> allPressed = InputController.getInstance().getAllPressed(player);
         for (int i = 0; i < allPressed.size(); i++) {
             String key = allPressed.get(i);
             if (key.equals(player.getBombControl()) || key.equals("BTN_A")) {
@@ -430,7 +433,7 @@ public class GameController implements ContentController {
         if (this.deadEnemies.size() > 0) {
             for (Enemy enemy : this.deadEnemies) {
                 this.enemies.remove(enemy);
-                this.arenaModel.getArenaMovables().remove((Movable) enemy);
+                this.arenaModel.getArenaMovables().remove(enemy);
             }
             this.deadEnemies.clear();
         }
@@ -661,10 +664,7 @@ public class GameController implements ContentController {
 //                Container.playSound(SoundID.GAME_MUSIC);
                 this.gameState = GameState.GAME_RUNS;
             }
-
         }
-//        else if (movable instanceof Enemy) {
-//        }
     }
 
     public GameState getGameState() {

@@ -17,6 +17,11 @@ import net.java.games.input.Controller;
 
 import java.util.*;
 
+/**
+ * This controller handles the menus, i.e everything outside the actual game.
+ * It utilizes abstract model and view objects in a State Pattern and changes
+ * them when moving between menus
+ */
 public class MenuController implements ContentController {
 
     private NewGameEvent newGameEvent;
@@ -68,12 +73,12 @@ public class MenuController implements ContentController {
         updateViews(null);
     }
 
-    public void updatePlayerGamePads(Set<Player> players, boolean updateListener) {
-        if (updateListener) {
-            ListenerController.getInstance().updateGamePads();
+    public void updatePlayerGamePads(Set<Player> players, boolean updateGamePads) {
+        if (updateGamePads) {
+            InputController.getInstance().updateGamePads();
         }
 
-        List<Controller> gamePads = ListenerController.getInstance().getGamePads();
+        List<Controller> gamePads = InputController.getInstance().getGamePads();
 
         for (Player player : players) {
             if (gamePads.size() > player.getPlayerID()) {
@@ -82,6 +87,8 @@ public class MenuController implements ContentController {
         }
     }
 
+    // The timerUpdate of MenuController is a simple run-down of all input and eventual
+    // actions as a consequence
     public void timerUpdate(double timeSinceStart, double timeSinceLastCall) throws Exception {
 
         localPlayerInput(this.newGameEvent.getPrimaryPlayer());
@@ -101,13 +108,15 @@ public class MenuController implements ContentController {
         updateViews(player);
     }
 
+    // Local (/primary) player input (constantly pushed down buttons), pressed (the exact moment a button
+    // is pressed down), and released (the exact moment a button is released again).
     private void localPlayerInput(Player player) {
-        List<String> allInput = ListenerController.getInstance().getAllInput(player);
+        List<String> allInput = InputController.getInstance().getAllInput(player);
         this.pressedDown = (allInput.contains("ENTER") || allInput.contains("SPACE") || allInput.contains("BTN_A"));
     }
 
     private void localPlayerPressed(Player player) {
-        List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
+        List<String> allPressed = InputController.getInstance().getAllPressed(player);
         String[] directionControls = player.getDirectionControls();
 
         if (!allPressed.isEmpty()) {
@@ -127,7 +136,7 @@ public class MenuController implements ContentController {
     }
 
     private void localPlayerReleased(Player player) {
-        List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
+        List<String> allReleased = InputController.getInstance().getAllReleased(player);
 
         if (!allReleased.isEmpty() && player.getPlayerID() == 0) {
             String key = allReleased.get(0);
@@ -162,6 +171,7 @@ public class MenuController implements ContentController {
         }
     }
 
+    // Different menu actions, that primary player could inflict when navigating menus
     private void menuActionExitProgram() {
         Container.stopSound(SoundID.MENU_BGM_1);
         Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
@@ -196,6 +206,7 @@ public class MenuController implements ContentController {
         }
     }
 
+    // Getting available characters to fill CPU-Players with
     private List<GameCharacter> getAvailableGameCharacters() {
         Set<GameCharacter> allCharacters = new HashSet<>();
         allCharacters.add(new GameCharacter("ALYSSA", -1));
@@ -216,8 +227,10 @@ public class MenuController implements ContentController {
         return availableCharacters;
     }
 
+    // Remote (/secondary) player input (constantly pushed down buttons), pressed (the exact moment a button
+    // is pressed down), and released (the exact moment a button is released again).
     private void remotePlayerPressed(Player player) {
-        List<String> allPressed = ListenerController.getInstance().getAllPressed(player);
+        List<String> allPressed = InputController.getInstance().getAllPressed(player);
         String[] directionControls = player.getDirectionControls();
 
         if (!allPressed.isEmpty()) {
@@ -237,7 +250,7 @@ public class MenuController implements ContentController {
     }
 
     private void remotePlayerReleased(Player player) {
-        List<String> allReleased = ListenerController.getInstance().getAllReleased(player);
+        List<String> allReleased = InputController.getInstance().getAllReleased(player);
 
         if (!allReleased.isEmpty()) {
             String key = allReleased.get(0);
@@ -250,8 +263,10 @@ public class MenuController implements ContentController {
         }
     }
 
+    // Update correct view when changing menu content
     public void updateViews(Player player) {
 
+        // When in character select menu, push character and player info to view
         if (this.menuMap.get(this.activeMenu) instanceof CharacterSelectMenu
                     && this.menuViewMap.get(this.activeMenu) instanceof CharacterSelectView) {
 
@@ -260,6 +275,7 @@ public class MenuController implements ContentController {
 
             ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setPlayers(this.newGameEvent.getPlayers());
 
+        // When in rooster menu, push player info into view
         } else if (this.menuMap.get(this.activeMenu) instanceof RoosterMenu
                     && this.menuViewMap.get(this.activeMenu) instanceof RoosterMenuView) {
 
@@ -267,6 +283,7 @@ public class MenuController implements ContentController {
                         ((RoosterMenu)this.menuMap.get(this.activeMenu)).getSelectedPlayers());
         }
 
+        // The actual updating of the view
         this.menuViewMap.get(this.activeMenu).updateView(
                 this.menuMap.get(this.activeMenu).getSelectedSuper(),
                 this.menuMap.get(this.activeMenu).getSelectedSub(),
@@ -276,6 +293,7 @@ public class MenuController implements ContentController {
                 );
     }
 
+    // Changes active menu
     public void setActiveMenu(MenuState activeMenu){
         Container.playSound(SoundID.MENU_BGM_1);
 
@@ -297,6 +315,7 @@ public class MenuController implements ContentController {
         return true;
     }
 
+    // Posted from InputController when a gamepad disconnects, to update players with this
     @Subscribe
     public void gamePadDisconnected(GamePadDisconnectedEvent disconnectedEvent) {
         Controller gamePad = disconnectedEvent.getGamePad();
@@ -310,6 +329,7 @@ public class MenuController implements ContentController {
         }
     }
 
+    // Posted from GameController when a game is over
     @Subscribe
     public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
         ((ResultsMenu) this.menuMap.get(MenuState.RESULTS_MENU)).setPlayers(exitToMenuEvent.getPlayers());
@@ -320,11 +340,13 @@ public class MenuController implements ContentController {
         GameEventBus.getInstance().post(new GoToMenuEvent(exitToMenuEvent.getDestinationMenu()));
     }
 
+    // Posted from RoosterMenu when updating gamepads is nescessary
     @Subscribe
     public void roosterPlayersUpdated(RoosterPlayersUpdatedEvent event) {
-        updatePlayerGamePads(this.newGameEvent.getPlayers(), event.isUpdateListener());
+        updatePlayerGamePads(this.newGameEvent.getPlayers(), event.isUpdateGamePads());
     }
 
+    // A thread to wait for exit-sound to play
     private static class EndGameThread implements Runnable {
         @Override
         public void run() {

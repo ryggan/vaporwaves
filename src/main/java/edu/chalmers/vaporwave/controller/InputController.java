@@ -12,9 +12,14 @@ import net.java.games.input.*;
 import java.lang.reflect.Constructor;
 import java.util.*;
 
-public class ListenerController {
+/**
+ * A collection of different input-handlers. Mainly divided into usual keyboard input
+ * and not-so-usual handheld controller (gamepads) input. The gamepad input has to be
+ * updated to be correct.
+ */
+public class InputController {
 
-    private static ListenerController instance;
+    private static InputController instance;
 
     private List<String> input;
     private List<String> pressed;
@@ -27,7 +32,7 @@ public class ListenerController {
     private Map<Controller, List<String>> gamePadPressed;
     private Map<Controller, List<String>> gamePadReleased;
 
-    private ListenerController() {
+    private InputController() {
         input = new ArrayList<>();
         pressed = new ArrayList<>();
         released = new ArrayList<>();
@@ -40,7 +45,8 @@ public class ListenerController {
         gamePadReleased = new HashMap<>();
     }
 
-    public void initiateListener(Scene scene) {
+    // Starts checking input
+    public void initiateListeners(Scene scene) {
 
         scene.setOnKeyPressed(
                 new EventHandler<KeyEvent>() {
@@ -76,7 +82,7 @@ public class ListenerController {
 
     // This method updates the list of gamepads connected to the game
     // - OBS!! Even if only ONE of several gamepads has changed (from connected to not, e.g); ALL gamepads in the
-    //   updated list will be different and therefor all Player gamepads needs to be re-maped (see MenuController)
+    //   updated list will be different and therefore all Player gamepads needs to be re-maped (see MenuController)
     public void updateGamePads() {
 
         this.gamePads.clear();
@@ -103,7 +109,7 @@ public class ListenerController {
         System.out.println("Updated gamepads, active ones: "+this.gamePads);
     }
 
-    // Method that goes around the fact that a give ControllerEnvironment is a singleton and therefor
+    // Method that goes around the fact that a give ControllerEnvironment is a singleton and therefore
     // cannot be re-created, which is necessary when updating the list of gamepads
     private static ControllerEnvironment createDefaultEnvironment() {
         try {
@@ -256,11 +262,12 @@ public class ListenerController {
                     } else if (button[0].equals("14")) {
                         gamePadOnOffButton(button[1], "DPAD_RIGHT", input, pressed, released);
 
-                        // Different inputs depending on controller type
+                    // Different inputs depending on controller type
                     } else if ((gamePad.getType() == Controller.Type.GAMEPAD && button[0].equals("0"))
                             || (gamePad.getType() == Controller.Type.STICK && button[0].equals("2"))) {
                         gamePadOnOffButton(button[1], "BTN_A", input, pressed, released);
-                        // Same input, irregardless (don't ask)
+
+                    // Same input, irregardless (don't ask why here and not above..)
                     } else if (button[0].equals("1")) {
                         gamePadOnOffButton(button[1], "BTN_B", input, pressed, released);
                     }
@@ -366,14 +373,14 @@ public class ListenerController {
     }
 
     // Classic static singleton methods
-    public static synchronized ListenerController getInstance() {
+    public static synchronized InputController getInstance() {
         initialize();
         return instance;
     }
 
     public static synchronized void initialize() {
         if (instance == null) {
-            instance = new ListenerController();
+            instance = new InputController();
         }
     }
 }

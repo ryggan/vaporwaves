@@ -15,6 +15,10 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.LoadException;
 import javafx.scene.Group;
 
+/**
+ * First controls the loading of assets via Container, then sets up a basic hierarchy of controllers,
+ * and lastly starts the application loop, which does not end until the user exits the application.
+ */
 public class MainController {
 
     private MenuController menuController;
@@ -28,11 +32,7 @@ public class MainController {
     private LoadingScreenView loaderView;
     private boolean loadingDone;
 
-    /**
-     * Constructor, that sets up the ongoing main loop.
-     *
-     * @param root
-     */
+    // Starts loading
     public MainController(Group root) throws Exception {
 
         this.root = root;
@@ -84,6 +84,7 @@ public class MainController {
         }
     }
 
+    // Initiates controllers etc, when loading is done
     public void initApplication() {
         try {
             GameEventBus.getInstance().register(this);
@@ -97,8 +98,8 @@ public class MainController {
             this.gameController = new GameController(gameRoot);
             this.contentController = menuController;
 
-            ListenerController.getInstance().clearPressed();
-            ListenerController.getInstance().clearReleased();
+            InputController.getInstance().clearPressed();
+            InputController.getInstance().clearReleased();
 
         } catch (Exception e) {
             ErrorMessage.show(e);
@@ -124,11 +125,13 @@ public class MainController {
 
                     double timeSinceStart = (currentNanoTime - startNanoTime) / 1000000000.0;
 
+                    // The active controller is updated; menu or game
                     contentController.timerUpdate(timeSinceStart, timeSinceLastCall);
 
-                    ListenerController.getInstance().updateGamePadInputs();
-                    ListenerController.getInstance().clearPressed();
-                    ListenerController.getInstance().clearReleased();
+                    // Listeners are updated
+                    InputController.getInstance().updateGamePadInputs();
+                    InputController.getInstance().clearPressed();
+                    InputController.getInstance().clearReleased();
 
                 } catch (Exception e) {
                     ErrorMessage.show(e);
@@ -138,6 +141,7 @@ public class MainController {
         }.start();
     }
 
+    // Posted from MenuController, when pressing Start Game button.
     @Subscribe
     public void newGame(NewGameEvent newGameEvent) {
         try {
@@ -151,11 +155,13 @@ public class MainController {
         }
     }
 
+    // Posted from menu
     @Subscribe
     public void exitGame(ExitGameEvent exitGameEvent) {
         System.exit(0);
     }
 
+    // Posted from menu every time the menu changes (or from game when going to the menu)
     @Subscribe
     public void goToMenu(GoToMenuEvent goToMenuEvent) {
         this.root.getChildren().clear();

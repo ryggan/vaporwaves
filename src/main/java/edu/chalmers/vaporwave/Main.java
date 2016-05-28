@@ -1,6 +1,6 @@
 package edu.chalmers.vaporwave;
 
-import edu.chalmers.vaporwave.controller.ListenerController;
+import edu.chalmers.vaporwave.controller.InputController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.ErrorMessage;
@@ -13,6 +13,10 @@ import javafx.stage.WindowEvent;
 
 import javax.annotation.Nonnull;
 
+/**
+ * The main class, where the FX application is created.
+ * When initiated, it immediately gives the control to MainController.œ
+ */
 public class Main extends Application {
 
 	public static void main(String[] args) {
@@ -51,7 +55,7 @@ public class Main extends Application {
 
         // Initiating controllers
 		try {
-			ListenerController.getInstance().initiateListener(scene);
+			InputController.getInstance().initiateListeners(scene);
 			new MainController(root);
 
 		} catch (Exception e) {
