@@ -1,9 +1,11 @@
 package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.game.Movable;
-import edu.chalmers.vaporwave.model.game.StaticTile;
-import edu.chalmers.vaporwave.assetcontainer.AnimatedSprite;
 
+/**
+ * This event is posted to the eventbus by AnimatedSprite when it's animation has run it's course
+ * (if the "do not loop" setting is on)
+ */
 public class AnimationFinishedEvent {
 
     private Movable movable;
@@ -36,7 +38,7 @@ public class AnimationFinishedEvent {
     @Override
     public int hashCode(){
         int hash = 23;
-        hash += movable.hashCode()*123;
+        hash += this.movable.hashCode()*123;
         return hash;
 
     }

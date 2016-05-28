@@ -2,6 +2,9 @@ package edu.chalmers.vaporwave.event;
 
 import com.google.common.eventbus.*;
 
+/**
+ * This is a simple singleton class, to encapsule the google eventbus we want to use.
+ */
 public class GameEventBus extends EventBus {
     private static GameEventBus eventBus;
 

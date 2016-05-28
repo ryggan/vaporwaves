@@ -88,19 +88,20 @@ public class AnimatedSprite extends Sprite {
 
         this.playedYet = true;
 
-        if (startFromBeginning && timeOffset == 0) {
-            timeOffset = time;
+        if (this.startFromBeginning && this.timeOffset == 0) {
+            this.timeOffset = time;
         }
 
-        if (loops != -1) {
-            if (startTime == 0) {
-                startTime = time;
+        if (this.loops != -1) {
+            if (this.startTime == 0) {
+                this.startTime = time;
             }
         }
 
         double timeToCheck = time - timeOffset;
 
-        if (!animationFinished && loops != -1 && startTime != 0 && time - startTime > loops * (duration * length)) {
+        if (!this.animationFinished && this.loops != -1 && this.startTime != 0
+                    && time - this.startTime > this.loops * (this.duration * this.length)) {
             this.animationFinished = true;
             if (this.animationFinishedEvent == null) {
                 this.animationFinishedEvent = new AnimationFinishedEvent();
@@ -109,15 +110,15 @@ public class AnimatedSprite extends Sprite {
 
         }
 
-        int index = (int)((timeToCheck % (length * duration)) / duration);
-        if (lingerOnLastFrame && animationFinished) {
-            index = length - 1;
+        int index = (int)((timeToCheck % (this.length * this.duration)) / this.duration);
+        if (this.lingerOnLastFrame && this.animationFinished) {
+            index = this.length - 1;
         }
 
         double width = getWidth() * getScale();
         double height = getHeight() * getScale();
-        int sourcex = frames.get(index)[0] * (int)width;
-        int sourcey = frames.get(index)[1] * (int)height;
+        int sourcex = this.frames.get(index)[0] * (int)width;
+        int sourcey = this.frames.get(index)[1] * (int)height;
 
         double targetx = (getPositionX() - getOffsetX()) * getScale();
         double targety = (getPositionY() - getOffsetY()) * getScale();
@@ -126,25 +127,25 @@ public class AnimatedSprite extends Sprite {
             targety = Math.round(targety * getScale()) / getScale();
         }
 
-        if (lingerOnLastFrame || !animationFinished) {
+        if (this.lingerOnLastFrame || !this.animationFinished) {
             gc.drawImage(getImage(), sourcex, sourcey, width, height, targetx, targety, width, height);
         }
     }
 
     public void resetLoops() {
-        startTime = 0;
-        timeOffset = 0;
-        playedYet = false;
-        animationFinished = false;
+        this.startTime = 0;
+        this.timeOffset = 0;
+        this.playedYet = false;
+        this.animationFinished = false;
     }
 
     @Override
     public String toString() {
-        return "Animated " + super.toString() + " Length: " + length;
+        return "Animated " + super.toString() + " Length: " + this.length;
     }
 
     public int getLength() {
-        return length;
+        return this.length;
     }
 
     public double getDuration() {
@@ -173,7 +174,7 @@ public class AnimatedSprite extends Sprite {
     }
 
     public double getTotalTime() {
-        return length * duration;
+        return this.length * this.duration;
     }
 
     @Override

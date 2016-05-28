@@ -2,6 +2,9 @@ package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.game.Movable;
 
+/**
+ * This event is posted to the eventbus by ArenaView when a Movables spawn animation is finished.
+ */
 public class SpawnEvent {
 
     private Movable movable;
@@ -25,6 +28,6 @@ public class SpawnEvent {
 
     @Override
     public int hashCode(){
-        return movable.hashCode();
+        return this.movable.hashCode() * 7;
     }
 }

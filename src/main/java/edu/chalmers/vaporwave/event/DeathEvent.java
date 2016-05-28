@@ -2,6 +2,9 @@ package edu.chalmers.vaporwave.event;
 
 import edu.chalmers.vaporwave.model.game.Movable;
 
+/**
+ * This event is posted to the eventbus by ArenaView when a Movables death animation is done.
+ */
 public class DeathEvent {
 
     private Movable movable;
@@ -25,7 +28,7 @@ public class DeathEvent {
 
     @Override
     public int hashCode(){
-        return movable.hashCode();
+        return this.movable.hashCode();
     }
 
 }

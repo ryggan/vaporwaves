@@ -6,12 +6,14 @@ import edu.chalmers.vaporwave.util.GameType;
 
 import java.util.Set;
 
+/**
+ * This event is posted to the eventbus by GameController when the exiting to menu
+ */
 public class ExitToMenuEvent {
 
     private MenuState destinationMenu;
     private Set<Player> players;
     private GameType gameType;
-
 
     public ExitToMenuEvent(MenuState destinationMenu, Set<Player> players, GameType gameType) {
         this.destinationMenu = destinationMenu;
