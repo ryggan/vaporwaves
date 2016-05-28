@@ -5,10 +5,16 @@ import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
 import net.java.games.input.Controller;
 
+/**
+ * Represents every active player (generally up to four at the same time), and
+ * holds all stats and other useful information
+ */
 public class Player implements Comparable<Player> {
+
     private int playerID;
     private String playerName;
     private GameCharacter gameCharacter;
+
     private int score;
     private int kills;
     private int deaths;
@@ -29,12 +35,21 @@ public class Player implements Comparable<Player> {
         resetPlayerGameStats();
     }
 
+    // Most of this is score-related; every time most stats change, the score does the same accordingly
     public void changeScore(int addition) {
         this.score = Math.max(this.score + addition, 0);
     }
 
     public int getScore() {
         return this.score;
+    }
+
+    public void resetPlayerGameStats() {
+        this.kills = 0;
+        this.creeps = 0;
+        this.powerUpScore = 0;
+        this.score = 0;
+        this.deaths = 0;
     }
 
     public void incrementKills() {
@@ -77,20 +92,23 @@ public class Player implements Comparable<Player> {
         return this.creeps;
     }
 
-    public void clearScore() {
-        this.score = 0;
+    public String[] getPlayerInfo() {
+        this.score = getScore();
+        playerInfo[0] = playerName;
+        playerInfo[1] = kills + "";
+        playerInfo[2] = deaths + "";
+        playerInfo[3] = creeps + "";
+        playerInfo[4] = score + "";
+        return ClonerUtility.stringArrayCloner(this.playerInfo);
     }
 
+    // Next is normal setters and getters for all the other attributes
     public void setCharacter(GameCharacter gameCharacter) {
         this.gameCharacter = gameCharacter;
     }
 
     public GameCharacter getCharacter() {
         return this.gameCharacter;
-    }
-
-    public void clearCharacter() {
-        this.gameCharacter = null;
     }
 
     public int getPlayerID() {
@@ -109,21 +127,11 @@ public class Player implements Comparable<Player> {
         this.playerName = name;
     }
 
-    public String[] getPlayerInfo() {
-        this.score = getScore();
-        playerInfo[0] = playerName;
-        playerInfo[1] = kills + "";
-        playerInfo[2] = deaths + "";
-        playerInfo[3] = creeps + "";
-        playerInfo[4] = score + "";
-        return ClonerUtility.stringArrayCloner(this.playerInfo);
-    }
-
     public void setGamePad(Controller gamePad) {
         this.gamePad = gamePad;
-//        System.out.println("Player "+getPlayerID()+", Gamepad set: "+gamePad);
     }
 
+    // Control specific stuff
     public Controller getGamePad() {
         return this.gamePad;
     }
@@ -144,6 +152,7 @@ public class Player implements Comparable<Player> {
         return this.bombControl;
     }
 
+    // Overridden normal methods
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) {
@@ -177,14 +186,6 @@ public class Player implements Comparable<Player> {
     public String toString() {
         return "Player [ Name: "+playerName+", ID: "+playerID+", Score: "+score+", Kills: "+kills+", Deaths: "+deaths
                 +", GamePad: "+gamePad+" ]";
-    }
-
-    public void resetPlayerGameStats() {
-        this.kills = 0;
-        this.creeps = 0;
-        this.powerUpScore = 0;
-        this.score = 0;
-        this.deaths = 0;
     }
 
     @Override

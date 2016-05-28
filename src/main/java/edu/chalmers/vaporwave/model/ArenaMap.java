@@ -7,6 +7,10 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is a simple class that holds initial map information about one arena; where the
+ * different objects are at the beginning of a game.
+ */
 public class ArenaMap {
     private String name;
     private MapObject[][] mapObjects;

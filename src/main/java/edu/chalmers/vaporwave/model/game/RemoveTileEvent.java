@@ -2,6 +2,10 @@ package edu.chalmers.vaporwave.model.game;
 
 import java.awt.*;
 
+/**
+ * This event is posted to the eventbus by ArenaView when a StaticTile should disappear
+ * (generally when a animation is finished)
+ */
 public class RemoveTileEvent {
 
     private StaticTile tile;

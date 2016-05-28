@@ -1,9 +1,11 @@
 package edu.chalmers.vaporwave.model;
 
 import edu.chalmers.vaporwave.assetcontainer.Container;
-import edu.chalmers.vaporwave.assetcontainer.SoundID;
-import edu.chalmers.vaporwave.util.SoundPlayer;
 
+/**
+ * A simple model for the pre-game loader. It only calculates how much is loaded
+ * and and then waits some, every time its update-method is called.
+ */
 public class LoadingScreen {
 
     private double percentLoaded;
@@ -13,7 +15,7 @@ public class LoadingScreen {
     }
 
     public void updateLoader() {
-        percentLoaded = Container.getTasksDone() / Container.getTotalTasks();
+        this.percentLoaded = Container.getTasksDone() / Container.getTotalTasks();
 
         try {
             Thread.sleep(100);

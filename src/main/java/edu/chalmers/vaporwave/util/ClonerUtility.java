@@ -1,22 +1,15 @@
 package edu.chalmers.vaporwave.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * A utility for the cloning of different kinds of arrays, many times used to protect
+ * internal representation
+ */
 public class ClonerUtility {
 
     public static String[] stringArrayCloner(String[] stringArray) {
         String[] temporary = new String[stringArray.length];
         for(int i = 0; i < stringArray.length; i++) {
             temporary[i] = stringArray[i];
-        }
-        return temporary;
-    }
-
-    public static List<Object> listCloner(List<Object> objectList) {
-        List<Object> temporary = new ArrayList<>();
-        for(int i = 0; i < objectList.size(); i++) {
-            temporary.add(objectList.get(i));
         }
         return temporary;
     }

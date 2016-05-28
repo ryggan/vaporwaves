@@ -3,6 +3,11 @@ package edu.chalmers.vaporwave.model;
 import edu.chalmers.vaporwave.model.game.EmptyAI;
 import edu.chalmers.vaporwave.model.game.PlayerAI;
 
+/**
+ * This class extends Player, and it's only purpose is to hold an AI. The reason to this
+ * is that when playing with AI-controlled GameCharacters, the only difference should be
+ * that the input comes from AI instead of human user.
+ */
 public class CPUPlayer extends Player {
 
     private PlayerAI playerAI;

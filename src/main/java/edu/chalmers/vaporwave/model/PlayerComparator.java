@@ -2,8 +2,13 @@ package edu.chalmers.vaporwave.model;
 
 import java.util.Comparator;
 
+/**
+ * A custom comparator for sorting lists with Players in them, by different values
+ * depending on which game type that was played, or if just by ID, and so on.
+ */
 public enum PlayerComparator implements Comparator<Player> {
 
+    // The different sorting settings
     ID_SORT {
         public int compare(Player player1, Player player2) {
             return Integer.valueOf(player1.getPlayerID()).compareTo(player2.getPlayerID());
@@ -24,6 +29,7 @@ public enum PlayerComparator implements Comparator<Player> {
             return Integer.valueOf(player1.getCreeps()).compareTo(player2.getCreeps());
         }};
 
+    // A way of reversing the sorted order, if needed
     public static Comparator<Player> decending(final Comparator<Player> other) {
         return new Comparator<Player>() {
             public int compare(Player player1, Player player2) {
@@ -32,6 +38,7 @@ public enum PlayerComparator implements Comparator<Player> {
         };
     }
 
+    // This is the method that needs to be called when creating the custom comparator
     public static Comparator<Player> getComparator(final PlayerComparator... multipleOptions) {
         return new Comparator<Player>() {
             public int compare(Player player1, Player player2) {
