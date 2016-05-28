@@ -322,6 +322,7 @@ public class MenuController implements ContentController {
 
     @Subscribe
     public void exitToMenu(ExitToMenuEvent exitToMenuEvent) {
+//        Set<Player> players = exitToMenuEvent.getPlayers();
 
         this.resultsMenuView.setPlayers(exitToMenuEvent.getPlayers());
         this.resultsMenuView.setGameType(exitToMenuEvent.getGameType());

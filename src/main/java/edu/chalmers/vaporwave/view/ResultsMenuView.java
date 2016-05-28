@@ -138,7 +138,7 @@ public class ResultsMenuView extends AbstractMenuView {
     }
 
     public void initScoreboard() {
-        this.scoreboardView = new ScoreboardView(this.root, this.players, 190, -40);
+        this.scoreboardView = new ScoreboardView(this.root, this.players, 190, -40, true, this.gameType);
         this.scoreboardView.showScoreboard();
     }
 
