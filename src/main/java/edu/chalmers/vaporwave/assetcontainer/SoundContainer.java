@@ -67,12 +67,12 @@ class SoundContainer {
 
         // background music (1)
         soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-bgm-1.mp3", 0.8);
+        setUpSoundArray(soundPlayer, 1, "menu-bgm-1.mp3", 0.5);
         soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
 
         //speech files(8)
         soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-exit.wav");
+        setUpSoundArray(soundPlayer, 1, "menu-exit.mp3");
         soundContainer.put(SoundID.MENU_EXIT, soundPlayer);
         soundPlayer = new SoundPlayer[1];
         setUpSoundArray(soundPlayer, 1, "menu-alyssa.mp3");
@@ -87,13 +87,13 @@ class SoundContainer {
         setUpSoundArray(soundPlayer, 1, "menu-zypher.mp3");
         soundContainer.put(SoundID.MENU_ZYPHER, soundPlayer);
         soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "game-start.wav");
+        setUpSoundArray(soundPlayer, 1, "game-start.mp3");
         soundContainer.put(SoundID.START_GAME, soundPlayer);
         soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-selectcharacter.wav");
+        setUpSoundArray(soundPlayer, 1, "menu-selectcharacter.mp3");
         soundContainer.put(SoundID.SELECT_CHARACTER, soundPlayer);
         soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-timeup.wav");
+        setUpSoundArray(soundPlayer, 1, "menu-timeup.mp3");
         soundContainer.put(SoundID.TIME_UP, soundPlayer);
 
         //        soundPlayer = new SoundPlayer[4];
@@ -147,7 +147,7 @@ class SoundContainer {
         SoundPlayer player = getSound(soundID);
         if (player != null) {
             double masterVolume = soundVolume;
-            if (soundID == SoundID.GAME_MUSIC) {
+            if (soundID == SoundID.GAME_MUSIC || soundID == SoundID.MENU_BGM_1) {
                 masterVolume = musicVolume;
             }
             player.playSound(masterVolume);
