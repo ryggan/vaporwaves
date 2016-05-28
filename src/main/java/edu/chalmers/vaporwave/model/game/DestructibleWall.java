@@ -1,5 +1,9 @@
 package edu.chalmers.vaporwave.model.game;
 
+/**
+ * This wall type is destructible. That means that a bomb can blow it up, which in turn
+ * means that it has to be animated and have a timestamp.
+ */
 public class DestructibleWall extends Wall implements AnimatedTile {
 
     private boolean destroyed;
@@ -23,6 +27,6 @@ public class DestructibleWall extends Wall implements AnimatedTile {
     }
 
     public String toString() {
-        return super.toString() + ": DestructibleWall [ destroyed: "+destroyed+", time: "+timeStamp+" ]";
+        return super.toString() + ": DestructibleWall [ destroyed: "+this.destroyed+", time: "+this.timeStamp+" ]";
     }
 }

@@ -6,6 +6,14 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 
 import java.awt.*;
 
+/**
+ * An explosive item is put in the arena by its owner and when it explodes, it transfers
+ * its damage to a Blast, which in turn deals damage to Movables.
+ *
+ * In the beginning, not only Bombs but also Mines where thought of, which is why the Bomb
+ * class inherits this, and is not the top class itself. We leave it like this, to be able
+ * to extend it later, after the assignment is finished.
+ */
 public abstract class Explosive extends StaticTile {
 
     private GameCharacter owner;
@@ -39,7 +47,7 @@ public abstract class Explosive extends StaticTile {
     }
 
     public void updateTimer(double timeSinceStart) {
-        if (timeSinceStart - this.timeStamp > delay) {
+        if (timeSinceStart - this.timeStamp > this.delay) {
             explode();
         }
     }
@@ -64,6 +72,6 @@ public abstract class Explosive extends StaticTile {
     }
 
     public String toString() {
-        return super.toString() + ": Explosive [ damage:"+damage+", delay:"+delay+"]";
+        return super.toString() + ": Explosive [ damage:"+this.damage+", delay:"+this.delay+"]";
     }
 }

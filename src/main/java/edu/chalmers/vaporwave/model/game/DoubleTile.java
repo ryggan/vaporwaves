@@ -1,5 +1,10 @@
 package edu.chalmers.vaporwave.model.game;
 
+/**
+ * A recursive solution to keep more than one StaticTile in one place in ArenaModel's grid.
+ * It's almost like a Decorator Pattern, since it can holds a StaticTile and is one, atthe
+ * same time.
+ */
 public class DoubleTile extends StaticTile {
 
     private StaticTile lowerTile;

@@ -6,6 +6,10 @@ import edu.chalmers.vaporwave.util.Constants;
 import java.awt.*;
 import java.util.Set;
 
+/**
+ * This class calculates how much every grid position in the arena is worth, taking into account
+ *  powerups, enemies and other dangers.
+ */
 public class AIHeuristics {
     private static int[][] heuristicMatrix = new int[Constants.GAME_WIDTH][Constants.GAME_HEIGHT];
 
@@ -15,6 +19,7 @@ public class AIHeuristics {
         heuristicMatrix[x][y] = value;
     }
 
+    // Returns a grid of values the same size as parameter arenaTiles
     public static int[][] getAIHeuristics(StaticTile[][] arenaTiles, Set<GameCharacter> gameCharacters, Set<Enemy> enemies) {
         for(int i = 0; i < arenaTiles.length; i++) {
             for(int j = 0; j < arenaTiles[0].length; j++) {

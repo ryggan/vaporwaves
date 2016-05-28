@@ -3,6 +3,10 @@ package edu.chalmers.vaporwave.model.game;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.util.BlastState;
 
+/**
+ * The Blast is a simple object with timestamp and direction; almost the only thing needed
+ * to render it on screen. Created by GameController when a BlastEvent occurs.
+ */
 public class Blast extends StaticTile implements AnimatedTile {
 
     private double damage;

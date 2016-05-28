@@ -7,9 +7,15 @@ import edu.chalmers.vaporwave.util.Utils;
 import javafx.geometry.BoundingBox;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A movable is anything that moves around in the arena, and therefore not a StaticTile.
+ * It holds its position and also have different states it can be in, and behaves accordingly.
+ * There is quite a bit of code concerning the movement, since it is very important that the
+ * movement feels good.
+ */
 public abstract class Movable {
 
     private String name;
@@ -18,9 +24,12 @@ public abstract class Movable {
     private double canvasPositionY;
     private double velocityX;
     private double velocityY;
+
+    private double health;
     private double speed;
     private boolean moving;
     private double damage;
+
     private List<Direction> lastMove;
     private Direction direction;
     private MovableState comingState;
@@ -31,7 +40,6 @@ public abstract class Movable {
     private int previousGridPositionY;
     private StaticTile[][] latestArenaTiles;
 
-    private double health;
     private int flinchTimer;
     private int flinchDelay;
     private boolean flinchInvincible;
@@ -40,6 +48,7 @@ public abstract class Movable {
 
     private BoundingBox boundingBox;
 
+    // Basic constructor with default values for most attributes
     public Movable(String name, double canvasPositionX, double canvasPositionY, double speed) {
 
         this.canvasPositionX = canvasPositionX;
@@ -55,7 +64,6 @@ public abstract class Movable {
         this.speed = speed;
         this.name = name;
         this.damage = 0;
-        this.health = Constants.DEFAULT_START_HEALTH;
 
         this.flinchDelay = 20;
         this.invincibleDelay = 60;
@@ -65,6 +73,8 @@ public abstract class Movable {
         reset(MovableState.IDLE);
     }
 
+    // The reset clears all altered data and sets it to default values
+    // Unlike the attributes in constructor, these values will need to be reset during game
     public void reset() {
         reset(MovableState.IDLE);
     }
@@ -82,6 +92,8 @@ public abstract class Movable {
         this.flinchInvincible = false;
     }
 
+    // A method called every animation frame, that not only updates position but also
+    // makes sure the Movables state is right, and lots of other stuff
     public void updatePosition() {
         this.previousState = this.movableState;
 
@@ -93,7 +105,7 @@ public abstract class Movable {
         this.canvasPositionX += this.velocityX;
         this.canvasPositionY += this.velocityY;
 
-        moving = (getVelocityX() != 0 || getVelocityY() != 0);
+        this.moving = (getVelocityX() != 0 || getVelocityY() != 0);
 
         switch (movableState) {
 
@@ -107,16 +119,17 @@ public abstract class Movable {
                 break;
 
             case FLINCH:
-                if (flinchTimer > 0) {
-                    flinchTimer--;
+                if (this.flinchTimer > 0) {
+                    this.flinchTimer--;
                 } else {
                     setState(MovableState.IDLE);
                     if (Math.round(Utils.gridToCanvasPositionX(getPreviousGridPositionX())) != Math.round(getCanvasPositionX())
                             || Math.round(Utils.gridToCanvasPositionY(getPreviousGridPositionY())) != Math.round(getCanvasPositionY())) {
-                        move(direction, latestArenaTiles);
+                        move(this.direction, this.latestArenaTiles);
                     }
                 }
                 break;
+
             default:
         }
 
@@ -124,27 +137,14 @@ public abstract class Movable {
     }
 
     public void updateInvincibleTimer() {
-        if (invincibleTimer > 0) {
-            invincibleTimer--;
+        if (this.invincibleTimer > 0) {
+            this.invincibleTimer--;
         } else {
-            flinchInvincible = false;
+            this.flinchInvincible = false;
         }
     }
 
-    private void stopAtTile(int newGridPositionX, int newGridPositionY) {
-
-        stop();
-        setState(MovableState.IDLE);
-        setCanvasPosition(Utils.gridToCanvasPositionX(newGridPositionX), Utils.gridToCanvasPositionY(newGridPositionY));
-        setPreviousGridPositionX(newGridPositionX);
-        setPreviousGridPositionY(newGridPositionY);
-    }
-
-    private void stop() {
-        setVelocity(0, 0);
-        this.setMoving(false);
-    }
-
+    // When walking, this method checks if the Movable has reached the middle of a arena tile, and stops
     private void stopOnTileIfNeeded() {
         int closestTilePositionX = Utils.canvasToGridPositionX(getCanvasPositionX());
         int closestTilePositionY = Utils.canvasToGridPositionY(getCanvasPositionY());
@@ -159,7 +159,9 @@ public abstract class Movable {
         if(closeToPosition) {
             stopAtTile(closestTilePositionX, closestTilePositionY);
 
-            // Following makes movable keep on moving, to not stop flow
+            // Following makes movable >keep on moving< instead of stoping, to not stop flow
+            // when holding a directional button
+
             Direction foundNewDirection = null;
             for(Direction direction : this.lastMove) {
                 if (Utils.isOrtogonalDirections(this.direction, direction)) {
@@ -175,7 +177,7 @@ public abstract class Movable {
             if (foundNewDirection != null) {
                 move(foundNewDirection, this.latestArenaTiles);
 
-                // If no flow needs to be kept, keep on moving in recently pressed direction
+            // If no flow needs to be kept, keep on moving in recently pressed direction
             } else {
                 for (Direction direction : this.lastMove) {
                     if (allowMove(direction) && !oppositeDirection(direction)) {
@@ -185,6 +187,21 @@ public abstract class Movable {
                 }
             }
         }
+    }
+
+    // Definitely stops on a given tile position, changing the position values if needed
+    private void stopAtTile(int newGridPositionX, int newGridPositionY) {
+        stop();
+        setState(MovableState.IDLE);
+        setCanvasPosition(Utils.gridToCanvasPositionX(newGridPositionX), Utils.gridToCanvasPositionY(newGridPositionY));
+        setPreviousGridPositionX(newGridPositionX);
+        setPreviousGridPositionY(newGridPositionY);
+    }
+
+    // Only simply stops, which means the Movable's velocity sets to zero
+    private void stop() {
+        setVelocity(0, 0);
+        this.setMoving(false);
     }
 
     public void setVelocity(double velocityX, double velocityY) {
@@ -206,6 +223,9 @@ public abstract class Movable {
     public double getSpeed() {
         return this.speed;
     }
+
+    // Here follows a couple of methods for setting to different MovableStates, and actions
+    // that is supposed to happen in connection to this
 
     public void idle() {
         setState(MovableState.IDLE);
@@ -233,27 +253,32 @@ public abstract class Movable {
         this.health = Constants.DEFAULT_START_HEALTH;
     }
 
+    // Every time a direction key is pressed, this method is called to tell the Movable to move
     public void move(Direction direction, StaticTile[][] arenaTiles) {
         if (direction != null && !this.lastMove.contains(Utils.getOppositeDirection(direction))) {
             this.lastMove.add(direction);
             this.latestArenaTiles = staticTileMatrixClone(arenaTiles);
             if (this.comingState != MovableState.SPAWN &&
                     (movableState == MovableState.IDLE || (movableState == MovableState.WALK && oppositeDirection(direction)))) {
+
+                boolean condition = false;
                 switch (direction) {
                     case UP:
-                        moveUp();
+                        condition = (getCanvasPositionY() > 0);
                         break;
                     case LEFT:
-                        moveLeft();
+                        condition = (getCanvasPositionY() < Utils.gridToCanvasPositionX(Constants.DEFAULT_GRID_HEIGHT-1));
                         break;
                     case DOWN:
-                        moveDown();
+                        condition = (getCanvasPositionX() > 0);
                         break;
                     case RIGHT:
-                        moveRight();
+                        condition = (getCanvasPositionX() < Utils.gridToCanvasPositionY(Constants.DEFAULT_GRID_WIDTH-1));
                         break;
                     default:
                 }
+                moveGeneral(direction, condition);
+
                 if (getVelocityY() != 0 || getVelocityX() != 0) {
                     setState(MovableState.WALK);
                 }
@@ -261,6 +286,7 @@ public abstract class Movable {
         }
     }
 
+    // A matrix cloner, moved here from utilites to get rid of unnecessary cross-package dependencies
     private StaticTile[][] staticTileMatrixClone(StaticTile[][] matrix) {
         StaticTile[][] newMatrix = new StaticTile[matrix.length][matrix[0].length];
         for(int i = 0; i < matrix.length; i++) {
@@ -271,43 +297,22 @@ public abstract class Movable {
         return newMatrix;
     }
 
-    public void moveUp() {
-        if (allowMove(0, -1) && getCanvasPositionY() > 0) {
-            setDirection(Direction.UP);
-            setVelocity(0, -this.getSpeed());
+    // This checks if a move is legal and makes it when possible
+    public void moveGeneral(Direction direction, boolean positionCondition) {
+        Point relativePoint = Utils.getRelativePoint(new Point(0, 0), 1, direction);
+        int x = relativePoint.x;
+        int y = relativePoint.y;
+
+        if (allowMove(x, y) && positionCondition) {
+            setDirection(direction);
+            setVelocity(x * this.getSpeed(), y * this.getSpeed());
 
         } else if (getState() == MovableState.IDLE) {
-            setDirection(Direction.UP);
-        }
-    }
-    public void moveDown() {
-        if (allowMove(0, 1) && getCanvasPositionY() < Utils.gridToCanvasPositionX(Constants.DEFAULT_GRID_HEIGHT-1)) {
-            setDirection(Direction.DOWN);
-            setVelocity(0, this.getSpeed());
-
-        } else if (getState() == MovableState.IDLE) {
-            setDirection(Direction.DOWN);
-        }
-    }
-    public void moveLeft() {
-        if (allowMove(-1, 0) && getCanvasPositionX() > 0) {
-            setDirection(Direction.LEFT);
-            setVelocity(-this.getSpeed(), 0);
-
-        } else if (getState() == MovableState.IDLE) {
-            setDirection(Direction.LEFT);
-        }
-    }
-    public void moveRight() {
-        if (allowMove(1, 0) && getCanvasPositionX() < Utils.gridToCanvasPositionY(Constants.DEFAULT_GRID_WIDTH-1)) {
-            setDirection(Direction.RIGHT);
-            setVelocity(this.getSpeed(), 0);
-
-        } else if (getState() == MovableState.IDLE) {
-            setDirection(Direction.RIGHT);
+            setDirection(direction);
         }
     }
 
+    // The foundation of moveGeneral; to check if a move is legal in a given direction
     private boolean allowMove(int gridDirectionX, int gridDirectionY) {
 
         // Calculates nearest gridposition
@@ -354,6 +359,7 @@ public abstract class Movable {
         return allowMove(directionToPoint.getX(), directionToPoint.getY());
     }
 
+    // Many times it is important to know if a given direction is the opposite of the current
     private boolean oppositeDirection(Direction direction) {
         return (((direction.equals(Direction.UP) && getDirection() == Direction.DOWN)
                 || (direction.equals(Direction.DOWN) && getDirection() == Direction.UP)
@@ -362,6 +368,7 @@ public abstract class Movable {
                 && !(this.latestArenaTiles[getPreviousGridPositionX()][getPreviousGridPositionY()] instanceof Bomb));
     }
 
+    // Movable receives damage and flinches or dies, whether its health is down or not
     public void dealDamage(double damage) {
         this.health -= damage;
         if (this.health <= 0) {
@@ -372,6 +379,7 @@ public abstract class Movable {
         }
     }
 
+    // Your standard get-and-sets
     public Direction getDirection() {
         return direction;
     }

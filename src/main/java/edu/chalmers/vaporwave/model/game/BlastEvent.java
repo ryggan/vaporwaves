@@ -1,5 +1,8 @@
 package edu.chalmers.vaporwave.model.game;
 
+/**
+ * This event is posted to the eventbus by Explosive when its timer runs out.
+ */
 public class BlastEvent {
 
     private Explosive explosive;
