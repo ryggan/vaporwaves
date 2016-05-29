@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GamePadDisconnectedEvent;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.Debug;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -105,8 +106,9 @@ public class InputController {
                 }
             }
         }
-
-        System.out.println("Updated gamepads, active ones: "+this.gamePads);
+        if (Debug.PRINT_LOG) {
+            System.out.println("Updated gamepads, active ones: " + this.gamePads);
+        }
     }
 
     // Method that goes around the fact that a give ControllerEnvironment is a singleton and therefore

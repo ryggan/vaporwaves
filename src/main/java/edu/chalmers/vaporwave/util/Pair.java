@@ -1,5 +1,9 @@
 package edu.chalmers.vaporwave.util;
 
+/**
+ * Our own implementation of a so called "tuple". In other words, a simple way of
+ * containing two different objects connected to eachother.
+ */
 public class Pair<F,S> {
 
     private F first;

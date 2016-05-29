@@ -20,7 +20,7 @@ public class ResultsMenu extends AbstractMenu {
     }
 
     public ResultsMenu(Set<Player> players) {
-        super(new int[]{0, 0});
+        super(new int[]{0});
 
         setPlayers(players);
     }
@@ -32,15 +32,15 @@ public class ResultsMenu extends AbstractMenu {
 
     @Override
     public MenuState getMenuAction() {
-//        if (this.getSelectedSuper() == 0) {
+        if (this.getSelectedSuper() == 0) {
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
             for (Player player : this.players) {
                 player.resetPlayerGameStats();
             }
 
             return MenuState.START_MENU;
-//        }
-//        return MenuState.NO_ACTION;
+        }
+        return MenuState.NO_ACTION;
     }
 
     @Override

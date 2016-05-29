@@ -5,6 +5,10 @@ import javafx.scene.media.MediaPlayer;
 
 import java.nio.file.Paths;
 
+/**
+ * A container class for MediaPlayer, to enable our own personal touch, since we only
+ * want it to play sounds, with a variety of extra features.
+ */
 public class SoundPlayer {
 
     private MediaPlayer sound;
@@ -21,6 +25,7 @@ public class SoundPlayer {
     public MediaPlayer getSound(){
         return sound;
     }
+
     private static class EndOfMediaRunnable implements Runnable {
         private MediaPlayer sound;
 

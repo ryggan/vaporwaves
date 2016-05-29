@@ -1,9 +1,11 @@
 package edu.chalmers.vaporwave.util;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Random;
 
+/**
+ * This class generates a random map to be used as arena.
+ * It is not used as of now in the game, but has been saved for future use.
+ */
 public class RandomMapGenerator {
     private Random random;
     private int numberOfRows = 14;

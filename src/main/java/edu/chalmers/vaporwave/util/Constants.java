@@ -1,5 +1,8 @@
 package edu.chalmers.vaporwave.util;
 
+/**
+ * Class to keep global constants in one place.
+ */
 public class Constants {
 
     public static final int WINDOW_WIDTH = 1080;

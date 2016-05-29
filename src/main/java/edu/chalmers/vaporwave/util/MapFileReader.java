@@ -4,6 +4,10 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class is for reading in a map from text file, interpreting it and returning an grid
+ * of all map objects.
+ */
 public class MapFileReader {
     private MapObject[][] mapObjects;
     private BufferedReader reader;
@@ -59,9 +63,9 @@ public class MapFileReader {
                 i++;
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            ErrorMessage.show(e);
         }  catch (IOException e) {
-            e.printStackTrace();
+            ErrorMessage.show(e);
         }
     }
 

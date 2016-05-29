@@ -8,21 +8,18 @@ import javafx.scene.image.WritableImage;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+/**
+ * A purely static class with an assortment of different utility methods that is used throughout
+ * the application.
+ */
 public class Utils {
 
-    /**
-     * This method takes one image and returns the exact copy of it, scaled to scaleFactor in both width and height.
-     * The reason for this lengthy way of doing it, is that it is very important that the image does not smoothen
-     * or get any blurry aliasing. This method will get around that problem.
-     * OBS! Other values than EVEN NUMBERS may still give a wee bit wonky graphic. Not a problem though.
-     * @param input
-     * @param scaleFactor
-     * @return A scaled image
-     */
+    // This method takes one image and returns the exact copy of it, scaled to scaleFactor in both width and height.
+    // The reason for this lengthy way of doing it, is that it is very important that the image does not smoothen
+    // or get any blurry aliasing. This method will get around that problem.
+    // OBS! Other values than EVEN NUMBERS may still give a wee bit wonky graphic. Not a problem though.
     public static Image resize(Image input, double scaleFactor) {
         final int W = (int) input.getWidth();
         final int H = (int) input.getHeight();
@@ -47,6 +44,7 @@ public class Utils {
         return output;
     }
 
+    // Different position conversions to and from canvas and grid
     public static int canvasToGridPositionX(double x) {
         return (int)Math.round(x / Constants.DEFAULT_TILE_WIDTH);
     }
@@ -65,14 +63,8 @@ public class Utils {
         return (double)(gridPositionY * Constants.DEFAULT_TILE_HEIGHT);
     }
 
-    /**
-     * Returns a Point with an offset in the specified direction
-     *
-     * @param initialPosition The position in the center
-     * @param distance The relative distance from the center point
-     * @param direction Which direction to calculate (left, up, right, down)
-     * @return newPosition The new position
-     */
+    // Returns a point that has moved relative to the given position, in the given direction,
+    // at a given distance.
     public static Point getRelativePoint(Point initialPosition, int distance, Direction direction) {
         Point newPosition = new Point(0,0);
         switch (direction) {
@@ -108,6 +100,7 @@ public class Utils {
         }
     }
 
+    // Since there will be a lot of different inputs, this method simplifies it a bit.
     public static Direction getDirectionFromString(String string) {
         switch(string) {
             case "LEFT":
@@ -143,6 +136,7 @@ public class Utils {
         }
     }
 
+    // At some places a direct conversion between direction and integers is needed
     public static Direction getDirectionFromInteger(int integer) {
         switch (integer) {
             case 0:
@@ -182,6 +176,7 @@ public class Utils {
         return directions;
     }
 
+    // Checker methods to see how two directions is aligned
     public static boolean isOrtogonalDirections(Direction direction1, Direction direction2) {
         return ((direction1 == Direction.DOWN || direction1 == Direction.UP)
                 && (direction2 == Direction.RIGHT || direction2 == Direction.LEFT))
@@ -197,6 +192,7 @@ public class Utils {
                 || (direction1 == Direction.LEFT && direction2 == Direction.RIGHT);
     }
 
+    // Caps a selection to the given modulus without losing the position
     public static int calculateRemoteSelected(int[] remoteSelected, int playerID, int modulus) {
         int selected = remoteSelected[playerID];
         while(selected < 0) {
@@ -205,6 +201,7 @@ public class Utils {
         return selected % modulus;
     }
 
+    // When spawning players a conversion from MapObject to simple integer is needed
     public static MapObject getMapObjectPlayerFromID(int id) {
         switch (id) {
             case 0:
@@ -220,6 +217,7 @@ public class Utils {
         return null;
     }
 
+    // The different keyboard controles for every player
     public static List<String[]> getPlayerControls() {
         List playerControls = new ArrayList<>();
         playerControls.add(new String[]{"LEFT", "UP", "RIGHT", "DOWN", "SPACE"});
