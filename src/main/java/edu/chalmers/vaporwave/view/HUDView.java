@@ -87,7 +87,7 @@ public class HUDView {
 
         // TIMER
         this.timerWindow = Container.getSprite(SpriteID.HUD_TIMER_MESSAGE);
-        this.timerWindow.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.timerWindow.getWidth() / 2.0), 10);
+        this.timerWindow.setPosition(Math.round(Constants.WINDOW_WIDTH / 2.0 - this.timerWindow.getWidth() / 2.0), 18);
         this.timerWindow.render(this.hudGC, 0);
 
         this.timer = new Label();

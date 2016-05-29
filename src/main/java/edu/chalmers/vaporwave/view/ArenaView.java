@@ -34,7 +34,7 @@ public class ArenaView {
     }
 
     private static final double xoffset = Math.floor((Constants.WINDOW_WIDTH / 2) - (Constants.GAME_WIDTH / 2)) - (Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
-    private static final double yoffset = 0;
+    private static final double yoffset = 14;
 
     private Canvas backgroundCanvas;
     private Canvas frameCanvas;
