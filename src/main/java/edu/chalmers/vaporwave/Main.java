@@ -4,7 +4,7 @@ import com.google.common.eventbus.Subscribe;
 import edu.chalmers.vaporwave.controller.InputController;
 import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.event.SetFullScreenEvent;
+import edu.chalmers.vaporwave.event.ToggleFullScreenEvent;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.ErrorMessage;
 import javafx.application.Application;
@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
 
 /**
  * The main class, where the FX application is created.
@@ -24,6 +23,7 @@ import java.awt.*;
 public class Main extends Application {
 
     Stage primaryStage;
+    double fullscreenTimestamp;
 
 	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -69,12 +69,24 @@ public class Main extends Application {
 		primaryStage.sizeToScene();
 
         GameEventBus.getInstance().register(this);
+        this.fullscreenTimestamp = 0;
 	}
 
     @Subscribe
-    public void setFullScreen(SetFullScreenEvent setFullScreenEvent) {
-        this.primaryStage.setFullScreen(setFullScreenEvent.isFullscreen());
-        this.primaryStage.sizeToScene();
+    public void toggleFullScreen(ToggleFullScreenEvent toggleFullScreenEvent) {
+        if (toggleFullScreenEvent.getTimeStamp() - this.fullscreenTimestamp > 1) {
+
+            if (toggleFullScreenEvent.isForced()) {
+                this.primaryStage.setFullScreen(toggleFullScreenEvent.getFullscreen());
+            } else {
+                this.primaryStage.setFullScreen(!this.primaryStage.isFullScreen());
+            }
+
+            System.out.println("Fullscreen! " + this.primaryStage.isFullScreen());
+            this.primaryStage.sizeToScene();
+
+            this.fullscreenTimestamp = toggleFullScreenEvent.getTimeStamp();
+        }
     }
 
     private static class CloseWindowEventHandler implements EventHandler<WindowEvent> {

@@ -5,7 +5,7 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.event.ExitGameEvent;
 import edu.chalmers.vaporwave.event.GameEventBus;
 import edu.chalmers.vaporwave.event.GoToMenuEvent;
-import edu.chalmers.vaporwave.event.SetFullScreenEvent;
+import edu.chalmers.vaporwave.event.ToggleFullScreenEvent;
 import edu.chalmers.vaporwave.model.LoadingScreen;
 import edu.chalmers.vaporwave.model.menu.NewGameEvent;
 import edu.chalmers.vaporwave.util.ErrorHandler;
@@ -134,6 +134,11 @@ public class MainController {
 
                     // The active controller is updated; menu or game
                     contentController.timerUpdate(timeSinceStart, timeSinceLastCall);
+
+                    if (InputController.getInstance().getInput().contains("CONTROL")
+                            && InputController.getInstance().getReleased().contains("F")) {
+                        GameEventBus.getInstance().post(new ToggleFullScreenEvent(timeSinceStart));
+                    }
 
                     // Listeners are updated
                     InputController.getInstance().updateGamePadInputs();
