@@ -163,19 +163,19 @@ public class CharacterSelectView extends AbstractMenuView {
         }
 
         // todo: Character stats!
-        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.MEI) + " - " + Container.getCharacterHealth(CharacterID.MEI) + " - " +
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.MEI) + " - " + (int)Container.getCharacterHealth(CharacterID.MEI) + " - " +
                 Container.getCharacterBombRange(CharacterID.MEI) + " - " + Container.getCharacterBombCount(CharacterID.MEI),
                 this.characterSelectorPositionList.get(0).get(0).x-5,
                 this.characterSelectorPositionList.get(0).get(0).y+390);
-        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + " - " + Container.getCharacterHealth(CharacterID.ALYSSA) + " - " +
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.ALYSSA) + " - " + (int)Container.getCharacterHealth(CharacterID.ALYSSA) + " - " +
                         Container.getCharacterBombRange(CharacterID.ALYSSA) + " - " + Container.getCharacterBombCount(CharacterID.ALYSSA),
                 this.characterSelectorPositionList.get(0).get(1).x-5,
                 this.characterSelectorPositionList.get(0).get(1).y-5+390);
-        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + " - " + Container.getCharacterHealth(CharacterID.ZYPHER) + " - " +
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.ZYPHER) + " - " + (int)Container.getCharacterHealth(CharacterID.ZYPHER) + " - " +
                         Container.getCharacterBombRange(CharacterID.ZYPHER) + " - " + Container.getCharacterBombCount(CharacterID.ZYPHER),
                 this.characterSelectorPositionList.get(0).get(2).x-5,
                 this.characterSelectorPositionList.get(0).get(2).y+390);
-        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + " - " + Container.getCharacterHealth(CharacterID.CHARLOTTE) + " - " +
+        this.getBackgroundGC().fillText("" + Container.getCharacterSpeed(CharacterID.CHARLOTTE) + " - " + (int)Container.getCharacterHealth(CharacterID.CHARLOTTE) + " - " +
                         Container.getCharacterBombRange(CharacterID.CHARLOTTE) + " - " + Container.getCharacterBombCount(CharacterID.CHARLOTTE),
                 this.characterSelectorPositionList.get(0).get(3).x-5,
                 this.characterSelectorPositionList.get(0).get(3).y+390);

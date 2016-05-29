@@ -180,7 +180,12 @@ public class MenuController implements ContentController {
 
     private void menuActionStartGame() {
         for (Player p : this.newGameEvent.getPlayers()) {
-            if(p.getClass().equals(CPUPlayer.class)){
+            if (p instanceof CPUPlayer) {
+                p.setCharacter(null);
+            }
+        }
+        for (Player p : this.newGameEvent.getPlayers()) {
+            if(p instanceof CPUPlayer){
                 p.setCharacter(getAvailableGameCharacters().get(0));
             }
         }
@@ -208,21 +213,22 @@ public class MenuController implements ContentController {
 
     // Getting available characters to fill CPU-Players with
     private List<GameCharacter> getAvailableGameCharacters() {
-        Set<GameCharacter> allCharacters = new HashSet<>();
-        allCharacters.add(new GameCharacter("ALYSSA", -1));
-        allCharacters.add(new GameCharacter("MEI", -1));
-        allCharacters.add(new GameCharacter("CHARLOTTE", -1));
-        allCharacters.add(new GameCharacter("ZYPHER", -1));
+        List<String> allCharacters = Utils.getCharacterNames();
 
         for (Player player : this.newGameEvent.getPlayers()) {
-            if (allCharacters.contains(player.getCharacter())) {
-                allCharacters.remove(player.getCharacter());
+            if (player.getCharacter() != null && allCharacters.contains(player.getCharacter().getName())) {
+                allCharacters.remove(player.getCharacter().getName());
             }
         }
 
         List<GameCharacter> availableCharacters = new ArrayList<>();
-        availableCharacters.addAll(allCharacters);
+        for (String name : allCharacters) {
+            availableCharacters.add(new GameCharacter(name, -1));
+        }
         Collections.shuffle(availableCharacters);
+
+        System.out.println("Available characters: ");
+        System.out.println("   "+availableCharacters);
 
         return availableCharacters;
     }

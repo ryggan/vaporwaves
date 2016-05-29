@@ -8,7 +8,9 @@ import javafx.scene.image.WritableImage;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Utils {
 
@@ -225,5 +227,14 @@ public class Utils {
         playerControls.add(new String[]{"F", "T", "H", "G", "R"});
         playerControls.add(new String[]{"J", "I", "L", "K", "U"});
         return playerControls;
+    }
+
+    public static List<String> getCharacterNames() {
+        List<String> characterNames = new ArrayList<>();
+        characterNames.add("ALYSSA");
+        characterNames.add("MEI");
+        characterNames.add("ZYPHER");
+        characterNames.add("CHARLOTTE");
+        return characterNames;
     }
 }
