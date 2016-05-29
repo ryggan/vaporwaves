@@ -1,14 +1,24 @@
 package edu.chalmers.vaporwave.model.game;
 
-import edu.chalmers.vaporwave.assetcontainer.*;
+import edu.chalmers.vaporwave.assetcontainer.CharacterID;
 import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.event.GameEventBus;
-import edu.chalmers.vaporwave.util.*;
+import edu.chalmers.vaporwave.util.MovableState;
+import edu.chalmers.vaporwave.util.Pair;
+import edu.chalmers.vaporwave.util.PowerUpType;
+import edu.chalmers.vaporwave.util.Utils;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a specific Movable that will be user controlled, or controlled by AI to
+ * simulate a (somewhat dense) human user.
+ * The most distinctive about GameCharacter, is that it can place bombs and has stats
+ * that differs depending on which characteristics it is assigned.
+ */
 public class GameCharacter extends Movable {
 
     private double startHealth;
@@ -25,7 +35,7 @@ public class GameCharacter extends Movable {
 
     private List<Pair<PowerUpType, Double>> powerUpPickedUp;
 
-
+    // This constructor retrieves the specific stats based on the name given
     public GameCharacter(String name, int playerID) {
         super(name, 0, 0, 0);
 
@@ -39,10 +49,12 @@ public class GameCharacter extends Movable {
         this.playerID = playerID;
     }
 
+    // Test constructor
     public GameCharacter() {
-        super ("ALYSSA", 0, 0, 0);
+        this ("ALYSSA", 0);
     }
 
+    // Puts character on position and saves it for all future spawns
     public void setSpawnPosition(Point spawnPosition) {
         setCanvasPosition(Utils.gridToCanvasPositionX(spawnPosition.x), Utils.gridToCanvasPositionY(spawnPosition.y));
 
@@ -50,7 +62,9 @@ public class GameCharacter extends Movable {
         this.startPosition = (Point)spawnPosition.clone();
     }
 
-    private void resetStats() {
+    // An extended version of Movables reset(), that resets even more attributes
+    @Override
+    public void reset() {
         super.reset();
         setHealth(this.startHealth);
         setSpeed(this.startSpeed);
@@ -62,6 +76,8 @@ public class GameCharacter extends Movable {
         this.powerUpPickedUp = new ArrayList<>();
     }
 
+    // Called when pressing "place bomb"-key, posts a PlaceBombEvent back to GameController, to handle
+    // the actual placing of the bomb
     public void placeBomb() {
         if (this.currentBombCount > 0 && (getState() == MovableState.IDLE || getState() == MovableState.WALK)) {
 
@@ -76,6 +92,7 @@ public class GameCharacter extends Movable {
         }
     }
 
+    // Sets/gets
     public void setBombRange(int bombRange) {
         this.bombRange = bombRange;
     }
@@ -116,6 +133,7 @@ public class GameCharacter extends Movable {
         return this.playerID;
     }
 
+    // Extended state methods that adds some GameCharacter specific functionality
     @Override
     public void flinch() {
         super.flinch();
@@ -129,9 +147,10 @@ public class GameCharacter extends Movable {
         } else {
             super.spawn(spawningPosition);
         }
-        resetStats();
+        reset();
     }
 
+    // Usual overrides
     @Override
     public boolean equals(Object otherObject){
         if (this == otherObject) {

@@ -2,8 +2,11 @@ package edu.chalmers.vaporwave.model.game;
 
 import java.util.Random;
 import java.util.Set;
-import java.util.Timer;
 
+/**
+ * This AI is meant to work with GameCharacters, and therefore also need to determine
+ * when a Bomb should be placed. Its movement is the same as SemiSmartAI.
+ */
 public class SemiSmartCPUAI extends SemiSmartAI implements PlayerAI {
     private Random random;
 

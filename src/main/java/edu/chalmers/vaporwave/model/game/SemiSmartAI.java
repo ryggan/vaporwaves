@@ -5,16 +5,22 @@ import edu.chalmers.vaporwave.util.Constants;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.List;
 
+/**
+ * An AI class meant to be not smart but not entirely dumb either, when comparing
+ * with human users.
+ * The core of it is the method getNextMove(), and all the rest is all just to
+ * cater for that method.
+ */
 public class SemiSmartAI implements AI {
     private int[][] heuristicMatrix;
     private Set<GameCharacter> gameCharacterSet;
-    private Random random = new Random();
+    private Random random;
     private List<NextDirection> directionList;
-    private Direction previousDirection = Direction.UP;
+    private Direction previousDirection;
     private Point enemyPosition;
     private NextDirection upDirection;
     private NextDirection rightDirection;
@@ -23,12 +29,20 @@ public class SemiSmartAI implements AI {
 
     public SemiSmartAI(Set<GameCharacter> gameCharacterSet) {
         this.gameCharacterSet = gameCharacterSet;
-        directionList = new ArrayList<>();
+        this.directionList = new ArrayList<>();
 
-        upDirection = new NextDirection(Direction.UP, 0);
-        leftDirection = new NextDirection(Direction.LEFT, 0);
-        rightDirection = new NextDirection(Direction.RIGHT, 0);
-        downDirection = new NextDirection(Direction.DOWN, 0);
+        this.random = new Random();
+        this.previousDirection = Direction.UP;
+
+        this.upDirection = new NextDirection(Direction.UP, 0);
+        this.leftDirection = new NextDirection(Direction.LEFT, 0);
+        this.rightDirection = new NextDirection(Direction.RIGHT, 0);
+        this.downDirection = new NextDirection(Direction.DOWN, 0);
+
+        this.directionList.add(this.upDirection);
+        this.directionList.add(this.leftDirection);
+        this.directionList.add(this.rightDirection);
+        this.directionList.add(this.downDirection);
     }
 
     static class NextDirection {
@@ -63,10 +77,8 @@ public class SemiSmartAI implements AI {
 
     public Direction getNextMove(Point enemyPosition, StaticTile[][] arenaTiles, Set<Enemy> enemies) {
 
-        directionList.clear();
         this.enemyPosition = enemyPosition;
-
-        heuristicMatrix = AIHeuristics.getAIHeuristics(arenaTiles, gameCharacterSet, enemies);
+        this.heuristicMatrix = AIHeuristics.getAIHeuristics(arenaTiles, this.gameCharacterSet, enemies);
 
         switch(previousDirection) {
             case UP:
@@ -93,35 +105,29 @@ public class SemiSmartAI implements AI {
                 break;
         }
 
-        upDirection.direction = Direction.UP;
-        upDirection.value = checkValueUp(enemyPosition);
-        leftDirection.direction = Direction.LEFT;
-        leftDirection.value = checkValueLeft(enemyPosition);
-        rightDirection.direction = Direction.RIGHT;
-        rightDirection.value = checkValueRight(enemyPosition);
-        downDirection.direction = Direction.DOWN;
-        downDirection.value = checkValueDown(enemyPosition);
+        this.upDirection.value = checkValueUp(enemyPosition);
+        this.leftDirection.value = checkValueLeft(enemyPosition);
+        this.rightDirection.value = checkValueRight(enemyPosition);
+        this.downDirection.value = checkValueDown(enemyPosition);
 
-        directionList.add(upDirection);
-        directionList.add(leftDirection);
-        directionList.add(rightDirection);
-        directionList.add(downDirection);
+        List<NextDirection> directions = new ArrayList<>();
+        directions.addAll(this.directionList);
 
-        removeLeastGoodAlternative(directionList);
+        removeLeastGoodAlternative(directions);
 
-        int temp = random.nextInt(6);
+        int temp = this.random.nextInt(6);
         if(temp == 0) {
             return takeARandomStep();
         }
 
-        previousDirection = directionList.get(0).direction;
-        return directionList.get(0).direction;
+        this.previousDirection = directions.get(0).direction;
+        return directions.get(0).direction;
 
     }
 
 
     public Direction takeARandomStep() {
-        int temp = random.nextInt(4);
+        int temp = this.random.nextInt(4);
         if(temp == 0) {
             return Direction.UP;
         } else if(temp == 1) {
@@ -136,7 +142,7 @@ public class SemiSmartAI implements AI {
 
     public int checkValueUp(Point enemyPosition) {
         if (enemyPosition.y > 0) {
-            return heuristicMatrix[enemyPosition.x][enemyPosition.y - 1];
+            return this.heuristicMatrix[enemyPosition.x][enemyPosition.y - 1];
         } else {
             return -1;
         }
@@ -144,7 +150,7 @@ public class SemiSmartAI implements AI {
 
     public int checkValueDown(Point enemyPosition) {
         if (enemyPosition.y < 14) {
-            return heuristicMatrix[enemyPosition.x][enemyPosition.y + 1];
+            return this.heuristicMatrix[enemyPosition.x][enemyPosition.y + 1];
         } else {
             return -1;
         }
@@ -152,7 +158,7 @@ public class SemiSmartAI implements AI {
 
     public int checkValueLeft(Point enemyPosition) {
         if (enemyPosition.x > 0) {
-            return heuristicMatrix[enemyPosition.x - 1][enemyPosition.y];
+            return this.heuristicMatrix[enemyPosition.x - 1][enemyPosition.y];
         } else {
             return -1;
         }
@@ -160,7 +166,7 @@ public class SemiSmartAI implements AI {
 
     public int checkValueRight(Point enemyPosition) {
         if (enemyPosition.x < 20) {
-            return heuristicMatrix[enemyPosition.x + 1][enemyPosition.y];
+            return this.heuristicMatrix[enemyPosition.x + 1][enemyPosition.y];
         } else {
             return -1;
         }
@@ -168,7 +174,7 @@ public class SemiSmartAI implements AI {
 
     public int checkValueCurrent(Point enemyPosition) {
         if(enemyPosition != null) {
-            return heuristicMatrix[enemyPosition.x][enemyPosition.y];
+            return this.heuristicMatrix[enemyPosition.x][enemyPosition.y];
         } return 0;
     }
 
