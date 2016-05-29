@@ -266,10 +266,10 @@ public abstract class Movable {
                     case UP:
                         condition = (getCanvasPositionY() > 0);
                         break;
-                    case LEFT:
+                    case DOWN:
                         condition = (getCanvasPositionY() < Utils.gridToCanvasPositionX(Constants.DEFAULT_GRID_HEIGHT-1));
                         break;
-                    case DOWN:
+                    case LEFT:
                         condition = (getCanvasPositionX() > 0);
                         break;
                     case RIGHT:

@@ -21,7 +21,7 @@ class FileContainer {
     private final static Map<FileID, Color> colorContainer = new HashMap<>();
 
     private static int tasksDone;
-    private static final double totalTasks = 1 + 2 + 3;
+    private static final double totalTasks = 1 + 3 + 3;
 
     // Called from Container
     public static void initFileContainer() throws Exception {
@@ -29,9 +29,10 @@ class FileContainer {
         // Misc files (1)
         addFile(FileID.XML_CHARACTER_ENEMY, new File(Constants.GAME_CHARACTER_XML_FILE));
 
-        // Map files (2)
+        // Map files (3)
         addFile(FileID.VAPORMAP_DEFAULT, new File(Constants.DEFAULT_MAP_FILE));
         addFile(FileID.VAPORMAP_BOBS1, new File("src/main/resources/maps/bobsmap.vapormap"));
+        addFile(FileID.VAPORMAP_SCARCE, new File("src/main/resources/maps/scarce.vapormap"));
 
         // Fonts (3)
         Font font = Font.loadFont(new FileInputStream(new File(Constants.FONT_FILE_BAUHAUS)), 14);

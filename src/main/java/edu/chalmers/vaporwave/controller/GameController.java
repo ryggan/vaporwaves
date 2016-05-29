@@ -101,7 +101,7 @@ public class GameController implements ContentController {
 
         // Setting up map (could also be replaced with settings from newGameEvent)
         ArenaMap arenaMap = new ArenaMap("default",
-                (new MapFileReader(Container.getFile(FileID.VAPORMAP_BOBS1))).getMapObjects());
+                (new MapFileReader(Container.getFile(FileID.VAPORMAP_SCARCE))).getMapObjects());
 
         // Setting up model objects and view objects
         this.arenaModel = newGame(arenaMap);
