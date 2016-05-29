@@ -124,12 +124,12 @@ public class GameCharacter extends Movable {
 
     @Override
     public void spawn(Point spawningPosition) {
-        resetStats();
         if (spawningPosition == null) {
             super.spawn(this.startPosition);
         } else {
             super.spawn(spawningPosition);
         }
+        resetStats();
     }
 
     @Override

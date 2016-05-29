@@ -17,9 +17,13 @@ public class PowerUp extends StaticTile implements AnimatedTile {
         SPAWN, IDLE, PICKUP, DESTROY
     }
 
-    public PowerUp(List<PowerUpType> enabledPowerUpList) {
+    public PowerUp() {
         this.powerUpState = PowerUpState.SPAWN;
         this.timeStamp = -1;
+    }
+
+    public PowerUp(List<PowerUpType> enabledPowerUpList) {
+        this();
 
         if(enabledPowerUpList.size() > 0) {
             int maxValue = 0;
@@ -38,6 +42,7 @@ public class PowerUp extends StaticTile implements AnimatedTile {
     }
 
     public PowerUp(PowerUpType powerUpType) {
+        this();
         setPowerUpType(powerUpType);
     }
 
