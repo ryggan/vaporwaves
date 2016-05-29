@@ -120,10 +120,10 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.MENU_ROOSTER_SELECT_CPU_ON,
                 new Sprite(menuRoosterSelect, new Dimension(133, 94), new int[] {5, 1}, new double[] {1, 1}, 1.0));
 
-        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_ALYSSA)));
-        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_MEI, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_MEI)));
-        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_CHARLOTTE)));
-        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_ZYPHER)));
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_ALYSSA), 1.0));
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_MEI, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_MEI), 1.0));
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_CHARLOTTE), 1.0));
+        prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_ZYPHER), 1.0));
 
         //Roostermenu
         prepareSpriteLoad(SpriteID.MENU_ROOSTER_HELP, new Sprite(Container.getImage(ImageID.MENU_ROOSTER_HELP)));
@@ -131,7 +131,7 @@ class SpriteContainer {
         //Startmenu
         prepareSpriteLoad(SpriteID.MENU_STARTMENU_HELP, new Sprite(Container.getImage(ImageID.MENU_STARTMENU_HELP)));
         prepareSpriteLoad(SpriteID.MENU_ALLCHARACTERS, new Sprite(Container.getImage(ImageID.MENU_ALLCHARACTERS)));
-        prepareSpriteLoad(SpriteID.MENU_TITLE, new Sprite(Container.getImage(ImageID.MENU_TITLE)));
+        prepareSpriteLoad(SpriteID.MENU_TITLE, new Sprite(Container.getImage(ImageID.MENU_TITLE), 1.0));
 
         // Game background and frame (5)
         prepareSpriteLoad(SpriteID.GAME_BACKGROUND_1, new Sprite(Container.getImage(ImageID.GAME_BACKGROUND_1)));
@@ -147,7 +147,7 @@ class SpriteContainer {
         // HUD (8)
         Image hudSheet = Container.getImage(ImageID.HUD_BOX_SHEET);
 
-        prepareSpriteLoad(SpriteID.MENU_PAUSE, new Sprite(Container.getImage(ImageID.MENU_PAUSE)));
+        prepareSpriteLoad(SpriteID.MENU_PAUSE, new Sprite(Container.getImage(ImageID.MENU_PAUSE), 1.0));
         prepareSpriteLoad(SpriteID.HUD_BOX,
                 new Sprite(hudSheet, new Dimension(134, 178), new double[] {1, 1}, new double[] {0, 0}, 1.0));
         prepareSpriteLoad(SpriteID.HUD_HEALTHBAR_FILLED,
@@ -249,6 +249,10 @@ class SpriteContainer {
         Image fishSpritesheet = Container.getImage(ImageID.FISH);
         prepareSpriteLoad(SpriteID.FISH,
                 new AnimatedSprite(fishSpritesheet, new Dimension(26, 16), 22, 0.1, new int[] {0, 0}, new double[] {1, 1}));
+
+        Image characterMiscSpritesheet = Container.getImage(ImageID.CHARACTER_MISC);
+        prepareSpriteLoad(SpriteID.POWERUP_SPARKLES,
+                new AnimatedSprite(characterMiscSpritesheet, new Dimension(48, 48), 9, 0.08, new int[] {0, 0}, new double[] {16, 27}));
 
         addSprites();
 

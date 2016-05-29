@@ -1,15 +1,21 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * Displayes the rooster buttons and changes them depending on which item is selected.
+ * Nothing over-exciting.
+ */
 public class RoosterMenuView extends AbstractMenuView {
 
     private List<MenuButtonSprite> menuButtonSpriteList;
@@ -73,9 +79,9 @@ public class RoosterMenuView extends AbstractMenuView {
             renderSpriteForSelectedPlayers(i, superSelected == 1 && subSelected[1] == i);
         }
 
-        for (int i = 0; i < menuButtonSpriteList.size(); i++) {
-            if (menuButtonSpriteList.get(i) != null) {
-                updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
+        for (int i = 0; i < this.menuButtonSpriteList.size(); i++) {
+            if (this.menuButtonSpriteList.get(i) != null) {
+                updateButton(this.menuButtonSpriteList.get(i), superSelected == i, pressedDown);
             }
         }
 

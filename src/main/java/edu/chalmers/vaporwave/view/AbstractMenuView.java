@@ -12,6 +12,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * A template view for all menu screens to come. The update-method is central.
+ */
 public abstract class AbstractMenuView {
 
     private Canvas backgroundCanvas;
@@ -27,8 +30,8 @@ public abstract class AbstractMenuView {
         backgroundImage = Container.getImage(ImageID.MENU_BACKGROUND_1);
     }
 
+    // Updates the main menu view, with all selected and unselected, etc.
     public abstract void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown);
-
 
     public GraphicsContext getBackgroundGC() {
         return this.backgroundGC;
@@ -48,6 +51,7 @@ public abstract class AbstractMenuView {
         this.backgroundImage = image;
     }
 
+    // Re-renders the image of a button
     public void updateButton(MenuButtonSprite button, boolean selected, boolean pressedDown) {
         if (selected && !pressedDown) {
             button.render(getBackgroundGC(), MenuButtonState.SELECTED);

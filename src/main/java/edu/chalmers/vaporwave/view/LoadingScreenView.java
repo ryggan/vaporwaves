@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.view;
 
-
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -8,6 +7,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Creates a loading backdrop and a loadingbar, and updates the loadingbar every frame
+ * with the loading progress percentage.
+ */
 public class LoadingScreenView  {
 
     private Canvas backgroundCanvas;

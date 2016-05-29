@@ -23,6 +23,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Compiles a scorebaord based on a set of players, which is sorted depending on preference.
+ * The scoreboard shows all points and kills etc., and is used both mid game and in
+ * results screen.
+ */
 public class ScoreboardView {
 
     private Group root;
@@ -132,6 +137,7 @@ public class ScoreboardView {
     }
 
     private void sortPlayerList() {
+        // Sort with winner at top, if told so
         if (this.sortByGameType) {
             if (this.gameType == GameType.SURVIVAL || this.gameType == GameType.SCORE_LIMIT) {
                 Collections.sort(this.playerList,
@@ -143,6 +149,8 @@ public class ScoreboardView {
                 Collections.sort(this.playerList,
                         PlayerComparator.decending(PlayerComparator.getComparator(PlayerComparator.ENEMY_KILL_SORT)));
             }
+
+        // Standard sorting: smallest ID first
         } else {
             Collections.sort(this.playerList, PlayerComparator.getComparator(PlayerComparator.ID_SORT));
         }

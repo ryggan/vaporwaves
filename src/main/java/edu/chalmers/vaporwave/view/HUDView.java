@@ -21,6 +21,11 @@ import java.util.*;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The HUD (Heads-Up Display) means all info that a player needs when playing a game,
+ * that does not show in the actual game graphics. This includes health, how many bombs
+ * are left, timer of game, etc.
+ */
 public class HUDView {
 
     private Point[] hudBoxPositions;
@@ -156,14 +161,17 @@ public class HUDView {
 
         int index = this.playerIDs.get(player.getPlayerID());
 
+        // The box itself
         Point boxPosition = this.hudBoxPositions[index];
         GameCharacter character = player.getCharacter();
 
         this.hudBox.setPosition(boxPosition.x, boxPosition.y);
         this.hudBox.render(this.hudGC, 0);
 
+        // Set score
         this.playerScores[index].setText(""+player.getScore());
 
+        // Set health
         double newHealth = character.getHealth();
         if (this.currentHealth[index] < newHealth - this.healthChange) {
             this.currentHealth[index] += this.healthChange;
@@ -177,6 +185,7 @@ public class HUDView {
         this.healthbar.setOffsetDimension((this.healthbar.getWidth() - (this.currentHealth[index] / 100.0) * this.healthbar.getWidth()), 0);
         this.healthbar.render(this.hudGC, 0);
 
+        // Set bombs
         this.statusbar.setPosition(boxPosition.x + 40, boxPosition.y + 79);
         int bombs = Math.min(character.getCurrentBombCount(), 9);
         this.statusbar.setOffsetDimension((9 - bombs) * 10, 0);
@@ -187,6 +196,7 @@ public class HUDView {
             this.plus.render(this.hudGC, 0);
         }
 
+        // Set bomb range
         this.statusbar.setPosition(boxPosition.x + 40, boxPosition.y + 115);
         int range = Math.min(character.getBombRange(), 9);
         this.statusbar.setOffsetDimension((9 - range) * 10, 0);
@@ -197,34 +207,31 @@ public class HUDView {
             this.plus.render(this.hudGC, 0);
         }
 
+        // Set speed
         this.statusbar.setPosition(boxPosition.x + 40, boxPosition.y + 151);
         double gain = Constants.DEFAULT_POWERUP_SPEED_GAIN;
         int speed = (int)Math.min((character.getSpeed() - gain * 6) / gain, 9);
         this.statusbar.setOffsetDimension((9 - speed) * 10, 0);
         this.statusbar.render(this.hudGC, 0);
-
-//        if (character.getSpeed() > gain * (6 + 9 + 1)) {
-//            this.plus.setPosition(boxPosition.x + 120, boxPosition.y + 151);
-//            this.plus.render(this.hudGC, 0);
-//        }
     }
 
+    // Translates the actual time to a string and renders it
     public void updateTimer(double time){
-        String millis="" + (int)((time*1000)%100);
-        String seconds="" + (int)time%60;
-        String minutes="" + (int) TimeUnit.SECONDS.toMinutes((long)time);
+        String millis = "" + (int) ((time*1000)%100);
+        String seconds = "" + (int) time%60;
+        String minutes = "" + (int) TimeUnit.SECONDS.toMinutes((long)time);
 
-        if((int)(time*1000%100)<10){
-            millis="0"+ millis;
+        if((int)(time * 1000 % 100) < 10){
+            millis = "0" + millis;
         }
-        if(((int)time%60)<10){
-            seconds="0"+ seconds;
+        if(((int)time % 60) < 10){
+            seconds= "0" + seconds;
         }
-        if(((int)TimeUnit.SECONDS.toMinutes((long)time))<10){
-            minutes="0"+ minutes;
+        if(((int)TimeUnit.SECONDS.toMinutes((long)time)) < 10){
+            minutes = "0" + minutes;
         }
 
-        timer.setText(minutes+":"+seconds + ":"+millis);
+        timer.setText(minutes + ":" + seconds + ":" + millis);
     }
 
     public void showGameOverMessage(String message) {
@@ -233,6 +240,7 @@ public class HUDView {
         this.gameOverMessage.setText(message);
     }
 
+    // Needed to reset the HUD before the next game
     public void clearHUD() {
         this.hudGC.clearRect(0, 0, this.hudCanvas.getWidth(), this.hudCanvas.getHeight());
         this.root.getChildren().remove(this.hudCanvas);

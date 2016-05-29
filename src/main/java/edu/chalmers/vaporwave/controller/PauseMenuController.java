@@ -2,10 +2,6 @@ package edu.chalmers.vaporwave.controller;
 
 import edu.chalmers.vaporwave.view.PauseMenuView;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A controller that initially was intended to hold a pause menu with optiones etc.
@@ -15,13 +11,9 @@ import java.util.List;
 public class PauseMenuController {
 
     private PauseMenuView pauseMenuView;
-    private List<Label> pauseMenuLabels;
 
     public PauseMenuController(Group root) {
-        pauseMenuLabels = new ArrayList<>();
-        pauseMenuLabels.add(new Label("[Game is paused!]"));
-
-        pauseMenuView = new PauseMenuView(root, pauseMenuLabels);
+        pauseMenuView = new PauseMenuView(root);
     }
 
     public PauseMenuView getPauseMenuView() {

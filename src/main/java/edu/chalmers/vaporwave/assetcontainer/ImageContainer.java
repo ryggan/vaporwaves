@@ -61,7 +61,7 @@ class ImageContainer {
         //Start (3):
         prepareImageLoad(ImageID.MENU_STARTMENU_HELP, "images/menu/menu-startmenu-help.png");
         prepareImageLoad(ImageID.MENU_TITLE, "images/menu/sunsetninjas.png");
-        prepareImageLoad(ImageID.MENU_ALLCHARACTERS, "images/menu/sunsetninjas2.png");
+        prepareImageLoad(ImageID.MENU_ALLCHARACTERS, "images/menu/sunsetninjasGang.png");
 
         // >>> GAME STUFF: <<<
 
