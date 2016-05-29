@@ -113,7 +113,7 @@ public class CharacterSelectView extends AbstractMenuView {
         this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(4, 4)));
         this.menuButtonSpriteList.add(null);
         this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME,
-                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 100)));
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
 

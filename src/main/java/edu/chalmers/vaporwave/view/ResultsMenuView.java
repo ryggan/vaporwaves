@@ -37,7 +37,7 @@ public class ResultsMenuView extends AbstractMenuView {
         this.gameType = ENEMY_KILLS;
         this.menuButtonSpriteList = new ArrayList<>();
         this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
-                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 100)));
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
         this.isTie = false;
         this.rand = (new Random()).nextInt(4);
     }
