@@ -5,6 +5,7 @@ import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.Sprite;
 import edu.chalmers.vaporwave.assetcontainer.SpriteID;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.PlayerComparator;
 import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.geometry.Pos;
@@ -16,10 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class HUDView {
@@ -51,6 +50,10 @@ public class HUDView {
     public HUDView(Group root, Set<Player> players) {
 
         this.root = root;
+
+        List<Player> sortedPlayers = new ArrayList<>();
+        sortedPlayers.addAll(players);
+        sortedPlayers.sort(PlayerComparator.getComparator(PlayerComparator.ID_SORT));
 
         this.hudCanvas = new Canvas(Constants.WINDOW_WIDTH, Constants.WINDOW_HEIGHT);
         this.root.getChildren().add(hudCanvas);
@@ -106,7 +109,7 @@ public class HUDView {
 
         // Setting up individual elements for every active player
         int index = 0;
-        for (Player player : players) {
+        for (Player player : sortedPlayers) {
 
             int id = player.getPlayerID();
 
