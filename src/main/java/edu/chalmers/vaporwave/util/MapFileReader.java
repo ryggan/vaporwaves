@@ -6,7 +6,7 @@ import java.util.Map;
 
 /**
  * This class is for reading in a map from text file, interpreting it and returning an grid
- * of all map objects.
+ *
  */
 public class MapFileReader {
     private MapObject[][] mapObjects;

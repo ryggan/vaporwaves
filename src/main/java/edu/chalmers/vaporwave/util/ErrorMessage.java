@@ -45,7 +45,7 @@ public class ErrorMessage {
                 public void run() {
                     Runtime.getRuntime().exit(1);
                 }
-            }, timeInSeconds * 1000);
+            }, timeInSeconds * 1000L);
             shown = true;
         }
     }

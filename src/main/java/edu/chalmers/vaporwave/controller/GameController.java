@@ -317,13 +317,15 @@ public class GameController implements ContentController {
     }
 
     private void updateCPUPlayerInputAction(Player player) {
-        CPUPlayer cpuPlayer = (CPUPlayer) player;
-        if (cpuPlayer.getPlayerAI().shouldPutBomb() && cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
-            checkAndPlaceBomb(cpuPlayer);
-        }
-        if(cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
-            cpuPlayer.getCharacter().move(cpuPlayer.getPlayerAI().getNextMove(cpuPlayer.getCharacter().getGridPosition(),
-                    this.arenaModel.getArenaTiles(), this.enemies), this.arenaModel.getArenaTiles());
+        if (player instanceof CPUPlayer) {
+            CPUPlayer cpuPlayer = (CPUPlayer) player;
+            if (cpuPlayer.getPlayerAI().shouldPutBomb() && cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
+                checkAndPlaceBomb(cpuPlayer);
+            }
+            if (cpuPlayer.getCharacter().getState() == MovableState.IDLE) {
+                cpuPlayer.getCharacter().move(cpuPlayer.getPlayerAI().getNextMove(cpuPlayer.getCharacter().getGridPosition(),
+                        this.arenaModel.getArenaTiles(), this.enemies), this.arenaModel.getArenaTiles());
+            }
         }
     }
 

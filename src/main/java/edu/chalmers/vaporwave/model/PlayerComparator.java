@@ -11,22 +11,22 @@ public enum PlayerComparator implements Comparator<Player> {
     // The different sorting settings
     ID_SORT {
         public int compare(Player player1, Player player2) {
-            return Integer.valueOf(player1.getPlayerID()).compareTo(player2.getPlayerID());
+            return Integer.compare(player1.getPlayerID(), player2.getPlayerID());
         }},
 
     SCORE_SORT {
         public int compare(Player player1, Player player2) {
-            return Integer.valueOf(player1.getScore()).compareTo(player2.getScore());
+            return Integer.compare(player1.getScore(), player2.getScore());
         }},
 
     CHARACTER_KILL_SORT {
         public int compare(Player player1, Player player2) {
-            return Integer.valueOf(player1.getKills()).compareTo(player2.getKills());
+            return Integer.compare(player1.getKills(), player2.getKills());
         }},
 
     ENEMY_KILL_SORT {
         public int compare(Player player1, Player player2) {
-            return Integer.valueOf(player1.getCreeps()).compareTo(player2.getCreeps());
+            return Integer.compare(player1.getCreeps(), player2.getCreeps());
         }};
 
     // A way of reversing the sorted order, if needed

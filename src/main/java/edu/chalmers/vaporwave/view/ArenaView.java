@@ -410,7 +410,6 @@ public class ArenaView {
     }
 
     public void renderMovable(Movable movable, double timeSinceStart) {
-        MovableState state = movable.getState();
         CharacterSprite sprites = null;
 
         // Get CharacterSprites for movable
@@ -530,7 +529,8 @@ public class ArenaView {
 
         while (iterator.hasNext()) {
             double timeStamp = iterator.next().getSecond();
-            if (timeSinceStart - timeStamp <= ((AnimatedSprite) this.characterSparkleSprite).getTotalTime()) {
+            if (this.characterSparkleSprite instanceof AnimatedSprite
+                        && timeSinceStart - timeStamp <= ((AnimatedSprite) this.characterSparkleSprite).getTotalTime()) {
 
                 this.characterSparkleSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
                         movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
