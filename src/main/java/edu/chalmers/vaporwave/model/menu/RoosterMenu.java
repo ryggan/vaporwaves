@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The Rooster is a menu where the primary player decides how many other players that
+ * should be playing, and if they should be human or CPU.
+ */
 public class RoosterMenu extends AbstractMenu {
 
     private int[] selectedPlayers;
@@ -67,6 +71,8 @@ public class RoosterMenu extends AbstractMenu {
 
     }
 
+    // This is called every time a new choice in the rooster is made, to make sure
+    // that the correct collection of players is carried on to the next menu
     private void updatePlayers(NewGameEvent newGameEvent) {
         newGameEvent.getPlayers().clear();
         newGameEvent.addPlayer(this.allPlayers.get(0));
@@ -84,7 +90,6 @@ public class RoosterMenu extends AbstractMenu {
                 while (!playerIDAvailable(newGameEvent.getPlayers(), id)) {
                     id++;
                 }
-
                 newGameEvent.addPlayer(new CPUPlayer(id, "CPU " + id));
             }
         }
@@ -92,6 +97,7 @@ public class RoosterMenu extends AbstractMenu {
         GameEventBus.getInstance().post(new RoosterPlayersUpdatedEvent(newGameEvent.getPlayers(), false));
     }
 
+    // Checks in a set of players whether a specific ID is present
     private boolean playerIDAvailable(Set<Player> playerSet, int ID) {
         for (Player player : playerSet) {
             if (player.getPlayerID() == ID) {
@@ -101,6 +107,7 @@ public class RoosterMenu extends AbstractMenu {
         return true;
     }
 
+    // Checks if a player is chosen at a given place in the rooster
     private boolean playerIsChosen(int current, int player) {
         for (int i = 0; i < this.selectedPlayers.length; i++) {
             if (current != i && this.selectedPlayers[i] == player && player != 5) {

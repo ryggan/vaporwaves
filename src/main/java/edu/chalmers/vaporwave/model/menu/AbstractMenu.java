@@ -5,6 +5,11 @@ import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
 
+/**
+ * This is the template for every menu screen model; most things are the same but every
+ * menu screen should have different actions and so on, which is implemented in its
+ * subclasses.
+ */
 public abstract class AbstractMenu {
 
     private int[] menuItems;
@@ -23,6 +28,11 @@ public abstract class AbstractMenu {
         this.remoteSelected = new int[Constants.MAX_NUMBER_OF_PLAYERS];
     }
 
+    // When a player presses a directional button, the following happens.
+    // First, simply check where to go, then move menu cursor in that way.
+    // Only primary player should be able to move up and down, but when moving left and right,
+    // it gets a bit messier, because of Character Select, where every player chooses his/her
+    // character individually.
     public void changeSelected(Direction direction, Player player) {
         switch (direction) {
             case UP:
@@ -89,11 +99,10 @@ public abstract class AbstractMenu {
         }
     }
 
-
+    // Gets and sets. Super selected means vertical selection, sub selected, means horizontal selection,
+    // and remote selected is what all the secondary players has selected.
     public int getSelectedSuper() {
-
         return this.currentSelected;
-
     }
 
     public int[] getSelectedSub() {

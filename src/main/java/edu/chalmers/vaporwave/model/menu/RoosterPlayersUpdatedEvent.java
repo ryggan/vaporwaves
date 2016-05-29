@@ -4,6 +4,9 @@ import edu.chalmers.vaporwave.model.Player;
 
 import java.util.Set;
 
+/**
+ * This event is posted by RoosterMenu to update gamepads for chosen players.
+ */
 public class RoosterPlayersUpdatedEvent {
 
     private Set<Player> players;

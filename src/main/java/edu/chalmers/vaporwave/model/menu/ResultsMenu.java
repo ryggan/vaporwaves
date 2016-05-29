@@ -7,6 +7,10 @@ import edu.chalmers.vaporwave.model.Player;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A simple menu to show the results of the recently played game.
+ * The only menu choice is to get back to start menu.
+ */
 public class ResultsMenu extends AbstractMenu {
 
     private Set<Player> players;
@@ -16,7 +20,7 @@ public class ResultsMenu extends AbstractMenu {
     }
 
     public ResultsMenu(Set<Player> players) {
-        super(new int[]{1, 0});
+        super(new int[]{0, 0});
 
         setPlayers(players);
     }
@@ -28,15 +32,15 @@ public class ResultsMenu extends AbstractMenu {
 
     @Override
     public MenuState getMenuAction() {
-        if (this.getSelectedSuper() == 0) {
+//        if (this.getSelectedSuper() == 0) {
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
             for (Player player : this.players) {
                 player.resetPlayerGameStats();
             }
 
             return MenuState.START_MENU;
-        }
-        return MenuState.NO_ACTION;
+//        }
+//        return MenuState.NO_ACTION;
     }
 
     @Override

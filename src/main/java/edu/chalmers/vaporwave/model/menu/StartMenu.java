@@ -3,6 +3,9 @@ package edu.chalmers.vaporwave.model.menu;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 
+/**
+ * Simple menu handling, based on its parent.
+ */
 public class StartMenu extends AbstractMenu {
     public StartMenu() {
         super(new int[]{0, 0}, 0);
@@ -14,7 +17,6 @@ public class StartMenu extends AbstractMenu {
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
             return MenuState.ROOSTER;
         } else if (this.getSelectedSuper() == 1) {
-            //Container.playSound(SoundID.MENU_EXIT);
             return MenuState.EXIT_PROGRAM;
         }
         return MenuState.NO_ACTION;
@@ -25,8 +27,7 @@ public class StartMenu extends AbstractMenu {
         System.out.println("Performing menu event in characterSelect");
     }
 
+    // This method is unused in this screen, but may get functionality in the future
     @Override
-    public void initMenu(NewGameEvent newGameEvent) {
-
-    }
+    public void initMenu(NewGameEvent newGameEvent) { }
 }

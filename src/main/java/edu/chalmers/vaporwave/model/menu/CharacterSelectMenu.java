@@ -11,6 +11,11 @@ import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.Utils;
 
+/**
+ * In this menu, all human players chooses which character they would want to play with.
+ * After every active player has chosen, if there are any CPU players, their characters are
+ * randomized between the remaining unclaimed characters.
+ */
 public class CharacterSelectMenu extends AbstractMenu {
 
     private int[] selectedCharacters;
@@ -20,11 +25,9 @@ public class CharacterSelectMenu extends AbstractMenu {
     public CharacterSelectMenu() {
         super(new int[]{0, 3, 0}, 1);
 
-        // Set selected characters to -1 for all players
+        // Set selected players to -1 for all characters
         selectedCharacters = new int[] {-1, -1, -1, -1};
-
     }
-
 
     public MenuState getMenuAction() {
         if (getSelectedSuper() == 0) {
@@ -61,6 +64,8 @@ public class CharacterSelectMenu extends AbstractMenu {
         }
     }
 
+    // When initializing this screen, makes sure that if a player has dropped out, its
+    // chosen character is released to be claimed by other players
     @Override
     public void initMenu(NewGameEvent newGameEvent) {
         for (int i = 0; i < this.selectedCharacters.length; i++) {
@@ -78,44 +83,48 @@ public class CharacterSelectMenu extends AbstractMenu {
         }
     }
 
+    // Special selection in this menu, as this is the only menu where other players than primary
+    // can input and make choices.
+    @Override
     public void changeSelected(Direction direction, Player player) {
-        switch (direction) {
-            // todo: Break out into helper method
-            case LEFT:
-                menuMoveLeft(player.getPlayerID());
-                if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
-                    while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
-                        menuMoveLeft(player.getPlayerID());
-                    }
-                } else {
-                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1 &&
-                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerID()) {
-                        menuMoveLeft(player.getPlayerID());
-                    }
-                }
+        if (direction == Direction.LEFT || direction == Direction.RIGHT) {
 
-                break;
-            case RIGHT:
-                menuMoveRight(player.getPlayerID());
-                if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
-                    while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
-                        menuMoveRight(player.getPlayerID());
-                    }
-                } else {
-                    while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1 &&
-                            this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(), player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerID()) {
-                        menuMoveRight(player.getPlayerID());
-                    }
-                }
+            moveDirection(direction, player);
+            if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
+                while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
 
-                break;
-            default:
-                super.changeSelected(direction, player);
-                break;
+                    moveDirection(direction, player);
+                }
+            } else {
+                while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(),
+                        player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1
+                        && this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(),
+                        player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerID()) {
+
+                    moveDirection(direction, player);
+                }
+            }
+
+        } else {
+            super.changeSelected(direction, player);
         }
-
     }
 
+    private void moveDirection(Direction direction, Player player) {
+        switch (direction) {
+            case LEFT:
+                menuMoveLeft(player.getPlayerID());
+                break;
+
+            case RIGHT:
+                menuMoveRight(player.getPlayerID());
+                break;
+
+            default:
+        }
+    }
+
+    // Unselects a character for a given player
     private void unselectCharacterForPlayer(int playerID) {
         for (int i = 0; i < selectedCharacters.length; i++) {
             if (selectedCharacters[i] == playerID) {

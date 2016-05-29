@@ -8,6 +8,12 @@ import edu.chalmers.vaporwave.util.PowerUpType;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This event is a bit special from the other events. This one is created when the first
+ * menu runs, and then is filled more and more as the primary player navigates through
+ * the menus. When all needed settings are set, it is posted to the bus, which then gives
+ * it to the GameController to set up a new game.
+ */
 public class NewGameEvent {
 
     private ArenaMap arenaMap;
@@ -22,11 +28,13 @@ public class NewGameEvent {
     private int killLimit;
     private int scoreLimit;
 
+    // Default values, many of which we were planning to make customizable by the user,
+    // but is for now just set values (we ran out of time)
     public NewGameEvent() {
         this.enabledPowerUps = new HashSet<>();
         this.players = new HashSet<>();
 
-        this.timeLimit = 120;
+        this.timeLimit = 10;
 
         this.destroyablePowerups = true;
         this.respawnPowerups = true;
@@ -35,24 +43,7 @@ public class NewGameEvent {
         this.scoreLimit = 5000;
     }
 
-    public void setArenaMap(ArenaMap arenaMap) {
-        this.arenaMap = arenaMap;
-    }
-
-    public ArenaMap getArenaMap() {
-        return this.arenaMap;
-    }
-
-    public void addPowerUp(PowerUpType powerUpState) {
-        this.enabledPowerUps.add(powerUpState);
-    }
-
-    public void removePowerUp(PowerUpType powerUpState) {
-        if(enabledPowerUps.contains(powerUpState)) {
-            enabledPowerUps.remove(powerUpState);
-        }
-    }
-
+    // The player handling is one of the core functios of NewGameEvent
     public void addPlayer(Player player) {
         this.players.add(player);
     }
@@ -70,13 +61,24 @@ public class NewGameEvent {
         return null;
     }
 
-    public Player getPlayerWithID(int id) {
-        for (Player player : players) {
-            if (player.getPlayerID() == id) {
-                return player;
-            }
+    // Setters and getters, many of which is unused but kept anyway since we want to
+    // extend the users choices for customization in the future
+    public void setArenaMap(ArenaMap arenaMap) {
+        this.arenaMap = arenaMap;
+    }
+
+    public ArenaMap getArenaMap() {
+        return this.arenaMap;
+    }
+
+    public void addPowerUp(PowerUpType powerUpState) {
+        this.enabledPowerUps.add(powerUpState);
+    }
+
+    public void removePowerUp(PowerUpType powerUpState) {
+        if(enabledPowerUps.contains(powerUpState)) {
+            enabledPowerUps.remove(powerUpState);
         }
-        return null;
     }
 
     public void setTimeLimit(int timeLimit) {
@@ -127,6 +129,7 @@ public class NewGameEvent {
         return this.scoreLimit;
     }
 
+    // Usual overrides
     @Override
     public boolean equals(Object o) {
         if(o instanceof NewGameEvent) {
