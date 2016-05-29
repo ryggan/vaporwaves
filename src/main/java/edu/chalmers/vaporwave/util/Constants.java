@@ -19,7 +19,7 @@ public class Constants {
     public static final String GAME_CHARACTER_XML_FILE = "src/main/resources/configuration/gameCharacters.xml";
     public static final String FONT_FILE_BAUHAUS = "src/main/resources/fonts/bauhaus-93.ttf";
 
-    public static final String DEFAULT_MAP_FILE = "src/main/resources/maps/default.vapormap";
+    public static final String DEFAULT_MAP_FILE = "src/main/resources/maps/bobsmap.vapormap";
 
     public static final int GRID_OFFSET_X = 0;
     public static final int GRID_OFFSET_Y = 45;
