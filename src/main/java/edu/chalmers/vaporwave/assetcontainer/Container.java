@@ -21,8 +21,8 @@ public class Container {
 
     // This method creates every other container, each after the other.
     // This takes a lot of time, which is why it is done in a loading sequence
-    public static void initialize() {
-        try {
+    public static void initialize() throws Exception {
+//        try {
             double time = System.currentTimeMillis();
             ImageContainer.initImageContainer();
             System.out.println("Image loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
@@ -43,10 +43,10 @@ public class Container {
             System.out.println("Menu buttons done, timed: " + (System.currentTimeMillis() - time) + " millis");
             isInitialized = true;
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            MainController.showError();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            MainController.showError();
+//        }
     }
 
     // All methods below are delegated to sub-containers, which are package private.

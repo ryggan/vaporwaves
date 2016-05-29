@@ -79,8 +79,14 @@ public class MainController {
 
     private static class InitializationRunnable implements Runnable {
         public void run() {
-            Container.initialize();
-            return;
+            try {
+                Container.initialize();
+                return;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                showError();
+            }
         }
     }
 
