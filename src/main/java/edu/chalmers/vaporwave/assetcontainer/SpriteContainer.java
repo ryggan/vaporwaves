@@ -125,6 +125,11 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_CHARLOTTE), 1.0));
         prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_CHARACTERSELECT_ZYPHER), 1.0));
 
+        prepareSpriteLoad(SpriteID.MENU_SIGN_ALYSSA, new Sprite(Container.getImage(ImageID.MENU_SIGN_ALYSSA), 1.0));
+        prepareSpriteLoad(SpriteID.MENU_SIGN_MEI, new Sprite(Container.getImage(ImageID.MENU_SIGN_MEI), 1.0));
+        prepareSpriteLoad(SpriteID.MENU_SIGN_CHARLOTTE, new Sprite(Container.getImage(ImageID.MENU_SIGN_CHARLOTTE), 1.0));
+        prepareSpriteLoad(SpriteID.MENU_SIGN_ZYPHER, new Sprite(Container.getImage(ImageID.MENU_SIGN_ZYPHER), 1.0));
+
         //Roostermenu
         prepareSpriteLoad(SpriteID.MENU_ROOSTER_HELP, new Sprite(Container.getImage(ImageID.MENU_ROOSTER_HELP)));
 

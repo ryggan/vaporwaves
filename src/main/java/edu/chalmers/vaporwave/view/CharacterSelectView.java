@@ -28,6 +28,7 @@ public class CharacterSelectView extends AbstractMenuView {
     private SpriteID[][] selectedCharacterSprite;
 
     private SpriteID[] playerOneSprite;
+    private SpriteID[] playerOneSpriteName;
 
     private int lastSelected;
 
@@ -47,13 +48,32 @@ public class CharacterSelectView extends AbstractMenuView {
             this.selectedCharacter[i] = -1;
         }
 
-        // Setting up all the character selection sprites
+        // First character selected sprites
         this.playerOneSprite = new SpriteID[4];
         this.playerOneSprite[0] = SpriteID.MENU_CHARACTERSELECT_MEI;
         this.playerOneSprite[1] = SpriteID.MENU_CHARACTERSELECT_ALYSSA;
         this.playerOneSprite[2] = SpriteID.MENU_CHARACTERSELECT_ZYPHER;
         this.playerOneSprite[3] = SpriteID.MENU_CHARACTERSELECT_CHARLOTTE;
 
+        double x = Constants.WINDOW_WIDTH / 28;
+        double y = Constants.WINDOW_HEIGHT / 9;
+        for (int i = 0; i < 4; i++) {
+            Container.getSprite(playerOneSprite[i]).setPosition(x, y);
+        }
+
+        this.playerOneSpriteName = new SpriteID[4];
+        this.playerOneSpriteName[0] = SpriteID.MENU_SIGN_MEI;
+        this.playerOneSpriteName[1] = SpriteID.MENU_SIGN_ALYSSA;
+        this.playerOneSpriteName[2] = SpriteID.MENU_SIGN_ZYPHER;
+        this.playerOneSpriteName[3] = SpriteID.MENU_SIGN_CHARLOTTE;
+
+        x = 310;
+        y = Constants.WINDOW_HEIGHT - 140;
+        for (int i = 0; i < 4; i++) {
+            Container.getSprite(playerOneSpriteName[i]).setPosition(x, y);
+        }
+
+        // Character selection sprites
         this.selectedCharacterSprite = new SpriteID[4][4];
         this.selectedCharacterSprite[0][0] = SpriteID.MENU_CHARACTER_MEI_1;
         this.selectedCharacterSprite[0][1] = SpriteID.MENU_CHARACTER_MEI_2;
@@ -139,14 +159,12 @@ public class CharacterSelectView extends AbstractMenuView {
         if (superSelected == 1) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).render(getBackgroundGC(), 0);
-            Container.getSprite(playerOneSprite[subSelected[1]]).setPosition(Constants.WINDOW_WIDTH / 28,Constants.WINDOW_HEIGHT / 9);
-            Container.getSprite(playerOneSprite[subSelected[1]]).render(getBackgroundGC(), 0);
             this.lastSelected = subSelected[1];
         }
 
         // Rendering selector sprites
-        Container.getSprite(playerOneSprite[lastSelected]).setPosition(Constants.WINDOW_WIDTH / 28,Constants.WINDOW_HEIGHT/9);
         Container.getSprite(playerOneSprite[lastSelected]).render(getBackgroundGC(), 0);
+        Container.getSprite(playerOneSpriteName[lastSelected]).render(getBackgroundGC(), 0);
 
         if (playerSetContainsPlayerWithID(1)) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_2).setPosition(

@@ -55,6 +55,11 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_ALYSSA, "images/menu/menu-alyssa-characterselect.png");
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_MEI, "images/menu/menu-mei-characterselect.png");
 
+        prepareImageLoad(ImageID.MENU_SIGN_ALYSSA, "images/menu/menu_namesign_alyssa.png");
+        prepareImageLoad(ImageID.MENU_SIGN_CHARLOTTE, "images/menu/menu_namesign_charlotte.png");
+        prepareImageLoad(ImageID.MENU_SIGN_MEI, "images/menu/menu_namesign_mei.png");
+        prepareImageLoad(ImageID.MENU_SIGN_ZYPHER, "images/menu/menu_namesign_zypher.png");
+
         //Rooster (1):
         prepareImageLoad(ImageID.MENU_ROOSTER_HELP, "images/menu/menu-rooster-help.png");
 
