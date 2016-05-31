@@ -51,7 +51,8 @@ public class GameCharacter extends Movable {
 
     // Test constructor
     public GameCharacter() {
-        this ("ALYSSA", 0);
+//        this ("ALYSSA", 0);
+        super("", 0, 0, 0);
     }
 
     // Puts character on position and saves it for all future spawns

@@ -48,7 +48,7 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_HELP, "images/menu/menu-characterselect-help.png");
         prepareImageLoad(ImageID.MENU_CHARACTER, "images/menu/spritesheet-character-select-443x626.png");
         prepareImageLoad(ImageID.MENU_CHARACTER_SELECTOR, "images/menu/spritesheet-character-selector-24x27.png");
-        prepareImageLoad(ImageID.MENU_CHECKBOX, "images/menu/spritesheet-menu-checkbox-111x118.png");
+//        prepareImageLoad(ImageID.MENU_CHECKBOX, "images/menu/spritesheet-menu-checkbox-111x118.png");
         prepareImageLoad(ImageID.MENU_ROOSTER_SELECT, "images/menu/spritesheet-rooster-select-133x94.png");
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_ZYPHER, "images/menu/menu-zypher-characterselect.png");
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_CHARLOTTE, "images/menu/menu-charlotte-characterselect.png");
