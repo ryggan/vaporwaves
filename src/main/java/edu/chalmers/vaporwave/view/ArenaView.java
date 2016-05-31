@@ -99,22 +99,22 @@ public class ArenaView {
         // Setting up area to draw graphics
 
         this.backgroundCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 4 * Constants.GAME_SCALE),
-                ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE));
+                ((Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE) + this.yoffset);
         root.getChildren().add(this.backgroundCanvas);
 
         this.frameCanvas = new Canvas(this.backgroundCanvas.getWidth(), this.backgroundCanvas.getHeight());
         root.getChildren().add(this.frameCanvas);
 
         this.tileCanvas = new Canvas(Constants.GAME_WIDTH + (Constants.DEFAULT_TILE_WIDTH * 2 * Constants.GAME_SCALE),
-                (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE);
+                (Constants.GAME_HEIGHT + Constants.GRID_OFFSET_Y) * Constants.GAME_SCALE + this.yoffset);
         root.getChildren().add(this.tileCanvas);
 
         this.backgroundCanvas.setLayoutX(this.xoffset - Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE);
-        this.backgroundCanvas.setLayoutY(this.yoffset);
+        this.backgroundCanvas.setLayoutY(0);
         this.frameCanvas.setLayoutX(this.backgroundCanvas.getLayoutX());
         this.frameCanvas.setLayoutY(this.backgroundCanvas.getLayoutY());
         this.tileCanvas.setLayoutX(this.xoffset);
-        this.tileCanvas.setLayoutY(this.yoffset);
+        this.tileCanvas.setLayoutY(0);
 
         this.tileGC = this.tileCanvas.getGraphicsContext2D();
         this.frameGC = this.frameCanvas.getGraphicsContext2D();
@@ -192,21 +192,24 @@ public class ArenaView {
 
         // Rendering gamebackground image to gamebackground canvas
 
-        this.arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        this.arenaBackgroundSprite.setPosition(Constants.DEFAULT_TILE_WIDTH * 2,
+                    Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y + this.yoffset);
         this.arenaBackgroundSprite.render(backgroundGC, -1);
 
-        this.arenaFrameSprites.get(Compass.NORTH).setPosition(0, -Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        this.arenaFrameSprites.get(Compass.NORTH).setPosition(0,
+                    -Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y + this.yoffset);
         this.arenaFrameSprites.get(Compass.NORTH).render(frameGC, -1);
 
-        this.arenaFrameSprites.get(Compass.WEST).setPosition(0, Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+        this.arenaFrameSprites.get(Compass.WEST).setPosition(0,
+                    Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y + this.yoffset);
         this.arenaFrameSprites.get(Compass.WEST).render(frameGC, -1);
 
         this.arenaFrameSprites.get(Compass.EAST).setPosition(Constants.DEFAULT_TILE_WIDTH * (2 + Constants.DEFAULT_GRID_WIDTH),
-                Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+                Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y + this.yoffset);
         this.arenaFrameSprites.get(Compass.EAST).render(frameGC, -1);
 
         this.arenaFrameSprites.get(Compass.SOUTH).setPosition(0,
-                (Constants.DEFAULT_GRID_HEIGHT + 1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+                (Constants.DEFAULT_GRID_HEIGHT + 1) * Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y + this.yoffset);
         this.arenaFrameSprites.get(Compass.SOUTH).render(frameGC, 0);
 
         // Rendering indestructible walls on gamebackground canvas
@@ -215,7 +218,7 @@ public class ArenaView {
                 if (arenaTiles[i][j] != null && arenaTiles[i][j] instanceof IndestructibleWall) {
                     Sprite tileSprite = getTileSprite(arenaTiles[i][j]);
                     tileSprite.setPosition((i+1) * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH,
-                            (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+                            (j+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y + this.yoffset);
                     tileSprite.render(this.backgroundGC, -1);
                 }
             }
@@ -333,7 +336,7 @@ public class ArenaView {
         Sprite tileSprite = getTileSprite(tile);
         if (tileSprite != null) {
             tileSprite.setPosition(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH,
-                    (gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y);
+                    (gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y + this.yoffset);
             tileSprite.render(this.tileGC, timeSinceStart);
         }
     }
@@ -359,7 +362,7 @@ public class ArenaView {
 
         Point destinationCanvasPosition =
                 new Point((int)(gridPosition.getX() * Constants.DEFAULT_TILE_WIDTH + Constants.DEFAULT_TILE_WIDTH),
-                        (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y));
+                        (int)((gridPosition.getY()+1) * Constants.DEFAULT_TILE_WIDTH + Constants.GRID_OFFSET_Y + this.yoffset));
 
         if (currentSprite instanceof AnimatedSprite &&
                 timeDifference <= ((AnimatedSprite)currentSprite).getLength() * ((AnimatedSprite)currentSprite).getDuration()) {
@@ -432,7 +435,7 @@ public class ArenaView {
             AnimatedSprite actualSprite = (AnimatedSprite) currentSprites[spriteIndex];
 
             actualSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
-                    movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+                    movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y + this.yoffset);
 
             animatedSpriteSettings(actualSprite, movable);
 
@@ -533,7 +536,7 @@ public class ArenaView {
                         && timeSinceStart - timeStamp <= ((AnimatedSprite) this.characterSparkleSprite).getTotalTime()) {
 
                 this.characterSparkleSprite.setPosition(movable.getCanvasPositionX() + Constants.DEFAULT_TILE_WIDTH,
-                        movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y);
+                        movable.getCanvasPositionY() + Constants.DEFAULT_TILE_HEIGHT + Constants.GRID_OFFSET_Y + this.yoffset);
 
                 this.characterSparkleSprite.render(this.tileGC, timeSinceStart - timeStamp);
             }
