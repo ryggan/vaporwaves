@@ -187,7 +187,7 @@ public class HUDView {
 
         // Set bombs
         this.statusbar.setPosition(boxPosition.x + 40, boxPosition.y + 79);
-        int bombs = Math.min(character.getCurrentBombCount(), 9);
+        int bombs = Math.max(Math.min(character.getCurrentBombCount(), 9), 0);
         this.statusbar.setOffsetDimension((9 - bombs) * 10, 0);
         this.statusbar.render(this.hudGC, 0);
 
@@ -198,7 +198,7 @@ public class HUDView {
 
         // Set bomb range
         this.statusbar.setPosition(boxPosition.x + 40, boxPosition.y + 115);
-        int range = Math.min(character.getBombRange(), 9);
+        int range = Math.max(Math.min(character.getBombRange(), 9), 0);
         this.statusbar.setOffsetDimension((9 - range) * 10, 0);
         this.statusbar.render(this.hudGC, 0);
 
@@ -210,7 +210,7 @@ public class HUDView {
         // Set speed
         this.statusbar.setPosition(boxPosition.x + 40, boxPosition.y + 151);
         double gain = Constants.DEFAULT_POWERUP_SPEED_GAIN;
-        int speed = (int)Math.min((character.getSpeed() - gain * 6) / gain, 9);
+        int speed = (int)Math.max(Math.min((character.getSpeed() - gain * 6) / gain, 9), 0);
         this.statusbar.setOffsetDimension((9 - speed) * 10, 0);
         this.statusbar.render(this.hudGC, 0);
     }
