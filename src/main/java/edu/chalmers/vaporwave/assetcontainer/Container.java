@@ -17,39 +17,46 @@ import java.io.File;
  */
 public class Container {
 
+    private static boolean isPrepared = false;
     private static boolean isInitialized = false;
 
     // This method creates every other container, each after the other.
     // This takes a lot of time, which is why it is done in a loading sequence
     public static void initialize() throws Exception {
-//        try {
-            double time = System.currentTimeMillis();
-            ImageContainer.initImageContainer();
-            System.out.println("Image loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
-            time = System.currentTimeMillis();
-            FileContainer.initFileContainer();
-            System.out.println("File loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
-            time = System.currentTimeMillis();
-            SoundContainer.initSoundContainer();
-            System.out.println("Sound loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
-            time = System.currentTimeMillis();
-            CharacterContainer.initCharacterContainer();
-            System.out.println("Characters done, timed: " + (System.currentTimeMillis() - time) + " millis");
-            time = System.currentTimeMillis();
-            SpriteContainer.initSpriteContainer();
-            System.out.println("Sprites done, timed: " + (System.currentTimeMillis() - time) + " millis");
-            time = System.currentTimeMillis();
-            MenuButtonContainer.initMenuButtonContainer();
-            System.out.println("Menu buttons done, timed: " + (System.currentTimeMillis() - time) + " millis");
-            isInitialized = true;
 
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            MainController.showError();
-//        }
+        double time = System.currentTimeMillis();
+        ImageContainer.prepare();
+        SpriteContainer.prepare();
+        System.out.println("Preparing done, timed: " + (System.currentTimeMillis() - time) + " millis");
+        isPrepared = true;
+        time = System.currentTimeMillis();
+        ImageContainer.init();
+        System.out.println("Image loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
+        time = System.currentTimeMillis();
+        FileContainer.initFileContainer();
+        System.out.println("File loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
+        time = System.currentTimeMillis();
+        SoundContainer.initSoundContainer();
+        System.out.println("Sound loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
+        time = System.currentTimeMillis();
+        CharacterContainer.initCharacterContainer();
+        System.out.println("Characters done, timed: " + (System.currentTimeMillis() - time) + " millis");
+        time = System.currentTimeMillis();
+//        SpriteContainer.prepare();
+        SpriteContainer.init();
+        System.out.println("Sprites done, timed: " + (System.currentTimeMillis() - time) + " millis");
+        time = System.currentTimeMillis();
+        MenuButtonContainer.initMenuButtonContainer();
+        System.out.println("Menu buttons done, timed: " + (System.currentTimeMillis() - time) + " millis");
+        isInitialized = true;
+
     }
 
     // All methods below are delegated to sub-containers, which are package private.
+    public static boolean getIsPrepared() {
+        return isPrepared;
+    }
+
     public static boolean getIsInitialized() {
         return isInitialized;
     }

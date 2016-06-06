@@ -22,7 +22,7 @@ class ImageContainer {
 
     // First all images is prepared in a set, partly to be able to count how many tasks to be done.
     // Then the loading of the external files takes place, which is the part that takes time.
-    public static void initImageContainer() throws Exception {
+    public static void prepare() throws Exception {
 
         imageContainer = new HashMap<>();
 
@@ -115,7 +115,9 @@ class ImageContainer {
 
         //Fish
         prepareImageLoad(ImageID.FISH, "images/spritesheet-fish-26x16.png");
+    }
 
+    static void init() {
         addImages();
     }
 

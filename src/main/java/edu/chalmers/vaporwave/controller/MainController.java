@@ -54,7 +54,12 @@ public class MainController {
             public void handle(long currentNanoTime) {
                 // Updates loading percentage and then updates view
                 loader.updateLoader();
-                loaderView.updateView(loader.getPercentLoaded());
+
+                if (Container.getIsPrepared()) {
+                    loaderView.updateView(loader.getPercentLoaded());
+                } else {
+                    loaderView.updateView(0.01);
+                }
 
                 // Only to delay loading done by one frame
                 if (loader.getPercentLoaded() == 1 && !loadingDone) {
