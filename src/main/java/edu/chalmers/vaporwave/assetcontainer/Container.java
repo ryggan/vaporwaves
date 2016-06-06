@@ -1,6 +1,5 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
-import edu.chalmers.vaporwave.controller.MainController;
 import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.SoundPlayer;
 import javafx.scene.image.Image;
@@ -26,6 +25,7 @@ public class Container {
 
         double time = System.currentTimeMillis();
         ImageContainer.prepare();
+        FileContainer.prepare();
         SpriteContainer.prepare();
         MenuButtonContainer.prepare();
         System.out.println("Preparing done, timed: " + (System.currentTimeMillis() - time) + " millis");
@@ -34,7 +34,7 @@ public class Container {
         ImageContainer.init();
         System.out.println("Image loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
         time = System.currentTimeMillis();
-        FileContainer.initFileContainer();
+        FileContainer.init();
         System.out.println("File loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
         time = System.currentTimeMillis();
         SoundContainer.initSoundContainer();
@@ -71,10 +71,6 @@ public class Container {
 
     public static Font getFont(FileID fileID) {
         return FileContainer.getFont(fileID);
-    }
-
-    public static javafx.scene.paint.Color getColor(FileID fileID) {
-        return FileContainer.getColor(fileID);
     }
 
     public static SoundPlayer getSound(SoundID soundID) {
