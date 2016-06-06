@@ -16,51 +16,67 @@ import java.util.Set;
  */
 class MenuButtonContainer {
 
+    static class MenuButtonSpriteProperties {
+        ImageID imageID;
+        int width;
+        int height;
+        Point gridPositionInSheet;
+
+        public MenuButtonSpriteProperties(ImageID imageID, int width, int height, Point gridPositionInSheet) {
+            this.imageID = imageID;
+            this.width = width;
+            this.height = height;
+            this.gridPositionInSheet = gridPositionInSheet;
+        }
+    }
+
     private static Map<MenuButtonID, MenuButtonSprite> menuButtonContainer;
 
     private static int tasksDone = 0;
     private static int totalTasks = 0;
-    private static Set<Pair<MenuButtonID, MenuButtonSprite>> menuButtonSet = new HashSet<>();
+    private static Set<Pair<MenuButtonID, MenuButtonSpriteProperties>> menuButtonSet = new HashSet<>();
 
     // First all images is prepared in a set, partly to be able to count how many tasks to be done.
     // Then the loading of the external files takes place, which is the part that takes time.
-    public static void initMenuButtonContainer() throws Exception {
+    static void prepare() throws Exception {
         menuButtonContainer = new HashMap<>();
 
-        final Image menuButtonSpritesheet = Container.getImage(ImageID.MENU_BUTTON_SPRITESHEET);
-        final Image smallMenuButtonSpritesheet = Container.getImage(ImageID.MENU_SMALL_BUTTON_SPRITESHEET);
         final int buttonWidth = 308;
         final int buttonHeight = 66;
-        final int smallButtonWidth = 92;
-        final int smallButtonHeight = 22;
 
         // Start menu (4)
-        prepareButtonLoad(MenuButtonID.BUTTON_NEW_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 0)));
-        prepareButtonLoad(MenuButtonID.BUTTON_EXIT_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 1)));
-        prepareButtonLoad(MenuButtonID.BUTTON_OPTIONS, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 2)));
-        prepareButtonLoad(MenuButtonID.BUTTON_HIGHSCORE, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 3)));
+        prepareButtonLoad(MenuButtonID.BUTTON_NEW_GAME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 0));
+        prepareButtonLoad(MenuButtonID.BUTTON_EXIT_GAME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 1));
+        prepareButtonLoad(MenuButtonID.BUTTON_OPTIONS, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 2));
+        prepareButtonLoad(MenuButtonID.BUTTON_HIGHSCORE, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 3));
 
         // Character select (2)
-        prepareButtonLoad(MenuButtonID.BUTTON_START_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 0)));
+        prepareButtonLoad(MenuButtonID.BUTTON_START_GAME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 0));
 
-        prepareButtonLoad(MenuButtonID.BUTTON_SMALL_BACK, new MenuButtonSprite(smallMenuButtonSpritesheet, smallButtonWidth, smallButtonHeight, new Point(0, 0)));
+        prepareButtonLoad(MenuButtonID.BUTTON_SMALL_BACK, ImageID.MENU_SMALL_BUTTON_SPRITESHEET, 92, 22, new Point(0, 0));
 
         // Misc (2)
-        prepareButtonLoad(MenuButtonID.BUTTON_BACK, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 2)));
-        prepareButtonLoad(MenuButtonID.BUTTON_NEXT, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 1)));
+        prepareButtonLoad(MenuButtonID.BUTTON_BACK, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 2));
+        prepareButtonLoad(MenuButtonID.BUTTON_NEXT, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 1));
 
+//        addButtons();
+    }
+
+    static void init() {
         addButtons();
     }
 
     // prepareButtonLoad calculates total tasks, and addButton counts up how many tasks are done
-    private static void prepareButtonLoad(MenuButtonID menuButtonID, MenuButtonSprite menuButtonSprite) {
-        menuButtonSet.add(new Pair<>(menuButtonID, menuButtonSprite));
+    private static void prepareButtonLoad(MenuButtonID menuButtonID, ImageID imageID, int width, int height, Point gridPositionInSheet) {
+        menuButtonSet.add(new Pair<>(menuButtonID, new MenuButtonSpriteProperties(imageID, width, height, gridPositionInSheet)));
         totalTasks += 1;
     }
 
     private static void addButtons() {
-        for (Pair<MenuButtonID, MenuButtonSprite> pair : menuButtonSet) {
-            addButton(pair.getFirst(), pair.getSecond());
+        for (Pair<MenuButtonID, MenuButtonSpriteProperties> pair : menuButtonSet) {
+            MenuButtonSpriteProperties prop = pair.getSecond();
+            addButton(pair.getFirst(),
+                    new MenuButtonSprite(Container.getImage(prop.imageID), prop.width, prop.height, prop.gridPositionInSheet));
         }
     }
 

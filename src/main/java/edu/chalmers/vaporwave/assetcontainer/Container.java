@@ -27,6 +27,7 @@ public class Container {
         double time = System.currentTimeMillis();
         ImageContainer.prepare();
         SpriteContainer.prepare();
+        MenuButtonContainer.prepare();
         System.out.println("Preparing done, timed: " + (System.currentTimeMillis() - time) + " millis");
         isPrepared = true;
         time = System.currentTimeMillis();
@@ -42,11 +43,10 @@ public class Container {
         CharacterContainer.initCharacterContainer();
         System.out.println("Characters done, timed: " + (System.currentTimeMillis() - time) + " millis");
         time = System.currentTimeMillis();
-//        SpriteContainer.prepare();
         SpriteContainer.init();
         System.out.println("Sprites done, timed: " + (System.currentTimeMillis() - time) + " millis");
         time = System.currentTimeMillis();
-        MenuButtonContainer.initMenuButtonContainer();
+        MenuButtonContainer.init();
         System.out.println("Menu buttons done, timed: " + (System.currentTimeMillis() - time) + " millis");
         isInitialized = true;
 
