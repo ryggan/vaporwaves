@@ -26,6 +26,7 @@ public class Container {
         double time = System.currentTimeMillis();
         ImageContainer.prepare();
         FileContainer.prepare();
+        SoundContainer.prepare();
         SpriteContainer.prepare();
         MenuButtonContainer.prepare();
         System.out.println("Preparing done, timed: " + (System.currentTimeMillis() - time) + " millis");
@@ -37,7 +38,7 @@ public class Container {
         FileContainer.init();
         System.out.println("File loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
         time = System.currentTimeMillis();
-        SoundContainer.initSoundContainer();
+        SoundContainer.init();
         System.out.println("Sound loading done, timed: " + (System.currentTimeMillis() - time) + " millis");
         time = System.currentTimeMillis();
         CharacterContainer.initCharacterContainer();

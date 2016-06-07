@@ -1,9 +1,14 @@
 package edu.chalmers.vaporwave.assetcontainer;
 
+import edu.chalmers.vaporwave.util.Pair;
+import edu.chalmers.vaporwave.util.Quad;
 import edu.chalmers.vaporwave.util.SoundPlayer;
+import edu.chalmers.vaporwave.util.Triple;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This container deals with all the sounds.
@@ -24,85 +29,78 @@ class SoundContainer {
     private static final int NR_OF_FORWARD_CLICK = 4;
     private static final int NR_OF_BACKWARD_CLICK = 4;
 
-    private static double tasksDone;
-    private static final double totalTasks = 3 + 7 + 2 +
-            NR_OF_BACKWARD_CLICK + NR_OF_FORWARD_CLICK +
-            NR_OF_PLACEBOMB + NR_OF_EXPLOSION + NR_OF_POWERUP;
+    private static double tasksDone = 0;
+    private static double totalTasks = 0;
+    private static Set<Quad<SoundID, String, Integer, Double>> soundSet = new HashSet<>();
+    private static Set<Triple<SoundID, String, Double>> musicSet = new HashSet<>();
 
-    public static void initSoundContainer() throws Exception {
+    static void prepare() throws Exception {
         soundVolume = 1.0;
         musicVolume = 0.5;
 
         // TODO: OBS!!! IF ADDING SOUNDS; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
         soundContainer = new HashMap<>();
-        SoundPlayer[] soundPlayer;
 
         // Game sounds (+0)
-        soundPlayer = new SoundPlayer[NR_OF_PLACEBOMB];
-        setUpSoundArray(soundPlayer, NR_OF_PLACEBOMB, "placebomb.mp3");
-        soundContainer.put(SoundID.PLACE_BOMB, soundPlayer);
-
-        soundPlayer = new SoundPlayer[NR_OF_EXPLOSION];
-        setUpSoundArray(soundPlayer, NR_OF_EXPLOSION, "explosion.mp3");
-        soundContainer.put(SoundID.EXPLOSION, soundPlayer);
-
-        soundPlayer = new SoundPlayer[NR_OF_POWERUP];
-        setUpSoundArray(soundPlayer, NR_OF_POWERUP, "powerup1.mp3", 0.8);
-        soundContainer.put(SoundID.POWERUP, soundPlayer);
+        prepareSoundLoad(SoundID.PLACE_BOMB, "placebomb.mp3", NR_OF_PLACEBOMB);
+        prepareSoundLoad(SoundID.EXPLOSION, "explosion.mp3", NR_OF_EXPLOSION);
+        prepareSoundLoad(SoundID.POWERUP, "powerup1.mp3", NR_OF_POWERUP, 0.8);
 
         // Menu sounds (+3)
-        soundPlayer = new SoundPlayer[NR_OF_FORWARD_CLICK];
-        setUpSoundArray(soundPlayer, NR_OF_FORWARD_CLICK, "menu-forward-click.mp3", 0.4);
-        soundContainer.put(SoundID.MENU_FORWARD_CLICK, soundPlayer);
-
-        soundPlayer = new SoundPlayer[NR_OF_BACKWARD_CLICK];
-        setUpSoundArray(soundPlayer, NR_OF_BACKWARD_CLICK, "menu-backward-click.mp3", 0.4);
-        soundContainer.put(SoundID.MENU_BACKWARD_CLICK, soundPlayer);
-
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-startup.mp3");
-        soundContainer.put(SoundID.MENU_STARTUP, soundPlayer);
-
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-exit.mp3");
-        soundContainer.put(SoundID.MENU_EXIT, soundPlayer);
-
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu_success1.mp3", 0.4);
-        soundContainer.put(SoundID.MENU_SUCCESS, soundPlayer);
+        prepareSoundLoad(SoundID.MENU_FORWARD_CLICK, "menu-forward-click.mp3", NR_OF_FORWARD_CLICK, 0.4);
+        prepareSoundLoad(SoundID.MENU_BACKWARD_CLICK, "menu-backward-click.mp3", NR_OF_BACKWARD_CLICK, 0.4);
+        prepareSoundLoad(SoundID.MENU_STARTUP, "menu-startup.mp3", 1);
+        prepareSoundLoad(SoundID.MENU_EXIT, "menu-exit.mp3", 1);
+        prepareSoundLoad(SoundID.MENU_SUCCESS, "menu_success1.mp3", 1, 0.4);
 
         // Speech files (7)
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-alyssa.mp3");
-        soundContainer.put(SoundID.MENU_ALYSSA, soundPlayer);
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-mei.mp3");
-        soundContainer.put(SoundID.MENU_MEI, soundPlayer);
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-charlotte.mp3");
-        soundContainer.put(SoundID.MENU_CHARLOTTE, soundPlayer);
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-zypher.mp3");
-        soundContainer.put(SoundID.MENU_ZYPHER, soundPlayer);
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "game-start.mp3");
-        soundContainer.put(SoundID.START_GAME, soundPlayer);
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-selectcharacter.mp3");
-        soundContainer.put(SoundID.SELECT_CHARACTER, soundPlayer);
-        soundPlayer = new SoundPlayer[1];
-        setUpSoundArray(soundPlayer, 1, "menu-timeup.mp3");
-        soundContainer.put(SoundID.TIME_UP, soundPlayer);
+        prepareSoundLoad(SoundID.MENU_ALYSSA, "menu-alyssa.mp3", 1);
+        prepareSoundLoad(SoundID.MENU_MEI, "menu-mei.mp3", 1);
+        prepareSoundLoad(SoundID.MENU_CHARLOTTE, "menu-charlotte.mp3", 1);
+        prepareSoundLoad(SoundID.MENU_ZYPHER, "menu-zypher.mp3", 1);
+        prepareSoundLoad(SoundID.START_GAME, "game-start.mp3", 1);
+        prepareSoundLoad(SoundID.SELECT_CHARACTER, "menu-selectcharacter.mp3", 1);
+        prepareSoundLoad(SoundID.TIME_UP, "menu-timeup.mp3", 1);
 
         // background music (2)
-        soundPlayer = new SoundPlayer[1];
-        setUpBackgroundMusic(soundPlayer, "menu-bgm-1.mp3", 1.0);
-        soundContainer.put(SoundID.MENU_BGM_1, soundPlayer);
+        prepareMusicLoad(SoundID.MENU_BGM_1, "menu-bgm-1.mp3", 1.0);
+        prepareMusicLoad(SoundID.GAME_MUSIC, "bg3.mp3", 1.0);
+    }
 
-        soundPlayer = new SoundPlayer[1];
-        setUpBackgroundMusic(soundPlayer, "bg3.mp3", 1.0);
-        soundContainer.put(SoundID.GAME_MUSIC, soundPlayer);
+    static void init() throws Exception {
+        addSounds();
+        addMusic();
+    }
+
+    private static void addSounds() throws Exception {
+        for (Quad<SoundID, String, Integer, Double> quad : soundSet) {
+            SoundPlayer[] soundPlayer = new SoundPlayer[quad.getThird()];
+            setUpSoundArray(soundPlayer, quad.getThird(), quad.getSecond(), quad.getFourth());
+            soundContainer.put(quad.getFirst(), soundPlayer);
+        }
+    }
+
+    private static void addMusic() throws Exception {
+        for (Triple<SoundID, String, Double> trip : musicSet) {
+            SoundPlayer[] soundPlayer = new SoundPlayer[1];
+            setUpBackgroundMusic(soundPlayer, trip.getSecond(), trip.getThird());
+            soundContainer.put(trip.getFirst(), soundPlayer);
+        }
+    }
+
+    private static void prepareSoundLoad(SoundID soundID, String fileName, int numberOfSounds, double volume) {
+        soundSet.add(new Quad<>(soundID, fileName, numberOfSounds, volume));
+        totalTasks += numberOfSounds;
+    }
+
+    private static void prepareSoundLoad(SoundID soundID, String fileName, int numberOfSounds) {
+        prepareSoundLoad(soundID, fileName, numberOfSounds, 1.0);
+    }
+
+    private static void prepareMusicLoad(SoundID soundID, String fileName, double volume) {
+        musicSet.add(new Triple<>(soundID, fileName, volume));
+        totalTasks++;
     }
 
     // First creates a sound, and if number of sounds is more than one, duplicates this sound that many times
