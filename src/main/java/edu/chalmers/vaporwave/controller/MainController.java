@@ -31,7 +31,7 @@ public class MainController {
 
     private LoadingScreen loader;
     private LoadingScreenView loaderView;
-    private boolean loadingDone;
+    private int loadingDoneWait;
 
     // Starts loading
     public MainController(Group root) throws Exception {
@@ -46,7 +46,7 @@ public class MainController {
     public void initLoader(Group root) throws Exception {
         this.loader = new LoadingScreen();
         this.loaderView = new LoadingScreenView(root);
-        this.loadingDone = false;
+        this.loadingDoneWait = 4;
         // Loading loop
         new AnimationTimer() {
 
@@ -58,15 +58,15 @@ public class MainController {
                 if (Container.getIsPrepared()) {
                     loaderView.updateView(loader.getPercentLoaded());
                 } else {
-                    loaderView.updateView(0.01);
+                    loaderView.updateView(0.02);
                 }
 
                 // Only to delay loading done by one frame
-                if (loader.getPercentLoaded() == 1 && !loadingDone) {
-                    loadingDone = true;
+                if (loader.getPercentLoaded() == 1 && loadingDoneWait > 0) {
+                    loadingDoneWait--;
 
                     // Initiates the rest of the game and starts game-timer, and finally ends the loading loop
-                } else if (loadingDone) {
+                } else if (loadingDoneWait <= 0) {
                     initApplication();
                     initTimer();
                     this.stop();

@@ -64,8 +64,6 @@ public class InputController {
                         onKeyReleased(input, released, code);
                     }
                 });
-
-        updateGamePads();
     }
 
     // These is used both by above listeners and by gampad-input-update below

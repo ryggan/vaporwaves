@@ -2,11 +2,14 @@ package edu.chalmers.vaporwave.assetcontainer;
 
 import edu.chalmers.vaporwave.util.CharacterStat;
 import edu.chalmers.vaporwave.util.MovableState;
+import edu.chalmers.vaporwave.util.Pair;
 import edu.chalmers.vaporwave.util.XMLReader;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A container class for all character properties, which are read from XML-file and structured
@@ -20,21 +23,36 @@ class CharacterContainer {
     private static Map<CharacterID, CharacterSprite> spriteContainer;
     private static Map<CharacterID, CharacterProperties> propertiesContainer;
 
-    private static int tasksDone;
-    private static final int totalTasks = 14 * 5;
+    private static int tasksDone = 0;
+//    private static final int totalTasks = 14 * 5;
+    private static int totalTasks = 0;
+    private static Set<CharacterID> characterSet = new HashSet<>();
 
-    public static void initCharacterContainer() throws Exception {
+    static void prepare() throws Exception {
         spriteContainer = new HashMap<>();
         propertiesContainer = new HashMap<>();
 
-        // TODO: OBS!!! IF ADDING CHARACTER SPRITES; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
+        prepareCharacterInit(CharacterID.ALYSSA);
+        prepareCharacterInit(CharacterID.CHARLOTTE);
+        prepareCharacterInit(CharacterID.ZYPHER);
+        prepareCharacterInit(CharacterID.MEI);
 
-        initCharacterSprites(CharacterID.ALYSSA);
-        initCharacterSprites(CharacterID.CHARLOTTE);
-        initCharacterSprites(CharacterID.ZYPHER);
-        initCharacterSprites(CharacterID.MEI);
+        prepareCharacterInit(CharacterID.PCCHAN);
+    }
 
-        initCharacterSprites(CharacterID.PCCHAN);
+    static void init() throws Exception {
+        initCharacters();
+    }
+
+    private static void prepareCharacterInit(CharacterID characterID) {
+        characterSet.add(characterID);
+        totalTasks += 14;
+    }
+
+    private static void initCharacters() throws Exception {
+        for (CharacterID characterID : characterSet) {
+            initCharacterSprites(characterID);
+        }
     }
 
     static CharacterSprite getCharacterSprite(CharacterID characterID) {
