@@ -241,7 +241,7 @@ public class ArenaView {
         if (this.scoreboardView != null) {
             this.scoreboardView.clearScoreboard();
         }
-        this.scoreboardView = new ScoreboardView(this.root, players);
+        this.scoreboardView = new ScoreboardView(this.root, players, 0, (int)this.yoffset * 2);
     }
 
     public void updateTimer(double timer) {
