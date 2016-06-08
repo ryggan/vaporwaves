@@ -57,6 +57,7 @@ public class ArenaMap {
 
     public String toString() {
         StringBuffer mapAsString = new StringBuffer();
+        mapAsString.append("\nArenaMap: "+this.name+"\n");
         for (int i = 0; i < this.mapObjects[0].length; i++) {
             for (int j = 0; j < this.mapObjects.length; j++) {
                 mapAsString.append(mapObjects[j][i].toString().substring(0,1) + "  ");

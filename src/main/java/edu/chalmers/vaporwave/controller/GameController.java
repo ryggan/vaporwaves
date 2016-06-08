@@ -3,7 +3,6 @@ package edu.chalmers.vaporwave.controller;
 import com.google.common.eventbus.Subscribe;
 import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.Container;
-import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.event.DeathEvent;
 import edu.chalmers.vaporwave.event.ExitToMenuEvent;
@@ -88,8 +87,9 @@ public class GameController implements ContentController {
         this.destroyablePowerUps = newGameEvent.getDestroyablePowerups();
         this.respawnPowerups = newGameEvent.getRespawnPowerups();
         this.players = newGameEvent.getPlayers();
+        ArenaMap arenaMap = newGameEvent.getArenaMap();
 
-        // Initiating variables
+                // Initiating variables
         this.timeSinceStart = 0.0;
         this.timeSinceStartOffset = 0.0;
         this.pausedTime = 0.0;
@@ -99,11 +99,7 @@ public class GameController implements ContentController {
         this.enemies = new HashSet<>();
         this.deadEnemies = new HashSet<>();
 
-        // Setting up map (could also be replaced with settings from newGameEvent)
-        ArenaMap arenaMap = new ArenaMap("default",
-                (new MapFileReader(Container.getMap(FileID.VAPORMAP_DEFAULT))).getMapObjects());
-
-        // Setting up model objects and view objects
+                // Setting up model objects and view objects
         this.arenaModel = newGame(arenaMap);
         this.pauseMenuController = new PauseMenuController(root);
 

@@ -4,7 +4,13 @@ import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.ArenaMap;
+import edu.chalmers.vaporwave.model.ArenaMapComparator;
 import edu.chalmers.vaporwave.util.MapFileReader;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The Rooster is a menu where the primary player decides how many other players that
@@ -12,13 +18,18 @@ import edu.chalmers.vaporwave.util.MapFileReader;
  */
 public class MapSelectMenu extends AbstractMenu {
 
+    private List<ArenaMap> maps;
+
     public MapSelectMenu() {
         super(new int[]{0, Container.getAllMaps().size(), 0}, 1);
 
-        System.out.println("Total maps: "+Container.getAllMaps().size());
+        this.maps = new ArrayList<>();
+        for (Map.Entry<FileID, File> entry : Container.getAllMaps().entrySet()) {
+            this.maps.add(new ArenaMap(entry.getKey().toString(), (new MapFileReader(entry.getValue())).getMapObjects()));
+        }
+        this.maps.sort(new ArenaMapComparator());
 
-//        ArenaMap arenaMap = new ArenaMap("default",
-//                (new MapFileReader(Container.getMap(FileID.VAPORMAP_DEFAULT))).getMapObjects());
+//        System.out.println("Arenamaps: "+maps);
     }
 
     public MenuState getMenuAction() {

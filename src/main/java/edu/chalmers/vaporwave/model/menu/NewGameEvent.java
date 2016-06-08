@@ -1,8 +1,11 @@
 package edu.chalmers.vaporwave.model.menu;
 
+import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.GameType;
+import edu.chalmers.vaporwave.util.MapFileReader;
 import edu.chalmers.vaporwave.util.PowerUpType;
 
 import java.util.HashSet;
@@ -34,13 +37,16 @@ public class NewGameEvent {
         this.enabledPowerUps = new HashSet<>();
         this.players = new HashSet<>();
 
+        // Defaults:
+        this.gameType = GameType.SURVIVAL;
+        this.arenaMap = new ArenaMap("default", (new MapFileReader(Container.getMap(FileID.VAPORMAP_DEFAULT))).getMapObjects());
+
         this.timeLimit = 120;
+        this.killLimit = 10;
+        this.scoreLimit = 5000;
 
         this.destroyablePowerups = true;
         this.respawnPowerups = true;
-        this.gameType = GameType.SURVIVAL;
-        this.killLimit = 10;
-        this.scoreLimit = 5000;
     }
 
     // The player handling is one of the core functios of NewGameEvent
