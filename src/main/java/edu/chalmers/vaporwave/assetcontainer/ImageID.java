@@ -40,6 +40,8 @@ public enum ImageID {
 
     MENU_ROOSTER_SELECT,
 
+    MENU_MAPSELECT_SHEET,
+
     MENU_PAUSE,
 
     // Hud

@@ -28,12 +28,6 @@ class ImageContainer {
 
         // >>> MENU STUFF: <<<
 
-        // Results menu (4):
-        prepareImageLoad(ImageID.MENU_RESULTS_ZYPHER, "images/menu/menu-zypher-result.png");
-        prepareImageLoad(ImageID.MENU_RESULTS_CHARLOTTE, "images/menu/menu-charlotte-result.png");
-        prepareImageLoad(ImageID.MENU_RESULTS_ALYSSA, "images/menu/menu-alyssa-result.png");
-        prepareImageLoad(ImageID.MENU_RESULTS_MEI, "images/menu/menu-mei-result.png");
-
         // Backgrounds (8):
         prepareImageLoad(ImageID.MENU_BACKGROUND_RESULT, "images/menu/menu-background-result.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_1, "images/menu/menu-background-2.bmp");
@@ -41,10 +35,18 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_SMALL_BUTTON_SPRITESHEET, "images/menu/spritesheet-menubuttons-small-92x22.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_CHARACTERSELECT, "images/menu/menu-background-characterselect.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_ROOSTER, "images/menu/menu-background-roostermenu.png");
-        prepareImageLoad(ImageID.MENU_BACKGROUND_MAPSELECT, "images/menu/menu-background-mapselect.png");
+        prepareImageLoad(ImageID.MENU_BACKGROUND_MAPSELECT, "images/menu/menu-background-mapselect-2.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_CUSTOMIZE, "images/menu/menu-background-customize.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_LOADING, "images/menu/menu-background-loading.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_START, "images/menu/menu-background-startmenu.png");
+
+        //Start (3):
+        prepareImageLoad(ImageID.MENU_STARTMENU_HELP, "images/menu/menu-startmenu-help.png");
+        prepareImageLoad(ImageID.MENU_TITLE, "images/menu/sunsetninjas.png");
+        prepareImageLoad(ImageID.MENU_ALLCHARACTERS, "images/menu/sunsetninjasGang.png");
+
+        //Rooster (1):
+        prepareImageLoad(ImageID.MENU_ROOSTER_HELP, "images/menu/menu-rooster-help.png");
 
         // Character select (9):
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_HELP, "images/menu/menu-characterselect-help.png");
@@ -62,13 +64,14 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_SIGN_MEI, "images/menu/menu_namesign_mei.png");
         prepareImageLoad(ImageID.MENU_SIGN_ZYPHER, "images/menu/menu_namesign_zypher.png");
 
-        //Rooster (1):
-        prepareImageLoad(ImageID.MENU_ROOSTER_HELP, "images/menu/menu-rooster-help.png");
+        // Map select (1)
+        prepareImageLoad(ImageID.MENU_MAPSELECT_SHEET, "images/menu/menu-mapselect-spritesheet.png");
 
-        //Start (3):
-        prepareImageLoad(ImageID.MENU_STARTMENU_HELP, "images/menu/menu-startmenu-help.png");
-        prepareImageLoad(ImageID.MENU_TITLE, "images/menu/sunsetninjas.png");
-        prepareImageLoad(ImageID.MENU_ALLCHARACTERS, "images/menu/sunsetninjasGang.png");
+        // Results menu (4):
+        prepareImageLoad(ImageID.MENU_RESULTS_ZYPHER, "images/menu/menu-zypher-result.png");
+        prepareImageLoad(ImageID.MENU_RESULTS_CHARLOTTE, "images/menu/menu-charlotte-result.png");
+        prepareImageLoad(ImageID.MENU_RESULTS_ALYSSA, "images/menu/menu-alyssa-result.png");
+        prepareImageLoad(ImageID.MENU_RESULTS_MEI, "images/menu/menu-mei-result.png");
 
         // >>> GAME STUFF: <<<
 
