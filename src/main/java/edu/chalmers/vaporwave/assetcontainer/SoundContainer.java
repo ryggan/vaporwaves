@@ -38,8 +38,6 @@ class SoundContainer {
         soundVolume = 1.0;
         musicVolume = 0.5;
 
-        // TODO: OBS!!! IF ADDING SOUNDS; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
-
         soundContainer = new HashMap<>();
 
         // Game sounds (+0)

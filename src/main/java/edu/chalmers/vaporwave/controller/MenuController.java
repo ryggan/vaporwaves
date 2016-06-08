@@ -290,15 +290,7 @@ public class MenuController implements ContentController {
                      ((CharacterSelectMenu)this.menuMap.get(this.activeMenu)).getSelectedCharacters());
 
              ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setPlayers(this.newGameEvent.getPlayers());
-
-         // When in map select menu, push map list into view
          }
-//         else if (this.menuMap.get(this.activeMenu) instanceof MapSelectMenu
-//                 && this.menuViewMap.get(this.activeMenu) instanceof MapSelectMenuView) {
-//
-//             ((MapSelectMenuView) this.menuViewMap.get(this.activeMenu)).setArenaMaps(
-//                     ((MapSelectMenu)this.menuMap.get(this.activeMenu)).getArenaMaps());
-//         }
 
         // The actual updating of the view
         this.menuViewMap.get(this.activeMenu).updateView(

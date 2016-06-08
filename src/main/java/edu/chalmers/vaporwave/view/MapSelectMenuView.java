@@ -3,8 +3,10 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.ArenaMap;
+import edu.chalmers.vaporwave.model.ArenaTheme;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.MapObject;
 import javafx.scene.Group;
 import javafx.scene.canvas.*;
 import javafx.scene.canvas.Canvas;
@@ -19,38 +21,50 @@ import java.util.List;
  */
 public class MapSelectMenuView extends AbstractMenuView {
 
-//    private Canvas bigPreviewCanvas;
-    private Canvas[] smallPreviewCanvas;
-
-//    private GraphicsContext bigPreviewGC;
-    private GraphicsContext[] smallPreviewGC;
+//    private Canvas[] smallPreviewCanvas;
+//    private GraphicsContext[] smallPreviewGC;
 
     private List<MenuButtonSprite> menuButtonSpriteList;
 
     private Sprite mark;
-    private Sprite indestructible;
-    private Sprite destructible;
+    private Sprite smallIndestructible;
+    private Sprite smallDestructible;
+
+    private Sprite arenaBackground;
+    private Sprite bigIndestructible;
+    private Sprite bigDestructible;
 
     private List<ArenaMap> arenaMaps;
+    private ArenaTheme theme;
+
+    int bigx;
+    int bigy;
+    int smallx;
+    int smally;
+    int smalli;
+    int smallDim;
 
     public MapSelectMenuView(Group root, List<ArenaMap> arenaMaps) {
         super(root);
+
+        this.bigx = 204 / (int)Constants.GAME_SCALE;
+        this.bigy = 44 / (int)Constants.GAME_SCALE;
+        this.smallx = 346;
+        this.smally = 545;
+        this.smalli = 141;
+        this.smallDim = 5;
 
         this.arenaMaps = arenaMaps;
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_MAPSELECT));
 
         // Setting up canvas
-//        this.bigPreviewCanvas = new Canvas(Constants.DEFAULT_GRID_WIDTH * Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE,
-//                Constants.DEFAULT_GRID_HEIGHT * Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE);
-//        this.bigPreviewGC = this.bigPreviewCanvas.getGraphicsContext2D();
-
-        int size = 5;
-        this.smallPreviewCanvas = new Canvas[3];
-        this.smallPreviewGC= new GraphicsContext[3];
-        for (int i = 0; i < this.smallPreviewCanvas.length; i++) {
-            this.smallPreviewCanvas[i] = new Canvas(Constants.DEFAULT_GRID_WIDTH * size, Constants.DEFAULT_GRID_HEIGHT * size);
-            this.smallPreviewGC[i] = this.smallPreviewCanvas[i].getGraphicsContext2D();
-        }
+//        int size = 5;
+//        this.smallPreviewCanvas = new Canvas[3];
+//        this.smallPreviewGC= new GraphicsContext[3];
+//        for (int i = 0; i < this.smallPreviewCanvas.length; i++) {
+//            this.smallPreviewCanvas[i] = new Canvas(Constants.DEFAULT_GRID_WIDTH * size, Constants.DEFAULT_GRID_HEIGHT * size);
+//            this.smallPreviewGC[i] = this.smallPreviewCanvas[i].getGraphicsContext2D();
+//        }
 
         // The good ol' usual buttons
         this.menuButtonSpriteList = new ArrayList<>();
@@ -63,28 +77,122 @@ public class MapSelectMenuView extends AbstractMenuView {
         this.mark = Container.getSprite(SpriteID.MENU_MAPSELECT_MARK);
         this.mark.setPosition(479, 537);
 
-        this.indestructible = Container.getSprite(SpriteID.MENU_MAPSELECT_INDESTRUCTIBLE);
-        this.destructible = Container.getSprite(SpriteID.MENU_MAPSELECT_DESTRUCTIBLE);
+        this.smallIndestructible = Container.getSprite(SpriteID.MENU_MAPSELECT_INDESTRUCTIBLE);
+        this.smallDestructible = Container.getSprite(SpriteID.MENU_MAPSELECT_DESTRUCTIBLE);
+
+        updateThemeSprites(ArenaTheme.BEACH);
     }
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
+        // Updating buttons
         for (int i = 0; i < this.menuButtonSpriteList.size(); i++) {
             if (this.menuButtonSpriteList.get(i) != null) {
                 updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
             }
         }
 
+        // Mark on map selector
         if (superSelected == 1) {
             this.mark.render(getBackgroundGC(), 0);
         }
 
+        // Rendering all preview maps
+        renderBigPreviewMap(this.arenaMaps.get(subSelected[1]));
+
+        int previusSelected = subSelected[1] - 1;
+        if (previusSelected < 0) {
+            previusSelected = this.arenaMaps.size() - 1;
+        }
+        renderSmallPreviewMap(this.arenaMaps.get(previusSelected), 0);
+
+        renderSmallPreviewMap(this.arenaMaps.get(subSelected[1]), 1);
+
+        int nextSelected = subSelected[1] + 1;
+        if (nextSelected > this.arenaMaps.size() - 1) {
+            nextSelected = 0;
+        }
+        renderSmallPreviewMap(this.arenaMaps.get(nextSelected), 2);
+
         setActive();
 
-//        getRoot().getChildren().add(this.bigPreviewCanvas);
-        for (int i = 0; i < this.smallPreviewCanvas.length; i++) {
-            getRoot().getChildren().add(this.smallPreviewCanvas[i]);
+        // Adding additional canvases
+//        for (int i = 0; i < this.smallPreviewCanvas.length; i++) {
+//            getRoot().getChildren().add(this.smallPreviewCanvas[i]);
+//        }
+    }
+
+    private void renderBigPreviewMap(ArenaMap arenaMap) {
+        this.arenaBackground.setPosition(this.bigx, this.bigy);
+        this.arenaBackground.render(getBackgroundGC(), 0);
+
+        MapObject[][] mapObjects = arenaMap.getMapObjects();
+        for (int i = 0; i < mapObjects.length; i++) {
+            for (int j = 0; j < mapObjects[i].length; j++) {
+                renderBigMapObject(mapObjects[i][j], i, j);
+            }
+        }
+    }
+
+    private void renderBigMapObject(MapObject mapObject, int x, int y) {
+        Sprite sprite;
+        switch (mapObject) {
+            case INDESTRUCTIBLE_WALL:
+                sprite = this.bigIndestructible;
+                break;
+            case DESTRUCTIBLE_WALL:
+                sprite = this.bigDestructible;
+                break;
+            default:
+                sprite = null;
+        }
+
+        if (sprite != null) {
+            sprite.setPosition(this.bigx + x * Constants.DEFAULT_TILE_WIDTH, this.bigy + y * Constants.DEFAULT_TILE_HEIGHT);
+            sprite.render(getBackgroundGC(), 0);
+        }
+    }
+
+    private void renderSmallPreviewMap(ArenaMap arenaMap, int index) {
+        MapObject[][] mapObjects = arenaMap.getMapObjects();
+        for (int i = 0; i < mapObjects.length; i++) {
+            for (int j = 0; j < mapObjects[i].length; j++) {
+                renderSmallMapObject(mapObjects[i][j], i, j, index);
+            }
+        }
+    }
+
+    private void renderSmallMapObject(MapObject mapObject, int x, int y, int index) {
+        Sprite sprite;
+        switch (mapObject) {
+            case INDESTRUCTIBLE_WALL:
+                sprite = this.smallIndestructible;
+                break;
+            case DESTRUCTIBLE_WALL:
+                sprite = this.smallDestructible;
+                break;
+            default:
+                sprite = null;
+        }
+
+        if (sprite != null) {
+            sprite.setPosition(this.smallx + x * this.smallDim + index * this.smalli, this.smally + y * this.smallDim);
+            sprite.render(getBackgroundGC(), 0);
+        }
+    }
+
+    private void updateThemeSprites(ArenaTheme theme) {
+        this.theme = theme;
+
+        switch (theme) {
+            default:
+            case DIGITAL:
+            case BEACH:
+                this.arenaBackground = Container.getSprite(SpriteID.GAME_BACKGROUND_1);
+                this.bigIndestructible = Container.getSprite(SpriteID.WALL_INDESTR_BEACHSTONE);
+                this.bigDestructible = Container.getSprite(SpriteID.WALL_DESTR_PARASOL);
+                break;
         }
     }
 }

@@ -20,8 +20,10 @@ public class MapSelectMenu extends AbstractMenu {
 
     private List<ArenaMap> arenaMaps;
 
+    private ArenaMap selectedMap;
+
     public MapSelectMenu() {
-        super(new int[]{0, Container.getAllMaps().size(), 0}, 1);
+        super(new int[]{0, Container.getAllMaps().size() - 1, 0}, 1);
 
         this.arenaMaps = new ArrayList<>();
         for (Map.Entry<FileID, File> entry : Container.getAllMaps().entrySet()) {
@@ -29,13 +31,14 @@ public class MapSelectMenu extends AbstractMenu {
         }
         this.arenaMaps.sort(new ArenaMapComparator());
 
-//        System.out.println("Arenamaps: "+maps);
+        this.selectedMap = this.arenaMaps.get(0);
+        System.out.println("Map list size: "+this.arenaMaps.size());
     }
 
     public MenuState getMenuAction() {
         if (this.getSelectedSuper() == 0) {
             Container.playSound(SoundID.MENU_BACKWARD_CLICK);
-            return MenuState.START_MENU;
+            return MenuState.CHARACTER_SELECT;
         } else if (this.getSelectedSuper() == 2) {
             return MenuState.START_GAME;
         }
