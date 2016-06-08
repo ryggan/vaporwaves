@@ -58,7 +58,11 @@ public class MapSelectMenu extends AbstractMenu {
 
     @Override
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
-        if (getSelectedSuper() == 2) {
+        if (getSelectedSuper() == 1) {
+            Container.playSound(SoundID.MENU_FORWARD_CLICK);
+            setSuperSelected(2);
+            
+        } else if (getSelectedSuper() == 2) {
             newGameEvent.setArenaMap(this.selectedMap);
         }
     }

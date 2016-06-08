@@ -105,6 +105,10 @@ public abstract class AbstractMenu {
         return this.currentSelected;
     }
 
+    public void setSuperSelected(int superSelected) {
+        this.currentSelected = Math.max(Math.min(superSelected, 0), this.menuItems.length - 1);
+    }
+
     public int[] getSelectedSub() {
         return ClonerUtility.intArrayCloner(this.selectedItems);
     }
