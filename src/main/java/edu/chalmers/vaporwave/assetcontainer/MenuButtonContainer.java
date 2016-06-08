@@ -52,14 +52,14 @@ class MenuButtonContainer {
 
         // Character select (2)
         prepareButtonLoad(MenuButtonID.BUTTON_START_GAME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 0));
-
         prepareButtonLoad(MenuButtonID.BUTTON_SMALL_BACK, ImageID.MENU_SMALL_BUTTON_SPRITESHEET, 92, 22, new Point(0, 0));
+
+        // Map select (1)
+        prepareButtonLoad(MenuButtonID.BUTTON_CHANGE_THEME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 3));
 
         // Misc (2)
         prepareButtonLoad(MenuButtonID.BUTTON_BACK, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 2));
         prepareButtonLoad(MenuButtonID.BUTTON_NEXT, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 1));
-
-//        addButtons();
     }
 
     static void init() {

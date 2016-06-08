@@ -11,6 +11,9 @@ public enum MenuButtonID {
     // Character select
     BUTTON_START_GAME, BUTTON_SMALL_BACK,
 
+    // Map select
+    BUTTON_CHANGE_THEME,
+
     // Misc
     BUTTON_BACK, BUTTON_NEXT
 
