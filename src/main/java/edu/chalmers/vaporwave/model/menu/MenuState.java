@@ -7,6 +7,7 @@ public enum MenuState {
     START_MENU,
     ROOSTER,
     CHARACTER_SELECT,
+    MAP_SELECT,
     RESULTS_MENU,
     NO_ACTION,
     EXIT_PROGRAM,

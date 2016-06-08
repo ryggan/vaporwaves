@@ -152,7 +152,7 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.MENU_SIGN_ZYPHER, ImageID.MENU_SIGN_ZYPHER, 1.0);
 
         //Roostermenu
-        prepareSpriteLoad(SpriteID.MENU_ROOSTER_HELP, ImageID.MENU_ROOSTER_HELP, -1);
+        prepareSpriteLoad(SpriteID.MENU_ROOSTER_HELP, ImageID.MENU_ROOSTER_HELP, 1.0);
 
         //Startmenu
         prepareSpriteLoad(SpriteID.MENU_STARTMENU_HELP, ImageID.MENU_STARTMENU_HELP, -1);

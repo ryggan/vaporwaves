@@ -34,7 +34,9 @@ public class CharacterSelectMenu extends AbstractMenu {
             Container.playSound(SoundID.MENU_BACKWARD_CLICK);
             return MenuState.ROOSTER;
         } else if (getSelectedSuper() == 2) {
-            return MenuState.START_GAME;
+//            return MenuState.START_GAME;
+            Container.playSound(SoundID.MENU_FORWARD_CLICK);
+            return MenuState.MAP_SELECT;
         }
         return MenuState.NO_ACTION;
     }

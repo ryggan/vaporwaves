@@ -7,6 +7,8 @@ import javafx.scene.text.Font;
 
 import java.awt.*;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * As the name implies; a container for all assets used in the game.
@@ -70,6 +72,16 @@ public class Container {
 
     public static File getFile(FileID fileID) {
         return FileContainer.getFile(fileID);
+    }
+
+    public static File getMap(FileID fileID) {
+        return FileContainer.getMap(fileID);
+    }
+
+    public static Map<FileID, File> getAllMaps() {
+        Map<FileID, File> newAllMaps = new HashMap<>();
+        newAllMaps.putAll(FileContainer.getAllMaps());
+        return newAllMaps;
     }
 
     public static Font getFont(FileID fileID) {

@@ -60,6 +60,7 @@ public class MenuController implements ContentController {
         this.menuMap.put(MenuState.START_MENU, new StartMenu());
         this.menuMap.put(MenuState.ROOSTER, new RoosterMenu(player));
         this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu());
+        this.menuMap.put(MenuState.MAP_SELECT, new MapSelectMenu());
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
 
         // Setting up menu views
@@ -67,6 +68,7 @@ public class MenuController implements ContentController {
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
+        this.menuViewMap.put(MenuState.MAP_SELECT, new MapSelectMenuView(root));
         this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root));
 
         // Initiating start screen view

@@ -58,9 +58,11 @@ public class RoosterMenu extends AbstractMenu {
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
         int subSelect = this.getSelectedSub()[1];
         if (subSelect > 0) {
+            System.out.println("subselect > 0 !!");
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
             do {
                 this.selectedPlayers[subSelect] += 1;
+                System.out.println("Correcting selected player! "+this.selectedPlayers[subSelect]);
             } while (playerIsChosen(subSelect, this.selectedPlayers[subSelect]));
 
             if (this.selectedPlayers[subSelect] > 5) {
@@ -68,7 +70,6 @@ public class RoosterMenu extends AbstractMenu {
             }
             updatePlayers(newGameEvent);
         }
-
     }
 
     // This is called every time a new choice in the rooster is made, to make sure

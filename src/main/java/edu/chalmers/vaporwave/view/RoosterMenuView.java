@@ -58,22 +58,20 @@ public class RoosterMenuView extends AbstractMenuView {
         this.roosterSelectors.put(Boolean.FALSE, roosterSelectorsOff);
         this.roosterSelectors.put(Boolean.TRUE, roosterSelectorsOn);
 
+        // Good ol buttons
+        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)));
+        this.menuButtonSpriteList.add(null);
+        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
     }
 
     @Override
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
+
         Container.getSprite(SpriteID.MENU_ROOSTER_HELP).setPosition(Constants.WINDOW_WIDTH-
                 Container.getSprite(SpriteID.MENU_ROOSTER_HELP).getWidth()-4, 4);
-        Container.getSprite(SpriteID.MENU_ROOSTER_HELP).setScale(1);
         Container.getSprite(SpriteID.MENU_ROOSTER_HELP).render(getBackgroundGC(), 0);
-
-        if (this.menuButtonSpriteList.size() == 0) {
-            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)));
-            this.menuButtonSpriteList.add(null);
-            this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
-                    new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
-        }
 
         for (int i = 0; i < this.selectedPlayers.length; i++) {
             renderSpriteForSelectedPlayers(i, superSelected == 1 && subSelected[1] == i);

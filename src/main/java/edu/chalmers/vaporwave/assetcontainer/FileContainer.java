@@ -18,9 +18,11 @@ import java.util.Set;
 class FileContainer {
 
     private static Set<Pair<FileID, String>> fileSet = new HashSet<>();
+    private static Set<Pair<FileID, String>> mapSet = new HashSet<>();
     private static Set<Pair<FileID, String>> fontSet = new HashSet<>();
 
     private final static Map<FileID, File> fileContainer = new HashMap<>();
+    private final static Map<FileID, File> mapContainer = new HashMap<>();
     private final static Map<FileID, Font> fontContainer = new HashMap<>();
 
     private static int tasksDone = 0;
@@ -33,14 +35,14 @@ class FileContainer {
         prepareFileLoad(FileID.XML_CHARACTER_ENEMY, Constants.GAME_CHARACTER_XML_FILE);
 
         // Map files (6)
-        prepareFileLoad(FileID.VAPORMAP_DEFAULT, Constants.DEFAULT_MAP_FILE);
+        prepareMapLoad(FileID.VAPORMAP_DEFAULT, Constants.DEFAULT_MAP_FILE);
 
-        prepareFileLoad(FileID.VAPORMAP_TEST, "src/main/resources/maps/test.vapormap");
-        prepareFileLoad(FileID.VAPORMAP_SCARCE, "src/main/resources/maps/scarce.vapormap");
-        prepareFileLoad(FileID.VAPORMAP_EMPTY, "src/main/resources/maps/empty.vapormap");
+        prepareMapLoad(FileID.VAPORMAP_TEST, "src/main/resources/maps/test.vapormap");
+        prepareMapLoad(FileID.VAPORMAP_SCARCE, "src/main/resources/maps/scarce.vapormap");
+        prepareMapLoad(FileID.VAPORMAP_EMPTY, "src/main/resources/maps/empty.vapormap");
 
-        prepareFileLoad(FileID.VAPORMAP_CLOSE, "src/main/resources/maps/close.vapormap");
-        prepareFileLoad(FileID.VAPORMAP_LABYRINTH, "src/main/resources/maps/labyrinth.vapormap");
+        prepareMapLoad(FileID.VAPORMAP_CLOSE, "src/main/resources/maps/close.vapormap");
+        prepareMapLoad(FileID.VAPORMAP_LABYRINTH, "src/main/resources/maps/labyrinth.vapormap");
 
         // Fonts (3)
         prepareFontLoad(FileID.FONT_BAUHAUS_14, Constants.FONT_FILE_BAUHAUS);
@@ -50,11 +52,17 @@ class FileContainer {
 
     static void init() throws Exception {
         addFiles();
+        addMaps();
         addFonts();
     }
 
     private static void prepareFileLoad(FileID fileID, String fileName) {
         fileSet.add(new Pair(fileID, fileName));
+        totalTasks++;
+    }
+
+    private static void prepareMapLoad(FileID fileID, String fileName) {
+        mapSet.add(new Pair(fileID, fileName));
         totalTasks++;
     }
 
@@ -66,6 +74,12 @@ class FileContainer {
     private static void addFiles() {
         for (Pair<FileID, String> pair : fileSet) {
             addFile(pair.getFirst(), new File(pair.getSecond()));
+        }
+    }
+
+    private static void addMaps() {
+        for (Pair<FileID, String> pair : mapSet) {
+            addMap(pair.getFirst(), new File(pair.getSecond()));
         }
     }
 
@@ -84,6 +98,11 @@ class FileContainer {
         tasksDone++;
     }
 
+    private static void addMap(FileID fileID, File file) {
+        mapContainer.put(fileID, file);
+        tasksDone++;
+    }
+
     private static void addFont(FileID fileID, Font font) {
         if (!fileID.toString().substring(0, 4).equals("FONT")) {
             throw new IllegalArgumentException();
@@ -94,6 +113,14 @@ class FileContainer {
 
     static File getFile(FileID fileID) {
         return fileContainer.get(fileID);
+    }
+
+    static File getMap(FileID fileID) {
+        return mapContainer.get(fileID);
+    }
+
+    static Map<FileID, File> getAllMaps() {
+        return mapContainer;
     }
 
     static Font getFont(FileID fileID) {
