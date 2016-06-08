@@ -155,7 +155,7 @@ public class MenuController implements ContentController {
                             break;
 
                         case START_GAME:
-                            menuActionStartGame();
+                            menuActionStartGame(menu);
                             break;
 
                         case NO_ACTION:
@@ -181,7 +181,10 @@ public class MenuController implements ContentController {
         Container.playSound(SoundID.MENU_EXIT);
     }
 
-    private void menuActionStartGame() {
+    private void menuActionStartGame(AbstractMenu menu) {
+
+        menu.performMenuAction(this.newGameEvent, 0);
+
         for (Player p : this.newGameEvent.getPlayers()) {
             if (p instanceof CPUPlayer) {
                 p.setCharacter(null);

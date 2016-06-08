@@ -32,7 +32,6 @@ public class MapSelectMenu extends AbstractMenu {
         this.arenaMaps.sort(new ArenaMapComparator());
 
         this.selectedMap = this.arenaMaps.get(0);
-        System.out.println("Map list size: "+this.arenaMaps.size());
     }
 
     public MenuState getMenuAction() {
@@ -46,19 +45,22 @@ public class MapSelectMenu extends AbstractMenu {
     }
 
     @Override
+    protected void menuMoveRight(int playerID) {
+        super.menuMoveRight(playerID);
+        this.selectedMap = this.arenaMaps.get(getSelectedSub()[1]);
+    }
+
+    @Override
+    protected void menuMoveLeft(int playerID) {
+        super.menuMoveLeft(playerID);
+        this.selectedMap = this.arenaMaps.get(getSelectedSub()[1]);
+    }
+
+    @Override
     public void performMenuAction(NewGameEvent newGameEvent, int playerID) {
-//        int subSelect = this.getSelectedSub()[1];
-//        if (subSelect > 0) {
-//            Container.playSound(SoundID.MENU_FORWARD_CLICK);
-//            do {
-//                this.selectedPlayers[subSelect] += 1;
-//            } while (playerIsChosen(subSelect, this.selectedPlayers[subSelect]));
-//
-//            if (this.selectedPlayers[subSelect] > 5) {
-//                this.selectedPlayers[subSelect] = 0;
-//            }
-//            updatePlayers(newGameEvent);
-//        }
+        if (getSelectedSuper() == 2) {
+            newGameEvent.setArenaMap(this.selectedMap);
+        }
     }
 
     // This method is unused in this screen, but may get functionality in the future

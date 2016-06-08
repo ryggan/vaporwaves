@@ -21,9 +21,6 @@ import java.util.List;
  */
 public class MapSelectMenuView extends AbstractMenuView {
 
-//    private Canvas[] smallPreviewCanvas;
-//    private GraphicsContext[] smallPreviewGC;
-
     private List<MenuButtonSprite> menuButtonSpriteList;
 
     private Sprite mark;
@@ -57,15 +54,6 @@ public class MapSelectMenuView extends AbstractMenuView {
         this.arenaMaps = arenaMaps;
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_MAPSELECT));
 
-        // Setting up canvas
-//        int size = 5;
-//        this.smallPreviewCanvas = new Canvas[3];
-//        this.smallPreviewGC= new GraphicsContext[3];
-//        for (int i = 0; i < this.smallPreviewCanvas.length; i++) {
-//            this.smallPreviewCanvas[i] = new Canvas(Constants.DEFAULT_GRID_WIDTH * size, Constants.DEFAULT_GRID_HEIGHT * size);
-//            this.smallPreviewGC[i] = this.smallPreviewCanvas[i].getGraphicsContext2D();
-//        }
-
         // The good ol' usual buttons
         this.menuButtonSpriteList = new ArrayList<>();
         this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(4, 4)));
@@ -80,7 +68,7 @@ public class MapSelectMenuView extends AbstractMenuView {
         this.smallIndestructible = Container.getSprite(SpriteID.MENU_MAPSELECT_INDESTRUCTIBLE);
         this.smallDestructible = Container.getSprite(SpriteID.MENU_MAPSELECT_DESTRUCTIBLE);
 
-        updateThemeSprites(ArenaTheme.BEACH);
+        setTheme(ArenaTheme.BEACH);
     }
 
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
@@ -116,11 +104,6 @@ public class MapSelectMenuView extends AbstractMenuView {
         renderSmallPreviewMap(this.arenaMaps.get(nextSelected), 2);
 
         setActive();
-
-        // Adding additional canvases
-//        for (int i = 0; i < this.smallPreviewCanvas.length; i++) {
-//            getRoot().getChildren().add(this.smallPreviewCanvas[i]);
-//        }
     }
 
     private void renderBigPreviewMap(ArenaMap arenaMap) {
@@ -182,7 +165,7 @@ public class MapSelectMenuView extends AbstractMenuView {
         }
     }
 
-    private void updateThemeSprites(ArenaTheme theme) {
+    public void setTheme(ArenaTheme theme) {
         this.theme = theme;
 
         switch (theme) {
