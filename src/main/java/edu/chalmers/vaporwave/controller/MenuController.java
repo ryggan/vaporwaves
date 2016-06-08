@@ -68,7 +68,8 @@ public class MenuController implements ContentController {
         this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
         this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
         this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
-        this.menuViewMap.put(MenuState.MAP_SELECT, new MapSelectMenuView(root));
+        this.menuViewMap.put(MenuState.MAP_SELECT, new MapSelectMenuView(root,
+                ((MapSelectMenu) this.menuMap.get(MenuState.MAP_SELECT)).getArenaMaps()));
         this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root));
 
         // Initiating start screen view
@@ -274,22 +275,30 @@ public class MenuController implements ContentController {
     // Update correct view when changing menu content
     public void updateViews(Player player) {
 
-        // When in character select menu, push character and player info to view
-        if (this.menuMap.get(this.activeMenu) instanceof CharacterSelectMenu
-                    && this.menuViewMap.get(this.activeMenu) instanceof CharacterSelectView) {
-
-            ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setSelectedCharacters(
-                        ((CharacterSelectMenu)this.menuMap.get(this.activeMenu)).getSelectedCharacters());
-
-            ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setPlayers(this.newGameEvent.getPlayers());
-
-        // When in rooster menu, push player info into view
-        } else if (this.menuMap.get(this.activeMenu) instanceof RoosterMenu
+         // When in rooster menu, push player info into view
+         if (this.menuMap.get(this.activeMenu) instanceof RoosterMenu
                     && this.menuViewMap.get(this.activeMenu) instanceof RoosterMenuView) {
 
-            ((RoosterMenuView) this.menuViewMap.get(this.activeMenu)).setSelectedPlayers(
-                        ((RoosterMenu)this.menuMap.get(this.activeMenu)).getSelectedPlayers());
-        }
+             ((RoosterMenuView) this.menuViewMap.get(this.activeMenu)).setSelectedPlayers(
+                     ((RoosterMenu) this.menuMap.get(this.activeMenu)).getSelectedPlayers());
+
+         // When in character select menu, push character and player info to view
+         } else if (this.menuMap.get(this.activeMenu) instanceof CharacterSelectMenu
+                 && this.menuViewMap.get(this.activeMenu) instanceof CharacterSelectView) {
+
+             ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setSelectedCharacters(
+                     ((CharacterSelectMenu)this.menuMap.get(this.activeMenu)).getSelectedCharacters());
+
+             ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setPlayers(this.newGameEvent.getPlayers());
+
+         // When in map select menu, push map list into view
+         }
+//         else if (this.menuMap.get(this.activeMenu) instanceof MapSelectMenu
+//                 && this.menuViewMap.get(this.activeMenu) instanceof MapSelectMenuView) {
+//
+//             ((MapSelectMenuView) this.menuViewMap.get(this.activeMenu)).setArenaMaps(
+//                     ((MapSelectMenu)this.menuMap.get(this.activeMenu)).getArenaMaps());
+//         }
 
         // The actual updating of the view
         this.menuViewMap.get(this.activeMenu).updateView(

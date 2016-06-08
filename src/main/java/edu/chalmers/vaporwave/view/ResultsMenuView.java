@@ -56,7 +56,7 @@ public class ResultsMenuView extends AbstractMenuView {
                     this.winnerSprite = getRandomSprite();
                 }
 
-            this.winnerSprite.setScale(1);
+//            this.winnerSprite.setScale(1);
             this.winnerSprite.setPosition(0, Constants.WINDOW_HEIGHT / 20);
             this.winnerSprite.render(this.getBackgroundGC(), 0);
         }

@@ -54,13 +54,15 @@ class SpriteContainer {
     static void prepare() throws Exception {
         spriteContainer = new HashMap<>();
 
-        //Results Menu
-        prepareSpriteLoad(SpriteID.MENU_RESULTS_ZYPHER, ImageID.MENU_RESULTS_ZYPHER, 1.0);
-        prepareSpriteLoad(SpriteID.MENU_RESULTS_CHARLOTTE, ImageID.MENU_RESULTS_CHARLOTTE, 1.0);
-        prepareSpriteLoad(SpriteID.MENU_RESULTS_MEI, ImageID.MENU_RESULTS_MEI, 1.0);
-        prepareSpriteLoad(SpriteID.MENU_RESULTS_ALYSSA, ImageID.MENU_RESULTS_ALYSSA, 1.0);
+        // Startmenu
+        prepareSpriteLoad(SpriteID.MENU_STARTMENU_HELP, ImageID.MENU_STARTMENU_HELP, -1);
+        prepareSpriteLoad(SpriteID.MENU_ALLCHARACTERS, ImageID.MENU_ALLCHARACTERS, -1);
+        prepareSpriteLoad(SpriteID.MENU_TITLE, ImageID.MENU_TITLE, 1.0);
 
-        //Character Select
+        // Roostermenu
+        prepareSpriteLoad(SpriteID.MENU_ROOSTER_HELP, ImageID.MENU_ROOSTER_HELP, 1.0);
+
+        // Character Select
         prepareSpriteLoad(SpriteID.MENU_CHARACTERSELECT_HELP, ImageID.MENU_CHARACTERSELECT_HELP, 1.0);
 
         prepareSpriteLoad(SpriteID.MENU_CHARACTER_ALL,
@@ -151,13 +153,19 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.MENU_SIGN_CHARLOTTE, ImageID.MENU_SIGN_CHARLOTTE, 1.0);
         prepareSpriteLoad(SpriteID.MENU_SIGN_ZYPHER, ImageID.MENU_SIGN_ZYPHER, 1.0);
 
-        //Roostermenu
-        prepareSpriteLoad(SpriteID.MENU_ROOSTER_HELP, ImageID.MENU_ROOSTER_HELP, 1.0);
+        // Map select
+        prepareSpriteLoad(SpriteID.MENU_MAPSELECT_MARK,
+                ImageID.MENU_MAPSELECT_SHEET, new Dimension(121, 91), new double[] {1, 1}, new double[] {0, 0}, 1.0);
+        prepareSpriteLoad(SpriteID.MENU_MAPSELECT_INDESTRUCTIBLE,
+                ImageID.MENU_MAPSELECT_SHEET, new Dimension(5, 5), new double[] {124, 1}, new double[] {0, 0}, 1.0);
+        prepareSpriteLoad(SpriteID.MENU_MAPSELECT_DESTRUCTIBLE,
+                ImageID.MENU_MAPSELECT_SHEET, new Dimension(5, 5), new double[] {131, 1}, new double[] {0, 0}, 1.0);
 
-        //Startmenu
-        prepareSpriteLoad(SpriteID.MENU_STARTMENU_HELP, ImageID.MENU_STARTMENU_HELP, -1);
-        prepareSpriteLoad(SpriteID.MENU_ALLCHARACTERS, ImageID.MENU_ALLCHARACTERS, -1);
-        prepareSpriteLoad(SpriteID.MENU_TITLE, ImageID.MENU_TITLE, 1.0);
+        // Results Menu
+        prepareSpriteLoad(SpriteID.MENU_RESULTS_ZYPHER, ImageID.MENU_RESULTS_ZYPHER, 1.0);
+        prepareSpriteLoad(SpriteID.MENU_RESULTS_CHARLOTTE, ImageID.MENU_RESULTS_CHARLOTTE, 1.0);
+        prepareSpriteLoad(SpriteID.MENU_RESULTS_MEI, ImageID.MENU_RESULTS_MEI, 1.0);
+        prepareSpriteLoad(SpriteID.MENU_RESULTS_ALYSSA, ImageID.MENU_RESULTS_ALYSSA, 1.0);
 
         // Game background and frame (5)
         prepareSpriteLoad(SpriteID.GAME_BACKGROUND_1, ImageID.GAME_BACKGROUND_1, -1);

@@ -18,16 +18,16 @@ import java.util.Map;
  */
 public class MapSelectMenu extends AbstractMenu {
 
-    private List<ArenaMap> maps;
+    private List<ArenaMap> arenaMaps;
 
     public MapSelectMenu() {
         super(new int[]{0, Container.getAllMaps().size(), 0}, 1);
 
-        this.maps = new ArrayList<>();
+        this.arenaMaps = new ArrayList<>();
         for (Map.Entry<FileID, File> entry : Container.getAllMaps().entrySet()) {
-            this.maps.add(new ArenaMap(entry.getKey().toString(), (new MapFileReader(entry.getValue())).getMapObjects()));
+            this.arenaMaps.add(new ArenaMap(entry.getKey().toString(), (new MapFileReader(entry.getValue())).getMapObjects()));
         }
-        this.maps.sort(new ArenaMapComparator());
+        this.arenaMaps.sort(new ArenaMapComparator());
 
 //        System.out.println("Arenamaps: "+maps);
     }
@@ -61,4 +61,10 @@ public class MapSelectMenu extends AbstractMenu {
     // This method is unused in this screen, but may get functionality in the future
     @Override
     public void initMenu(NewGameEvent newGameEvent) { }
+
+    public List<ArenaMap> getArenaMaps() {
+        List<ArenaMap> newList = new ArrayList<>();
+        newList.addAll(this.arenaMaps);
+        return newList;
+    }
 }
