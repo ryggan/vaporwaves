@@ -8,11 +8,17 @@ import java.util.Random;
  */
 public class RandomMapGenerator {
     private Random random;
-    private int numberOfRows = 14;
-    private int numberOfColumns = 16;
+    private int numberOfRows;
+    private int numberOfColumns;
+
+    public RandomMapGenerator(int gridWidth, int gridHeight) {
+        this.numberOfRows = gridWidth;
+        this.numberOfColumns = gridHeight;
+        random = new Random();
+    }
 
     public RandomMapGenerator() {
-        random = new Random();
+        this(Constants.DEFAULT_GRID_WIDTH, Constants.DEFAULT_GRID_HEIGHT);
     }
 
     public MapObject[][] generateMap() {
@@ -40,9 +46,9 @@ public class RandomMapGenerator {
         /**
          * Player 2 spawnpoint
          */
-        mapObjects[0][15] = MapObject.EMPTY;
+        mapObjects[0][13] = MapObject.EMPTY;
         mapObjects[0][14] = MapObject.EMPTY;
-        mapObjects[1][15] = MapObject.EMPTY;
+        mapObjects[1][13] = MapObject.EMPTY;
 
         /**
          * Player 3 spawnpoint
@@ -54,9 +60,9 @@ public class RandomMapGenerator {
         /**
          * Player 4 spawnpoint
          */
-        mapObjects[13][15] = MapObject.EMPTY;
+        mapObjects[13][13] = MapObject.EMPTY;
         mapObjects[13][14] = MapObject.EMPTY;
-        mapObjects[12][15] = MapObject.EMPTY;
+        mapObjects[12][13] = MapObject.EMPTY;
 
         return mapObjects;
     }

@@ -5,6 +5,7 @@ import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaMapComparator;
+import edu.chalmers.vaporwave.model.RandomArenaMap;
 import edu.chalmers.vaporwave.util.MapFileReader;
 
 import java.io.File;
@@ -26,6 +27,7 @@ public class MapSelectMenu extends AbstractMenu {
         super(new int[]{0, Container.getAllMaps().size() - 1, 0}, 1);
 
         this.arenaMaps = new ArrayList<>();
+        this.arenaMaps.add(new RandomArenaMap());
         for (Map.Entry<FileID, File> entry : Container.getAllMaps().entrySet()) {
             this.arenaMaps.add(new ArenaMap(entry.getKey().toString(), (new MapFileReader(entry.getValue())).getMapObjects()));
         }
@@ -61,7 +63,7 @@ public class MapSelectMenu extends AbstractMenu {
         if (getSelectedSuper() == 1) {
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
             setSuperSelected(2);
-            
+
         } else if (getSelectedSuper() == 2) {
             newGameEvent.setArenaMap(this.selectedMap);
         }

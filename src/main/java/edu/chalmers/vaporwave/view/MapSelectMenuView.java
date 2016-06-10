@@ -1,15 +1,20 @@
 package edu.chalmers.vaporwave.view;
 
-import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
+import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaTheme;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.RandomArenaMap;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapObject;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.canvas.*;
-import javafx.scene.canvas.Canvas;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.paint.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,6 +36,10 @@ public class MapSelectMenuView extends AbstractMenuView {
     private Sprite bigIndestructible;
     private Sprite bigDestructible;
 
+    private Label questionMark;
+    private Label randomText;
+    private boolean showQuestionMark;
+
     private List<ArenaMap> arenaMaps;
     private ArenaTheme theme;
 
@@ -50,6 +59,26 @@ public class MapSelectMenuView extends AbstractMenuView {
         this.smally = 545;
         this.smalli = 141;
         this.smallDim = 5;
+
+        // Setting up text labels
+        this.questionMark = new Label("?");
+        this.questionMark.setFont(Container.getFont(FileID.FONT_BAUHAUS_60));
+        this.questionMark.setTextFill(Color.web(Constants.COLORNO_VAPEPINK));
+        this.questionMark.setLayoutY(this.smally + 5);
+        this.questionMark.setAlignment(Pos.CENTER);
+        this.questionMark.setTextAlignment(TextAlignment.CENTER);
+        this.questionMark.setVisible(false);
+
+        this.showQuestionMark = false;
+
+        this.randomText = new Label("Random map!");
+        this.randomText.setFont(Container.getFont(FileID.FONT_BAUHAUS_60));
+        this.randomText.setTextFill(Color.web(Constants.COLORNO_VAPEPINK));
+        this.randomText.setLayoutX(this.bigx + Constants.DEFAULT_GRID_WIDTH * Constants.DEFAULT_TILE_WIDTH * Constants.GAME_SCALE / 2 - 70);
+        this.randomText.setLayoutY(this.bigy + Constants.DEFAULT_GRID_HEIGHT * Constants.DEFAULT_TILE_HEIGHT * Constants.GAME_SCALE / 2 - 15);
+        this.randomText.setAlignment(Pos.CENTER);
+        this.randomText.setTextAlignment(TextAlignment.CENTER);
+        this.randomText.setVisible(false);
 
         this.arenaMaps = arenaMaps;
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_MAPSELECT));
@@ -104,16 +133,31 @@ public class MapSelectMenuView extends AbstractMenuView {
         renderSmallPreviewMap(this.arenaMaps.get(nextSelected), 2);
 
         setActive();
+
+        getRoot().getChildren().remove(this.randomText);
+        getRoot().getChildren().add(this.randomText);
+
+        getRoot().getChildren().remove(this.questionMark);
+        getRoot().getChildren().add(this.questionMark);
+
+        this.showQuestionMark = false;
     }
 
     private void renderBigPreviewMap(ArenaMap arenaMap) {
-        this.arenaBackground.setPosition(this.bigx, this.bigy);
-        this.arenaBackground.render(getBackgroundGC(), 0);
+        if (arenaMap instanceof RandomArenaMap) {
+            this.randomText.setVisible(true);
 
-        MapObject[][] mapObjects = arenaMap.getMapObjects();
-        for (int i = 0; i < mapObjects.length; i++) {
-            for (int j = 0; j < mapObjects[i].length; j++) {
-                renderBigMapObject(mapObjects[i][j], i, j);
+        } else {
+            this.randomText.setVisible(false);
+
+            this.arenaBackground.setPosition(this.bigx, this.bigy);
+            this.arenaBackground.render(getBackgroundGC(), 0);
+
+            MapObject[][] mapObjects = arenaMap.getMapObjects();
+            for (int i = 0; i < mapObjects.length; i++) {
+                for (int j = 0; j < mapObjects[i].length; j++) {
+                    renderBigMapObject(mapObjects[i][j], i, j);
+                }
             }
         }
     }
@@ -138,10 +182,21 @@ public class MapSelectMenuView extends AbstractMenuView {
     }
 
     private void renderSmallPreviewMap(ArenaMap arenaMap, int index) {
-        MapObject[][] mapObjects = arenaMap.getMapObjects();
-        for (int i = 0; i < mapObjects.length; i++) {
-            for (int j = 0; j < mapObjects[i].length; j++) {
-                renderSmallMapObject(mapObjects[i][j], i, j, index);
+        if (arenaMap instanceof RandomArenaMap) {
+            this.questionMark.setVisible(true);
+            this.questionMark.setLayoutX(this.smallx + 35 + index * this.smalli);
+            this.showQuestionMark = true;
+
+        } else {
+            if (!this.showQuestionMark) {
+                this.questionMark.setVisible(false);
+            }
+
+            MapObject[][] mapObjects = arenaMap.getMapObjects();
+            for (int i = 0; i < mapObjects.length; i++) {
+                for (int j = 0; j < mapObjects[i].length; j++) {
+                    renderSmallMapObject(mapObjects[i][j], i, j, index);
+                }
             }
         }
     }

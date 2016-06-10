@@ -48,6 +48,7 @@ class FileContainer {
         prepareFontLoad(FileID.FONT_BAUHAUS_14, Constants.FONT_FILE_BAUHAUS);
         prepareFontLoad(FileID.FONT_BAUHAUS_18, Constants.FONT_FILE_BAUHAUS);
         prepareFontLoad(FileID.FONT_BAUHAUS_30, Constants.FONT_FILE_BAUHAUS);
+        prepareFontLoad(FileID.FONT_BAUHAUS_60, Constants.FONT_FILE_BAUHAUS);
     }
 
     static void init() throws Exception {

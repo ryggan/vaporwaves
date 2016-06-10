@@ -17,7 +17,15 @@ public class ArenaMap {
     private Dimension mapSize;
     private Map<MapObject, Point> playersPositions;
 
+    public ArenaMap () {
+        // Only used by RandomArenaMap
+    }
+
     public ArenaMap(String name, MapObject[][] mapObjects) {
+        setNewMap(name, mapObjects);
+    }
+
+    public void setNewMap(String name, MapObject[][] mapObjects) {
         this.name = name;
         this.mapObjects = ClonerUtility.mapObjectMatrixCloner(mapObjects);
         this.mapSize = new Dimension(mapObjects.length, mapObjects[0].length);
