@@ -33,7 +33,9 @@ public class MapSelectMenu extends AbstractMenu {
         }
         this.arenaMaps.sort(new ArenaMapComparator());
 
-        this.selectedMap = this.arenaMaps.get(0);
+//        this.selectedMap = this.arenaMaps.get(0);
+
+        selectMap();
     }
 
     public MenuState getMenuAction() {
@@ -49,13 +51,20 @@ public class MapSelectMenu extends AbstractMenu {
     @Override
     protected void menuMoveRight(int playerID) {
         super.menuMoveRight(playerID);
-        this.selectedMap = this.arenaMaps.get(getSelectedSub()[1]);
+        selectMap();
     }
 
     @Override
     protected void menuMoveLeft(int playerID) {
         super.menuMoveLeft(playerID);
+        selectMap();
+    }
+
+    private void selectMap() {
         this.selectedMap = this.arenaMaps.get(getSelectedSub()[1]);
+        if (this.selectedMap instanceof RandomArenaMap) {
+            ((RandomArenaMap) this.selectedMap).randomize();
+        }
     }
 
     @Override
@@ -65,6 +74,7 @@ public class MapSelectMenu extends AbstractMenu {
             setSuperSelected(2);
 
         } else if (getSelectedSuper() == 2) {
+            selectMap();
             newGameEvent.setArenaMap(this.selectedMap);
         }
     }
