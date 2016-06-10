@@ -68,33 +68,29 @@ public class ArenaMap {
         mapAsString.append("\nArenaMap: "+this.name+"\n");
         for (int i = 0; i < this.mapObjects[0].length; i++) {
             for (int j = 0; j < this.mapObjects.length; j++) {
-                mapAsString.append(mapObjects[j][i].toString().substring(0,1) + "  ");
+                switch(mapObjects[j][i]) {
+                    case PLAYER1:
+                    case PLAYER2:
+                    case PLAYER3:
+                    case PLAYER4:
+                        String num = mapObjects[j][i].toString();
+                        num = num.substring(num.length() - 1, num.length());
+                        mapAsString.append(num + " ");
+                        break;
+                    case DESTRUCTIBLE_WALL:
+                        mapAsString.append("D ");
+                        break;
+                    case INDESTRUCTIBLE_WALL:
+                        mapAsString.append("X ");
+                        break;
+                    case EMPTY:
+                    default:
+                        mapAsString.append("° ");
+                        break;
+                }
             }
             mapAsString.append("\n");
         }
         return mapAsString.toString();
     }
-    
-//    public void printMap(MapObject[][] mapObjects) {
-//        System.out.println("<<<< CURRENT MAP >>>>");
-//
-//        for(int i = 0; i < mapObjects.length; i++) {
-//            for(int j = 0; j < mapObjects[0].length; j++) {
-//
-//                switch(mapObjects[i][j]) {
-//                    case DESTRUCTIBLE_WALL:
-//                        System.out.print("D ");
-//                        break;
-//                    case INDESTRUCTIBLE_WALL:
-//                        System.out.print("X ");
-//                        break;
-//                    case EMPTY:
-//                    default:
-//                        System.out.print("° ");
-//                        break;
-//                }
-//            }
-//            System.out.println();
-//        }
-//    }
 }
