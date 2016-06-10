@@ -74,4 +74,27 @@ public class ArenaMap {
         }
         return mapAsString.toString();
     }
+    
+//    public void printMap(MapObject[][] mapObjects) {
+//        System.out.println("<<<< CURRENT MAP >>>>");
+//
+//        for(int i = 0; i < mapObjects.length; i++) {
+//            for(int j = 0; j < mapObjects[0].length; j++) {
+//
+//                switch(mapObjects[i][j]) {
+//                    case DESTRUCTIBLE_WALL:
+//                        System.out.print("D ");
+//                        break;
+//                    case INDESTRUCTIBLE_WALL:
+//                        System.out.print("X ");
+//                        break;
+//                    case EMPTY:
+//                    default:
+//                        System.out.print("° ");
+//                        break;
+//                }
+//            }
+//            System.out.println();
+//        }
+//    }
 }

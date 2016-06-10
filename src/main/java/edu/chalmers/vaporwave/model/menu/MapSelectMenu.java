@@ -24,7 +24,7 @@ public class MapSelectMenu extends AbstractMenu {
     private ArenaMap selectedMap;
 
     public MapSelectMenu() {
-        super(new int[]{0, Container.getAllMaps().size() - 1, 0}, 1);
+        super(new int[]{0, Container.getAllMaps().size(), 0}, 1);
 
         this.arenaMaps = new ArrayList<>();
         this.arenaMaps.add(new RandomArenaMap());
