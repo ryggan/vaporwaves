@@ -31,8 +31,8 @@ class ImageContainer {
         // Backgrounds (8):
         prepareImageLoad(ImageID.MENU_BACKGROUND_RESULT, "images/menu/menu-background-result.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_1, "images/menu/menu-background-2.bmp");
-        prepareImageLoad(ImageID.MENU_BUTTON_SPRITESHEET, "images/menu/spritesheet_menubuttons-308x198.png");
-        prepareImageLoad(ImageID.MENU_SMALL_BUTTON_SPRITESHEET, "images/menu/spritesheet-menubuttons-small-92x22.png");
+        prepareImageLoad(ImageID.MENU_BUTTON_SPRITESHEET, "images/menu/spritesheet_menubuttons-3-308x198.png");
+        prepareImageLoad(ImageID.MENU_SMALL_BUTTON_SPRITESHEET, "images/menu/spritesheet-menubuttons-small-2-92x22.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_CHARACTERSELECT, "images/menu/menu-background-characterselect.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_ROOSTER, "images/menu/menu-background-roostermenu.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_MAPSELECT, "images/menu/menu-background-mapselect-2.png");
@@ -50,8 +50,8 @@ class ImageContainer {
 
         // Character select (9):
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_HELP, "images/menu/menu-characterselect-help.png");
-        prepareImageLoad(ImageID.MENU_CHARACTER, "images/menu/spritesheet-character-select-443x626.png");
-        prepareImageLoad(ImageID.MENU_CHARACTER_SELECTOR, "images/menu/spritesheet-character-selector-24x27.png");
+        prepareImageLoad(ImageID.MENU_CHARACTER, "images/menu/spritesheet-character-select-2-443x626.png");
+        prepareImageLoad(ImageID.MENU_CHARACTER_SELECTOR, "images/menu/spritesheet-character-selector-2-24x27.png");
 //        prepareImageLoad(ImageID.MENU_CHECKBOX, "images/menu/spritesheet-menu-checkbox-111x118.png");
         prepareImageLoad(ImageID.MENU_ROOSTER_SELECT, "images/menu/spritesheet-rooster-select-133x94.png");
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_ZYPHER, "images/menu/menu-zypher-characterselect.png");
@@ -65,7 +65,7 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_SIGN_ZYPHER, "images/menu/menu_namesign_zypher.png");
 
         // Map select (1)
-        prepareImageLoad(ImageID.MENU_MAPSELECT_SHEET, "images/menu/menu-mapselect-spritesheet.png");
+        prepareImageLoad(ImageID.MENU_MAPSELECT_SHEET, "images/menu/menu-mapselect-spritesheet-2.png");
 
         // Results menu (4):
         prepareImageLoad(ImageID.MENU_RESULTS_ZYPHER, "images/menu/menu-zypher-result.png");
