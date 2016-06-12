@@ -138,9 +138,17 @@ public class CharacterSelectMenu extends AbstractMenu {
     public void changeSelected(Direction direction, Player player) {
         if (direction == Direction.LEFT || direction == Direction.RIGHT) {
 
+            int debugCounter = 0;
+
             moveDirection(direction, player);
             if (player.getPlayerID() == 0 && getSelectedSuper() == 1) {
-                while (this.selectedCharacters[getSelectedSub()[1]] > 0) {
+                while (this.selectedCharacters[getSelectedSub()[1]] > 0 && debugCounter < 1000) {
+
+                    debugCounter++;
+                    if (debugCounter >= 1000) {
+                        System.out.println("Local player infinite loop");
+                        throw new RuntimeException();
+                    }
 
                     moveDirection(direction, player);
                 }
@@ -148,7 +156,14 @@ public class CharacterSelectMenu extends AbstractMenu {
                 while (this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(),
                         player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != -1
                         && this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(),
-                        player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerID()) {
+                        player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)] != player.getPlayerID()
+                        && debugCounter < 1000) {
+
+                    debugCounter++;
+                    if (debugCounter >= 1000) {
+                        System.out.println("Remote player infinite loop");
+                        throw new RuntimeException();
+                    }
 
                     moveDirection(direction, player);
                 }
