@@ -11,6 +11,10 @@ import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.Utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * In this menu, all human players chooses which character they would want to play with.
  * After every active player has chosen, if there are any CPU players, their characters are
@@ -22,8 +26,12 @@ public class CharacterSelectMenu extends AbstractMenu {
     private static final String[] characterNames = { "MEI", "ALYSSA", "ZYPHER", "CHARLOTTE" };
     SoundID[] soundIDs = {SoundID.MENU_MEI, SoundID.MENU_ALYSSA,SoundID.MENU_ZYPHER,SoundID.MENU_CHARLOTTE};
 
-    public CharacterSelectMenu() {
+    NewGameEvent newGameEvent;
+
+    public CharacterSelectMenu(NewGameEvent newGameEvent) {
         super(new int[]{0, 3, 0}, 1);
+
+        this.newGameEvent = newGameEvent;
 
         // Set selected players to -1 for all characters
         selectedCharacters = new int[] {-1, -1, -1, -1};
@@ -34,11 +42,50 @@ public class CharacterSelectMenu extends AbstractMenu {
             Container.playSound(SoundID.MENU_BACKWARD_CLICK);
             return MenuState.ROOSTER;
         } else if (getSelectedSuper() == 2) {
-//            return MenuState.START_GAME;
-            Container.playSound(SoundID.MENU_FORWARD_CLICK);
-            return MenuState.MAP_SELECT;
+            return nextAction();
         }
         return MenuState.NO_ACTION;
+    }
+
+    public MenuState nextAction() {
+        for (Player p : this.newGameEvent.getPlayers()) {
+            if (p instanceof CPUPlayer) {
+                p.setCharacter(null);
+            }
+        }
+        for (Player p : this.newGameEvent.getPlayers()) {
+            if(p instanceof CPUPlayer){
+                p.setCharacter(getAvailableGameCharacters().get(0));
+            }
+        }
+
+        if (this.newGameEvent.allPlayersGotCharacters()) {
+            Container.playSound(SoundID.MENU_FORWARD_CLICK);
+            return MenuState.MAP_SELECT;
+
+        } else {
+            Container.playSound(SoundID.EXPLOSION);
+            return MenuState.NO_ACTION;
+        }
+    }
+
+    // Getting available characters to fill CPU-Players with
+    private List<GameCharacter> getAvailableGameCharacters() {
+        List<String> allCharacters = Utils.getCharacterNames();
+
+        for (Player player : this.newGameEvent.getPlayers()) {
+            if (player.getCharacter() != null && allCharacters.contains(player.getCharacter().getName())) {
+                allCharacters.remove(player.getCharacter().getName());
+            }
+        }
+
+        List<GameCharacter> availableCharacters = new ArrayList<>();
+        for (String name : allCharacters) {
+            availableCharacters.add(new GameCharacter(name, -1));
+        }
+        Collections.shuffle(availableCharacters);
+
+        return availableCharacters;
     }
 
     @Override

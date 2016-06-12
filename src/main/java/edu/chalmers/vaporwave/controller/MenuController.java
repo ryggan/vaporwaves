@@ -5,9 +5,7 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.SoundID;
 import edu.chalmers.vaporwave.event.*;
-import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.model.Player;
-import edu.chalmers.vaporwave.model.game.GameCharacter;
 import edu.chalmers.vaporwave.model.menu.*;
 import edu.chalmers.vaporwave.util.Debug;
 import edu.chalmers.vaporwave.util.Utils;
@@ -15,7 +13,10 @@ import edu.chalmers.vaporwave.view.*;
 import javafx.scene.Group;
 import net.java.games.input.Controller;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This controller handles the menus, i.e everything outside the actual game.
@@ -59,7 +60,7 @@ public class MenuController implements ContentController {
         this.menuMap = new HashMap<>();
         this.menuMap.put(MenuState.START_MENU, new StartMenu());
         this.menuMap.put(MenuState.ROOSTER, new RoosterMenu(player));
-        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu());
+        this.menuMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectMenu(this.newGameEvent));
         this.menuMap.put(MenuState.MAP_SELECT, new MapSelectMenu());
         this.menuMap.put(MenuState.RESULTS_MENU, new ResultsMenu(this.newGameEvent.getPlayers()));
 
@@ -185,24 +186,10 @@ public class MenuController implements ContentController {
 
         menu.performMenuAction(this.newGameEvent, 0);
 
-        for (Player p : this.newGameEvent.getPlayers()) {
-            if (p instanceof CPUPlayer) {
-                p.setCharacter(null);
-            }
-        }
-        for (Player p : this.newGameEvent.getPlayers()) {
-            if(p instanceof CPUPlayer){
-                p.setCharacter(getAvailableGameCharacters().get(0));
-            }
-        }
-        if (isNewGameEventReady()) {
-            GameEventBus.getInstance().post(this.newGameEvent);
-            Container.stopSound(SoundID.MENU_BGM_1);
-            Container.playSound(SoundID.START_GAME);
-            Container.playSound(SoundID.MENU_SUCCESS);
-        }else{
-            Container.playSound(SoundID.EXPLOSION);
-        }
+        GameEventBus.getInstance().post(this.newGameEvent);
+        Container.stopSound(SoundID.MENU_BGM_1);
+        Container.playSound(SoundID.START_GAME);
+        Container.playSound(SoundID.MENU_SUCCESS);
     }
 
     private void menuActionNoAction(AbstractMenu menu) {
@@ -215,28 +202,6 @@ public class MenuController implements ContentController {
                     && this.menuViewMap.get(this.activeMenu) instanceof CharacterSelectView) {
             Container.playSound(SoundID.SELECT_CHARACTER);
         }
-    }
-
-    // Getting available characters to fill CPU-Players with
-    private List<GameCharacter> getAvailableGameCharacters() {
-        List<String> allCharacters = Utils.getCharacterNames();
-
-        for (Player player : this.newGameEvent.getPlayers()) {
-            if (player.getCharacter() != null && allCharacters.contains(player.getCharacter().getName())) {
-                allCharacters.remove(player.getCharacter().getName());
-            }
-        }
-
-        List<GameCharacter> availableCharacters = new ArrayList<>();
-        for (String name : allCharacters) {
-            availableCharacters.add(new GameCharacter(name, -1));
-        }
-        Collections.shuffle(availableCharacters);
-
-        System.out.println("Available characters: ");
-        System.out.println("   "+availableCharacters);
-
-        return availableCharacters;
     }
 
     // Remote (/secondary) player input (constantly pushed down buttons), pressed (the exact moment a button
@@ -316,15 +281,6 @@ public class MenuController implements ContentController {
 
         this.menuMap.get(activeMenu).initMenu(this.newGameEvent);
         updateViews(this.newGameEvent.getPrimaryPlayer());
-    }
-
-    private boolean isNewGameEventReady() {
-        for (Player player : this.newGameEvent.getPlayers()) {
-            if (player.getCharacter() == null) {
-                return false;
-            }
-        }
-        return true;
     }
 
     // Posted from InputController when a gamepad disconnects, to update players with this

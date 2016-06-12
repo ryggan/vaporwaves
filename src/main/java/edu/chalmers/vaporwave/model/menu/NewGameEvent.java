@@ -135,6 +135,15 @@ public class NewGameEvent {
         return this.scoreLimit;
     }
 
+    public boolean allPlayersGotCharacters() {
+        for (Player player : getPlayers()) {
+            if (player.getCharacter() == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // Usual overrides
     @Override
     public boolean equals(Object o) {
