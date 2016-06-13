@@ -4,6 +4,10 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
+import edu.chalmers.vaporwave.util.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the template for every menu screen model; most things are the same but every
@@ -12,7 +16,8 @@ import edu.chalmers.vaporwave.util.Constants;
  */
 public abstract class AbstractMenu {
 
-    private int[] menuItems;
+    private List<boolean[]> menuItems;
+//    private int[] menuItems;
     private int[] selectedItems;
     private int currentSelected;
     private int[] remoteSelected;
@@ -24,8 +29,17 @@ public abstract class AbstractMenu {
     public AbstractMenu(int[] menuItems, int currentSelected) {
         this.selectedItems = new int[menuItems.length];
         this.currentSelected = currentSelected;
-        this.menuItems = ClonerUtility.intArrayCloner(menuItems);
+//        this.menuItems = ClonerUtility.intArrayCloner(menuItems);
         this.remoteSelected = new int[Constants.MAX_NUMBER_OF_PLAYERS];
+
+        this.menuItems = new ArrayList<>();
+        for (int i = 0; i < menuItems.length; i++) {
+            boolean[] menuRow = new boolean[menuItems[i] + 1];
+            for (int j = 0; j < menuRow.length; j++) {
+                menuRow[j] = true;
+            }
+            this.menuItems.add(menuRow);
+        }
     }
 
     // When a player presses a directional button, the following happens.
@@ -55,12 +69,12 @@ public abstract class AbstractMenu {
         if (currentSelected > 0) {
             currentSelected -= 1;
         } else {
-            currentSelected = menuItems.length - 1;
+            currentSelected = menuItems.size() - 1;
         }
     }
 
     protected void menuMoveDown() {
-        if (currentSelected != menuItems.length - 1) {
+        if (currentSelected != menuItems.size() - 1) {
             currentSelected += 1;
         } else {
             currentSelected = 0;
@@ -69,10 +83,10 @@ public abstract class AbstractMenu {
 
     protected void menuMoveRight(int playerID) {
         if (playerID == 0) {
-            if (selectedItems[currentSelected] < menuItems[currentSelected]) {
+            if (selectedItems[currentSelected] < menuItems.get(currentSelected).length) {
                 selectedItems[currentSelected] += 1;
             } else {
-                if (menuItems[currentSelected] > 0) {
+                if (menuItems.get(currentSelected).length > 0) {
                     selectedItems[currentSelected] = 0;
                 } else {
                     menuMoveDown();
@@ -88,8 +102,8 @@ public abstract class AbstractMenu {
             if (selectedItems[currentSelected] > 0) {
                 selectedItems[currentSelected] -= 1;
             } else {
-                if (menuItems[currentSelected] > 0) {
-                    selectedItems[currentSelected] = menuItems[currentSelected];
+                if (menuItems.get(currentSelected).length > 0) {
+                    selectedItems[currentSelected] = menuItems.get(currentSelected).length;
                 } else {
                     menuMoveUp();
                 }
@@ -106,7 +120,7 @@ public abstract class AbstractMenu {
     }
 
     public void setSuperSelected(int superSelected) {
-        this.currentSelected = Math.max(Math.min(superSelected, 0), this.menuItems.length - 1);
+        this.currentSelected = Math.max(Math.min(superSelected, 0), this.menuItems.size() - 1);
     }
 
     public int[] getSelectedSub() {
@@ -119,8 +133,16 @@ public abstract class AbstractMenu {
 
     public abstract MenuState getMenuAction();
 
-    public int[] getMenuItems() {
-        return ClonerUtility.intArrayCloner(this.menuItems);
+    public List<boolean[]> getMenuItems() {
+        List<boolean[]> newList = new ArrayList<>();
+        for (boolean[] row : this.menuItems) {
+            boolean[] newRow = new boolean[row.length];
+            for (int i = 0; i < row.length; i++) {
+                newRow[i] = row[i];
+            }
+            newList.add(newRow);
+        }
+        return newList;
     }
 
     public abstract void performMenuAction(NewGameEvent newGameEvent, int playerID);

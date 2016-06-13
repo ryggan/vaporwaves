@@ -66,12 +66,11 @@ public class MenuController implements ContentController {
 
         // Setting up menu views
         this.menuViewMap = new HashMap<>();
-        this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root));
-        this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root));
-        this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root));
-        this.menuViewMap.put(MenuState.MAP_SELECT, new MapSelectMenuView(root,
-                ((MapSelectMenu) this.menuMap.get(MenuState.MAP_SELECT)).getArenaMaps()));
-        this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root));
+        this.menuViewMap.put(MenuState.START_MENU, new StartMenuView(root, this.menuMap.get(MenuState.START_MENU)));
+        this.menuViewMap.put(MenuState.ROOSTER, new RoosterMenuView(root, this.menuMap.get(MenuState.ROOSTER)));
+        this.menuViewMap.put(MenuState.CHARACTER_SELECT, new CharacterSelectView(root, this.menuMap.get(MenuState.CHARACTER_SELECT)));
+        this.menuViewMap.put(MenuState.MAP_SELECT, new MapSelectMenuView(root, this.menuMap.get(MenuState.MAP_SELECT)));
+        this.menuViewMap.put(MenuState.RESULTS_MENU, new ResultsMenuView(root, this.menuMap.get(MenuState.RESULTS_MENU)));
 
         // Initiating start screen view
         updateViews(null);
@@ -262,6 +261,7 @@ public class MenuController implements ContentController {
 
         // The actual updating of the view
         this.menuViewMap.get(this.activeMenu).updateView(
+                this.menuMap.get(this.activeMenu).getMenuItems(),
                 this.menuMap.get(this.activeMenu).getSelectedSuper(),
                 this.menuMap.get(this.activeMenu).getSelectedSub(),
                 this.menuMap.get(this.activeMenu).getRemoteSelected(),

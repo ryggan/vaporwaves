@@ -6,6 +6,8 @@ import edu.chalmers.vaporwave.model.ArenaMap;
 import edu.chalmers.vaporwave.model.ArenaTheme;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.model.RandomArenaMap;
+import edu.chalmers.vaporwave.model.menu.AbstractMenu;
+import edu.chalmers.vaporwave.model.menu.MapSelectMenu;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapObject;
 import javafx.geometry.Pos;
@@ -50,8 +52,9 @@ public class MapSelectMenuView extends AbstractMenuView {
     int smalli;
     int smallDim;
 
-    public MapSelectMenuView(Group root, List<ArenaMap> arenaMaps) {
-        super(root);
+    public MapSelectMenuView(Group root, AbstractMenu menu) {
+//        public MapSelectMenuView(Group root, List<ArenaMap> arenaMaps) {
+        super(root, menu);
 
         this.bigx = 204 / (int)Constants.GAME_SCALE;
         this.bigy = 44 / (int)Constants.GAME_SCALE;
@@ -80,7 +83,8 @@ public class MapSelectMenuView extends AbstractMenuView {
         this.randomText.setTextAlignment(TextAlignment.CENTER);
         this.randomText.setVisible(false);
 
-        this.arenaMaps = arenaMaps;
+//        this.arenaMaps = arenaMaps;
+        this.arenaMaps = ((MapSelectMenu) menu).getArenaMaps();
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_MAPSELECT));
 
         // The good ol' usual buttons
@@ -100,7 +104,8 @@ public class MapSelectMenuView extends AbstractMenuView {
         setTheme(ArenaTheme.BEACH);
     }
 
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
+    public void updateView(List<boolean[]> menuItems, int superSelected, int[] subSelected, int[] remoteSelected,
+                           Player player, boolean pressedDown) {
         clearView();
 
         // Updating buttons

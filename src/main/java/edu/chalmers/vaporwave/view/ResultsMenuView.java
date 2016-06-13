@@ -3,12 +3,14 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.menu.AbstractMenu;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.GameType;
 import javafx.scene.Group;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import static edu.chalmers.vaporwave.util.GameType.ENEMY_KILLS;
 
@@ -30,8 +32,8 @@ public class ResultsMenuView extends AbstractMenuView {
     private ScoreboardView scoreboardView;
     int rand;
 
-    public ResultsMenuView(Group root) {
-        super(root);
+    public ResultsMenuView(Group root, AbstractMenu menu) {
+        super(root, menu);
         this.root = root;
         setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
         this.gameType = ENEMY_KILLS;
@@ -42,7 +44,8 @@ public class ResultsMenuView extends AbstractMenuView {
         this.rand = (new Random()).nextInt(4);
     }
 
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
+    public void updateView(List<boolean[]> menuItems, int superSelected, int[] subSelected, int[] remoteSelected,
+                           Player player, boolean pressedDown) {
         clearView();
         setActive();
 

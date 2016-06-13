@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.menu.AbstractMenu;
 import javafx.scene.Group;
 
 import java.awt.*;
@@ -16,8 +17,8 @@ public class StartMenuView extends AbstractMenuView {
 
     private List<MenuButtonSprite> menuButtonSpriteList;
 
-    public StartMenuView(Group root) {
-        super(root);
+    public StartMenuView(Group root, AbstractMenu menu) {
+        super(root, menu);
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_START));
 
         menuButtonSpriteList = new ArrayList<>();
@@ -25,7 +26,8 @@ public class StartMenuView extends AbstractMenuView {
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_EXIT_GAME, new Point(640, 280)));
     }
 
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
+    public void updateView(List<boolean[]> menuItems, int superSelected, int[] subSelected, int[] remoteSelected,
+                           Player player, boolean pressedDown) {
         clearView();
         Container.getSprite(SpriteID.MENU_TITLE).setPosition(70,70);
         Container.getSprite(SpriteID.MENU_TITLE).render(getBackgroundGC(),0);

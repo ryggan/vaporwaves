@@ -4,6 +4,7 @@ import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.menu.AbstractMenu;
 import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.Utils;
@@ -32,8 +33,8 @@ public class CharacterSelectView extends AbstractMenuView {
 
     private int lastSelected;
 
-    public CharacterSelectView(Group root) {
-        super(root);
+    public CharacterSelectView(Group root, AbstractMenu menu) {
+        super(root, menu);
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CHARACTERSELECT));
 
         this.playerSet = new HashSet<>();
@@ -141,7 +142,8 @@ public class CharacterSelectView extends AbstractMenuView {
     }
 
     @Override
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
+    public void updateView(List<boolean[]> menuItems, int superSelected, int[] subSelected, int[] remoteSelected,
+                           Player player, boolean pressedDown) {
         clearView();
 
         // Basic stuff

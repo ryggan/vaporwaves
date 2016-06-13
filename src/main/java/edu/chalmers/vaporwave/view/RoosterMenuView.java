@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.view;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.*;
 import edu.chalmers.vaporwave.model.Player;
+import edu.chalmers.vaporwave.model.menu.AbstractMenu;
 import edu.chalmers.vaporwave.util.Constants;
 import javafx.scene.Group;
 
@@ -23,8 +24,8 @@ public class RoosterMenuView extends AbstractMenuView {
     private List<Point> roosterSelectPosition;
     private Map<Boolean, List<SpriteID>> roosterSelectors;
 
-    public RoosterMenuView(Group root) {
-        super(root);
+    public RoosterMenuView(Group root, AbstractMenu menu) {
+        super(root, menu);
 
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_ROOSTER));
 
@@ -66,7 +67,8 @@ public class RoosterMenuView extends AbstractMenuView {
     }
 
     @Override
-    public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
+    public void updateView(List<boolean[]> menuItems, int superSelected, int[] subSelected, int[] remoteSelected,
+                           Player player, boolean pressedDown) {
         clearView();
 
         Container.getSprite(SpriteID.MENU_ROOSTER_HELP).setPosition(Constants.WINDOW_WIDTH-
