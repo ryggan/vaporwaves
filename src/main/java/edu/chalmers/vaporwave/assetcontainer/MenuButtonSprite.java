@@ -40,11 +40,13 @@ public class MenuButtonSprite {
             case PRESSED:
                 frameY = 2;
                 break;
-            default:
+            case DISABLED:
+                frameY = 3;
                 break;
+            default:
         }
 
-        menuGC.drawImage(spriteSheet, gridPositionInSheet.x * width, (3 * gridPositionInSheet.y + frameY) * height,
+        menuGC.drawImage(spriteSheet, gridPositionInSheet.x * width, (4 * gridPositionInSheet.y + frameY) * height,
                 width, height, positionOnCanvas.x, positionOnCanvas.y, width, height);
     }
 

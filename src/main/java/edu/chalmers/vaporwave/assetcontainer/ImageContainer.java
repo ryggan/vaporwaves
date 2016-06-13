@@ -31,7 +31,7 @@ class ImageContainer {
         // Backgrounds (8):
         prepareImageLoad(ImageID.MENU_BACKGROUND_RESULT, "images/menu/menu-background-result.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_1, "images/menu/menu-background-2.bmp");
-        prepareImageLoad(ImageID.MENU_BUTTON_SPRITESHEET, "images/menu/spritesheet_menubuttons-3-308x198.png");
+        prepareImageLoad(ImageID.MENU_BUTTON_SPRITESHEET, "images/menu/spritesheet_menubuttons-4-308x198.png");
         prepareImageLoad(ImageID.MENU_SMALL_BUTTON_SPRITESHEET, "images/menu/spritesheet-menubuttons-small-2-92x22.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_CHARACTERSELECT, "images/menu/menu-background-characterselect.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_ROOSTER, "images/menu/menu-background-roostermenu.png");
