@@ -19,7 +19,6 @@ import java.util.Map;
  */
 public class RoosterMenuView extends AbstractMenuView {
 
-    private List<MenuButtonSprite> menuButtonSpriteList;
     private int[] selectedPlayers;
     private List<Point> roosterSelectPosition;
     private Map<Boolean, List<SpriteID>> roosterSelectors;
@@ -28,8 +27,6 @@ public class RoosterMenuView extends AbstractMenuView {
         super(root, menu);
 
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_ROOSTER));
-
-        this.menuButtonSpriteList = new ArrayList<>();
 
         this.roosterSelectPosition = new ArrayList<>();
         this.roosterSelectPosition.add(new Point(120, 300));
@@ -60,10 +57,9 @@ public class RoosterMenuView extends AbstractMenuView {
         this.roosterSelectors.put(Boolean.TRUE, roosterSelectorsOn);
 
         // Good ol buttons
-        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)));
-        this.menuButtonSpriteList.add(null);
-        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
-                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
+        setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
+        setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 2, 0);
     }
 
     @Override
@@ -79,11 +75,7 @@ public class RoosterMenuView extends AbstractMenuView {
             renderSpriteForSelectedPlayers(i, superSelected == 1 && subSelected[1] == i);
         }
 
-        for (int i = 0; i < this.menuButtonSpriteList.size(); i++) {
-            if (this.menuButtonSpriteList.get(i) != null) {
-                updateButton(this.menuButtonSpriteList.get(i), superSelected == i, pressedDown);
-            }
-        }
+        updateButtons(menuItems, superSelected, subSelected, pressedDown);
 
         setActive();
     }

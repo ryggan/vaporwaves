@@ -83,10 +83,10 @@ public abstract class AbstractMenu {
 
     protected void menuMoveRight(int playerID) {
         if (playerID == 0) {
-            if (selectedItems[currentSelected] < menuItems.get(currentSelected).length) {
+            if (selectedItems[currentSelected] < menuItems.get(currentSelected).length - 1) {
                 selectedItems[currentSelected] += 1;
             } else {
-                if (menuItems.get(currentSelected).length > 0) {
+                if (menuItems.get(currentSelected).length - 1 > 0) {
                     selectedItems[currentSelected] = 0;
                 } else {
                     menuMoveDown();
@@ -102,8 +102,8 @@ public abstract class AbstractMenu {
             if (selectedItems[currentSelected] > 0) {
                 selectedItems[currentSelected] -= 1;
             } else {
-                if (menuItems.get(currentSelected).length > 0) {
-                    selectedItems[currentSelected] = menuItems.get(currentSelected).length;
+                if (menuItems.get(currentSelected).length - 1 > 0) {
+                    selectedItems[currentSelected] = menuItems.get(currentSelected).length - 1;
                 } else {
                     menuMoveUp();
                 }

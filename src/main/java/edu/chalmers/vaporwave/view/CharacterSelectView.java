@@ -152,11 +152,7 @@ public class CharacterSelectView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).render(getBackgroundGC(), 0);
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
-        for (int i = 0; i < this.menuButtonSpriteList.size(); i++) {
-            if (this.menuButtonSpriteList.get(i) != null) {
-                updateButton(this.menuButtonSpriteList.get(i), superSelected == i, pressedDown);
-            }
-        }
+        updateButtons(menuItems, superSelected, subSelected, pressedDown, this.menuButtonSpriteList);
 
         if (superSelected == 1) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));

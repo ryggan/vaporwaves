@@ -108,12 +108,7 @@ public class MapSelectMenuView extends AbstractMenuView {
                            Player player, boolean pressedDown) {
         clearView();
 
-        // Updating buttons
-        for (int i = 0; i < this.menuButtonSpriteList.size(); i++) {
-            if (this.menuButtonSpriteList.get(i) != null) {
-                updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
-            }
-        }
+        updateButtons(menuItems, superSelected, subSelected, pressedDown, this.menuButtonSpriteList);
 
         // Mark on map selector
         if (superSelected == 1) {

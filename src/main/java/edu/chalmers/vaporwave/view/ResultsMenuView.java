@@ -59,14 +59,11 @@ public class ResultsMenuView extends AbstractMenuView {
                     this.winnerSprite = getRandomSprite();
                 }
 
-//            this.winnerSprite.setScale(1);
             this.winnerSprite.setPosition(0, Constants.WINDOW_HEIGHT / 20);
             this.winnerSprite.render(this.getBackgroundGC(), 0);
         }
 
-        for (int i = 0; i < this.menuButtonSpriteList.size(); i++) {
-            updateButton(this.menuButtonSpriteList.get(i), superSelected == i, pressedDown);
-        }
+        updateButtons(menuItems, superSelected, subSelected, pressedDown, this.menuButtonSpriteList);
 
     }
 

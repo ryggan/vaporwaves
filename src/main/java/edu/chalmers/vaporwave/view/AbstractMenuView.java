@@ -53,6 +53,35 @@ public abstract class AbstractMenuView {
     public abstract void updateView(List<boolean[]> menuItems, int superSelected, int[] subSelected,
                                     int[] remoteSelected, Player player, boolean pressedDown);
 
+    // Steps through every button and updates it
+    public void updateButtons(List<boolean[]> menuItems, int superSelected, int[] subSelected, boolean pressedDown) {
+
+        if (menuItems.size() != this.allButtons.size()) {
+            throw new IllegalArgumentException();
+        }
+        for (int i = 0; i < menuItems.size(); i++) {
+            if (menuItems.get(i).length != this.allButtons.get(i).length) {
+                throw new IllegalArgumentException();
+            }
+            for (int j = 0; j < menuItems.get(i).length; j++) {
+                if (this.allButtons.get(i)[j] != null) {
+                    boolean selected = (superSelected == i) && (subSelected[superSelected] == j);
+                    updateButton(this.allButtons.get(i)[j], selected, pressedDown, !menuItems.get(i)[j]);
+                }
+            }
+        }
+    }
+
+    public void updateButtons(List<boolean[]> menuItems, int superSelected, int[] subSelected, boolean pressedDown,
+                              List<MenuButtonSprite> menuButtonSpriteList) {
+
+        for (int i = 0; i < menuButtonSpriteList.size(); i++) {
+            if (menuButtonSpriteList.get(i) != null) {
+                updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown, false);
+            }
+        }
+    }
+
     public GraphicsContext getBackgroundGC() {
         return this.backgroundGC;
     }
@@ -72,11 +101,13 @@ public abstract class AbstractMenuView {
     }
 
     // Re-renders the image of a button
-    public void updateButton(MenuButtonSprite button, boolean selected, boolean pressedDown) {
+    public void updateButton(MenuButtonSprite button, boolean selected, boolean pressedDown, boolean disabled) {
         if (selected && !pressedDown) {
             button.render(getBackgroundGC(), MenuButtonState.SELECTED);
         } else if (selected && pressedDown) {
             button.render(getBackgroundGC(), MenuButtonState.PRESSED);
+        } else if (disabled) {
+            button.render(getBackgroundGC(), MenuButtonState.DISABLED);
         } else {
             button.render(getBackgroundGC(), MenuButtonState.UNSELECTED);
         }

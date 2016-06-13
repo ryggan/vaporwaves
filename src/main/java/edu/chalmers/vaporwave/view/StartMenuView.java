@@ -15,15 +15,18 @@ import java.util.List;
  */
 public class StartMenuView extends AbstractMenuView {
 
-    private List<MenuButtonSprite> menuButtonSpriteList;
+//    private List<MenuButtonSprite> menuButtonSpriteList;
 
     public StartMenuView(Group root, AbstractMenu menu) {
         super(root, menu);
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_START));
 
-        menuButtonSpriteList = new ArrayList<>();
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEW_GAME, new Point(640, 200)));
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_EXIT_GAME, new Point(640, 280)));
+//        menuButtonSpriteList = new ArrayList<>();
+//        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEW_GAME, new Point(640, 200)));
+//        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_EXIT_GAME, new Point(640, 280)));
+
+        setButton(Container.getButton(MenuButtonID.BUTTON_NEW_GAME, new Point(640, 200)), 0 ,0);
+        setButton(Container.getButton(MenuButtonID.BUTTON_EXIT_GAME, new Point(640, 280)), 1 ,0);
     }
 
     public void updateView(List<boolean[]> menuItems, int superSelected, int[] subSelected, int[] remoteSelected,
@@ -32,9 +35,8 @@ public class StartMenuView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_TITLE).setPosition(70,70);
         Container.getSprite(SpriteID.MENU_TITLE).render(getBackgroundGC(),0);
 
-        for (int i = 0; i < menuButtonSpriteList.size(); i++) {
-            updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
-        }
+        updateButtons(menuItems, superSelected, subSelected, pressedDown);
+
         setActive();
     }
 }
