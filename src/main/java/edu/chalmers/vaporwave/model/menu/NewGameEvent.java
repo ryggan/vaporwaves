@@ -3,6 +3,7 @@ package edu.chalmers.vaporwave.model.menu;
 import edu.chalmers.vaporwave.assetcontainer.Container;
 import edu.chalmers.vaporwave.assetcontainer.FileID;
 import edu.chalmers.vaporwave.model.ArenaMap;
+import edu.chalmers.vaporwave.model.CPUPlayer;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.GameType;
 import edu.chalmers.vaporwave.util.MapFileReader;
@@ -137,7 +138,7 @@ public class NewGameEvent {
 
     public boolean allPlayersGotCharacters() {
         for (Player player : getPlayers()) {
-            if (player.getCharacter() == null) {
+            if (!(player instanceof CPUPlayer) && player.getCharacter() == null) {
                 return false;
             }
         }

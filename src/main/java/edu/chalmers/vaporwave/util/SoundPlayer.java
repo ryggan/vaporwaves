@@ -52,6 +52,7 @@ public class SoundPlayer {
 
     public SoundPlayer(SoundPlayer otherPlayer) {
         this(new MediaPlayer(otherPlayer.sound.getMedia()));
+        this.volume = otherPlayer.volume;
     }
 
 
