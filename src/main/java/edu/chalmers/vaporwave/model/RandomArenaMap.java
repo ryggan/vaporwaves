@@ -12,6 +12,6 @@ public class RandomArenaMap extends ArenaMap {
 
     public void randomize() {
         this.mapGenerator = new RandomMapGenerator();
-        setNewMap("Random", this.mapGenerator.generateMap());
+        setNewMap("Vapor_Random", this.mapGenerator.generateMap());
     }
 }
