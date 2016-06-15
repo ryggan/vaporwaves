@@ -17,7 +17,6 @@ import java.util.List;
 public abstract class AbstractMenu {
 
     private List<boolean[]> menuItems;
-//    private int[] menuItems;
     private int[] selectedItems;
     private int currentSelected;
     private int[] remoteSelected;
@@ -29,7 +28,6 @@ public abstract class AbstractMenu {
     public AbstractMenu(int[] menuItems, int currentSelected) {
         this.selectedItems = new int[menuItems.length];
         this.currentSelected = currentSelected;
-//        this.menuItems = ClonerUtility.intArrayCloner(menuItems);
         this.remoteSelected = new int[Constants.MAX_NUMBER_OF_PLAYERS];
 
         this.menuItems = new ArrayList<>();
@@ -143,6 +141,10 @@ public abstract class AbstractMenu {
             newList.add(newRow);
         }
         return newList;
+    }
+
+    public void setMenuItem(boolean enabled, int superPosition, int subPosition) {
+        this.menuItems.get(superPosition)[subPosition] = enabled;
     }
 
     public abstract void performMenuAction(NewGameEvent newGameEvent, int playerID);

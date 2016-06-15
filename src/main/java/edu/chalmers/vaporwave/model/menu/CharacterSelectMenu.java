@@ -100,23 +100,38 @@ public class CharacterSelectMenu extends AbstractMenu {
             newGameEvent.getPrimaryPlayer().setCharacter(new GameCharacter(characterNames[this.getSelectedSub()[1]], 0));
             Container.playSound(soundIDs[this.getSelectedSub()[1]]);
 
-        } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
+        } else if (playerID >= 1 && this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(),
+                playerID, Constants.MAX_NUMBER_OF_PLAYERS)] == -1) {
+
             unselectCharacterForPlayer(playerID);
-            this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
+            this.selectedCharacters[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID,
+                    Constants.MAX_NUMBER_OF_PLAYERS)] = playerID;
 
             for (Player player : newGameEvent.getPlayers()) {
                 if (player.getPlayerID() == playerID) {
-                    player.setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)], playerID));
-                    Container.playSound(soundIDs[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)]);
+                    player.setCharacter(new GameCharacter(characterNames[Utils.calculateRemoteSelected(
+                            this.getRemoteSelected(), playerID, Constants.MAX_NUMBER_OF_PLAYERS)], playerID));
+                    Container.playSound(soundIDs[Utils.calculateRemoteSelected(this.getRemoteSelected(), playerID,
+                            Constants.MAX_NUMBER_OF_PLAYERS)]);
                 }
             }
         }
+
+        updateNextButton();
+    }
+
+    private void updateNextButton() {
+        boolean enabled = this.newGameEvent.allPlayersGotCharacters();
+        setMenuItem(enabled, 2, 0);
+        System.out.println("Next button is enabled: "+enabled);
     }
 
     // When initializing this screen, makes sure that if a player has dropped out, its
     // chosen character is released to be claimed by other players
     @Override
     public void initMenu(NewGameEvent newGameEvent) {
+        this.newGameEvent = newGameEvent;
+
         for (int i = 0; i < this.selectedCharacters.length; i++) {
             if (this.selectedCharacters[i] != -1) {
                 boolean playerStillHere = false;
@@ -130,6 +145,8 @@ public class CharacterSelectMenu extends AbstractMenu {
                 }
             }
         }
+
+        updateNextButton();
     }
 
     // Special selection in this menu, as this is the only menu where other players than primary
