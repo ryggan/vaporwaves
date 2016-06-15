@@ -60,7 +60,7 @@ public class MapSelectMenuView extends AbstractMenuView {
         // Setting up text labels
         this.questionMark = new Label("?");
         this.questionMark.setFont(Container.getFont(FileID.FONT_BAUHAUS_60));
-        this.questionMark.setTextFill(Color.web(Constants.COLORNO_VAPEPINK));
+        this.questionMark.setTextFill(Color.web(Constants.COLORNO_MAPGREY));
         this.questionMark.setLayoutY(this.smally + 5);
         this.questionMark.setAlignment(Pos.CENTER);
         this.questionMark.setTextAlignment(TextAlignment.CENTER);

@@ -43,6 +43,7 @@ public class Constants {
     public static final int ENEMY_UPDATE_RATE = 15;
 
     public static final String COLORNO_VAPEPINK = "#fd2881";
+    public static final String COLORNO_MAPGREY = "#808080";
 
     public static final int SCORE_KILL_CHARACTER = 500;
     public static final int SCORE_KILL_ENEMY = 100;
