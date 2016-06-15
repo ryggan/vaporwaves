@@ -38,6 +38,8 @@ public class MapSelectMenuView extends AbstractMenuView {
     private boolean rightPressed;
     private boolean leftPressed;
 
+    private Sprite[] playerStart;
+
     private Label questionMark;
     private Label randomText;
     private boolean showQuestionMark;
@@ -99,6 +101,12 @@ public class MapSelectMenuView extends AbstractMenuView {
 
         this.rightPressed = false;
         this.leftPressed = false;
+
+        this.playerStart = new Sprite[4];
+        this.playerStart[0] = Container.getSprite(SpriteID.MENU_MAPSELECT_P1);
+        this.playerStart[1] = Container.getSprite(SpriteID.MENU_MAPSELECT_P2);
+        this.playerStart[2] = Container.getSprite(SpriteID.MENU_MAPSELECT_P3);
+        this.playerStart[3] = Container.getSprite(SpriteID.MENU_MAPSELECT_P4);
 
         // The good ol' usual buttons
         setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
@@ -180,6 +188,14 @@ public class MapSelectMenuView extends AbstractMenuView {
     private void renderBigMapObject(MapObject mapObject, int x, int y) {
         Sprite sprite;
         switch (mapObject) {
+            case PLAYER1:
+            case PLAYER2:
+            case PLAYER3:
+            case PLAYER4:
+                String mapObjStr = mapObject.toString();
+                int playerID = Integer.valueOf(mapObjStr.substring(mapObjStr.length()-1, mapObjStr.length())) - 1;
+                sprite = this.playerStart[playerID];
+                break;
             case INDESTRUCTIBLE_WALL:
                 sprite = this.bigIndestructible;
                 break;
