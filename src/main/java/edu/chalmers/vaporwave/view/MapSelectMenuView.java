@@ -112,7 +112,7 @@ public class MapSelectMenuView extends AbstractMenuView {
         setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
         setButton(Container.getButton(MenuButtonID.BUTTON_CHANGE_THEME,
                 new Point(386, Constants.WINDOW_HEIGHT - 80)), 2, 1);
-        setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
+        setButton(Container.getButton(MenuButtonID.BUTTON_START_GAME,
                 new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 2, 0);
 
         setTheme(ArenaTheme.BEACH);
