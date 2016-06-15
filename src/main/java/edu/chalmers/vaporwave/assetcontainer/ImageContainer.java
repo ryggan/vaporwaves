@@ -66,6 +66,7 @@ class ImageContainer {
 
         // Map select (1)
         prepareImageLoad(ImageID.MENU_MAPSELECT_SHEET, "images/menu/menu-mapselect-spritesheet-2.png");
+        prepareImageLoad(ImageID.MENU_MAPSELECT_PLAYERS, "images/menu/spritesheet-mapselect-playerstart-18x18.png");
 
         // Results menu (4):
         prepareImageLoad(ImageID.MENU_RESULTS_ZYPHER, "images/menu/menu-zypher-result.png");
