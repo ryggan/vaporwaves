@@ -4,7 +4,6 @@ import com.sun.javafx.scene.traversal.Direction;
 import edu.chalmers.vaporwave.model.Player;
 import edu.chalmers.vaporwave.util.ClonerUtility;
 import edu.chalmers.vaporwave.util.Constants;
-import edu.chalmers.vaporwave.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,33 +62,77 @@ public abstract class AbstractMenu {
         }
     }
 
-    protected void menuMoveUp() {
-        if (currentSelected > 0) {
-            currentSelected -= 1;
-        } else {
-            currentSelected = menuItems.size() - 1;
+    private void moveVertically(int move) {
+
+        int previousSelected = this.currentSelected;
+
+        this.currentSelected += move;
+
+        while (!isValidPosition() && !(this.currentSelected < 0 || this.currentSelected > this.menuItems.size() - 1)) {
+            if (this.menuItems.get(this.currentSelected).length > 1 && !isRowDisabled()) {
+                moveHorizontally(move);
+            } else {
+                this.currentSelected += move;
+            }
+        }
+
+        if (this.currentSelected < 0 || this.currentSelected > this.menuItems.size() - 1) {
+            this.currentSelected = previousSelected;
         }
     }
 
-    protected void menuMoveDown() {
-        if (currentSelected != menuItems.size() - 1) {
-            currentSelected += 1;
+    private void moveHorizontally(int move) {
+        if (this.menuItems.get(this.currentSelected).length <= 1) {
+            moveVertically(move);
+
         } else {
-            currentSelected = 0;
+            int[] limit = new int[] {-1, 0, this.menuItems.get(this.currentSelected).length};
+
+            do {
+                this.selectedItems[this.currentSelected] += move;
+
+                if (getSubSelected() == limit[move + 1]) {
+                    this.selectedItems[this.currentSelected] = limit[-move + 1] + move;
+                }
+            } while (!isCurrentSelectedEnabled());
         }
+    }
+
+    private boolean isValidPosition() {
+        return !(this.currentSelected < 0 || this.currentSelected > this.menuItems.size() - 1)
+                && this.menuItems.get(this.currentSelected)[getSubSelected()];
+    }
+
+    private boolean isRowDisabled() {
+        boolean foundEnabled = false;
+        boolean[] row = this.menuItems.get(this.currentSelected);
+        for (int i = 0; i < row.length; i++) {
+            if (row[i]) {
+                foundEnabled = true;
+            }
+        }
+        return !foundEnabled;
+    }
+
+    public boolean isCurrentSelectedEnabled() {
+        return this.menuItems.get(this.currentSelected)[getSubSelected()];
+    }
+
+    public int getSubSelected() {
+        return this.selectedItems[this.currentSelected];
+    }
+
+    protected void menuMoveUp() {
+        moveVertically(-1);
+    }
+
+    protected void menuMoveDown() {
+        moveVertically(1);
     }
 
     protected void menuMoveRight(int playerID) {
         if (playerID == 0) {
-            if (selectedItems[currentSelected] < menuItems.get(currentSelected).length - 1) {
-                selectedItems[currentSelected] += 1;
-            } else {
-                if (menuItems.get(currentSelected).length - 1 > 0) {
-                    selectedItems[currentSelected] = 0;
-                } else {
-                    menuMoveDown();
-                }
-            }
+            moveHorizontally(1);
         } else {
             remoteSelected[playerID] += 1;
         }
@@ -97,15 +140,7 @@ public abstract class AbstractMenu {
 
     protected void menuMoveLeft(int playerID) {
         if (playerID == 0) {
-            if (selectedItems[currentSelected] > 0) {
-                selectedItems[currentSelected] -= 1;
-            } else {
-                if (menuItems.get(currentSelected).length - 1 > 0) {
-                    selectedItems[currentSelected] = menuItems.get(currentSelected).length - 1;
-                } else {
-                    menuMoveUp();
-                }
-            }
+            moveHorizontally(-1);
         } else {
             remoteSelected[playerID] -= 1;
         }
