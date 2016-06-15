@@ -123,7 +123,6 @@ public class CharacterSelectMenu extends AbstractMenu {
     private void updateNextButton() {
         boolean enabled = this.newGameEvent.allPlayersGotCharacters();
         setMenuItem(enabled, 2, 0);
-        System.out.println("Next button is enabled: "+enabled);
     }
 
     // When initializing this screen, makes sure that if a player has dropped out, its

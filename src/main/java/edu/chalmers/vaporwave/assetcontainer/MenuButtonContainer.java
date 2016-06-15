@@ -47,18 +47,18 @@ class MenuButtonContainer {
         // Start menu (4)
         prepareButtonLoad(MenuButtonID.BUTTON_NEW_GAME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 0));
         prepareButtonLoad(MenuButtonID.BUTTON_EXIT_GAME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 1));
-        prepareButtonLoad(MenuButtonID.BUTTON_OPTIONS, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 2));
-        prepareButtonLoad(MenuButtonID.BUTTON_HIGHSCORE, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(0, 3));
+        prepareButtonLoad(MenuButtonID.BUTTON_OPTIONS, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(2, 0));
+        prepareButtonLoad(MenuButtonID.BUTTON_HIGHSCORE, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(2, 1));
 
         // Character select (2)
         prepareButtonLoad(MenuButtonID.BUTTON_START_GAME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 0));
         prepareButtonLoad(MenuButtonID.BUTTON_SMALL_BACK, ImageID.MENU_SMALL_BUTTON_SPRITESHEET, 92, 22, new Point(0, 0));
 
         // Map select (1)
-        prepareButtonLoad(MenuButtonID.BUTTON_CHANGE_THEME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 3));
+        prepareButtonLoad(MenuButtonID.BUTTON_CHANGE_THEME, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(3, 1));
 
         // Misc (2)
-        prepareButtonLoad(MenuButtonID.BUTTON_BACK, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 2));
+        prepareButtonLoad(MenuButtonID.BUTTON_BACK, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(3, 0));
         prepareButtonLoad(MenuButtonID.BUTTON_NEXT, ImageID.MENU_BUTTON_SPRITESHEET, buttonWidth, buttonHeight, new Point(1, 1));
     }
 

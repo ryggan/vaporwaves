@@ -24,7 +24,7 @@ public class MapSelectMenu extends AbstractMenu {
     private ArenaMap selectedMap;
 
     public MapSelectMenu() {
-        super(new int[]{0, Container.getAllMaps().size(), 0}, 1);
+        super(new int[]{0, Container.getAllMaps().size(), 1}, 1);
 
         this.arenaMaps = new ArrayList<>();
         this.arenaMaps.add(new RandomArenaMap());
@@ -33,17 +33,23 @@ public class MapSelectMenu extends AbstractMenu {
         }
         this.arenaMaps.sort(new ArenaMapComparator());
 
-//        this.selectedMap = this.arenaMaps.get(0);
-
         selectMap();
+
+        setMenuItem(false, 2, 1);
     }
 
     public MenuState getMenuAction() {
-        if (this.getSelectedSuper() == 0) {
+        if (getSelectedSuper() == 0) {
             Container.playSound(SoundID.MENU_BACKWARD_CLICK);
             return MenuState.CHARACTER_SELECT;
-        } else if (this.getSelectedSuper() == 2) {
-            return MenuState.START_GAME;
+
+        } else if (getSelectedSuper() == 2) {
+            if (getSubSelected() == 0) {
+                return MenuState.START_GAME;
+
+            } else if (getSubSelected() == 1) {
+                Container.playSound(SoundID.MENU_FORWARD_CLICK);
+            }
         }
         return MenuState.NO_ACTION;
     }
@@ -64,6 +70,10 @@ public class MapSelectMenu extends AbstractMenu {
         this.selectedMap = this.arenaMaps.get(getSelectedSub()[1]);
         if (this.selectedMap instanceof RandomArenaMap) {
             ((RandomArenaMap) this.selectedMap).randomize();
+            setMenuItem(false, 2, 1);
+        } else {
+            // todo: don't forget to put this in when implementing theme
+//            setMenuItem(true, 2, 1);
         }
     }
 
@@ -72,10 +82,16 @@ public class MapSelectMenu extends AbstractMenu {
         if (getSelectedSuper() == 1) {
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
             setSuperSelected(2);
+            setSubSelected(2, 0);
 
         } else if (getSelectedSuper() == 2) {
-            selectMap();
-            newGameEvent.setArenaMap(this.selectedMap);
+            if (getSubSelected() == 0) {
+                selectMap();
+                newGameEvent.setArenaMap(this.selectedMap);
+
+            } else if (getSubSelected() == 1) {
+                // todo: implement level changing theme
+            }
         }
     }
 

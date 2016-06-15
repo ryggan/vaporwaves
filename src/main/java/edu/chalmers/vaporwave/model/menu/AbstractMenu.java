@@ -118,10 +118,6 @@ public abstract class AbstractMenu {
         return this.menuItems.get(this.currentSelected)[getSubSelected()];
     }
 
-    public int getSubSelected() {
-        return this.selectedItems[this.currentSelected];
-    }
-
     protected void menuMoveUp() {
         moveVertically(-1);
     }
@@ -153,7 +149,16 @@ public abstract class AbstractMenu {
     }
 
     public void setSuperSelected(int superSelected) {
-        this.currentSelected = Math.max(Math.min(superSelected, 0), this.menuItems.size() - 1);
+        this.currentSelected = Math.min(Math.max(superSelected, 0), this.menuItems.size() - 1);
+    }
+
+    public int getSubSelected() {
+        return this.selectedItems[this.currentSelected];
+    }
+
+    public void setSubSelected(int superSelected, int subSelected) {
+        superSelected = Math.min(Math.max(superSelected, 0), this.menuItems.size() - 1);
+        this.selectedItems[superSelected] = Math.min(Math.max(subSelected, 0), this.menuItems.get(superSelected).length - 1);
     }
 
     public int[] getSelectedSub() {

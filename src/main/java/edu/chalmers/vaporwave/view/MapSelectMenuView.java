@@ -82,6 +82,8 @@ public class MapSelectMenuView extends AbstractMenuView {
 
         // The good ol' usual buttons
         setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
+        setButton(Container.getButton(MenuButtonID.BUTTON_CHANGE_THEME,
+                new Point(386, Constants.WINDOW_HEIGHT - 80)), 2, 1);
         setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
                 new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 2, 0);
 
