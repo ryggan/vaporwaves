@@ -21,8 +21,6 @@ import static edu.chalmers.vaporwave.util.GameType.ENEMY_KILLS;
  */
 public class ResultsMenuView extends AbstractMenuView {
 
-    private java.util.List<MenuButtonSprite> menuButtonSpriteList;
-
     private Sprite winnerSprite;
     private Set<Player> players;
     private GameType gameType;
@@ -30,16 +28,15 @@ public class ResultsMenuView extends AbstractMenuView {
 
     private boolean isTie;
     private ScoreboardView scoreboardView;
-    int rand;
+    private int rand;
 
     public ResultsMenuView(Group root, AbstractMenu menu) {
         super(root, menu);
         this.root = root;
         setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_RESULT));
         this.gameType = ENEMY_KILLS;
-        this.menuButtonSpriteList = new ArrayList<>();
-        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
-                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
+        setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 0, 0);
         this.isTie = false;
         this.rand = (new Random()).nextInt(4);
     }
@@ -63,20 +60,8 @@ public class ResultsMenuView extends AbstractMenuView {
             this.winnerSprite.render(this.getBackgroundGC(), 0);
         }
 
-        updateButtons(menuItems, superSelected, subSelected, pressedDown, this.menuButtonSpriteList);
+        updateButtons(menuItems, superSelected, subSelected, pressedDown);
 
-    }
-
-    public void setPressed(int superSelected) {
-        for (int i = 0; i < this.menuButtonSpriteList.size(); i++) {
-
-            if (superSelected == i) {
-                this.menuButtonSpriteList.get(i).render(getBackgroundGC(), MenuButtonState.PRESSED);
-            } else {
-                this.menuButtonSpriteList.get(i).render(getBackgroundGC(), MenuButtonState.UNSELECTED);
-            }
-        }
-        setActive();
     }
 
     public Sprite getSprite(Player p) {

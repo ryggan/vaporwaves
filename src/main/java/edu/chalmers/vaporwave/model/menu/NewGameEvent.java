@@ -41,7 +41,7 @@ public class NewGameEvent {
         this.gameType = GameType.SURVIVAL;
         this.arenaMap = new ArenaMap("default", (new MapFileReader(Container.getMap(FileID.VAPORMAP_DEFAULT))).getMapObjects());
 
-        this.timeLimit = 120;
+        this.timeLimit = 10;
         this.killLimit = 10;
         this.scoreLimit = 5000;
 

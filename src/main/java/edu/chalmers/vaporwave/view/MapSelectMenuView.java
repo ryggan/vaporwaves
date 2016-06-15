@@ -12,14 +12,11 @@ import edu.chalmers.vaporwave.util.Constants;
 import edu.chalmers.vaporwave.util.MapObject;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.paint.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,8 +24,6 @@ import java.util.List;
  * Nothing over-exciting.
  */
 public class MapSelectMenuView extends AbstractMenuView {
-
-    private List<MenuButtonSprite> menuButtonSpriteList;
 
     private Sprite mark;
     private Sprite smallIndestructible;
@@ -53,7 +48,6 @@ public class MapSelectMenuView extends AbstractMenuView {
     int smallDim;
 
     public MapSelectMenuView(Group root, AbstractMenu menu) {
-//        public MapSelectMenuView(Group root, List<ArenaMap> arenaMaps) {
         super(root, menu);
 
         this.bigx = 204 / (int)Constants.GAME_SCALE;
@@ -83,16 +77,13 @@ public class MapSelectMenuView extends AbstractMenuView {
         this.randomText.setTextAlignment(TextAlignment.CENTER);
         this.randomText.setVisible(false);
 
-//        this.arenaMaps = arenaMaps;
         this.arenaMaps = ((MapSelectMenu) menu).getArenaMaps();
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_MAPSELECT));
 
         // The good ol' usual buttons
-        this.menuButtonSpriteList = new ArrayList<>();
-        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(4, 4)));
-        this.menuButtonSpriteList.add(null);
-        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_START_GAME,
-                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
+        setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
+        setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 2, 0);
 
         // Setting up sprites
         this.mark = Container.getSprite(SpriteID.MENU_MAPSELECT_MARK);
@@ -108,7 +99,7 @@ public class MapSelectMenuView extends AbstractMenuView {
                            Player player, boolean pressedDown) {
         clearView();
 
-        updateButtons(menuItems, superSelected, subSelected, pressedDown, this.menuButtonSpriteList);
+        updateButtons(menuItems, superSelected, subSelected, pressedDown);
 
         // Mark on map selector
         if (superSelected == 1) {

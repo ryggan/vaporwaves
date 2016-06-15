@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class CharacterSelectView extends AbstractMenuView {
 
-    private List<MenuButtonSprite> menuButtonSpriteList;
     private List<Map<Integer, Point>> characterSelectorPositionList;
     private Set<Player> playerSet;
     private int[] selectedCharacter;
@@ -130,11 +129,9 @@ public class CharacterSelectView extends AbstractMenuView {
         this.characterSelectorPositionList.add(characterSelectorPositions4);
 
         // The good ol' usual buttons
-        this.menuButtonSpriteList = new ArrayList<>();
-        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(4, 4)));
-        this.menuButtonSpriteList.add(null);
-        this.menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_NEXT,
-                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)));
+        setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
+        setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 2, 0);
 
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).setPosition(CHARACTERS_POSITION);
 
@@ -152,7 +149,7 @@ public class CharacterSelectView extends AbstractMenuView {
         Container.getSprite(SpriteID.MENU_CHARACTERSELECT_HELP).render(getBackgroundGC(), 0);
         Container.getSprite(SpriteID.MENU_CHARACTER_ALL).render(getBackgroundGC(), 0);
 
-        updateButtons(menuItems, superSelected, subSelected, pressedDown, this.menuButtonSpriteList);
+        updateButtons(menuItems, superSelected, subSelected, pressedDown);
 
         if (superSelected == 1) {
             Container.getSprite(SpriteID.MENU_CHARACTER_SELECTOR_1).setPosition(this.characterSelectorPositionList.get(0).get(subSelected[1]));

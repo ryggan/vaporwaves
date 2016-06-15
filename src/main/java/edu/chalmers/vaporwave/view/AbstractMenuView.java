@@ -72,16 +72,6 @@ public abstract class AbstractMenuView {
         }
     }
 
-    public void updateButtons(List<boolean[]> menuItems, int superSelected, int[] subSelected, boolean pressedDown,
-                              List<MenuButtonSprite> menuButtonSpriteList) {
-
-        for (int i = 0; i < menuButtonSpriteList.size(); i++) {
-            if (menuButtonSpriteList.get(i) != null) {
-                updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown, false);
-            }
-        }
-    }
-
     public GraphicsContext getBackgroundGC() {
         return this.backgroundGC;
     }
