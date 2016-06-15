@@ -161,6 +161,11 @@ class SpriteContainer {
         prepareSpriteLoad(SpriteID.MENU_MAPSELECT_DESTRUCTIBLE,
                 ImageID.MENU_MAPSELECT_SHEET, new Dimension(5, 5), new double[] {131, 1}, new double[] {0, 0}, 1.0);
 
+        prepareSpriteLoad(SpriteID.MENU_MAPSELECT_ARROW_RIGHT,
+                ImageID.MENU_MAPSELECT_SHEET, new Dimension(16, 28), new double[] {124, 8}, new double[] {0, 0}, 1.0);
+        prepareSpriteLoad(SpriteID.MENU_MAPSELECT_ARROW_LEFT,
+                ImageID.MENU_MAPSELECT_SHEET, new Dimension(16, 28), new double[] {124, 38}, new double[] {0, 0}, 1.0);
+
         // Results Menu
         prepareSpriteLoad(SpriteID.MENU_RESULTS_ZYPHER, ImageID.MENU_RESULTS_ZYPHER, 1.0);
         prepareSpriteLoad(SpriteID.MENU_RESULTS_CHARLOTTE, ImageID.MENU_RESULTS_CHARLOTTE, 1.0);

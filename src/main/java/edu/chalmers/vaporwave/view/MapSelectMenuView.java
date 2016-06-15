@@ -33,6 +33,11 @@ public class MapSelectMenuView extends AbstractMenuView {
     private Sprite bigIndestructible;
     private Sprite bigDestructible;
 
+    private Sprite arrowRight;
+    private Sprite arrowLeft;
+    private boolean rightPressed;
+    private boolean leftPressed;
+
     private Label questionMark;
     private Label randomText;
     private boolean showQuestionMark;
@@ -80,19 +85,27 @@ public class MapSelectMenuView extends AbstractMenuView {
         this.arenaMaps = ((MapSelectMenu) menu).getArenaMaps();
         this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_MAPSELECT));
 
-        // The good ol' usual buttons
-        setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
-        setButton(Container.getButton(MenuButtonID.BUTTON_CHANGE_THEME,
-                new Point(386, Constants.WINDOW_HEIGHT - 80)), 2, 1);
-        setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
-                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 2, 0);
-
         // Setting up sprites
         this.mark = Container.getSprite(SpriteID.MENU_MAPSELECT_MARK);
         this.mark.setPosition(479, 537);
 
         this.smallIndestructible = Container.getSprite(SpriteID.MENU_MAPSELECT_INDESTRUCTIBLE);
         this.smallDestructible = Container.getSprite(SpriteID.MENU_MAPSELECT_DESTRUCTIBLE);
+
+        this.arrowRight = Container.getSprite(SpriteID.MENU_MAPSELECT_ARROW_RIGHT);
+        this.arrowRight.setPosition(761, 569);
+        this.arrowLeft = Container.getSprite(SpriteID.MENU_MAPSELECT_ARROW_LEFT);
+        this.arrowLeft.setPosition(302, 569);
+
+        this.rightPressed = false;
+        this.leftPressed = false;
+
+        // The good ol' usual buttons
+        setButton(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(5, 5)), 0, 0);
+        setButton(Container.getButton(MenuButtonID.BUTTON_CHANGE_THEME,
+                new Point(386, Constants.WINDOW_HEIGHT - 80)), 2, 1);
+        setButton(Container.getButton(MenuButtonID.BUTTON_NEXT,
+                new Point(Constants.WINDOW_WIDTH - 320, Constants.WINDOW_HEIGHT - 80)), 2, 0);
 
         setTheme(ArenaTheme.BEACH);
     }
@@ -124,6 +137,15 @@ public class MapSelectMenuView extends AbstractMenuView {
             nextSelected = 0;
         }
         renderSmallPreviewMap(this.arenaMaps.get(nextSelected), 2);
+
+        if (superSelected == 1) {
+            if (this.rightPressed) {
+                this.arrowRight.render(getBackgroundGC(), 0);
+            }
+            if (this.leftPressed) {
+                this.arrowLeft.render(getBackgroundGC(), 0);
+            }
+        }
 
         setActive();
 
@@ -211,6 +233,11 @@ public class MapSelectMenuView extends AbstractMenuView {
             sprite.setPosition(this.smallx + x * this.smallDim + index * this.smalli, this.smally + y * this.smallDim);
             sprite.render(getBackgroundGC(), 0);
         }
+    }
+
+    public void setArrowPressed(boolean leftPressed, boolean rightPressed) {
+        this.leftPressed = leftPressed;
+        this.rightPressed = rightPressed;
     }
 
     public void setTheme(ArenaTheme theme) {

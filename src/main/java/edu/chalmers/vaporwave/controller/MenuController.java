@@ -31,6 +31,8 @@ public class MenuController implements ContentController {
     private MenuState activeMenu;
 
     private boolean pressedDown;
+    private boolean rightPressed;
+    private boolean leftPressed;
 
     public MenuController(Group root) throws Exception {
 
@@ -38,6 +40,8 @@ public class MenuController implements ContentController {
 
         this.newGameEvent = new NewGameEvent();
         this.pressedDown = false;
+        this.rightPressed = false;
+        this.leftPressed = false;
 
         // Menu background music
         Container.playSound(SoundID.MENU_BGM_1);
@@ -116,6 +120,20 @@ public class MenuController implements ContentController {
     private void localPlayerInput(Player player) {
         List<String> allInput = InputController.getInstance().getAllInput(player);
         this.pressedDown = (allInput.contains("ENTER") || allInput.contains("SPACE") || allInput.contains("BTN_A"));
+
+        String[] directionControls = player.getDirectionControls();
+        boolean changedPressed = false;
+        if (this.leftPressed != (allInput.contains(directionControls[0]) || allInput.contains("LS_LEFT") || allInput.contains("DPAD_LEFT"))) {
+            this.leftPressed = (allInput.contains(directionControls[0]) || allInput.contains("LS_LEFT") || allInput.contains("DPAD_LEFT"));
+            changedPressed = true;
+        }
+        if (this.rightPressed != (allInput.contains(directionControls[2]) || allInput.contains("LS_RIGHT") || allInput.contains("DPAD_RIGHT"))) {
+            this.rightPressed = (allInput.contains(directionControls[2]) || allInput.contains("LS_RIGHT") || allInput.contains("DPAD_RIGHT"));
+            changedPressed = true;
+        }
+        if (changedPressed) {
+            updateViews(this.newGameEvent.getPrimaryPlayer());
+        }
     }
 
     private void localPlayerPressed(Player player) {
@@ -126,12 +144,13 @@ public class MenuController implements ContentController {
             String key = allPressed.get(0);
             for (int i = 0; i < directionControls.length; i++) {
                 if (key.equals(directionControls[i])
-                        || key.equals("LS_UP") || key.equals("LS_LEFT")|| key.equals("LS_DOWN")|| key.equals("LS_RIGHT")
-                        || key.equals("DPAD_UP") || key.equals("DPAD_LEFT")|| key.equals("DPAD_DOWN")|| key.equals("DPAD_RIGHT")) {
+                        || key.equals("LS_UP") || key.equals("LS_LEFT") || key.equals("LS_DOWN") || key.equals("LS_RIGHT")
+                        || key.equals("DPAD_UP") || key.equals("DPAD_LEFT") || key.equals("DPAD_DOWN") || key.equals("DPAD_RIGHT")) {
                     changeSelected(Utils.getDirectionFromString(key), player);
                     break;
                 }
             }
+
             if (allPressed.contains("ENTER") || allPressed.contains("SPACE") || allPressed.contains("BTN_A")) {
                 updateViews(this.newGameEvent.getPrimaryPlayer());
             }
@@ -257,6 +276,11 @@ public class MenuController implements ContentController {
                      ((CharacterSelectMenu)this.menuMap.get(this.activeMenu)).getSelectedCharacters());
 
              ((CharacterSelectView) this.menuViewMap.get(this.activeMenu)).setPlayers(this.newGameEvent.getPlayers());
+
+         } else if (this.menuMap.get(this.activeMenu) instanceof MapSelectMenu
+                 && this.menuViewMap.get(this.activeMenu) instanceof MapSelectMenuView) {
+
+             ((MapSelectMenuView) this.menuViewMap.get(this.activeMenu)).setArrowPressed(this.leftPressed, this.rightPressed);
          }
 
         // The actual updating of the view
