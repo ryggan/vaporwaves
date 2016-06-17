@@ -37,12 +37,13 @@ class FileContainer {
         // Map files (6)
         prepareMapLoad(FileID.VAPORMAP_DEFAULT, Constants.DEFAULT_MAP_FILE);
 
-        prepareMapLoad(FileID.VAPORMAP_TEST, "src/main/resources/maps/test.vapormap");
-        prepareMapLoad(FileID.VAPORMAP_SCARCE, "src/main/resources/maps/scarce.vapormap");
-        prepareMapLoad(FileID.VAPORMAP_EMPTY, "src/main/resources/maps/empty.vapormap");
+//        prepareMapLoad(FileID.VAPORMAP_TEST, "src/main/resources/maps/test.vapormap");
+//        prepareMapLoad(FileID.VAPORMAP_SCARCE, "src/main/resources/maps/scarce.vapormap");
+//        prepareMapLoad(FileID.VAPORMAP_EMPTY, "src/main/resources/maps/empty.vapormap");
 
         prepareMapLoad(FileID.VAPORMAP_CLOSE, "src/main/resources/maps/close.vapormap");
         prepareMapLoad(FileID.VAPORMAP_LABYRINTH, "src/main/resources/maps/labyrinth.vapormap");
+        prepareMapLoad(FileID.VAPORMAP_ARENA, "src/main/resources/maps/arena.vapormap");
 
         // Fonts (3)
         prepareFontLoad(FileID.FONT_BAUHAUS_14, Constants.FONT_FILE_BAUHAUS);
