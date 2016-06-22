@@ -74,6 +74,14 @@ public class Container {
         return SoundContainer.getSound(soundID);
     }
 
+    public static void setSoundMuted(boolean b){
+        SoundContainer.setSoundMuted(b);
+    }
+
+    public static boolean isSoundMuted(){
+        return SoundContainer.isSoundMuted();
+    }
+
     public static void playSound(SoundID soundID) {
         SoundContainer.playSound(soundID);
     }

@@ -18,6 +18,8 @@ class SoundContainer {
     private static double soundVolume;
     private static double musicVolume;
 
+    private static boolean isMuted;
+
     private static final int NR_OF_PLACEBOMB = 10;
     private static final int NR_OF_EXPLOSION = 20;
     private static final int NR_OF_POWERUP = 10;
@@ -32,6 +34,8 @@ class SoundContainer {
     public static void initSoundContainer() throws Exception {
         soundVolume = 1.0;
         musicVolume = 0.5;
+
+        isMuted=false;
 
         // TODO: OBS!!! IF ADDING SOUNDS; REMEMBER TO ALTER TOTAL TASKS ABOVE!!
 
@@ -148,13 +152,21 @@ class SoundContainer {
     // Not only is it possible to get each sound via Container, but also to play sounds directly
     public static void playSound(SoundID soundID) {
         SoundPlayer player = getSound(soundID);
-        if (player != null) {
+        if (player != null&&!isMuted) {
             double masterVolume = soundVolume;
             if (soundID == SoundID.GAME_MUSIC || soundID == SoundID.MENU_BGM_1) {
                 masterVolume = musicVolume;
             }
             player.playSound(masterVolume);
         }
+    }
+
+    public static void setSoundMuted(boolean b){
+        isMuted=b;
+    }
+
+    public static boolean isSoundMuted(){
+        return isMuted;
     }
 
     public static void stopSound(SoundID soundID) {
