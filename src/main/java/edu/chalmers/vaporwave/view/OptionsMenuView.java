@@ -28,6 +28,12 @@ public class OptionsMenuView extends AbstractMenuView{
     public void updateView(int superSelected, int[] subSelected, int[] remoteSelected, Player player, boolean pressedDown) {
         clearView();
 
+        if(Container.isSoundMuted()){
+            menuButtonSpriteList.set(1,Container.getButton(MenuButtonID.BUTTON_PLAY_SOUNDS, new Point(640, 280)));
+        } else {
+            menuButtonSpriteList.set(1,Container.getButton(MenuButtonID.BUTTON_MUTE, new Point(640, 280)));
+        }
+
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {
             updateButton(menuButtonSpriteList.get(i), superSelected == i, pressedDown);
         }

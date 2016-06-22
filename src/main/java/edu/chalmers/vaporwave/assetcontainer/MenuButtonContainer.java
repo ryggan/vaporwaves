@@ -40,9 +40,10 @@ class MenuButtonContainer {
         prepareButtonLoad(MenuButtonID.BUTTON_OPTIONS, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 2)));
         prepareButtonLoad(MenuButtonID.BUTTON_HIGHSCORE, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(0, 3)));
 
-        // Options menu (2)
+        // Options menu (3)
         prepareButtonLoad(MenuButtonID.BUTTON_CONTROLS, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 3)));
         prepareButtonLoad(MenuButtonID.BUTTON_MUTE, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(2, 0)));
+        prepareButtonLoad(MenuButtonID.BUTTON_PLAY_SOUNDS, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(2, 1)));
 
         // Character select (2)
         prepareButtonLoad(MenuButtonID.BUTTON_START_GAME, new MenuButtonSprite(menuButtonSpritesheet, buttonWidth, buttonHeight, new Point(1, 0)));

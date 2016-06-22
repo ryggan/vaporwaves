@@ -17,16 +17,14 @@ public class OptionsMenu extends AbstractMenu{
     public MenuState getMenuAction() {
         if (this.getSelectedSuper() == 0) {
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
-            return MenuState.ROOSTER;
+
         }else if (this.getSelectedSuper() == 1) {
             if(Container.isSoundMuted()){
                 Container.setSoundMuted(false);
                 Container.playSound(SoundID.MENU_BGM_1);
-                System.out.println("unmuted");
             } else {
-                Container.stopSound(SoundID.MENU_BGM_1);
                 Container.setSoundMuted(true);
-                System.out.println("muted");
+                Container.stopSound(SoundID.MENU_BGM_1);
             }
         } else if (this.getSelectedSuper() == 2) {
             Container.playSound(SoundID.MENU_BACKWARD_CLICK);
