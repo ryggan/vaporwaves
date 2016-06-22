@@ -10,5 +10,6 @@ public enum MenuState {
     RESULTS_MENU,
     NO_ACTION,
     EXIT_PROGRAM,
-    START_GAME
+    START_GAME,
+    OPTIONS_MENU
 }
