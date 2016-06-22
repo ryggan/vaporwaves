@@ -17,6 +17,7 @@ public class OptionsMenu extends AbstractMenu{
     public MenuState getMenuAction() {
         if (this.getSelectedSuper() == 0) {
             Container.playSound(SoundID.MENU_FORWARD_CLICK);
+            return MenuState.CONTROLS_MENU;
 
         }else if (this.getSelectedSuper() == 1) {
             if(Container.isSoundMuted()){

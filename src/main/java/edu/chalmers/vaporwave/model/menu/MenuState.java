@@ -11,5 +11,6 @@ public enum MenuState {
     NO_ACTION,
     EXIT_PROGRAM,
     START_GAME,
-    OPTIONS_MENU
+    OPTIONS_MENU,
+    CONTROLS_MENU
 }
