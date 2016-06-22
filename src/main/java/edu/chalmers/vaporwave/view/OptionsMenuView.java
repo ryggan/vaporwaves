@@ -16,11 +16,11 @@ public class OptionsMenuView extends AbstractMenuView{
 
     public OptionsMenuView(Group root) {
         super(root);
-        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_START));
+        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_OPTIONS));
 
         menuButtonSpriteList = new ArrayList<>();
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_CONTROLS, new Point(640, 200)));
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_MUTE, new Point(640, 280)));
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_CONTROLS, new Point(40, 200)));
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_MUTE, new Point(40, 280)));
         menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(640, 360)));
     }
 
@@ -29,9 +29,9 @@ public class OptionsMenuView extends AbstractMenuView{
         clearView();
 
         if(Container.isSoundMuted()){
-            menuButtonSpriteList.set(1,Container.getButton(MenuButtonID.BUTTON_PLAY_SOUNDS, new Point(640, 280)));
+            menuButtonSpriteList.set(1,Container.getButton(MenuButtonID.BUTTON_PLAY_SOUNDS, new Point(40, 280)));
         } else {
-            menuButtonSpriteList.set(1,Container.getButton(MenuButtonID.BUTTON_MUTE, new Point(640, 280)));
+            menuButtonSpriteList.set(1,Container.getButton(MenuButtonID.BUTTON_MUTE, new Point(40, 280)));
         }
 
         for (int i = 0; i < menuButtonSpriteList.size(); i++) {

@@ -43,6 +43,7 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_BACKGROUND_ROOSTER, "images/menu/menu-background-roostermenu.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_LOADING, "images/menu/menu-background-loading.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_START, "images/menu/menu-background-startmenu.png");
+        prepareImageLoad(ImageID.MENU_BACKGROUND_OPTIONS, "images/menu/menu-background-optionsmenu.png");
 
         // Character select (9):
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_HELP, "images/menu/menu-characterselect-help.png");
