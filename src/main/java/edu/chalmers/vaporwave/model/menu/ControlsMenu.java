@@ -15,7 +15,7 @@ public class ControlsMenu extends AbstractMenu {
     public MenuState getMenuAction() {
 
         if (this.getSelectedSuper() == 0) {
-            Container.playSound(SoundID.MENU_FORWARD_CLICK);
+            Container.playSound(SoundID.MENU_BACKWARD_CLICK);
             return MenuState.OPTIONS_MENU;
 
         }

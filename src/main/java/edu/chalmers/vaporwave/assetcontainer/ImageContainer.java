@@ -34,7 +34,7 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_RESULTS_ALYSSA, "images/menu/menu-alyssa-result.png");
         prepareImageLoad(ImageID.MENU_RESULTS_MEI, "images/menu/menu-mei-result.png");
 
-        // Backgrounds (8):
+        // Backgrounds (9):
         prepareImageLoad(ImageID.MENU_BACKGROUND_RESULT, "images/menu/menu-background-result.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_1, "images/menu/menu-background-2.bmp");
         prepareImageLoad(ImageID.MENU_BUTTON_SPRITESHEET, "images/menu/spritesheet_menubuttons-308x198.png");
@@ -44,6 +44,7 @@ class ImageContainer {
         prepareImageLoad(ImageID.MENU_BACKGROUND_LOADING, "images/menu/menu-background-loading.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_START, "images/menu/menu-background-startmenu.png");
         prepareImageLoad(ImageID.MENU_BACKGROUND_OPTIONS, "images/menu/menu-background-optionsmenu.png");
+        prepareImageLoad(ImageID.MENU_BACKGROUND_CONTROLS, "images/menu/menu-background-controlsmenu.png");
 
         // Character select (9):
         prepareImageLoad(ImageID.MENU_CHARACTERSELECT_HELP, "images/menu/menu-characterselect-help.png");

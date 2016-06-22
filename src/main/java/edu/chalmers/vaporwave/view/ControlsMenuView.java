@@ -6,6 +6,10 @@ import edu.chalmers.vaporwave.assetcontainer.MenuButtonID;
 import edu.chalmers.vaporwave.assetcontainer.MenuButtonSprite;
 import edu.chalmers.vaporwave.model.Player;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,14 +21,19 @@ public class ControlsMenuView extends AbstractMenuView {
 
     private java.util.List<MenuButtonSprite> menuButtonSpriteList;
 
+    private String p1="";
+    private String p2;
+    private String p3;
+    private String p4;
+
 
     public ControlsMenuView(Group root) {
         super(root);
-        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_OPTIONS));
+        this.setBackgroundImage(Container.getImage(ImageID.MENU_BACKGROUND_CONTROLS));
 
         menuButtonSpriteList = new ArrayList<>();
-        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_BACK, new Point(240, 200)));
-
+        menuButtonSpriteList.add(Container.getButton(MenuButtonID.BUTTON_SMALL_BACK, new Point(640, 200)));
+        
     }
 
     @Override
