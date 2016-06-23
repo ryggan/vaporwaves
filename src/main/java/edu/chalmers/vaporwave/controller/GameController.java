@@ -379,15 +379,22 @@ public class GameController implements ContentController {
     private void updateMovablePowerupCheck(Movable movable) {
         GameCharacter gameCharacter = (GameCharacter) movable;
 
-        if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof PowerUp) {
-            PowerUp powerUp = (PowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
+//        java.lang.ArrayIndexOutOfBoundsException: -1
+//        at edu.chalmers.vaporwave.controller.GameController.updateMovablePowerupCheck(GameController.java:382)
 
-            // If so, pick it up
-            if (powerUp.getPowerUpType() != null && (powerUp.getState() == PowerUp.PowerUpState.IDLE
-                    || powerUp.getState() == PowerUp.PowerUpState.SPAWN)) {
-                powerUp.pickUp(this.timeSinceStart);
-                playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
+        try {
+            if (this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y] instanceof PowerUp) {
+                PowerUp powerUp = (PowerUp) this.arenaModel.getArenaTiles()[gameCharacter.getGridPosition().x][gameCharacter.getGridPosition().y];
+
+                // If so, pick it up
+                if (powerUp.getPowerUpType() != null && (powerUp.getState() == PowerUp.PowerUpState.IDLE
+                        || powerUp.getState() == PowerUp.PowerUpState.SPAWN)) {
+                    powerUp.pickUp(this.timeSinceStart);
+                    playerWalksOnPowerUp(powerUp.getPowerUpType(), gameCharacter);
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(gameCharacter.getName()+" - x: "+gameCharacter.getGridPosition().x+", y: "+gameCharacter.getGridPosition().y);
         }
     }
 

@@ -177,7 +177,10 @@ public class CharacterSelectMenu extends AbstractMenu {
 
                     debugCounter++;
                     if (debugCounter >= 1000) {
-                        System.out.println("Remote player infinite loop");
+                        System.out.println("Remote player infinite loop : "+
+                                this.selectedCharacters[Utils.calculateRemoteSelected(getRemoteSelected(),
+                                player.getPlayerID(), Constants.MAX_NUMBER_OF_PLAYERS)]+
+                                " : id: "+player.getPlayerID());
                         throw new RuntimeException();
                     }
 
