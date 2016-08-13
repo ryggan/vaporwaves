@@ -177,9 +177,14 @@ public class MenuController implements ContentController {
 
     // Different menu actions, that primary player could inflict when navigating menus
     private void menuActionExitProgram() {
-        Container.stopSound(SoundID.MENU_BGM_1);
-        Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
-        Container.playSound(SoundID.MENU_EXIT);
+        if(Container.isSoundMuted()&&GameEventBus.getInstance()!=null){
+            GameEventBus.getInstance().post(new ExitGameEvent());
+
+        } else {
+            Container.stopSound(SoundID.MENU_BGM_1);
+            Container.getSound(SoundID.MENU_EXIT).getSound().setOnEndOfMedia(new EndGameThread());
+            Container.playSound(SoundID.MENU_EXIT);
+        }
     }
 
     private void menuActionStartGame() {
